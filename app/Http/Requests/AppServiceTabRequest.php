@@ -28,9 +28,7 @@ class AppServiceTabRequest extends FormRequest
             'url_slug' => 'required|regex:/^\S*$/u|unique:app_service_tabs,url_slug,' . $id,
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:app_service_tabs,url_slug_bn,' . $id,
             'banner_name' => 'required|regex:/^\S*$/u|unique:app_service_tabs,banner_name,' . $id,
-            'banner_name_web_bn' => 'required|regex:/^\S*$/u|unique:app_service_tabs,banner_name_web_bn,' . $id,
-            'banner_name_mobile_en' => 'required|regex:/^\S*$/u|unique:app_service_tabs,banner_name_mobile_en,' . $id,
-            'banner_name_mobile_bn' => 'required|regex:/^\S*$/u|unique:app_service_tabs,banner_name_mobile_bn,' . $id,
+            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:app_service_tabs,banner_name_bn,' . $id,
         ];
     }
 }

@@ -21,55 +21,29 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('product_img_web_en') ? ' error' : '' }}">
-    <label class="required">Product Image Name Web EN</label>
+<div class="form-group col-md-6 {{ $errors->has('product_img_en') ? ' error' : '' }}">
+    <label class="required">Product Image Name EN</label>
     <div>
-        <input type="text" name="product_img_web_en" required class="form-control"
-               placeholder="Enter product image web name en"
-               value="{{ isset($appServiceProduct->product_img_web_en) ? $appServiceProduct->product_img_web_en : "" }}">
+        <input type="text" name="product_img_en" required class="form-control"
+               placeholder="Enter product image name en"
+               value="{{ isset($appServiceProduct->product_img_en) ? $appServiceProduct->product_img_en : "" }}">
     </div>
 
-    @if ($errors->has('product_img_web_en'))
-        <div class="help-block">{{ $errors->first('product_img_web_en') }}</div>
+    @if ($errors->has('product_img_en'))
+        <div class="help-block">{{ $errors->first('product_img_en') }}</div>
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('product_img_web_bn') ? ' error' : '' }}">
-    <label class="required">Product Image Name Web BN</label>
+<div class="form-group col-md-6 {{ $errors->has('product_img_bn') ? ' error' : '' }}">
+    <label class="required">Product Image Name BN</label>
     <div>
-        <input type="text" name="product_img_web_bn" required class="form-control"
-               placeholder="Enter product image web name bn"
-               value="{{ isset($appServiceProduct->product_img_web_bn) ? $appServiceProduct->product_img_web_bn : "" }}">
+        <input type="text" name="product_img_bn" required class="form-control"
+               placeholder="Enter product image name bn"
+               value="{{ isset($appServiceProduct->product_img_bn) ? $appServiceProduct->product_img_bn : "" }}">
     </div>
 
-    @if ($errors->has('product_img_web_bn'))
-        <div class="help-block">{{ $errors->first('product_img_web_bn') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-6 {{ $errors->has('product_img_mobile_en') ? ' error' : '' }}">
-    <label class="required">Product Image Name Mobile EN</label>
-    <div>
-        <input type="text" name="product_img_mobile_en" required class="form-control"
-               placeholder="Enter product image mobile name en"
-               value="{{ isset($appServiceProduct->product_img_mobile_en) ? $appServiceProduct->product_img_mobile_en : "" }}">
-    </div>
-
-    @if ($errors->has('product_img_mobile_en'))
-        <div class="help-block">{{ $errors->first('product_img_mobile_en') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-6 {{ $errors->has('product_img_mobile_bn') ? ' error' : '' }}">
-    <label class="required">Product Image Name Mobile BN</label>
-    <div>
-        <input type="text" name="product_img_mobile_bn" required class="form-control"
-               placeholder="Enter product image mobile name bn"
-               value="{{ isset($appServiceProduct->product_img_mobile_bn) ? $appServiceProduct->product_img_mobile_bn : "" }}">
-    </div>
-
-    @if ($errors->has('product_img_mobile_bn'))
-        <div class="help-block">  {{ $errors->first('product_img_mobile_bn') }}</div>
+    @if ($errors->has('product_img_bn'))
+        <div class="help-block">{{ $errors->first('product_img_bn') }}</div>
     @endif
 </div>
 

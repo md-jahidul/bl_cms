@@ -27,9 +27,7 @@ class AppServiceDetailsFixedSectionRequest extends FormRequest
         $id = (int) $request->app_service_product_details_id;
         return [
             'banner_name' => 'required|unique:app_service_product_details,banner_name,' . $id,
-            'banner_name_web_bn' => 'required|unique:app_service_product_details,banner_name_web_bn,' . $id,
-            'banner_name_mobile_en' => 'required|unique:app_service_product_details,banner_name_mobile_en,' . $id,
-            'banner_name_mobile_bn' => 'required|unique:app_service_product_details,banner_name_mobile_bn,' . $id,
+            'banner_name_bn' => 'required|unique:app_service_product_details,banner_name_bn,' . $id,
         ];
     }
 }
