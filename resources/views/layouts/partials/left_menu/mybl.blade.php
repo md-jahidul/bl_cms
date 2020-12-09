@@ -409,6 +409,21 @@
     @endif
 
 
+    @if( auth()->user()->can_view('MigratePlan'))
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Deeplink Report</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('products-deep-link-report') }}">
+                    <a class="menu-item" href="{{ route('products-deep-link-report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Product Deeplink</a>
+                </li>
+
+
+            </ul>
+        </li>
+    @endif
+
     @if (Auth::user()->hasRole('developer'))
         <li class="{{ is_active_url('developer/api/debug') }}">
             <a class="menu-item" href="{{ route('mybl.api.debug') }}">
@@ -424,6 +439,7 @@
     </li>
 
     @endif
+
     {{--------------------------------------------------------------------------------------------------------------------}}
     {{---------------------------------------------------------My-BL App End----------------------------------------------}}
     {{--------------------------------------------------------------------------------------------------------------------}}
