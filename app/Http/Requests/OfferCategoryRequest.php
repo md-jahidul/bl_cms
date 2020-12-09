@@ -30,13 +30,10 @@ class OfferCategoryRequest extends FormRequest
         $image_upload_type = ConfigController::adminImageUploadType();
 
         return [
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
             'url_slug' => 'required|regex:/^\S*$/u|unique:offer_categories,url_slug,' . $id,
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,url_slug_bn,' . $id,
             'banner_name' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name,' . $id,
-            'banner_name_web_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name_web_bn,' . $id,
-            'banner_name_mobile_en' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name_mobile_en,' . $id,
-            'banner_name_mobile_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name_mobile_bn,' . $id,
+            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name_bn,' . $id,
             'banner_image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
         ];
     }
