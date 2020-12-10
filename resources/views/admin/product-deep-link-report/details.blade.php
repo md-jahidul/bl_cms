@@ -21,7 +21,6 @@
                             <div class="col-md-3">
                                 <select class="form-control" name="action" id="option">
                                     <option value="">Select Option</option>
-                                    <option value="view">View</option>
                                     <option value="cancel">Cancel</option>
                                     <option value="buy_success">Buy Success</option>
                                     <option value="buy_failure">Buy Failure</option>
