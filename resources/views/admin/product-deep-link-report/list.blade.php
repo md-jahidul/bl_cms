@@ -17,7 +17,7 @@
 {{--                        <th width="15%">Deeplink</th>--}}
                         <th width="8%">Total View</th>
                         <th width="8%">Total Buy</th>
-                        <th width="8%">Total Attempt</th>
+                        <th width="8%">Buy Failure</th>
                         <th width="8%">Total Cancel</th>
                         <th width="15%">Date</th>
                         <th width="10%">action</th>

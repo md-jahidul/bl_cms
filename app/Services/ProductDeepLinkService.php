@@ -102,11 +102,12 @@ class ProductDeepLinkService
         ];
         $items->each(function ($item) use (&$response) {
             $created_at = date('d-M-Y', strtotime($item->created_at));
+            $total_view = $item->total_cancel + $item->total_buy + $item->buy_attempt;
             $response['data'][] = [
                 'id' => $item->id,
                 'product_code' => $item->product_code,
                 'deep_link' => $item->deep_link,
-                'total_view' => $item->total_view,
+                'total_view' => $total_view,
                 'total_buy' => $item->total_buy,
                 'total_cancel' => $item->total_cancel,
                 'buy_attempt' => $item->buy_attempt,
@@ -135,9 +136,12 @@ class ProductDeepLinkService
                 $inputData = array();
                 $inputData['msisdn'] = $input['value'];
                 $inputData['action_type'] = $request->get('option_name');
+                $inputData['product_code_id'] = $request->get('product_code_id');
                 $all_items_count = $builder->where(function ($q) use ($inputData) {
                     $msisdn = $inputData['msisdn'];
                     $action_type = $inputData['action_type'];
+                    $product_code_id = $inputData['product_code_id'];
+                    $q->where('product_code_id', $product_code_id);
                     if (!empty($msisdn)) {
                         $q->where('msisdn', 'LIKE', "%{$msisdn}%");
                     }
@@ -149,6 +153,8 @@ class ProductDeepLinkService
                 $items = $builder->where(function ($q) use ($inputData) {
                     $msisdn = $inputData['msisdn'];
                     $action_type = $inputData['action_type'];
+                    $product_code_id = $inputData['product_code_id'];
+                    $q->where('product_code_id', $product_code_id);
                     if (!empty($msisdn)) {
                         $q->where('msisdn', 'LIKE', "%{$msisdn}%");
                     }
@@ -159,9 +165,9 @@ class ProductDeepLinkService
                 )->orderBy('id', 'desc')->skip($start)->take($length)->get();
             } else {
 
-                $all_items_count = $builder->count();
+                $all_items_count = $builder->where('product_code_id', $productDeeplinkDbId)->count();
                 $builder->orderBy('id', 'desc');
-                $items = $builder->skip($start)->take($length)->get();
+                $items = $builder->where('product_code_id', $productDeeplinkDbId)->skip($start)->take($length)->get();
             }
         }
         $response = [

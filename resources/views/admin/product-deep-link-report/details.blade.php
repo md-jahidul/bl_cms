@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Deeplink Product Purchase Details</li>
 @endsection
 @section('action')
-            <a href="{{ route('target-wise-notification-report.report') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-list"></i>
+            <a href="{{ route('products-deep-link-report') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-list"></i>
                Report List
             </a>
 @endsection
@@ -22,6 +22,9 @@
                                 <select class="form-control" name="action" id="option">
                                     <option value="">Select Option</option>
                                     <option value="view">View</option>
+                                    <option value="cancel">Cancel</option>
+                                    <option value="buy_success">Buy Success</option>
+                                    <option value="buy_failure">Buy Failure</option>
                                 </select>
                             </div>
                             </div>
