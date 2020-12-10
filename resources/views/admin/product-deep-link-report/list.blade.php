@@ -108,7 +108,7 @@
                     {
                         name: 'action',
                         render: function (data, type, row) {
-                            let viewUrl="{{url('target-wise-notification-report-details')}}/"+row.date;
+                            let viewUrl="{{url('deeplink-product-purchase-details')}}/"+row.id;
                             return  `<a  role="button" data-id="" href="`+viewUrl+`" data-placement="right" class="showButton btn btn-outline-info btn-sm"
                                                 onclick="" ><i class="la la-magic" ></i></a>`;
                         }

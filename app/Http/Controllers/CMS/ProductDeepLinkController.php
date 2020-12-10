@@ -66,4 +66,13 @@ class ProductDeepLinkController extends Controller
     }
 
 
+    public function  getDetails(Request $request,$productDeeplinkDbId=null){
+        if($request->has('draw')) {
+            return $this->productDeepLinkService->getProductDeepLinkDetailsReport($request,$productDeeplinkDbId);
+        }
+//        $productDeeplinkDbId=$productDeeplinkDbId;
+        return view('admin.product-deep-link-report.details',compact('productDeeplinkDbId'));
+    }
+
+
 }
