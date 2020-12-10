@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\Contracts\Collection;
+use App\Repositories\CorporateInitiativeTabRepository;
 use App\Repositories\LeadCategoryRepository;
 use App\Repositories\LeadProductRepository;
 use App\Repositories\LeadRequestRepository;
@@ -74,6 +75,10 @@ class LeadRequestService
      * @var ProductRepository
      */
     private $productRepository;
+    /**
+     * @var CorporateInitiativeTabRepository
+     */
+    private $corpInitiativeTabRepository;
 
     public function __construct(
         LeadRequestRepository $leadRequestRepository,
@@ -81,7 +86,8 @@ class LeadRequestService
         LeadProductRepository $leadProductRepository,
         BusinessPackageRepository $businessPackageRepository,
         BusinessOthersRepository $businessOthersRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        CorporateInitiativeTabRepository $corporateInitiativeTabRepository
     )
     {
         $this->leadRequestRepository = $leadRequestRepository;
@@ -90,6 +96,7 @@ class LeadRequestService
         $this->businessPackageRepository = $businessPackageRepository;
         $this->businessOthersRepository = $businessOthersRepository;
         $this->productRepository = $productRepository;
+        $this->corpInitiativeTabRepository = $corporateInitiativeTabRepository;
         $this->setActionRepository($leadRequestRepository);
     }
 
@@ -105,26 +112,25 @@ class LeadRequestService
         $leadData['created_at'] = explode(" ", $item->created_at)[0];
 
         switch ($leadCat->slug) {
-            case "ecareer_programs";
+            case "ecareer_programs":
                 $leadProduct = $this->leadProductRepository->findOne($item->lead_product_id);
-                $leadData['lead_product'] = ($leadProduct->title) ? $leadProduct->title : null;
                 break;
-            case "postpaid_package";
+            case "postpaid_package":
                 $leadProduct = $this->productRepository->getOfferCatWise(4, 'postpaid', $item->lead_product_id);
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
-            case "business_package";
+            case "business_package":
                 $leadProduct = $this->businessPackageRepository->getBusinessPack($item->lead_product_id);
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
-            case "business_enterprise_solution";
+            case "business_enterprise_solution":
                 $leadProduct = $this->businessOthersRepository->getEnterEnterpriseSol($item->lead_product_id);
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
+                break;
+            case "corporate_responsibility":
+                $leadProduct = $this->corpInitiativeTabRepository->getInitiativeTab($item->lead_product_id);
                 break;
             default:
                 $leadData = array();
         }
-
+        $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
         return $leadData;
     }
 
@@ -246,28 +252,14 @@ class LeadRequestService
     public function excelGenerator($request)
     {
         $leadRequest = $this->getLeads($request);
-
         if ($leadRequest['count'] > 0) {
             // Find Category Wise Product With Form data
             $products = $leadRequest['items'];
 
-            // Excel Header Create
-            foreach ($products as $key => $items) {
-                $bindData = $this->bindDynamicValues($items, 'form_data');
-                unset($bindData['form_data']);
-                foreach ($bindData as $field => $val) {
-                    $header[] = $field;
-                }
-            }
-            $header = array_unique($header);
-
             $writer = WriterEntityFactory::createXLSXWriter();
-
-            // File Name Generate
             $fileName = str_replace(' ', '-', $products[0]['lead_category']);
-            $writer->openToBrowser($fileName . date('Y-m-d') . '.xlsx');
+            $writer->openToBrowser($fileName . "-" . date('Y-m-d') . '.xlsx');
 
-            // header Style
             $header_style = (new StyleBuilder())
                 ->setFontBold()
                 ->setFontSize(10)
@@ -278,20 +270,50 @@ class LeadRequestService
                 ->setFontSize(9)
                 ->build();
 
-
-            $row = WriterEntityFactory::createRowFromArray(array_values($header), $header_style);
-            $writer->addRow($row);
-            $problem = [];
-            foreach ($products as $product) {
-                $bindData = $this->bindDynamicValues($product, 'form_data');
-                unset($bindData['form_data']);
-                $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+            //  Corporate responsibility
+            if ($request->lead_category == 5) {
+                // Excel Header and Row Value Format
+                foreach ($products as $key => $items) {
+                    foreach ($items as $field => $val) {
+                        if ($field == "form_data") {
+                            foreach ($val as $dataKey => $data) {
+                                foreach ($data as $fieldKey => $fieldVal) {
+                                    $header[] = str_replace('_', ' ', ucwords($fieldKey));
+                                    $rowValue[$key][] = $fieldVal;
+                                }
+                            }
+                        }
+                    }
+                }
+                $header = array_unique($header);
+                $row = WriterEntityFactory::createRowFromArray($header, $header_style);
                 $writer->addRow($row);
+                foreach ($rowValue as $product) {
+                    $row = WriterEntityFactory::createRowFromArray($product, $data_style);
+                    $writer->addRow($row);
+                }
+            } else {
+                // Excel Header Create
+                foreach ($products as $key => $items) {
+                    $bindData = $this->bindDynamicValues($items, 'form_data');
+                    unset($bindData['form_data']);
+                    foreach ($bindData as $field => $val) {
+                        $header[] = str_replace('_', ' ', ucwords($field));
+                    }
+                }
+                $header = array_unique($header);
+                $row = WriterEntityFactory::createRowFromArray(array_values($header), $header_style);
+                $writer->addRow($row);
+                foreach ($products as $product) {
+                    $bindData = $this->bindDynamicValues($product, 'form_data');
+                    unset($bindData['form_data']);
+                    $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+                    $writer->addRow($row);
+                }
             }
-            Log::info(json_encode($problem));
             $writer->close();
         } else {
-            return response('No data available in table!');
+            return response('No data available in this category!');
         }
     }
 
@@ -319,6 +341,8 @@ class LeadRequestService
 
     public function makeLeadInfoTable($data)
     {
+        $leadCat = $this->leadCategoryRepository->findOne($data->lead_category_id);
+
         $table = "<style>
                   @font-face {
                     font-family: 'Helvetica';
@@ -332,15 +356,34 @@ class LeadRequestService
                   </style>";
 
         $table .= '<h3 align="center">Applicant Data</h3>
-                  <table width="100%" style="border-collapse: collapse; border: 0px;"><tbody>';
+                    <span align="left"><strong>' . $leadCat->title . '</strong></span>
+                    <span style="float: right"><strong>Date: </strong>' . date('d/m/yy') . '</span>
+                  <table width="100%" style="border-collapse: collapse; border: 0px; margin-top: 20px;"><tbody>';
+
         foreach ($data->form_data as $field => $value) {
-            if ($field != "applicant_cv") {
-                $table .= "<tr>";
-                $table .= '<th style="border: 1px solid; padding:12px;" width="30%">' . str_replace('_', ' ', strtoupper($field)) . '</th>';
-                $table .= '<td style="border: 1px solid; padding:12px;">' . $value . '</td>';
-                $table .= "</tr>";
+            // Corporate Responsibility
+            if ($data->lead_category_id == 5) {
+                $table .= '<tr style="background: rgba(225,233,221,0.88);">
+                                <th colspan="2" style="border: 1px solid; padding:12px; text-align: left">' . str_replace('_', ' ', strtoupper($field)) . '</th>
+                           </tr>';
+//                $table .= '<tr><th></th></tr>';
+                foreach ($value as $subField => $subValue) {
+                    $table .= '<tr>
+                                 <th style="border: 1px solid; padding:12px; text-align: left">' . str_replace('_', ' ', ucwords($subField)) . '</th>
+                                 <td style="border: 1px solid; padding:12px;">' . $subValue . '</td>
+                               </tr>';
+                }
+            } // Other Categories
+            else {
+                if ($field != "applicant_cv") {
+                    $table .= "<tr>";
+                    $table .= '<th style="border: 1px solid; padding:12px;" width="30%; text-align: left">' . str_replace('_', ' ', ucwords($field)) . '</th>';
+                    $table .= '<td style="border: 1px solid; padding:12px;">' . $value . '</td>';
+                    $table .= "</tr>";
+                }
             }
         }
+
         $table .= "</tbody></table>";
         return $table;
     }

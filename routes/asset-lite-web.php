@@ -951,4 +951,155 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Access Logs
     Route::get('access-logs', 'AccessLogController@index');
 
+    // Corporate Responsibility
+    Route::resource('corporate-resp-section', 'AssetLite\CorporateRespSectionController')
+        ->except('show', 'destroy', 'store');
+
+    // Corporate Responsibility CR Strategy
+    Route::resource('corporate/cr-strategy-section', 'AssetLite\CorporateCrStrategySectionController')
+        ->except('show', 'destroy');
+    Route::get('corporate/cr-strategy-section/destroy/{id}', 'AssetLite\CorporateCrStrategySectionController@destroy');
+    Route::get('corporate/cr-strategy-section-sort', 'AssetLite\CorporateCrStrategySectionController@sectionSortable');
+
+    //Section Component Corporate Responsibility
+    Route::get('corporate/cr-strategy-component/{section_id}/list', 'AssetLite\CorpCrStrategyComponentController@index')
+        ->name('cr-strategy-component.index');
+    Route::get('corporate/cr-strategy-component/{section_id}/create', 'AssetLite\CorpCrStrategyComponentController@create')
+        ->name('cr-strategy-component.create');
+    Route::post('corporate/cr-strategy-component/{section_id}/store', 'AssetLite\CorpCrStrategyComponentController@store')
+        ->name('cr-strategy-component.store');
+    Route::get('corporate/cr-strategy-component/{section_id}/edit/{id}', 'AssetLite\CorpCrStrategyComponentController@edit')
+        ->name('cr-strategy-component.edit');
+    Route::put('corporate/cr-strategy-component/{section_id}/update/{id}', 'AssetLite\CorpCrStrategyComponentController@update')
+        ->name('cr-strategy-component.update');
+    Route::get('corporate/cr-strategy-component/{section_id}/destroy/{id}', 'AssetLite\CorpCrStrategyComponentController@destroy');
+    Route::get('corporate/cr-strategy-component-sort', 'AssetLite\CorpCrStrategyComponentController@sectionSortable');
+
+    //CR-Strategy Details Component Corporate Responsibility
+    Route::get('corporate/cr-strategy/component/{com_id}/details/list',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentList')
+        ->name('cr-strategy-details.index');
+    Route::get('corporate/cr-strategy/component/{com_id}/details/create',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentCreateForm')
+        ->name('cr-strategy-details.create');
+    Route::post('corporate/cr-strategy/component/{com_id}/details/store',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentStore')
+        ->name('cr-strategy-details.store');
+    Route::get('corporate/cr-strategy/component/{com_id}/details/edit/{id}',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentEditForm')
+        ->name('cr-strategy-details.edit');
+    Route::put('corporate/cr-strategy/component/{com_id}/details/update/{id}',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentUpdate')
+        ->name('cr-strategy-details.update');
+    Route::get('corporate/cr-strategy/component/{com_id}/details/destroy/{id}',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentDestroy')
+        ->name('cr-strategy-details.destroy');
+    Route::get('corporate/cr-strategy-details-sort',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentSortable');
+
+    Route::post('corporate/cr-strategy/component/details/banner-upload',
+        'AssetLite\CorpCrStrategyComponentDetailsController@detailsBannerUpload')
+        ->name('cr-strategy-details-banner-image.upload');
+
+
+    // Case Study Corporate Responsibility Section
+    Route::resource('corporate/case-study-section', 'AssetLite\CorpCaseStudySectionController')
+        ->except('show', 'destroy');
+    Route::get('corporate/case-study-section/destroy/{id}', 'AssetLite\CorpCaseStudySectionController@destroy');
+    Route::get('corporate/case-study-section-sort', 'AssetLite\CorpCaseStudySectionController@sectionSortable');
+
+    //Case Study Component Corporate Responsibility Component
+    Route::get('corporate/case-study-component/{section_id}/list', 'AssetLite\CorpCaseStudyComponentController@index')
+        ->name('case-study-component.index');
+    Route::get('corporate/case-study-component/{section_id}/create', 'AssetLite\CorpCaseStudyComponentController@create')
+        ->name('case-study-component.create');
+    Route::post('corporate/case-study-component/{section_id}/store', 'AssetLite\CorpCaseStudyComponentController@store')
+        ->name('case-study-component.store');
+    Route::get('corporate/case-study-component/{section_id}/edit/{id}', 'AssetLite\CorpCaseStudyComponentController@edit')
+        ->name('case-study-component.edit');
+    Route::put('corporate/case-study-component/{section_id}/update/{id}', 'AssetLite\CorpCaseStudyComponentController@update')
+        ->name('case-study-component.update');
+    Route::get('corporate/case-study-component/{section_id}/destroy/{id}', 'AssetLite\CorpCaseStudyComponentController@destroy');
+    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpCaseStudyComponentController@sectionSortable');
+
+    //Case Study Details Corporate Responsibility
+    Route::get('corporate/case-study/component/{com_id}/details/list',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentList')
+        ->name('case-study-details.index');
+    Route::get('corporate/case-study/component/{com_id}/details/create',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentCreateForm')
+        ->name('case-study-details.create');
+    Route::post('corporate/case-study/component/{com_id}/details/store',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentStore')
+        ->name('case-study-details.store');
+    Route::get('corporate/case-study/component/{com_id}/details/edit/{id}',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentEditForm')
+        ->name('case-study-details.edit');
+    Route::put('corporate/case-study/component/{com_id}/details/update/{id}',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentUpdate')
+        ->name('case-study-details.update');
+    Route::get('corporate/case-study/component/{com_id}/details/destroy/{id}',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentDestroy')
+        ->name('case-study-details.destroy');
+    Route::get('corporate/case-study-details-sort',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentSortable');
+
+    Route::post('corporate/case-study/component/details/banner-upload',
+        'AssetLite\CorpCaseStudyComponentDetailsController@detailsBannerUpload')
+        ->name('case-study-details-banner-image.upload');
+
+    // Initiative Tab Corporate Responsibility
+    Route::resource('corporate/initiative-tab', 'AssetLite\CorpInitiativeTabController')
+        ->except('show', 'destroy');
+    Route::get('corporate/initiative-tab/destroy/{id}', 'AssetLite\CorpInitiativeTabController@destroy');
+    Route::get('corporate/initiative-tab-sort', 'AssetLite\CorpInitiativeTabController@tabSortable');
+
+    // Initiative Tab Component Corporate Responsibility
+    Route::get('corporate/initiative-tab/{tab_id}/component/list',
+        'AssetLite\CorpInitiativeTabComponentController@componentList')
+        ->name('initiative_component.index');
+    Route::get('corporate/initiative-tab/{tab_id}/component/create',
+        'AssetLite\CorpInitiativeTabComponentController@componentCreateForm')
+        ->name('initiative_component.create');
+    Route::post('corporate/initiative-tab/{tab_id}/component/store',
+        'AssetLite\CorpInitiativeTabComponentController@componentStore')
+        ->name('initiative_component.store');
+    Route::get('corporate/initiative-tab/{tab_id}/component/edit/{id}',
+        'AssetLite\CorpInitiativeTabComponentController@componentEditForm')
+        ->name('initiative_component.edit');
+    Route::put('corporate/initiative-tab/{tab_id}/component/update/{id}',
+        'AssetLite\CorpInitiativeTabComponentController@componentUpdate')
+        ->name('initiative_component.update');
+    Route::get('corporate/initiative-tab/{tab_id}/component/destroy/{id}',
+        'AssetLite\CorpInitiativeTabComponentController@componentDestroy')
+        ->name('initiative_component.destroy');
+    Route::get('corporate/initiative-tab-component-sort',
+        'AssetLite\CorpInitiativeTabComponentController@componentSortable');
+
+    // Corporate Responsibility Contact Us page
+    Route::resource('corporate-resp/contact-us-page-info', 'AssetLite\CorporateRespContactUsController')
+        ->except('show', 'destroy', 'store');
+
+    // Corporate Responsibility Contact Us Field
+    Route::get('corporate/contact-us-field/{section_id}/list', 'AssetLite\CorpContactUsFieldController@index')
+        ->name('contact-us-field.index');
+    Route::get('corporate/contact-us-field/{section_id}/create', 'AssetLite\CorpContactUsFieldController@create')
+        ->name('contact-us-field.create');
+    Route::post('corporate/contact-us-field/{section_id}/store', 'AssetLite\CorpContactUsFieldController@store')
+        ->name('contact-us-field.store');
+    Route::get('corporate/contact-us-field/{section_id}/edit/{id}', 'AssetLite\CorpContactUsFieldController@edit')
+        ->name('contact-us-field.edit');
+    Route::put('corporate/contact-us-field/{section_id}/update/{id}', 'AssetLite\CorpContactUsFieldController@update')
+        ->name('contact-us-field.update');
+    Route::get('corporate/contact-us-field/{section_id}/destroy/{id}', 'AssetLite\CorpContactUsFieldController@destroy');
+//    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
+
+    // Corporate Responsibility Contact Us Info List
+    Route::get('corporate/contact-us-info', 'AssetLite\CorporateRespContactUsController@customerContactInfoList')
+        ->name('contact-us-info.list');
+    Route::get('corporate/contact-us/more-details/{id}', 'AssetLite\CorporateRespContactUsController@showCustomerDetails')
+        ->name('contact-us.more_details');
+
+    // Referral List
+    Route::get('referral-list', 'AssetLite\ReferralListController@index');
 });
