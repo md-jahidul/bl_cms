@@ -90,14 +90,14 @@
                             return row.total_buy;
                         }
                     },{
-                        name: 'total_cancel',
-                        render: function (data, type, row) {
-                            return row.total_cancel;
-                        }
-                    },{
                         name: 'buy_attempt',
                         render: function (data, type, row) {
                             return row.buy_attempt;
+                        }
+                    },{
+                        name: 'total_cancel',
+                        render: function (data, type, row) {
+                            return row.total_cancel;
                         }
                     },{
                         name: 'date',
