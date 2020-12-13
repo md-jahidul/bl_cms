@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'App Launch Popup')
-@section('card_name', 'App Launch Popup | Create')
+@section('card_name', 'App Launch Popup | ' . ucwords($page))
 
 @section('action')
     <a href="{{ route('app-launch.index') }}" class="btn btn-info btn-sm btn-glow px-2">
@@ -15,7 +15,7 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('app-launch.store')}}"
+                              action="{{ $page == 'create' ? route('app-launch.store') : route('app-launch.update', $popup->id)}}"
                               method="POST"
                               enctype="multipart/form-data">
                             @csrf
@@ -27,7 +27,7 @@
                                                name="title"
                                                id="title"
                                                maxlength="20"
-                                               value="{{ old("title") ? old("title") : '' }}"
+                                               value="{{ $page == 'edit' ? $popup->title : old("title") }}"
                                                required>
                                         @if($errors->has('title'))
                                             <p class="text-left">
@@ -39,11 +39,11 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="type" class="required">Popup Type</label>
-                                        <select id="type" name="type" class="form-control" required>
-                                            <option value="image">Image</option>
-                                            <option value="html">HTML Content</option>
-                                            <option value="purchase">Purchase</option>
-                                        </select>
+                                        @php
+                                            $types = ['image' => 'Image', 'html' => 'HTML Content', 'purchase' => 'Purchase'];
+                                        @endphp
+                                        {{ Form::select('type', $types, $page == 'edit' ? $popup->type : old('type'),
+                                            ['class' => 'form-control', 'required', 'id' => 'type']) }}
                                         @if($errors->has('type'))
                                             <p class="text-left">
                                                 <small class="danger text-muted">{{ $errors->first('type') }}</small>
@@ -52,20 +52,36 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 hidden" id="productCode">
-                                    {{-- <div class="form-group " >
-                                        <label for="type" class="required col-md-12" style="padding:0px">Product Code</label>
-                                        {!!Form::select('product_code',$productList, null, ['class' => 'form-control select2 col-md-12'])!!}
+                                <div
+                                    class="col-md-4 {{($page == 'edit' && $popup->type == 'purchase') ? '' : 'hidden'}}"
+                                    id="productCode">
+                                    <div class="form-group ">
+                                        <label for="type" class="required col-md-12" style="padding:0px">
+                                            Product Code
+                                        </label>
+                                        <select name="product_code" class="form-control select2 col-md-12">
+                                            @if($page == 'edit' && $popup->type == 'purchase')
+                                                @foreach($productList as $product)
+                                                    <option value="{{$product['id']}}"
+                                                        {{$product['id'] == $popup->product_code ? 'selected' : ''}}>
+                                                        {{$product['text']}}
+                                                    </option>
+                                                @endforeach
+                                            @else
+                                                @foreach($productList as $product)
+                                                    <option value="{{$product['id']}}">{{$product['text']}}</option>
+                                                @endforeach
+                                            @endif
+
+                                        </select>
                                         @if($errors->has('product_code'))
                                             <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('product_code') }}</small>
+                                                <small
+                                                    class="danger text-muted">{{ $errors->first('product_code') }}</small>
                                             </p>
                                         @endif
-                                    </div> --}}
+                                    </div>
                                 </div>
-                                {{--                                <div class="col-md-4">--}}
-                                {{--                                    --}}
-                                {{--                                </div>--}}
 
                             </div>
 
@@ -74,24 +90,29 @@
                                 <!-- Recurring schedule -->
                                 <div class="col-md-4">
                                     <label class="form-label">Recurring Schedule<span class="red">*</span></label>
-
+                                    @php
+                                        $recurringType = isset($popup) ? $popup->recurring_type : 'none';
+                                    @endphp
                                     <div class="">
                                         <ul class="list list-inline">
                                             <li class="list-inline-item">
                                                 <input type="radio" name="recurring_type" id="none" value="none"
-                                                       checked>
+                                                    {{$recurringType == 'none' ? 'checked' : ''}}>
                                                 <label for="none" class="small">None</label>
                                             </li>
                                             <li class="list-inline-item">
-                                                <input id="daily" type="radio" name="recurring_type" value="daily">
+                                                <input id="daily" type="radio" name="recurring_type" value="daily"
+                                                    {{$recurringType == 'daily' ? 'checked' : ''}}>
                                                 <label for="daily" class="small">Daily</label>
                                             </li>
                                             <li class="list-inline-item">
-                                                <input id="weekly" type="radio" name="recurring_type" value="weekly">
+                                                <input id="weekly" type="radio" name="recurring_type" value="weekly"
+                                                    {{$recurringType == 'weekly' ? 'checked' : ''}}>
                                                 <label for="weekly" class="small">Weekly</label>
                                             </li>
                                             <li class="list-inline-item">
-                                                <input id="monthly" type="radio" name="recurring_type" value="monthly">
+                                                <input id="monthly" type="radio" name="recurring_type" value="monthly"
+                                                    {{$recurringType == 'monthly' ? 'checked' : ''}}>
                                                 <label for="monthly" class="small">Monthly</label>
                                             </li>
                                         </ul>
@@ -100,7 +121,10 @@
                                     <div class="row">
                                         <!-- Regular time period (When recurring type is none) -->
                                         <div class="col-md-12">
-                                            <div class="form-group" id="time_period">
+                                            <div class="form-group" id="time_period"
+                                                 @if($recurringType != 'none')
+                                                 style="display: none"
+                                                @endif>
                                                 <label class="small">Time Period</label>
                                                 <div class='input-group'>
                                                     <input type='text'
@@ -120,51 +144,80 @@
 
                                         <!-- Weekday Picker -->
                                         <div class="col-md-12">
-                                            <div class="weekDays-selector" id="weekday_selector" style="display: none">
+                                            @php
+                                                $weekdays = isset($popup) ? explode(',', optional($popup->schedule)->weekdays) ?? [] : [];
+                                            @endphp
+
+                                            <div class="weekDays-selector" id="weekday_selector"
+                                                 @if($recurringType != 'weekly')
+                                                 style="display: none"
+                                                @endif>
                                                 <input name="weekdays[]" value="sun" type="checkbox" id="weekday-sun"
-                                                       class="weekday"/>
+                                                       class="weekday" {{in_array('sun', $weekdays) ? 'checked' : ''}}/>
                                                 <label for="weekday-sun">SU</label>
                                                 <input name="weekdays[]" value="mon" type="checkbox" id="weekday-mon"
-                                                       class="weekday"/>
+                                                       {{in_array('mon', $weekdays) ? 'checked' : ''}} class="weekday"/>
                                                 <label for="weekday-mon">MO</label>
                                                 <input name="weekdays[]" value="tue" type="checkbox" id="weekday-tue"
-                                                       class="weekday"/>
+                                                       {{in_array('tue', $weekdays) ? 'checked' : ''}} class="weekday"/>
                                                 <label for="weekday-tue">TU</label>
                                                 <input name="weekdays[]" value="wed" type="checkbox" id="weekday-wed"
-                                                       class="weekday"/>
+                                                       {{in_array('wed', $weekdays) ? 'checked' : ''}} class="weekday"/>
                                                 <label for="weekday-wed">WE</label>
                                                 <input name="weekdays[]" value="thu" type="checkbox" id="weekday-thu"
-                                                       class="weekday"/>
+                                                       {{in_array('thu', $weekdays) ? 'checked' : ''}} class="weekday"/>
                                                 <label for="weekday-thu">TH</label>
                                                 <input name="weekdays[]" value="fri" type="checkbox" id="weekday-fri"
-                                                       class="weekday"/>
+                                                       {{in_array('fri', $weekdays) ? 'checked' : ''}} class="weekday"/>
                                                 <label for="weekday-fri">FR</label>
                                                 <input name="weekdays[]" value="sat" type="checkbox" id="weekday-sat"
-                                                       class="weekday"/>
+                                                       {{in_array('sat', $weekdays) ? 'checked' : ''}} class="weekday"/>
                                                 <label for="weekday-sat">SA</label>
                                             </div>
                                             <br>
                                         </div>
 
-                                        <!-- Month dates slector -->
-                                        <div class="col-md-12" id="dates" style="display: none">
+                                        <!-- Month dates selector -->
+                                        <div class="col-md-12" id="dates"
+                                             @if($recurringType != 'monthly')
+                                             style="display: none"
+                                            @endif>
                                             <div class="form-group">
+                                                @php
+                                                    $dates = isset($popup) ? explode(',', optional($popup->schedule)->month_dates) ?? [] : [];
+                                                @endphp
                                                 <select name="month_dates[]" id="month_dates" class="form-control"
                                                         multiple>
                                                     @for($i = 1; $i < 32; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
+                                                        <option
+                                                            value="{{$i}}" {{in_array($i, $dates) ? 'selected' : ''}}>
+                                                            {{$i}}
+                                                        </option>
                                                     @endfor
                                                 </select>
                                             </div>
                                         </div>
 
                                         <!-- Time slot/hour selector -->
-                                        <div class="col-md-12" id="time_slot" style="display: none">
+                                        <div class="col-md-12" id="time_slot"
+                                             @if($recurringType == 'none')
+                                             style="display: none"
+                                            @endif>
                                             <div class="form-group">
-                                                <select class="form-control" name="time_ranges[]" id="time_range" multiple>
+                                                @php
+                                                    $slots = isset($popup) ? $popup->timeSlots->each(function ($item) {
+                                                        return $item->slot = date('h:i A', strtotime($item->start_time))
+                                                        . ' - ' . date('h:i A', strtotime($item->end_time));
+                                                        })->pluck('slot')->toArray() ?? [] : [];
+                                                @endphp
+                                                <select class="form-control" name="time_ranges[]" id="time_range"
+                                                        multiple>
                                                     <option value=""></option>
                                                     @foreach($hourSlots as $slot)
-                                                        <option value="{{$slot}}">{{$slot}}</option>
+                                                        <option
+                                                            value="{{$slot}}" {{in_array($slot, $slots) ? 'selected' : ''}}>
+                                                            {{$slot}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -177,17 +230,23 @@
                                 <div class="col-md-2">
                                     <div class="form-group skin skin-flat">
                                         <label class="control-label required">Connection Type</label>
+                                        @php
+                                            $connectionType = isset($popup) ? $popup->connection_type : 'all';
+                                        @endphp
                                         <ul class="list list-group">
                                             <li class="list-inline-item">
-                                                <input type="radio" name="connection_type" value="all" checked>
+                                                <input type="radio" name="connection_type" value="all"
+                                                    {{$connectionType == 'all' ? 'checked' : ''}}>
                                                 <label class="control-label small">All</label>
                                             </li>
                                             <li class="list-inline-item">
-                                                <input type="radio" name="connection_type" value="prepaid">
+                                                <input type="radio" name="connection_type" value="prepaid"
+                                                    {{$connectionType == 'prepaid' ? 'checked' : ''}}>
                                                 <label class="control-label small">Prepaid</label>
                                             </li>
                                             <li class="list-inline-item">
-                                                <input type="radio" name="connection_type" value="postpaid">
+                                                <input type="radio" name="connection_type" value="postpaid"
+                                                    {{$connectionType == 'postpaid' ? 'checked' : ''}}>
                                                 <label class="control-label small">Postpaid</label>
                                             </li>
                                         </ul>
@@ -198,11 +257,15 @@
                                     <div class="form-group">
                                         <label class="required">Image</label>
                                         <input type="file"
-                                               required
                                                name="content_data"
                                                data-max-file-size="2M"
                                                data-allowed-formats="portrait square"
                                                data-allowed-file-extensions="jpeg png jpg"
+                                               @if($page == 'edit')
+                                               data-default-file="{{ url('storage/' .$popup->content) }}"
+                                               @else
+                                               required
+                                               @endif
                                                class="dropify"/>
                                     </div>
                                     @if($errors->has('content_div'))

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\RecurringSchedule;
 use App\Repositories\MyBlAppLaunchPopupRepository;
 use App\Repositories\RecurringScheduleRepository;
 use App\Traits\CrudTrait;
@@ -45,26 +46,28 @@ class AppLaunchPopupService
 
     /**
      * @param array $data
+     * @param null $id
      * @return bool|\Illuminate\Database\Eloquent\Model|\Illuminate\Http\RedirectResponse
      */
-    public function store(array $data)
+    public function storeOrUpdate(array $data, $id = null)
     {
         try {
-            return DB::transaction(function () use ($data) {
+            return DB::transaction(function () use ($data, $id) {
                 $type = $data['type'];
                 if ($type == 'image' || $type == 'purchase') {
-                    if (!is_file($data['content_data'])) {
+                    if (isset($data['content_data'])) {
+                        // upload the image
+                        $file = $data['content_data'];
+                        $path = $file->storeAs(
+                            'app-launch-popup/images',
+                            strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                            'public'
+                        );
+                        $data['content'] = $path;
+                    } elseif(!isset($data['content_data']) && is_null($id)) {
                         return redirect()->back()->with('error', 'Image is required');
                     }
-                    // upload the image
-                    $file = $data['content_data'];
-                    $path = $file->storeAs(
-                        'app-launch-popup/images',
-                        strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                        'public'
-                    );
 
-                    $data['content'] = $path;
                 } else {
                     $data['content'] = $data['content_data'];
                 }
@@ -82,8 +85,13 @@ class AppLaunchPopupService
                     $data['end_date'] = Carbon::parse('+24 hours')->format('Y-m-d H:i:s');
                 }
 
-                $data['created_by'] = auth()->id();
-                $popup = $this->save($data);
+                if (is_null($id)) {
+                    $data['created_by'] = auth()->id();
+                    $popup = $this->save($data);
+                } else {
+                    $popup = $this->findOne($id);
+                    $popup->update($data);
+                }
 
                 if ($data['recurring_type'] != 'none') {
                     $this->saveSchedule(
@@ -123,6 +131,8 @@ class AppLaunchPopupService
             $this->recurringScheduleHourService->addOrReplace($hourSlotData, $key === 0 ? true : false);
         }
 
+        $checkSchedule = $this->recurringScheduleRepository->findBy(['schedulable_item_id' => $schedulerId]);
+
         $scheduleData = [
             'schedulable_item' => 'popup',
             'schedulable_item_id' => $schedulerId,
@@ -131,7 +141,11 @@ class AppLaunchPopupService
             'status' => true
         ];
 
-        $this->recurringScheduleRepository->save($scheduleData);
+        if (count($checkSchedule)) {
+            RecurringSchedule::where('schedulable_item_id', $schedulerId)->update($scheduleData);
+        } else {
+            $this->recurringScheduleRepository->save($scheduleData);
+        }
     }
 
     /**

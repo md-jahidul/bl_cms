@@ -63,7 +63,7 @@
                                                 Weekdays: <strong>{{strtoupper($schedule->weekdays)}}</strong><br>
                                             @endif
                                             @if($recurringType == 'monthly')
-                                                Month dates:  <strong>{{strtoupper($schedule->month_dates)}}</strong>
+                                                Month dates: <strong>{{strtoupper($schedule->month_dates)}}</strong>
                                                 <br>
                                             @endif
                                             Time slots:
