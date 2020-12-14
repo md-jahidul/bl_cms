@@ -83,7 +83,9 @@ class BusinessHomeService {
         $update['name'] = $request->name_en;
         $update['name_bn'] = $request->name_bn;
         $update['alt_text'] = $request->alt_text;
+        $update['alt_text_bn'] = $request->alt_text_bn;
         $update['banner_name'] = $request->banner_name;
+        $update['banner_name_bn'] = $request->banner_name_bn;
         $update['url_slug'] = $request->url_slug;
         $update['url_slug_bn'] = $request->url_slug_bn;
         $update['schema_markup'] = $request->schema_markup;

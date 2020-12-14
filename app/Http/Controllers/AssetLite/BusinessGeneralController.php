@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessProductCategoriesRequest;
 use App\Services\BusinessHomeService;
 use Illuminate\Http\Request;
 use Session;
@@ -66,7 +67,7 @@ class BusinessGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 06/04/2020
      */
-    public function updateCategory(Request $request) {
+    public function updateCategory(BusinessProductCategoriesRequest $request) {
         $response = $this->businessHomeService->updateCategory($request);
         if ($response['success'] == 1) {
             Session::flash('message', 'Category updated successfully!');
