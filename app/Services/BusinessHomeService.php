@@ -357,12 +357,6 @@ class BusinessHomeService {
     public function saveNews($request) {
         try {
 
-            $request->validate([
-                'title' => 'required',
-                'title_bn' => 'required',
-                'body_bn' => 'required'
-            ]);
-
             //file upload in storege
             $filePath = "";
             if ($request['news_photo'] != "") {
