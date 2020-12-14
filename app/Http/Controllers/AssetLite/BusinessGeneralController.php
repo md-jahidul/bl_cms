@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BusinessHomeService;
 use App\Http\Requests\BusinessNewsRequest;
+use App\Http\Requests\BusinessFeaturesRequest;
 use App\Http\Requests\BusinessProductCategoriesRequest;
 
 class BusinessGeneralController extends Controller {
@@ -251,7 +252,7 @@ class BusinessGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
      */
-    public function featureSave(Request $request) {
+    public function featureSave(BusinessFeaturesRequest $request) {
 
         $response = $this->businessHomeService->saveFeature($request);
 

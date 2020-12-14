@@ -462,11 +462,6 @@ class BusinessHomeService {
     public function saveFeature($request) {
         try {
 
-            $request->validate([
-                'title' => 'required',
-                'title_bn' => 'required'
-            ]);
-
             //file upload in storege
             $filePath = "";
             if ($request['feature_icon'] != "") {
