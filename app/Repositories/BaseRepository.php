@@ -311,4 +311,35 @@ class BaseRepository implements BaseRepositoryContract
 
         return "success";
     }
+
+    /**
+     * Apply condition on query builder based on search criteria
+     *
+     * @param Object $queryBuilder
+     * @param array $searchCriteria
+     * @return mixed
+     */
+    protected function applySearchCriteriaInQueryBuilder($queryBuilder, array $searchCriteria = [])
+    {
+
+        foreach ($searchCriteria as $key => $value) {
+
+            //skip pagination related query params
+            if (in_array($key, ['page', 'per_page'])) {
+                continue;
+            }
+
+            //we can pass multiple params for a filter with commas
+            $allValues = explode(',', $value);
+
+            if (count($allValues) > 1) {
+                $queryBuilder->whereIn($key, $allValues);
+            } else {
+                $operator = '=';
+                $queryBuilder->where($key, $operator, $value);
+            }
+        }
+
+        return $queryBuilder;
+    }
 }
