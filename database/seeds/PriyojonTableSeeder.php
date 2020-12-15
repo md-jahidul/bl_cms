@@ -14,6 +14,8 @@ class PriyojonTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('priyojons')->truncate();
+
         $priyojonLandingData = [
             [
                 'parent_id' => 0,
