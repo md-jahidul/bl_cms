@@ -252,6 +252,7 @@
 
             $('select').select2({
                 placeholder: 'Please Select Data Section',
+                maximumSelectionLength: 5,
                 allowClear: true
             });
 
