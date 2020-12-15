@@ -43,7 +43,8 @@ class ProductCore extends Model
         'other_info',
         'status',
         'validity_in_days',
-        'platform'
+        'platform',
+        'display_sd_vat_tax'
 
     ];
 

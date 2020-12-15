@@ -172,14 +172,27 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-4 icheck_minimal skin mt-2">
-                                    <fieldset>
-                                        <input type="checkbox" id="show_in_home" value="1" name="show_in_app"
-                                               @if($details->show_in_home) checked @endif>
-                                        <label for="show_in_home">Show in Home</label>
-                                    </fieldset>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Schedule Availability </label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Show From</label>
+                                                <input class="form-control" id="show_from" name="show_from" placeholder="Show From Time" autocomplete="off">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Hide From</label>
+                                                <input class="form-control" id="hide_from" name="hide_from" placeholder="Hide From Time" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        @if($errors->has('tag'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('tag') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <label>Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
@@ -192,6 +205,13 @@
                                         </li>
                                     </ul>
                                 </div>
+                                    <div class="col-md-2 icheck_minimal skin mt-2">
+                                        <fieldset>
+                                            <input type="checkbox" id="show_in_home" value="1" name="show_in_app"
+                                                   @if($details->show_in_home) checked @endif>
+                                            <label for="show_in_home">Show in Home</label>
+                                        </fieldset>
+                                    </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
@@ -238,15 +258,54 @@
 @endsection
 
 @push('style')
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
+
     <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/icheck.css">
     <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
+
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         // Translated
+        var date;
+        // Date & Time
+        date = new Date();
+        date.setDate(date.getDate());
+        $('#show_from').daterangepicker({
+            singleDatePicker: true,
+            timePicker: true,
+            timePickerIncrement: 5,
+            startDate: '{{date('Y-m-d H:i:s')}}',
+            minDate: date,
+            locale: {
+                format: 'YYYY/MM/DD h:mm A'
+            }
+        });
+
+        $('#hide_from').daterangepicker({
+            singleDatePicker: true,
+            timePicker: true,
+            timePickerIncrement: 5,
+            endDate: '{{date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}',
+            minDate: date,
+            locale: {
+                format: 'YYYY/MM/DD h:mm A'
+            }
+        });
+        $('#show_from').val("{{$details->show_from ? \Carbon\Carbon::parse($details->show_from)->format('Y/m/d h:i A') : ''}}");
+        $('#hide_from').val("{{$details->hide_from ? \Carbon\Carbon::parse($details->hide_from)->format('Y/m/d h:i A') : ''}}");
+        //$('#hide_from').val('');
+
+        $('#show_from,#hide_from').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
         $('.dropify').dropify({
             messages: {
                 'default': 'Browse for an Image to upload',
