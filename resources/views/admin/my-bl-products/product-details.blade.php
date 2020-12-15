@@ -148,8 +148,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Select Data Section </label>
-                                            <select
-                                                class="form-control"
+                                            <select multiple
+                                                class="form-control data-section"
                                                 name="offer_section_slug" required>
                                                 <option value="">Please Select Data Section</option>
                                                 @foreach($internet_categories as $category)
@@ -246,6 +246,20 @@
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
+
+
+        $(function () {
+
+            $('select').select2({
+                placeholder: 'Please Select Data Section',
+                allowClear: true
+            });
+
+
+        })
+
+
+
         // Translated
         $('.dropify').dropify({
             messages: {
