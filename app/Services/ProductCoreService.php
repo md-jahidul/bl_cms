@@ -294,7 +294,6 @@ class ProductCoreService
                                 $core_data['platform'] = 'app';
                             }
 
-                            //dd($core_data);
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
@@ -835,6 +834,11 @@ class ProductCoreService
         return Redirect::back()->with('success', 'Product updated Successfully');
     }
 
+
+    /**
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
     public function downloadMyblProducts()
     {
         $products = MyBlProduct::whereHas('details')->with('details')->where('status', 1)->get();
@@ -870,7 +874,6 @@ class ProductCoreService
 
        // array_pop($headers);
 
-
         $row = WriterEntityFactory::createRowFromArray(array_values($headers), $header_style);
         $writer->addRow($row);
 
@@ -904,7 +907,9 @@ class ProductCoreService
                 $insert_data[23] = $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
-                $insert_data[26] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[26] = $product->details->display_sd_vat_tax;
+                $insert_data[27] = ($product->status) ? 'Yes' : 'No';
+
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
