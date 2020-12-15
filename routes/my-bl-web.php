@@ -422,6 +422,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/usage-details/{number}/{type}', 'CMS\ApiDebugController@getUsageDetails');
     Route::get('developer/api/debug/contact-restore-logs/{number}', 'CMS\ApiDebugController@getContactRestoreLogs');
 
+    // Agent Deeplink
+    //    Route::resource('deeplink/agent', 'CMS\AgentListController');
+    Route::get('deeplink/agent/list', 'CMS\AgentListController@index')->name('deeplink.agent.list');
+    Route::get('deeplink/agent/create', 'CMS\AgentListController@create')->name('deeplink.agent.create');
+    Route::POST('deeplink/agent/store', 'CMS\AgentListController@store')->name('deeplink.agent.store');
+    Route::get('deeplink/agent/{id}/edit', 'CMS\AgentListController@edit')->name('deeplink.agent.edit');
+    Route::get('deeplink/agent/{id}/change-status', 'CMS\AgentListController@changeStatus')->name('deeplink.agent.statusChange');
+    Route::POST('deeplink/agent/{id}/update', 'CMS\AgentListController@update')->name('deeplink.agent.update');
+    Route::DELETE('deeplink/agent/destroy/{id}', 'CMS\AgentListController@destroy')->name('deeplink.agent.destroy');
+
+
     // Learn Priyojon Sections
 
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
