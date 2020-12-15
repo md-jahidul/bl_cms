@@ -31,7 +31,17 @@ return [
             'call_rate'             => 24,
             'call_rate_unit'        => 25,
             'display_sd_vat_tax'    => 26,
-            'status'                => 27,
+            'is_visible'            => 27,
+            'show_from'             => 28,
+            'hide_from'             => 29,
+            'status'                => 30,
+        ],
+        'product_schedule_statuses' => [
+            0 => 'None',
+            1 => 'Active Schedule',
+            2 => 'To be Hidden',
+            3 => 'Completed Schedule',
+            4 => 'To be Shown'
 
         ]
     ],
