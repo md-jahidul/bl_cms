@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessInternetPackageRequest;
 use App\Services\BusinessInternetService;
 use Illuminate\Http\Request;
 use Session;
@@ -21,7 +22,7 @@ class BusinessInternetController extends Controller {
 
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @param NA
      * @return Factory|View
      * @Bulbul Mahmud Nito || 17/02/2020
@@ -32,7 +33,7 @@ class BusinessInternetController extends Controller {
 
     /**
      * Internet Create Form
-     * 
+     *
      * @param NA
      * @return Factory|View
      * @Bulbul Mahmud Nito || 12/03/2020
@@ -43,15 +44,15 @@ class BusinessInternetController extends Controller {
         return view('admin.business.internet_package_create', compact('otherPorducts', 'tags'));
     }
 
-    
+
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    public function saveInternetPackage(Request $request) {
+    public function saveInternetPackage(BusinessInternetPackageRequest $request) {
 
         $response = $this->internetService->saveInternet($request);
-        
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Package is saved!');
         } else {
@@ -60,11 +61,11 @@ class BusinessInternetController extends Controller {
 
         return redirect('/business-internet');
     }
-    
-    
+
+
     /**
      * Internet edit Form
-     * 
+     *
      * @param NA
      * @return Factory|View
      * @Bulbul Mahmud Nito || 12/03/2020
@@ -80,12 +81,12 @@ class BusinessInternetController extends Controller {
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateInternetPackage(Request $request) {
+    public function updateInternetPackage(BusinessInternetPackageRequest $request) {
 
         $response = $this->internetService->updateInternet($request);
-        
+
 //        dd($response);
-        
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Package is updated!');
         } else {
@@ -94,7 +95,7 @@ class BusinessInternetController extends Controller {
 
         return redirect('/business-internet');
     }
-    
+
 
     public function internetPackageList(Request $request) {
 
