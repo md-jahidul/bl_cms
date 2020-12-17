@@ -33,7 +33,7 @@ class RecurringScheduleHourService
      */
     public function getHourSlots($feature = 'popup')
     {
-        return $this->findBy(['used' => 0, 'feature' => $feature])
+        return $this->findBy(['used' => 0, 'feature' => $feature], null, ['column' => 'start_time', 'direction' => 'asc'])
             ->each(function ($item) {
                 return $item->slot = Carbon::parse($item->start_time)->format("h:i A") . ' - ' .
                     Carbon::parse($item->end_time)->format("h:i A");
