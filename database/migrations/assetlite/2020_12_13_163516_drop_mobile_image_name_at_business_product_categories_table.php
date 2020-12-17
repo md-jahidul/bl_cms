@@ -36,6 +36,10 @@ class DropMobileImageNameAtBusinessProductCategoriesTable extends Migration
                 $table->string('banner_name_mobile')->nullable();
                 $table->string('banner_name_mobile_bn')->nullable();
             }
+
+            if (Schema::hasColumn('business_product_categories', 'banner_name_bn')) {
+                $table->renameColumn('banner_name_bn', 'banner_name_web_bn');
+            }
         });
     }
 }
