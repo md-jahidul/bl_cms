@@ -18,7 +18,7 @@ class DropMobileImageNameAtRoamingCagegoriesTable extends Migration
                 $table->dropColumn(['banner_name_mobile_en', 'banner_name_mobile_bn']);
             }
 
-            if (Schema::hasColumn('romaing_cagegories', 'banner_name_web_bn')) {
+            if (Schema::hasColumn('roaming_cagegories', 'banner_name_web_bn')) {
                 $table->renameColumn('banner_name_web_bn', 'banner_name_bn');
             }
         });
@@ -37,7 +37,7 @@ class DropMobileImageNameAtRoamingCagegoriesTable extends Migration
                 $table->string('banner_name_mobile_bn')->nullable();
             }
 
-            if (Schema::hasColumn('romaing_cagegories', 'banner_name_bn')) {
+            if (Schema::hasColumn('roaming_cagegories', 'banner_name_bn')) {
                 $table->renameColumn('banner_name_bn', 'banner_name_web_bn');
             }
         });
