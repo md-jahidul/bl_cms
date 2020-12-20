@@ -150,7 +150,7 @@
                                             <label>Select Data Section </label>
                                             <select multiple
                                                 class="form-control data-section"
-                                                name="offer_section_slug" required>
+                                                name="offer_section_slug[]" required>
                                                 <option value="">Please Select Data Section</option>
                                                 @foreach($internet_categories as $category)
                                                     <option value="{{ $category->slug }}"
@@ -256,9 +256,7 @@
                 allowClear: true
             });
 
-
-        })
-
+        });
 
 
         // Translated

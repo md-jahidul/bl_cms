@@ -765,9 +765,18 @@ class ProductCoreService
         }*/
 
         if ($request->has('offer_section_slug')) {
-            $data['offer_section_slug'] = $request->offer_section_slug;
-            $offer = MyBlInternetOffersCategory::where('slug', $request->offer_section_slug)->first();
-            $data['offer_section_title'] = $offer->name;
+
+
+            foreach ($request->offer_section_slug as $offer_section_slug)
+            {
+               // $data['offer_section_slug'] = $offer_section_slug;
+                $offer = MyBlInternetOffersCategory::where('slug', $offer_section_slug)->first();
+                $offer_slug[$offer_section_slug] = $offer->name;
+
+               // $data['offer_section_title'] = $offer->name;
+            }
+
+
         }
         $data['tag'] = $request->tag;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
@@ -779,6 +788,18 @@ class ProductCoreService
 
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
+
+
+            foreach ($offer_slug as $key => $value) {
+                $model_tab = MyBlProductTab::where('product_code', $product_code);
+
+                $data_section_slug['product_code'] = $product_code;
+                $data_section_slug['offer_section_slug'] = $key;
+                $data_section_slug['offer_section_title'] = $value;
+
+                $model_tab->updateOrCreate($data_section_slug);
+            }
+
 
             $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
 
