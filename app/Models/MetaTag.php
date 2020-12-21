@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MetaTag extends Model
 {
-    protected $fillable = ['title', 'keywords', 'description'];
+    protected $guarded = ['id'];
 
     public function page()
     {

@@ -348,7 +348,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Fixed  ====================================
-    Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
+    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent');
+    Route::get('fixed-pages', 'AssetLite\FixedPageController@fixedPageList');
+    Route::get('fixed-pages/create', 'AssetLite\FixedPageController@fixedPageCreate');
+    Route::post('fixed-pages/store', 'AssetLite\FixedPageController@fixedPageStore');
+    Route::get('fixed-pages/edit/{id}', 'AssetLite\FixedPageController@fixedPageEdit');
+    Route::post('fixed-pages/update/{id}', 'AssetLite\FixedPageController@fixedPageUpdate');
+    Route::get('fixed-pages/delete/{id}', 'AssetLite\FixedPageController@deleteFixedPage');
+
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');

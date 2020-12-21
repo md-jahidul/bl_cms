@@ -500,6 +500,15 @@
                             </li>
                         @endif
 
+{{--                        @if( auth()->user()->can_view('home-page/component') )--}}
+                            <li class="{{ is_active_url('home-page/component') }}">
+                                <a class="menu-item" href="{{ url('home-page/component') }}"
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-file-image-o"></i> Home Component
+                                </a>
+                            </li>
+{{--                        @endif           --}}
+
                         @if( auth()->user()->can_view('FixedPage') )
                             <li class="{{ is_active_url('fixed-pages') }}">
                                 <a class="menu-item" href="{{ url('fixed-pages') }}"
