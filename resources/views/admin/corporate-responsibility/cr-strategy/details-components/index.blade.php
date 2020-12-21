@@ -91,13 +91,44 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="banner[alt_text_en]" id="alt_text" class="form-control"
                                            placeholder="Enter alt text" value="{{ isset($sectionComponent->banner['alt_text_en']) ? $sectionComponent->banner['alt_text_en'] : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text</label>
+                                    <input type="text" name="banner[alt_text_en]" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($sectionComponent->banner['alt_text_en']) ? $sectionComponent->banner['alt_text_en'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-3 {{ $errors->has('banner_image_en') ? ' error' : '' }}">
+                                    <label for="banner_image_en" class="required">Banner Image Name En</label>
+                                    <input type="text" name="banner_image_en" class="form-control section_alt_text"
+                                           value="{{ $sectionComponent->banner_image_en }}" required>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('banner_image_bn') ? ' error' : '' }}">
+                                    <label for="banner_image_bn" class="required">Banner Image Name Bn</label>
+                                    <input type="text" name="banner_image_bn" class="form-control section_alt_text"
+                                           value="{{ $sectionComponent->banner_image_bn }}" required>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_bn') }}</div>
                                     @endif
                                 </div>
 

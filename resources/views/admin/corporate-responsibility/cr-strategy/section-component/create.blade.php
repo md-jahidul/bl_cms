@@ -56,7 +56,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
+                                <div class="form-group col-md-12 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
                                     <label for="thumbnail_image">Thumbnail Image</label>
                                     <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
 {{--                                           data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->thumbnail_image }}"--}}
@@ -67,14 +67,39 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="other_attributes[alt_text_en]" class="form-control" placeholder="Enter alt text"
-{{--                                           value="{{ $pressNewsEvent->alt_text_en }}"--}}
-                                           required data-validation-required-message="Enter alt text">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en" class="required1">Alt text English</label>
+                                    <input type="text" name="other_attributes[alt_text_en]" class="form-control section_alt_text">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text_en'))
                                         <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn" class="required1">Alt text Bangla</label>
+                                    <input type="text" name="other_attributes[alt_text_bn]"  class="form-control section_alt_text">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_en') ? ' error' : '' }}">
+                                    <label for="image_name_en" class="required">Image Name En</label>
+                                    <input type="text" name="image_name_en" class="form-control section_alt_text" required>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_en'))
+                                        <div class="help-block">  {{ $errors->first('image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label for="image_name_bn" class="required">Image Name Bn</label>
+                                    <input type="text" name="image_name_bn" class="form-control section_alt_text" required>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
                                     @endif
                                 </div>
 
