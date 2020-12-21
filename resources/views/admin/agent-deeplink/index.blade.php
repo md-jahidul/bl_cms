@@ -33,13 +33,15 @@
                         @php $sl=1; @endphp
                         @foreach ($agent as $list)
                             <tr>
-                                <td width="10%">{{$sl++}}</td>
+                                <td width="5%">{{$sl++}}</td>
                                 <td width="10%">
                                     {{$list->name}}
-                                    <span class="badge badge-default badge-pill bg-primary float-right"></span>
-
                                 </td>
-                                <td width="10%">{{(empty($list->msisdn)?'N/A':$list->msisdn)}}</td>
+                                <td width="10%">
+                                <a href="{{route('deeplink.agent.edit',$list->id)}}">
+                                    {{(empty($list->msisdn)?'N/A':$list->msisdn)}}
+                                </a>
+                                </td>
                                 <td width="10%">{{(empty($list->email)?'N/A':$list->email)}}</td>
                                 <td width="10%">{{(empty($list->address)?'N/A':$list->address)}}</td>
                                 <td width="10%">
@@ -50,25 +52,26 @@
                                  @endif
 
                                 </td>
-                                <td width="20%">
+                                <td width="25%">
                                     <div class="row justify-content-md-center no-gutters">
-                                        <div class="col-md-3">
                                             <a role="button" title="Active Or Inactive" href="{{route('deeplink.agent.statusChange',$list->id)}}"
-                                               class=" btn-sm btn-outline-success">
-                                                <i class="la la-toggle-off"></i>
+                                               class="btn btn-sm btn-outline-warning">
+                                                @if($list->is_active==1)
+                                                    <i class="la la-toggle-on"></i>
+                                                @else
+                                                    <i class="la la-toggle-off"></i>
+                                                @endif
+
                                             </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a role="button" title="Edit" href="{{route('deeplink.agent.edit',$list->id)}}" class="btn-sm btn-outline-success" >
+                                            <a role="button" title="Edit" href="{{route('deeplink.agent.edit',$list->id)}}" class="btn btn-sm btn-outline-success ml-1 mr-1" >
                                                 <i class="la la-pencil"></i>
                                             </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href="#" class="btn-sm btn-outline-danger" onclick="showDelete('{{$list->id}}')">
+                                            <a href="#" class="btn btn-sm btn-outline-danger  mr-1" onclick="showDelete('{{$list->id}}')" >
                                                 <i class="la la-trash"></i>
                                             </a>
-{{--                                            <button data-id="{{$list->id}}" title="Delete" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>--}}
-                                        </div>
+                                        <a href="{{route('deeplink.agent.deeplink.list',$list->id)}}" class="btn btn-sm btn-outline-success">
+                                            <i class="la la-eye"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

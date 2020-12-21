@@ -413,8 +413,8 @@
                         <i class="la la-list"></i>Agent List
                     </a>
                 </li>
-                <li class="{{is_active_url('faq/questions')}}">
-                    <a class="menu-item" href="{{ route('faq.questions.index') }} "
+                <li class="{{is_active_url('agent/deeplink/report')}}">
+                    <a class="menu-item" href="{{ route('agent.deeplink.report') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-list"></i> Report
                     </a>
