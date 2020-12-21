@@ -76,7 +76,7 @@ class MyblSliderImageService
         $products = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data','voice','sms']);
+                $q->whereIn('content_type', ['data','voice','sms', 'mix']);
             }
         )->get();
 
@@ -85,7 +85,7 @@ class MyblSliderImageService
         foreach ($products as $product) {
             $data [] = [
                 'id'    => $product->details->product_code,
-                'text' =>  '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+                'text' =>  $product->details->product_code . ' - (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
             ];
         }
 

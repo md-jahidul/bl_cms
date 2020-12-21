@@ -2,9 +2,6 @@ $("input[name='recurring_type']").change(function () {
     let recurringType = $(this).val();
     switch (recurringType) {
         case 'daily':
-            $('#time_period').css('display', 'none');
-            $('#display_period').attr('disabled', 'disabled');
-
             $('#weekday_selector').css('display', 'none');
             $('.weekday').attr('disabled', 'disabled');
 
@@ -17,9 +14,6 @@ $("input[name='recurring_type']").change(function () {
             break;
 
         case 'weekly':
-            $('#time_period').css('display', 'none');
-            $('#display_period').attr('disabled', 'disabled');
-
             $('#weekday_selector').css('display', 'block');
             $('.weekday').removeAttr('disabled');
 
@@ -32,9 +26,6 @@ $("input[name='recurring_type']").change(function () {
             break;
 
         case 'monthly':
-            $('#time_period').css('display', 'none');
-            $('#display_period').attr('disabled', 'disabled');
-
             $('#weekday_selector').css('display', 'none');
             $('.weekday').attr('disabled', 'disabled');
 
@@ -47,9 +38,6 @@ $("input[name='recurring_type']").change(function () {
             break;
 
         default :
-            $('#time_period').css('display', 'block');
-            $('#display_period').removeAttr('disabled');
-
             $('#weekday_selector').css('display', 'none');
             $('.weekday').attr('disabled', 'disabled');
 
