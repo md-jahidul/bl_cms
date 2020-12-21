@@ -106,6 +106,13 @@ class ComponentService
 
     public function componentStore($data, $sectionId, $pageType)
     {
+        if ($data['component_type'] == "title_with_text_and_right_image") {
+            request()->validate([
+                'image_name_en' => 'required|unique:components,image_name_en',
+                'image_name_bn' => 'required|unique:components,image_name_bn',
+            ]);
+        }
+
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
         }
@@ -130,6 +137,8 @@ class ComponentService
 
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
 
+        dd($data);
+
         $countComponents = $this->componentRepository->list($sectionId, self::PAGE_TYPE['product_details']);
 
         $data['component_order'] = count($countComponents) + 1;
@@ -143,6 +152,11 @@ class ComponentService
 
     public function componentUpdate($data, $id)
     {
+        request()->validate([
+            'image_name_en' => 'required|unique:components,image_name_en,' . $id,
+            'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+        ]);
+
         $component = $this->findOne($id);
 
         if (request()->hasFile('image')) {

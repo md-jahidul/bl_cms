@@ -24,7 +24,7 @@
                                                 required data-validation-required-message="Please select component type">
                                             <option value="">--Select Component Type--</option>
                                             @foreach($componentTypes as $key => $item)
-                                                <option data-alias="{{ $key }}" value="{{ $key }}">{{ $item }}</option>
+                                                <option data-alias="{{ $key }}" value="{{ $key }}" {{ old("component_type") == $key ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -44,7 +44,8 @@
                                     </slot>
 
                                     {{--Title Text and Image Component--}}
-                                    <slot id="title_with_text_and_right_image" data-offer-type="title_with_text_and_right_image" class="d-none">
+                                    <slot id="title_with_text_and_right_image" data-offer-type="title_with_text_and_right_image"
+                                          class="{{ old("component_type") == "title_with_text_and_right_image" ? '' : 'd-none' }}">
                                         @include('layouts.partials.product-details.component.common-field.title')
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                         @include('layouts.partials.product-details.component.common-field.single-image')
