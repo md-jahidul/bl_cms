@@ -33,6 +33,13 @@ class MetaTagService
         return $this->metaTagRepository->metaTag($id);
     }
 
+    public function storeFixedPageTag($data)
+    {
+        $data['page_id'] = 0;
+//        dd($data);
+        $this->save($data);
+        return Response('Fixed page tag add successfully');
+    }
 
     /**
      * @param $data
@@ -44,5 +51,12 @@ class MetaTagService
         $metaTag = $this->findOne($id);
         $metaTag->update($data);
         return Response('Meta tag updated successfully');
+    }
+
+    public function deleteFixedPage($id)
+    {
+        $fixedPage = $this->findOne($id);
+        $fixedPage->delete();
+        return Response("Fixed page delete successfully!");
     }
 }

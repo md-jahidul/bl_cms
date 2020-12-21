@@ -18,23 +18,12 @@
                                 @foreach($pages as $page)
                                     <tr data-index="{{ $page->id }}" data-position="{{ $page->display_order }}">
                                         <td width="55%">{{ $page->title  }}</td>
-                                        <td class="text-right" width="30%">
-                                            <a href="{{ route('fixed-page-metatags', $page->id ) }}" class="btn btn-success  round btn-glow px-2">Meta Info</a>
-                                            <a href="{{ route('fixed-page-components', $page->id ) }}" class="btn btn-instagram  round btn-glow px-2">Components</a>
-                                        </td>
-
-
                                         <td class="text-right">
-                                            <a href="" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                            <a href="#" remove="{{--{{ url("offers/$type/$product->id") }}--}}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{--{{ $product->id }}--}}" title="Delete">
+                                            <a href="{{ url("fixed-pages/edit/$page->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            <a href="#" remove="{{ url("fixed-pages/delete/$page->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{--{{ $product->id }}--}}" title="Delete">
                                                 <i class="la la-trash"></i>
                                             </a>
                                         </td>
-
-                                        <!-- <a href="{{ route('partner-offer-home') }}" class="btn btn-instagram  round btn-glow px-2"><i class="la la-list"></i>View home page offers</a>
-                                        <a href="{{ url('partners/create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>Add Partner</a> -->
-
-
                                     </tr>
                                 @endforeach
                             @else
