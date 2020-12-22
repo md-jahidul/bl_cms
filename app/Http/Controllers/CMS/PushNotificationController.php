@@ -4,13 +4,18 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\NotificationSend;
+use App\Models\Customer;
+use App\Models\NotificationDraft;
+use App\Models\NotificationSchedule;
+use App\Services\CustomerService;
 use App\Services\NotificationService;
+use App\Services\PushNotificationSendService;
 use App\Services\PushNotificationService;
+use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -19,21 +24,34 @@ use Illuminate\Support\Str;
  */
 class PushNotificationController extends Controller
 {
-
+    use CrudTrait;
 
     /**
      * @var NotificationService
      */
     protected $notificationService;
 
+    /**
+     * @var CustomerService
+     */
+    protected $customerService;
+
+
+    protected  $pushNotificationSendService;
 
     /**
      * PushNotificationController constructor.
      * @param NotificationService $notificationService
+     * @param CustomerService $customerService
+     * @param PushNotificationSendService $pushNotificationSendService
      */
-    public function __construct(NotificationService $notificationService)
+    public function __construct(NotificationService $notificationService,
+                                CustomerService $customerService,
+                                PushNotificationSendService $pushNotificationSendService )
     {
         $this->notificationService = $notificationService;
+        $this->customerService = $customerService;
+        $this->pushNotificationSendService = $pushNotificationSendService;
         $this->middleware('auth');
     }
 
@@ -50,6 +68,16 @@ class PushNotificationController extends Controller
     }
 
     /**
+     * Method that saves file of user base and stores schedule data in the database
+     * @param Request $request
+     * @return array
+     */
+    public function sendScheduledNotification(Request $request)
+    {
+        return $this->pushNotificationSendService->storeScheduledNotification($request->all());
+    }
+
+    /**
      * Send Notification
      *
      * @param Request $request
@@ -60,9 +88,12 @@ class PushNotificationController extends Controller
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
+        $notification_data = $request->all();
+        $notificationInfo = NotificationDraft::find($notification_id);
+
+       // $mute_user_phone = $this->notificationService->getMuteUserPhoneList($category_id);
 
         try {
-
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
@@ -76,22 +107,26 @@ class PushNotificationController extends Controller
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
                     $user_phone [] = $number;
+                   // $user_phone_num [] = $number;
 
-                   // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+                   // $user_phone  = $this->notificationService->removeMuteUserFromList($user_phone_num, $mute_user_phone);
 
-                    if(count($user_phone) == 300){
-                        $notification = $this->getNotificationArray($request, $user_phone);
-                        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                    if (count($user_phone) == 300) {
+                        list($customer, $notification) = $this->checkTargetWise($request, $notificationInfo, $user_phone, $notification_id, $notification_data);
+
+                        NotificationSend::dispatch($notification, $notification_id, $customer, $this->notificationService)
                             ->onQueue('notification');
+
                         $user_phone = [];
                     }
                 }
             }
             $reader->close();
 
-            if(!empty($user_phone)){
-                $notification = $this->getNotificationArray($request, $user_phone);
-                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+            if (!empty($user_phone)) {
+                list($customer, $notification) = $this->checkTargetWise($request, $notificationInfo, $user_phone, $notification_id, $notification_data);
+
+                NotificationSend::dispatch($notification, $notification_id, $customer, $this->notificationService)
                     ->onQueue('notification');
             }
 
@@ -101,21 +136,108 @@ class PushNotificationController extends Controller
                 'message' => 'Notification Sent'
             ];
         } catch (\Exception $e) {
-            Log::info('Error:'.$e->getMessage());
+            Log::info('Error:' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ];
         }
     }
 
     /**
+     * Target wise notification Send
+     *
      * @param Request $request
-     * @param array $user_phone
      * @return array
      */
-    public function getNotificationArray(Request $request, array $user_phone): array
+    public function targetWiseNotificationSend(Request $request)
     {
+        $user_phone = [];
+        $notification_id = $request->input('id');
+        // $category_id = $request->input('category_id');
+
+        try {
+            $reader = ReaderFactory::createFromType(Type::XLSX);
+            $path = $request->file('customer_file')->getRealPath();
+            $reader->open($path);
+
+            foreach ($reader->getSheetIterator() as $sheet) {
+                if ($sheet->getIndex() > 0) {
+                    break;
+                }
+
+                foreach ($sheet->getRowIterator() as $row) {
+                    $cells = $row->getCells();
+                    $number = $cells[0]->getValue();
+                    $user_phone[] = $number;
+                    // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+
+                    if (count($user_phone) == 300) {
+                        $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
+                        $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
+                        NotificationSend::dispatch($notification, $notification_id, $user_phone,
+                            $this->notificationService)
+                            ->onQueue('notification');
+                        $user_phone = [];
+                    }
+                }
+            }
+            $reader->close();
+
+            if (!empty($user_phone)) {
+                $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
+                $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
+                // $notification = $this->getNotificationArray($request, $user_phone);
+                NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
+                    ->onQueue('notification');
+
+
+            }
+
+            Log::info('Success: Notification sending from excel');
+            return [
+                'success' => true,
+                'message' => 'Notification Sent',
+            ];
+        } catch (\Exception $e) {
+            Log::info('Error:' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * This function only prepare data formated
+     */
+
+    public function prepareDataForSendNotification(Request $request, array $customar, $notification_id)
+    {
+
+        $notificationInfo = NotificationDraft::find($notification_id);
+
+        $url = "test.com";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
+            $url = "$notificationInfo->external_url";
+        }
+
+        $product_code = "0000";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
+            $product_code = "$notificationInfo->external_url";
+        }
+
+
+        $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
+
+        if ($request->has('image_url')) {
+            $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
+        } else{
+            $image_url = null;
+        }
+
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -123,15 +245,22 @@ class PushNotificationController extends Controller
             'category_name' => $request->input('category_name'),
             "sending_from" => "cms",
             "send_to_type" => "INDIVIDUALS",
-            "recipients" => $user_phone,
-            "is_interactive" => "NO",
+            "recipients" => $customar,
+            "is_interactive" => "Yes",
+            "mutable_content" => true,
             "data" => [
-                "cid" => "1",
-                "url" => "test.com",
+               "cid" => "$category_id",
+                "url" => "$url",
+                "image_url" => $image_url,
                 "component" => "offer",
-            ]
+                'product_code' => "$product_code",
+                'navigation_action' => "$notificationInfo->navigate_action"
+
+            ],
         ];
+
     }
+
 
     /**
      * Send Notification to All customers
@@ -145,6 +274,27 @@ class PushNotificationController extends Controller
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
         $is_all = $request->input('is_active');
+
+        $notificationInfo = NotificationDraft::find($notification_id);
+
+        $url = "test.com";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
+            $url = "$notificationInfo->external_url";
+        }
+
+        $product_code = "0000";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
+            $product_code = "$notificationInfo->external_url";
+        }
+
+
+        if ($request->has('image_url')) {
+            $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
+        } else{
+            $image_url = null;
+        }
 
         try {
 
@@ -162,10 +312,14 @@ class PushNotificationController extends Controller
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
                 "is_interactive" => "NO",
+                "mutable_content" => true,
                 "data" => [
-                    "cid" => "1",
-                    "url" => "test.com",
+                    "cid" => "$category_id",
+                    "url" => "$url",
+                    "image_url" => $image_url,
                     "component" => "offer",
+                    'product_code' => "$product_code",
+                    'navigation_action' => "$notificationInfo->navigate_action"
                 ]
 
             ];
@@ -178,10 +332,14 @@ class PushNotificationController extends Controller
                 'category_name' => $request->input('category_name'),
                 "send_to_type" => "ALL",
                 "is_interactive" => "NO",
+                "mutable_content" => true,
                 "data" => [
-                    "cid" => "1",
-                    "url" => "test.com",
+                    "cid" => "$category_id",
+                    "url" => "$url",
+                    "image_url" => $image_url,
                     "component" => "offer",
+                    'product_code' => "$product_code",
+                    'navigation_action' => "$notificationInfo->navigate_action"
                 ]
 
             ];
@@ -209,6 +367,26 @@ class PushNotificationController extends Controller
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param $notificationInfo
+     * @param array $user_phone
+     * @param $notification_id
+     * @param array $notification_data
+     * @return array
+     */
+    public function checkTargetWise(Request $request, $notificationInfo, array $user_phone, $notification_id, array $notification_data): array
+    {
+        if ($notificationInfo->device_type != "all" || $notificationInfo->customer_type != "all") {
+            $customer = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
+            $notification = $this->pushNotificationSendService->getNotificationArray($notification_data, $customer, $notificationInfo);
+        } else {
+            $customer = $user_phone;
+            $notification = $this->pushNotificationSendService->getNotificationArray($notification_data, $user_phone, $notificationInfo);
+        }
+        return array($customer, $notification);
     }
 
 }

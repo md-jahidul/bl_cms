@@ -51,8 +51,8 @@ class MyblProductEntryController extends Controller
 
         foreach ($codes as $code) {
             $data ['results'][] = [
-              'id'   => $code,
-              'text' => $code,
+                'id' => $code,
+                'text' => $code,
             ];
         }
 
@@ -75,10 +75,16 @@ class MyblProductEntryController extends Controller
 
         return view('admin.my-bl-products.product-details', compact('details', 'internet_categories'));
     }
+
+    /**
+     * @return Factory|View
+     */
     public function index()
     {
         return view('admin.my-bl-products.mybl_product_entry');
     }
+
+
 
     /**
      * @param Request $request
@@ -127,13 +133,17 @@ class MyblProductEntryController extends Controller
      * @param UpdateMyblProductRequest $request
      * @param $product_code
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function updateMyblProducts(UpdateMyblProductRequest $request, $product_code)
     {
         return $this->service->updateMyblProducts($request, $product_code);
     }
 
-
+    /**
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
     public function downloadMyblProducts()
     {
         return $this->service->downloadMyblProducts();

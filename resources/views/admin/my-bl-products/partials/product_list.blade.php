@@ -37,17 +37,22 @@
     </div>
 </div>
 <div class="col-md-12 mt-3">
+
     <table class="table table-striped table-bordered dataTable"
            id="product_list" role="grid">
         <thead>
         <tr>
             <th>Sl.</th>
             <th>Product Code</th>
-            <th>Renew Product Code</th>
-            <th>Recharge Product Code</th>
+            <th>Renew Prod. Code</th>
+            <th>Recharge Prod. Code</th>
             <th>Description</th>
             <th>Show in Home</th>
-            <th>Attached Image</th>
+            <th>Visibility</th>
+            <th>Show From</th>
+            <th>Hide From</th>
+            <th>Has Image</th>
+            <th>Deep Link</th>
             <th class="filter_data">Actions</th>
         </tr>
         </thead>
@@ -55,13 +60,15 @@
         </tbody>
     </table>
 </div>
-
+<link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
 @push('page-js')
     {{--    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript">
         </script>--}}
-
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
+        <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script>
         $(function () {
+            new Clipboard('.copy-text');
             $("#product_list").dataTable({
                 scrollX: true,
                 processing: true,
@@ -100,7 +107,8 @@
                     {
                         name: 'product_code',
                         render: function (data, type, row) {
-                            return row.product_code;
+                            let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
+                            return '<a href="' + detail_question_url + '">' + row.product_code + '</a>';
                         }
                     },
 
@@ -118,13 +126,6 @@
                         }
                     },
 
-/*                    {
-                        name: 'name',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            return row.name;
-                        }
-                    },*/
 
                     {
                         name: 'description',
@@ -140,9 +141,63 @@
                         }
                     },
                     {
+                        name: 'is_visible',
+                        render: function (data, type, row) {
+                            let visibility = '';
+                            switch (row.is_visible) {
+                                case 'Shown':
+                                case 'Active Schedule':
+                                case 'To be Hidden':
+                                    visibility = "<span class='badge badge-success'>" + row.is_visible + "</span>";
+                                    break;
+
+                                case 'Completed Schedule':
+                                case 'Hidden':
+                                    visibility = "<span class='badge badge-danger'>" + row.is_visible + "</span>";
+                                    break;
+
+                                case 'To be Shown':
+                                    visibility = "<span class='badge badge-warning'>" + row.is_visible + "</span>";
+                                    break;
+
+                                default:
+                                    visibility = "<span class='badge badge-info'>" + row.is_visible + "</span>";
+                                    break;
+                            }
+                            return visibility;
+                        }
+                    },
+                    {
+                        name: 'show_from',
+                        render: function (data, type, row) {
+                            return   row.show_from;
+                        }
+                    },
+                    {
+                        name: 'hide_from',
+                        render: function (data, type, row) {
+                            return   row.hide_from;
+                        }
+                    },
+                    {
                         name: 'Attached Image',
                         render: function (data, type, row) {
                             return row.media;
+                        }
+                    },
+                    {
+                        name: 'name',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            // return row.deep_link;
+                            if(row.deep_link==null){
+                             return `<div class="btn-group" role="group" aria-label="Basic example">
+                            <button class="btn btn-sm btn-icon btn-outline-success edit" onclick="deepLinkCreate('` + row.product_code + `');"><i class="la icon-link"></i></button>
+                          </div>`
+                            }else{
+                                return `<button class="btn btn-sm btn-success" id="` + row.deep_link + `" onclick="copyDeepLinkCreate('` + row.deep_link + `');" class="copy-text" href="#">copy</button>`;
+
+                            }
                         }
                     },
                     {
@@ -166,6 +221,47 @@
                 $('#product_list').DataTable().ajax.reload();
             });
         });
+
+        function deepLinkCreate(productCode){
+                    $.ajax({
+                            url: "{{ url('mybl-products-deep-link-create') }}/"+productCode,
+                            methods: "get",
+                            success: function (result) {
+                                console.log(result.status_code);
+                                if(result.status_code===200){
+                                Swal.fire(
+                                    'Generated!',
+                                    'Deep link generated successfully .<br><br> Link :  '+result.short_link,
+                                    'success',
+                                );
+                                }else{
+                                    Swal.fire(
+                                    'Oops!',
+                                    'Something went wrong please try again ',
+                                    'error',
+                                );
+                                }
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    $('#product_list').DataTable().ajax.reload();
+                                }
+                            }
+                        });
+            }
+
+        function copyDeepLinkCreate(deeplink){
+            const str = document.getElementById(deeplink).id;
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+        }
     </script>
 
 @endpush

@@ -97,7 +97,7 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
             <ul class="menu-content">
                 {{--page--}}
-                <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
+            <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
                     <a class="menu-item" href="{{ route('notificationCategory.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-server"></i>Category List
@@ -109,14 +109,13 @@
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
 
-                {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
-                     <a class="menu-item" href="{{ route('notification.report') }}"
-                        data-i18n="nav.templates.vert.classic_menu">
-                         <i class="la la-comment-o"></i>Notification Report</a>
-                 </li>--}}
-
-                <li class="{{ is_active_url('notification-report')}}">
+                {{-- <li class="{{ is_active_url('notification-report')}}">
                     <a class="menu-item" href="{{ url('notification-report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification Report</a>
+                </li> --}}
+                <li class="{{ is_active_url('target-wise-notification-report') }}">
+                    <a class="menu-item" href="{{ route('target-wise-notification-report.report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification Report</a>
                 </li>
