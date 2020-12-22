@@ -27,7 +27,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($pop_ups as $key => $popup)
+                            @foreach($popups as $key => $popup)
                                 @php
                                     $recurringType = $popup->recurring_type;
                                 @endphp
@@ -44,17 +44,13 @@
                                     </td>
                                     <td>
                                         Recurring Type: <strong>{{ ucwords($recurringType) }}</strong><br>
-                                        @if($recurringType == 'none')
-                                            Start Time:
-                                            <strong>
-                                                {{ \Carbon\Carbon::parse($popup->start_date)->setTimezone('Asia/Dhaka')->toDayDateTimeString() }}
-                                            </strong><br>
-                                            End Time:
-                                            <strong>
-                                                {{ \Carbon\Carbon::parse($popup->end_date)->setTimezone('Asia/Dhaka')->toDayDateTimeString() }}
-                                            </strong>
-
-                                        @else
+                                        Date Range:
+                                        <strong>
+                                            {{ \Carbon\Carbon::parse($popup->start_date)->setTimezone('Asia/Dhaka')->format('d-m-Y') }}
+                                            -
+                                            {{ \Carbon\Carbon::parse($popup->end_date)->setTimezone('Asia/Dhaka')->format('d-m-Y') }}
+                                        </strong><br>
+                                        @if($recurringType != 'none')
                                             @php
                                                 $schedule = $popup->schedule;
                                                 $timeSlots = $popup->timeSlots;
@@ -73,7 +69,6 @@
                                                     {{\Carbon\Carbon::parse($timeSlot->end_time)->format('h:i: A')}}
                                                 </span>
                                             @endforeach
-
                                         @endif
                                     </td>
                                     <td>
@@ -94,7 +89,7 @@
                             </tbody>
                         </table>
 
-                        {{ $pop_ups->links() }}
+                        {{ $popups->links() }}
                     </div>
                 </div>
             </div>

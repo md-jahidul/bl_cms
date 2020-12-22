@@ -72,18 +72,12 @@ class AppLaunchPopupService
                     $data['content'] = $data['content_data'];
                 }
 
-                // Storing recurring schedule
-                if ($data['recurring_type'] == 'none') {
-                    // start date end date
-                    $date_range_array = explode('-', $data['display_period']);
-                    $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-                        ->toDateTimeString();
-                    $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-                        ->toDateTimeString();
-                } else {
-                    $data['start_date'] = Carbon::now()->format('Y-m-d H:i:s');
-                    $data['end_date'] = Carbon::parse('+24 hours')->format('Y-m-d H:i:s');
-                }
+                // start date end date
+                $date_range_array = explode('-', $data['display_period']);
+                $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
+                    ->toDateTimeString();
+                $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
+                    ->toDateTimeString();
 
                 if (is_null($id)) {
                     $data['created_by'] = auth()->id();
@@ -93,6 +87,7 @@ class AppLaunchPopupService
                     $popup->update($data);
                 }
 
+                // Storing recurring schedule
                 if ($data['recurring_type'] != 'none') {
                     $this->saveSchedule(
                         $data['time_ranges'],

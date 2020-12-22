@@ -17,6 +17,7 @@
                         <form role="form"
                               action="{{ $page == 'create' ? route('app-launch.store') : route('app-launch.update', $popup->id)}}"
                               method="POST"
+                              class="form"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -64,12 +65,12 @@
                                                 @foreach($productList as $product)
                                                     <option value="{{$product['id']}}"
                                                         {{$product['id'] == $popup->product_code ? 'selected' : ''}}>
-                                                        {{$product['text']}}
+                                                        {{$product['id'] . ' - ' . $product['text']}}
                                                     </option>
                                                 @endforeach
                                             @else
                                                 @foreach($productList as $product)
-                                                    <option value="{{$product['id']}}">{{$product['text']}}</option>
+                                                    <option value="{{$product['id']}}">{{$product['id'] . ' - ' .$product['text']}}</option>
                                                 @endforeach
                                             @endif
 
@@ -121,21 +122,19 @@
                                     <div class="row">
                                         <!-- Regular time period (When recurring type is none) -->
                                         <div class="col-md-12">
-                                            <div class="form-group" id="time_period"
-                                                 @if($recurringType != 'none')
-                                                 style="display: none"
-                                                @endif>
-                                                <label class="small">Time Period</label>
+                                            <div class="form-group" id="time_period">
+                                                <label class="small">Date Range</label>
                                                 <div class='input-group'>
                                                     <input type='text'
                                                            class="form-control datetime"
-                                                           value="{{ old("display_period") ? old("display_period") : '' }}"
+                                                           value="{{ $page == 'edit' ? $dateRange : old('display_period') }}"
                                                            name="display_period"
                                                            id="display_period"/>
                                                     @if($errors->has('display_period'))
                                                         <p class="text-left">
-                                                            <small
-                                                                class="danger text-muted">{{ $errors->first('display_period') }}</small>
+                                                            <small class="danger text-muted">
+                                                                {{ $errors->first('display_period') }}
+                                                            </small>
                                                         </p>
                                                     @endif
                                                 </div>
@@ -309,20 +308,43 @@
     {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
     {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script>
+        var date;
+        // Date & Time
+        date = new Date();
+        date.setDate(date.getDate());
+
+        $('input[name=recurring_type]').change(function () {
+           pickerFormat();
+        });
+
+        $('input[name=recurring_type]').ready(function () {
+            pickerFormat();
+        })
+
+        function pickerFormat()
+        {
+            recurringType = $('input[name=recurring_type]:checked').val();
+            if (recurringType != 'none') {
+                $('.datetime').daterangepicker({
+                    timePicker: false,
+                    minDate: date,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+            } else {
+                $('.datetime').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 5,
+                    minDate: date,
+                    locale: {
+                        format: 'YYYY/MM/DD hh:mm A'
+                    }
+                });
+            }
+        }
 
         $(function () {
-            var date;
-            // Date & Time
-            date = new Date();
-            date.setDate(date.getDate());
-            $('.datetime').daterangepicker({
-                timePicker: true,
-                timePickerIncrement: 30,
-                minDate: date,
-                locale: {
-                    format: 'YYYY/MM/DD h:mm A'
-                }
-            });
 
             function initiateDropify(selector) {
                 $(selector).dropify({
@@ -436,6 +458,15 @@
 
             $("#time_range").select2({
                 placeholder: 'Time slots'
+            });
+
+            $('.form').submit(function () {
+                if ($('input[name=recurring_type]:checked').val() != 'none') {
+                    let dateRange = $('#display_period').val().split("-");
+                    var start = dateRange[0] + ' 12:00 AM';
+                    var end = dateRange[1] + ' 11:59 PM';
+                    $('#display_period').val(start + ' - ' + end);
+                }
             });
         })
     </script>
