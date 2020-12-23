@@ -117,21 +117,6 @@
                                 @include('layouts.partials.app-service.financial')
                             </slot>
 
-
-
-                            <div class="col-md-6">
-                                <label></label>
-                                <div class="form-group">
-                                    <label for="title" class="mr-1">Status:</label>
-                                    <input type="radio" name="status" value="1" id="active" checked>
-                                    <label for="active" class="mr-1">Active</label>
-
-                                    <input type="radio" name="status" value="0" id="inactive">
-                                    <label for="inactive">Inactive</label>
-                                </div>
-                            </div>
-
-
                             <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label> URL EN <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN" id="url_slug">
@@ -159,7 +144,7 @@
                             </div>
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
+                                <label>Page Header English (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
@@ -182,7 +167,17 @@
                                 </small>
                             </div>
 
+                            <div class="col-md-6">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" checked>
+                                    <label for="active" class="mr-1">Active</label>
 
+                                    <input type="radio" name="status" value="0" id="inactive">
+                                    <label for="inactive">Inactive</label>
+                                </div>
+                            </div>
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
