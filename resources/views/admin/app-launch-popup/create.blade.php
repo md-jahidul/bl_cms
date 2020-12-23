@@ -69,11 +69,11 @@
                                                     </option>
                                                 @endforeach
                                             @else
+                                                <option value=""></option>
                                                 @foreach($productList as $product)
                                                     <option value="{{$product['id']}}">{{$product['id'] . ' - ' .$product['text']}}</option>
                                                 @endforeach
                                             @endif
-
                                         </select>
                                         @if($errors->has('product_code'))
                                             <p class="text-left">
@@ -429,19 +429,19 @@
                     initiatePurchaseImage();
                     $(".select2").css({"min-width": "400px"});
                     $('#productCode').removeClass('hidden').addClass('show');
-                    $("#productCode").html(product_html);
-                    $(".product-list").select2({
-                        placeholder: "Select a product",
-                        ajax: {
-                            url: "{{ route('myblslider.active-products') }}",
-                            processResults: function (data) {
-                                // Transforms the top-level key of the response object from 'items' to 'results'
-                                return {
-                                    results: data
-                                };
-                            }
-                        }
-                    });
+                    {{--$("#productCode").html(product_html);--}}
+                    {{--$(".product-list").select2({--}}
+                    {{--    placeholder: "Select a product",--}}
+                    {{--    ajax: {--}}
+                    {{--        url: "{{ route('myblslider.active-products') }}",--}}
+                    {{--        processResults: function (data) {--}}
+                    {{--            // Transforms the top-level key of the response object from 'items' to 'results'--}}
+                    {{--            return {--}}
+                    {{--                results: data--}}
+                    {{--            };--}}
+                    {{--        }--}}
+                    {{--    }--}}
+                    {{--});--}}
                 } else {
                     initiateTextEditor();
                     $('#productCode').removeClass('show').addClass('hidden');

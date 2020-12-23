@@ -509,15 +509,6 @@
                             </li>
 {{--                        @endif           --}}
 
-                        @if( auth()->user()->can_view('FixedPage') )
-                            <li class="{{ is_active_url('fixed-pages') }}">
-                                <a class="menu-item" href="{{ url('fixed-pages') }}"
-                                   data-i18n="nav.templates.vert.classic_menu">
-                                    <i class="la la-file-image-o"></i> Fixed Page
-                                </a>
-                            </li>
-                        @endif
-
                         <li class="{{ is_active_url('store-locations/entry') }}">
                             <a class="menu-item" href="{{ url('store-locations/entry') }}"
                                data-i18n="nav.templates.vert.classic_menu">
@@ -558,9 +549,18 @@
                 </li>
             @endif
 
+{{--            @if( auth()->user()->can_view('FixedPage') )--}}
+                <li class="{{ is_active_url('fixed-pages') }}">
+                    <a class="menu-item" href="{{ url('fixed-pages') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-file-image-o"></i> Fixed Page
+                    </a>
+                </li>
+{{--            @endif--}}
+
             <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
                         class="la la-futbol-o"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
+                    <span class="menu-title" data-i18n="nav.templates.main">Dynamic Pages</span></a>
             </li>
             <li class="{{ is_active_url('/popular-search') }} nav-item">
                 <a href="{{ url('popular-search') }}">

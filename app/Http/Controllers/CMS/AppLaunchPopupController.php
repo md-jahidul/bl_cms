@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MyBlProduct;
 use App\Services\ProductCoreService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class AppLaunchPopupController
@@ -73,7 +74,7 @@ class AppLaunchPopupController extends Controller
      */
     public function edit($popupId)
     {
-        $popup = $this->appLaunchPopupService->findBy(['id' => $popupId, 'status' =>1])->first();
+        $popup = $this->appLaunchPopupService->findBy(['id' => $popupId, 'status' => 1])->first();
         if (!$popup) {
             return redirect()->route('app-launch.index')->with('error', 'Error! Popup Not Found');
         }
@@ -109,8 +110,15 @@ class AppLaunchPopupController extends Controller
      */
     public function destroy($id)
     {
-        $this->appLaunchPopupService->findOne($id)->update(['status' => 0]);
-        return redirect()->back()->with('success', 'Popup Successfully Deleted');
+        $popup = $this->appLaunchPopupService->findOne($id);
+        if ($popup) {
+            $popup->update([
+                'status' => 0,
+                'title' => $popup->title . ' - deleted by user bearing id: ' . Auth::user()->id
+            ]);
+            return redirect()->back()->with('success', 'Popup Successfully Deleted');
+        }
+        return redirect()->back()->with('error', 'Popup Can Not Be Deleted!');
     }
 
     public function getActiveProducts()
