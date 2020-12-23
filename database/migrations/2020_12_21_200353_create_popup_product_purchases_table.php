@@ -20,6 +20,7 @@ class CreatePopupProductPurchasesTable extends Migration
             $table->integer('total_popup_cancel')->default(0);
             $table->integer('total_popup_continue')->default(0);
             $table->integer('total_buy')->default(0);
+            $table->integer('total_buy_attempt')->default(0);
             $table->integer('total_cancel')->default(0);
 
             $table->timestamps();

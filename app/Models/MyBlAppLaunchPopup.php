@@ -35,6 +35,11 @@ class MyBlAppLaunchPopup extends Model
         return $this->hasMany(RecurringScheduleHour::class, 'scheduler_id', 'id');
     }
 
+    public function purchaseLog()
+    {
+        return $this->hasOne(PopupProductPurchase::class, 'popup_id', 'id');
+    }
+
     /**
      * Checks and returns the visibility status according to schedule stored with it
      * @return bool

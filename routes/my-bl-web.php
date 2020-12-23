@@ -286,6 +286,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@update')->name('app-launch.update');
     Route::delete('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@destroy')->name('app-launch.delete');
 
+    Route::get('app-launch/popup/report', 'CMS\AppLaunchPopupController@report')->name('app-launch.report');
+    Route::get('app-launch/popup/report/{popupId}', 'CMS\AppLaunchPopupController@reportDetail')
+        ->name('app-launch.report-detail');
+
     Route::resource('recurring-schedule-hours', 'CMS\RecurringScheduleHourController');
 
     /*
