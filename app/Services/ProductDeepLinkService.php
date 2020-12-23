@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\MyBlProduct;
 use App\Models\ProductDeepLink;
+use App\Models\ProductDeepLinkDetails;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
@@ -121,7 +122,6 @@ class ProductDeepLinkService
      */
     public function getProductDeepLinkDetailsReport($request, $productDeeplinkDbId)
     {
-        
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
