@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\MyBlProduct;
 use App\Models\ProductDeepLink;
-use App\Models\ProductDeepLinkDetails;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
@@ -15,37 +14,36 @@ class ProductDeepLinkService
 {
 
     use CrudTrait;
-
     /**
      * @var $firebaseDeepLinkService
      */
     protected $firebaseDeepLinkService;
-
     public function __construct(
         FirebaseDeepLinkService $firebaseDeepLinkService
-    )
-    {
-        $this->firebaseDeepLinkService = $firebaseDeepLinkService;
+    ) {
+        $this->firebaseDeepLinkService=$firebaseDeepLinkService;
     }
 
-
-    public function createDeepLink($product_code)
-    {
+    /**
+     * @param $product_code
+     * @return array
+     */
+    public function createDeepLink($product_code){
 
         $product = MyBlProduct::where('product_code', $product_code)->first();
         if (!$product) {
             throw new NotFoundHttpException();
         }
-        $body = [
-            "dynamicLinkInfo" => [
-                "domainUriPrefix" => env('DOMAINURIPREFIX'),
-                "link" => "https://banglalink.net/product/$product_code",
-                "androidInfo" => [
-                    "androidPackageName" => "com.arena.banglalinkmela.app.qa"
-                ],
-                "iosInfo" => [
-                    "iosBundleId" => "com.Banglalink.My-Banglalink"
-                ]
+        $body=[
+            "dynamicLinkInfo"=>[
+              "domainUriPrefix"=>env('DOMAINURIPREFIX'),
+              "link"=>"https://banglalink.net/product/$product_code",
+              "androidInfo"=> [
+                "androidPackageName"=>"com.arena.banglalinkmela.app"
+              ],
+              "iosInfo"=>[
+                "iosBundleId"=>"com.Banglalink.My-Banglalink"
+              ]
             ]
         ];
         $saveData = new ProductDeepLink();

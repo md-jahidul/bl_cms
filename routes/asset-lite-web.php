@@ -1122,11 +1122,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us-info.list');
     Route::get('corporate/contact-us/more-details/{id}', 'AssetLite\CorporateRespContactUsController@showCustomerDetails')
         ->name('contact-us.more_details');
-//=======
+
     // Referral List
     Route::get('referral-list', 'AssetLite\ReferralListController@index');
-//>>>>>>> 6e682c417ebd1276da26dffa0366bc5148ee3bab
-
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController');
 });
