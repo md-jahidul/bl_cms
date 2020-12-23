@@ -123,6 +123,7 @@ class ProductDeepLinkService
      */
     public function getProductDeepLinkDetailsReport($request, $productDeeplinkDbId)
     {
+        
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
