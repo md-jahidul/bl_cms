@@ -74,7 +74,6 @@ class AppLaunchPopupController extends Controller
      */
     public function edit($popupId)
     {
-        dd($popupId);
         $popup = $this->appLaunchPopupService->findBy(['id' => $popupId, 'status' => 1])->first();
         if (!$popup) {
             return redirect()->route('app-launch.index')->with('error', 'Error! Popup Not Found');
