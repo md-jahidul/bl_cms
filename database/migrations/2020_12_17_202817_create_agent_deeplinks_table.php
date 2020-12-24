@@ -23,6 +23,7 @@ class CreateAgentDeeplinksTable extends Migration
             $table->integer('total_buy')->nullable(false)->default(0);
             $table->integer('total_cancel')->nullable(false)->default(0);
             $table->integer('buy_attempt')->nullable(false)->default(0);
+            $table->integer('is_delete')->nullable(false)->default(0);
             $table->foreign('agent_id')->references('id')->on('agent_lists')->onDelete('cascade');
             $table->timestamps();
 
