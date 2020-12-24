@@ -20,9 +20,9 @@
                                 <th width="5%">Sl.</th>
                                 <th width="10%">Agent</th>
                                 <th width="10%">Deeplink</th>
-                                <th width="10%">Deeplink Type</th>
-                                <th width="7%">View</th>
-                                <th width="7%">Buy/Signup</th>
+                                <th width="10%">Type</th>
+                                <th width="7%">Total</th>
+                                <th width="7%">Buy/<br>Signup</th>
                                 <th width="7%">Failure</th>
                                 <th width="7%">Cancel</th>
                                 <th width="5%">Action</th>
@@ -71,7 +71,6 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'agent_info', name: 'agent_info'},
-                    // {data: 'product_code', name: 'product_code'},
                     {data: 'deep_link', name: 'deep_link'},
                     {data: 'deeplink_type', name: 'deeplink_type'},
                     {data: 'tview', name: 'tview'},

@@ -209,4 +209,11 @@ class AgentService
             ->make(true);
     }
 
+    public function agentDeeplinkReportCount($id){
+        return  $this->agentDeepLinkRepository->findOne($id);
+
+
+
+    }
+
 }

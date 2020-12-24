@@ -60,8 +60,8 @@
                             <th width="5%">ID</th>
                             <th width="10%">Product code</th>
                             <th width="10%">Deeplink</th>
-                            <th width="10%">Deeplink Type</th>
-                            <th width="7%">View</th>
+                            <th width="10%">Type</th>
+                            <th width="7%">Total</th>
                             <th width="7%">Buy</th>
                             <th width="7%">Failure</th>
                             <th width="7%">Cancel</th>
