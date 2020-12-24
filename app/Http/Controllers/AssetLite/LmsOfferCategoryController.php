@@ -9,6 +9,7 @@ use App\Services\AlSliderComponentTypeService;
 use App\Services\LmsOfferCategoryService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,7 +64,7 @@ class LmsOfferCategoryController extends Controller
     {
         $response = $this->lmsOfferCategoryService->storeLmsOfferCat($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('/las-offer-category');
+        return redirect('/lms-offer-category');
     }
 
     /**
@@ -73,7 +74,7 @@ class LmsOfferCategoryController extends Controller
     public function edit($id)
     {
         $lmsCategory = $this->lmsOfferCategoryService->findOne($id);
-        return view('admin.loyalty.lms-categories.create', compact('lmsCategory'));
+        return view('admin.loyalty.lms-categories.edit', compact('lmsCategory'));
     }
 
     /**
@@ -83,20 +84,20 @@ class LmsOfferCategoryController extends Controller
      */
     public function update(LmsOfferCategoryRequest $request, $id)
     {
-        $response = $this->lmsOfferCategoryService->updateSlider($request->all(), $request->id);
+        $response = $this->lmsOfferCategoryService->updateLmsOfferCat($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect((strpos($request->previous_url, 'about-slider') !== false) ? $request->previous_url : url("/$sliderType-sliders"));
+        return redirect('/lms-offer-category');
     }
 
     /**
      * @param $id
-     * @return RedirectResponse|Redirector
+     * @return Application|UrlGenerator|RedirectResponse|Redirector|string
      * @throws Exception
      */
     public function destroy($id)
     {
         $response = $this->lmsOfferCategoryService->deleteLmsOfferCat($id);
         Session::flash('message', $response->getContent());
-        return url('/las-offer-category');
+        return url('/lms-offer-category');
     }
 }

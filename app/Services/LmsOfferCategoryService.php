@@ -53,7 +53,7 @@ class LmsOfferCategoryService
      * @param $id
      * @return ResponseFactory|Response
      */
-    public function updateSlider($data, $id)
+    public function updateLmsOfferCat($data, $id)
     {
         $slider = $this->findOne($id);
         $slider->update($data);

@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"> LMS Offer Category Add</li>
 @endsection
 @section('action')
-    <a href="{{ url('las-offer-category') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('lms-offer-category') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -13,7 +13,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('las-offer-category.store') }}" method="POST" novalidate>
+                        <form role="form" action="{{ route('lms-offer-category.store') }}" method="POST" novalidate>
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en" class="required">Title (English)</label>
