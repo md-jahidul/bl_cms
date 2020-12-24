@@ -18,6 +18,7 @@ class CreateAgentDeeplinkDetailsTable extends Migration
             $table->bigInteger('agent_deeplink_id')->unsigned();
             $table->string('msisdn')->nullable();
             $table->string('action_type')->nullable();
+            $table->string('action_url')->nullable();
             $table->string('action_status')->nullable();
             $table->foreign('agent_deeplink_id')->references('id')->on('agent_deeplinks')->onDelete('cascade');
             $table->timestamps();

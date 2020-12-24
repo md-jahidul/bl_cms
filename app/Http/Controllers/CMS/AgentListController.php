@@ -122,6 +122,10 @@ class AgentListController extends Controller
     public function viewAgentDeeplinkDetails($id = null)
     {
         $agentId = $id;
+        if (empty($agentId)) {
+            return redirect('deeplink/agent/list');
+
+        }
         $deeplinkTypeList = $this->agentService->deepLinkTypeList();
         $deeplinkList = $this->agentService->getDeepLinkListByAgentId($agentId);
         return view('admin.agent-deeplink.deeplink.list', compact('deeplinkTypeList', 'deeplinkList', 'agentId'));
@@ -166,5 +170,19 @@ class AgentListController extends Controller
             return $this->agentService->agentDeeplinkReportData($request);
         }
         return view('admin.agent-deeplink.report.list');
+    }
+
+    /**
+     * @param null $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function agentDeeplinkReportDetails($id = null, Request $request)
+    {
+        if ($request->ajax()) {
+            return $this->agentService->agentDeeplinkDetailReportData($id, $request);
+        }
+        $deeplinkId = $id;
+        return view('admin.agent-deeplink.report.details', compact('deeplinkId'));
     }
 }
