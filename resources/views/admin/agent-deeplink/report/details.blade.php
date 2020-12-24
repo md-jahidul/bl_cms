@@ -9,6 +9,45 @@
 
 @section('content')
     <section>
+        <div class="bg-gray">
+            <div class="row w-100">
+                <div class="col-md-3">
+                    <div class="card border-info mx-sm-1 p-1">
+                        <div class="text-info text-center"><h4>Total</h4></div>
+                        <div class="text-info text-center"><h1>
+                                @php
+                                $total=$report_count->total_buy+$report_count->total_cancel+$report_count->buy_attempt;
+                                @endphp
+                                {{$total}}
+                            </h1></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info mx-sm-1 p-1">
+                        <div class="text-info text-center"><h4>Buy/Signup</h4></div>
+                        <div class="text-info text-center"><h1>
+                                {{$report_count->total_buy}}
+                            </h1></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info mx-sm-1 p-1">
+                        <div class="text-info text-center"><h4>Cancel</h4></div>
+                        <div class="text-info text-center"><h1>
+                                {{$report_count->total_cancel}}
+                            </h1></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info mx-sm-1 p-1">
+                        <div class="text-info text-center"><h4>Failure</h4></div>
+                        <div class="text-info text-center"><h1>
+                                {{$report_count->buy_attempt}}
+                            </h1></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="row table-responsive">

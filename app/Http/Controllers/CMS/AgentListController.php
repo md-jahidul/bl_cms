@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\AgentList;
+use App\Models\AgentDeeplinkDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AgentRequest;
@@ -183,6 +184,7 @@ class AgentListController extends Controller
             return $this->agentService->agentDeeplinkDetailReportData($id, $request);
         }
         $deeplinkId = $id;
-        return view('admin.agent-deeplink.report.details', compact('deeplinkId'));
+        $report_count=$this->agentService->agentDeeplinkReportCount($id);
+        return view('admin.agent-deeplink.report.details', compact('deeplinkId','report_count'));
     }
 }
