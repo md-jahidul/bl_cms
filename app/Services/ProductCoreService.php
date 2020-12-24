@@ -71,7 +71,7 @@ class ProductCoreService
         $this->productCoreRepository = $productCoreRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
-        $this->productDeepLinkRepository=$productDeepLinkRepository;
+        $this->productDeepLinkRepository = $productDeepLinkRepository;
         $this->setActionRepository($productCoreRepository);
     }
 
@@ -313,7 +313,6 @@ class ProductCoreService
                                 $core_data['platform'] = 'app';
                             }
 
-                            //dd($core_data);
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
@@ -897,7 +896,6 @@ class ProductCoreService
 
         // array_pop($headers);
 
-
         $row = WriterEntityFactory::createRowFromArray(array_values($headers), $header_style);
         $writer->addRow($row);
 
@@ -931,10 +929,13 @@ class ProductCoreService
                 $insert_data[23] = $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
-                $insert_data[26] = ($product->is_visible) ? 'Yes' : 'No';
-                $insert_data[27] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
-                $insert_data[28] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
-                $insert_data[29] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[26] = $product->details->display_sd_vat_tax;
+                $insert_data[27] = ($product->is_visible) ? 'Yes' : 'No';
+                $insert_data[28] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
+                $insert_data[29] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
+                $insert_data[30] = ($product->status) ? 'Yes' : 'No';
+
+
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
