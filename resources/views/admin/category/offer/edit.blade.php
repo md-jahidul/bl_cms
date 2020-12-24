@@ -58,7 +58,6 @@
                                 </small>
                                 @if ($errors->has('url_slug_bn'))
                                     <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
-                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
                                 @endif
                             </div>
 
