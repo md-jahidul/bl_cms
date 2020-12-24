@@ -1,3 +1,14 @@
+@php
+    function match($slug, $multiItems){
+        foreach ($multiItems as $item){
+           if($item->offer_section_slug == $slug){
+              return true;
+           }
+         }
+        return false;
+     }
+@endphp
+
 @extends('layouts.admin')
 @section('title', 'Mybl Products')
 
@@ -145,7 +156,7 @@
                             </div>
                             <div class="row">
                                 @if(strtolower($details->details->content_type) == 'data')
-                                    <div class="col-md-4">
+                                   {{-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Select Data Section </label>
                                             <select multiple
@@ -159,7 +170,31 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    </div>--}}
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Data Section </label>
+                                            <select multiple
+                                                    class="form-control data-section"
+                                                    name="offer_section_slug[]" required>
+                                                <option value="">Please Select Data Section</option>
+
+                                                @foreach ($internet_categories as $category)
+                                                    @if(isset($details))
+                                                        <option  {{ match($category->slug, $details->tabs) ? 'selected' : '' }}
+                                                                 value="{{ $category->slug}}">  {{$category->name}}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{$category->slug}}">  {{$category->name}} </option>
+                                                    @endif
+
+                                                @endforeach
+
+                                            </select>
+                                        </div>
                                     </div>
+
                                 @endif
                                 <div class="col-md-4">
                                     <div class="form-group">

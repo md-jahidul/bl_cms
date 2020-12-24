@@ -738,7 +738,7 @@ class ProductCoreService
      */
     public function getProductDetails($product_code)
     {
-        return MyBlProduct::with('details')->where('product_code', $product_code)->first();
+        return MyBlProduct::with('details', 'tabs')->where('product_code', $product_code)->first();
     }
 
     /**

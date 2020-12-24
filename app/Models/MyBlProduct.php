@@ -25,4 +25,13 @@ class MyBlProduct extends Model
         return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tabs()
+    {
+        return $this->hasMany(MyBlProductTab::class, 'product_code', 'product_code');
+    }
+
 }

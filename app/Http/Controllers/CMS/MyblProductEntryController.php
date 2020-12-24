@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Models\MyBlProductTab;
 use App\Services\ProductCoreService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -69,6 +70,7 @@ class MyblProductEntryController extends Controller
         if (!$product) {
             throw new NotFoundHttpException();
         }
+
         $details = $this->service->getProductDetails($product_code);
 
         $internet_categories = MyBlInternetOffersCategory::all()->sortBy('sort');
