@@ -42,6 +42,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
+    Route::resource('las-offer-category', 'AssetLite\LmsOfferCategoryController')->except('show', 'destroy');
+    Route::get('las-offer-category/destroy/{id}', 'AssetLite\LmsOfferCategoryController@destroy');
+
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
     Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['create', 'store', 'update', 'edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
