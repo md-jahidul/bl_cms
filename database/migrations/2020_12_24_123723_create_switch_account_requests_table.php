@@ -20,6 +20,10 @@ class CreateSwitchAccountRequestsTable extends Migration
             $table->string('to_msisdn', 20);
             $table->tinyInteger('status')->default(2);
 
+            $table->index('notification_id');
+            $table->index('from_msisdn');
+            $table->index('to_msisdn');
+
             $table->timestamps();
         });
     }
