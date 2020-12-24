@@ -23,7 +23,8 @@
         "laravelista/ekko": "^1.5",
         "orangehill/iseed": "^2.6",
         "predis/predis": "^1.1",
-        "symfony/finder": "^4.3"
+        "symfony/finder": "^4.3",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -75,4 +76,3 @@
         ]
     }
 }
-
