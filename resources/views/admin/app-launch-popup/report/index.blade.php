@@ -20,8 +20,8 @@
                             <th width="10%">Popup Proceed</th>
                             <th width="10%">Popup Cancel</th>
                             <th width="10%">Purchase</th>
-                            <th width="10%">Cancel</th>
                             <th width="10%">Purchase Fail</th>
+                            <th width="10%">Cancel</th>
                             <th width="10%">Action</th>
                         </tr>
                         </thead>
