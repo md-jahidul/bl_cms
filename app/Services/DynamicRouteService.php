@@ -76,12 +76,10 @@ class DynamicRouteService
      * @return ResponseFactory|Response
      * @throws Exception
      */
-    public function deleteAboutUsInfo($id)
+    public function deleteDynamicRoute($id)
     {
-        $aboutUs = $this->findOne($id);
-        $this->deleteFile($aboutUs->content_image);
-        $this->deleteFile($aboutUs->banner_image);
-        $aboutUs->delete();
-        return Response('About Us Info deleted successfully !');
+        $route = $this->findOne($id);
+        $route->delete();
+        return Response('Route move to trashed successfully !');
     }
 }

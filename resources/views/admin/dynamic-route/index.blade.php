@@ -25,7 +25,7 @@
                                         <th width="20%">Container Name</th>
                                         <th width="20%">Key</th>
                                         <th width="20%">Url Slug</th>
-                                        <th class="text-center" width="8%">Action</th>
+                                        <th class="text-center" width="12%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +38,9 @@
                                         <td class="text-center">
                                             <a href="{{ route('dynamic-routes.edit', $item->id) }}" role="button" class="btn-sm btn-outline-info border-0">
                                                 <i class="la la-pencil-square"></i>
+                                            </a>
+                                            <a href="#" remove="{{ url("dynamic-routes/destroy/$item->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
+                                                <i class="la la-trash"></i>
                                             </a>
                                         </td>
                                     </tr>

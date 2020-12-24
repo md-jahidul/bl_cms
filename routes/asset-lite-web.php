@@ -1122,5 +1122,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us.more_details');
 
     // Dynamic Routes
-    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController');
+    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
+    Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 });
