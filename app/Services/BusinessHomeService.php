@@ -231,7 +231,9 @@ class BusinessHomeService {
         try {
 
             $request->validate([
-                'home_sort' => 'required'
+                'home_sort' => 'required',
+                'image_name_en' => 'unique:business_home_banner,image_name_en,' . $request->banner_id,
+                'image_name_bn' => 'unique:business_home_banner,image_name_bn,' . $request->banner_id,
             ]);
 
             //file upload in storege
@@ -256,7 +258,7 @@ class BusinessHomeService {
             }
 
             //save data in database
-            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request['alt_text'], $request['home_sort']);
+            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request);
 
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
             $photoMob = $filePathMob == "" ? $request['old_photo_mobile'] : $filePathMob;

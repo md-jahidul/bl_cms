@@ -229,6 +229,7 @@
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     @endif
                                     <input type="hidden" name="home_sort" value="{{$b->home_sort}}">
+                                    <input type="hidden" name="banner_id" value="{{$b->id}}">
                                     <input type="hidden" class="old_photo_{{$sort}}" name="old_photo" value="{{$b->image_name}}">
                                 </div>
 
@@ -251,8 +252,35 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label>Image Name EN</label>
+                                    <input type="text" class="form-control" value="{{ $b->image_name_en }}" name="image_name_en">
+                                    <small class="text-info">
+                                        <strong>note :</strong> please enter unique value<br>
+                                    </small>
+                                    @if ($errors->has('image_name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Image Name BN</label>
+                                    <input type="text" class="form-control" value="{{ $b->image_name_bn }}" name="image_name_bn">
+                                    <small class="text-info">
+                                        <strong>note :</strong> please enter unique value<br>
+                                    </small>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                     <label>Alt Text</label>
                                     <input type="text" class="form-control" value="{{ $b->alt_text }}" name="alt_text">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" class="form-control" value="{{ $b->alt_text_bn }}" name="alt_text_bn">
                                 </div>
 
                                 <div class="form-group text-center">
