@@ -13,6 +13,8 @@ use App\Models\AgentDeeplink;
 use App\Models\AgentDeeplinkDetail;
 use App\Repositories\AgentRepository;
 use App\Repositories\AgentDeepLinkRepository;
+use App\Repositories\AgentDeepLinkDetailsRepository;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
@@ -42,16 +44,19 @@ class AgentService
      * @param AgentRepository $agentRepository
      * @param AgentDeepLinkRepository $agentDeepLinkRepository
      * @param FirebaseDeepLinkService $firebaseDeepLinkService
+     * @param AgentDeepLinkDetailsRepository $agentDeepLinkDetailsRepository
      */
     public function __construct(
         AgentRepository $agentRepository,
         AgentDeepLinkRepository $agentDeepLinkRepository,
-        FirebaseDeepLinkService $firebaseDeepLinkService
+        FirebaseDeepLinkService $firebaseDeepLinkService,
+        AgentDeepLinkDetailsRepository $agentDeepLinkDetailsRepository
     )
     {
         $this->agentRepository = $agentRepository;
         $this->agentDeepLinkRepository = $agentDeepLinkRepository;
         $this->firebaseDeepLinkService = $firebaseDeepLinkService;
+        $this->agentDeepLinkDetailsRepository = $agentDeepLinkDetailsRepository;
         $this->setActionRepository($agentRepository);
     }
 
@@ -118,16 +123,25 @@ class AgentService
             }
         }
         if (strtolower($request['deeplink_type']) == 'product') {
-            $product_code = $request['product_code'];
-            $checkProduct = MyBlProduct::where('product_code', $product_code)->first();
-            if (!$checkProduct) {
-                throw new NotFoundHttpException();
+
+            $checkAgentDeepLink = $this->agentDeepLinkRepository->findOneBy(['product_code' => $request['product_code'], 'agent_id' => $request['agent_id'], 'is_delete' => 0]);
+
+            if ($checkAgentDeepLink) {
+                return new Response("Sorry, This agent deeplink already assigned ");
+            } else {
+
+                $product_code = $request['product_code'];
+                $checkProduct = MyBlProduct::where('product_code', $product_code)->first();
+                if (!$checkProduct) {
+                    throw new NotFoundHttpException();
+                }
             }
         }
+        $agent_id = $request['agent_id'];
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
-                "link" => "https://banglalink.net/agent/$productType/$product_code",
+                "link" => "https://banglalink.net/agent/$productType/$product_code/$agent_id",
                 "androidInfo" => [
                     "androidPackageName" => "com.arena.banglalinkmela.app"
                 ],
@@ -174,11 +188,24 @@ class AgentService
                 return $data->total_buy + $data->total_cancel + $data->buy_attempt;
             })
             ->addColumn('action', function ($row) {
-                $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">view</a>';
+                $url = route('agent.deeplink.report.details', $row->id);
+                $actionBtn = '<a href="' . $url . '" class="edit btn btn-success btn-sm">view</a>';
 //                $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
                 return $actionBtn;
             })
             ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function agentDeeplinkDetailReportData($id, $request)
+    {
+        $data = $this->agentDeepLinkDetailsRepository->findAll()->where('agent_deeplink_id', $id);
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('date', function ($data) {
+                return date('d-m-Y', strtotime($data->created_at));
+            })
+            ->rawColumns(['date'])
             ->make(true);
     }
 
