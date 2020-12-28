@@ -103,6 +103,21 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header" class="form-control" rows="4">{{ $component->page_header }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header_bn" class="form-control" rows="4">{{ $component->page_header_bn }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea name="schema_markup" class="form-control" rows="4">{{ $component->schema_markup }}</textarea>
+                                </div>
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary">
