@@ -28,12 +28,4 @@ class LmsOfferCategoryRequest extends FormRequest
             'url_slug_bn' => 'required|unique:partner_categories,url_slug_bn,' . $this->id,
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'url_slug_en' => "Select feed category",
-            'title.required' => "Enter feed title",
-        ];
-    }
 }
