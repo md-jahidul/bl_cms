@@ -42,6 +42,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
+    Route::resource('lms-offer-category', 'AssetLite\LmsOfferCategoryController')->except('show', 'destroy');
+    Route::get('lms-offer-category/destroy/{id}', 'AssetLite\LmsOfferCategoryController@destroy');
+
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
     Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['create', 'store', 'update', 'edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
@@ -1126,5 +1129,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Referral List
     Route::get('referral-list', 'AssetLite\ReferralListController@index');
     // Dynamic Routes
-    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController');
+    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
+    Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 });
