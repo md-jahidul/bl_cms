@@ -93,7 +93,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>Page Header</label>
+                                    <label>Page Header BN</label>
                                     <textarea name="page_header_bn" class="form-control" rows="4">
                                         {{ old("page_header_bn") ? old("page_header_bn") : '' }}
                                     </textarea>
