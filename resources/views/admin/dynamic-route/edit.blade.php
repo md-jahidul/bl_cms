@@ -142,7 +142,7 @@
                 if ($(checkDynamic).prop("checked")) {
                     pageDynamic.removeClass('d-none')
                     keyDynamic.addClass('d-none')
-                    code.val('DynamicPages')
+                    code.val('DynamicPage')
                     code.attr('readonly', 'readonly')
                 } else {
                     keyDynamic.removeClass('d-none')
