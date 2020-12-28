@@ -46,7 +46,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">
                                     <label for="code">Page URL</label>
-                                    <select class="form-control" name="code">
+                                    <select class="select2 form-control" name="code">
                                         <option value="">---Select Page---</option>
                                         @foreach($dynamicRoutes as $route)
                                             <option value="{{ $route->key }}">{{ $route->url }}</option>

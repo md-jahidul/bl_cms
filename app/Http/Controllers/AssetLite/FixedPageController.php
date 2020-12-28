@@ -55,7 +55,7 @@ class FixedPageController extends Controller
     public function fixedPageCreate()
     {
         $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
-        return view('admin.pages.fixed.create', compact('dynamicRoutes'));
+        return view('admin.pages.fixed-page.create', compact('dynamicRoutes'));
     }
 
     public function fixedPageStore(Request $request)
