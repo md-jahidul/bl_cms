@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\MyBlProduct;
 use App\Models\ProductDeepLink;
+use App\Models\ProductDeepLinkDetails;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;

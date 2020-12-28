@@ -306,6 +306,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@update')->name('app-launch.update');
     Route::delete('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@destroy')->name('app-launch.delete');
 
+    Route::get('app-launch/popup/report', 'CMS\AppLaunchPopupController@report')->name('app-launch.report');
+    Route::get('app-launch/popup/report/{popupId}', 'CMS\AppLaunchPopupController@reportDetail')
+        ->name('app-launch.report-detail');
+
     Route::resource('recurring-schedule-hours', 'CMS\RecurringScheduleHourController');
 
     /*
@@ -451,6 +455,26 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('developer/api/debug/usage-details/{number}/{type}', 'CMS\ApiDebugController@getUsageDetails');
     Route::get('developer/api/debug/contact-restore-logs/{number}', 'CMS\ApiDebugController@getContactRestoreLogs');
+
+    // Agent Deeplink
+    //    Route::resource('deeplink/agent', 'CMS\AgentListController');
+
+    Route::get('deeplink/agent/list', 'CMS\AgentListController@index')->name('deeplink.agent.list');
+    Route::get('deeplink/agent/create', 'CMS\AgentListController@create')->name('deeplink.agent.create');
+    Route::POST('deeplink/agent/store', 'CMS\AgentListController@store')->name('deeplink.agent.store');
+    Route::get('deeplink/agent/{id}/edit', 'CMS\AgentListController@edit')->name('deeplink.agent.edit');
+    Route::get('deeplink/agent/{id}/change-status', 'CMS\AgentListController@changeStatus')->name('deeplink.agent.statusChange');
+    Route::POST('deeplink/agent/{id}/update', 'CMS\AgentListController@update')->name('deeplink.agent.update');
+    Route::DELETE('deeplink/agent/destroy/{id}', 'CMS\AgentListController@destroy')->name('deeplink.agent.destroy');
+
+    // Agent deeplink list
+    Route::get('deeplink/agent/deeplink/list', 'CMS\AgentListController@index')->name('deeplink.agent.list');
+    Route::get('deeplink/agent/deeplink/list/{id}', 'CMS\AgentListController@viewAgentDeeplinkDetails')->name('deeplink.agent.deeplink.list');
+    Route::POST('agent/deeplink/store', 'CMS\AgentListController@agentDeeplinkStore')->name('agent.deeplink.store');
+    Route::get('agent/deeplink/item/delete/{agentId}/{id}', 'CMS\AgentListController@agentDeeplinkDelete')->name('agent.deeplink.item.delete');
+    Route::get('agent/deeplink/report', 'CMS\AgentListController@agentDeeplinkReport')->name('agent.deeplink.report');
+    Route::get('agent/deeplink/report/details/{id}', 'CMS\AgentListController@agentDeeplinkReportDetails')->name('agent.deeplink.report.details');
+    Route::get('agent/deeplink/report/details', 'CMS\AgentListController@agentDeeplinkReport')->name('agent.deeplink.report');
 
     // Learn Priyojon Sections
 

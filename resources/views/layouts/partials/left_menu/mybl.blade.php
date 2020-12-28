@@ -60,13 +60,17 @@
         <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>
             <ul class="menu-content">
-                <li class="{{ is_active_match(route('app-launch.index'))}}">
+                <li class="{{ is_active_match(route('app-launch.report')) ? '' : is_active_match(route('app-launch.index')) }}">
                     <a class="menu-item" href="{{ route('app-launch.index') }}">
                         <i class="ft-alert-triangle"></i>App Launch Popup</a>
                 </li>
                 <li class="{{ is_active_match(route('recurring-schedule-hours.index'))}}">
                     <a class="menu-item" href="{{ route('recurring-schedule-hours.index') }}">
                         <i class="ft-clock"></i>Recurring Hours</a>
+                </li>
+                <li class="{{ is_active_match(route('app-launch.report'))}}">
+                    <a class="menu-item" href="{{ route('app-launch.report') }}">
+                        <i class="ft-list"></i>Purchase Report</a>
                 </li>
             </ul>
         </li>
@@ -109,14 +113,6 @@
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
 
-                {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
-                     <a class="menu-item" href="{{ route('notification.report') }}"
-                        data-i18n="nav.templates.vert.classic_menu">
-                         <i class="la la-comment-o"></i>Notification Report</a>
-                 </li>--}}
-
-                <li class="{{ is_active_url('notification-report')}}">
-                    <a class="menu-item" href="{{ url('notification-report') }}"
                 {{-- <li class="{{ is_active_url('notification-report')}}">
                     <a class="menu-item" href="{{ url('notification-report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
@@ -165,6 +161,7 @@
                         <i class="la la-comment-o"></i>App List</a>
                 </li>
 
+
             </ul>
         </li>
     @endif
@@ -177,8 +174,7 @@
             <ul class="menu-content">
                 {{--page--}}
                 <li class="{{ is_active_url('myblslider') . is_active_url('myblslider/addImage/') . is_active_url('myblslider/create') . is_active_url('myblslider/edit') }}">
-                    <a class="menu-item" href="{{ route('myblslider.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('myblslider.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
                 </li>
                 <li class="{{ is_active_url('banner') . is_active_url('banner/create')}}">
@@ -216,8 +212,7 @@
                         <i class="la la-phone-square"></i> Minute Offer</a>
                 </li>
                 <li class="{{is_active_url('smsOffer')}} {{is_active_url('smsOffer/create')}}">
-                    <a class="menu-item" href="{{ route('smsOffer.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('smsOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comments-o"></i> SMS Offer</a>
                 </li>
                 <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixedBundleOffer/create')}}">
@@ -231,8 +226,7 @@
                         <i class="la la-gift"></i> Near by Offer</a>
                 </li>
                 <li class="{{is_active_url('amarOffer')}} {{is_active_url('amarOffer/create')}}">
-                    <a class="menu-item" href="{{ route('amarOffer.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('amarOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cart-arrow-down"></i> Amar Offer</a>
                 </li>
 
@@ -283,8 +277,7 @@
                 <span class="menu-title">Config</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
-                    <a class="menu-item" href="{{ route('otp-config.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('otp-config.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cog"></i>OTP Config</a>
                 </li>
 
@@ -368,6 +361,13 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('AppLaunch') )
+        <li class="{{ is_active_url('app-launch')}}">
+            <a class="menu-item" href="{{ route('app-launch.index') }}">
+                <i class="ft-alert-triangle"></i>App Launch Popup</a>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('LearnPriyojon') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title">Priyojon</span></a>
@@ -418,8 +418,7 @@
     @endif
 
     @if( auth()->user()->can_view('Setting') )
-        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i
-                    class="la la-cogs"></i>
+        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
         </li>
     @endif
@@ -448,14 +447,30 @@
     @endif
 
 
-
     <li class="{{ is_active_url('developer/api/debug') }}">
         <a class="menu-item" href="{{ route('support-message') }}">
             <i class="la la-code-fork"></i>Support Messages</a>
     </li>
 
-    @endif
+    <li class=" nav-item"><a href="#"><i class="la la-users"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Agent List</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('deeplink/agent/deeplink/list')}}">
+                <a class="menu-item" href="{{ route('deeplink.agent.list') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Agent List
+                </a>
+            </li>
+            <li class="{{is_active_url('agent/deeplink/report')}}">
+                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Report
+                </a>
+            </li>
+        </ul>
+    </li>
 
+@endif
     {{--------------------------------------------------------------------------------------------------------------------}}
     {{---------------------------------------------------------My-BL App End----------------------------------------------}}
     {{--------------------------------------------------------------------------------------------------------------------}}

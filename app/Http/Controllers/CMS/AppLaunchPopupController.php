@@ -144,4 +144,26 @@ class AppLaunchPopupController extends Controller
 
         return $data;
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function report()
+    {
+        $popups = $this->appLaunchPopupService->findBy(['status' => 1, 'type' => 'purchase'], ['purchaseLog']);
+        return view('admin.app-launch-popup.report.index', compact('popups'));
+    }
+
+    public function reportDetail($popupId)
+    {
+        $popup = $this->appLaunchPopupService->findOne($popupId, ['purchaseLog']);
+        $popupPurchaseLog = $popup->purchaseLog ?? [];
+        $popupPurchaseLogDetails = optional($popup->purchaseLog)->details ?? [];
+
+        return view(
+            'admin.app-launch-popup.report.details',
+            compact('popup', 'popupPurchaseLog', 'popupPurchaseLogDetails')
+        );
+    }
+
 }

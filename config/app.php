@@ -181,7 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Yajra\DataTables\DataTablesServiceProvider::class,
         'BenSampo\Enum\EnumServiceProvider',
 
 //        Maatwebsite\Excel\ExcelServiceProvider::class
@@ -240,7 +240,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Helper' => App\Helpers\Helper::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
