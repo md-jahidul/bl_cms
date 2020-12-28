@@ -286,6 +286,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@update')->name('app-launch.update');
     Route::delete('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@destroy')->name('app-launch.delete');
 
+    Route::get('app-launch/popup/report', 'CMS\AppLaunchPopupController@report')->name('app-launch.report');
+    Route::get('app-launch/popup/report/{popupId}', 'CMS\AppLaunchPopupController@reportDetail')
+        ->name('app-launch.report-detail');
+
     Route::resource('recurring-schedule-hours', 'CMS\RecurringScheduleHourController');
 
     /*
@@ -398,6 +402,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('mybl/settings/najat', 'CMS\NajatContentsSettingsController@index')->name('mybl.settings.najat.index');
     Route::post('mybl/settings/najat', 'CMS\NajatContentsSettingsController@store')->name('mybl.settings.najat.store');
+
+    /*
+    * Bandho Sim image
+    */
+    Route::resource('bandhosimimage', 'CMS\BandhoSimImageController');
+    Route::get('bandhosim/index', 'CMS\BandhoSimImageController@index')->name('bandhosim.index');
+    Route::post('mybl/settings/bandhosimimage/Store', 'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
+    Route::post('mybl/settings/bandhosimimage/update/{id}', 'CMS\BandhoSimImageController@update')->name('mybl.settings.bandho.sim.image.update');
 
     /*
      *  API Debug For Developer

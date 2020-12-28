@@ -35,24 +35,33 @@ class MyBlAppLaunchPopup extends Model
         return $this->hasMany(RecurringScheduleHour::class, 'scheduler_id', 'id');
     }
 
+    public function purchaseLog()
+    {
+        return $this->hasOne(PopupProductPurchase::class, 'popup_id', 'id');
+    }
+
     /**
      * Checks and returns the visibility status according to schedule stored with it
      * @return bool
      */
-    public function visibilityStatus()
+    public function visibilityStatus() : bool
     {
+        $showFrom = $this->start_date ? strtotime($this->start_date) : 0;
+        $hideFrom = $this->end_date ? strtotime($this->end_date) : 0;
         $currentTime = strtotime(date('Y-m-d H:i:s'));
-        if ($this->recurring_type == 'none') {
-            $showFrom = $this->start_date ? strtotime($this->start_date) : 0;
-            $hideFrom = $this->end_date ? strtotime($this->end_date) : 0;
-            return (($currentTime >= $showFrom) && ($currentTime <= $hideFrom)) ? true : false;
-        } else {
+
+        if (($currentTime >= $showFrom) && ($currentTime <= $hideFrom)) {
+            if ($this->recurring_type == 'none') {
+                return true;
+            }
+            // Returning false if recurring type is weekly and current day is out of scope
             if ($this->recurring_type == 'weekly') {
                 $weekdays = explode(',', $this->schedule->weekdays);
                 if (!in_array(strtolower(date('D')), $weekdays)) {
                     return false;
                 }
             }
+            // Returning false if recurring type is monthly and current date is out of scope
             if ($this->recurring_type == 'monthly') {
                 $monthDates = explode(',', $this->schedule->month_dates);
                 if (!in_array(date('j'), $monthDates)) {
@@ -67,9 +76,7 @@ class MyBlAppLaunchPopup extends Model
                     return true;
                 }
             }
-
-            return false;
         }
-
+        return false;
     }
 }

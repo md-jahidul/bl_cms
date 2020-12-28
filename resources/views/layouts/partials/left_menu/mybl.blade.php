@@ -60,13 +60,17 @@
         <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>
             <ul class="menu-content">
-                <li class="{{ is_active_match(route('app-launch.index'))}}">
+                <li class="{{ is_active_match(route('app-launch.report')) ? '' : is_active_match(route('app-launch.index')) }}">
                     <a class="menu-item" href="{{ route('app-launch.index') }}">
                         <i class="ft-alert-triangle"></i>App Launch Popup</a>
                 </li>
                 <li class="{{ is_active_match(route('recurring-schedule-hours.index'))}}">
                     <a class="menu-item" href="{{ route('recurring-schedule-hours.index') }}">
                         <i class="ft-clock"></i>Recurring Hours</a>
+                </li>
+                <li class="{{ is_active_match(route('app-launch.report'))}}">
+                    <a class="menu-item" href="{{ route('app-launch.report') }}">
+                        <i class="ft-list"></i>Purchase Report</a>
                 </li>
             </ul>
         </li>
@@ -293,6 +297,10 @@
                 <li class="{{ is_active_url('mybl/settings/lodge/complaints')}}">
                     <a class="menu-item" href="{{ route('lodge_complaints') }}">
                         <i class="la la-cog"></i>Lodge Complaints</a>
+                </li>
+                <li class="{{ is_active_url('mybl/settings/bandho/sim/list')}}">
+                    <a class="menu-item" href="{{ route('bandhosim.index') }}">
+                        <i class="la la-cog"></i>Bandho sim image</a>
                 </li>
 
             </ul>

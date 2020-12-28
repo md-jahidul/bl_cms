@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MyBlProduct;
 use App\Services\ProductCoreService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class AppLaunchPopupController
@@ -62,24 +63,31 @@ class AppLaunchPopupController extends Controller
      */
     public function index()
     {
-        $pop_ups = MyBlAppLaunchPopup::paginate(15);
+        $popups = MyBlAppLaunchPopup::where('status', 1)->paginate(15);
 
-        return view('admin.app-launch-popup.index', compact('pop_ups'));
+        return view('admin.app-launch-popup.index', compact('popups'));
     }
 
     /**
      * @param $popupId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit($popupId)
     {
-        $popup = MyBlAppLaunchPopup::find($popupId);
+        $popup = $this->appLaunchPopupService->findBy(['id' => $popupId, 'status' => 1])->first();
+        if (!$popup) {
+            return redirect()->route('app-launch.index')->with('error', 'Error! Popup Not Found');
+        }
         $productList = $this->getActiveProducts();
-        //ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
+        $dateRange = Carbon::parse($popup->start_date)->format('Y/m/d') . ' - ' .
+            Carbon::parse($popup->end_date)->format('Y/m/d');
         $hourSlots = $this->appLaunchPopupService->getHourSlots();
         $page = 'edit';
 
-        return view('admin.app-launch-popup.create', compact('popup', 'productList', 'hourSlots', 'page'));
+        return view(
+            'admin.app-launch-popup.create',
+            compact('popup', 'productList', 'hourSlots', 'page', 'dateRange')
+        );
     }
 
     /**
@@ -93,15 +101,24 @@ class AppLaunchPopupController extends Controller
             return redirect()->back()->with('success', 'Popup updated successfully.');
         }
         return redirect()->back()->with('error', 'Error! Popup not updated.');
-
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function destroy($id)
     {
-        $pop_up = MyBlAppLaunchPopup::findOrFail($id);
-        $pop_up->delete();
-
-        return redirect()->back()->with('success', 'Successfully Deleted');
+        $popup = $this->appLaunchPopupService->findOne($id);
+        if ($popup) {
+            $popup->update([
+                'status' => 0,
+                'title' => $popup->title . ' - deleted by user bearing id: ' . Auth::user()->id
+            ]);
+            return redirect()->back()->with('success', 'Popup Successfully Deleted');
+        }
+        return redirect()->back()->with('error', 'Popup Can Not Be Deleted!');
     }
 
     public function getActiveProducts()
@@ -112,7 +129,7 @@ class AppLaunchPopupController extends Controller
         $products = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data', 'voice', 'sms']);
+                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
             }
         )->get();
 
@@ -127,4 +144,26 @@ class AppLaunchPopupController extends Controller
 
         return $data;
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function report()
+    {
+        $popups = $this->appLaunchPopupService->findBy(['status' => 1, 'type' => 'purchase'], ['purchaseLog']);
+        return view('admin.app-launch-popup.report.index', compact('popups'));
+    }
+
+    public function reportDetail($popupId)
+    {
+        $popup = $this->appLaunchPopupService->findOne($popupId, ['purchaseLog']);
+        $popupPurchaseLog = $popup->purchaseLog ?? [];
+        $popupPurchaseLogDetails = optional($popup->purchaseLog)->details ?? [];
+
+        return view(
+            'admin.app-launch-popup.report.details',
+            compact('popup', 'popupPurchaseLog', 'popupPurchaseLogDetails')
+        );
+    }
+
 }
