@@ -764,20 +764,6 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-        if ($request->has('offer_section_slug')) {
-
-
-            foreach ($request->offer_section_slug as $offer_section_slug)
-            {
-               // $data['offer_section_slug'] = $offer_section_slug;
-                $offer = MyBlInternetOffersCategory::where('slug', $offer_section_slug)->first();
-                $offer_slug[$offer_section_slug] = $offer->name;
-
-               // $data['offer_section_title'] = $offer->name;
-            }
-
-
-        }
         $data['tag'] = $request->tag;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
@@ -790,12 +776,11 @@ class ProductCoreService
             $model->update($data);
 
 
-            foreach ($offer_slug as $key => $value) {
+            foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
                 $model_tab = MyBlProductTab::where('product_code', $product_code);
 
                 $data_section_slug['product_code'] = $product_code;
-                $data_section_slug['offer_section_slug'] = $key;
-                $data_section_slug['offer_section_title'] = $value;
+                $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
 
                 $model_tab->updateOrCreate($data_section_slug);
             }

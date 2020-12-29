@@ -34,4 +34,18 @@ class MyBlProduct extends Model
         return $this->hasMany(MyBlProductTab::class, 'product_code', 'product_code');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function detialTabs()
+    {
+        return $this->hasManyThrough(
+            MyBlInternetOffersCategory::class,
+            MyBlProductTab::class,
+            'product_code',
+            'id',
+            'product_code',
+            'my_bl_internet_offers_category_id'
+        );
+    }
 }

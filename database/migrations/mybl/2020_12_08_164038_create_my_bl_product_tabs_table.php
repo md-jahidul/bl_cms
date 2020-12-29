@@ -16,10 +16,13 @@ class CreateMyBlProductTabsTable extends Migration
         Schema::create('my_bl_product_tabs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_code');
-            $table->string('offer_section_slug')->nullable();
-            $table->string('offer_section_title')->nullable();
+            $table->integer('my_bl_internet_offers_category_id');
 
             $table->timestamps();
+
+            $table->index('product_code');
+            $table->index('my_bl_internet_offers_category_id');
+
         });
     }
 
