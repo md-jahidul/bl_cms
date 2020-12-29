@@ -10,6 +10,10 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use  App\Services\FirebaseDeepLinkService;
+use  App\Repositories\ProductDeepLinkRepository;
+use DataTables;
+
+//use Yajra\DataTables\EloquentDataTable;
 
 class ProductDeepLinkService
 {
@@ -20,12 +24,15 @@ class ProductDeepLinkService
      * @var $firebaseDeepLinkService
      */
     protected $firebaseDeepLinkService;
+    protected $productDeepLinkRepository;
 
     public function __construct(
-        FirebaseDeepLinkService $firebaseDeepLinkService
+        FirebaseDeepLinkService $firebaseDeepLinkService,
+        ProductDeepLinkRepository $productDeepLinkRepository
     )
     {
         $this->firebaseDeepLinkService = $firebaseDeepLinkService;
+        $this->productDeepLinkRepository = $productDeepLinkRepository;
     }
 
 
@@ -70,50 +77,33 @@ class ProductDeepLinkService
 
     /**
      * @param $request
-     * @return array
-     * @author  Ahsan Habib
+     * @return mixed
      */
     public function getProductDeepLinkListReport($request)
     {
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $length = $request->get('length');
-
-        $builder = new ProductDeepLink();
-        $builder->orderBy('id', 'desc');
-
-        if ($request->has('search') && !empty($request->get('search'))) {
-            $input = $request->get('search');
-            if (!empty($input['value'])) {
-                $product_code = $input['value'];
-                $all_items_count = $builder->where('product_code', 'LIKE', "%{$product_code}%")->count();
-                $items = $builder->where('product_code', 'LIKE', "%{$product_code}%")->skip($start)->take($length)->get();
-            } else {
-
-                $all_items_count = $builder->count();
-                $items = $builder->skip($start)->take($length)->get();
-            }
-        }
-        $response = [
-            'draw' => $draw,
-            'recordsTotal' => $all_items_count,
-            'recordsFiltered' => $all_items_count,
-            'data' => []
-        ];
-        $items->each(function ($item) use (&$response) {
-            $created_at = date('d-M-Y', strtotime($item->created_at));
-            $total_view = $item->total_cancel + $item->total_buy + $item->buy_attempt;
-            $response['data'][] = [
-                'id' => $item->id,
-                'product_code' => $item->product_code,
-                'deep_link' => $item->deep_link,
-                'total_view' => $total_view,
-                'total_buy' => $item->total_buy,
-                'total_cancel' => $item->total_cancel,
-                'buy_attempt' => $item->buy_attempt,
-                'date' => $created_at];
-        });
-        return $response;
+        $model = ProductDeepLink::query();
+        return DataTables::eloquent($model)
+            ->filter(function ($query) {
+                if (request()->has('searchByFromdate') && request()->has('searchByFromdate') && !empty(request()->input('searchByFromdate')) && !empty(request()->input('searchByTodate'))) {
+                    $datefrom = request()->input('searchByFromdate') . ' 00:00:00';
+                    $dateto = request()->input('searchByTodate') . ' 23:59:59';
+                    $query->whereBetween('created_at', [$datefrom, $dateto]);
+                }
+            }, true)
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($data) {
+                return date('d-m-Y', strtotime($data->created_at));
+            })
+            ->addColumn('total_view', function ($data) {
+                return $data->total_buy + $data->total_cancel + $data->buy_attempt;
+            })
+            ->addColumn('action', function ($row) {
+                $url = url('deeplink-product-purchase-details');
+                $actionBtn = '<a href="' . $url . '/' . $row->id . '" class="edit btn btn-success btn-sm">view</a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['created_at', 'action'])
+            ->make(true);
     }
 
     /**
@@ -123,7 +113,7 @@ class ProductDeepLinkService
      */
     public function getProductDeepLinkDetailsReport($request, $productDeeplinkDbId)
     {
-        
+
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');

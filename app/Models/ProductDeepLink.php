@@ -13,5 +13,6 @@ class ProductDeepLink extends Model
         'total_buy',
         'total_cancel',
         'buy_attempt',
+        'created_at'
     ];
 }

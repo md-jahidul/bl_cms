@@ -47,9 +47,9 @@ class ProductDeepLinkController extends Controller
 
     /**
      * @param Request $request
-     * @return array
+     * @return mixed
      */
-    public function data(Request $request): array
+    public function data(Request $request)
     {
         return $this->productDeepLinkService->getProductDeepLinkListReport($request);
     }
