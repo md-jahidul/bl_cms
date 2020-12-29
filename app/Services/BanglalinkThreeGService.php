@@ -89,9 +89,11 @@ class BanglalinkThreeGService
                 }
             }
             $data['other_attributes'] = $new_multiple_attributes;
+
+
             $bannerImage->update($data);
         }
-        return Response('Banner Image update successfully!!');
+        return Response('3G page info update successfully!!');
     }
 
 }
