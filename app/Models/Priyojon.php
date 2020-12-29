@@ -16,6 +16,9 @@ class Priyojon extends Model
         'url',
         'url_slug_en',
         'url_slug_bn',
+        'page_header',
+        'page_header_bn',
+        'schema_markup',
         'status'
     ];
 }

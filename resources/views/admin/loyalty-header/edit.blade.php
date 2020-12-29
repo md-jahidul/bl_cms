@@ -77,6 +77,21 @@
                                         @endif
                                     </div>
 
+                                    <div class="form-group col-md-6">
+                                        <label>Page Header</label>
+                                        <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonLanding->page_header }}</textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>Page Header BN</label>
+                                        <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>Schema Markup</label>
+                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <label></label>
                                         <div class="form-group">
