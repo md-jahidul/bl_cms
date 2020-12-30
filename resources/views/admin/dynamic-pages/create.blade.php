@@ -27,6 +27,7 @@
                             $pageContentEn = "";
                             $pageContentBn = "";
                             $urlSlug = "";
+                            $urlSlugBn = "";
                             $desktopImg = null;
                             $mobileImg = null;
                             $altText = "";
@@ -41,6 +42,7 @@
                                 $pageContentEn = $page->page_content_en;
                                 $pageContentBn = $page->page_content_bn;
                                 $urlSlug = $page->url_slug;
+                                $urlSlugBn = $page->url_slug_bn;
                                 $desktopImg = $page->banner_image_url;
                                 $mobileImg = $page->banner_mobile_view;
                                 $altText = $page->alt_text;
@@ -53,19 +55,19 @@
 
                             <input type="hidden" name="page_id" value="{{$pageId}}">
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label class="required">Page Name (EN)</label>
                                 <input type="text" name="page_name_en" required value="{{$nameEn}}"  class="form-control">
                                 <div class="help-block"></div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label class="required">Page Name (BN)</label>
                                 <input type="text" name="page_name_bn" required value="{{$nameBn}}"  class="form-control">
                                 <div class="help-block"></div>
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                <label> URL (url slug) <span class="text-danger">*</span></label>
+                            <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label>English URL (url slug) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{ $urlSlug }}" name="url_slug"
                                        required placeholder="URL">
                                 <div class="help-block"></div>
@@ -74,6 +76,19 @@
                                 </small>
                                 @if ($errors->has('url_slug'))
                                     <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label>Bangla URL (url slug) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ $urlSlugBn }}" name="url_slug_bn"
+                                       required placeholder="URL bangla">
+                                <div class="help-block"></div>
+                                <small class="text-info">
+                                    <strong>i.e:</strong> page-name (no spaces)<br>
+                                </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
                                 @endif
                             </div>
 
@@ -151,7 +166,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{ $pageHeader }}</textarea>
                                 <small class="text-info">
@@ -159,7 +174,7 @@
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
                                 <label>Page Header Bangla (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header_bn">{{ $pageHeaderBn }}</textarea>
                                 <small class="text-info">
@@ -167,25 +182,13 @@
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Schema Markup</label>
                                 <textarea class="form-control" rows="7" name="schema_markup">{{ $schemaMarkup }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
                             </div>
-
-                                {{--                            <div class="form-group col-md-12">--}}
-{{--                                <label for="details_bn" class="required">Page HTML/Content (EN)</label>--}}
-{{--                                <textarea type="text" name="page_content_en"  class="form-control tinymce">{{$contentEn}}</textarea>--}}
-{{--                                <div class="help-block"></div>--}}
-
-{{--                            </div>--}}
-{{--                            <div class="form-group col-md-12">--}}
-{{--                                <label for="details_bn" class="required">Page HTML/Content (BN)</label>--}}
-{{--                                <textarea type="text" name="page_content_bn"  class="form-control tinymce">{{$contentBn}}</textarea>--}}
-{{--                                <div class="help-block"></div>--}}
-{{--                            </div>--}}
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">

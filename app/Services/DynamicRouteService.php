@@ -61,6 +61,10 @@ class DynamicRouteService
      */
     public function updateRoute($request, $id)
     {
+        request()->validate([
+            'url' => 'required|unique:front_end_dynamic_routes,url,' . $id,
+        ]);
+
         $data = $request->all();
         $route = $this->findOne($id);
         $data['code'] = str_replace(' ', '', $data['code']);
