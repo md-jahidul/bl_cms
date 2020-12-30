@@ -47,7 +47,7 @@ class ProductDeepLinkController extends Controller
 
     /**
      * @param Request $request
-     * @return mixed
+     * @return mixedgetDetails
      */
     public function data(Request $request)
     {
