@@ -5,14 +5,13 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Requests\AppLaunchPopupStoreRequest;
 use App\Http\Requests\AppLaunchPopupUpdateRequest;
 use App\Models\MyBlAppLaunchPopup;
+use App\Services\AppLaunchPopupService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
-use App\Models\ProductCore;
 use App\Services\ProductCoreService;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class AppLaunchPopupController
@@ -20,145 +19,106 @@ use App\Services\ProductCoreService;
  */
 class AppLaunchPopupController extends Controller
 {
-    public function __construct(ProductCoreService $service)
+    /**
+     * @var AppLaunchPopupService
+     */
+    private $appLaunchPopupService;
+
+    /**
+     * AppLaunchPopupController constructor.
+     * @param ProductCoreService $service
+     * @param AppLaunchPopupService $appLaunchPopupService
+     */
+    public function __construct(ProductCoreService $service, AppLaunchPopupService $appLaunchPopupService)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->appLaunchPopupService = $appLaunchPopupService;
     }
 
     public function create()
     {
+        $productList = $this->getActiveProducts();
+        $hourSlots = $this->appLaunchPopupService->getHourSlots();
+        $page = 'create';
 
-        $produc=$this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
-        $productList=$produc;
-        // dd($productList);
-        return view('admin.app-launch-popup.create', compact('productList'));
+        return view('admin.app-launch-popup.create', compact('productList', 'hourSlots', 'page'));
     }
 
+    /**
+     * @param AppLaunchPopupStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(AppLaunchPopupStoreRequest $request)
     {
-        $type = $request->type;
-        if ($type=='image') {
-            if (!$request->hasFile('content_data')) {
-                return redirect()->back()->with('error', 'Image is required');
-            }
-            // upload the image
-            $file = $request->content_data;
-            $path = $file->storeAs(
-                'app-launch-popup/images',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-
-            $data['content'] = $path;
-        }elseif($type=='purchase'){
-            if (!$request->hasFile('content_data')) {
-                return redirect()->back()->with('error', 'Image is required');
-            }
-            // upload the image
-            $file = $request->content_data;
-            $path = $file->storeAs(
-                'app-launch-popup/images',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-
-            $data['content'] = $path;
-        } else {
-            $data['content'] = $request->input('content_data');
-
+        if ($this->appLaunchPopupService->storeOrUpdate($request->all())) {
+            return redirect()->back()->with('success', 'Popup added successfully.');
         }
 
-        // start date end date
-        $date_range_array = explode('-', $request->input('display_period'));
-        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-                               ->toDateTimeString();
-        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-                             ->toDateTimeString();
-
-        $data['type'] = $type;
-        $data['title'] = $request->title;
-        if(isset($request->product_code)){
-            $data['product_code']=$request->product_code;
-        }
-        $data['created_by'] = auth()->id();
-
-        MyBlAppLaunchPopup::create($data);
-
-        return redirect()->back()->with('success', 'Successfully Saved');
+        return redirect()->back()->with('error', 'Error! Popup not saved.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $pop_ups = MyBlAppLaunchPopup::paginate(15);
+        $popups = MyBlAppLaunchPopup::where('status', 1)->paginate(15);
 
-        return view('admin.app-launch-popup.index', compact('pop_ups'));
+        return view('admin.app-launch-popup.index', compact('popups'));
     }
 
-    public function edit(MyBlAppLaunchPopup $pop_up)
+    /**
+     * @param $popupId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function edit($popupId)
     {
-        $empty=[''=>'Please Select'];
-        $productList= $this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
-        return view('admin.app-launch-popup.edit', compact('pop_up','productList'));
+        $popup = $this->appLaunchPopupService->findBy(['id' => $popupId, 'status' => 1])->first();
+        if (!$popup) {
+            return redirect()->route('app-launch.index')->with('error', 'Error! Popup Not Found');
+        }
+        $productList = $this->getActiveProducts();
+        $dateRange = Carbon::parse($popup->start_date)->format('Y/m/d') . ' - ' .
+            Carbon::parse($popup->end_date)->format('Y/m/d');
+        $hourSlots = $this->appLaunchPopupService->getHourSlots();
+        $page = 'edit';
+
+        return view(
+            'admin.app-launch-popup.create',
+            compact('popup', 'productList', 'hourSlots', 'page', 'dateRange')
+        );
     }
 
+    /**
+     * @param AppLaunchPopupUpdateRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(AppLaunchPopupUpdateRequest $request, $id)
     {
-        $all=$request->all();
-        $type = $request->type;
-        if ($type=='image') {
-            if ($request->hasFile('content_data')) {
-                // upload the image
-                $file = $request->content_data;
-                $path = $file->storeAs(
-                    'app-launch-popup/images',
-                    strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                    'public'
-                );
-
-                $data['content'] = $path;
-            }
-        } elseif($type=='purchase'){
-            if ($request->hasFile('content_data')) {
-                // upload the image
-                $file = $request->content_data;
-                $path = $file->storeAs(
-                    'app-launch-popup/images',
-                    strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                    'public'
-                );
-
-                $data['content'] = $path;
-            }
-        } else {
-            $data['content'] = $request->input('content_data');
+        if ($this->appLaunchPopupService->storeOrUpdate($request->all(), $id)) {
+            return redirect()->back()->with('success', 'Popup updated successfully.');
         }
-
-        $date_range_array = explode('-', $request->input('display_period'));
-        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-                                  ->toDateTimeString();
-        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-                                 ->toDateTimeString();
-
-        $data['type'] = $type;
-        $data['title'] = $request->title;
-        if(isset($request->product_code)){
-            $data['product_code']=$request->product_code;
-        }
-        $pop_up = MyBlAppLaunchPopup::find($id);
-
-        $pop_up->update($data);
-
-        return redirect()->back()->with('success', 'Successfully Updated');
+        return redirect()->back()->with('error', 'Error! Popup not updated.');
     }
 
-
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function destroy($id)
     {
-        $pop_up = MyBlAppLaunchPopup::findOrFail($id);
-        $pop_up->delete();
-
-        return redirect()->back()->with('success', 'Successfully Deleted');
+        $popup = $this->appLaunchPopupService->findOne($id);
+        if ($popup) {
+            $popup->update([
+                'status' => 0,
+                'title' => $popup->title . ' - deleted by user bearing id: ' . Auth::user()->id
+            ]);
+            return redirect()->back()->with('success', 'Popup Successfully Deleted');
+        }
+        return redirect()->back()->with('error', 'Popup Can Not Be Deleted!');
     }
 
     public function getActiveProducts()
@@ -169,19 +129,41 @@ class AppLaunchPopupController extends Controller
         $products = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data','voice','sms']);
+                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
             }
         )->get();
 
-        $data =[]; //[''=>'Please Select'];
+        $data = []; //[''=>'Please Select'];
 
         foreach ($products as $product) {
-            $data[] =[
-                'id'    => $product->details->product_code,
-                'text' =>  '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+            $data[] = [
+                'id' => $product->details->product_code,
+                'text' => '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
             ];
         }
 
         return $data;
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function report()
+    {
+        $popups = $this->appLaunchPopupService->findBy(['status' => 1, 'type' => 'purchase'], ['purchaseLog']);
+        return view('admin.app-launch-popup.report.index', compact('popups'));
+    }
+
+    public function reportDetail($popupId)
+    {
+        $popup = $this->appLaunchPopupService->findOne($popupId, ['purchaseLog']);
+        $popupPurchaseLog = $popup->purchaseLog ?? [];
+        $popupPurchaseLogDetails = optional($popup->purchaseLog)->details ?? [];
+
+        return view(
+            'admin.app-launch-popup.report.details',
+            compact('popup', 'popupPurchaseLog', 'popupPurchaseLogDetails')
+        );
+    }
+
 }

@@ -18,7 +18,6 @@
                     <form id="product_form" role="form" action="{{ route('app-service-product.store') }}" method="POST" novalidate enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-
                             <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                 <label for="offer_category_id" class="required">App & Service Type</label>
                                 <select class="form-control required" name="app_service_tab_id" id="offer_type"
@@ -41,7 +40,7 @@
                                 </select>
                                 <div class="help-block"></div>
                                 @if ($errors->has('app_service_cat_id'))
-                                <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
+                                    <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
                                 @endif
                             </div>
 
@@ -65,17 +64,16 @@
                                 @endif
                             </div>
 
-
                             <div class="form-group col-md-6 ">
                                 <label for="description_en">Description (English)</label>
-                                <textarea type="text" name="description_en" id="vat" class="form-control text_editor" placeholder="Enter description in English"
+                                <textarea type="text" name="description_en" id="vat" class="form-control summernote_editor" placeholder="Enter description in English"
                                           >{{ old("description_en") ? old("description_en") : '' }}</textarea>
                                 <div class="help-block"></div>
                             </div>
 
                             <div class="form-group col-md-6 ">
                                 <label for="description_bn">Description (Bangla)</label>
-                                <textarea type="text" name="description_bn" id="vat" class="form-control text_editor" placeholder="Enter description in Bangla"
+                                <textarea type="text" name="description_bn" id="vat" class="form-control summernote_editor" placeholder="Enter description in Bangla"
                                           >{{ old("description_bn") ? old("description_bn") : '' }}</textarea>
                                 <div class="help-block"></div>
                             </div>
@@ -143,7 +141,7 @@
                             </div>
 
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header"></textarea>
                                 <small class="text-info">
@@ -151,7 +149,7 @@
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
                                 <label>Page Header Bangla (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header_bn"></textarea>
                                 <small class="text-info">
@@ -159,7 +157,7 @@
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Schema Markup</label>
                                 <textarea class="form-control" rows="7" name="schema_markup"></textarea>
                                 <small class="text-info">
@@ -235,18 +233,18 @@ $(function () {
     });
 
 //text editor for package details
-    $("textarea.text_editor").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 200
-    });
+//     $("textarea.text_editor").summernote({
+//         toolbar: [
+//             ['style', ['bold', 'italic', 'underline', 'clear']],
+//             ['font', ['strikethrough', 'superscript', 'subscript']],
+//             ['fontsize', ['fontsize']],
+//             ['color', ['color']],
+//             // ['table', ['table']],
+//             ['para', ['ul', 'ol', 'paragraph']],
+//             ['view', ['codeview']]
+//         ],
+//         height: 200
+//     });
 });
 </script>
 @endpush
