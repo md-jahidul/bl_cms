@@ -37,7 +37,7 @@
                             <th width="5%">ID</th>
                             <th width="15%">Msisdn</th>
                             <th width="12%">Action Type</th>
-                            <th width="10%">Action Status</th>
+{{--                            <th width="10%">Action Status</th>--}}
                             <th width="30%">Action URL</th>
                             <th width="15%">Date</th>
                         </tr>
@@ -60,6 +60,15 @@
         table.dataTable tbody td {
             max-height: 40px;
         }
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right;
+            margin-top: -52px;
+        }
+        .dt-buttons.btn-group {
+            text-align: center;
+            margin-bottom: 2px;
+            /*margin-left: 27%;*/
+        }
     </style>
 @endpush
 @push('page-js')
@@ -76,6 +85,21 @@
                 autoWidth: false,
                 pageLength: 10,
                 ordering: false,
+                dom: 'Blfrtip',
+                buttons:  [
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [ 1,2,3,4 ]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [ 1,2,3,4 ]
+                        }
+                    }
+                ],
                 // dataType: "json",
                 ajax: {
                     url: '{{ route('deeplink-product-purchase-details') }}/'+productCodeId,
@@ -108,12 +132,14 @@
                             return row.action_type;
                         }
                     },
+                    // {
+                    //     name: 'action_status',
+                    //     render: function (data, type, row) {
+                    //         return row.action_status;
+                    //     }
+                    // },
+
                     {
-                        name: 'action_status',
-                        render: function (data, type, row) {
-                            return row.action_status;
-                        }
-                    },{
                         name: 'action_url',
                         render: function (data, type, row) {
                             return row.action_url;
