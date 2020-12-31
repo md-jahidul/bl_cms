@@ -167,7 +167,7 @@
                             <div class="row">
                                 @if(strtolower($details->details->content_type) == 'data')
                                     @php
-                                        $tabs = $details->detialTabs->pluck('id')->toArray() ?? [];
+                                        $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
                                     @endphp
                                     {{-- <div class="col-md-4">
                                          <div class="form-group">

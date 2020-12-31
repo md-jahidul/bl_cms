@@ -48,7 +48,7 @@ class ProductCoreService
     protected $productCoreRepository;
     protected $searchRepository;
     protected $tagRepository;
-    protected  $productDeepLinkRepository;
+    protected $productDeepLinkRepository;
 
     /**
      * @var array
@@ -57,9 +57,9 @@ class ProductCoreService
 
     /**
      * ProductCoreService constructor.
-     * @param  ProductCoreRepository  $productCoreRepository
-     * @param  SearchDataRepository  $searchRepository
-     * @param  TagCategoryRepository  $tagRepository
+     * @param ProductCoreRepository $productCoreRepository
+     * @param SearchDataRepository $searchRepository
+     * @param TagCategoryRepository $tagRepository
      * @param ProductDeepLinkRepository $productDeepLinkRepository
      */
     public function __construct(
@@ -194,7 +194,7 @@ class ProductCoreService
                 foreach ($sheet->getRowIterator() as $row) {
                     $core_data = [];
                     $mybl_data = [];
-                    $mybl_data_tab = [];
+                    $productTabs = [];
 
                     if ($row_number != 1) {
                         $cells = $row->getCells();
@@ -277,12 +277,23 @@ class ProductCoreService
                                 case "offer_section_title":
                                     $title = $cells [$index]->getValue();
                                     if ($title != '') {
-                                        $mybl_data[$field] = $title;
-                                        $mybl_data['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
+                                        $titleArr = explode(',', $title);
+                                        $mybl_data[$field] = $titleArr[0];
+                                        $mybl_data['offer_section_slug'] = str_replace(' ', '_',
+                                            strtolower($titleArr[0]));
 
-                                        $mybl_data_tab[$field] = $title;
-                                        $mybl_data_tab['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
-
+                                        if (strtolower($core_data['content_type']) === 'data') {
+                                            $productCode = $core_data['product_code'];
+                                            $productTabs = MyBlInternetOffersCategory::select('id')
+                                                ->whereIn('name', $titleArr)
+                                                ->get()
+                                                ->each(function ($item) use ($productCode) {
+                                                    $item->product_code = $productCode;
+                                                    $item->my_bl_internet_offers_category_id = $item->id;
+                                                    unset($item->id);
+                                                    return $item;
+                                                })->toArray();
+                                        }
                                     }
                                     break;
                                 case "tag":
@@ -319,7 +330,6 @@ class ProductCoreService
                                 $core_data['platform'] = 'app';
                             }
 
-
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
                             ], $core_data);
@@ -328,13 +338,20 @@ class ProductCoreService
                                 'product_code' => $product_code
                             ], $mybl_data);
 
-                            MyBlProductTab::updateOrCreate([
-                                'product_code' => $product_code
-                            ], $mybl_data_tab);
+                            if (count($productTabs)) {
+                                Log::info('Hello here : ' . json_encode($productTabs));
+                                MyBlProductTab::where('product_code', $product_code)->delete();
+
+                                foreach ($productTabs as $productTab) {
+                                    $productTabInsert = new MyBlProductTab();
+                                    $productTabInsert->product_code = $productTab['product_code'];
+                                    $productTabInsert->my_bl_internet_offers_category_id = $productTab['my_bl_internet_offers_category_id'];
+                                    $productTabInsert->save();
+                                }
+                            }
 
                         } catch (Exception $e) {
-                            Log::info('Error:' . $e->getMessage());
-                            dd($e->getMessage());
+                            Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
                             continue;
                         }
                     }
@@ -344,8 +361,7 @@ class ProductCoreService
             $reader->close();
             return true;
         } catch (Exception $e) {
-            dd($e->getMessage());
-            Log::error('Product Entry Error' . $e->getMessage());
+            Log::error('Product Entry Error: ' . $e->getMessage());
             return 0;
         }
     }
@@ -414,7 +430,7 @@ class ProductCoreService
         $items->each(function ($item) use (&$response) {
             $activeSchedule = $item->scheduleStatus() ? config('productMapping.mybl.product_schedule_statuses.'
                 . $item->scheduleStatus()) : 'Shown';
-            $link=$this->productDeepLinkRepository->findOneProductLink($item->product_code);
+            $link = $this->productDeepLinkRepository->findOneProductLink($item->product_code);
             $response['data'][] = [
                 'product_code' => $item->product_code,
                 'renew_product_code' => $item->details->renew_product_code,
@@ -431,7 +447,7 @@ class ProductCoreService
                 'is_visible' => $item->is_visible ? $activeSchedule : 'Hidden',
                 'show_from' => $item->show_from ? Carbon::parse($item->show_from)->format('d-m-Y h:i A') : '',
                 'hide_from' => $item->hide_from ? Carbon::parse($item->hide_from)->format('d-m-Y h:i A') : '',
-                'deep_link'=>!empty($link->deep_link)?$link->deep_link:null,
+                'deep_link' => !empty($link->deep_link) ? $link->deep_link : null,
 
             ];
         });
@@ -799,16 +815,17 @@ class ProductCoreService
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
 
+            if ($request->has('offer_section_slug')) {
+                MyBlProductTab::where('product_code', $product_code)->delete();
+                foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
+                    $model_tab = MyBlProductTab::where('product_code', $product_code);
 
-            foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
-                $model_tab = MyBlProductTab::where('product_code', $product_code);
+                    $data_section_slug['product_code'] = $product_code;
+                    $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
 
-                $data_section_slug['product_code'] = $product_code;
-                $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
-
-                $model_tab->updateOrCreate($data_section_slug);
+                    $model_tab->updateOrCreate($data_section_slug);
+                }
             }
-
 
             $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
 
@@ -881,7 +898,7 @@ class ProductCoreService
 
     public function downloadMyblProducts()
     {
-        $products = MyBlProduct::whereHas('details')->with('details')->where('status', 1)->get();
+        $products = MyBlProduct::whereHas('details')->with('details', 'detailTabs')->where('status', 1)->get();
 
         $products = $products->sortBy('details.content_type');
 
@@ -943,7 +960,10 @@ class ProductCoreService
                 $insert_data[19] = $product->details->vat;
                 $insert_data[20] = ($product->show_recharge_offer) ? 'Yes' : 'No';
                 $insert_data[21] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
-                $insert_data[22] = $product->offer_section_title;
+                $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
+                    ',',
+                    $product->detailTabs->pluck('name')->toArray()
+                ) ?: $product->offer_section_title);
                 $insert_data[23] = $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
@@ -953,8 +973,6 @@ class ProductCoreService
                 $insert_data[29] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
                 $insert_data[30] = ($product->status) ? 'Yes' : 'No';
 
-
-
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
@@ -963,7 +981,9 @@ class ProductCoreService
             }
         }
 
-        Log::info(json_encode($problem));
+        if (count($problem)) {
+            Log::info(json_encode($problem));
+        }
         $writer->close();
     }
 

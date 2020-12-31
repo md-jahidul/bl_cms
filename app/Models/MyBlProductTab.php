@@ -11,5 +11,5 @@ class MyBlProductTab extends Model
      *
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $fillable = ['product_code', 'my_bl_internet_offers_category_id'];
 }

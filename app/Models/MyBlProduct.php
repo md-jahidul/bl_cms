@@ -56,9 +56,9 @@ class MyBlProduct extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function detialTabs()
+    public function detailTabs()
     {
         return $this->hasManyThrough(
             MyBlInternetOffersCategory::class,
