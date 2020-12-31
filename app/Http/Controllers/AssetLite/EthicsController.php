@@ -21,7 +21,7 @@ class EthicsController extends Controller {
 
     /**
      * Display page info and list of files
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 22/06/2020
@@ -33,17 +33,16 @@ class EthicsController extends Controller {
         return view('admin.ethics.index', compact('pageInfo', 'files'));
     }
 
- 
+
 
     /**
      * Update category
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 20/03/2020
      */
     public function updatePageInfo(Request $request) {
-
         $response = $this->service->updatePageInfo($request);
 
         if ($response['success'] == 1) {
@@ -57,7 +56,7 @@ class EthicsController extends Controller {
 
     /**
      * Save ethics file
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 22/06/2020
@@ -74,13 +73,13 @@ class EthicsController extends Controller {
 
         return redirect('/ethics-compliance');
     }
-    
-    
-    
+
+
+
 
     /**
      * File Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 22/06/2020
@@ -92,7 +91,7 @@ class EthicsController extends Controller {
 
     /**
      * File status Change.
-     * 
+     *
      * @param  $fileId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 22/06/2020
@@ -104,7 +103,7 @@ class EthicsController extends Controller {
 
     /**
      * Get single file's data
-     * 
+     *
      * @param  $fileId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/06/2020
@@ -118,16 +117,16 @@ class EthicsController extends Controller {
 
     /**
      * file delete.
-     * 
+     *
      * @param $fileId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/06/2020
      */
     public function fileDelete($fileId) {
-        
+
 
         $response = $this->service->deleteEthicsFile($fileId);
-        
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'File is deleted!');
         } else {
