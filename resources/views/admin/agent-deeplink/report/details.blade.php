@@ -82,7 +82,6 @@
         .add-button {
             margin-top: 1.9rem !important;
         }
-
         .filter_data {
             text-align: right;
         }
@@ -90,7 +89,6 @@
         .dataTable {
             width: 100% !important;
         }
-
         .dt-buttons.btn-group {
             margin-bottom: 2px;
         }
