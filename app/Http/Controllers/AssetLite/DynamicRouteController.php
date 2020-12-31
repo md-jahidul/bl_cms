@@ -111,4 +111,15 @@ class DynamicRouteController extends Controller
         }
         session()->flash('message', "Failed! Please try again");
     }
+
+    /**
+     * @param $id
+     * @return UrlGenerator|string
+     */
+    public function destroy($id)
+    {
+        $response = $this->dynamicRouteService->deleteDynamicRoute($id);
+        Session::flash('message', $response->getContent());
+        return url(route('dynamic-routes.index'));
+    }
 }

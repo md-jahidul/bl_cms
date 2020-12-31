@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAdditionalFieldInPriyojonsTable extends Migration
+class AddDeletedAtColumnInFrontEndDynamicRoutes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddAdditionalFieldInPriyojonsTable extends Migration
      */
     public function up()
     {
-        Schema::table('priyojons', function (Blueprint $table) {
-            $table->string('title_bn')->nullable()->change();
-            $table->tinyInteger('status')->default(1)->after('alias');
+        Schema::table('front_end_dynamic_routes', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -26,8 +25,8 @@ class AddAdditionalFieldInPriyojonsTable extends Migration
      */
     public function down()
     {
-        Schema::table('priyojons', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('front_end_dynamic_routes', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
 }

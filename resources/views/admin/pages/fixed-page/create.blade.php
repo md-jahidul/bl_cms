@@ -30,8 +30,8 @@
                                     </div>
 
                                     <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                        <label for="title" class="required">Title</label>
-                                        <select name="dynamic_route_key" class="form-control">
+                                        <label for="title" class="required">Page URL</label>
+                                        <select name="dynamic_route_key" class="select2 form-control" id="data-type">
                                             <option value="">---Select Route---</option>
                                             @foreach($dynamicRoutes as $route)
                                                 <option value="{{ $route->key }}">{{ $route->url }}</option>

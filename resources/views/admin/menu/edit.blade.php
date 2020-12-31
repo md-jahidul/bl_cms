@@ -68,7 +68,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }} {{ ($menu->external_site == 1) ? 'd-none' : '' }}" id="pageDynamic">
                                     <label for="code">Page URL</label>
-                                    <select class="form-control" name="code">
+                                    <select class="select2 form-control" name="code">
                                         <option value="">---Select Page---</option>
                                         @foreach($dynamicRoutes as $route)
                                             <option value="{{ $route->key }}" {{ ($route->key == $menu->code) ? 'selected' : '' }}>{{ $route->url }}</option>
