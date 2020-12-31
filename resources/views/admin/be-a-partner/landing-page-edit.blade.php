@@ -173,24 +173,6 @@
                                 <h5><strong>Be A Partner SEO Page Info</strong></h5>
                                 <div class="form-actions col-md-12 mt-0"></div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label> URL (English) <span class="text-danger">*</span></label>
-                                    <input type="text" name="url_slug_en" class="form-control" value="{{ isset($beAPartner->url_slug_en) ? $beAPartner->url_slug_en : null }}"
-                                           required placeholder="Enter URL in English" id="url_slug">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
-                                    </small>
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL (Bangla) <span class="text-danger">*</span></label>
-                                    <input type="text" name="url_slug_bn" class="form-control" value="{{ isset($beAPartner->url_slug_bn) ? $beAPartner->url_slug_bn : null }}"
-                                           required placeholder="Enter URL in Bangla" id="url_slug">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
-                                    </small>
-                                </div>
-
                                 <div class="form-group col-md-4 {{ $errors->has('page_header') ? ' error' : '' }}">
                                     <label>Page Header (HTML)</label>
                                     <textarea class="form-control" rows="7" name="page_header">{{ isset($beAPartner->page_header) ? $beAPartner->page_header : null }}</textarea>
