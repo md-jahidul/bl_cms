@@ -72,30 +72,53 @@
                                     <div class="col-md-6 col-xs-12">
                                         <label for="Title">Title (EN)<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control title" required name="title" placeholder="Title EN">
+                                        @if($errors->has('title'))
+                                            <div class="help-block text-danger">{{ $errors->first('title') }}</div>
+                                        @endif
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <label for="Title">Title (BN)<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control title_bn" required name="title_bn" placeholder="Title BN">
+                                        @if($errors->has('title_bn'))
+                                            <div class="help-block text-danger">{{ $errors->first('title_bn') }}</div>
+                                        @endif
                                     </div>
 
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-md-6 col-xs-12">
+                                    <div class="col-md-6 col-xs-12 mb-1">
                                         <label for="Icon">Icon <span class="text-danger">*</span></label>
                                         <input type="file" class="dropify_feature" name="feature_icon" data-height="70"
                                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
 
                                     <div class="col-md-6 col-xs-12">
-                                        <label>Alt Text<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control alt_text" required name="alt_text" placeholder="Alt Text">
+                                        <label>Icon Name EN<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control icon_name_en" required name="icon_name_en" placeholder="Icon Name EN">
+                                        @if($errors->has('icon_name_en'))
+                                            <div class="help-block text-danger">{{ $errors->first('icon_name_en') }}</div>
+                                        @endif
                                     </div>
 
+                                    <div class="col-md-6 col-xs-12 mb-1">
+                                        <label>Icon Name BN<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control icon_name_bn" required name="icon_name_bn" placeholder="Icon Name BN">
+                                        @if($errors->has('icon_name_bn'))
+                                            <div class="help-block text-danger">{{ $errors->first('icon_name_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Alt Text EN<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control alt_text" required name="alt_text" placeholder="Alt Text EN">
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Alt Text BN<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control alt_text_bn" required name="alt_text_bn" placeholder="Alt Text BN">
+                                    </div>
                                 </div>
-
-
-
                                 <div class="form-group text-right">
                                     <button class="btn btn-sm btn-info news_submit" type="submit">Save News</button>
                                 </div>
@@ -237,7 +260,10 @@
                     $('.home_feature_form .title').val(result.title);
                     $('.home_feature_form .title_bn').val(result.title_bn);
                     $('.home_feature_form .old_photo').val(result.icon_url);
+                    $('.home_feature_form .icon_name_en').val(result.icon_name_en);
+                    $('.home_feature_form .icon_name_bn').val(result.icon_name_bn);
                     $('.home_feature_form .alt_text').val(result.alt_text);
+                    $('.home_feature_form .alt_text_bn').val(result.alt_text_bn);
 
 
                 },

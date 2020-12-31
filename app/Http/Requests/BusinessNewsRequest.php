@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class RoamingCategoriesRequest extends FormRequest
+class BusinessNewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,13 @@ class RoamingCategoriesRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        $id = $request->cat_id;
         return [
-            'name_en' => 'required',
-            'name_bn' => 'required',
-            'page_url' => 'required|regex:/^\S*$/u',
-            'page_url_bn' => 'required|regex:/^\S*$/u',
-            'banner_name' => 'required|regex:/^\S*$/u|unique:roaming_cagegories,banner_name,' . $id,
-            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:roaming_cagegories,banner_name_bn,' . $id,
+            'title' => 'required',
+            'title_bn' => 'required',
+            'body' => 'required',
+            'body_bn' => 'required',
+            'image_name_en' => 'required|unique:business_news,image_name_en,' . $request->news_id,
+            'image_name_bn' => 'required|unique:business_news,image_name_bn,' . $request->news_id,
         ];
     }
 }

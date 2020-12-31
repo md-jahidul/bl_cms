@@ -112,12 +112,17 @@ class BusinessPackageRepository extends BaseRepository
         $package->card_banner_web = $cardWeb;
         $package->card_banner_mobile = $cardMob;
         $package->card_banner_alt_text = $request->card_banner_alt_text;
+        $package->card_banner_alt_text_bn = $request->card_banner_alt_text_bn;
+        $package->card_banner_name_en = $request->card_banner_name_en;
+        $package->card_banner_name_bn = $request->card_banner_name_bn;
 
         $package->banner_photo = $bannerWeb;
         $package->banner_image_mobile = $bannerMob;
         $package->alt_text = $request->alt_text;
-
+        $package->alt_text_bn = $request->alt_text_bn;
         $package->banner_name = $request->banner_name;
+        $package->banner_name_bn = $request->banner_name_bn;
+
         $package->url_slug = $request->url_slug;
         $package->url_slug_bn = $request->url_slug_bn;
         $package->schema_markup = $request->schema_markup;
@@ -167,8 +172,18 @@ class BusinessPackageRepository extends BaseRepository
         if ($bannerMob != "") {
             $package->banner_image_mobile = $bannerMob;
         }
+
+        $package->card_banner_name_en = $request->card_banner_name_en;
+        $package->card_banner_name_bn = $request->card_banner_name_bn;
+        $package->card_banner_alt_text = $request->card_banner_alt_text;
+        $package->card_banner_alt_text_bn = $request->card_banner_alt_text_bn;
+
+
         $package->alt_text = $request->alt_text;
+        $package->alt_text_bn = $request->alt_text_bn;
         $package->banner_name = $request->banner_name;
+        $package->banner_name_bn = $request->banner_name_bn;
+
         $package->url_slug = $request->url_slug;
         $package->url_slug_bn = $request->url_slug_bn;
         $package->schema_markup = $request->schema_markup;

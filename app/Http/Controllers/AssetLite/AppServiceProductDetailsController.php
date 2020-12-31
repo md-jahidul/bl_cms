@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\AppServiceDetailsFixedSectionRequest;
 use App\Models\AppServiceProduct;
 use App\Services\AppServiceProductService;
 use Illuminate\Contracts\Foundation\Application;
@@ -131,7 +132,7 @@ class AppServiceProductDetailsController extends Controller
      * @param $product_id
      * @return RedirectResponse|Redirector
      */
-    public function fixedSectionUpdate(Request $request, $tab_type, $product_id)
+    public function fixedSectionUpdate(AppServiceDetailsFixedSectionRequest $request, $tab_type, $product_id)
     {
         $response = $this->appServiceProductDetailsService->fixedSectionUpdate($request->all(), $tab_type, $product_id);
         Session::flash('message', $response->getContent());

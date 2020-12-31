@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProductDetail extends Model
 {
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'app_service_product_details_id'];
 
     protected $casts = [
         'other_attributes' => 'array'
