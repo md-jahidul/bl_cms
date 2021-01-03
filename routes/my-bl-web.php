@@ -159,6 +159,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('target-wise-notification-report', 'CMS\NotificationController@getTargetWiseNotificationReport')->name('target-wise-notification-report.report');
     Route::get('target-wise-notification-report-details/{titel}', 'CMS\NotificationController@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report.report-details');
 
+    // Get push notification purchase report
+    Route::get('purchase/from-notification/list', 'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
+
 
     Route::post(
         'push-notification-all',
@@ -444,6 +447,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Migrate Plan
     Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
+
+
 
     /*
      *  Feed Routes
