@@ -82,13 +82,18 @@
         .add-button {
             margin-top: 1.9rem !important;
         }
-
         .filter_data {
             text-align: right;
         }
 
         .dataTable {
             width: 100% !important;
+        }
+        .dt-buttons.btn-group {
+            margin-bottom: 2px;
+        }
+        div#question_list_table_length {
+            margin-bottom: -50px;
         }
     </style>
 @endpush
@@ -99,10 +104,11 @@
 
     <script>
         $(function () {
-
             $('#question_list_table').DataTable({
                 processing: true,
                 serverSide: true,
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                pageLength: 10,
                 ajax: "{{ route('agent.deeplink.report.details',$deeplinkId) }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
@@ -116,10 +122,24 @@
                         orderable: true,
                         searchable: true
                     },
+                ],
+                dom: 'Blfrtip',
+                buttons:  [
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [ 1,2,3,4,5 ]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [ 1,2,3,4,5 ]
+                        }
+                    }
                 ]
             });
             $(document).on('change', '#filter_category', function (e) {
-                console.log('change');
                 $('#question_list_table').DataTable().ajax.reload();
             });
         });

@@ -138,10 +138,11 @@ class AgentService
             }
         }
         $agent_id = $request['agent_id'];
+        $fullLink="https://banglalink.net/agent/$agent_id/$productType/$product_code";
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
-                "link" => "https://banglalink.net/agent/$productType/$product_code/$agent_id",
+                "link" => $fullLink,
                 "androidInfo" => [
                     "androidPackageName" => "com.arena.banglalinkmela.app"
                 ],
@@ -156,6 +157,7 @@ class AgentService
         if ($result['status_code'] == 200) {
             $shortLink = $result['response']['shortLink'];
             $request['deep_link'] = $shortLink;
+            $request['full_link'] = $fullLink;
             $result = $this->agentDeepLinkRepository->save($request);
             if ($result) {
                 return new Response("Agent DeepLink has been successfully created");
