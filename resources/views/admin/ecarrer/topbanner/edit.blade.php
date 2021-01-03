@@ -101,21 +101,58 @@
                                 @endif
                             </div>
 
+                            <div class="col-md-4 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                <label class="required">Banner Name EN</label>
+                                <input type="hidden" name="old_banner_name" value="{{$sections->banner_name}}">
+                                <input type="text" class="form-control" required name="banner_name"
+                                       value="{{ $sections->banner_name }}" placeholder="Banner Name EN">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if ($errors->has('banner_name'))
+                                    <div class="help-block text-danger">  {{ $errors->first('banner_name') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-4 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                <label class="required">Banner Name BN</label>
+                                <input type="text" class="form-control" name="banner_name_bn"
+                                       value="{{ $sections->banner_name_bn }}" required placeholder="Banner Name BN">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> রোমিং-সম্পর্কে (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if ($errors->has('banner_name_bn'))
+                                    <div class="help-block text-danger">  {{ $errors->first('banner_name_bn') }}</div>
+                                @endif
+                            </div>
+
 
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label for="alt_text" class="required1">Alt text</label>
-                                <input type="text" name="alt_text"  class="form-control section_alt_text"
+                                <label for="alt_text" class="required1">Alt Text EN</label>
+                                <input type="text" name="alt_text"  class="form-control section_alt_text" placeholder="Alt Text EN"
                                        value="{{ $sections->alt_text }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('alt_text'))
-                                <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                <div class="help-block text-danger">  {{ $errors->first('alt_text') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                <label for="alt_text_bn" class="required1">Alt Text BN</label>
+                                <input type="text" name="alt_text_bn"  class="form-control section_alt_text_bn" placeholder="Alt Text BN"
+                                       value="{{ $sections->alt_text_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('alt_text_bn'))
+                                    <div class="help-block text-danger">  {{ $errors->first('alt_text_bn') }}</div>
                                 @endif
                             </div>
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header EN (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header">{{$sections->page_header}}</textarea>
+                                <textarea class="form-control" rows="4" name="page_header">{{$sections->page_header}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -123,7 +160,7 @@
 
                             <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
                                 <label>Page Header BN (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header_bn">{{$sections->page_header_bn}}</textarea>
+                                <textarea class="form-control" rows="4" name="page_header_bn">{{$sections->page_header_bn}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -131,7 +168,7 @@
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Schema Markup</label>
-                                <textarea class="form-control" rows="7" name="schema_markup">{{$sections->schema_markup}}</textarea>
+                                <textarea class="form-control" rows="4" name="schema_markup">{{$sections->schema_markup}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
@@ -139,16 +176,6 @@
 
                             <div class="form-group col-md-12">
                                 <div class="row">
-                                    <div class="col-md-4 {{ $errors->has('banner_name') ? ' error' : '' }}">
-                                        <label>Banner Photo Name</label>
-                                        <input type="hidden" name="old_banner_name" value="{{$sections->banner_name}}">
-                                        <input type="text" class="form-control" name="banner_name"
-                                               value="{{$sections->banner_name}}" placeholder="Photo Name">
-                                        <small class="text-info">
-                                            <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
-                                            <strong>Note: </strong> Don't need MIME type like jpg,png
-                                        </small>
-                                    </div>
                                     <div class="col-md-4 {{ $errors->has('route_slug') ? ' error' : '' }}">
                                         <label> URL EN (route slug) <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control slug-convert"

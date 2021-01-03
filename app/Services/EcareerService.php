@@ -181,7 +181,9 @@ class EcareerService {
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
             $update['alt_text'] = $data['alt_text'];
+            $update['alt_text_bn'] = $data['alt_text_bn'];
             $update['banner_name'] = $data['banner_name'];
+            $update['banner_name_bn'] = $data['banner_name_bn'];
             $update['page_header'] = $data['page_header'];
             $update['page_header_bn'] = $data['page_header_bn'];
             $update['schema_markup'] = $data['schema_markup'];
