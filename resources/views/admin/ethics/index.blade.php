@@ -68,7 +68,7 @@
                                         <label>Page Header Bangla (HTML)</label>
                                         <textarea class="form-control" rows="7" name="page_header_bn">{{ $pageInfo->page_header_bn }}</textarea>
                                         <small class="text-info">
-                                            <strong>Note: </strong> Title, meta, canonical and other tags
+                                            <strong>Note : </strong> Title, meta, canonical and other tags
                                         </small>
                                     </div>
                                 </div>
