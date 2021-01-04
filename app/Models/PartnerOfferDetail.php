@@ -12,6 +12,7 @@ class PartnerOfferDetail extends Model
         'page_header_bn',
         'schema_markup',
         'url_slug',
+        'url_slug_bn',
         'details_en',
         'details_bn',
         'offer_details_en',
@@ -24,6 +25,8 @@ class PartnerOfferDetail extends Model
         'banner_mobile_view',
         'banner_alt_text',
         'banner_alt_text_bn',
+        'banner_name',
+        'banner_name_bn',
         'created_by',
         'updated_by'
     ];

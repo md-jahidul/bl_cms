@@ -32,6 +32,7 @@ class PartnerOffer extends Model
         'show_in_home',
         'is_active',
         'url_slug',
+        'url_slug_bn',
         'page_header',
         'page_header_bn',
         'schema_markup',
