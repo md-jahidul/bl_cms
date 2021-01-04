@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Popup Purchase Detail')
 @section('card_name', 'Popup Purchase Detail')
+
 @section('breadcrumb')
     <li class="breadcrumb-item active">Popup Detail History</li>
 @endsection
@@ -16,8 +17,33 @@
     <section>
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
+
+                <div class="card-body">
+                    <form class="form">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="control-label">Date Range</label>
+                                <input type="text" required name="date_range" id="from" class="form-control datetime"
+                                       placeholder="Pick Dates to filter" autocomplete="off">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">MSISDN</label>
+                                <input type="text" name="msisdn" placeholder="e.g: 019xxxxxxxx" class="form-control"
+                                       value="{{\Illuminate\Support\Facades\Input::get('msisdn') ?? old('msisdn')}}">
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button type="submit" class="btn btn-info" value="search">
+                                    <i class="ft ft-search"> </i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="card-header">
                     <div class="row">
+
                         <div class="col-md-12">
                             <table class="table">
                                 <tr>
@@ -29,31 +55,31 @@
                                     <td>
                                         <span class="badge badge-info">
                                             Popup Proceed:
-                                            {{ $popupPurchaseLog->total_popup_continue ?? 0 }}
+                                            {{ $popupPurchaseLogDetails->where('action_type', 'popup_continue')->count('action_type') ?? 0 }}
                                         </span>
                                     </td>
                                     <td>
                                         <span class="badge badge-danger">
                                             Popup Cancel:
-                                            {{ $popupPurchaseLog->total_popup_cancel ?? 0 }}
+                                         {{ $popupPurchaseLogDetails->where('action_type', 'popup_cancel')->count('action_type') ?? 0 }}
                                         </span>
                                     </td>
                                     <td>
                                         <span class="badge badge-success">
                                             Total Buy:
-                                            {{ $popupPurchaseLog->total_buy ?? 0 }}
+                                            {{ $popupPurchaseLogDetails->where('action_type', 'buy_success')->count('action_type') ?? 0 }}
                                         </span>
                                     </td>
                                     <td>
                                         <span class="badge badge-warning">
                                             Total Buy Failure:
-                                            {{ $popupPurchaseLog->total_buy_attempt ?? 0 }}
+                                            {{ $popupPurchaseLogDetails->where('action_type', 'buy_failure')->count('action_type') ?? 0 }}
                                         </span>
                                     </td>
                                     <td>
                                         <span class="badge badge-danger">
                                             Total Buy Cancel:
-                                            {{ $popupPurchaseLog->total_cancel ?? 0 }}
+                                            {{ $popupPurchaseLogDetails->where('action_type', 'cancel')->count('action_type') ?? 0 }}
                                         </span>
                                     </td>
                                 </tr>
@@ -94,7 +120,11 @@
     </section>
 
 @endsection
+
 @push('style')
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
+
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
@@ -104,7 +134,12 @@
         }
     </style>
 @endpush
+
 @push('page-js')
+
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
+
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js"
@@ -113,13 +148,28 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+            $('.datetime').daterangepicker({
+                timePicker: false,
+                singleDatePicker: false,
+                autoApply: true,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+
+            $("#from").val("{{\Illuminate\Support\Facades\Input::get('date_range') ?? ''}}");
+
             $('#Example1').DataTable({
-                // dom: 'Bfrtip',
-                // buttons: [],
+                autoWidth: false,
+                pageLength: 10,
+                lengthMenu: [ 10, 25, 50, 75, 100, 200, 500],
+                dom: 'B<"bottom"flp>rti',
+                buttons: [
+                    'csv', 'excel'
+                ],
                 paging: true,
                 searching: true,
                 "bDestroy": true,
-                "pageLength": 10
             });
         });
 

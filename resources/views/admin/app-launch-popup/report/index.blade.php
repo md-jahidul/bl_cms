@@ -15,11 +15,8 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label class="control-label">From</label>
-                                <input type="text" required name="from_date" class="form-control datetime">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">To</label>
-                                <input type="text" required name="to_date" class="form-control datetime">
+                                <input type="text" required name="date_range" id="from" class="form-control datetime"
+                                placeholder="Pick Dates to filter" autocomplete="off">
                             </div>
                             <div class="col-md-3">
                                 <br>
@@ -79,6 +76,7 @@
     </section>
 
 @endsection
+
 @push('style')
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
@@ -92,6 +90,7 @@
         }
     </style>
 @endpush
+
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
@@ -107,15 +106,23 @@
 
             $('.datetime').daterangepicker({
                 timePicker: false,
-                singleDatePicker: true,
+                singleDatePicker: false,
+                autoApply: true,
                 locale: {
                     format: 'DD/MM/YYYY'
                 }
             });
 
+            $("#from").val("{{\Illuminate\Support\Facades\Input::get('date_range') ?? ''}}");
+
             $("#Example11").dataTable({
                 autoWidth: false,
                 pageLength: 10,
+                lengthMenu: [ 10, 25, 50, 75, 100, 200, 500],
+                dom: 'B<"bottom"flp>rti',
+                buttons: [
+                    'csv', 'excel'
+                ]
             });
 
         });

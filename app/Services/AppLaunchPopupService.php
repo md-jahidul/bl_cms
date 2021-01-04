@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PurchaseLog;
 use App\RecurringSchedule;
 use App\Repositories\MyBlAppLaunchPopupRepository;
 use App\Repositories\PopupProductPurchaseDetailRepository;
@@ -167,30 +168,81 @@ class AppLaunchPopupService
     public function getFilteredReport(array $data)
     {
         $popups = $this->findBy(['status' => 1, 'type' => 'purchase'], ['purchaseLog']);
-        $counts = [];
-        $filteredPopups = [];
-        if (isset($data['from_date']) || isset($data['to_date'])) {
+        if (isset($data['date_range'])) {
+            $dateRangeArr = explode('-', $data['date_range']);
+            $detailsData = $this->popupProductPurchaseDetailRepository->getCountsByActionType(
+                trim($dateRangeArr[0]),
+                trim($dateRangeArr[1])
+            );
             foreach ($popups as $popup) {
                 $purchaseLog = $popup->purchaseLog;
                 if ($purchaseLog) {
-                    $detailsData = $this->popupProductPurchaseDetailRepository->getCountsByActionType(
-                        $data['from_date'],
-                        $data['to_date']
-                    );
-                    $filteredPopups[] = $detailsData;
+                    $detailsDatum = $detailsData
+                        ->where('popup_product_purchase_id', $purchaseLog->id)
+                        ->flatten()
+                        ->toArray();
 
+                    $popup->purchaseLog = $this->prepareFilteredCount($purchaseLog, $detailsDatum);
                 }
             }
 
         }
 
-        //dd($popups, $filteredPopups);
         return $popups;
     }
 
-    public function prepareReportData()
+    /**
+     * @param $purchaseLogId
+     * @param array $data
+     * @return mixed
+     */
+    public function getFilteredDetailReport($purchaseLogId, array $data)
     {
+        if (isset($data['date_range'])) {
+            $dateRangeArr = explode('-', $data['date_range']);
+        }
 
+        //dd($data['msisdn'], $dateRangeArr);
+
+        return $this->popupProductPurchaseDetailRepository->getDataByPurchaseId(
+            $purchaseLogId,
+            $data['msisdn'] ?? null,
+            trim($dateRangeArr[0]),
+            trim($dateRangeArr[1])
+        );
+
+    }
+
+    public function prepareFilteredCount($purchaseLog, $data)
+    {
+        if (count($data)) {
+            foreach ($data as $datum) {
+                switch ($datum['action_type']) {
+                    case PurchaseLog::ACTION_POPUP_CANCEL:
+                        $purchaseLog->total_popup_cancel = $datum['total_count'];
+                        break;
+                    case PurchaseLog::ACTION_POPUP_CONTINUE:
+                        $purchaseLog->total_popup_continue = $datum['total_count'];
+                        break;
+                    case PurchaseLog::ACTION_BUY_SUCCESS:
+                        $purchaseLog->total_buy = $datum['total_count'];
+                        break;
+                    case PurchaseLog::ACTION_CANCEL:
+                        $purchaseLog->total_cancel = $datum['total_count'];
+                        break;
+                    case PurchaseLog::ACTION_BUY_FAILURE:
+                        $purchaseLog->total_buy_attempt = $datum['total_count'];
+                        break;
+                }
+            }
+        } else {
+            $purchaseLog->total_popup_cancel = 0;
+            $purchaseLog->total_popup_continue = 0;
+            $purchaseLog->total_buy = 0;
+            $purchaseLog->total_cancel = 0;
+            $purchaseLog->total_buy_attempt = 0;
+        }
+        return $purchaseLog;
     }
 
 }

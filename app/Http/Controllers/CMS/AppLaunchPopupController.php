@@ -159,14 +159,15 @@ class AppLaunchPopupController extends Controller
 
     /**
      * @param $popupId
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function reportDetail($popupId)
+    public function reportDetail($popupId, Request $request)
     {
         $popup = $this->appLaunchPopupService->findOne($popupId, ['purchaseLog']);
         $popupPurchaseLog = $popup->purchaseLog ?? [];
-        $popupPurchaseLogDetails = optional($popup->purchaseLog)->details ?? [];
-
+        $popupPurchaseLogDetails = $this->appLaunchPopupService->getFilteredDetailReport($popupPurchaseLog->id, $request->all());
+//dd($popupPurchaseLogDetails);
         return view(
             'admin.app-launch-popup.report.details',
             compact('popup', 'popupPurchaseLog', 'popupPurchaseLogDetails')
