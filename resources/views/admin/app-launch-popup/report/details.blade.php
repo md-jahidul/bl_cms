@@ -4,6 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">Popup Detail History</li>
 @endsection
+
 @section('action')
     <a href="{{ route('app-launch.report') }}" class="btn btn-primary round btn-glow px-2">
         <i class="la la-list"></i>
@@ -25,13 +26,37 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Popup Stat :</strong></td>
-                                    <td>Popup Proceed: {{ $popupPurchaseLog->total_popup_continue ?? 0 }}</td>
-                                    <td>Popup Cancel: {{ $popupPurchaseLog->total_popup_cancel ?? 0 }}</td>
-                                    <td>Total Buy: {{ $popupPurchaseLog->total_buy ?? 0 }}</td>
-                                    <td>Total Buy Failure: {{ $popupPurchaseLog->total_buy_attempt ?? 0 }}</td>
-                                    <td>Total Buy Cancel: {{ $popupPurchaseLog->total_cancel ?? 0 }}</td>
+                                    <td>
+                                        <span class="badge badge-info">
+                                            Popup Proceed:
+                                            {{ $popupPurchaseLog->total_popup_continue ?? 0 }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-danger">
+                                            Popup Cancel:
+                                            {{ $popupPurchaseLog->total_popup_cancel ?? 0 }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">
+                                            Total Buy:
+                                            {{ $popupPurchaseLog->total_buy ?? 0 }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-warning">
+                                            Total Buy Failure:
+                                            {{ $popupPurchaseLog->total_buy_attempt ?? 0 }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-danger">
+                                            Total Buy Cancel:
+                                            {{ $popupPurchaseLog->total_cancel ?? 0 }}
+                                        </span>
+                                    </td>
                                 </tr>
-
                             </table>
                         </div>
                     </div>

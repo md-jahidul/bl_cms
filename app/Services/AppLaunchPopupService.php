@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\RecurringSchedule;
 use App\Repositories\MyBlAppLaunchPopupRepository;
+use App\Repositories\PopupProductPurchaseDetailRepository;
 use App\Repositories\RecurringScheduleRepository;
 use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\Types\Collection;
 
 class AppLaunchPopupService
 {
@@ -26,22 +28,29 @@ class AppLaunchPopupService
      * @var RecurringScheduleRepository
      */
     private $recurringScheduleRepository;
+    /**
+     * @var PopupProductPurchaseDetailRepository
+     */
+    private $popupProductPurchaseDetailRepository;
 
     /**
      * AppLaunchPopupService constructor.
      * @param MyBlAppLaunchPopupRepository $appLaunchPopupRepository
      * @param RecurringScheduleHourService $recurringScheduleHourService
      * @param RecurringScheduleRepository $recurringScheduleRepository
+     * @param PopupProductPurchaseDetailRepository $popupProductPurchaseDetailRepository
      */
     public function __construct(
         MyBlAppLaunchPopupRepository $appLaunchPopupRepository,
         RecurringScheduleHourService $recurringScheduleHourService,
-        RecurringScheduleRepository $recurringScheduleRepository
+        RecurringScheduleRepository $recurringScheduleRepository,
+        PopupProductPurchaseDetailRepository $popupProductPurchaseDetailRepository
     ) {
         $this->appLaunchPopupRepository = $appLaunchPopupRepository;
         $this->recurringScheduleHourService = $recurringScheduleHourService;
         $this->setActionRepository($appLaunchPopupRepository);
         $this->recurringScheduleRepository = $recurringScheduleRepository;
+        $this->popupProductPurchaseDetailRepository = $popupProductPurchaseDetailRepository;
     }
 
     /**
@@ -64,7 +73,7 @@ class AppLaunchPopupService
                             'public'
                         );
                         $data['content'] = $path;
-                    } elseif(!isset($data['content_data']) && is_null($id)) {
+                    } elseif (!isset($data['content_data']) && is_null($id)) {
                         return redirect()->back()->with('error', 'Image is required');
                     }
 
@@ -149,6 +158,39 @@ class AppLaunchPopupService
     public function getHourSlots()
     {
         return $this->recurringScheduleHourService->getHourSlots('popup');
+    }
+
+    /**
+     * @param array $data
+     * @return array|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getFilteredReport(array $data)
+    {
+        $popups = $this->findBy(['status' => 1, 'type' => 'purchase'], ['purchaseLog']);
+        $counts = [];
+        $filteredPopups = [];
+        if (isset($data['from_date']) || isset($data['to_date'])) {
+            foreach ($popups as $popup) {
+                $purchaseLog = $popup->purchaseLog;
+                if ($purchaseLog) {
+                    $detailsData = $this->popupProductPurchaseDetailRepository->getCountsByActionType(
+                        $data['from_date'],
+                        $data['to_date']
+                    );
+                    $filteredPopups[] = $detailsData;
+
+                }
+            }
+
+        }
+
+        //dd($popups, $filteredPopups);
+        return $popups;
+    }
+
+    public function prepareReportData()
+    {
+
     }
 
 }
