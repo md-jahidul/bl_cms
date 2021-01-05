@@ -124,7 +124,7 @@ class PriyojonController extends Controller
             'banner_name' => 'unique:priyojons,banner_name,' . $id,
             'banner_name_bn' => 'unique:priyojons,banner_name_bn,' . $id,
         ]);
-        
+
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->bannerUpload($request->all(), $id);
         Session::flash('message', $response->getContent());
