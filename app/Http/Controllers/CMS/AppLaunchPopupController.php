@@ -167,7 +167,6 @@ class AppLaunchPopupController extends Controller
         $popup = $this->appLaunchPopupService->findOne($popupId, ['purchaseLog']);
         $popupPurchaseLog = $popup->purchaseLog ?? [];
         $popupPurchaseLogDetails = $this->appLaunchPopupService->getFilteredDetailReport($popupPurchaseLog->id, $request->all());
-//dd($popupPurchaseLogDetails);
         return view(
             'admin.app-launch-popup.report.details',
             compact('popup', 'popupPurchaseLog', 'popupPurchaseLogDetails')

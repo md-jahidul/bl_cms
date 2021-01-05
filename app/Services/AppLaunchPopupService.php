@@ -198,8 +198,12 @@ class AppLaunchPopupService
      */
     public function getFilteredDetailReport($purchaseLogId, array $data)
     {
+        $dateRangeArr = [0 => null, 1 => null];
         if (isset($data['date_range'])) {
             $dateRangeArr = explode('-', $data['date_range']);
+            $from = trim($dateRangeArr[0]);
+            $to = trim($dateRangeArr[1]);
+
         }
 
         //dd($data['msisdn'], $dateRangeArr);
@@ -207,8 +211,8 @@ class AppLaunchPopupService
         return $this->popupProductPurchaseDetailRepository->getDataByPurchaseId(
             $purchaseLogId,
             $data['msisdn'] ?? null,
-            trim($dateRangeArr[0]),
-            trim($dateRangeArr[1])
+            $from ?? null,
+            $to ?? null
         );
 
     }
