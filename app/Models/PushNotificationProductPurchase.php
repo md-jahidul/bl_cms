@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PushNotificationProductPurchase extends Model
 {
+    
     protected $fillable = [
         'id',
         'notification_id',
@@ -17,6 +18,9 @@ class PushNotificationProductPurchase extends Model
         'is_delete'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function pushNotificationProductPurchaseLog()
     {
         return $this->hasMany(PushNotificationProductPurchaseDetails::class, 'push_notification_product_purchase_id', 'id');

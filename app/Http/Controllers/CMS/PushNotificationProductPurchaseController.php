@@ -24,28 +24,40 @@ class PushNotificationProductPurchaseController extends Controller
      */
     public function __construct(PushNotificationProductPurchaseService $pushNotificationProductPurchase)
     {
-        $this->pushNotificationProductPurchase=$pushNotificationProductPurchase;
+        $this->pushNotificationProductPurchase = $pushNotificationProductPurchase;
         $this->middleware('auth');
     }
 
-    public function index(Request $request){
-        if($request->ajax()){
-            if($request->has('searchByFromdate') || $request->has('searchByTodate')){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->has('searchByFromdate') || $request->has('searchByTodate')) {
                 return $this->pushNotificationProductPurchase->getPurchaseFilteredList($request);
-            }else{
+            } else {
                 return $this->pushNotificationProductPurchase->getPurchaseList($request);
             }
         }
         return view('admin.notification.notification-product-purchase.index');
 
     }
-    public function details($id = null, Request $request){
-        $from=(!empty($request->input('from')))?$request->input('from'):null;
-        $to=(!empty($request->input('to')))?$request->input('to'):null;
-        if($request->ajax()){
-           return $this->pushNotificationProductPurchase->getPurchaseDetailsList($id, $from,$to);
+
+    /**
+     * @param null $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function details($id = null, Request $request)
+    {
+        $from = (!empty($request->input('from'))) ? $request->input('from') : null;
+        $to = (!empty($request->input('to'))) ? $request->input('to') : null;
+        if ($request->ajax()) {
+            return $this->pushNotificationProductPurchase->getPurchaseDetailsList($id, $from, $to);
         }
-        return view('admin.notification.notification-product-purchase.details',compact('id','from','to'));
+        return view('admin.notification.notification-product-purchase.details', compact('id', 'from', 'to'));
 
     }
 

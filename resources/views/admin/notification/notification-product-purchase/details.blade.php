@@ -39,15 +39,19 @@
         .add-button {
             margin-top: 1.9rem !important;
         }
+
         .filter_data {
             text-align: right;
         }
+
         .dataTable {
             width: 100% !important;
         }
+
         .dt-buttons.btn-group {
             margin-bottom: 2px;
         }
+
         div#question_list_table_length {
             margin-bottom: -50px;
         }
@@ -60,7 +64,7 @@
 
     <script>
         $(function () {
-            let URL="{{ route('push.notification.purchase.report.details',$id) }}?from={{$from}}&to={{$to}}";
+            let URL = "{{ route('push.notification.purchase.report.details',$id) }}?from={{$from}}&to={{$to}}";
             $('#question_list_table').DataTable({
                 processing: true,
                 serverSide: false,
@@ -79,17 +83,17 @@
                     },
                 ],
                 dom: 'Blfrtip',
-                buttons:  [
+                buttons: [
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3]
+                            columns: [1, 2, 3]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3 ]
+                            columns: [1, 2, 3]
                         }
                     }
                 ]

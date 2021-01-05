@@ -13,12 +13,16 @@
                         <table border="0" cellspacing="5" cellpadding="5" style="float: right">
                             <tr>
                                 <td>Title:</td>
-                                <td><input type="text" class="form-control" id="title" name="from" autocomplete="off"></td>
+                                <td><input type="text" class="form-control" id="title" name="title" autocomplete="off">
+                                </td>
                                 <td>From:</td>
-                                <td><input type="text" class="datepicker form-control" id="from" name="from" autocomplete="off"></td>
+                                <td><input type="text" class="datepicker form-control" id="from" name="from"
+                                           autocomplete="off"></td>
                                 <td>To:</td>
-                                <td><input type="text" class="datepicker form-control" id="to" name="to" autocomplete="off"></td>
-                                <td><input id="submit" value="Search"  class="btn btn-sm btn-success "  type="button" ></td>
+                                <td><input type="text" class="datepicker form-control" id="to" name="to"
+                                           autocomplete="off"></td>
+                                <td><input id="submit" value="Search" class="btn btn-sm btn-success " type="button">
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -51,7 +55,8 @@
 @endsection
 
 @push('style')
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
@@ -59,15 +64,19 @@
         .add-button {
             margin-top: 1.9rem !important;
         }
+
         .filter_data {
             text-align: right;
         }
+
         .dataTable {
             width: 100% !important;
         }
+
         .dt-buttons.btn-group {
             margin-bottom: -70px;
         }
+
         /*div#question_list_table_length {*/
         /*    margin-bottom: -50px;*/
         /*}*/
@@ -82,27 +91,27 @@
 
     <script>
         $(function () {
-            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'}).val();
 
             $('#question_list_table').DataTable({
                 processing: true,
                 serverSide: true,
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 pageLength: 10,
-                ajax:{
-                    'url':"{{ route('purchase.from_notification.list') }}",
-                    'data': function(data){
+                ajax: {
+                    'url': "{{ route('purchase.from_notification.list') }}",
+                    'data': function (data) {
                         let fromdate = $('#from').val();
                         let todate = $('#to').val();
                         let title = $('#title').val();
-                        if (fromdate !==""){
+                        if (fromdate !== "") {
                             data.searchByFromdate = fromdate;
                         }
-                        if (fromdate !==""){
+                        if (fromdate !== "") {
                             data.searchByTodate = todate;
                         }
 
-                        if (title !==""){
+                        if (title !== "") {
                             data.searchByTitle = title;
                         }
 
@@ -124,17 +133,17 @@
                     },
                 ],
                 dom: 'Bfrtip',
-                buttons:  [
+                buttons: [
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6 ]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6 ]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
                     }
                 ]
@@ -145,7 +154,7 @@
         });
 
 
-        $( "#submit" ).click(function() {
+        $("#submit").click(function () {
             $('#question_list_table').DataTable().ajax.reload();
         });
     </script>
