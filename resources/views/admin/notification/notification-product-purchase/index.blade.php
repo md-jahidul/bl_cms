@@ -123,8 +123,9 @@
                     {data: 'notification_title', name: 'notification_title'},
                     {data: 'total_view', name: 'total_view'},
                     {data: 'total_buy', name: 'total_buy'},
-                    {data: 'total_cancel', name: 'total_cancel'},
                     {data: 'total_buy_attempt', name: 'total_buy_attempt'},
+                    {data: 'total_cancel', name: 'total_cancel'},
+
                     {
                         data: 'action',
                         name: 'action',
