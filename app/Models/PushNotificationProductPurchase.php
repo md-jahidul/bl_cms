@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PushNotificationProductPurchase extends Model
 {
-    
+
     protected $fillable = [
         'id',
         'notification_id',
