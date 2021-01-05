@@ -14,7 +14,7 @@
                     <form class="form">
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="control-label">From</label>
+                                <label class="control-label">Date Range</label>
                                 <input type="text" required name="date_range" id="from" class="form-control datetime"
                                 placeholder="Pick Dates to filter" autocomplete="off">
                             </div>
@@ -119,7 +119,7 @@
                 autoWidth: false,
                 pageLength: 10,
                 lengthMenu: [ 10, 25, 50, 75, 100, 200, 500],
-                dom: 'B<"bottom"flp>rti',
+                dom: 'Bflrtip',
                 buttons: [
                     'csv', 'excel'
                 ]
