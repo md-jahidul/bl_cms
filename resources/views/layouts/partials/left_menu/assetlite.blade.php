@@ -744,10 +744,28 @@
 {{--    @endif--}}
 
 
-    <hr>
-    <hr>
-    <hr>
-
+    @if( auth()->user()->can_view('CorporateRespSection') )
+        <li class="nav-item"><a href="#"><i class="la la-search"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">SEO Server Site Files</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('corporate-resp-section') }}">
+                    <a class="menu-item" href="{{ url('corporate-resp-section') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-arrow-right"></i>.Htaccess</a>
+                </li>
+                <li class="{{ is_active_url(url('robot-txt')) }}">
+                    <a class="menu-item" href="{{ url('robot-txt') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-arrow-right"></i> Robots Txt</a>
+                </li>
+                <li class="{{ is_active_url(url('site-map')) }}">
+                    <a class="menu-item" href="{{ url('site-map') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-sitemap"></i> Site-Map</a>
+                </li>
+            </ul>
+        </li>
+    @endif
 
 
 

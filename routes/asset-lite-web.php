@@ -1131,4 +1131,13 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
+
+    // Robots Txt
+    Route::get('robot-txt', 'AssetLite\SeoServerFileController@showRobotsTxt');
+    Route::post('robot-txt/update-or-create', 'AssetLite\SeoServerFileController@updateOrCreate');
+
+    // Site Map
+    Route::get('site-map', 'AssetLite\SeoServerFileController@showSiteMap');
+    Route::post('site-map/update-or-create', 'AssetLite\SeoServerFileController@siteMapStoreOrUpdate');
+
 });
