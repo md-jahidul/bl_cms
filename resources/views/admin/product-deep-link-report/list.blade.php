@@ -9,21 +9,36 @@
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
 
-
-            <div class="card-body card-dashboard table-responsive">
-                <div class="row">
-                    <div class="col-md-7">
-
-                    </div>
-                    <div class="col-md-5 " style="float: left">
-                    <table border="0" cellspacing="5" cellpadding="5" width="300px" style="float: right">
+            <div class="row" style="margin-bottom: -20px;">
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <table border="0" cellspacing="5" cellpadding="5" style="float: right">
                         <tr>
-                            <td>Date Range:</td>
-                            <td><input type="text" id="date_range" name="date_range"></td>
+                            <td>Product Code:</td>
+                            <td><input type="text" class="form-control" id="product_code" name="product_code" autocomplete="off"></td>
+                            <td>From:</td>
+                            <td><input type="text" class="datepicker form-control" id="from" name="from" autocomplete="off"></td>
+                            <td>To:</td>
+                            <td><input type="text" class="datepicker form-control" id="to" name="to" autocomplete="off"></td>
+                            <td><input id="submit" value="Search"  class="btn btn-sm btn-success "  type="button" ></td>
                         </tr>
-                        </table>
-                    </div>
+                    </table>
                 </div>
+
+            </div>
+            <div class="card-body card-dashboard table-responsive">
+{{--                <div class="row">--}}
+{{--                    <div class="col-md-7">--}}
+
+{{--                    </div>--}}
+{{--                    <div class="col-md-5 " style="float: left">--}}
+{{--                    <table border="0" cellspacing="5" cellpadding="5" width="300px" style="float: right">--}}
+{{--                        <tr>--}}
+{{--                            <td>Date Range:</td>--}}
+{{--                            <td><input type="text" id="date_range" name="date_range"></td>--}}
+{{--                        </tr>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <table class="table table-striped table-bordered  dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
@@ -33,7 +48,7 @@
                         <th width="8%">Buy</th>
                         <th width="8%">Buy Failure</th>
                         <th width="8%">Cancel</th>
-                        <th width="15%">Date</th>
+{{--                        <th width="15%">Date</th>--}}
                         <th width="10%">action</th>
                     </tr>
                     </thead>
@@ -75,23 +90,7 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $('input[name="date_range"]').daterangepicker({
-                autoUpdateInput: false,
-                showDropdowns: true,
-                locale: {
-                    cancelLabel: 'Clear',
-                    format: 'YYYY-MM-DD'
-                },
-            });
-
-            $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD') + '=' + picker.endDate.format('YYYY-MM-DD'));
-                $('#Example1').DataTable().ajax.reload();
-            });
-
-            $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
-            });
+            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
 
             $('#Example1').DataTable({
                 processing: true,
@@ -101,14 +100,18 @@
                 ajax:{
                     'url':"{{ route('product-deeplink-list') }}",
                     'data': function(data){
-                        let fullDate = $('#date_range').val();
-                        let date = fullDate.split("=");
-                        // Read values
-                        var from_date = date[0];
-                        var to_date = date[1];
-                        // Append to data
-                        data.searchByFromdate = from_date;
-                        data.searchByTodate = to_date;
+                        let fromdate = $('#from').val();
+                        let todate = $('#to').val();
+                        let product_code = $('#product_code').val();
+                        if (fromdate !==""){
+                            data.searchByFromdate = fromdate;
+                        }
+                        if (fromdate !==""){
+                            data.searchByTodate = todate;
+                        }
+                        if (product_code !==""){
+                            data.searchByProductCode = product_code;
+                        }
                     }
                 },
                 columns: [
@@ -117,8 +120,8 @@
                     {data: 'total_view', name: 'total_view'},
                     {data: 'total_buy', name: 'total_buy'},
                     {data: 'total_cancel', name: 'total_cancel'},
-                    {data: 'buy_attempt', name: 'buy_attempt'},
-                    {data: 'created_at', name: 'created_at'},
+                    {data: 'total_buy_attempt', name: 'total_buy_attempt'},
+                    // {data: 'created_at', name: 'created_at'},
                     {
                         data: 'action',
                         name: 'action',
@@ -131,13 +134,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6 ]
+                            columns: [ 1,2,3,4,5 ]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6 ]
+                            columns: [ 1,2,3,4,5 ]
                         }
                     }
                 ],
@@ -148,6 +151,8 @@
             });
 
         });
-
+        $( "#submit" ).click(function() {
+            $('#Example1').DataTable().ajax.reload();
+        });
     </script>
 @endpush

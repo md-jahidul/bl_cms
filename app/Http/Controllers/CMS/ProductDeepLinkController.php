@@ -15,7 +15,6 @@ class ProductDeepLinkController extends Controller
      */
     protected $productDeepLinkService;
 
-
     /**
      * PushNotificationController constructor.
      * @param ProductDeepLinkService $productDeepLinkService
@@ -42,7 +41,7 @@ class ProductDeepLinkController extends Controller
      */
     public function create($product_code)
     {
-       return $this->productDeepLinkService->createDeepLink($product_code);
+        return $this->productDeepLinkService->createDeepLink($product_code);
     }
 
     /**
@@ -51,27 +50,27 @@ class ProductDeepLinkController extends Controller
      */
     public function data(Request $request)
     {
-        return $this->productDeepLinkService->getProductDeepLinkListReport($request);
+        if ($request->has('searchByFromdate') || $request->has('searchByTodate') || $request->has('searchByProductCode')) {
+            return $this->productDeepLinkService->getProductDeepLinkfilterList($request);
+        } else {
+            return $this->productDeepLinkService->getProductDeepLinkListReport($request);
+        }
+
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param null $productDeeplinkDbId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function show(ProductDeepLink $productDeepLink)
+    public function getDetails(Request $request, $productDeeplinkDbId = null)
     {
-        //
-    }
-
-
-    public function  getDetails(Request $request,$productDeeplinkDbId=null){
-        if($request->has('draw')) {
-            return $this->productDeepLinkService->getProductDeepLinkDetailsReport($request,$productDeeplinkDbId);
+        $from = ($request->has('from')) ? $request->input('from') : null;
+        $to = ($request->has('to')) ? $request->input('to') : null;
+        if ($request->has('draw')) {
+            return $this->productDeepLinkService->getProductDeepLinkDetailsReport($request, $productDeeplinkDbId);
         }
-//        $productDeeplinkDbId=$productDeeplinkDbId;
-        return view('admin.product-deep-link-report.details',compact('productDeeplinkDbId'));
+        return view('admin.product-deep-link-report.details', compact('productDeeplinkDbId', 'from', 'to'));
     }
 
 
