@@ -5,11 +5,13 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Requests\AppLaunchPopupStoreRequest;
 use App\Http\Requests\AppLaunchPopupUpdateRequest;
 use App\Models\MyBlAppLaunchPopup;
+use App\Models\RequestLog;
 use App\Services\AppLaunchPopupService;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\MyBlProduct;
 use App\Services\ProductCoreService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -146,20 +148,25 @@ class AppLaunchPopupController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function report()
+    public function report(Request $request)
     {
-        $popups = $this->appLaunchPopupService->findBy(['status' => 1, 'type' => 'purchase'], ['purchaseLog']);
+        $popups = $this->appLaunchPopupService->getFilteredReport($request->all());
         return view('admin.app-launch-popup.report.index', compact('popups'));
     }
 
-    public function reportDetail($popupId)
+    /**
+     * @param $popupId
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reportDetail($popupId, Request $request)
     {
         $popup = $this->appLaunchPopupService->findOne($popupId, ['purchaseLog']);
         $popupPurchaseLog = $popup->purchaseLog ?? [];
-        $popupPurchaseLogDetails = optional($popup->purchaseLog)->details ?? [];
-
+        $popupPurchaseLogDetails = $this->appLaunchPopupService->getFilteredDetailReport($popupPurchaseLog->id, $request->all());
         return view(
             'admin.app-launch-popup.report.details',
             compact('popup', 'popupPurchaseLog', 'popupPurchaseLogDetails')
