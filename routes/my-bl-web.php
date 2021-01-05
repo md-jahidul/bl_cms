@@ -161,6 +161,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Get push notification purchase report
     Route::get('purchase/from-notification/list', 'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
+    Route::get('purchase/from-notification/details/{id}', 'CMS\PushNotificationProductPurchaseController@details')->name('push.notification.purchase.report.details');
 
 
     Route::post(

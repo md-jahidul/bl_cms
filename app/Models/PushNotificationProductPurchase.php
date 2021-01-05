@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PushNotificationProductPurchase extends Model
 {
     protected $fillable = [
+        'id',
         'notification_id',
         'notification_title',
         'product_code',
@@ -15,4 +16,9 @@ class PushNotificationProductPurchase extends Model
         'total_buy_attempt',
         'is_delete'
     ];
+
+    public function pushNotificationProductPurchaseLog()
+    {
+        return $this->hasMany(PushNotificationProductPurchaseDetails::class, 'push_notification_product_purchase_id', 'id');
+    }
 }
