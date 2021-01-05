@@ -15,4 +15,12 @@ class ProductDeepLink extends Model
         'buy_attempt',
         'created_at'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productDeeplinkDetails()
+    {
+        return $this->hasMany(ProductDeepLinkDetails::class, 'product_code_id', 'id');
+    }
 }
