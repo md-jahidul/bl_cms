@@ -163,7 +163,7 @@
                 autoWidth: false,
                 pageLength: 10,
                 lengthMenu: [ 10, 25, 50, 75, 100, 200, 500],
-                dom: 'B<"bottom"flp>rti',
+                dom: 'Bflrtip',
                 buttons: [
                     'csv', 'excel'
                 ],
