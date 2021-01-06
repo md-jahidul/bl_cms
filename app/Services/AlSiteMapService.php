@@ -78,6 +78,6 @@ class AlSiteMapService
             $subTag['last_mod'] = date('Y-m-d');
             $this->save($subTag);
         }
-        return Response('Robots txt has been successfully updated');
+        return Response('Site map has been successfully updated');
     }
 }
