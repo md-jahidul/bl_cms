@@ -168,6 +168,9 @@ class AgentListController extends Controller
     public function agentDeeplinkReport(Request $request)
     {
         if ($request->ajax()) {
+            if (($request->has('searchByFromdate') && !empty($request->input('searchByFromdate'))) && ($request->has('searchByTodate') && !empty($request->input('searchByTodate')))) {
+                return $this->agentService->agentDeeplinkReportFilterData($request);
+            }
             return $this->agentService->agentDeeplinkReportData($request);
         }
         return view('admin.agent-deeplink.report.list');
@@ -180,11 +183,12 @@ class AgentListController extends Controller
      */
     public function agentDeeplinkReportDetails($id = null, Request $request)
     {
+        $from = ($request->has('from')) ? $request->input('from') : null;
+        $to = ($request->has('to')) ? $request->input('to') : null;
         if ($request->ajax()) {
             return $this->agentService->agentDeeplinkDetailReportData($id, $request);
         }
         $deeplinkId = $id;
-        $report_count=$this->agentService->agentDeeplinkReportCount($id);
-        return view('admin.agent-deeplink.report.details', compact('deeplinkId','report_count'));
+        return view('admin.agent-deeplink.report.details', compact('deeplinkId', 'from', 'to'));
     }
 }
