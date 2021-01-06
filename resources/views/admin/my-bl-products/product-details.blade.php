@@ -1,3 +1,14 @@
+@php
+    function match($slug, $multiItems){
+        foreach ($multiItems as $item){
+           if($item->offer_section_slug == $slug){
+              return true;
+           }
+         }
+        return false;
+     }
+@endphp
+
 @extends('layouts.admin')
 @section('title', 'Mybl Products')
 
@@ -41,20 +52,23 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="name">Title</label>
-                                        <input class="form-control" value="{{ $details->details->name }}" name="name" id="name">
+                                        <input class="form-control" value="{{ $details->details->name }}" name="name"
+                                               id="name">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="content_type">Content Type</label>
                                         <input class="form-control"
-                                               value="{{ ucfirst($details->details->content_type) }}" name="content_type">
+                                               value="{{ ucfirst($details->details->content_type) }}"
+                                               name="content_type">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Short Description</label>
-                                        <input class="form-control" value="{{ $details->details->short_description }}" name="short_description">
+                                        <input class="form-control" value="{{ $details->details->short_description }}"
+                                               name="short_description">
                                     </div>
                                 </div>
                                 @if( $details->details->activation_ussd)
@@ -62,7 +76,8 @@
                                         <div class="form-group">
                                             <label>Activation USSD </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->activation_ussd }}" name="activation_ussd">
+                                                   value="{{ $details->details->activation_ussd }}"
+                                                   name="activation_ussd">
                                         </div>
                                     </div>
                                 @endif
@@ -71,14 +86,16 @@
                                         <div class="form-group">
                                             <label>Balance USSD</label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->balance_check_ussd }}" name="balance_check_ussd">
+                                                   value="{{ $details->details->balance_check_ussd }}"
+                                                   name="balance_check_ussd">
                                         </div>
                                     </div>
                                 @endif
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>MRP Price</label>
-                                        <input class="form-control" value="{{ $details->details->mrp_price }}" name="mrp_price">
+                                        <input class="form-control" value="{{ $details->details->mrp_price }}"
+                                               name="mrp_price">
                                     </div>
                                 </div>
                                 @if($details->details->data_volume)
@@ -86,7 +103,8 @@
                                         <div class="form-group">
                                             <label>Data Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->data_volume }} {{ $details->details->data_volume_unit }}" name="data_volume">
+                                                   value="{{ $details->details->data_volume }} {{ $details->details->data_volume_unit }}"
+                                                   name="data_volume">
                                         </div>
                                     </div>
                                 @endif
@@ -95,7 +113,8 @@
                                         <div class="form-group">
                                             <label>Minute Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->minute_volume }} Minutes" name="minute_volume">
+                                                   value="{{ $details->details->minute_volume }} Minutes"
+                                                   name="minute_volume">
                                         </div>
                                     </div>
                                 @endif
@@ -122,14 +141,16 @@
                                     <div class="form-group">
                                         <label>Validity </label>
                                         <input class="form-control"
-                                               value="{{ $details->details->validity }} {{ ucfirst($details->details->validity_unit) }}" name="validity">
+                                               value="{{ $details->details->validity }} {{ ucfirst($details->details->validity_unit) }}"
+                                               name="validity">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Has Auto Renew Code? </label>
                                         <input class="form-control"
-                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}" disabled>
+                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}"
+                                               disabled>
                                     </div>
                                 </div>
                                 @if($details->details->renew_product_code)
@@ -145,26 +166,51 @@
                             </div>
                             <div class="row">
                                 @if(strtolower($details->details->content_type) == 'data')
+                                    @php
+                                        $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
+                                    @endphp
+                                    {{-- <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Select Data Section </label>
+                                             <select multiple
+                                                 class="form-control data-section"
+                                                 name="offer_section_slug[]" required>
+                                                 <option value="">Please Select Data Section</option>
+                                                 @foreach($internet_categories as $category)
+                                                     <option value="{{ $category->slug }}"
+                                                             @if($category->slug == $details->offer_section_slug) selected @endif>
+                                                         {{ $category->name }}</option>
+                                                 @endforeach
+                                             </select>
+                                         </div>
+                                     </div>--}}
+
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Select Data Section </label>
-                                            <select
-                                                class="form-control"
-                                                name="offer_section_slug" required>
+                                            <select multiple
+                                                    class="form-control data-section"
+                                                    name="offer_section_slug[]" required>
                                                 <option value="">Please Select Data Section</option>
-                                                @foreach($internet_categories as $category)
-                                                    <option value="{{ $category->slug }}"
-                                                            @if($category->slug == $details->offer_section_slug) selected @endif>
-                                                        {{ $category->name }}</option>
+
+                                                @foreach ($internet_categories as $key => $category)
+                                                    <option
+                                                        {{ in_array($key, $tabs, false) ? 'selected' : '' }}
+                                                        value="{{ $key }}">  {{$category}}
+                                                    </option>
                                                 @endforeach
+
                                             </select>
                                         </div>
                                     </div>
+
                                 @endif
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tag </label>
-                                        <input class="form-control" name="tag" value="{{ $details->tag }}" placeholder="e.g. Hot, New etc">
+                                        <input class="form-control" name="tag" value="{{ $details->tag }}"
+                                               placeholder="e.g. Hot, New etc">
                                         @if($errors->has('tag'))
                                             <p class="text-left">
                                                 <small class="danger text-muted">{{ $errors->first('tag') }}</small>
@@ -196,11 +242,13 @@
                                     <label>Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
-                                            <input type="radio" name="is_visible" value="1" {{$details->is_visible ? 'checked' : ''}}>
+                                            <input type="radio" name="is_visible"
+                                                   value="1" {{$details->is_visible ? 'checked' : ''}}>
                                             <label class="small">Show</label>
                                         </li>
                                         <li class="list-inline-item">
-                                            <input type="radio" name="is_visible" value="0" {{$details->is_visible ? '' : 'checked'}}>
+                                            <input type="radio" name="is_visible"
+                                                   value="0" {{$details->is_visible ? '' : 'checked'}}>
                                             <label class="small">Hide</label>
                                         </li>
                                     </ul>
@@ -272,6 +320,19 @@
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
+
+
+        $(function () {
+
+            $('select').select2({
+                placeholder: 'Please Select Data Section',
+                maximumSelectionLength: 5,
+                allowClear: true
+            });
+
+        });
+
+
         // Translated
         var date;
         // Date & Time
