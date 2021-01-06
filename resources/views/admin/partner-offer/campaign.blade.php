@@ -33,8 +33,8 @@
                             {{--@php $campaignOffer = strtolower(str_replace(' ', '-', $campaignOffer->partner->company_name_en)) @endphp--}}
                             <tr data-index="{{ $campaignOffer->id }}" data-position="{{ $campaignOffer->campaign_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td><img class="" src="{{ config('filesystems.file_base_url') . $campaignOffer->partner->company_logo }}" alt="Slider Image" height="50" width="50" /></td>
-                                <td><img class="" src="{{ config('filesystems.file_base_url') . $campaignOffer->campaign_img }}" alt="Slider Image" height="50" width="50" /></td>
+                                <td><img class="" src="{{ isset($campaignOffer->partner->company_logo) ? config('filesystems.file_base_url') . $campaignOffer->partner->company_logo : '' }}" alt="Slider Image" height="50" width="50" /></td>
+                                <td><img class="" src="{{ isset($campaignOffer->campaign_img) ? config('filesystems.file_base_url') . $campaignOffer->campaign_img : '' }}" alt="Slider Image" height="50" width="50" /></td>
                                 <td>{{ $campaignOffer->validity_en }} {!! $campaignOffer->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{ $campaignOffer->get_offer_msg_en }}</td>
                                 <td>{{ $campaignOffer->offer_en }}</td>
