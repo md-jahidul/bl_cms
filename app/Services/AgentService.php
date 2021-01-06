@@ -18,6 +18,7 @@ use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
+use Carbon\Carbon;
 
 class AgentService
 {
@@ -138,7 +139,7 @@ class AgentService
             }
         }
         $agent_id = $request['agent_id'];
-        $fullLink="https://banglalink.net/agent/$agent_id/$productType/$product_code";
+        $fullLink = "https://banglalink.net/agent/$agent_id/$productType/$product_code";
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
@@ -168,16 +169,28 @@ class AgentService
 
     }
 
+    /**
+     * @param $agentId
+     * @return mixed
+     */
     public function getDeepLinkListByAgentId($agentId)
     {
         return $this->agentDeepLinkRepository->findDeeplinkById($agentId);
     }
 
+    /**
+     * @param $agentDeepLinkId
+     * @return Response
+     */
     public function agentDeeplinkDeleteById($agentDeepLinkId)
     {
         return $this->agentDeepLinkRepository->agentDeeplinkSoftDelete($agentDeepLinkId);
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function agentDeeplinkReportData($request)
     {
         $data = $this->agentDeepLinkRepository->findAll()->where('is_delete', 0);
@@ -187,6 +200,8 @@ class AgentService
                 return $data->agentInfo->name . ' - ' . $data->agentInfo->msisdn;
             })
             ->addColumn('tview', function ($data) {
+                return $data->total_buy + $data->total_cancel + $data->buy_attempt;
+            })->addColumn('tview', function ($data) {
                 return $data->total_buy + $data->total_cancel + $data->buy_attempt;
             })
             ->addColumn('action', function ($row) {
@@ -199,9 +214,110 @@ class AgentService
             ->make(true);
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function agentDeeplinkReportFilterData($request)
+    {
+        $data = $this->agentDeepLinkRepository->findAll()->where('is_delete', 0);
+        $searchByFromdate = ($request->has('searchByFromdate')) ? $request->input('searchByFromdate') : null;
+        $searchByTodate = ($request->has('searchByTodate')) ? $request->input('searchByTodate') : null;
+        $detailsData = $this->agentDeepLinkDetailsRepository->getCountsByActionType(
+            $searchByFromdate,
+            $searchByTodate
+        );
+        $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
+        $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
+        $result = [];
+        foreach ($data as $key => $log) {
+            $result[$key]['id'] = $log->id;
+            $result[$key]['agent_info'] = $log->agentInfo->name . ' - ' . $log->agentInfo->msisdn;
+            $result[$key]['deep_link'] = $log->deep_link;
+            $result[$key]['deeplink_type'] = $log->deeplink_type;
+
+            $detailsDatum = $detailsData
+                ->where('agent_deeplink_id', $log->id)
+                ->flatten()
+                ->toArray();
+            $result[$key]['log'] = $this->prepareFilteredCount($detailsDatum);
+        }
+
+        return Datatables::collection($result)
+            ->addIndexColumn()
+            ->addColumn('tview', function ($result) {
+                return $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
+            })
+            ->addColumn('total_buy', function ($result) {
+                return $result['log']['total_buy'];
+            })
+            ->addColumn('buy_attempt', function ($result) {
+                return $result['log']['total_buy_attempt'];
+            })
+            ->addColumn('total_cancel', function ($result) {
+                return $result['log']['total_cancel'];
+            })
+            ->addColumn('action', function ($result) use ($from, $to) {
+                $url = route('agent.deeplink.report.details', $result['id']);
+                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '" class="edit btn btn-success btn-sm">view</a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+
+
+    }
+
+    /**
+     * @param $detailsDatum
+     * @return array
+     */
+    public function prepareFilteredCount($detailsDatum)
+    {
+        if (empty($detailsDatum)) {
+            $array['total_buy'] = 0;
+            $array['total_cancel'] = 0;
+            $array['total_buy_attempt'] = 0;
+        } else {
+            $total_buy_attempt = 0;
+            $total_cancel = 0;
+            $total_buy = 0;
+            foreach ($detailsDatum as $infolog) {
+                if ($infolog['action_type'] == 'buy_failure') {
+                    $total_buy_attempt = +$infolog['total_count'];
+                }
+                if ($infolog['action_type'] == 'buy_success') {
+                    $total_buy = +$infolog['total_count'];
+                }
+                if ($infolog['action_type'] == 'cancel') {
+                    $total_cancel = +$infolog['total_count'];
+                }
+
+            }
+
+            $array['total_buy_attempt'] = $total_buy_attempt;
+            $array['total_cancel'] = $total_cancel;
+            $array['total_buy'] = $total_buy;
+        }
+        return $array;
+
+    }
+
+    /**
+     * @param $id
+     * @param $request
+     * @return mixed
+     */
     public function agentDeeplinkDetailReportData($id, $request)
     {
-        $data = $this->agentDeepLinkDetailsRepository->findAll()->where('agent_deeplink_id', $id);
+        if (!empty($request->input('from')) && !empty($request->input('to'))) {
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('from') . '00:00:00')->toDateTimeString();
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('to') . '23:59:59')->toDateTimeString();
+            $data = AgentDeeplinkDetail::where('agent_deeplink_id', $id)->whereBetween('created_at', [$from, $to])->get();
+        } else {
+            $data = $this->agentDeepLinkDetailsRepository->findAll()->where('agent_deeplink_id', $id);
+        }
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('date', function ($data) {
@@ -211,11 +327,5 @@ class AgentService
             ->make(true);
     }
 
-    public function agentDeeplinkReportCount($id){
-        return  $this->agentDeepLinkRepository->findOne($id);
-
-
-
-    }
 
 }
