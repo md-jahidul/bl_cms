@@ -39,7 +39,7 @@
                                 <td>{{ $campaignOffer->get_offer_msg_en }}</td>
                                 <td>{{ $campaignOffer->offer_en }}</td>
                                 <td class="action" width="8%">
-{{--                                    <a href="{{ route('partner_offer_edit', [ $campaignOffer->partner_id, $campaignOffer, $campaignOffer->id ] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
+                                    <a href="{{ route('partner_offer_edit', [ $campaignOffer->partner_id, $campaignOffer, $campaignOffer->id, 'campaign-offers'] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 {{--                                    <a href="#" remove="{{ url("partner-offer/$campaignOffer->partner_id/$campaignOffer/offer/destroy/$campaignOffer->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $campaignOffer->id }}" title="Delete">--}}
 {{--                                        <i class="la la-trash"></i>--}}
 {{--                                    </a>--}}
