@@ -15,6 +15,11 @@ class AlSiteMapRepository extends BaseRepository
 {
     public $modelName = AlSiteMap::class;
 
+    public function siteMapData()
+    {
+        return $this->model->first();
+    }
+
     public function deleteTagType($type)
     {
         return $this->model->whereIn('tag_type', [$type])->delete();

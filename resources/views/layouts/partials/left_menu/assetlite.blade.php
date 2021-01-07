@@ -744,12 +744,12 @@
 {{--    @endif--}}
 
 
-    @if( auth()->user()->can_view('CorporateRespSection') )
+{{--    @if( auth()->user()->can_view('CorporateRespSection') )--}}
         <li class="nav-item"><a href="#"><i class="la la-search"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">SEO Server Site Files</span></a>
             <ul class="menu-content">
-                <li class="{{ is_active_url('corporate-resp-section') }}">
-                    <a class="menu-item" href="{{ url('corporate-resp-section') }}"
+                <li class="{{ is_active_url('htaccess') }}">
+                    <a class="menu-item" href="{{ url('htaccess') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-arrow-right"></i>.Htaccess</a>
                 </li>
@@ -765,7 +765,7 @@
                 </li>
             </ul>
         </li>
-    @endif
+{{--    @endif--}}
 
 
 

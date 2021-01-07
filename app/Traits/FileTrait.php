@@ -105,4 +105,8 @@ trait FileTrait {
         return Storage::disk($this->disk)->path($fileName);
     }
 
+    public function makeFile($path, $content)
+    {
+        return Storage::disk($this->disk)->put($path, $content);
+    }
 }

@@ -15,7 +15,6 @@ class CreateAlHtaccessesTable extends Migration
     {
         Schema::create('al_htaccesses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('redirection_type')->nullable();
             $table->text('data')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

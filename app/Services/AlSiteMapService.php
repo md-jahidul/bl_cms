@@ -13,12 +13,15 @@ use App\Repositories\AlRobotsRepository;
 use App\Repositories\AlSiteMapRepository;
 use App\Repositories\AmarOfferRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AlSiteMapService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var AlSiteMapRepository
@@ -35,14 +38,9 @@ class AlSiteMapService
         $this->setActionRepository($alSiteMapRepository);
     }
 
-//    public function robotTxt()
-//    {
-//        return $this->alSiteMapRepository->Data();
-//    }
-
-    public function findByTagType($type)
+    public function getSiteMapData()
     {
-        return $this->alSiteMapRepository->findOneByProperties(['tag_type' => $type]);
+        return $this->alSiteMapRepository->siteMapData();
     }
 
     /**
@@ -52,32 +50,22 @@ class AlSiteMapService
      */
     public function siteMapUpdateOrCreate($data)
     {
-//        request()->validate([
-//            'txt' => 'required'
-//        ]);
+        request()->validate([
+            'data' => 'required'
+        ]);
 
+        $this->deleteFile('assetlite/server-files/sitemap.xml');
+        $this->makeFile('assetlite/server-files/sitemap.xml', $data['data']);
 
-        $urlSet = $this->findByTagType('url_set');
-
-        $parentTag['url_set'] = $data['url_set'];
-        $parentTag['tag_type'] = 'url_set';
-
-
-        if ($urlSet) {
-            $urlSet->update($parentTag);
+        $siteMap = $this->alSiteMapRepository->siteMapData();
+        if ($siteMap) {
+            $data['updated_by'] = Auth::id();
+            $siteMap->update($data);
         } else {
-            $this->save($parentTag);
+            $data['created_by'] = Auth::id();
+            $this->save($data);
         }
 
-        $this->alSiteMapRepository->deleteTagType('url');
-        foreach ($data['loc'] as $key => $items) {
-            $subTag['tag_type'] = "url";
-            $subTag['loc'] = $items;
-            $subTag['change_freq'] = $data['change_freq'][$key];
-            $subTag['priority'] = $data['priority'][$key];
-            $subTag['last_mod'] = date('Y-m-d');
-            $this->save($subTag);
-        }
         return Response('Site map has been successfully updated');
     }
 }

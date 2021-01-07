@@ -12,11 +12,14 @@ namespace App\Services;
 use App\Repositories\AlRobotsRepository;
 use App\Repositories\AmarOfferRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AlRobotsService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var AlRobotsRepository
@@ -49,10 +52,15 @@ class AlRobotsService
             'txt' => 'required'
         ]);
 
+        $this->deleteFile('assetlite/server-files/robots.txt');
+        $this->makeFile('assetlite/server-files/robots.txt', $data['txt']);
+
         $robotTxt = $this->alRobotsRepository->robotData();
         if ($robotTxt) {
+            $data['updated_by'] = Auth::id();
             $robotTxt->update($data);
         } else {
+            $data['created_by'] = Auth::id();
             $this->save($data);
         }
         return Response('Robots txt has been successfully updated');

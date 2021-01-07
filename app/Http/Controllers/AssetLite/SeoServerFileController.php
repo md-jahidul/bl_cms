@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 
 use App\Models\AmarOfferDetails;
+use App\Services\AlHtaccessService;
 use App\Services\AlRobotsService;
 use App\Services\AlSiteMapService;
 use App\Services\AmarOfferDetailsService;
@@ -25,19 +26,45 @@ class SeoServerFileController extends Controller
      * @var AlSiteMapService
      */
     private $alSiteMapService;
+    /**
+     * @var AlHtaccessService
+     */
+    private $htaccessService;
 
     /**
      * AlRobotsService constructor.
+     * @param AlHtaccessService $htaccessService
      * @param AlRobotsService $alRobotsService
      * @param AlSiteMapService $alSiteMapService
      */
     public function __construct(
+        AlHtaccessService $htaccessService,
         AlRobotsService $alRobotsService,
         AlSiteMapService $alSiteMapService
-    )
-    {
+    ) {
+        $this->htaccessService = $htaccessService;
         $this->alRobotsService = $alRobotsService;
         $this->alSiteMapService = $alSiteMapService;
+    }
+
+    /**
+     * @return Factory|View
+     */
+    public function getHtaccess()
+    {
+        $robotsTxt = $this->htaccessService->getHtaccess();
+        return view('admin.seo-server-site-files.htaccess.index', compact('robotsTxt'));
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Redirector
+     */
+    public function updateHtaccess(Request $request)
+    {
+        $response = $this->htaccessService->updateHtaccess($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect("htaccess");
     }
 
     /**
@@ -55,7 +82,7 @@ class SeoServerFileController extends Controller
      * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function updateOrCreate(Request $request)
+    public function updateRobotsTxt(Request $request)
     {
         $response = $this->alRobotsService->updateRobotsTxt($request->all());
         Session::flash('message', $response->getContent());
@@ -67,9 +94,8 @@ class SeoServerFileController extends Controller
      */
     public function showSiteMap()
     {
-        $parentTag = $this->alSiteMapService->findByTagType('url_set');
-        $subTags = $this->alSiteMapService->findBy(['tag_type' => 'url']);
-        return view('admin.seo-server-site-files.site-map.index', compact('parentTag', 'subTags'));
+        $siteMap = $this->alSiteMapService->getSiteMapData();
+        return view('admin.seo-server-site-files.site-map.index', compact('siteMap'));
     }
 
     /**

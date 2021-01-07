@@ -1132,9 +1132,13 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 
+    // Htaccess
+    Route::get('htaccess', 'AssetLite\SeoServerFileController@getHtaccess');
+    Route::post('htaccess/update-or-create', 'AssetLite\SeoServerFileController@updateHtaccess');
+
     // Robots Txt
     Route::get('robot-txt', 'AssetLite\SeoServerFileController@showRobotsTxt');
-    Route::post('robot-txt/update-or-create', 'AssetLite\SeoServerFileController@updateOrCreate');
+    Route::post('robot-txt/update-or-create', 'AssetLite\SeoServerFileController@updateRobotsTxt');
 
     // Site Map
     Route::get('site-map', 'AssetLite\SeoServerFileController@showSiteMap');
