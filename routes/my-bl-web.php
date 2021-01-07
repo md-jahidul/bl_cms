@@ -479,6 +479,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('agent/deeplink/report', 'CMS\AgentListController@agentDeeplinkReport')->name('agent.deeplink.report');
     Route::get('agent/deeplink/report/details/{id}', 'CMS\AgentListController@agentDeeplinkReportDetails')->name('agent.deeplink.report.details');
     Route::get('agent/deeplink/report/details', 'CMS\AgentListController@agentDeeplinkReport')->name('agent.deeplink.report');
+    Route::POST('agent/deeplink/email-send', 'CMS\AgentListController@agentDeeplinkEmailSend')->name('agent.deeplink.emailsend');
 
     // Learn Priyojon Sections
 
