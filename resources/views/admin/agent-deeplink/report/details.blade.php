@@ -3,53 +3,34 @@
 @section('card_name', "Agent Deeplink Report Details")
 
 @section('action')
-    <a href="{{ url('agent/deeplink/report') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Report
+    <a href="{{ url('agent/deeplink/report') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+        Report
         List </a>
 @endsection
 
 @section('content')
     <section>
-        <div class="bg-gray">
-            <div class="row w-100">
-                <div class="col-md-3">
-                    <div class="card border-info mx-sm-1 p-1">
-                        <div class="text-info text-center"><h4>Total</h4></div>
-                        <div class="text-info text-center"><h1>
-                                @php
-                                $total=$report_count->total_buy+$report_count->total_cancel+$report_count->buy_attempt;
-                                @endphp
-                                {{$total}}
-                            </h1></div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-info mx-sm-1 p-1">
-                        <div class="text-info text-center"><h4>Buy/Signup</h4></div>
-                        <div class="text-info text-center"><h1>
-                                {{$report_count->total_buy}}
-                            </h1></div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-info mx-sm-1 p-1">
-                        <div class="text-info text-center"><h4>Cancel</h4></div>
-                        <div class="text-info text-center"><h1>
-                                {{$report_count->total_cancel}}
-                            </h1></div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-info mx-sm-1 p-1">
-                        <div class="text-info text-center"><h4>Failure</h4></div>
-                        <div class="text-info text-center"><h1>
-                                {{$report_count->buy_attempt}}
-                            </h1></div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
+                <div class="row" style="margin-bottom: -20px;">
+                    <div class="col-md-12" style="margin-top: 10px;">
+                        <table border="0" cellspacing="5" cellpadding="5">
+                            <tr>
+                                <td>From:</td>
+                                <td><input type="text" class="datepicker form-control" id="from" name="from"
+                                           autocomplete="off"
+                                           value="@if(!empty($from)){{date("Y-m-d", strtotime($from))}} @endif"></td>
+                                <td>To:</td>
+                                <td><input type="text" class="datepicker form-control" id="to" name="to"
+                                           autocomplete="off"
+                                           value="@if(!empty($to)){{date("Y-m-d", strtotime($to))}} @endif"></td>
+                                <td><input id="submit" value="Search" class="btn btn-sm btn-success " type="button">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
                 <div class="row table-responsive">
                     <div class="col-md-12 pt-2 pb-2">
                         <table class="table table-striped table-bordered dataTable"
@@ -75,6 +56,9 @@
 @endsection
 
 @push('style')
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
@@ -82,6 +66,7 @@
         .add-button {
             margin-top: 1.9rem !important;
         }
+
         .filter_data {
             text-align: right;
         }
@@ -89,9 +74,11 @@
         .dataTable {
             width: 100% !important;
         }
+
         .dt-buttons.btn-group {
-            margin-bottom: 2px;
+            margin-bottom: -70px;
         }
+
         div#question_list_table_length {
             margin-bottom: -50px;
         }
@@ -99,17 +86,33 @@
 @endpush
 
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js') }}"></script>
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
 
     <script>
         $(function () {
+            $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'}).val();
             $('#question_list_table').DataTable({
                 processing: true,
                 serverSide: true,
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 pageLength: 10,
-                ajax: "{{ route('agent.deeplink.report.details',$deeplinkId) }}",
+                ajax: {
+                    'url': "{{ route('agent.deeplink.report.details',$deeplinkId) }}",
+                    'data': function (data) {
+                        let fromdate = $('#from').val();
+                        ;
+                        let todate = $('#to').val();
+                        if (fromdate !== "") {
+                            data.from = fromdate;
+                        }
+                        if (fromdate !== "") {
+                            data.to = todate;
+                        }
+                    }
+                },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'msisdn', name: 'msisdn'},
@@ -123,18 +126,18 @@
                         searchable: true
                     },
                 ],
-                dom: 'Blfrtip',
-                buttons:  [
+                dom: 'Bfrtip',
+                buttons: [
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5 ]
+                            columns: [1, 2, 3, 4, 5]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5 ]
+                            columns: [1, 2, 3, 4, 5]
                         }
                     }
                 ]
@@ -142,6 +145,9 @@
             $(document).on('change', '#filter_category', function (e) {
                 $('#question_list_table').DataTable().ajax.reload();
             });
+        });
+        $("#submit").click(function () {
+            $('#question_list_table').DataTable().ajax.reload();
         });
     </script>
 @endpush
