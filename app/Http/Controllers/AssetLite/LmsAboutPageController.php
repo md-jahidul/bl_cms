@@ -69,6 +69,13 @@ class LmsAboutPageController extends Controller
      */
     public function aboutPageUpdate(Request $request)
     {
+        $request->validate([
+            'left_img_name_en' => 'unique:about_pages,left_img_name_en,' . $request->about_page_id,
+            'left_img_name_bn' => 'unique:about_pages,left_img_name_bn,' . $request->about_page_id,
+            'right_img_name_en' => 'unique:about_pages,right_img_name_en,' . $request->about_page_id,
+            'right_img_name_bn' => 'unique:about_pages,right_img_name_bn,' . $request->about_page_id,
+        ]);
+
         $response = $this->aboutPageService->updateAboutPage($request->all());
         \Illuminate\Support\Facades\Session::flash('message', $response->getContent());
         return redirect(route('about-page', $request->slug));
