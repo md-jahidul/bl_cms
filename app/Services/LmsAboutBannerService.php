@@ -57,6 +57,9 @@ class LmsAboutBannerService
             }
         }
         $moduleWiseData['about_loyalty']['alt_text_en'] = $data['alt_text_en'];
+        $moduleWiseData['about_loyalty']['alt_text_bn'] = $data['alt_text_bn'];
+        $moduleWiseData['about_loyalty']['banner_name'] = $data['banner_name'];
+        $moduleWiseData['about_loyalty']['banner_name_bn'] = $data['banner_name_bn'];
         $moduleWiseData['about_loyalty']['page_type'] = 'about_loyalty';
 
         if (request()->has('reward_banner_image_url')) {
@@ -72,6 +75,9 @@ class LmsAboutBannerService
             }
         }
         $moduleWiseData['about_reward']['alt_text_en'] = $data['reward_alt_text_en'];
+        $moduleWiseData['about_reward']['alt_text_bn'] = $data['reward_alt_text_bn'];
+        $moduleWiseData['about_reward']['banner_name'] = $data['reward_banner_name'];
+        $moduleWiseData['about_reward']['banner_name_bn'] = $data['reward_banner_name_bn'];
         $moduleWiseData['about_reward']['page_type'] = 'about_reward';
 
         foreach ($moduleWiseData as $data) {

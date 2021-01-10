@@ -37,6 +37,7 @@
                                         <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
                                     @endif
                                 </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Mobile)</label>
                                     <div class="custom-file">
@@ -51,15 +52,45 @@
                                         <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($aboutLoyalty->alt_text_en) ? $aboutLoyalty->alt_text_en : '' }}">
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Name EN</label>
+                                    <input type="text" name="banner_name" id="alt_text" class="form-control"
+                                           placeholder="Enter banner name" value="{{ isset($aboutLoyalty->banner_name) ? $aboutLoyalty->banner_name : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block">{{ $errors->first('banner_name') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Name BN</label>
+                                    <input type="text" name="banner_name_bn" class="form-control"
+                                           placeholder="Enter banner name bn" value="{{ isset($aboutLoyalty->banner_name_bn) ? $aboutLoyalty->banner_name_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text EN</label>
+                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text en" value="{{ isset($aboutLoyalty->alt_text_en) ? $aboutLoyalty->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($aboutLoyalty->alt_text_bn) ? $aboutLoyalty->alt_text_bn : '' }}">
+                                </div>
+
+                                <!-- Loyality Hidden Id -->
+                                <input type="hidden" value="{{ isset($aboutLoyalty->id) ? $aboutLoyalty->id : '' }}" name="loyality_id">
+
+                                <!-- Loyality Hidden Id -->
+                                <input type="hidden" value="{{ isset($aboutReward->id) ? $aboutReward->id : '' }}" name="reward_id">
 
                                 <div class="col-md-12 mt-1"></div>
                                 <h4><strong>Reword Point Banner Image</strong></h4>
@@ -94,14 +125,38 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('reward_alt_text_en') ? ' error' : '' }}">
-                                    <label for="reward_alt_text_en">Alt Text</label>
-                                    <input type="text" name="reward_alt_text_en" id="reward_alt_text_en" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($aboutReward->alt_text_en) ? $aboutReward->alt_text_en : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('reward_banner_name') ? ' error' : '' }}">
+                                    <label>Banner Name EN</label>
+                                    <input type="text" name="reward_banner_name" id="alt_text" class="form-control"
+                                           placeholder="Enter banner name" value="{{ isset($aboutReward->banner_name) ? $aboutReward->banner_name : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('reward_alt_text_en'))
-                                        <div class="help-block">{{ $errors->first('reward_alt_text_en') }}</div>
+                                    @if ($errors->has('reward_banner_name'))
+                                        <div class="help-block">{{ $errors->first('reward_banner_name') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('reward_banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Name BN</label>
+                                    <input type="text" name="reward_banner_name_bn" class="form-control"
+                                           placeholder="Enter banner name bn" value="{{ isset($aboutReward->banner_name_bn) ? $aboutReward->banner_name_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('reward_banner_name_bn'))
+                                        <div class="help-block">{{ $errors->first('reward_banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('reward_alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text EN</label>
+                                    <input type="text" name="reward_alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text en" value="{{ isset($aboutReward->alt_text_en) ? $aboutReward->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('reward_alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="reward_alt_text_bn" id="alt_text_bn" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($aboutReward->alt_text_bn) ? $aboutReward->alt_text_bn : '' }}">
+                                    <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-actions col-md-12">
