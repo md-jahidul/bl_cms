@@ -49,9 +49,8 @@
                                 </div>
 
                                 @if($slug == 'reward_points')
-                                    <div
-                                        class="form-group col-md-6 {{ $errors->has('left_card_title_en') ? ' error' : '' }}">
-                                        <label for="left_card_title_en" class="required">Card-1 Title (English)</label>
+                                    <div class="form-group col-md-6 {{ $errors->has('left_card_title_en') ? ' error' : '' }}">
+                                        <label for="left_card_title_en" class="required">Left Card Title (English)</label>
                                         <input type="text" name="other_attributes[left_card_title_en]"
                                                class="form-control" placeholder="Enter title in English"
                                                value="{{ $details->other_attributes['left_card_title_en'] }}" required
@@ -62,9 +61,8 @@
                                         @endif
                                     </div>
 
-                                    <div
-                                        class="form-group col-md-6 {{ $errors->has('right_card_title_en') ? ' error' : '' }}">
-                                        <label for="right_card_title_en" class="required">Card-2 Title (English)</label>
+                                    <div class="form-group col-md-6 {{ $errors->has('right_card_title_en') ? ' error' : '' }}">
+                                        <label for="right_card_title_en" class="required">Right Card Title (English)</label>
                                         <input type="text" name="other_attributes[right_card_title_en]"
                                                class="form-control" placeholder="Enter title in Eangla"
                                                value="{{ $details->other_attributes['right_card_title_en'] }}" required
@@ -75,9 +73,8 @@
                                         @endif
                                     </div>
 
-                                    <div
-                                        class="form-group col-md-6 {{ $errors->has('left_card_title_bn') ? ' error' : '' }}">
-                                        <label for="left_card_title_bn" class="required">Card-1 Title (Bangla)</label>
+                                    <div class="form-group col-md-6 {{ $errors->has('left_card_title_bn') ? ' error' : '' }}">
+                                        <label for="left_card_title_bn" class="required">Left Card Title (Bangla)</label>
                                         <input type="text" name="other_attributes[left_card_title_bn]"
                                                class="form-control" placeholder="Enter title in Bangla"
                                                value="{{ $details->other_attributes['left_card_title_bn'] }}" required
@@ -90,7 +87,7 @@
 
                                     <div
                                         class="form-group col-md-6 {{ $errors->has('right_card_title_bn') ? ' error' : '' }}">
-                                        <label for="right_card_title_bn" class="required">Card-2 Title (Bangla)</label>
+                                        <label for="right_card_title_bn" class="required">Right Card Title (Bangla)</label>
                                         <input type="text" name="other_attributes[right_card_title_bn]"
                                                class="form-control" placeholder="Enter title in Bangla"
                                                value="{{ $details->other_attributes['right_card_title_bn'] }}" required
@@ -98,6 +95,79 @@
                                         <div class="help-block"></div>
                                         @if ($errors->has('right_card_title_bn'))
                                             <div class="help-block">  {{ $errors->first('right_card_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('left_button_title_en') ? ' error' : '' }}">
+                                        <label for="left_button_title_en" class="required">Left Button (English)</label>
+                                        <input type="text" name="other_attributes[left_button_title_en]"
+                                               class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ isset($details->other_attributes['left_button_title_en']) ? $details->other_attributes['left_button_title_en'] : '' }}" required
+                                               data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('left_button_title_en'))
+                                            <div class="help-block">  {{ $errors->first('left_button_title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('right_button_title_en') ? ' error' : '' }}">
+                                        <label for="right_button_title_en" class="required">Right Button (English)</label>
+                                        <input type="text" name="other_attributes[right_button_title_en]"
+                                               class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ isset($details->other_attributes['right_button_title_en']) ? $details->other_attributes['right_button_title_en'] : '' }}" required
+                                               data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('right_button_title_en'))
+                                            <div class="help-block">  {{ $errors->first('right_button_title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('left_button_title_bn') ? ' error' : '' }}">
+                                        <label for="left_button_title_bn" class="required">Left Button (Bangla)</label>
+                                        <input type="text" name="other_attributes[left_button_title_bn]"
+                                               class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ isset($details->other_attributes['left_button_title_bn']) ? $details->other_attributes['left_button_title_bn'] : '' }}" required
+                                               data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('left_button_title_bn'))
+                                            <div class="help-block">  {{ $errors->first('left_button_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('right_button_title_en') ? ' error' : '' }}">
+                                        <label for="right_button_title_en" class="required">Right Button (Bangla)</label>
+                                        <input type="text" name="other_attributes[right_button_title_en]"
+                                               class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ isset($details->other_attributes['right_button_title_en']) ? $details->other_attributes['right_button_title_en'] : '' }}" required
+                                               data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('right_button_title_en'))
+                                            <div class="help-block">  {{ $errors->first('right_button_title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('left_button_url') ? ' error' : '' }}">
+                                        <label for="left_button_url" class="required">Left Button URL</label>
+                                        <input type="text" name="other_attributes[left_button_url]"
+                                               class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ isset($details->other_attributes['left_button_url']) ? $details->other_attributes['left_button_url'] : '' }}" required
+                                               data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('left_button_url'))
+                                            <div class="help-block">  {{ $errors->first('left_button_url') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div
+                                        class="form-group col-md-6 {{ $errors->has('right_button_url') ? ' error' : '' }}">
+                                        <label for="right_button_url" class="required">Right Button URL</label>
+                                        <input type="text" name="other_attributes[right_button_url]"
+                                               class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ isset($details->other_attributes['right_button_url']) ? $details->other_attributes['right_button_url'] : '' }}" required
+                                               data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('right_button_url'))
+                                            <div class="help-block">  {{ $errors->first('right_button_url') }}</div>
                                         @endif
                                     </div>
                                 @endif

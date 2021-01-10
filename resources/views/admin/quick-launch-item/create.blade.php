@@ -36,13 +36,23 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
                                            value="{{ old("alt_text") ? old("alt_text") : '' }}" required data-validation-required-message="Enter alt text">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn" class="required">Alt Text Bangla</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Enter alt text"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : '' }}" required data-validation-required-message="Enter alt text">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -63,8 +73,28 @@
                                     <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('link') ? ' error' : '' }}">
-                                    <label for="link" class="required">Link</label>
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_en') ? ' error' : '' }}">
+                                    <label for="image_name_en" class="required">Image Name English</label>
+                                    <input type="text" name="image_name_en"  class="form-control" placeholder="example: /quick-recharge"
+                                           value="{{ old("image_name_en") ? old("image_name_en") : '' }}" required data-validation-required-message="Enter image name en">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_en'))
+                                        <div class="help-block">  {{ $errors->first('image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label for="image_name_bn" class="required">Image Name Bangla </label>
+                                    <input type="text" name="image_name_bn"  class="form-control" placeholder="example: /quick-recharge"
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('link') ? ' error' : '' }}">
+                                    <label for="link" class="required">URL English</label>
                                     <input type="text" name="link"  class="form-control" placeholder="example: /quick-recharge"
                                            value="{{ old("link") ? old("link") : '' }}" required data-validation-required-message="Enter link">
                                     <div class="help-block"></div>
@@ -73,15 +103,25 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-3 {{ $errors->has('link_bn') ? ' error' : '' }}">
+                                    <label for="link_bn" class="required">URL Bangla </label>
+                                    <input type="text" name="link_bn"  class="form-control" placeholder="example: /quick-recharge"
+                                           value="{{ old("link_bn") ? old("link_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('link_bn'))
+                                        <div class="help-block">  {{ $errors->first('link_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group mt-1">
+                                    <div class="form-group">
                                         <label for="is_external_link" class="mr-1">Is External Link:</label>
                                         <input type="checkbox" name="is_external_link" value="1" id="is_external_link">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6 mt-1">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <label for="title" class="required mr-1">Status:</label>
                                         <input type="radio" name="status" value="1" id="input-radio-15" checked>

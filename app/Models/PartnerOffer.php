@@ -28,6 +28,8 @@ class PartnerOffer extends Model
         'location',
         'map_link',
         'campaign_img',
+        'image_name_en',
+        'image_name_bn',
         'is_campaign',
         'show_in_home',
         'is_active',

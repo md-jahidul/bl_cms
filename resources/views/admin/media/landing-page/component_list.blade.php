@@ -99,6 +99,21 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header" class="form-control" rows="4">{{ isset($bannerImage->page_header) ? $bannerImage->page_header : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Page Header BN</label>
+                                    <textarea name="page_header_bn" class="form-control" rows="4">{{ isset($bannerImage->page_header_bn) ? $bannerImage->page_header_bn : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Schema Markup</label>
+                                    <textarea name="schema_markup" class="form-control" rows="4">{{ isset($bannerImage->schema_markup) ? $bannerImage->schema_markup : '' }}</textarea>
+                                </div>
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

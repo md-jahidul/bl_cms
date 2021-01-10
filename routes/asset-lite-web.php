@@ -42,6 +42,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
+    Route::resource('lms-offer-category', 'AssetLite\LmsOfferCategoryController')->except('show', 'destroy');
+    Route::get('lms-offer-category/destroy/{id}', 'AssetLite\LmsOfferCategoryController@destroy');
+
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
     Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['create', 'store', 'update', 'edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
@@ -278,7 +281,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'AssetLite\PartnerOfferController@create');
     Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'AssetLite\PartnerOfferController@store')
         ->name('partner_offer_store');
-    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'AssetLite\PartnerOfferController@edit')
+    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/{campaign?}', 'AssetLite\PartnerOfferController@edit')
         ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
         ->name('partner_offer_update');
@@ -348,7 +351,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Fixed  ====================================
-    Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
+    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent');
+    Route::get('fixed-pages', 'AssetLite\FixedPageController@fixedPageList');
+    Route::get('fixed-pages/create', 'AssetLite\FixedPageController@fixedPageCreate');
+    Route::post('fixed-pages/store', 'AssetLite\FixedPageController@fixedPageStore');
+    Route::get('fixed-pages/edit/{id}', 'AssetLite\FixedPageController@fixedPageEdit');
+    Route::post('fixed-pages/update/{id}', 'AssetLite\FixedPageController@fixedPageUpdate');
+    Route::get('fixed-pages/delete/{id}', 'AssetLite\FixedPageController@deleteFixedPage');
+
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
@@ -1115,5 +1125,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us.more_details');
 
     // Dynamic Routes
-    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController');
+    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
+    Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 });

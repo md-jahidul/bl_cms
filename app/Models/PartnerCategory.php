@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PartnerCategory extends Model
 {
-    protected $fillable = ['name_en', 'name_bn'];
+    protected $guarded = ['id'];
 
     public function partner()
     {

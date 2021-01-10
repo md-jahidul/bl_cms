@@ -88,7 +88,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <div class="form-group col-md-12 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="other_attributes[alt_text_en]" id="alt_text" class="form-control"
                                            placeholder="Enter alt text" value="{{ isset($bannerImage->other_attributes['alt_text_en']) ? $bannerImage->other_attributes['alt_text_en'] : '' }}">
@@ -96,6 +96,33 @@
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                     @endif
+                                </div>
+
+                                <h5><strong>3G Landing Page Info</strong></h5>
+                                <div class="form-actions col-md-12 mt-0"></div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="other_attributes[page_header]">{{ isset($bannerImage->other_attributes['page_header']) ? $bannerImage->other_attributes['page_header'] : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="other_attributes[page_header_bn]">{{ isset($bannerImage->other_attributes['page_header_bn']) ? $bannerImage->other_attributes['page_header_bn'] : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('schema_markup') ? ' error' : '' }}">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" rows="7" name="other_attributes[schema_markup]">{{ isset($bannerImage->other_attributes['schema_markup']) ? $bannerImage->other_attributes['schema_markup'] : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
                                 </div>
 
                                 <div class="form-actions col-md-12">
