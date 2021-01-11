@@ -99,10 +99,11 @@ class PartnerOfferController extends Controller {
      * @param $id
      * @return Factory|View
      */
-    public function edit($partnerId, $partnerName, $id) {
+    public function edit($partnerId, $partnerName, $id, $campaignPath = null) {
+
         $areas = $this->partnerOfferService->getAreaList();
         $partnerOffer = $this->partnerOfferService->findOne($id);
-        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'areas'));
+        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'areas', 'campaignPath'));
     }
 
     /**
@@ -113,9 +114,11 @@ class PartnerOfferController extends Controller {
      * @return RedirectResponse|Redirector
      */
     public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id) {
+
+        $campaignList = $request->campaign_redirect;
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(isset($redirect) ? $redirect : "partner-offer/$partnerId/$partnerName");
+        return redirect(isset($campaignList) ? $campaignList : "partner-offer/$partnerId/$partnerName");
     }
 
     /**
