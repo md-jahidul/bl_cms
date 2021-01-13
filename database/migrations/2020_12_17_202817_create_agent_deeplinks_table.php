@@ -19,6 +19,7 @@ class CreateAgentDeeplinksTable extends Migration
             $table->string('deeplink_type',80)->nullable(false);
             $table->string('product_code',80)->nullable(false);
             $table->string('deep_link',255)->nullable(false);
+            $table->string('full_link',255)->nullable(false);
             $table->integer('total_view')->nullable(false)->default(0);
             $table->integer('total_buy')->nullable(false)->default(0);
             $table->integer('total_cancel')->nullable(false)->default(0);

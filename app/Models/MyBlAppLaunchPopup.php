@@ -44,7 +44,7 @@ class MyBlAppLaunchPopup extends Model
      * Checks and returns the visibility status according to schedule stored with it
      * @return bool
      */
-    public function visibilityStatus() : bool
+    public function visibilityStatus(): bool
     {
         $showFrom = $this->start_date ? strtotime($this->start_date) : 0;
         $hideFrom = $this->end_date ? strtotime($this->end_date) : 0;

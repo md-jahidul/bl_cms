@@ -18,6 +18,7 @@ class AgentDeeplink extends Model
         'deeplink_type',
         'product_code',
         'deep_link',
+        'full_link',
         'total_view',
         'total_buy',
         'total_cancel',

@@ -123,6 +123,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification Report</a>
                 </li>
+                <li class="{{ is_active_url('purchase/from-notification/list')}}">
+                    <a class="menu-item" href="{{ url('purchase/from-notification/list') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Purchase Report</a>
+                </li>
 
             </ul>
         </li>

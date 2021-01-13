@@ -10,41 +10,67 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use  App\Services\FirebaseDeepLinkService;
+use  App\Repositories\ProductDeepLinkRepository;
+use  App\Repositories\ProductDeepLinkDetailsRepository;
+use DataTables;
+use Carbon\Carbon;
+
 
 class ProductDeepLinkService
 {
 
     use CrudTrait;
+
     /**
-     * @var $firebaseDeepLinkService
+     * @var \App\Services\FirebaseDeepLinkService
      */
     protected $firebaseDeepLinkService;
+    /**
+     * @var ProductDeepLinkRepository
+     */
+    protected $productDeepLinkRepository;
+    /**
+     * @var ProductDeepLinkDetailsRepository
+     */
+    protected $productDeepLinkDetailsRepository;
+
+    /**
+     * ProductDeepLinkService constructor.
+     * @param \App\Services\FirebaseDeepLinkService $firebaseDeepLinkService
+     * @param ProductDeepLinkRepository $productDeepLinkRepository
+     * @param ProductDeepLinkDetailsRepository $productDeepLinkDetailsRepository
+     */
     public function __construct(
-        FirebaseDeepLinkService $firebaseDeepLinkService
-    ) {
-        $this->firebaseDeepLinkService=$firebaseDeepLinkService;
+        FirebaseDeepLinkService $firebaseDeepLinkService,
+        ProductDeepLinkRepository $productDeepLinkRepository,
+        ProductDeepLinkDetailsRepository $productDeepLinkDetailsRepository
+    )
+    {
+        $this->firebaseDeepLinkService = $firebaseDeepLinkService;
+        $this->productDeepLinkRepository = $productDeepLinkRepository;
+        $this->productDeepLinkDetailsRepository = $productDeepLinkDetailsRepository;
     }
 
     /**
      * @param $product_code
      * @return array
      */
-    public function createDeepLink($product_code){
-
+    public function createDeepLink($product_code)
+    {
         $product = MyBlProduct::where('product_code', $product_code)->first();
         if (!$product) {
             throw new NotFoundHttpException();
         }
-        $body=[
-            "dynamicLinkInfo"=>[
-              "domainUriPrefix"=>env('DOMAINURIPREFIX'),
-              "link"=>"https://banglalink.net/product/$product_code",
-              "androidInfo"=> [
-                "androidPackageName"=>"com.arena.banglalinkmela.app"
-              ],
-              "iosInfo"=>[
-                "iosBundleId"=>"com.Banglalink.My-Banglalink"
-              ]
+        $body = [
+            "dynamicLinkInfo" => [
+                "domainUriPrefix" => env('DOMAINURIPREFIX'),
+                "link" => "https://banglalink.net/product/$product_code",
+                "androidInfo" => [
+                    "androidPackageName" => "com.arena.banglalinkmela.app.qa"
+                ],
+                "iosInfo" => [
+                    "iosBundleId" => "com.Banglalink.My-Banglalink"
+                ]
             ]
         ];
         $saveData = new ProductDeepLink();
@@ -64,128 +90,151 @@ class ProductDeepLinkService
         } else {
             return ['short_link' => "", 'status_code' => 500, 'ms' => "something is wrong"];
         }
-
     }
 
     /**
      * @param $request
-     * @return array
-     * @author  Ahsan Habib
+     * @return mixed
      */
     public function getProductDeepLinkListReport($request)
     {
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $length = $request->get('length');
-
-        $builder = new ProductDeepLink();
-        $builder->orderBy('id', 'desc');
-
-        if ($request->has('search') && !empty($request->get('search'))) {
-            $input = $request->get('search');
-            if (!empty($input['value'])) {
-                $product_code = $input['value'];
-                $all_items_count = $builder->where('product_code', 'LIKE', "%{$product_code}%")->count();
-                $items = $builder->where('product_code', 'LIKE', "%{$product_code}%")->skip($start)->take($length)->get();
-            } else {
-
-                $all_items_count = $builder->count();
-                $items = $builder->skip($start)->take($length)->get();
-            }
-        }
-        $response = [
-            'draw' => $draw,
-            'recordsTotal' => $all_items_count,
-            'recordsFiltered' => $all_items_count,
-            'data' => []
-        ];
-        $items->each(function ($item) use (&$response) {
-            $created_at = date('d-M-Y', strtotime($item->created_at));
-            $total_view = $item->total_cancel + $item->total_buy + $item->buy_attempt;
-            $response['data'][] = [
-                'id' => $item->id,
-                'product_code' => $item->product_code,
-                'deep_link' => $item->deep_link,
-                'total_view' => $total_view,
-                'total_buy' => $item->total_buy,
-                'total_cancel' => $item->total_cancel,
-                'buy_attempt' => $item->buy_attempt,
-                'date' => $created_at];
-        });
-        return $response;
+        $model = ProductDeepLink::query();
+        return DataTables::eloquent($model)
+            ->filter(function ($query) {
+                if (request()->has('searchByFromdate') && request()->has('searchByFromdate') && !empty(request()->input('searchByFromdate')) && !empty(request()->input('searchByTodate'))) {
+                    $datefrom = request()->input('searchByFromdate') . ' 00:00:00';
+                    $dateto = request()->input('searchByTodate') . ' 23:59:59';
+                    $query->whereBetween('created_at', [$datefrom, $dateto]);
+                }
+            }, true)
+            ->addIndexColumn()
+            ->addColumn('total_view', function ($data) {
+                return $data->total_buy + $data->total_cancel + $data->buy_attempt;
+            })
+            ->addColumn('total_buy_attempt', function ($data) {
+                return $data->buy_attempt;
+            })
+            ->addColumn('action', function ($row) {
+                $url = url('deeplink-product-purchase-details');
+                $actionBtn = '<a href="' . $url . '/' . $row->id . '" class="edit btn btn-success btn-sm">view</a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
      * @param $request
+     * @return mixed
+     */
+    public function getProductDeepLinkfilterList($request)
+    {
+        if ($request->has('searchByProductCode') && !empty($request->input('searchByProductCode'))) {
+            $searchByProductCode = trim($request->input('searchByProductCode'));
+            $data = ProductDeepLink::where('product_code', "$searchByProductCode")->get();
+        } else {
+            $data = $this->productDeepLinkRepository->findAll();
+        }
+        $searchByFromdate = ($request->has('searchByFromdate')) ? $request->input('searchByFromdate') : null;
+        $searchByTodate = ($request->has('searchByTodate')) ? $request->input('searchByTodate') : null;
+        $detailsData = $this->productDeepLinkDetailsRepository->getCountsByActionType(
+            $searchByFromdate,
+            $searchByTodate
+        );
+        $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
+        $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
+
+        $result = [];
+        foreach ($data as $key => $purchase) {
+            $result[$key]['id'] = $purchase->id;
+            $result[$key]['notification_id'] = $purchase->notification_id;
+            $result[$key]['notification_title'] = $purchase->notification_title;
+            $result[$key]['product_code'] = $purchase->product_code;
+
+            $detailsDatum = $detailsData
+                ->where('product_code_id', $purchase->id)
+                ->flatten()
+                ->toArray();
+            $result[$key]['log'] = $this->prepareFilteredCount($detailsDatum);
+        }
+        return Datatables::collection($result)
+            ->addIndexColumn()
+            ->addColumn('total_view', function ($result) {
+                return $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
+            })
+            ->addColumn('total_buy', function ($result) {
+                return $result['log']['total_buy'];
+            })
+            ->addColumn('total_buy_attempt', function ($result) {
+                return $result['log']['total_buy_attempt'];
+            })
+            ->addColumn('total_cancel', function ($result) {
+                return $result['log']['total_cancel'];
+            })
+            ->addColumn('action', function ($result) use ($from, $to) {
+                $url = url('deeplink-product-purchase-details');
+                $actionBtn = '<a href="' . $url . '/' . $result['id'] . '?from=' . $from . '&to=' . $to . '" class="edit btn btn-success btn-sm">view</a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+
+    }
+
+    /**
+     * @param $detailsDatum
      * @return array
-     * @author  Ahsan Habib
+     */
+    public function prepareFilteredCount($detailsDatum)
+    {
+        if (empty($detailsDatum)) {
+            $array['total_buy'] = 0;
+            $array['total_cancel'] = 0;
+            $array['total_buy_attempt'] = 0;
+        } else {
+            $total_buy_attempt = 0;
+            $total_cancel = 0;
+            $total_buy = 0;
+            foreach ($detailsDatum as $infolog) {
+                if ($infolog['action_type'] == 'buy_failure') {
+                    $total_buy_attempt = +$infolog['total_count'];
+                }
+                if ($infolog['action_type'] == 'buy_success') {
+                    $total_buy = +$infolog['total_count'];
+                }
+                if ($infolog['action_type'] == 'cancel') {
+                    $total_cancel = +$infolog['total_count'];
+                }
+            }
+            $array['total_buy_attempt'] = $total_buy_attempt;
+            $array['total_cancel'] = $total_cancel;
+            $array['total_buy'] = $total_buy;
+        }
+        return $array;
+
+    }
+
+    /**
+     * @param $request
+     * @param $productDeeplinkDbId
+     * @return mixed
      */
     public function getProductDeepLinkDetailsReport($request, $productDeeplinkDbId)
     {
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $length = $request->get('length');
-        $builder = new ProductDeepLinkDetails();
-        $builder->where('product_code_id', $productDeeplinkDbId);
-
-        if ($request->has('search') && !empty($request->get('search'))) {
-            $input = $request->get('search');
-            if (!empty($input['value']) or !empty($request->get('option_name'))) {
-                $product_code = $input['value'];
-                $inputData = array();
-                $inputData['msisdn'] = $input['value'];
-                $inputData['action_type'] = $request->get('option_name');
-                $inputData['product_code_id'] = $request->get('product_code_id');
-                $all_items_count = $builder->where(function ($q) use ($inputData) {
-                    $msisdn = $inputData['msisdn'];
-                    $action_type = $inputData['action_type'];
-                    $product_code_id = $inputData['product_code_id'];
-                    $q->where('product_code_id', $product_code_id);
-                    if (!empty($msisdn)) {
-                        $q->where('msisdn', 'LIKE', "%{$msisdn}%");
-                    }
-                    if (!empty($action_type)) {
-                        $q->where('action_type', 'LIKE', "%{$action_type}%");
-                    }
-                }
-                )->count();
-                $items = $builder->where(function ($q) use ($inputData) {
-                    $msisdn = $inputData['msisdn'];
-                    $action_type = $inputData['action_type'];
-                    $product_code_id = $inputData['product_code_id'];
-                    $q->where('product_code_id', $product_code_id);
-                    if (!empty($msisdn)) {
-                        $q->where('msisdn', 'LIKE', "%{$msisdn}%");
-                    }
-                    if (!empty($action_type)) {
-                        $q->where('action_type', 'LIKE', "%{$action_type}%");
-                    }
-                }
-                )->orderBy('id', 'desc')->skip($start)->take($length)->get();
-            } else {
-
-                $all_items_count = $builder->where('product_code_id', $productDeeplinkDbId)->count();
-                $builder->orderBy('id', 'desc');
-                $items = $builder->where('product_code_id', $productDeeplinkDbId)->skip($start)->take($length)->get();
-            }
+        $from = ($request->has('from')) ? $request->input('from') : null;
+        $to = ($request->has('to')) ? $request->input('to') : null;
+        $builder = ProductDeepLinkDetails::where('product_code_id', $productDeeplinkDbId)->orderBy('id', 'DESC')->get();
+        $result = $collection = collect($builder);
+        if (!empty($from) && !empty($to)) {
+            $filtered = $collection->whereBetween('created_at', [$from, $to]);
+            $result = $filtered->all();
         }
-        $response = [
-            'draw' => $draw,
-            'recordsTotal' => $all_items_count,
-            'recordsFiltered' => $all_items_count,
-            'data' => []
-        ];
-        $items->each(function ($item) use (&$response) {
-            $created_at = date('d-M-Y', strtotime($item->created_at));
-            $response['data'][] = [
-                'msisdn' => $item->msisdn,
-                'action_type' => $item->action_type,
-                'action_status' => $item->action_status,
-                'action_url' => $item->action_url,
-                'date' => $created_at
-            ];
-        });
-        return $response;
+        return Datatables::collection($result)
+            ->addIndexColumn()
+            ->addColumn('created_at', function ($result) {
+                return  date("d-M-Y", strtotime($result->created_at));
+            })
+            ->make(true);
     }
 
 }
