@@ -7,12 +7,28 @@
     </div>
 </div>
 
-<div class="form-group col-md-5">
-    <label for="alt_text">Alt Text</label>
-    <input type="text" name="multi_item[alt_text-1]" class="form-control">
+<div class="form-group col-md-3">
+    <label for="alt_text">Alt Text English</label>
+    <input type="text" name="multi_item[alt_text_en-1]" class="form-control">
+</div>
+
+<div class="form-group col-md-2">
+    <label for="alt_text">Alt Text Bangla</label>
+    <input type="text" name="multi_item[alt_text_bn-1]" class="form-control">
 </div>
 
 <div class="form-group col-md-1">
     <label for="alt_text"></label>
     <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
 </div>
+
+<div class="form-group col-md-6">
+    <label for="alt_text">Image Name English</label>
+    <input type="text" name="multi_item[img_name_en-1]" class="form-control">
+</div>
+
+<div class="form-group col-md-6">
+    <label for="alt_text">Image Name Bangla</label>
+    <input type="text" name="multi_item[img_name_bn-1]" class="form-control">
+</div>
+

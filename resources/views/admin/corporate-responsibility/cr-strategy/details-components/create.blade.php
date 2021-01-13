@@ -151,7 +151,6 @@
 
     <script>
         $(function () {
-
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"
                 var fullUrl = "{{ asset('component-images') }}/" + componentType;
@@ -236,13 +235,25 @@
                     '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '  </div>\n' +
                     ' </div>\n'+
-                    '<div class="form-group col-md-5 option-'+total_option+'">\n' +
-                    '    <label for="alt_text">Alt Text</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+                    '<div class="form-group col-md-3 option-'+total_option+'">\n' +
+                    '    <label for="alt_text">Alt Text English</label>\n' +
+                    '    <input type="text" name="multi_item[alt_text_en-'+total_option+']"  class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-2 option-'+total_option+'">\n' +
+                    '    <label for="alt_text">Alt Text Bangla</label>\n' +
+                    '    <input type="text" name="multi_item[alt_text_bn-'+total_option+']"  class="form-control">\n' +
                     '</div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                     '   <label for="alt_text"></label>\n' +
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '<label for="alt_text">Image Name English</label>\n' +
+                    '    <input type="text" name="multi_item[img_name_en-'+total_option+']" class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="alt_text">Image Name Bangla</label>\n' +
+                    '    <input type="text" name="multi_item[img_name_bn-'+total_option+']" class="form-control">\n' +
                     '</div>';
                 $('#multiple_image').append(input);
                 dropify();

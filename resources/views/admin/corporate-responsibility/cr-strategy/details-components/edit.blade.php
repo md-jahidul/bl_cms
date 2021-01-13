@@ -98,10 +98,22 @@
                                                         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-5 option-{{ $i }}">
-                                                    <label for="alt_text">Alt Text</label>
-                                                    <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
+                                                <div class="form-group col-md-3 option-{{ $i }}">
+                                                    <label for="alt_text">Alt Text English</label>
+                                                    <input type="text" name="multi_item[alt_text_en-{{ $i }}]"
+                                                           value="{{ isset($image['alt_text_en']) ? $image['alt_text_en'] : '' }}" class="form-control">
                                                 </div>
+
+                                                <div class="form-group col-md-2 option-{{ $i }}">
+                                                    <label for="alt_text">Alt Text Bangla</label>
+                                                    <input type="text" name="multi_item[alt_text_bn-{{ $i }}]"
+                                                           value="{{ isset($image['alt_text_bn']) ? $image['alt_text_bn'] : '' }}" class="form-control">
+                                                </div>
+
+{{--                                                <div class="form-group col-md-6">--}}
+{{--                                                    <label for="alt_text">Image Name Bangla</label>--}}
+{{--                                                    <input type="text" name="multi_item[img_name_bn-1]" class="form-control">--}}
+{{--                                                </div>--}}
 
                                                 @if($i == 1)
                                                     <div class="form-group col-md-1">
@@ -114,6 +126,19 @@
                                                     {{--                                                                    <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
                                                     {{--                                                                </div>--}}
                                                 @endif
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="alt_text">Image Name English</label>
+                                                    <input type="text" name="multi_item[img_name_en-{{ $i }}]]" class="form-control"
+                                                           value="{{ isset($image['img_name_en']) ? $image['img_name_en'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="alt_text">Image Name Bangla</label>
+                                                    <input type="text" name="multi_item[img_name_bn-{{ $i }}]]" class="form-control"
+                                                           value="{{ isset($image['img_name_bn']) ? $image['img_name_bn'] : '' }}">
+                                                </div>
+
                                             @endforeach
                                         @endif
                                     </slot>

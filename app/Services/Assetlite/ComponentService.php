@@ -11,6 +11,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 use App\Repositories\ComponentRepository;
+use Illuminate\Support\Facades\Validator;
 
 class ComponentService
 {
@@ -137,8 +138,6 @@ class ComponentService
 
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
 
-        dd($data);
-
         $countComponents = $this->componentRepository->list($sectionId, self::PAGE_TYPE['product_details']);
 
         $data['component_order'] = count($countComponents) + 1;
@@ -152,11 +151,12 @@ class ComponentService
 
     public function componentUpdate($data, $id)
     {
-        request()->validate([
-            'image_name_en' => 'required|unique:components,image_name_en,' . $id,
-            'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
-        ]);
-
+        if ($data['component_type'] == "title_with_text_and_right_image") {
+            request()->validate([
+                'image_name_en' => 'required|unique:components,image_name_en,' . $id,
+                'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+            ]);
+        }
         $component = $this->findOne($id);
 
         if (request()->hasFile('image')) {
