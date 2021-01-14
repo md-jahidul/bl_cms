@@ -14,9 +14,13 @@ class UserMuteNotificationCategoryRepository extends BaseRepository
      */
     public function getUsersPhoneByCategory($categoryId)
     {
-        return $this->model->select('user_id')->where('category_id', $categoryId)->get()->each(function ($user) {
-            return $user->phone = $user->customer->phone;
-        })->pluck('phone')->toArray();
+        return array_filter($this->model->select('user_id')->where('category_id', $categoryId)->get()->each(function ($user) {
+            if (!empty($user->customer->phone)) {
+                return $user->phone = $user->customer->phone;
+            } else {
+                return false;
+            }
+        })->pluck('phone')->toArray(), 'strlen');
     }
 
 }
