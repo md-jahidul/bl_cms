@@ -110,6 +110,9 @@ class SeoServerFileController extends Controller
     {
         $response = $this->alSiteMapService->siteMapUpdateOrCreate($request->all());
         Session::flash('message', $response->getContent());
+
+        list($output, $retval) = $this->alSiteMapService->copyInRootDirectory();
+
         return redirect("site-map");
     }
 

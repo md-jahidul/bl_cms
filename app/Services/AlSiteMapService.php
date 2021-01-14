@@ -68,4 +68,20 @@ class AlSiteMapService
 
         return Response('Site map has been successfully updated');
     }
+
+    /**
+     * @return array
+     */
+    public function copyInRootDirectory(): array
+    {
+        $output = null;
+        $retval = null;
+
+        $source = env('SRC_DIRECTORY');
+        $destination = env('DST_DIRECTORY');
+
+        exec('cp'." ".$source.'sitemap.xml'." ".$destination, $output, $retval);
+
+        return array($output, $retval);
+    }
 }
