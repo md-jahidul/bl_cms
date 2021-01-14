@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\AboutUsBanglalinkRequest;
 use App\Http\Requests\StoreSliderImageRequest;
 use App\Models\AboutUsBanglalink;
 use App\Services\AboutUsService;
@@ -140,7 +141,7 @@ class AboutUsController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(AboutUsBanglalinkRequest $request)
     {
         $response = $this->aboutUsService->storeAboutUsInfo($request);
         Session::flash('message', $response->getContent());
@@ -166,7 +167,7 @@ class AboutUsController extends Controller
      * @param AboutUsBanglalink $aboutUs
      * @return Response
      */
-    public function update(Request $request, AboutUsBanglalink $aboutUs)
+    public function update(AboutUsBanglalinkRequest $request, AboutUsBanglalink $aboutUs)
     {
         $response = $this->aboutUsService->updateAboutUsInfo($request, $aboutUs);
 
