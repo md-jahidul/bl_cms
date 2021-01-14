@@ -65,4 +65,21 @@ class AlRobotsService
         }
         return Response('Robots txt has been successfully updated');
     }
+
+
+    /**
+     * @return array
+     */
+    public function copyInRootDirectory(): array
+    {
+        $output = null;
+        $retval = null;
+
+        $source = env('SRC_DIRECTORY');
+        $destination = env('DST_DIRECTORY');
+
+        exec('cp'." ".$source.'robots.txt'." ".$destination, $output, $retval);
+
+        return array($output, $retval);
+    }
 }

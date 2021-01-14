@@ -86,6 +86,9 @@ class SeoServerFileController extends Controller
     {
         $response = $this->alRobotsService->updateRobotsTxt($request->all());
         Session::flash('message', $response->getContent());
+
+        list($output, $retval) = $this->alRobotsService->copyInRootDirectory();
+
         return redirect("robot-txt");
     }
 
