@@ -10,14 +10,10 @@
 namespace App\Repositories;
 
 use App\Models\AboutPage;
+use App\Models\ComponentMultiData;
 use App\Models\Prize;
 
-class AboutPageRepository extends BaseRepository
+class ComponentMultiDataRepository extends BaseRepository
 {
-    public $modelName = AboutPage::class;
-
-    public function findDetail($key)
-    {
-        return $this->model->where('slug', $key)->first();
-    }
+    public $modelName = ComponentMultiData::class;
 }

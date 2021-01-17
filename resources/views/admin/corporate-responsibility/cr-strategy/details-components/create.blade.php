@@ -75,11 +75,73 @@
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                     </slot>
 
+{{--                                    {{ $errors }}--}}
+
                                     {{--Multiple Image--}}
                                     <slot id="multiple_image" data-offer-type="multiple_image" class="d-none">
+
+
+                                        <div class="col-md-12 col-xs-6 d-none" id="duplicate-error">
+                                            <div class="alert bg-danger alert-dismissible mb-2" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                Duplicate Value is given.
+                                            </div>
+                                        </div>
+
+
                                         @include('layouts.partials.product-details.component.common-field.extra-title')
                                         @include('layouts.partials.product-details.component.common-field.title')
-                                        @include('layouts.partials.product-details.component.common-field.multiple-image')
+
+{{--                                        <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">--}}
+                                        <div class="col-md-6 col-xs-6">
+                                            <div class="form-group">
+                                                <label for="message">Multiple Image</label>
+                                                <input type="file" class="dropify" name="base_image[]" data-height="80" required/>
+                                                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="alt_text">Alt Text English</label>
+                                            <input type="text" name="alt_text_en[]" class="form-control">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label for="alt_text">Alt Text Bangla</label>
+                                            <input type="text" name="multi_alt_text_bn[]" class="form-control">
+                                        </div>
+
+                                        <div class="form-group col-md-1">
+                                            <label for="alt_text"></label>
+                                            <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="alt_text">Image Name English</label>
+                                            <input type="text" name="img_name_en[]" class="form-control img_name">
+                                            <div class="help-block duplicate-error text-danger"></div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="alt_text">Image Name Bangla</label>
+                                            <input type="text" name="img_name_bn[]" class="form-control img_name">
+                                            <div class="help-block duplicate-error text-danger"></div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="alt_text">Image Name English</label>
+                                            <input type="text" name="img_name_en[]" class="form-control img_name" onchange="checkDuplicate()">
+                                            <div class="help-block duplicate-error text-danger"></div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="alt_text">Image Name Bangla</label>
+                                            <input type="text" name="img_name_bn[]" class="form-control img_name" onchange="checkDuplicate()">
+                                            <div class="help-block duplicate-error text-danger"></div>
+                                        </div>
                                     </slot>
 
                                     <div class="col-md-12 mt-2">
@@ -113,6 +175,11 @@
     <style>
         form #related_product_field .select2-container {
             width: 100% !important;
+        }
+
+        form .img_name {
+            /*color: white;*/
+            border-color: red;
         }
     </style>
 
@@ -222,26 +289,74 @@
             });
 
 
+            // Multi Image Duplicate Check
+
+            function checkDuplicate(){
+                var inputId  = [];
+                $(".img_name").removeClass("img_name")
+                var $inputs = $('input[class="img_name"]');
+
+                $inputs.each(function () {
+                    var v = this.value;
+                    if(!v) return true
+                    if (inputId.includes(v));
+                    $inputs.filter(function () {
+                        return this.value == v
+                    }).addClass("img_name")
+                    inputId.push(v)
+                })
+            }
+
+            // $('#multiple_image :input').change(function() {
+            //
+            //     // alert('Hi')
+            //     console.log($(this))
+            //
+            //     //Create array of input values
+            //     var ar = $('#multiple_image :input').map(function() {
+            //         if ($(this).val() != '') return $(this).val()
+            //     }).get();
+            //
+            //     // alert(ar)
+            //
+            //     //Create array of duplicates if there are any
+            //     var unique = ar.filter(function(item, pos) {
+            //         return ar.indexOf(item) != pos;
+            //     });
+            //
+            //     alert(unique)
+            //
+            //     //show/hide error msg
+            //     // var error = $('#duplicate-error');
+            //     var classError = $('#multiple_image .duplicate-error');
+            //
+            //     // classError.html('Duplicate')
+            //
+            //     // console.log(classError.attr('Duplicate'))
+            //
+            //     (unique.length !== 0) ? classError.html('Duplicate') : classError.html('');
+            // })
+
             // Multi Image Component
             $(document).on('click', '#plus-image', function () {
                 var option_count = $('.options-count');
                 var total_option = option_count.length + 2;
 
                 var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
-                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
+                    // '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
                     '<div class="form-group">\n' +
                     '      <label for="message">Multiple Image</label>\n' +
-                    '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+                    '      <input type="file" class="dropify" name="base_image[]" data-height="80"/>\n' +
                     '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '  </div>\n' +
                     ' </div>\n'+
                     '<div class="form-group col-md-3 option-'+total_option+'">\n' +
                     '    <label for="alt_text">Alt Text English</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text_en-'+total_option+']"  class="form-control">\n' +
+                    '    <input type="text" name="alt_text_en[]"  class="form-control">\n' +
                     '</div>\n' +
                     '<div class="form-group col-md-2 option-'+total_option+'">\n' +
                     '    <label for="alt_text">Alt Text Bangla</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text_bn-'+total_option+']"  class="form-control">\n' +
+                    '    <input type="text" name="multi_alt_text_bn[]"  class="form-control">\n' +
                     '</div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                     '   <label for="alt_text"></label>\n' +
@@ -249,12 +364,13 @@
                     '</div>\n' +
                     '<div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '<label for="alt_text">Image Name English</label>\n' +
-                    '    <input type="text" name="multi_item[img_name_en-'+total_option+']" class="form-control">\n' +
+                    '    <input type="text" name="img_name_en[]" class="form-control img_name">\n' +
                     '</div>\n' +
                     '<div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '    <label for="alt_text">Image Name Bangla</label>\n' +
-                    '    <input type="text" name="multi_item[img_name_bn-'+total_option+']" class="form-control">\n' +
+                    '    <input type="text" name="img_name_bn[]" class="form-control img_name">\n' +
                     '</div>';
+
                 $('#multiple_image').append(input);
                 dropify();
             });
