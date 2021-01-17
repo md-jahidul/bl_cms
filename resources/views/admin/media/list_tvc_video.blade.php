@@ -99,6 +99,31 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text</label>
+                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($bannerImage->alt_text_en) ? $bannerImage->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header" class="form-control" rows="4">{{ isset($bannerImage->page_header) ? $bannerImage->page_header : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea name="page_header_bn" class="form-control" rows="4">{{ isset($bannerImage->page_header_bn) ? $bannerImage->page_header_bn : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea name="schema_markup" class="form-control" rows="4">{{ isset($bannerImage->schema_markup) ? $bannerImage->schema_markup : '' }}</textarea>
+                                </div>
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

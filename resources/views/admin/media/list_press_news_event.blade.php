@@ -106,6 +106,31 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text</label>
+                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($pressBannerImage->alt_text_en) ? $pressBannerImage->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header" class="form-control" rows="4">{{ isset($pressBannerImage->page_header) ? $pressBannerImage->page_header : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea name="page_header_bn" class="form-control" rows="4">{{ isset($pressBannerImage->page_header_bn) ? $pressBannerImage->page_header_bn : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea name="schema_markup" class="form-control" rows="4">{{ isset($pressBannerImage->schema_markup) ? $pressBannerImage->schema_markup : '' }}</textarea>
+                                </div>
+
                                 <div class="col-md-12 mt-1"></div>
                                 <h4><strong>News Event Banner Image</strong></h4>
                                 <div class="form-actions col-md-12 mt-0"></div>
@@ -148,6 +173,31 @@
                                     @if ($errors->has('news_alt_text_en'))
                                         <div class="help-block">{{ $errors->first('news_alt_text_en') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('news_alt_text_en') ? ' error' : '' }}">
+                                    <label for="news_alt_text_en">Alt Text</label>
+                                    <input type="text" name="news_alt_text_en" id="news_alt_text_en" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($newsBannerImage->alt_text_en) ? $newsBannerImage->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('news_alt_text_en'))
+                                        <div class="help-block">{{ $errors->first('news_alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="news_page_header" class="form-control" rows="4">{{ isset($newsBannerImage->page_header) ? $newsBannerImage->page_header : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea name="news_page_header_bn" class="form-control" rows="4">{{ isset($newsBannerImage->page_header_bn) ? $newsBannerImage->page_header_bn : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea name="news_schema_markup" class="form-control" rows="4">{{ isset($newsBannerImage->schema_markup) ? $newsBannerImage->schema_markup : '' }}</textarea>
                                 </div>
 
                                 <div class="form-actions col-md-12">
