@@ -75,6 +75,9 @@ class MediaBannerImageService
             $moduleWiseData['press_release']['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
         }
         $moduleWiseData['press_release']['alt_text_en'] = $data['alt_text_en'];
+        $moduleWiseData['press_release']['page_header'] = $data['page_header'];
+        $moduleWiseData['press_release']['page_header_bn'] = $data['page_header_bn'];
+        $moduleWiseData['press_release']['schema_markup'] = $data['schema_markup'];
         $moduleWiseData['press_release']['module_type'] = 'press_release';
 
         if (request()->has('news_news_banner_image_url')) {
@@ -84,6 +87,9 @@ class MediaBannerImageService
             $moduleWiseData['news_event']['banner_mobile_view'] = $this->upload($data['news_banner_mobile_view'], $dirPath);
         }
         $moduleWiseData['news_event']['alt_text_en'] = $data['news_alt_text_en'];
+        $moduleWiseData['news_event']['page_header'] = $data['news_page_header'];
+        $moduleWiseData['news_event']['page_header_bn'] = $data['news_page_header_bn'];
+        $moduleWiseData['news_event']['schema_markup'] = $data['news_schema_markup'];
         $moduleWiseData['news_event']['module_type'] = 'news_event';
 
         foreach ($moduleWiseData as $data) {
