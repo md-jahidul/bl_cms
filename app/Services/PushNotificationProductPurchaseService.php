@@ -185,7 +185,7 @@ class PushNotificationProductPurchaseService
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('date', function ($data) {
-                return date('d-m-Y', strtotime($data->created_at));
+                return date('d-m-Y H:i:s', strtotime($data->created_at));
             })
             ->rawColumns(['date'])
             ->make(true);

@@ -10,6 +10,7 @@ use App\Http\Requests\AgentRequest;
 use App\Http\Requests\AgentDeeplinkRequest;
 use Redirect;
 use App\Services\AgentService;
+use Mail;
 
 class AgentListController extends Controller
 {
@@ -190,5 +191,24 @@ class AgentListController extends Controller
         }
         $deeplinkId = $id;
         return view('admin.agent-deeplink.report.details', compact('deeplinkId', 'from', 'to'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function agentDeeplinkEmailSend(Request $request)
+    {
+        Mail::send('admin.agent-deeplink.email',
+            ['content' => $request->get('body'), 'logo' => '', ' title' => 'Agent deeplink', 'branch_name' => 'Banglalink Head Office'],
+            function ($message) use ($request) {
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $message->to($request->get('email'), $request->get('name'));
+//                $message->to(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $subject = !empty($request->get('subject')) ? $request->get('subject') : 'Email  send from Banglalink';
+                $message->subject($subject);
+            });
+        return back()->with('success', 'Email send successfully completed');
+
     }
 }

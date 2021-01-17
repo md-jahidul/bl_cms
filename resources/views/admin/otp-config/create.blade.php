@@ -32,15 +32,15 @@
                 <form novalidate action="{{ route('otp-config.update',$config->id) }}" method="post" enctype="multipart/form-data">
                 @else
                 <form novalidate action="{{ route('otp-config.store') }}" method="post" enctype="multipart/form-data">
-            @endif 
+            @endif
 
             @csrf
             @if(isset($config))
                 @method('put')
                 @else
                 @method('post')
-            @endif 
-           
+            @endif
+
             <div class="row">
 
                     <div class="col-6">
@@ -108,7 +108,7 @@
 
 
 @push('style')
-   
+
 @endpush
 @push('page-js')
 
@@ -126,10 +126,10 @@
                 $('#token_length_number').val(token);
             });
         });
-        
+
     </script>
 
 
 
-    
+
 @endpush
