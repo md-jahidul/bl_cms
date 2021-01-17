@@ -35,7 +35,6 @@ class StoreSliderImageRequest extends FormRequest
             'image_name' => 'required|unique:al_slider_images,image_name,' . $request->id,
             'image_name_bn' => 'required|unique:al_slider_images,image_name_bn,' . $request->id,
             'alt_text' => 'required',
-            'alt_text_bn' => 'required',
             'is_active' => 'required',
         ];
     }
