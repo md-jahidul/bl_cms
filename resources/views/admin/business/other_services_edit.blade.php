@@ -2,7 +2,13 @@
 @section('title', 'Edit Business Enterprise Service')
 @section('card_name', 'Enterprise Solution')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
+    @php
+        $url = str_replace(url('/'), '', url()->previous());
+        $previousUrl = substr($url, 1);
+    @endphp
+
+<li class="breadcrumb-item active"> <a href="{{ url($previousUrl) }}">
+        {{ $previousUrl != "business-other-services" ? 'Slider List' : 'Service List' }}</a></li>
 <li class="breadcrumb-item active"> Edit</li>
 @endsection
 @section('action')
