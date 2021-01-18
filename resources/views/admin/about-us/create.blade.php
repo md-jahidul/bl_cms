@@ -279,17 +279,40 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                    <label> URL (url slug) <span class="text-danger">*</span></label>
+                                    <label> URL EN (url slug) <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control"
-                                           value="@if(isset($about)){{$about->url_slug}} @else {{old("url_slug")}} @endif" required name="url_slug" placeholder="URL">
+                                           value="@if(isset($about)){{$about->url_slug}} @else {{old("url_slug")}} @endif" required name="url_slug" placeholder="URL EN">
                                     <small class="text-info">
                                         <strong>i.e:</strong> about-us (no spaces)<br>
                                     </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block text-danger">{{ $errors->first('url_slug') }}</div>
+                                    @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Page Header (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header">@if(isset($about)){{$about->page_header}} @else {{old("page_header")}} @endif </textarea>
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label> URL BN (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control"
+                                           value="@if(isset($about)){{$about->url_slug_bn}}@else{{old("url_slug_bn")}}@endif" required name="url_slug_bn" placeholder="URL BN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> আমাদের-সম্পর্কে (no spaces)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('url_slug_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('page_header') ? ' error' : '' }}">
+                                    <label>Page Header EN (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header">@if(isset($about)){{$about->page_header}} @else {{old("page_header")}} @endif</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                    <label>Page Header BN (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header_bn">@if(isset($about)){{$about->page_header_bn}}@else {{old("page_header_bn")}} @endif </textarea>
                                     <small class="text-info">
                                         <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
