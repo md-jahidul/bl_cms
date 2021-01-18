@@ -20,7 +20,6 @@ class EthicsFilesRepository extends BaseRepository {
 
     public function saveFileData($filePath, $request) {
         try {
-
             $file = $this->model;
             if ($request->file_id > 0) {
                 $file = $this->model->findOrFail($request->file_id);
@@ -29,6 +28,8 @@ class EthicsFilesRepository extends BaseRepository {
             $file->file_name_en = $request->file_name_en;
             $file->file_name_bn = $request->file_name_bn;
             $file->file_path = $filePath;
+            $file->alt_text = $request->alt_text;;
+            $file->alt_text_bn = $request->alt_text_bn;;
             $file->status = $request->status;
             $file->save();
 

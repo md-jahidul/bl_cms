@@ -29,10 +29,21 @@
                                                data-default-file="{{ isset($pageInfo->banner_web) ? config('filesystems.file_base_url') . $pageInfo->banner_web : '' }}"
                                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
+
+                                    <div class="form-group {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                        <label for="banner_name">Banner Name EN</label>
+                                        <input type="text" name="banner_name" id="banner_name" class="form-control"
+                                               placeholder="Enter banner name en" value="{{ isset($pageInfo->banner_name) ? $pageInfo->banner_name : '' }}">
+                                        @if ($errors->has('banner_name'))
+                                            <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="form-group">
                                         <label>Alt Text English</label>
                                         <input type="text" class="form-control" name="alt_text" value="{{ $pageInfo->alt_text }}" placeholder="Alt Text">
                                     </div>
+
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
@@ -47,6 +58,16 @@
                                                data-default-file="{{ isset($pageInfo->banner_mobile) ? config('filesystems.file_base_url') . $pageInfo->banner_mobile : '' }}"
                                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
+
+                                    <div class="form-group {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                        <label for="banner_name_bn">Banner Name BN</label>
+                                        <input type="text" name="banner_name_bn" id="banner_name_bn" class="form-control"
+                                               placeholder="Enter banner name bn" value="{{ isset($pageInfo->banner_name_bn) ? $pageInfo->banner_name_bn : '' }}">
+                                        @if ($errors->has('banner_name_bn'))
+                                            <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="form-group">
                                         <label>Alt Text Bangla</label>
                                         <input type="text" class="form-control" name="alt_text" value="{{ $pageInfo->alt_text }}" placeholder="Alt Text">
@@ -160,19 +181,33 @@
                         <form method="POST" action="{{ url('ethics/save-ethics-file') }}" class="form" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="file_id" class="file_id">
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('file_name_en') ? ' error' : '' }}">
                                 <label>File Name (EN) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control file_name_en" required name="file_name_en"   placeholder="File Name EN">
+                                @if ($errors->has('file_name_en'))
+                                    <div class="help-block text-danger">{{ $errors->first('file_name_en') }}</div>
+                                 @endif
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('file_name_bn') ? ' error' : '' }}">
                                 <label>File Name (BN) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control file_name_bn" required name="file_name_bn"   placeholder="File Name BN">
+                                @if ($errors->has('file_name_bn'))
+                                    <div class="help-block text-danger">{{ $errors->first('file_name_bn') }}</div>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label>File</label>
                                 <input type="file" class="dropify" name="file_path" data-height="70"
                                        data-allowed-file-extensions='["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"]'>
                                 <input type="hidden" name="old_path" class="old_path">
+                            </div>
+                            <div class="form-group">
+                                <label>Alt Text English</label>
+                                <input type="text" class="form-control file_alt_text" name="alt_text" id="file_alt_text" placeholder="Alt Text EN">
+                            </div>
+                            <div class="form-group">
+                                <label>Alt Text Bangla</label>
+                                <input type="text" class="form-control file_alt_text_bn" name="alt_text_bn" id="file_alt_text_bn" placeholder="Alt Text BN">
                             </div>
 
                             <div class="form-group">
@@ -340,6 +375,8 @@ if (Session::has('error')) {
                $('.file_id').val(data['id']);
                $('.file_name_en').val(data['file_name_en']);
                $('.file_name_bn').val(data['file_name_bn']);
+               $('.file_alt_text').val(data['alt_text']);
+               $('.file_alt_text_bn').val(data['alt_text_bn']);
                $('.old_path').val(data['file_path']);
 
                var status = parseInt(data['status']);
