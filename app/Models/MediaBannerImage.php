@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaBannerImage extends Model
 {
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'tvc_banner_id', 'landing_page_id'];
 }
