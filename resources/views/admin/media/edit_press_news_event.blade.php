@@ -74,13 +74,34 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"
-                                           value="{{ $pressNewsEvent->alt_text_en }}"
-                                           required data-validation-required-message="Enter alt text">
+                                    <label for="alt_text_en" class="">Alt Text EN</label>
+                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text en"
+                                           value="{{ old("alt_text_en") ? old("alt_text_en") : $pressNewsEvent->alt_text_en }}">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn" class="">Alt Text BN</label>
+                                    <input type="text" id="alt_text_bn" name="alt_text_bn" class="form-control" placeholder="Enter alt text bn"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : $pressNewsEvent->alt_text_bn }}">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image_name_en') ? ' error' : '' }}">
+                                    <label class="required">Thumbnail Image Name EN</label>
+                                    <input type="text" name="thumbnail_image_name_en" class="form-control" placeholder="Enter thumbnail image name en"
+                                           required value="{{ old("thumbnail_image_name_en") ? old("thumbnail_image_name_en") : $pressNewsEvent->thumbnail_image_name_en }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text_en'))
-                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @if ($errors->has('thumbnail_image_name_en'))
+                                        <div class="help-block">  {{ $errors->first('thumbnail_image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image_name_en') ? ' error' : '' }}">
+                                    <label class="required">Thumbnail Image Name BN</label>
+                                    <input type="text" name="thumbnail_image_name_bn" required class="form-control" placeholder="Enter thumbnail image name bn"
+                                           value="{{ old("thumbnail_image_name_bn") ? old("thumbnail_image_name_bn") : $pressNewsEvent->thumbnail_image_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('thumbnail_image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('thumbnail_image_name_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -103,6 +124,7 @@
                                         <div class="help-block">  {{ $errors->first('short_details_bn') }}</div>
                                     @endif
                                 </div>
+                                <div class="col-md-6"></div>
 
 {{--                                <slot id="press_release" data-offer-type="press_release" class="{{ $pressNewsEvent->type == "press_release" ? '' : 'd-none' }}">--}}
                                     <h5><strong>Pop Up Section</strong></h5>
@@ -119,17 +141,40 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-6 {{ $errors->has('details_alt_text_en') ? ' error' : '' }}">
-                                        <label for="details_alt_text_en" class="">Alt Text</label>
-                                        <input type="text" id="details_alt_text_en" name="details_alt_text_en" class="form-control" placeholder="Enter alt text"
-                                               value="{{ $pressNewsEvent->details_alt_text_en }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('details_alt_text_en'))
-                                            <div class="help-block">  {{ $errors->first('details_alt_text_en') }}</div>
-                                        @endif
-                                    </div>
+                                <div class="form-group col-md-3 {{ $errors->has('details_alt_text_en') ? ' error' : '' }}">
+                                    <label for="details_alt_text_en" class="">Alt Text EN</label>
+                                    <input type="text" id="details_alt_text_en" name="details_alt_text_en" class="form-control" placeholder="Enter alt text en"
+                                           value="{{ old("details_alt_text_en") ? old("details_alt_text_en") : $pressNewsEvent->details_alt_text_en }}">
+                                </div>
 
-                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('details_alt_text_bn') ? ' error' : '' }}">
+                                    <label for="details_alt_text_bn" class="">Alt Tex BN</label>
+                                    <input type="text" id="details_alt_text_bn" name="details_alt_text_bn" class="form-control" placeholder="Enter alt text bn"
+                                           value="{{ old("details_alt_text_bn") ? old("details_alt_text_bn") : $pressNewsEvent->details_alt_text_bn }}">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('details_image_name_en') ? ' error' : '' }}">
+                                    <label class="required">Banner Name EN</label>
+                                    <input type="text" name="details_image_name_en" class="form-control" placeholder="Enter details image name en"
+                                           required value="{{ old("details_image_name_en") ? old("details_image_name_en") : $pressNewsEvent->details_image_name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_image_name_en'))
+                                        <div class="help-block">  {{ $errors->first('details_image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('details_image_name_bn') ? ' error' : '' }}">
+                                    <label class="required">Banner Name BN</label>
+                                    <input type="text" name="details_image_name_bn" required class="form-control" placeholder="Enter details image name bn"
+                                           value="{{ old("details_image_name_bn") ? old("details_image_name_bn") : $pressNewsEvent->details_image_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('details_image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
                                         <label for="long_details_bn" class="required">Long Description En</label>
                                         <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required
                                                   data-validation-required-message="Enter long description in English">{{ $pressNewsEvent->long_details_en }}</textarea>
