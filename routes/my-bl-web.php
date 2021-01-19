@@ -490,7 +490,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
 
-
+//    Banner Analytic
+//    Route::resource('banner-analytic', 'CMS\BannerAnalyticController');
+    Route::get('banner-analytic', 'CMS\BannerAnalyticController@index')->name('banner-analytic.index');
+    Route::Get('banner-analytic/data', 'CMS\BannerAnalyticController@data')->name('banner-analytic.data');
+    Route::Get('banner-analytic/report/details/{id}', 'CMS\BannerAnalyticController@detailreport')->name('banner-analytic.report.details');
 
     /*
      *  Feed Routes

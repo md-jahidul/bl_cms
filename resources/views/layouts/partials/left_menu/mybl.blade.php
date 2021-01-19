@@ -196,6 +196,12 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                 </li>
+
+                <li class="{{ is_active_url('banner-analytic')}}">
+                    <a class="menu-item" href="{{ route('banner-analytic.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-external-link-square"></i>Banner Analytics</a>
+                </li>
             </ul>
         </li>
     @endif
