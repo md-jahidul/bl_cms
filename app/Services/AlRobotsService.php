@@ -73,13 +73,36 @@ class AlRobotsService
     public function copyInRootDirectory(): array
     {
         $output = null;
-        $retval = null;
+        $retVal = null;
 
-        $source = env('SRC_DIRECTORY');
-        $destination = env('DST_DIRECTORY');
+        if(env('APP_ENV') == "production") {
 
-        exec('cp'." ".$source.'robots.txt'." ".$destination, $output, $retval);
+            $source1 = env('SRC_DIRECTORY1');
+            $destination1 = env('DST_DIRECTORY1');
 
-        return array($output, $retval);
+            $source2 = env('SRC_DIRECTORY2');
+            $destination2 = env('DST_DIRECTORY2');
+
+            $source3 = env('SRC_DIRECTORY3');
+            $destination3 = env('DST_DIRECTORY3');
+
+            exec('cp'." ".$source1.'robots.txt'." ".$destination1, $output, $retVal);
+
+            exec('cp'." ".$source2.'robots.txt'." ".$destination2, $output, $retVal);
+
+            exec('cp'." ".$source3.'robots.txt'." ".$destination3, $output, $retVal);
+
+            return array($output, $retVal);
+
+        } else {
+
+            $source = env('SRC_DIRECTORY1');
+            $destination = env('DST_DIRECTORY1');
+
+            exec('cp'." ".$source.'robots.txt'." ".$destination, $output, $retVal);
+
+            return array($output, $retVal);
+        }
+
     }
 }
