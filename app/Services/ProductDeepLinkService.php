@@ -20,7 +20,6 @@ class ProductDeepLinkService
 {
 
     use CrudTrait;
-
     /**
      * @var \App\Services\FirebaseDeepLinkService
      */
@@ -61,16 +60,16 @@ class ProductDeepLinkService
         if (!$product) {
             throw new NotFoundHttpException();
         }
-        $body = [
-            "dynamicLinkInfo" => [
-                "domainUriPrefix" => env('DOMAINURIPREFIX'),
-                "link" => "https://banglalink.net/product/$product_code",
-                "androidInfo" => [
-                    "androidPackageName" => "com.arena.banglalinkmela.app.qa"
-                ],
-                "iosInfo" => [
-                    "iosBundleId" => "com.Banglalink.My-Banglalink"
-                ]
+        $body=[
+            "dynamicLinkInfo"=>[
+              "domainUriPrefix"=>env('DOMAINURIPREFIX'),
+              "link"=>"https://banglalink.net/product/$product_code",
+              "androidInfo"=> [
+                "androidPackageName"=>"com.arena.banglalinkmela.app.qa"
+              ],
+              "iosInfo"=>[
+                "iosBundleId"=>"com.Banglalink.My-Banglalink.qa"
+              ]
             ]
         ];
         $saveData = new ProductDeepLink();
