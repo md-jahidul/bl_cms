@@ -250,6 +250,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
       //Deep link
       Route::get('mybl-products-deep-link-create/{product_code}', 'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
+      Route::get('product-deep-link-report', 'CMS\ProductDeepLinkController@index')->name('products-deep-link-report');
+      Route::get('product-deeplink-list', 'CMS\ProductDeepLinkController@data')->name('product-deeplink-list');
+      Route::get('deeplink-product-purchase-details', 'CMS\ProductDeepLinkController@getDetails')->name('deeplink-product-purchase-details');
+      Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 
 
     /*
