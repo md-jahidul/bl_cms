@@ -13,5 +13,14 @@ class ProductDeepLink extends Model
         'total_buy',
         'total_cancel',
         'buy_attempt',
+        'created_at'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productDeeplinkDetails()
+    {
+        return $this->hasMany(ProductDeepLinkDetails::class, 'product_code_id', 'id');
+    }
 }

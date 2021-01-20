@@ -159,6 +159,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('target-wise-notification-report', 'CMS\NotificationController@getTargetWiseNotificationReport')->name('target-wise-notification-report.report');
     Route::get('target-wise-notification-report-details/{titel}', 'CMS\NotificationController@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report.report-details');
 
+    // Get push notification purchase report
+    Route::get('purchase/from-notification/list', 'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
+    Route::get('purchase/from-notification/details/{id}', 'CMS\PushNotificationProductPurchaseController@details')->name('push.notification.purchase.report.details');
+
 
     Route::post(
         'push-notification-all',
@@ -250,6 +254,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
       //Deep link
       Route::get('mybl-products-deep-link-create/{product_code}', 'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
+      Route::get('product-deep-link-report', 'CMS\ProductDeepLinkController@index')->name('products-deep-link-report');
+      Route::get('product-deeplink-list', 'CMS\ProductDeepLinkController@data')->name('product-deeplink-list');
+      Route::get('deeplink-product-purchase-details', 'CMS\ProductDeepLinkController@getDetails')->name('deeplink-product-purchase-details');
+      Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 
 
     /*
@@ -444,6 +452,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Migrate Plan
     Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
+
+
 
     /*
      *  Feed Routes
