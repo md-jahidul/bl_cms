@@ -21,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <form class="form" method="POST" id="sendNotificationForm" enctype="multipart/form-data">
+                    <form class="form" method="POST" id="sendNotificationForm" enctype="multipart/form-data" action="{{ route('notification.send') }}">
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -175,6 +175,7 @@
             /* file handled  */
             $('#sendNotificationForm').submit(function (e) {
 
+                return true;
                 e.preventDefault();
                 swal.fire({
                     title: 'Data Uploading.Please Wait ...',
