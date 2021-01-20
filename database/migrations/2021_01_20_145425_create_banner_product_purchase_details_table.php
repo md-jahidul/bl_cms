@@ -19,8 +19,8 @@ class CreateBannerProductPurchaseDetailsTable extends Migration
             $table->integer('banner_product_purchase_id');
             $table->string('msisdn', 20);
             $table->string('action_type');
-            $table->integer('session_time');
-            $table->string('error_desc');
+            $table->integer('session_time')->nullable();
+            $table->string('error_desc')->nullable();
 
             $table->timestamps();
         });
