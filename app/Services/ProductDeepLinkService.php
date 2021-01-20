@@ -39,10 +39,10 @@ class ProductDeepLinkService
               "domainUriPrefix"=>env('DOMAINURIPREFIX'),
               "link"=>"https://banglalink.net/product/$product_code",
               "androidInfo"=> [
-                "androidPackageName"=>"com.arena.banglalinkmela.app"
+                "androidPackageName"=>"com.arena.banglalinkmela.app.qa"
               ],
               "iosInfo"=>[
-                "iosBundleId"=>"com.Banglalink.My-Banglalink"
+                "iosBundleId"=>"com.Banglalink.My-Banglalink.qa"
               ]
             ]
         ];
