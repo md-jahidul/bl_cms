@@ -153,6 +153,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
+    Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
+
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')

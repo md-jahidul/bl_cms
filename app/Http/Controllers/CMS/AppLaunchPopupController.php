@@ -131,16 +131,16 @@ class AppLaunchPopupController extends Controller
         $products = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
+                $q->whereIn('content_type', ['data','voice','sms','mix']);
             }
         )->get();
 
         $data = []; //[''=>'Please Select'];
 
         foreach ($products as $product) {
-            $data[] = [
-                'id' => $product->details->product_code,
-                'text' => '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+            $data[] =[
+                'id'    => $product->details->product_code,
+                'text' =>  '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
             ];
         }
 
