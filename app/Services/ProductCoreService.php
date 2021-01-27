@@ -930,10 +930,13 @@ class ProductCoreService
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
                 $insert_data[26] = $product->details->display_sd_vat_tax;
-                $insert_data[27] = ($product->is_visible) ? 'Yes' : 'No';
-                $insert_data[28] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
-                $insert_data[29] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
-                $insert_data[30] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[27] = $product->details->display_title_en;
+                $insert_data[28] = $product->details->display_title_bn;
+                $insert_data[29] = $product->details->points;
+                $insert_data[30] = ($product->is_visible) ? 'Yes' : 'No';
+                $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
+                $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
+                $insert_data[33] = ($product->status) ? 'Yes' : 'No';
 
 
 

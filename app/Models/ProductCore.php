@@ -44,7 +44,10 @@ class ProductCore extends Model
         'status',
         'validity_in_days',
         'platform',
-        'display_sd_vat_tax'
+        'display_sd_vat_tax',
+        'display_title_en',
+        'display_title_bn',
+        'points'
 
     ];
 
