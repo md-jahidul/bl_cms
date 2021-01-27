@@ -18,6 +18,7 @@ use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CorpCrStrategyComponentService
 {
@@ -53,6 +54,16 @@ class CorpCrStrategyComponentService
      */
     public function storeComponent($data, $pageType, $sectionId)
     {
+//        $validInfo = request()->validate([
+//            'other_attributes.image_name_en' => 'required|unique:corp_cr_strategy_components',
+//            'other_attributes.image_name_bn' => 'required|unique:corp_cr_strategy_components'
+//        ]);
+//
+//        $validator = Validator::make(request()->all(), [
+//            'other_attributes.image_name_en' => 'required|unique:corp_cr_strategy_components',
+////            'person.*.first_name' => 'required_with:person.*.last_name',
+//        ]);
+
         $directory = 'assetlite/images/corporate-responsibility';
         if (isset($data['other_attributes']['thumbnail_image'])) {
             $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
@@ -70,26 +81,18 @@ class CorpCrStrategyComponentService
     public function updateComponent($data, $sectionId, $id)
     {
         $component = $this->findOne($id);
-
         $directory = 'assetlite/images/corporate-responsibility';
-//        $file = $data['other_attributes']['thumbnail_image'];
         if (!empty($data['other_attributes']['thumbnail_image'])) {
-            $result['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
+            $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
         }
         // get original data
         $new_multiple_attributes = $component->other_attributes;
-//         contains all the inputs from the form as an array
-        $input_multiple_attributes = isset($result) ? $result : null;
-//         loop over the product array
-        if ($input_multiple_attributes) {
-            foreach ($input_multiple_attributes as $data_id => $inputData) {
-                foreach ($inputData as $key => $value) {
-                    // set the new value
-                    $new_multiple_attributes[$key] = $value;
-                }
-            }
+        //contains all the inputs from the form as an array
+        $input_multiple_attributes = isset($data['other_attributes']) ? $data['other_attributes'] : null;
+        //loop over the product array
+        foreach ($input_multiple_attributes as $data_id => $inputData) {
+            $new_multiple_attributes[$data_id] = $inputData;
         }
-
         $data['other_attributes'] = $new_multiple_attributes;
         $component->update($data);
         return Response('Component has been successfully updated');
@@ -114,6 +117,11 @@ class CorpCrStrategyComponentService
 
     public function bannerImageUpload($data)
     {
+        request()->validate([
+            'banner_image_en' => 'required|unique:corp_cr_strategy_components,banner_image_en,' . $data['section_component_id'],
+            'banner_image_bn' => 'required|unique:corp_cr_strategy_components,banner_image_bn,' . $data['section_component_id'],
+        ]);
+
         $sectionComponent = $this->findOne($data['section_component_id']);
 
         $directory = 'assetlite/images/banner/corporate-responsibility';

@@ -10,7 +10,6 @@
 <div class="form-group col-md-5">
     <label for="alt_text">Alt Text</label>
     <input type="text" name="multi_item[alt_text-1]" class="form-control">
-
 </div>
 
 <div class="form-group col-md-1">

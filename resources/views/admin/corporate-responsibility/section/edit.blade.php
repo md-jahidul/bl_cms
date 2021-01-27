@@ -83,40 +83,40 @@
                             <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
                                 <label for="alt_text_en" class="required1">Alt text English</label>
                                 <input type="text" name="alt_text_en"  class="form-control section_alt_text"
-                                       value="{{ $section->alt_text }}">
+                                       value="{{ $section->alt_text_en }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('alt_text_en'))
                                 <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                <label for="alt_text_en" class="required1">Alt text Bangla</label>
-                                <input type="text" name="alt_text_en"  class="form-control section_alt_text"
-                                       value="{{ $section->alt_text }}">
+                            <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                <label for="alt_text_bn" class="required1">Alt text Bangla</label>
+                                <input type="text" name="alt_text_bn"  class="form-control section_alt_text"
+                                       value="{{ $section->alt_text_bn }}">
                                 <div class="help-block"></div>
-                                @if ($errors->has('alt_text_en'))
-                                    <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                @if ($errors->has('alt_text_bn'))
+                                    <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                <label for="alt_text_en" class="required1">Banner Name En</label>
-                                <input type="text" name="alt_text_en"  class="form-control section_alt_text"
-                                       value="{{ $section->alt_text }}">
+                            <div class="form-group col-md-3 {{ $errors->has('banner_image_name') ? ' error' : '' }}">
+                                <label for="banner_image_name" class="required1">Banner Name En</label>
+                                <input type="text" name="banner_image_name"  class="form-control section_alt_text"
+                                       value="{{ $section->banner_image_name }}">
                                 <div class="help-block"></div>
-                                @if ($errors->has('alt_text_en'))
-                                    <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                @if ($errors->has('banner_image_name'))
+                                    <div class="help-block">  {{ $errors->first('banner_image_name') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                <label for="alt_text_en" class="required1">Banner Name Bn</label>
-                                <input type="text" name="alt_text_en"  class="form-control section_alt_text"
-                                       value="{{ $section->alt_text }}">
+                            <div class="form-group col-md-3 {{ $errors->has('banner_image_name_bn') ? ' error' : '' }}">
+                                <label for="banner_image_name_bn" class="required1">Banner Name Bn</label>
+                                <input type="text" name="banner_image_name_bn"  class="form-control section_alt_text"
+                                       value="{{ $section->banner_image_name_bn }}">
                                 <div class="help-block"></div>
-                                @if ($errors->has('alt_text_en'))
-                                    <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                @if ($errors->has('banner_image_name_bn'))
+                                    <div class="help-block">  {{ $errors->first('banner_image_name_bn') }}</div>
                                 @endif
                             </div>
 

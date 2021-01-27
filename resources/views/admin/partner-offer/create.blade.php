@@ -242,7 +242,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                 <label> URL BN (url slug) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{ old('url_slug_bn') ? old('url_slug_bn') : '' }}"
-                                       name="url_slug_bn" placeholder="URL BN">
+                                       name="url_slug_bn" required placeholder="URL BN">
                                 <div class="help-block"></div>
                                 <small class="text-info">
                                     <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
