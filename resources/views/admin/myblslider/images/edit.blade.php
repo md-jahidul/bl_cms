@@ -195,7 +195,7 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control" required>
+                                                    <select name="other_attributes" class="form-control select2" required>
                                                         <option value="">Select a Product</option>
                                                         @foreach ($products as $value)
                                                             <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
