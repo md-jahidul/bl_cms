@@ -119,6 +119,10 @@ class MediaLandingPageController extends Controller
 
     public function bannerUpload(Request $request)
     {
+        $request->validate([
+            'banner_name_en' => 'unique:media_banner_images,banner_name_en,' . $request->ladning_page_id,
+            'banner_name_bn' => 'unique:media_banner_images,banner_name_bn,' . $request->ladning_page_id,
+        ]);
         $response = $this->mediaBannerImageService->tvcBannerUpload($request->all(), self::MODULE_TYPE);
         Session::flash('message', $response->getContent());
         return redirect('landing-page-component');

@@ -132,6 +132,7 @@
                                     @endif--}}
                                 </div>
 
+
                                 <div class="form-group col-md-6">
                                     @if(isset($about))
                                         <img style="height:120px;width:180px;"
@@ -140,6 +141,43 @@
                                         <img style="height:120px;width:180px;display:none" id="profile_image_Display">
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('content_img_name') ? ' error' : '' }}">
+                                    <label>Content Image Name EN</label>
+                                    <input type="text" class="form-control" placeholder="Content image name en" name="content_img_name"
+                                           value="@if(isset($about)){{$about->content_img_name}}@else {{old("content_img_name")}} @endif">
+                                    @if($errors->has('content_img_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('content_img_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('content_img_name_bn') ? ' error' : '' }}">
+                                    <label>Content Image Name BN</label>
+                                    <input type="text" class="form-control" placeholder="Content image name bn" name="content_img_name_bn"
+                                           value="@if(isset($about)){{$about->content_img_name_bn}}@else {{old("content_img_name_bn")}} @endif">
+                                    @if($errors->has('content_img_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('content_img_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Content Alt Text En</label>
+                                    <input type="text" class="form-control" placeholder="Content alt text en" name="content_img_alt_text"
+                                           value="@if(isset($about)){{$about->content_img_alt_text}}@else {{old("content_img_alt_text")}} @endif">
+                                    @if($errors->has('content_img_alt_text'))
+                                        <div class="help-block text-danger">{{ $errors->first('content_img_alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Content Alt Text Bn</label>
+                                    <input type="text" class="form-control" placeholder="Content alt text bn" name="content_img_alt_text_bn"
+                                           value="@if(isset($about)){{$about->content_img_alt_text_bn}}@else {{old("content_img_alt_text_bn")}} @endif">
+                                    @if($errors->has('content_img_alt_text_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('content_img_alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
                                     <label for="alt_text" >Banner Image (Web)</label>
@@ -155,7 +193,6 @@
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif--}}
                                 </div>
-
 
                                 <div class="form-group col-md-6">
                                     @if(isset($about))
@@ -193,6 +230,40 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Enter image alter text bn"
+                                           value="@if(isset($about)){{$about->alt_text_bn}} @else {{old("alt_text_bn")}} @endif">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Photo Name</label>
+                                    <input type="hidden" name="old_banner_name" value="@if(isset($about)){{$about->banner_name}} @else {{old("old_banner_name")}} @endif">
+                                    <input type="text" class="form-control" name="banner_name"
+                                           value="@if(isset($about)){{$about->banner_name}} @else {{old("banner_name")}} @endif" placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> about-us (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Photo Name BN</label>
+                                    <input type="text" class="form-control" name="banner_name_bn"
+                                           value="@if(isset($about)){{$about->banner_name_bn}} @else {{old("banner_name_bn")}} @endif" placeholder="Photo Name Bn">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> about-us (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
                                     <label for="name" class="required">Select Slug:</label>
                                     <select name="slug" required data-validation-required-message="Slug is required"  class="browser-default custom-select">
                                         @if(isset($about))
@@ -205,17 +276,6 @@
                                         @endif
 
                                     </select>
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Banner Photo Name</label>
-                                    <input type="hidden" name="old_banner_name" value="@if(isset($about)){{$about->banner_name}} @else {{old("old_banner_name")}} @endif">
-                                    <input type="text" class="form-control" name="banner_name"
-                                           value="@if(isset($about)){{$about->banner_name}} @else {{old("banner_name")}} @endif" placeholder="Photo Name">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> about-us (no spaces)<br>
-                                        <strong>Note: </strong> Don't need MIME type like jpg,png
-                                    </small>
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">

@@ -59,7 +59,7 @@
                                             <i class="la la-pencil"></i>
                                         </a>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 ml-1">
                                         <button data-id="{{$manage->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                     </div>
                                 </div>

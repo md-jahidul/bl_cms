@@ -28,7 +28,10 @@ class EthicsRepository extends BaseRepository {
             $page->page_name_bn = $request->page_name_bn;
             $page->banner_web = $webPath;
             $page->banner_mobile = $mobilePath;
+            $page->banner_name = $request->banner_name;
+            $page->banner_name_bn = $request->banner_name_bn;
             $page->alt_text = $request->alt_text;
+            $page->alt_text_bn = $request->alt_text_bn;
             $page->page_header = $request->page_header;
             $page->page_header_bn = $request->page_header_bn;
             $page->schema_markup = $request->schema_markup;

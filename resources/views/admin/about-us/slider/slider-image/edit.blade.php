@@ -32,15 +32,15 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
-{{--                                    <label for="title_bn" class="required">Title (Bangla)</label>--}}
-{{--                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter english title"--}}
-{{--                                           value="{{ $sliderImage->title_bn }}" required data-validation-required-message="Enter english title">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('title_bn'))--}}
-{{--                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter english title"
+                                           value="{{ $sliderImage->title_bn }}" required data-validation-required-message="Enter english title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
@@ -62,16 +62,6 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Alt Text</label>
-                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter bangla title"
-                                           value="{{ $sliderImage->alt_text }}" required data-validation-required-message="Enter bangla title">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
 
@@ -101,6 +91,45 @@
                                     @if ($errors->has('mobile_view_img'))
                                         <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 mb-1 {{ $errors->has('image_name') ? ' error' : '' }}">
+                                    <label class="required">Image Name EN</label>
+                                    <input type="text" name="image_name"  class="form-control" placeholder="Enter image name en"
+                                           required data-validation-required-message="Enter image name en"
+                                           value="{{ old("image_name") ? old("image_name") : $sliderImage->image_name }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name'))
+                                        <div class="help-block">  {{ $errors->first('image_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 mb-1 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label class="required">Image Name BN</label>
+                                    <input type="text" name="image_name_bn"  class="form-control" placeholder="Enter image name bn"
+                                           required data-validation-required-message="Enter image name en"
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : $sliderImage->image_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 mb-0 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Alt Text EN</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
+                                           required data-validation-required-message="Enter alt text"
+                                           value="{{ old("title") ? old("title") : $sliderImage->alt_text }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 mb-0 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Enter alt text bn"
+                                           value="{{ old("title") ? old("title") :  $sliderImage->alt_text_bn }}">
                                 </div>
 
                                  @include('layouts.partials.slider_types.' . $type )
