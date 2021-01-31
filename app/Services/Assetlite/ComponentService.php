@@ -172,10 +172,11 @@ class ComponentService
                 }
                 $imgData = [
                     'component_id' => $component->id,
+                    'page_type' => $pageType,
                     'alt_text_en' => $data['alt_text_en'][$key],
                     'alt_text_bn' => $data['multi_alt_text_bn'][$key],
-                    'img_name_en' => $data['img_name_en'][$key],
-                    'img_name_bn' => $data['img_name_bn'][$key],
+                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
+                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
                     'base_image' => $baseImgUrl,
                     'created_by' => Auth::id(),
                 ];
@@ -186,7 +187,7 @@ class ComponentService
     }
 
 
-    public function componentUpdate($data, $id)
+    public function componentUpdate($data, $id, $pageType)
     {
         if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
@@ -242,6 +243,27 @@ class ComponentService
         }
 
         $component->update($data);
+        if ($data['component_type'] == "multiple_image") {
+            $this->comMultiDataRepository->deleteAllById($id);
+            foreach ($data['base_image'] as $key => $img) {
+                if (is_object($img)) {
+                    $this->deleteFile($data['old_img_url'][$key]);
+                    $img = $this->upload($img, 'assetlite/images/component');
+                }
+                $imgData = [
+                    'component_id' => $component->id,
+                    'page_type' => $pageType,
+                    'alt_text_en' => $data['alt_text_en'][$key],
+                    'alt_text_bn' => $data['multi_alt_text_bn'][$key],
+                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
+                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
+                    'base_image' => $img,
+                    'updated_by' => Auth::id()
+                ];
+                $this->comMultiDataRepository->save($imgData);
+            }
+        }
+
         return response("Component update successfully!!");
     }
 

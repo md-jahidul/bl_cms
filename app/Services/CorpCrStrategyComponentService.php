@@ -54,19 +54,14 @@ class CorpCrStrategyComponentService
      */
     public function storeComponent($data, $pageType, $sectionId)
     {
-//        $validInfo = request()->validate([
-//            'other_attributes.image_name_en' => 'required|unique:corp_cr_strategy_components',
-//            'other_attributes.image_name_bn' => 'required|unique:corp_cr_strategy_components'
-//        ]);
-//
-//        $validator = Validator::make(request()->all(), [
-//            'other_attributes.image_name_en' => 'required|unique:corp_cr_strategy_components',
-////            'person.*.first_name' => 'required_with:person.*.last_name',
+//        request()->validate([
+//            'image_name_en' => 'required|unique:corp_cr_strategy_components',
+//            'image_name_bn' => 'required|unique:corp_cr_strategy_components'
 //        ]);
 
         $directory = 'assetlite/images/corporate-responsibility';
-        if (isset($data['other_attributes']['thumbnail_image'])) {
-            $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
+        if (isset($data['image_base_url'])) {
+            $data['image_base_url'] = $this->upload($data['image_base_url'], $directory);
         }
         $data['section_id'] = $sectionId;
         $this->save($data);
@@ -78,12 +73,17 @@ class CorpCrStrategyComponentService
      * @param $data
      * @return Response
      */
-    public function updateComponent($data, $sectionId, $id)
+    public function updateComponent($data, $id)
     {
+//        request()->validate([
+//            'image_name_en' => 'required|unique:corp_cr_strategy_components,image_name_en,' . $id,
+//            'image_name_bn' => 'required|unique:corp_cr_strategy_components,image_name_bn,' . $id
+//        ]);
+
         $component = $this->findOne($id);
         $directory = 'assetlite/images/corporate-responsibility';
-        if (!empty($data['other_attributes']['thumbnail_image'])) {
-            $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
+        if (!empty($data['image_base_url'])) {
+            $data['image_base_url'] = $this->upload($data['image_base_url'], $directory);
         }
         // get original data
         $new_multiple_attributes = $component->other_attributes;
@@ -118,23 +118,21 @@ class CorpCrStrategyComponentService
     public function bannerImageUpload($data)
     {
         request()->validate([
-            'banner_image_en' => 'required|unique:corp_cr_strategy_components,banner_image_en,' . $data['section_component_id'],
-            'banner_image_bn' => 'required|unique:corp_cr_strategy_components,banner_image_bn,' . $data['section_component_id'],
+            'banner_name_en' => 'required|unique:corp_cr_strategy_components,banner_name_en,' . $data['section_component_id'],
+            'banner_name_bn' => 'required|unique:corp_cr_strategy_components,banner_name_bn,' . $data['section_component_id'],
         ]);
 
         $sectionComponent = $this->findOne($data['section_component_id']);
 
         $directory = 'assetlite/images/banner/corporate-responsibility';
-        if (!empty($data['banner']['banner_image_url'])) {
-            $data['banner']['banner_image_url'] = $this->upload($data['banner']['banner_image_url'], $directory);
-            $filePath = isset($sectionComponent->banner['banner_image_url']) ? $sectionComponent->banner['banner_image_url'] : null;
-            $this->deleteFile($filePath);
+        if (!empty($data['banner_image_web'])) {
+            $data['banner_image_web'] = $this->upload($data['banner_image_web'], $directory);
+            $this->deleteFile($sectionComponent->banner_image_web);
         }
 
-        if (!empty($data['banner']['banner_mobile_view'])) {
-            $data['banner']['banner_mobile_view'] = $this->upload($data['banner']['banner_mobile_view'], $directory);
-            $filePath = isset($sectionComponent->banner['banner_mobile_view']) ? $sectionComponent->banner['banner_mobile_view'] : null;
-            $this->deleteFile($filePath);
+        if (!empty($data['banner_image_mobile'])) {
+            $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], $directory);
+            $this->deleteFile($sectionComponent->banner_mobile_view);
         }
 
         // get original data
@@ -150,6 +148,7 @@ class CorpCrStrategyComponentService
         }
         unset($data['section_component_id']);
         $data['banner'] = $new_multiple_attributes;
+
         $sectionComponent->update($data);
         return Response('Details Banner image has been successfully updated');
     }

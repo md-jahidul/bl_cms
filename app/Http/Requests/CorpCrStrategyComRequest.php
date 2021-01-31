@@ -26,14 +26,16 @@ class CorpCrStrategyComRequest extends FormRequest
         return [
             'image_name_en' => 'required|unique:corp_cr_strategy_components,image_name_en,' . $this->id,
             'image_name_bn' => 'required|unique:corp_cr_strategy_components,image_name_bn,' . $this->id,
+            'url_slug_en' => 'required|unique:corp_cr_strategy_components,url_slug_en,' . $this->id,
+            'url_slug_bn' => 'required|unique:corp_cr_strategy_components,url_slug_bn,' . $this->id,
         ];
     }
 
     public function messages()
     {
         return [
-            'image_name_en' => "Enter image name in english",
-            'image_name_bn' => "Enter image name in Bangla",
+            'image_name_en.required' => "Enter image name in english",
+            'image_name_bn.required' => "Enter image name in Bangla",
         ];
     }
 }

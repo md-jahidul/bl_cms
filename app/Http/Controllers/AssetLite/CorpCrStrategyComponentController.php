@@ -104,7 +104,7 @@ class CorpCrStrategyComponentController extends Controller
      */
     public function update(CorpCrStrategyComRequest $request, $sectionId, $id)
     {
-        $response = $this->corpCrStrategyComponentService->updateComponent($request->all(), $sectionId, $id);
+        $response = $this->corpCrStrategyComponentService->updateComponent($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('cr-strategy-component.index', $sectionId));
     }

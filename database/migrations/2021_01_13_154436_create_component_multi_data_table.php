@@ -16,6 +16,7 @@ class CreateComponentMultiDataTable extends Migration
         Schema::create('component_multi_data', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('component_id')->default(0);
+            $table->string('page_type')->nullable();
             $table->string('alt_text_en')->nullable();
             $table->string('alt_text_bn')->nullable();
             $table->string('base_image')->nullable();

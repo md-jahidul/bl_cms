@@ -61,7 +61,7 @@
 @push('page-js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">
-        var auto_save_url = "{{ url('corporate/cr-strategy-details-sort') }}";
+        var auto_save_url = "{{ url('corporate/initiative-tab-component-sort') }}";
         $(function () {
             $('.dropify').dropify({
                 messages: {

@@ -43,4 +43,10 @@ class Component extends Model
         'other_attributes' => 'array',
     ];
 
+
+    public function componentMultiData()
+    {
+        return $this->hasMany(ComponentMultiData::class, 'component_id', 'id');
+    }
+
 }

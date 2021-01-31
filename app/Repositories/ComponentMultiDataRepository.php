@@ -16,4 +16,16 @@ use App\Models\Prize;
 class ComponentMultiDataRepository extends BaseRepository
 {
     public $modelName = ComponentMultiData::class;
+
+    public function findDataOne($imgName)
+    {
+        return $this->model->where('img_name_en', $imgName)
+            ->orWhere('img_name_bn', $imgName)
+            ->first();
+    }
+
+    public function deleteAllById($id)
+    {
+        return $this->model->whereIn('component_id', [$id])->delete();
+    }
 }
