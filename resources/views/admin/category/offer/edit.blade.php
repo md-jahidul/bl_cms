@@ -105,7 +105,7 @@
                             <div class="form-group col-md-3 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                 <label>Banner Name En <span class="text-danger">*</span></label>
                                 <input type="hidden" name="old_banner_name_en" value="{{$offer->banner_name}}">
-                                <input type="text" class="form-control" required name="banner_name" value="{{$offer->banner_name}}"
+                                <input type="text" class="form-control slug-convert" required name="banner_name" value="{{$offer->banner_name}}"
                                        placeholder="Enter English Web Banner Name" id="banner_name_en">
                                 <small class="text-info">
                                     <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
@@ -118,7 +118,7 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
                                 <label>Banner Name Bn<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="banner_name_bn"
+                                <input type="text" class="form-control slug-convert" name="banner_name_bn"
                                        value="{{$offer->banner_name_bn}}" required
                                        placeholder="Enter Bangeli Banner Name">
 
