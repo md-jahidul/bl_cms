@@ -58,11 +58,10 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
-                                    <label for="thumbnail_image">Thumbnail Image</label>
-                                    <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-                                          data-default-file="{{ isset($component->other_attributes['thumbnail_image']) ? config('filesystems.file_base_url') . $component->other_attributes['thumbnail_image'] : '' }}"
-                                           value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}">
+                                <div class="form-group col-md-12 {{ $errors->has('image_base_url') ? ' error' : '' }}">
+                                    <label for="image_base_url">Thumbnail Image</label>
+                                    <input type="file" name="image_base_url" class="form-control dropify" data-height="90"
+                                          data-default-file="{{ isset($component->image_base_url) ? config('filesystems.file_base_url') . $component->image_base_url : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('thumbnail_image'))
                                         <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
@@ -92,7 +91,7 @@
 
                                 <div class="form-group col-md-3 {{ $errors->has('image_name_en') ? ' error' : '' }}">
                                     <label for="image_name_en" class="required">Image Name En</label>
-                                    <input type="text" name="image_name_en" class="form-control section_alt_text"
+                                    <input type="text" name="image_name_en" class="form-control section_alt_text slug-convert"
                                            value="{{ $component->image_name_en }}" required>
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_name_en'))
@@ -102,7 +101,7 @@
 
                                 <div class="form-group col-md-3 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
                                     <label for="image_name_bn" class="required">Image Name Bn</label>
-                                    <input type="text" name="image_name_bn" class="form-control section_alt_text"
+                                    <input type="text" name="image_name_bn" class="form-control section_alt_text slug-convert"
                                            value="{{ $component->image_name_bn }}" required>
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_name_bn'))
@@ -152,6 +151,7 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $('.dropify').dropify({

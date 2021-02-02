@@ -102,7 +102,7 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('banner_image_name') ? ' error' : '' }}">
                                 <label for="banner_image_name" class="required1">Banner Name En</label>
-                                <input type="text" name="banner_image_name"  class="form-control section_alt_text"
+                                <input type="text" name="banner_image_name"  class="form-control slug-convert"
                                        value="{{ $section->banner_image_name }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('banner_image_name'))
@@ -112,7 +112,7 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('banner_image_name_bn') ? ' error' : '' }}">
                                 <label for="banner_image_name_bn" class="required1">Banner Name Bn</label>
-                                <input type="text" name="banner_image_name_bn"  class="form-control section_alt_text"
+                                <input type="text" name="banner_image_name_bn"  class="form-control slug-convert"
                                        value="{{ $section->banner_image_name_bn }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('banner_image_name_bn'))

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Http\Requests\AboutUsBanglalinkRequest;
+use App\Http\Requests\CorpCaseStudyComponentRequest;
 use App\Http\Requests\StoreSliderImageRequest;
 use App\Models\AboutUsBanglalink;
 use App\Services\AboutUsService;
@@ -141,7 +141,7 @@ class AboutUsController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(AboutUsBanglalinkRequest $request)
+    public function store(CorpCaseStudyComponentRequest $request)
     {
         $request->validate([
             'url_slug' => 'required|unique:about_us_banglalink,url_slug',
@@ -171,7 +171,7 @@ class AboutUsController extends Controller
      * @param AboutUsBanglalink $aboutUs
      * @return Response
      */
-    public function update(AboutUsBanglalinkRequest $request, AboutUsBanglalink $aboutUs)
+    public function update(CorpCaseStudyComponentRequest $request, AboutUsBanglalink $aboutUs)
     {
         $request->validate([
             'url_slug' => 'required|unique:about_us_banglalink,url_slug,' . $aboutUs->id,

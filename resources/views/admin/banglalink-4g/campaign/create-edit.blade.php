@@ -32,12 +32,18 @@
                                 $details_en = "";
                                 $details_bn = "";
                                 $alt_text_en = "";
+                                $alt_text_bn = "";
+                                $image_name_en = "";
+                                $image_name_bn = "";
                                 if (!empty($campaign)) {
                                     $title = $campaign->title;
                                     $image = $campaign->image_url;
                                     $details_en = $campaign->details_en;
                                     $details_bn = $campaign->details_bn;
                                     $alt_text_en = $campaign->alt_text_en;
+                                    $alt_text_bn = $campaign->alt_text_bn;
+                                    $image_name_en = $campaign->image_name_en;
+                                    $image_name_bn = $campaign->image_name_bn;
                                 }
                                 ?>
 
@@ -62,15 +68,40 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en">Alt Text</label>
-                                    <input type="text" name="alt_text_en" id="alt_text_en" class="form-control"
-                                           placeholder="Enter offer name in English"
-                                           value="{{ $alt_text_en }}">
+                                <div class="form-group col-md-6 {{ $errors->has('image_name_en') ? ' error' : '' }}">
+                                    <label for="image_name_en">Image Name EN</label>
+                                    <input type="text" name="image_name_en" id="image_name_en" class="form-control slug-convert"
+                                           placeholder="Enter image name en"
+                                           value="{{ $image_name_en }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text_en'))
-                                        <div class="help-block">{{ $errors->first('alt_text_en') }}</div>
+                                    @if ($errors->has('image_name_en'))
+                                        <div class="help-block">{{ $errors->first('image_name_en') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label for="image_name_bn">Image Name BN</label>
+                                    <input type="text" name="image_name_bn" id="image_name_bn" class="form-control slug-convert"
+                                           placeholder="Enter image name bn"
+                                           value="{{ $image_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">{{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="alt_text_en">Alt Text EN</label>
+                                    <input type="text" name="alt_text_en" id="alt_text_en" class="form-control"
+                                           placeholder="Enter alt text en"
+                                           value="{{ $alt_text_en }}">
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
+                                           placeholder="Enter alt text bn"
+                                           value="{{ $alt_text_bn }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
