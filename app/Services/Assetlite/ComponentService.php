@@ -118,20 +118,13 @@ class ComponentService
 
     public function componentStore($data, $sectionId, $pageType)
     {
-//        dd($data);
 
-        if ($data['component_type'] == "title_with_text_and_right_image") {
+
+//        if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
                 'image_name_en' => 'required|unique:components,image_name_en',
                 'image_name_bn' => 'required|unique:components,image_name_bn',
             ]);
-        }
-
-//        if ($data['component_type'] == "multiple_image") {
-//            request()->validate([
-//                'img_name_en' => 'unique:component_multi_data,img_name_en',
-//                'img_name_bn' => 'unique:component_multi_data,img_name_en',
-//            ]);
 //        }
 
         if (request()->hasFile('image')) {
@@ -195,6 +188,12 @@ class ComponentService
                 'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
             ]);
         }
+
+        request()->validate([
+            'image_name_en' => 'required|unique:components,image_name_en,' . $id,
+            'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+        ]);
+
         $component = $this->findOne($id);
 
         if (request()->hasFile('image')) {

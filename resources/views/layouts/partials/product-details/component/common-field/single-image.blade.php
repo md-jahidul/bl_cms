@@ -19,7 +19,7 @@
 
 <div class="form-group col-md-3 {{ $errors->has('image_name_en') ? ' error' : '' }}">
     <label for="image_name_en" class="required">Image Name En</label>
-    <input type="text" name="image_name_en" class="form-control section_alt_text"
+    <input type="text" name="image_name_en" class="form-control section_alt_text slug-convert"
            value="{{ isset($component->image_name_en) ? $component->image_name_en : '' }}" required>
     <div class="help-block"></div>
     @if ($errors->has('image_name_en'))
@@ -29,7 +29,7 @@
 
 <div class="form-group col-md-3 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
     <label for="image_name_bn" class="required">Image Name Bn</label>
-    <input type="text" name="image_name_bn" class="form-control section_alt_text"
+    <input type="text" name="image_name_bn" class="form-control section_alt_text slug-convert"
            value="{{ isset($component->image_name_bn) ? $component->image_name_bn : '' }}" required>
     <div class="help-block"></div>
     @if ($errors->has('image_name_bn'))
