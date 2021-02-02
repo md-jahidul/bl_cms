@@ -60,7 +60,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('base_image') ? ' error' : '' }}">
                                     <label for="thumbnail_image">Thumbnail Image</label>
-                                    <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90">
+                                    <input type="file" name="base_image" class="form-control dropify" data-height="90">
                                     <div class="help-block"></div>
                                     @if ($errors->has('base_image'))
                                         <div class="help-block">  {{ $errors->first('base_image') }}</div>
