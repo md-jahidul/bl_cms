@@ -66,7 +66,7 @@
 
 <div class="form-group col-md-6 {{ $errors->has("img_name_en.$key") ? ' error' : '' }}">
     <label for="alt_text" class="required">Image Name English</label>
-    <input type="text" name="img_name_en[]" class="form-control img-data" required
+    <input type="text" name="img_name_en[]" class="form-control img-data slug-convert" required
            value="{{ isset($image['img_name_en']) ? $image['img_name_en'] : '' }}">
     <span class="duplicate-error text-danger"></span>
 
@@ -78,7 +78,7 @@
 
 <div class="form-group col-md-6">
     <label for="alt_text" class="required">Image Name Bangla</label>
-    <input type="text" name="img_name_bn[]" class="form-control img-data" required
+    <input type="text" name="img_name_bn[]" class="form-control img-data slug-convert" required
            value="{{ isset($image['img_name_bn']) ? $image['img_name_bn'] : '' }}">
     <span class="help-block duplicate-error text-danger"></span>
 </div>

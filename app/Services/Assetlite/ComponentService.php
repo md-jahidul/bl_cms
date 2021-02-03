@@ -110,20 +110,14 @@ class ComponentService
         return new Response('App Service Component added successfully');
     }
 
-//    protected function imageUpload($data)
-//    {
-//        return $image;
-//    }
-
-
     public function componentStore($data, $sectionId, $pageType)
     {
 
 
 //        if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
-                'image_name_en' => 'required|unique:components,image_name_en',
-                'image_name_bn' => 'required|unique:components,image_name_bn',
+                'image_name_en' => 'unique:components,image_name_en',
+                'image_name_bn' => 'unique:components,image_name_bn',
             ]);
 //        }
 
@@ -190,8 +184,8 @@ class ComponentService
         }
 
         request()->validate([
-            'image_name_en' => 'required|unique:components,image_name_en,' . $id,
-            'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+            'image_name_en' => 'unique:components,image_name_en,' . $id,
+            'image_name_bn' => 'unique:components,image_name_bn,' . $id,
         ]);
 
         $component = $this->findOne($id);
@@ -219,7 +213,7 @@ class ComponentService
         }
 
         // get original data
-        $new_multiple_attributes = $component->multiple_attributes;
+        $new_multiple_attributes = isset($component->multiple_attributes) ? $component->multiple_attributes : null;
 
 //         contains all the inputs from the form as an array
         $input_multiple_attributes = isset($results) ? array_values($results) : null;
@@ -240,13 +234,13 @@ class ComponentService
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
         }
-
         $component->update($data);
         if ($data['component_type'] == "multiple_image") {
             $this->comMultiDataRepository->deleteAllById($id);
             foreach ($data['base_image'] as $key => $img) {
                 if (is_object($img)) {
-                    $this->deleteFile($data['old_img_url'][$key]);
+                    $filePath = isset($data['old_img_url']) ? $data['old_img_url'][$key] : null;
+                    $this->deleteFile($filePath);
                     $img = $this->upload($img, 'assetlite/images/component');
                 }
                 $imgData = [
