@@ -64,12 +64,25 @@ class BanglalinkThreeGService
         $comType = $data['type'];
         $bannerImage = $this->banglalinkThreeGRepository->findOneByProperties(['type' => $comType]);
 
+        $data['banner_image_url'] = $bannerImage->other_attributes['banner_image_url'] ?? null;
+        $data['banner_mobile_view'] = $bannerImage->other_attributes['banner_mobile_view'] ?? null;
+
         $dirPath = 'assetlite/images/banner/three-g';
         if (!empty($data['other_attributes']['banner_image_url'])) {
             $data['other_attributes']['banner_image_url'] = $this->upload($data['other_attributes']['banner_image_url'], $dirPath);
+            $data['banner_image_url'] = $data['other_attributes']['banner_image_url'];
         }
         if (!empty($data['other_attributes']['banner_mobile_view'])) {
             $data['other_attributes']['banner_mobile_view'] = $this->upload($data['other_attributes']['banner_mobile_view'], $dirPath);
+            $data['banner_mobile_view'] = $data['other_attributes']['banner_mobile_view'];
+        }
+
+        if(!empty($data['other_attributes']['banner_name_en'])) {
+            $data['banner_name_en'] = $data['other_attributes']['banner_name_en'];
+        }
+
+        if(!empty($data['other_attributes']['banner_name_bn'])) {
+            $data['banner_name_bn'] = $data['other_attributes']['banner_name_bn'];
         }
 
         if (!$bannerImage) {
