@@ -15,6 +15,7 @@ class CreateBannerAnalyticsTable extends Migration
     {
         Schema::create('banner_analytics', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('slider_id');
             $table->integer('banner_id');
             $table->bigInteger('view_count');
             $table->integer('click_count');
