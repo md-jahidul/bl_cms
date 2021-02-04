@@ -53,27 +53,17 @@ class BeAPartnerService
         $beAPartner = $this->findOne($id);
 
         $dirPath = 'assetlite/images/banner/be-a-partner';
-        if (!empty($data['banner_image']['banner_image_url'])) {
-            $data['banner_image']['banner_image_url'] = $this->upload($data['banner_image']['banner_image_url'], $dirPath);
+        if (!empty($data['banner_image'])) {
+            $data['banner_image'] = $this->upload($data['banner_image'], $dirPath);
+            $this->deleteFile($beAPartner->banner_image);
         }
-        if (!empty($data['banner_image']['banner_mobile_view'])) {
-            $data['banner_image']['banner_mobile_view'] = $this->upload($data['banner_image']['banner_mobile_view'], $dirPath);
+        if (!empty($data['banner_mobile_view'])) {
+            $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
+            $this->deleteFile($beAPartner->banner_mobile_view);
         }
-
         if (!$beAPartner) {
             $this->save($data);
         } else {
-            // get original data
-            $new_multiple_attributes = $beAPartner->banner_image;
-            // contains all the inputs from the form as an array
-            $input_multiple_attributes = isset($data['banner_image']) ? $data['banner_image'] : null;
-            // loop over the product array
-            if ($input_multiple_attributes) {
-                foreach ($input_multiple_attributes as $field => $inputData) {
-                    $new_multiple_attributes[$field] = $inputData;
-                }
-            }
-            $data['banner_image'] = $new_multiple_attributes;
             $beAPartner->update($data);
         }
         return response('Be A Partner Data updated!!');

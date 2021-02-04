@@ -89,7 +89,7 @@ class ComponentController extends Controller
 
     public function conponentStore(Request $request)
     {
-
+        dd($request->all());
         $response = $this->componentService->storeComponentDetails($request->all());
 
         $section_id = $request->input('section_details_id');

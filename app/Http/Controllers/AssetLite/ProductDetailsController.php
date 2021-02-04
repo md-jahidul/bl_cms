@@ -125,7 +125,7 @@ class ProductDetailsController extends Controller
             'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name' : '',
             'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name_bn' : '',
         ]);
-        
+
         $response = $this->productDetailsSectionService->sectionStore($request->all());
         Session::flash('success', $response->content());
         return redirect(route('section-list', [$simType, $id]));
@@ -170,6 +170,7 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $simType, $productDetailsId, $sectionID)
     {
+        dd($request->all());
         $response = $this->componentService->componentStore($request->all(), $sectionID, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionID]));

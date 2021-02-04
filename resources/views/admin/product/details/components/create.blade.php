@@ -82,7 +82,7 @@
                                     </slot>
 
                                     {{--Features Component--}}
-                                    <slot id="features_component" data-offer-type="features_component" class="d-none">
+                                    <slot id="features_component" data-offer-type="features_component" class="{{ old("component_type") == 'features_component' ? '' : 'd-none' }}">
                                         @include('layouts.partials.product-details.component.common-field.title', ['title_en' => "Component (English)", 'title_bn' => 'Component (Bangla)'])
 
                                         <div class="form-group col-md-12 text-right">
@@ -98,46 +98,60 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="alt_text">Feature Title (English)</label>
-                                            <input type="text" name="multi_item[feature_title_en-1]" class="form-control">
+                                            <input type="text" name="title_en[]" class="form-control">
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label for="alt_text">Feature Title (Bangla)</label>
-                                            <input type="text" name="multi_item[feature_title_bn-1]" class="form-control">
+                                            <input type="text" name="title_bn[]" class="form-control">
                                         </div>
 
                                         <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">
-                                        <div class="col-md-12 col-xs-12">
+                                        <div class="col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <label for="message">Feature Icon</label>
-                                                <input type="file" class="dropify" name="multi_item[image_url-1]" data-height="80"/>
+                                                <input type="file" class="dropify" name="base_image[]" data-height="80"/>
                                                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="alt_text">Alt Text</label>
-                                            <input type="text" name="multi_item[alt_text-1]" class="form-control" placeholder="Enter image alt text">
+                                        <div class="form-group col-md-3">
+                                            <label for="alt_text">Alt Text English</label>
+                                            <input type="text" name="alt_text_en[]" class="form-control" placeholder="Enter image alt text">
                                         </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="button_en">Button Title (English)</label>
-                                            <input type="text" name="multi_item[button_en-1]"  class="form-control" placeholder="Enter company name bangla" value="">
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="button_bn" >Button Title (Bangla)</label>
-                                            <input type="text" name="multi_item[button_bn-1]"  class="form-control" placeholder="Enter company name bangla" value="">
+                                        <div class="form-group col-md-3">
+                                            <label for="alt_text">Alt Text Bangla</label>
+                                            <input type="text" name="alt_text_bn[]" class="form-control" placeholder="Enter image alt text">
                                         </div>
 
                                         <div class="form-group col-md-6">
+                                            <label for="button_en">Image Name English</label>
+                                            <input type="text" name="img_name_en[]"  class="form-control" placeholder="Enter company name bangla" value="">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="button_bn" >Image Name Bangla</label>
+                                            <input type="text" name="img_name_bn[]"  class="form-control" placeholder="Enter company name bangla" value="">
+                                        </div>
+
+{{--                                        <div class="form-group col-md-3">--}}
+{{--                                            <label for="button_en">Button Title (English)</label>--}}
+{{--                                            <input type="text" name="other_attr[button_en-1]"  class="form-control" placeholder="Enter company name bangla" value="">--}}
+{{--                                        </div>--}}
+
+{{--                                        <div class="form-group col-md-3">--}}
+{{--                                            <label for="button_bn" >Button Title (Bangla)</label>--}}
+{{--                                            <input type="text" name="multi_item[button_bn-1]"  class="form-control" placeholder="Enter company name bangla" value="">--}}
+{{--                                        </div>--}}
+
+                                        <div class="form-group col-md-6">
                                             <label for="button_link" >Details (English)</label>
-                                            <textarea name="multi_item[details_en-1]" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>
+                                            <textarea name="details_en[]" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label for="button_link" >Details (Bangla)</label>
-                                            <textarea name="multi_item[details_bn-1]" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>
+                                            <textarea name="details_bn[]" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>
                                         </div>
                                     </slot>
 
@@ -329,6 +343,7 @@
                     '     <label for="alt_text">Alt Text</label>\n' +
                     '     <input type="text" name="multi_item[alt_text-'+total_option+']" placeholder="Enter image alt text" class="form-control">\n' +
                     ' </div>\n' +
+
                     ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="button_en">Button Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
@@ -337,6 +352,17 @@
                     '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
+
+
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    '     <label for="button_en">Button Title (English)</label>\n' +
+                    '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
+                    '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    ' </div>\n' +
+
                     '<div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="button_link" >Details (English)</label>\n' +
                     '     <textarea name="multi_item[details_en-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>\n' +
