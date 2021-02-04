@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use \Illuminate\Support\Facades\DB;
 
 class ColumnTypeChangeInBeAPartners extends Migration
 {
@@ -15,6 +16,7 @@ class ColumnTypeChangeInBeAPartners extends Migration
     {
         Schema::table('be_a_partners', function (Blueprint $table) {
             $table->string('banner_image')->change();
+            DB::table('be_a_partners')->update(['banner_image' => null]);
         });
     }
 
@@ -26,7 +28,9 @@ class ColumnTypeChangeInBeAPartners extends Migration
     public function down()
     {
         Schema::table('be_a_partners', function (Blueprint $table) {
-            $table->json('banner_image')->change();
+            $table->json('banner_image')->nullable()
+                ->customSchemaOptions(['collation' => '', 'charset' => ''])
+                ->change();
         });
     }
 }
