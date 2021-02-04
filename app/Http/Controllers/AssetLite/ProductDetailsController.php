@@ -170,7 +170,6 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $simType, $productDetailsId, $sectionID)
     {
-        dd($request->all());
         $response = $this->componentService->componentStore($request->all(), $sectionID, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionID]));
@@ -188,7 +187,7 @@ class ProductDetailsController extends Controller
     public function componentEdit($simType, $productDetailsId, $sectionId, $id)
     {
         $dataTypes = $this->dataTypes;
-        $component = $this->componentService->findOne($id);
+        $component = $this->componentService->findOne($id, ['componentMultiData']);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
         return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'simType', 'productDetailsId'));
@@ -205,7 +204,8 @@ class ProductDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $simType, $productDetailsId, $sectionId, $id)
     {
-        $this->componentService->componentUpdate($request->all(), $id);
+        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
+        Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionId]));
     }
 
