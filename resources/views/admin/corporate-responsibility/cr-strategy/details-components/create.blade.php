@@ -75,20 +75,8 @@
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                     </slot>
 
-{{--                                    {{ $errors }}--}}
-
                                     {{--Multiple Image--}}
                                     <slot id="multiple_image" data-offer-type="multiple_image" class="d-none">
-
-
-                                        <div class="col-md-12 col-xs-6 d-none" id="duplicate-error">
-                                            <div class="alert bg-danger alert-dismissible mb-2" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                Duplicate Value is given.
-                                            </div>
-                                        </div>
                                         @include('layouts.partials.product-details.component.common-field.extra-title')
                                         @include('layouts.partials.product-details.component.common-field.title')
                                         @include('layouts.partials.product-details.component.common-field.multiple-image')

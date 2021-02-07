@@ -57,7 +57,7 @@ $(document).on('click', '#plus-image', function () {
         ' </div>\n' +
         '<div class="form-group col-md-3 option-' + total_option + '">\n' +
         '    <label for="alt_text">Alt Text English</label>\n' +
-        '    <input type="text" name="alt_text_en[]"  class="form-control">\n' +
+        '    <input type="text" name="multi_alt_text_en[]"  class="form-control">\n' +
         '</div>\n' +
         '<div class="form-group col-md-2 option-' + total_option + '">\n' +
         '    <label for="alt_text">Alt Text Bangla</label>\n' +

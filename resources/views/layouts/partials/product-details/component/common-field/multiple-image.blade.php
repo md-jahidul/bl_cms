@@ -47,7 +47,7 @@
 
 <div class="form-group col-md-3">
     <label for="alt_text">Alt Text English</label>
-    <input type="text" name="alt_text_en[]" class="form-control"
+    <input type="text" name="multi_alt_text_en[]" class="form-control"
            value="{{ isset($image['alt_text_en']) ? $image['alt_text_en'] : '' }}">
 </div>
 

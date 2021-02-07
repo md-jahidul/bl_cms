@@ -255,12 +255,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 @push('page-js')
+    <script>
+        var duplicateChecker = "{{ url('component-multiple-data') }}";
+    </script>
     <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
+    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>
 
 
     <script>
@@ -285,29 +290,29 @@
             dropify();
 
             // Multi Image Component
-            $(document).on('click', '#plus-image', function () {
-                var option_count = $('.options-count');
-                var total_option = option_count.length + 2;
-
-                var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
-                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
-                    '<div class="form-group">\n' +
-                    '      <label for="message">Multiple Image</label>\n' +
-                    '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
-                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
-                    '  </div>\n' +
-                    ' </div>\n'+
-                    '<div class="form-group col-md-5 option-'+total_option+'">\n' +
-                    '    <label for="alt_text">Alt Text</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
-                    '</div>\n' +
-                    '<div class="form-group col-md-1 option-'+total_option+'">\n' +
-                    '   <label for="alt_text"></label>\n' +
-                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
-                    '</div>';
-                $('#multiple_image').append(input);
-                dropify();
-            });
+            // $(document).on('click', '#plus-image', function () {
+            //     var option_count = $('.options-count');
+            //     var total_option = option_count.length + 2;
+            //
+            //     var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+            //         '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
+            //         '<div class="form-group">\n' +
+            //         '      <label for="message">Multiple Image</label>\n' +
+            //         '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+            //         '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+            //         '  </div>\n' +
+            //         ' </div>\n'+
+            //         '<div class="form-group col-md-5 option-'+total_option+'">\n' +
+            //         '    <label for="alt_text">Alt Text</label>\n' +
+            //         '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+            //         '</div>\n' +
+            //         '<div class="form-group col-md-1 option-'+total_option+'">\n' +
+            //         '   <label for="alt_text"></label>\n' +
+            //         '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+            //         '</div>';
+            //     $('#multiple_image').append(input);
+            //     dropify();
+            // });
 
             $(document).on('click', '.remove-image', function (event) {
                 var rowId = $(event.target).attr('data-id');
