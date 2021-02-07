@@ -213,8 +213,8 @@ class ProductDetailsController extends Controller
     public function bannerImgRelatedPro(Request $request, $simType, $productId)
     {
         $request->validate([
-           'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:banner_img_related_products,banner_name,' . $request->banner_related_id : '',
-           'banner_name_bn' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:banner_img_related_products,banner_name_bn,' . $request->banner_related_id : '',
+           'banner_name' => !empty($request->banner_name) ? 'unique:banner_img_related_products,banner_name,' . $request->banner_related_id : '',
+           'banner_name_bn' => !empty($request->banner_name) ? 'unique:banner_img_related_products,banner_name_bn,' . $request->banner_related_id : '',
         ]);
         $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
         Session::flash('success', $response->content());
