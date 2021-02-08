@@ -110,20 +110,14 @@ class ComponentService
         return new Response('App Service Component added successfully');
     }
 
-//    protected function imageUpload($data)
-//    {
-//        return $image;
-//    }
-
-
     public function componentStore($data, $sectionId, $pageType)
     {
 
-
+//        dd($data);
 //        if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
-                'image_name_en' => 'required|unique:components,image_name_en',
-                'image_name_bn' => 'required|unique:components,image_name_bn',
+                'image_name_en' => 'unique:components,image_name_en',
+                'image_name_bn' => 'unique:components,image_name_bn',
             ]);
 //        }
 
@@ -155,10 +149,11 @@ class ComponentService
 
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
-
+//        dd($data);
         $component = $this->save($data);
 
-        if ($data['component_type'] == "multiple_image" && isset($data['base_image'])) {
+        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
+//            dd($data);
             foreach ($data['base_image'] as $key => $img) {
                 if (!empty($img)) {
                     $baseImgUrl = $this->upload($img, 'assetlite/images/component');
@@ -166,7 +161,9 @@ class ComponentService
                 $imgData = [
                     'component_id' => $component->id,
                     'page_type' => $pageType,
-                    'alt_text_en' => $data['alt_text_en'][$key],
+                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : '',
+                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : '',
+                    'alt_text_en' => $data['multi_alt_text_en'][$key],
                     'alt_text_bn' => $data['multi_alt_text_bn'][$key],
                     'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
                     'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
@@ -190,8 +187,8 @@ class ComponentService
         }
 
         request()->validate([
-            'image_name_en' => 'required|unique:components,image_name_en,' . $id,
-            'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+            'image_name_en' => 'unique:components,image_name_en,' . $id,
+            'image_name_bn' => 'unique:components,image_name_bn,' . $id,
         ]);
 
         $component = $this->findOne($id);
@@ -219,7 +216,7 @@ class ComponentService
         }
 
         // get original data
-        $new_multiple_attributes = $component->multiple_attributes;
+        $new_multiple_attributes = isset($component->multiple_attributes) ? $component->multiple_attributes : null;
 
 //         contains all the inputs from the form as an array
         $input_multiple_attributes = isset($results) ? array_values($results) : null;
@@ -240,19 +237,22 @@ class ComponentService
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
         }
-
         $component->update($data);
-        if ($data['component_type'] == "multiple_image") {
+        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
             $this->comMultiDataRepository->deleteAllById($id);
             foreach ($data['base_image'] as $key => $img) {
+//                dd($data);
                 if (is_object($img)) {
-                    $this->deleteFile($data['old_img_url'][$key]);
                     $img = $this->upload($img, 'assetlite/images/component');
+                    $filePath = isset($data['old_img_url'][$key]) ? $data['old_img_url'][$key] : null;
+                    $this->deleteFile($filePath);
                 }
                 $imgData = [
                     'component_id' => $component->id,
                     'page_type' => $pageType,
-                    'alt_text_en' => $data['alt_text_en'][$key],
+                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : null,
+                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : null,
+                    'alt_text_en' => $data['multi_alt_text_en'][$key],
                     'alt_text_bn' => $data['multi_alt_text_bn'][$key],
                     'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
                     'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),

@@ -128,7 +128,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                     <label>Banner Photo Name EN</label>
                                     <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">
-                                    <input type="text" class="form-control" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
+                                    <input type="text" class="form-control slug-covert" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
                                            placeholder="Photo Name">
                                     <small class="text-info">
                                         <strong>Note: </strong> Don't give spach & slash
@@ -140,7 +140,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
                                     <label>Banner Photo Name BN</label>
-                                    <input type="text" class="form-control" name="banner_name_bn" value="{{ isset($bannerRelatedProduct->banner_name_bn) ? $bannerRelatedProduct->banner_name_bn : null }}"
+                                    <input type="text" class="form-control slug-covert" name="banner_name_bn" value="{{ isset($bannerRelatedProduct->banner_name_bn) ? $bannerRelatedProduct->banner_name_bn : null }}"
                                            placeholder="Photo Name">
                                     <small class="text-info">
                                         <strong>Note: </strong> Don't give spach & slash

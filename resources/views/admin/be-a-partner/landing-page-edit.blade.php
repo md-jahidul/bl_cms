@@ -125,8 +125,8 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Desktop)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="banner_image[banner_image_url]" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($beAPartner->banner_image['banner_image_url']) ? config('filesystems.file_base_url') . $beAPartner->banner_image['banner_image_url'] : '' }}">
+                                        <input type="file" name="banner_image" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($beAPartner->banner_image) ? config('filesystems.file_base_url') . $beAPartner->banner_image : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
@@ -138,35 +138,61 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Mobile)</label>
                                     <div class="custom-file">
-{{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
-                                        <input type="file" name="banner_image[banner_mobile_view]" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($beAPartner->banner_image['banner_mobile_view']) ? config('filesystems.file_base_url') . $beAPartner->banner_image['banner_mobile_view'] : '' }}">
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
+                                               data-default-file="{{ isset($beAPartner->banner_mobile_view) ? config('filesystems.file_base_url') . $beAPartner->banner_mobile_view : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_mobile_view'))
                                         <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text English</label>
-                                    <input type="text" name="banner_image[alt_text_en]" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($beAPartner->banner_image['alt_text_en']) ? $beAPartner->banner_image['alt_text_en'] : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en">Alt Text English</label>
+                                    <input type="text" name="alt_text_en" id="alt_text_en" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($beAPartner->alt_text_en) ? $beAPartner->alt_text_en : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @if ($errors->has('alt_text_en'))
+                                        <div class="help-block">{{ $errors->first('alt_text_en') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
                                     <label for="alt_text_bn">Alt Text Bangla</label>
                                     <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
                                            placeholder="Enter alt text" value="{{ isset($beAPartner->alt_text_bn) ? $beAPartner->alt_text_bn : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text_bn'))
                                         <div class="help-block">{{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Image Name En</label>
+                                    <input type="text" class="form-control slug-convert" name="banner_name"
+                                           value="{{ $beAPartner->banner_name }}" placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Image Name Bn</label>
+                                    <input type="text" class="form-control slug-convert" name="banner_name_bn"
+                                           value="{{ $beAPartner->banner_name_bn }}" placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_name_bn') }}</div>
                                     @endif
                                 </div>
 

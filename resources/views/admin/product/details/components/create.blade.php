@@ -82,7 +82,7 @@
                                     </slot>
 
                                     {{--Features Component--}}
-                                    <slot id="features_component" data-offer-type="features_component" class="d-none">
+                                    <slot id="features_component" data-offer-type="features_component" class="{{ old("component_type") == 'features_component' ? '' : 'd-none' }}">
                                         @include('layouts.partials.product-details.component.common-field.title', ['title_en' => "Component (English)", 'title_bn' => 'Component (Bangla)'])
 
                                         <div class="form-group col-md-12 text-right">
@@ -98,47 +98,62 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="alt_text">Feature Title (English)</label>
-                                            <input type="text" name="multi_item[feature_title_en-1]" class="form-control">
+                                            <input type="text" name="multi_title_en[]" class="form-control">
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label for="alt_text">Feature Title (Bangla)</label>
-                                            <input type="text" name="multi_item[feature_title_bn-1]" class="form-control">
+                                            <input type="text" name="multi_title_bn[]" class="form-control">
                                         </div>
 
                                         <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">
                                         <div class="col-md-12 col-xs-12">
                                             <div class="form-group">
                                                 <label for="message">Feature Icon</label>
-                                                <input type="file" class="dropify" name="multi_item[image_url-1]" data-height="80"/>
+                                                <input type="file" class="dropify" name="base_image[]" data-height="80"/>
                                                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="alt_text">Alt Text</label>
-                                            <input type="text" name="multi_item[alt_text-1]" class="form-control" placeholder="Enter image alt text">
+{{--                                        <div class="form-group col-md-4">--}}
+{{--                                            <label for="button_link" >Details (English)</label>--}}
+{{--                                            <textarea name="details_en[]" rows="4" class="form-control" placeholder="Enter feature details in English"></textarea>--}}
+{{--                                        </div>--}}
+
+{{--                                        <div class="form-group col-md-4">--}}
+{{--                                            <label for="button_link" >Details (Bangla)</label>--}}
+{{--                                            <textarea name="details_bn[]" rows="4" class="form-control" placeholder="Enter feature details in Bangla"></textarea>--}}
+{{--                                        </div>--}}
+
+                                        <div class="form-group col-md-3">
+                                            <label for="alt_text">Alt Text English</label>
+                                            <input type="text" name="multi_alt_text_en[]" class="form-control" placeholder="Enter image alt text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="alt_text">Alt Text Bangla</label>
+                                            <input type="text" name="multi_alt_text_bn[]" class="form-control" placeholder="Enter image alt text">
                                         </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="button_en">Button Title (English)</label>
-                                            <input type="text" name="multi_item[button_en-1]"  class="form-control" placeholder="Enter company name bangla" value="">
+                                        <div class="form-group col-md-3">
+                                            <label for="button_en">Image Name English</label>
+                                            <input type="text" name="img_name_en[]"  class="form-control" placeholder="Enter company name bangla" value="">
                                         </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="button_bn" >Button Title (Bangla)</label>
-                                            <input type="text" name="multi_item[button_bn-1]"  class="form-control" placeholder="Enter company name bangla" value="">
+                                        <div class="form-group col-md-3">
+                                            <label for="button_bn" >Image Name Bangla</label>
+                                            <input type="text" name="img_name_bn[]"  class="form-control" placeholder="Enter company name bangla" value="">
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label for="button_link" >Details (English)</label>
-                                            <textarea name="multi_item[details_en-1]" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>
-                                        </div>
+{{--                                        <div class="form-group col-md-3">--}}
+{{--                                            <label for="button_en">Button Title (English)</label>--}}
+{{--                                            <input type="text" name="other_attr[button_en-1]"  class="form-control" placeholder="Enter company name bangla" value="">--}}
+{{--                                        </div>--}}
 
-                                        <div class="form-group col-md-6">
-                                            <label for="button_link" >Details (Bangla)</label>
-                                            <textarea name="multi_item[details_bn-1]" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>
-                                        </div>
+{{--                                        <div class="form-group col-md-3">--}}
+{{--                                            <label for="button_bn" >Button Title (Bangla)</label>--}}
+{{--                                            <input type="text" name="multi_item[button_bn-1]"  class="form-control" placeholder="Enter company name bangla" value="">--}}
+{{--                                        </div>--}}
+
                                     </slot>
 
                                     {{--Bullet Text--}}
@@ -240,12 +255,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 @push('page-js')
+    <script>
+        var duplicateChecker = "{{ url('component-multiple-data') }}";
+    </script>
     <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
+    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>
 
 
     <script>
@@ -270,29 +290,29 @@
             dropify();
 
             // Multi Image Component
-            $(document).on('click', '#plus-image', function () {
-                var option_count = $('.options-count');
-                var total_option = option_count.length + 2;
-
-                var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
-                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
-                    '<div class="form-group">\n' +
-                    '      <label for="message">Multiple Image</label>\n' +
-                    '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
-                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
-                    '  </div>\n' +
-                    ' </div>\n'+
-                    '<div class="form-group col-md-5 option-'+total_option+'">\n' +
-                    '    <label for="alt_text">Alt Text</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
-                    '</div>\n' +
-                    '<div class="form-group col-md-1 option-'+total_option+'">\n' +
-                    '   <label for="alt_text"></label>\n' +
-                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
-                    '</div>';
-                $('#multiple_image').append(input);
-                dropify();
-            });
+            // $(document).on('click', '#plus-image', function () {
+            //     var option_count = $('.options-count');
+            //     var total_option = option_count.length + 2;
+            //
+            //     var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+            //         '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
+            //         '<div class="form-group">\n' +
+            //         '      <label for="message">Multiple Image</label>\n' +
+            //         '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+            //         '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+            //         '  </div>\n' +
+            //         ' </div>\n'+
+            //         '<div class="form-group col-md-5 option-'+total_option+'">\n' +
+            //         '    <label for="alt_text">Alt Text</label>\n' +
+            //         '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+            //         '</div>\n' +
+            //         '<div class="form-group col-md-1 option-'+total_option+'">\n' +
+            //         '   <label for="alt_text"></label>\n' +
+            //         '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+            //         '</div>';
+            //     $('#multiple_image').append(input);
+            //     dropify();
+            // });
 
             $(document).on('click', '.remove-image', function (event) {
                 var rowId = $(event.target).attr('data-id');
@@ -312,39 +332,60 @@
                     ' </div>\n' +
                     ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Feature Title (English)</label>\n' +
-                    '     <input type="text" name="multi_item[feature_title_en-'+total_option+']" class="form-control">\n' +
+                    '     <input type="text" name="multi_title_en[]" class="form-control">\n' +
                     ' </div>\n' +
                     ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Feature Title (Bangla)</label>\n' +
-                    '     <input type="text" name="multi_item[feature_title_bn-'+total_option+']" class="form-control">\n' +
+                    '     <input type="text" name="multi_title_bn[]" class="form-control">\n' +
                     ' </div>\n' +
                     ' <div class="col-md-12 col-xs-12 component-count option-'+total_option+'"">\n' +
                     '     <div class="form-group">\n' +
                     '         <label for="message">Feature Icon</label>\n' +
-                    '         <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+                    '         <input type="file" class="dropify" name="base_image[]" data-height="80"/>\n' +
                     '         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '     </div>\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
-                    '     <label for="alt_text">Alt Text</label>\n' +
-                    '     <input type="text" name="multi_item[alt_text-'+total_option+']" placeholder="Enter image alt text" class="form-control">\n' +
+
+                    // '<div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    // '     <label for="button_link" >Details (English)</label>\n' +
+                    // '     <textarea name="multi_item[details_en-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>\n' +
+                    // '</div>\n' +
+                    // '<div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    // '     <label for="button_link" >Details (Bangla)</label>\n' +
+                    // '     <textarea name="multi_item[details_bn-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>\n' +
+                    // '</div>\n' +
+
+                    ' <div class="form-group col-md-3 option-'+total_option+'">\n' +
+                    '     <label for="alt_text">Alt Text English</label>\n' +
+                    '     <input type="text" name="multi_alt_text_en[]" placeholder="Enter image alt text" class="form-control">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
-                    '     <label for="button_en">Button Title (English)</label>\n' +
-                    '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+
+                    ' <div class="form-group col-md-3 option-'+total_option+'">\n' +
+                    '     <label for="alt_text">Alt Text Bangla</label>\n' +
+                    '     <input type="text" name="multi_alt_text_bn[]" placeholder="Enter image alt text" class="form-control">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
-                    '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
-                    '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+
+                    ' <div class="form-group col-md-3 option-'+total_option+'">\n' +
+                    '     <label for="button_en">Image Name English</label>\n' +
+                    '     <input type="text" name="img_name_en[]"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
-                    '     <label for="button_link" >Details (English)</label>\n' +
-                    '     <textarea name="multi_item[details_en-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>\n' +
-                    '</div>\n' +
-                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
-                    '     <label for="button_link" >Details (Bangla)</label>\n' +
-                    '     <textarea name="multi_item[details_bn-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>\n' +
-                    '</div>\n' +
+
+                    ' <div class="form-group col-md-3 option-'+total_option+'">\n' +
+                    '     <label for="button_bn" >Image Name Bangla</label>\n' +
+                    '     <input type="text" name="img_name_bn[]"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    ' </div>\n' +
+
+
+                    // ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    // '     <label for="button_en">Button Title (English)</label>\n' +
+                    // '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    // ' </div>\n' +
+                    // ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    // '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
+                    // '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    // ' </div>\n' +
+
+
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
                     '</div>';
