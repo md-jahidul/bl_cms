@@ -137,7 +137,7 @@
 
                                 <div class="col-md-6 col-xs-12 mb-1">
                                     <label> Alt Text BN</label>
-                                    <input type="text" class="form-control" name="alt_text" placeholder="Alt Text" value="{{ $offer->alt_text_bn }}">
+                                    <input type="text" class="form-control" name="alt_text_bn" placeholder="Alt Text BN" value="{{ $offer->alt_text_bn }}">
                                 </div>
 
 
