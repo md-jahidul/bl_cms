@@ -324,6 +324,11 @@
         function pickerFormat()
         {
             recurringType = $('input[name=recurring_type]:checked').val();
+            let page = "{{$page}}";
+            if (page == 'edit') {
+                    let startTime = "{{$popup->start_time}}";
+                    date = new Date(Date.parse(startTime));
+                }
             if (recurringType != 'none') {
                 $('.datetime').daterangepicker({
                     timePicker: false,

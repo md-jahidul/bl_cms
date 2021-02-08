@@ -63,7 +63,7 @@ class AppLaunchPopupController extends Controller
      */
     public function index()
     {
-        $popups = MyBlAppLaunchPopup::where('status', 1)->paginate(15);
+        $popups = MyBlAppLaunchPopup::where('status', 1)->orderBy('id', 'desc')->get();
 
         return view('admin.app-launch-popup.index', compact('popups'));
     }
@@ -79,8 +79,9 @@ class AppLaunchPopupController extends Controller
             return redirect()->route('app-launch.index')->with('error', 'Error! Popup Not Found');
         }
         $productList = $this->getActiveProducts();
-        $dateRange = Carbon::parse($popup->start_date)->format('Y/m/d') . ' - ' .
-            Carbon::parse($popup->end_date)->format('Y/m/d');
+        $format = $popup->recurring_type == 'none' ? 'Y/m/d h:i A' : 'Y/m/d';
+        $dateRange = Carbon::parse($popup->start_date)->format($format) . ' - ' .
+            Carbon::parse($popup->end_date)->format($format);
         $hourSlots = $this->appLaunchPopupService->getHourSlots();
         $page = 'edit';
 
