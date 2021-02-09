@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Models\MyBlProductTab;
 use App\Services\ProductCoreService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -69,9 +70,10 @@ class MyblProductEntryController extends Controller
         if (!$product) {
             throw new NotFoundHttpException();
         }
+
         $details = $this->service->getProductDetails($product_code);
 
-        $internet_categories = MyBlInternetOffersCategory::all()->sortBy('sort');
+        $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
 
         return view('admin.my-bl-products.product-details', compact('details', 'internet_categories'));
     }
@@ -83,6 +85,8 @@ class MyblProductEntryController extends Controller
     {
         return view('admin.my-bl-products.mybl_product_entry');
     }
+
+
 
     /**
      * @param Request $request
@@ -131,13 +135,17 @@ class MyblProductEntryController extends Controller
      * @param UpdateMyblProductRequest $request
      * @param $product_code
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function updateMyblProducts(UpdateMyblProductRequest $request, $product_code)
     {
         return $this->service->updateMyblProducts($request, $product_code);
     }
 
-
+    /**
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
     public function downloadMyblProducts()
     {
         return $this->service->downloadMyblProducts();

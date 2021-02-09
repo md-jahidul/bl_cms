@@ -30,7 +30,22 @@ return [
             'tag'                   => 23,
             'call_rate'             => 24,
             'call_rate_unit'        => 25,
-            'status'                => 26
+            'display_sd_vat_tax'    => 26,
+            'display_title_en'      => 27,
+            'display_title_bn'      => 28,
+            'points'                => 29,
+            'is_visible'            => 30,
+            'show_from'             => 31,
+            'hide_from'             => 32,
+            'status'                => 33,
+        ],
+        'product_schedule_statuses' => [
+            0 => 'None',
+            1 => 'Active Schedule',
+            2 => 'To be Hidden',
+            3 => 'Completed Schedule',
+            4 => 'To be Shown'
+
         ]
     ],
     /*'pcat' => [

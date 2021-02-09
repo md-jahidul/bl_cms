@@ -15,7 +15,6 @@ class ProductDeepLinkController extends Controller
      */
     protected $productDeepLinkService;
 
-
     /**
      * PushNotificationController constructor.
      * @param ProductDeepLinkService $productDeepLinkService
@@ -32,7 +31,7 @@ class ProductDeepLinkController extends Controller
      */
     public function index()
     {
-
+        return view('admin.product-deep-link-report.list');
     }
 
     /**
@@ -42,62 +41,37 @@ class ProductDeepLinkController extends Controller
      */
     public function create($product_code)
     {
-       return $this->productDeepLinkService->createDeepLink($product_code);
+        return $this->productDeepLinkService->createDeepLink($product_code);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return mixedgetDetails
      */
-    public function store(Request $request)
+    public function data(Request $request)
     {
-        //
+        if ($request->has('searchByFromdate') || $request->has('searchByTodate') || $request->has('searchByProductCode')) {
+            return $this->productDeepLinkService->getProductDeepLinkfilterList($request);
+        } else {
+            return $this->productDeepLinkService->getProductDeepLinkListReport($request);
+        }
+
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param null $productDeeplinkDbId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function show(ProductDeepLink $productDeepLink)
+    public function getDetails(Request $request, $productDeeplinkDbId = null)
     {
-        //
+        $from = ($request->has('from')) ? $request->input('from') : null;
+        $to = ($request->has('to')) ? $request->input('to') : null;
+        if ($request->has('draw')) {
+            return $this->productDeepLinkService->getProductDeepLinkDetailsReport($request, $productDeeplinkDbId);
+        }
+        return view('admin.product-deep-link-report.details', compact('productDeeplinkDbId', 'from', 'to'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProductDeepLink $productDeepLink)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProductDeepLink $productDeepLink)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProductDeepLink $productDeepLink)
-    {
-        //
-    }
 }

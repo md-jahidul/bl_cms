@@ -28,7 +28,7 @@ class UpdateMyblProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'offer_section_slug'    => 'string|exists:my_bl_internet_offers_categories,slug',
+           // 'offer_section_slug'    => 'string|exists:my_bl_internet_offers_categories,slug',
             'tag'                   => 'max:20',
             'show_in_app'           => 'boolean',
             'is_rate_cutter_offer'  => 'boolean',
