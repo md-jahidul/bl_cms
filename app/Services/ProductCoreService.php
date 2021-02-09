@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
+use App\Models\ProductTag;
+use App\Repositories\MyBlProductTagRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDeepLinkRepository;
 use App\Repositories\SearchDataRepository;
@@ -25,6 +27,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,6 +57,10 @@ class ProductCoreService
      * @var array
      */
     protected $config;
+    /**
+     * @var MyBlProductTagRepository
+     */
+    private $myBlProductTagRepository;
 
     /**
      * ProductCoreService constructor.
@@ -61,18 +68,21 @@ class ProductCoreService
      * @param SearchDataRepository $searchRepository
      * @param TagCategoryRepository $tagRepository
      * @param ProductDeepLinkRepository $productDeepLinkRepository
+     * @param MyBlProductTagRepository $myBlProductTagRepository
      */
     public function __construct(
         ProductCoreRepository $productCoreRepository,
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
-        ProductDeepLinkRepository $productDeepLinkRepository
+        ProductDeepLinkRepository $productDeepLinkRepository,
+        MyBlProductTagRepository $myBlProductTagRepository
     ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->productDeepLinkRepository = $productDeepLinkRepository;
         $this->setActionRepository($productCoreRepository);
+        $this->myBlProductTagRepository = $myBlProductTagRepository;
     }
 
     /**
@@ -802,7 +812,8 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-        $data['tag'] = $request->tag;
+        $firstTag = ProductTag::where('id', $request->tags[0])->first();
+        $data['tag'] = $firstTag->title;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -814,6 +825,17 @@ class ProductCoreService
 
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
+
+            if ($request->has('tags')) {
+                $this->myBlProductTagRepository->deleteByProductCode($product_code);
+
+                foreach ($request->tags ?? [] as $tag) {
+                    $this->myBlProductTagRepository->save([
+                        'product_code' => $product_code,
+                        'product_tag_id' => $tag
+                    ]);
+                }
+            }
 
             if ($request->has('offer_section_slug')) {
                 MyBlProductTab::where('product_code', $product_code)->delete();
@@ -832,7 +854,7 @@ class ProductCoreService
             $data_request = $request->all();
             unset($data_request['_token']);
             unset($data_request['_method']);
-            unset($data_request['tag']);
+            unset($data_request['tags']);
             unset($data_request['media']);
             unset($data_request['show_in_app']);
             unset($data_request['is_rate_cutter_offer']);
