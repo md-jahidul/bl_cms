@@ -153,7 +153,6 @@ class ComponentService
         $component = $this->save($data);
 
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
-//            dd($data);
             foreach ($data['base_image'] as $key => $img) {
                 if (!empty($img)) {
                     $baseImgUrl = $this->upload($img, 'assetlite/images/component');

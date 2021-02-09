@@ -32,6 +32,7 @@
 {{--    <input type="text" name="multi_item[img_name_bn-1]" class="form-control">--}}
 {{--</div>--}}
 
+@php isset($key) ? $key : $key = 0 @endphp
 
 <input type="hidden" name="multi_img_ids[]" value="{{ isset($image['id']) ? $image['id'] : '' }}">
 <div class="col-md-6 col-xs-6">
