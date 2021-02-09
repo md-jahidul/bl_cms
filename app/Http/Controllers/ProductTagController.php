@@ -23,7 +23,7 @@ class ProductTagController extends Controller
 
     public function index()
     {
-        $tags = $this->productTagService->findAll();
+        $tags = $this->productTagService->findAll(null, null, ['column' => 'priority', 'direction' => 'asc']);
         return view('admin.product.tag.index', compact('tags'));
     }
 

@@ -205,6 +205,7 @@ class ProductCoreService
                     $core_data = [];
                     $mybl_data = [];
                     $productTabs = [];
+                    $tags = [];
 
                     if ($row_number != 1) {
                         $cells = $row->getCells();
@@ -307,8 +308,11 @@ class ProductCoreService
                                     }
                                     break;
                                 case "tag":
-                                    $tag = $cells [$index]->getValue();
-                                    $mybl_data[$field] = $tag;
+                                    $rawTags = explode(',', $cells [$index]->getValue());
+                                    $tags = collect($rawTags)->map(function ($item) {
+                                        return trim($item);
+                                    })->toArray();
+                                    $mybl_data[$field] = $tags[0] ?? "";
                                     break;
 
                                 case "show_from":
@@ -349,7 +353,6 @@ class ProductCoreService
                             ], $mybl_data);
 
                             if (count($productTabs)) {
-                                Log::info('Hello here : ' . json_encode($productTabs));
                                 MyBlProductTab::where('product_code', $product_code)->delete();
 
                                 foreach ($productTabs as $productTab) {
@@ -358,6 +361,23 @@ class ProductCoreService
                                     $productTabInsert->my_bl_internet_offers_category_id = $productTab['my_bl_internet_offers_category_id'];
                                     $productTabInsert->save();
                                 }
+                            }
+
+                            if (count($tags)) {
+                                $existingTags = ProductTag::whereIn('title', $tags)->get();
+                                $existingTagTitles = $existingTags->pluck('title')->toArray();
+                                $existingTagIds = $existingTags->pluck('id')->toArray();
+
+                                foreach ($tags as $tag) {
+                                    if (!in_array($tag, Arr::flatten($existingTagTitles)) && $tag != "") {
+                                        $tagInsert = new ProductTag();
+                                        $tagInsert->title = $tag;
+                                        $tagInsert->priority = rand(5, 10);
+                                        $tagInsert->save();
+                                    }
+                                }
+
+                                $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
                             }
 
                         } catch (Exception $e) {
@@ -827,14 +847,7 @@ class ProductCoreService
             $model->update($data);
 
             if ($request->has('tags')) {
-                $this->myBlProductTagRepository->deleteByProductCode($product_code);
-
-                foreach ($request->tags ?? [] as $tag) {
-                    $this->myBlProductTagRepository->save([
-                        'product_code' => $product_code,
-                        'product_tag_id' => $tag
-                    ]);
-                }
+                $this->syncProductTags($product_code, $request->tags);
             }
 
             if ($request->has('offer_section_slug')) {
@@ -986,7 +999,8 @@ class ProductCoreService
                     ',',
                     $product->detailTabs->pluck('name')->toArray()
                 ) ?: $product->offer_section_title);
-                $insert_data[23] = $product->tag;
+                $productTags = $product->tags;
+                $insert_data[23] = $productTags->count() ? implode(',', $productTags->pluck('title')->toArray()) : $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
                 $insert_data[26] = $product->details->display_sd_vat_tax;
@@ -1007,6 +1021,18 @@ class ProductCoreService
             Log::info(json_encode($problem));
         }
         $writer->close();
+    }
+
+    public function syncProductTags($productCode, $tags)
+    {
+        $this->myBlProductTagRepository->deleteByProductCode($productCode);
+
+        foreach ($tags ?? [] as $tag) {
+            $this->myBlProductTagRepository->save([
+                'product_code' => $productCode,
+                'product_tag_id' => $tag
+            ]);
+        }
     }
 
     public function resetProductRedisKeys()

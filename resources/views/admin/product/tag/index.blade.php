@@ -40,7 +40,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <span class="content-header-title">Product Tag List</span>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered dataTable">
                         <thead>
                         <tr>
                             <th>Sl</th>
@@ -80,8 +80,11 @@
 
 @push('page-js')
     <script>
-        $('#del').submit(function () {
-            return confirm('Are you sure to delete this tag?');
+        $('form').submit(function () {
+            let confirmation  = confirm('Are you sure to delete this tag?');
+            return confirmation;
         });
+
+        $('.dataTable').dataTable();
     </script>
 @endpush
