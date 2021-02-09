@@ -65,9 +65,7 @@ class CorpInitiativeTabComponentService
     public function componentStore($data, $tabId)
     {
         $directory = 'assetlite/images/corporate-responsibility/initiative';
-
         if (
-            $data['component_type'] == "batch_component" ||
             $data['component_type'] == "news_component" ||
             $data['component_type'] == "young_future" &&
             isset($data['single_base_image'])
