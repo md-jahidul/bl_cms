@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="popup">
                             <thead>
                             <tr>
                                 <th>Sl</th>
@@ -45,12 +45,19 @@
                                     <td>
                                         Recurring Type: <strong>{{ ucwords($recurringType) }}</strong><br>
                                         Date Range:
-                                        <strong>
-                                            {{ \Carbon\Carbon::parse($popup->start_date)->setTimezone('Asia/Dhaka')->format('d-m-Y') }}
-                                            -
-                                            {{ \Carbon\Carbon::parse($popup->end_date)->setTimezone('Asia/Dhaka')->format('d-m-Y') }}
-                                        </strong><br>
+                                        @if($recurringType == 'none')
+                                            <strong>
+                                                {{ \Carbon\Carbon::parse($popup->start_date)->setTimezone('Asia/Dhaka')->format('d-m-Y h:i A') }}
+                                                -
+                                                {{ \Carbon\Carbon::parse($popup->end_date)->setTimezone('Asia/Dhaka')->format('d-m-Y h:i A') }}
+                                            </strong><br>
+                                        @endif
                                         @if($recurringType != 'none')
+                                            <strong>
+                                                {{ \Carbon\Carbon::parse($popup->start_date)->setTimezone('Asia/Dhaka')->format('d-m-Y') }}
+                                                -
+                                                {{ \Carbon\Carbon::parse($popup->end_date)->setTimezone('Asia/Dhaka')->format('d-m-Y') }}
+                                            </strong><br>
                                             @php
                                                 $schedule = $popup->schedule;
                                                 $timeSlots = $popup->timeSlots;
@@ -89,7 +96,7 @@
                             </tbody>
                         </table>
 
-                        {{ $popups->links() }}
+                        {{--                        {{ $popups->links() }}--}}
                     </div>
                 </div>
             </div>
@@ -97,7 +104,14 @@
     </section>
 @stop
 
+@push('page-js')
+    <script>
+        $(document).ready( function () {
+            $('#popup').DataTable();
+        } );
+    </script>
 
+@endpush
 
 
 
