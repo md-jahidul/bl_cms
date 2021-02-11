@@ -128,6 +128,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('amarOffer', 'CMS\AmarOfferController');
     Route::get('amarOffer/destroy/{id}', 'CMS\AmarOfferController@destroy');
 
+    // mybl internet offer category
+    Route::get('mybl-internet-offer-category', 'CMS\MyBlInternetOffersCategoryController@index')->name('mybl-internet-offer-category');
+    Route::POST('mybl-internet-offer-category', 'CMS\MyBlInternetOffersCategoryController@saveSortFilter')->name('mybl-internet-offer-category.store');
+    Route::get('mybl-internet-offer-category/create', 'CMS\MyBlInternetOffersCategoryController@create')->name('mybl.internetOffer.category.create');
+    Route::get('mybl-internet-offer-category/edit/{id}', 'CMS\MyBlInternetOffersCategoryController@edit')->name('mybl.internetOffer.category.edit');
+    Route::put('mybl-internet-offer-category/update/{id}', 'CMS\MyBlInternetOffersCategoryController@update')->name('mybl.internetOffer.category.update');
+    Route::get('mybl-internet-offer-category/delete/{id}', 'CMS\MyBlInternetOffersCategoryController@destroy')->name('mybl.internetOffer.category.delete');
+
     // ussd code
     Route::resource('ussd', 'CMS\UssdController');
     Route::get('ussd/destroy/{id}', 'CMS\UssdController@destroy');
