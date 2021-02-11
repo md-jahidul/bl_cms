@@ -54,7 +54,12 @@ class MyBlInternetOffersCategoryController extends Controller
         $page='create';
         return view('admin.data-bundle.create',compact('page'));
     }
-
+/**
+ * Undocumented function
+ *
+ * @param Request $request
+ * @return void
+ */
     public function saveSortFilter(Request $request)
     {
         $validate = Validator::make(
@@ -77,20 +82,36 @@ class MyBlInternetOffersCategoryController extends Controller
             Session()->flash('message', $response->content());
         return redirect()->back();
     }
-
+/**
+ * Undocumented function
+ *
+ * @param [type] $id
+ * @return void
+ */
     public function edit($id=null){
         $page='create';
         $internet_offer=MyBlInternetOffersCategory::find($id);
         return view('admin.data-bundle.edit',compact('page','internet_offer'));
     }
-
+/**
+ * Undocumented function
+ *
+ * @param MyBlInternetOffersCategoryRequest $request
+ * @param [type] $id
+ * @return void
+ */
     public function update(MyBlInternetOffersCategoryRequest $request, $id){
         $response = $this->myBlInternetOffersCategoryService->updateInternetOffersCategory($request->all(),$id);
         Session()->flash('message', $response->content());
         return redirect('mybl-internet-offer-category');
 
     }
-
+/**
+ * Undocumented function
+ *
+ * @param [type] $id
+ * @return void
+ */
     public function destroy($id){
         return $this->myBlInternetOffersCategoryService->delFilter($id);
 

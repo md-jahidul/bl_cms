@@ -93,13 +93,3 @@
 
     </section>
 @endsection
-
-
-
-
-@push('style')
-
-@endpush
-@push('page-js')
-
-@endpush

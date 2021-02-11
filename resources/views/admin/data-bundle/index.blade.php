@@ -10,15 +10,9 @@
     </a>
 @endsection
 @section('content')
-
     <section>
         <div class="card">
             <div class="card-header">
-                {{-- <div class="row">
-                    <div class="col-md-10">
-                        <h1 class="card-title pl-1">Internet Offer Category List</h1>
-                    </div>
-                </div> --}}
             </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -40,7 +34,6 @@
                                 <td width='35%'>{{$internet_offer->name}}</td>
                                 <td width='35%'>{{$internet_offer->slug}}</td>
                                 <td width='10%'>{{$internet_offer->sort}} </td>
-
                                 <td width='10%'>
                                     <div class="btn-group" role="group">
                                         <a role="button" href="{{route('mybl.internetOffer.category.edit',$internet_offer->id)}}" class="btn btn-outline-success">
@@ -48,27 +41,16 @@
                                         </a>
                                         {{-- <button data-id="{{$internet_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button> --}}
                                     </div>
-
                                 </td>
                             </tr>
-
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-
-
-
     </section>
-
 @endsection
-
-
-
-
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
@@ -129,6 +111,5 @@
                 "bDestroy": true,
             });
         });
-
     </script>
 @endpush

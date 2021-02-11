@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Traits\CrudTrait;
 use Exception;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use App\Repositories\MyBlInternetOffersCategoryRepository;
 use Illuminate\Http\Request;
@@ -28,18 +27,23 @@ class MyBlInternetOffersCategoryService
         $this->internetOffersCategoryRepository = $internetOffersCategoryRepository;
         $this->setActionRepository($internetOffersCategoryRepository);
     }
-
     /**
-     * Storing the banner resource
-     * @return Response
+     * Undocumented function
+     *
+     * @param [type] $data
+     * @return void
      */
-
-    public function storeInternetOffersCategory($data)
+   public function storeInternetOffersCategory($data)
     {
         $this->internetOffersCategoryRepository->save($data);
         return new Response("Internet Offer has been successfully created");
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delFilter($id)
     {
         try {
@@ -58,7 +62,6 @@ class MyBlInternetOffersCategoryService
             ], 500);
         }
     }
-
 
      /**
      * Updating the internet offer category
