@@ -48,7 +48,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Logde a Complain
     Route::get('mybl/settings/lodge/complaints', 'CMS\SettingController@lodgeComplain')->name('lodge_complaints');
-    Route::Post('mybl/settings/lodge/complain/store', 'CMS\SettingController@sotreLodgeComplain')->name('store_lodge_complaints');
+    Route::Post('mybl/settings/lodge/complain/store',
+        'CMS\SettingController@sotreLodgeComplain')->name('store_lodge_complaints');
 
 
     //App Version
@@ -167,13 +168,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')
         ->name('notification-schedule.send');
-    Route::post('target-wise-push-notification', 'CMS\PushNotificationController@targetWiseNotificationSend')->name('target_wise_notification.send');
-    Route::get('target-wise-notification-report', 'CMS\NotificationController@getTargetWiseNotificationReport')->name('target-wise-notification-report.report');
-    Route::get('target-wise-notification-report-details/{titel}', 'CMS\NotificationController@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report.report-details');
+    Route::post('target-wise-push-notification',
+        'CMS\PushNotificationController@targetWiseNotificationSend')->name('target_wise_notification.send');
+    Route::get('target-wise-notification-report',
+        'CMS\NotificationController@getTargetWiseNotificationReport')->name('target-wise-notification-report.report');
+    Route::get('target-wise-notification-report-details/{titel}',
+        'CMS\NotificationController@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report.report-details');
 
     // Get push notification purchase report
-    Route::get('purchase/from-notification/list', 'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
-    Route::get('purchase/from-notification/details/{id}', 'CMS\PushNotificationProductPurchaseController@details')->name('push.notification.purchase.report.details');
+    Route::get('purchase/from-notification/list',
+        'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
+    Route::get('purchase/from-notification/details/{id}',
+        'CMS\PushNotificationProductPurchaseController@details')->name('push.notification.purchase.report.details');
 
 
     Route::post(
@@ -211,15 +217,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Store App Slider Image
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');
     Route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
-    Route::get('appslider/addImage/{sliderId}', 'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
+    Route::get('appslider/addImage/{sliderId}',
+        'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
 
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index')->name('appslider.images.index');
-    Route::get('appslider/{id}/images/create', 'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
+    Route::get('appslider/{id}/images/create',
+        'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
     Route::post('appslider/images/store', 'CMS\StoreAppSliderImageController@store')->name('appslider.images.store');
     Route::get('appslider/images/{id}/edit', 'CMS\StoreAppSliderImageController@edit')->name('appslider.images.edit');
-    Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
-    Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
-    Route::delete('appslider/images/{id}/delete', 'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
+    Route::put('appslider/images/{id}/update',
+        'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
+    Route::put('appslider/images/{id}/update',
+        'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
+    Route::delete('appslider/images/{id}/delete',
+        'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
 
 
     /*
@@ -267,12 +278,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
-      //Deep link
-      Route::get('mybl-products-deep-link-create/{product_code}', 'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
-      Route::get('product-deep-link-report', 'CMS\ProductDeepLinkController@index')->name('products-deep-link-report');
-      Route::get('product-deeplink-list', 'CMS\ProductDeepLinkController@data')->name('product-deeplink-list');
-      Route::get('deeplink-product-purchase-details', 'CMS\ProductDeepLinkController@getDetails')->name('deeplink-product-purchase-details');
-      Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
+    /*
+     * Product Tags Routes
+     */
+    Route::get('mybl/product/tags', 'ProductTagController@index')->name('product-tags.index');
+    Route::post('mybl/product/tags', 'ProductTagController@store')->name('product-tags.store');
+    Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
+
+    //Deep link
+    Route::get('mybl-products-deep-link-create/{product_code}',
+        'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
+    Route::get('product-deep-link-report', 'CMS\ProductDeepLinkController@index')->name('products-deep-link-report');
+    Route::get('product-deeplink-list', 'CMS\ProductDeepLinkController@data')->name('product-deeplink-list');
+    Route::get('deeplink-product-purchase-details',
+        'CMS\ProductDeepLinkController@getDetails')->name('deeplink-product-purchase-details');
+    Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 
 
     /*
@@ -442,8 +462,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     */
     Route::resource('bandhosimimage', 'CMS\BandhoSimImageController');
     Route::get('bandhosim/index', 'CMS\BandhoSimImageController@index')->name('bandhosim.index');
-    Route::post('mybl/settings/bandhosimimage/Store', 'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
-    Route::post('mybl/settings/bandhosimimage/update/{id}', 'CMS\BandhoSimImageController@update')->name('mybl.settings.bandho.sim.image.update');
+    Route::post('mybl/settings/bandhosimimage/Store',
+        'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
+    Route::post('mybl/settings/bandhosimimage/update/{id}',
+        'CMS\BandhoSimImageController@update')->name('mybl.settings.bandho.sim.image.update');
 
     /*
      *  API Debug For Developer
@@ -455,7 +477,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
         ->name('mybl.api.debug.balance-details');
 
-    Route::get('developer/api/debug/product/log/{number}', 'CMS\ApiDebugController@getProductLogs')->name('product.api.log');
+    Route::get('developer/api/debug/product/log/{number}',
+        'CMS\ApiDebugController@getProductLogs')->name('product.api.log');
 
     Route::get('developer/api/debug/audit_logs/{number}', 'CMS\ApiDebugController@getBrowseHistory');
     Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
@@ -509,11 +532,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
      *  Feed Routes
      */
-    Route::namespace ('CMS')->prefix('feeds')->name('feeds.')->group(function () {
+    Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {
         Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
         // Category resource
         Route::resource('categories', 'FeedCategoryController')->except('show');
-        Route::get('categories/update-position', 'FeedCategoryController@updatePosition')->name('categories.update_position');
+        Route::get('categories/update-position',
+            'FeedCategoryController@updatePosition')->name('categories.update_position');
     });
 
 });

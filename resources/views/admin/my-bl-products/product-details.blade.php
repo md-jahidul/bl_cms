@@ -169,23 +169,6 @@
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
                                     @endphp
-                                    {{-- <div class="col-md-4">
-                                         <div class="form-group">
-                                             <label>Select Data Section </label>
-                                             <select multiple
-                                                 class="form-control data-section"
-                                                 name="offer_section_slug[]" required>
-                                                 <option value="">Please Select Data Section</option>
-                                                 @foreach($internet_categories as $category)
-                                                     <option value="{{ $category->slug }}"
-                                                             @if($category->slug == $details->offer_section_slug) selected @endif>
-                                                         {{ $category->name }}</option>
-                                                 @endforeach
-                                             </select>
-                                         </div>
-                                     </div>--}}
-
-
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Select Data Section </label>
@@ -204,31 +187,56 @@
                                             </select>
                                         </div>
                                     </div>
-
                                 @endif
+
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Tag </label>
-                                        <input class="form-control" name="tag" value="{{ $details->tag }}"
-                                               placeholder="e.g. Hot, New etc">
-                                        @if($errors->has('tag'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('tag') }}</small>
-                                            </p>
-                                        @endif
+                                        <label>Tags </label>
+                                        @php
+                                            $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];
+
+                                        //dd($thisProductTags);
+                                        @endphp
+                                        <select multiple
+                                                class="form-control tags"
+                                                name="tags[]" required>
+                                            <option value=""></option>
+
+                                            @foreach ($tags as $tag)
+                                                <option
+                                                    {{ in_array($tag->id, $thisProductTags, false) ? 'selected' : '' }}
+                                                    value="{{ $tag->id }}">  {{$tag->title}}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
                                     </div>
                                 </div>
+                                {{--                                <div class="col-md-4">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label>Tag </label>--}}
+                                {{--                                        <input class="form-control" name="tag" value="{{ $details->tag }}"--}}
+                                {{--                                               placeholder="e.g. Hot, New etc">--}}
+                                {{--                                        @if($errors->has('tag'))--}}
+                                {{--                                            <p class="text-left">--}}
+                                {{--                                                <small class="danger text-muted">{{ $errors->first('tag') }}</small>--}}
+                                {{--                                            </p>--}}
+                                {{--                                        @endif--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Schedule Availability </label>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="form-label small">Show From</label>
-                                                <input class="form-control" id="show_from" name="show_from" placeholder="Show From Time" autocomplete="off">
+                                                <input class="form-control" id="show_from" name="show_from"
+                                                       placeholder="Show From Time" autocomplete="off">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label small">Hide From</label>
-                                                <input class="form-control" id="hide_from" name="hide_from" placeholder="Hide From Time" autocomplete="off">
+                                                <input class="form-control" id="hide_from" name="hide_from"
+                                                       placeholder="Hide From Time" autocomplete="off">
                                             </div>
                                         </div>
                                         @if($errors->has('tag'))
@@ -253,13 +261,13 @@
                                         </li>
                                     </ul>
                                 </div>
-                                    <div class="col-md-2 icheck_minimal skin mt-2">
-                                        <fieldset>
-                                            <input type="checkbox" id="show_in_home" value="1" name="show_in_app"
-                                                   @if($details->show_in_home) checked @endif>
-                                            <label for="show_in_home">Show in Home</label>
-                                        </fieldset>
-                                    </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="show_in_home" value="1" name="show_in_app"
+                                               @if($details->show_in_home) checked @endif>
+                                        <label for="show_in_home">Show in Home</label>
+                                    </fieldset>
+                                </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
@@ -324,10 +332,15 @@
 
         $(function () {
 
-            $('select').select2({
+            $('.data-section').select2({
                 placeholder: 'Please Select Data Section',
                 maximumSelectionLength: 5,
                 allowClear: true
+            });
+
+            $('.tags').select2({
+                placeholder: 'Please Select Tags',
+                maximumSelectionLength: 3
             });
 
         });
@@ -363,7 +376,7 @@
         $('#hide_from').val("{{$details->hide_from ? \Carbon\Carbon::parse($details->hide_from)->format('Y/m/d h:i A') : ''}}");
         //$('#hide_from').val('');
 
-        $('#show_from,#hide_from').on('cancel.daterangepicker', function(ev, picker) {
+        $('#show_from,#hide_from').on('cancel.daterangepicker', function (ev, picker) {
             $(this).val('');
         });
 
