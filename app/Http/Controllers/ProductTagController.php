@@ -25,6 +25,7 @@ class ProductTagController extends Controller
     {
         $tags = $this->productTagService->findAll(null, null, ['column' => 'priority', 'direction' => 'asc']);
         return view('admin.product.tag.index', compact('tags'));
+
     }
 
     /**
@@ -41,6 +42,31 @@ class ProductTagController extends Controller
             $type = 'error';
         }
 
+        return redirect()->back()->with($type, $message);
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $tag = $this->productTagService->findOne($id);
+        return view('admin.product.tag.edit', compact('tag'));
+    }
+
+    public function update(ProductTagRequest $request, $id)
+    {
+        $tag = $this->productTagService->findOne($id);
+        if ($tag) {
+            $message = "Product Tag Updated Successful";
+            $type = 'success';
+            $tag->update($request->all());
+
+        } else {
+            $message = "Error! Product Tag Was Not Updated";
+            $type = 'error';
+        }
         return redirect()->back()->with($type, $message);
     }
 
