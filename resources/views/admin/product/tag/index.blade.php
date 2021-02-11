@@ -58,6 +58,10 @@
                                 <td>{{ ucwords($tag->priority) }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-info" title="Edit"
+                                           href="{{route('product-tags.edit', $tag->id)}}">
+                                            <i class="ft-edit"></i>
+                                        </a>&nbsp; &nbsp;
                                         <form action="{{route('product-tags.destroy', $tag->id)}}" class="delete-form"
                                               method="post">
                                             @csrf @method('delete')
