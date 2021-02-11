@@ -43,14 +43,3 @@
         </div>
     </section>
 @stop
-
-@push('page-js')
-    <script>
-        $('.delete-form').submit(function () {
-            let confirmation = confirm('Are you sure to delete this tag?');
-            return confirmation;
-        });
-
-        $('.dataTable').dataTable();
-    </script>
-@endpush
