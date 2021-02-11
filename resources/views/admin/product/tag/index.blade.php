@@ -58,7 +58,7 @@
                                 <td>{{ ucwords($tag->priority) }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <form action="{{route('product-tags.destroy', $tag->id)}}" id="del"
+                                        <form action="{{route('product-tags.destroy', $tag->id)}}" class="delete-form"
                                               method="post">
                                             @csrf @method('delete')
                                             <button class="btn btn-sm btn-outline-danger" title="Delete" type="submit">
@@ -80,7 +80,7 @@
 
 @push('page-js')
     <script>
-        $('form').submit(function () {
+        $('.delete-form').submit(function () {
             let confirmation  = confirm('Are you sure to delete this tag?');
             return confirmation;
         });
