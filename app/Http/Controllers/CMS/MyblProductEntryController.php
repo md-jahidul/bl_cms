@@ -78,7 +78,9 @@ class MyblProductEntryController extends Controller
         $details = $this->service->getProductDetails($product_code);
 
         $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
-        $tags = $this->productTagService->findAll();
+        $tags = $this->productTagService
+            ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
+            ->pluck('title', 'id');
 
         return view('admin.my-bl-products.product-details', compact('details', 'internet_categories', 'tags'));
     }

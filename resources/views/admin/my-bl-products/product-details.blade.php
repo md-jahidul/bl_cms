@@ -194,18 +194,16 @@
                                         <label>Tags </label>
                                         @php
                                             $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];
-
-                                        //dd($thisProductTags);
                                         @endphp
                                         <select multiple
                                                 class="form-control tags"
                                                 name="tags[]" required>
                                             <option value=""></option>
 
-                                            @foreach ($tags as $tag)
+                                            @foreach ($tags as $key => $tag)
                                                 <option
-                                                    {{ in_array($tag->id, $thisProductTags, false) ? 'selected' : '' }}
-                                                    value="{{ $tag->id }}">  {{$tag->title}}
+                                                    {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
+                                                    value="{{ $key }}">  {{$tag}}
                                                 </option>
                                             @endforeach
 
