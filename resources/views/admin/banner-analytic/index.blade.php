@@ -36,7 +36,7 @@
                                 <th width="7%">Total Click</th>
                                 <th width="7%">Buy Success</th>
                                 <th width="7%">Failure</th>
-                                <th width="7%">Cancel</th>
+                                <th width="7%">Buy Cancel</th>
                                 <th width="5%">Action</th>
                             </tr>
                             </thead>

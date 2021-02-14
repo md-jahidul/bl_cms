@@ -31,12 +31,30 @@ class BannerAnalyticDetailsRepository extends BaseRepository
     {
         $from = is_null($from) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $from . ' 00:00:00')->toDateTimeString();
         $to = is_null($to) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $to . '23:59:59')->toDateTimeString();
-        return $this->model->selectRaw('action_type, count(distinct id) total_count, banner_analytic_id')
+        return $this->model->selectRaw('error_title, count(distinct id) total_count, banner_analytic_id')
             ->whereBetween('created_at', [$from, $to])
-            ->groupBy('action_type', 'banner_analytic_id')
+            ->groupBy('error_title', 'banner_analytic_id')
             ->orderBy('banner_analytic_id', 'ASC')
             ->get();
     }
+
+
+    /**
+     * @param null $from
+     * @param null $to
+     * @return mixed
+     */
+    public function getPurchaseCountsByActionType($from = null, $to = null)
+    {
+        $from = is_null($from) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $from . ' 00:00:00')->toDateTimeString();
+        $to = is_null($to) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $to . '23:59:59')->toDateTimeString();
+        return $this->model->selectRaw('error_title, count(distinct id) total_count, banner_analytic_id')
+            ->whereBetween('created_at', [$from, $to])
+            ->groupBy('error_title', 'banner_analytic_id')
+            ->orderBy('banner_analytic_id', 'ASC')
+            ->get();
+    }
+
 
     /**
      * @param $id

@@ -49,6 +49,7 @@ class BannerAnalyticService
             $searchByFromdate,
             $searchByTodate
         );
+        dd($detailsData);
 
         $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
         $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
@@ -99,10 +100,10 @@ class BannerAnalyticService
         $data = $this->findAll();
         $searchByFromdate = ($request->has('searchByFromdate')) ? $request->input('searchByFromdate') : null;
         $searchByTodate = ($request->has('searchByTodate')) ? $request->input('searchByTodate') : null;
-        $detailsData = $this->bannerAnalyticDetailsRepository->getCountsByActionType(
-            $searchByFromdate,
-            $searchByTodate
-        );
+        // $detailsData = $this->bannerAnalyticDetailsRepository->getCountsByActionType(
+        //     $searchByFromdate,
+        //     $searchByTodate
+        // );
 
         $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
         $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
@@ -114,11 +115,16 @@ class BannerAnalyticService
             $result[$key]['view_count'] = $log->view_count;
             $result[$key]['click_count'] = $log->view_count;
 
-            $detailsDatum = $detailsData
-                ->where('banner_analytic_id', $log->id)
-                ->flatten()
-                ->toArray();
-            $result[$key]['log'] = $this->prepareFilteredCount($detailsDatum);
+            // $detailsDatum = $detailsData
+            //     ->where('banner_analytic_id', $log->id)
+            //     ->flatten()
+            //     ->toArray();
+
+            $result[$key]['log']['total_buy'] = !empty($log->getBannePurchases->total_buy) ? $log->getBannePurchases->total_buy:0;
+             //$this->prepareFilteredCount($detailsDatum);
+            $result[$key]['log']['total_buy_attempt'] = !empty($log->getBannePurchases->total_buy_attempt) ? $log->getBannePurchases->total_buy_attempt:0;
+            $result[$key]['log']['total_cancel'] = !empty($log->getBannePurchases->total_cancel) ? $log->getBannePurchases->total_cancel:0;
+
         }
         return Datatables::collection($result)
             ->addIndexColumn()
