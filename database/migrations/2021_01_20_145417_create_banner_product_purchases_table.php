@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBannerAnalyticsTable extends Migration
+class CreateBannerProductPurchasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateBannerAnalyticsTable extends Migration
      */
     public function up()
     {
-        Schema::create('banner_analytics', function (Blueprint $table) {
+        Schema::create('banner_product_purchases', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('slider_id');
+
             $table->integer('banner_id');
-            $table->bigInteger('view_count');
-            $table->integer('click_count');
+            $table->string('product_code');
+            $table->integer('total_buy')->default(0);
+            $table->integer('total_buy_attempt')->default(0);
+            $table->integer('total_cancel')->default(0);
 
             $table->timestamps();
         });
@@ -31,6 +33,6 @@ class CreateBannerAnalyticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banner_analytics');
+        Schema::dropIfExists('banner_product_purchases');
     }
 }
