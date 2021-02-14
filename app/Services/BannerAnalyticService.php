@@ -42,17 +42,22 @@ class BannerAnalyticService
      */
     public function bannerAnaliticReporFilterData($request)
     {
-        $data = $this->findAll();
+
         $searchByFromdate = ($request->has('searchByFromdate')) ? $request->input('searchByFromdate') : null;
         $searchByTodate = ($request->has('searchByTodate')) ? $request->input('searchByTodate') : null;
         $detailsData = $this->bannerAnalyticDetailsRepository->getCountsByActionType(
             $searchByFromdate,
             $searchByTodate
         );
-        dd($detailsData);
+        $purchaseDetailsData = $this->bannerAnalyticDetailsRepository->getPurchaseCountsByActionType(
+            $searchByFromdate,
+            $searchByTodate
+        );
 
         $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
         $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
+        $data =  $this->bannerAnalyticRepository->getBannerAnalytic($from, $to);
+
         $result = [];
         foreach ($data as $key => $log) {
             $result[$key]['id'] = $log->id;
@@ -65,12 +70,23 @@ class BannerAnalyticService
                 ->where('banner_analytic_id', $log->id)
                 ->flatten()
                 ->toArray();
-            $result[$key]['log'] = $this->prepareFilteredCount($detailsDatum);
+            $purchaseDetailsDatum = $purchaseDetailsData
+            ->where('banner_id', $log->id)
+            ->flatten()
+            ->toArray();
+            $array1 = json_decode(json_encode($detailsDatum), true);
+            $array2 = json_decode(json_encode($purchaseDetailsDatum), true);
+            $proceshData=collect([$array1,$array2]);
+            $result[$key]['log'] = $this->preparePurchaseFilteredCount($proceshData);
         }
+
         return Datatables::collection($result)
             ->addIndexColumn()
             ->addColumn('tview', function ($result) {
-                return $result['view_count'];
+                return $result['log']['click']+$result['log']['total_buy']+$result['log']['total_buy_attempt']+$result['log']['total_cancel'];
+            })
+            ->addColumn('click_count', function ($result) {
+                return $result['log']['click'];
             })
             ->addColumn('total_buy', function ($result) {
                 return $result['log']['total_buy'];
@@ -129,10 +145,10 @@ class BannerAnalyticService
         return Datatables::collection($result)
             ->addIndexColumn()
             ->addColumn('tview', function ($result) {
-                return $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
+                return $result['click_count'] + $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
             })
             ->addColumn('click_count', function ($result) {
-                return $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
+                return $result['click_count'];
             })
             ->addColumn('total_buy', function ($result) {
                 return $result['log']['total_buy'];
@@ -165,6 +181,7 @@ class BannerAnalyticService
             $array['total_buy'] = 0;
             $array['total_cancel'] = 0;
             $array['total_buy_attempt'] = 0;
+
         } else {
             $total_buy_attempt = 0;
             $total_cancel = 0;
@@ -179,16 +196,61 @@ class BannerAnalyticService
                 if ($infolog['action_type'] == 'cancel') {
                     $total_cancel = +$infolog['total_count'];
                 }
-
             }
-
             $array['total_buy_attempt'] = $total_buy_attempt;
             $array['total_cancel'] = $total_cancel;
             $array['total_buy'] = $total_buy;
+
         }
         return $array;
 
     }
+
+ /**
+     * @param $detailsDatum
+     * @return array
+     */
+    public function preparePurchaseFilteredCount($detailsDatum)
+    {
+        if (empty($detailsDatum)) {
+            $array['total_buy'] = 0;
+            $array['total_cancel'] = 0;
+            $array['total_buy_attempt'] = 0;
+            $array['click']=0;
+            $array['banner_id'] = 0;
+        } else {
+            $total_buy_attempt = 0;
+            $total_cancel = 0;
+            $total_buy = 0;
+            $click=0;
+            $banner_id=0;
+            foreach ($detailsDatum as $key=>$infolog) {
+                if(!empty($infolog[0])){
+                if ($infolog[0]['action_type'] == 'buy_failure') {
+                    $total_buy_attempt = +$infolog[0]['total_count'];
+                }
+                if ($infolog[0]['action_type'] == 'buy_success') {
+                    $total_buy = +$infolog[0]['total_count'];
+                }
+                if ($infolog[0]['action_type'] == 'cancel') {
+                    $total_cancel = +$infolog[0]['total_count'];
+                }
+                if ($infolog[0]['action_type'] == 'click') {
+                    $click = +$infolog[0]['total_count'];
+                }
+                $banner_id=$infolog[0]['banner_id'];
+            }
+            }
+            $array['total_buy_attempt'] = $total_buy_attempt;
+            $array['total_cancel'] = $total_cancel;
+            $array['total_buy'] = $total_buy;
+            $array['click']=$click;
+            $array['banner_id'] = $banner_id;
+        }
+        return $array;
+
+    }
+
 
     /**
      * @param $id
