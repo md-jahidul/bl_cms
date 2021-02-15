@@ -34,8 +34,8 @@
                                 <td width='5%'>{{++$key}}</td>
                                 <td width='30%'>{{$internet_offer->name}}</td>
                                 <td width='30%'>{{$internet_offer->slug}}</td>
-                                <td width='10%'>{{$internet_offer->sort}} </td>
-                                <td width='20%'>{{$internet_offer->created_at}} </td>
+                                <td width='10%'>{{$internet_offer->sort}}</td>
+                                <td width='20%'>{{$internet_offer->created_at}}</td>
                                 <td width='10%'>
                                     <div class="btn-group" role="group">
                                         <a role="button" href="{{route('mybl.internetOffer.category.edit',$internet_offer->id)}}" class="btn btn-outline-success">
