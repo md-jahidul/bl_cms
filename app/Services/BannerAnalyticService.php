@@ -6,7 +6,6 @@ namespace App\Services;
 use App\Repositories\BannerAnalyticRepository;
 use App\Repositories\BannerAnalyticDetailsRepository;
 use App\Traits\CrudTrait;
-use Illuminate\Http\Response;
 use DataTables;
 use Carbon\Carbon;
 
@@ -61,6 +60,7 @@ class BannerAnalyticService
         $result = [];
         foreach ($data as $key => $log) {
             $result[$key]['id'] = $log->id;
+            $result[$key]['banner_id'] = $log->banner_id;
             $result[$key]['banner_name'] = $log->getBanner->name;
             $result[$key]['code'] = $log->getBanner->code;
             $result[$key]['view_count'] = $log->view_count;
@@ -99,8 +99,14 @@ class BannerAnalyticService
             })
             ->addColumn('action', function ($result) use ($from, $to) {
                 $url = route('banner-analytic.report.details', $result['id']);
-                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '" class="edit btn btn-success btn-sm">view</a>';
-                return $actionBtn;
+                if($result['log']['product_purchases_id']!==0){
+                $url2 = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
+                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '&banner_id=2" class="edit btn btn-success btn-sm">view</a>'.
+               '<a href="' . $url2 . '?from=' . $from . '&to=' . $to . '&banner_id=2" class="edit btn btn-info btn-sm">Puchase</a>';
+                }else{
+                    $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '&banner_id=2" class="edit btn btn-success btn-sm">view</a>';
+                  }
+               return $actionBtn;
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -116,11 +122,6 @@ class BannerAnalyticService
         $data = $this->findAll();
         $searchByFromdate = ($request->has('searchByFromdate')) ? $request->input('searchByFromdate') : null;
         $searchByTodate = ($request->has('searchByTodate')) ? $request->input('searchByTodate') : null;
-        // $detailsData = $this->bannerAnalyticDetailsRepository->getCountsByActionType(
-        //     $searchByFromdate,
-        //     $searchByTodate
-        // );
-
         $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
         $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
         $result = [];
@@ -130,17 +131,10 @@ class BannerAnalyticService
             $result[$key]['code'] = $log->getBanner->code;
             $result[$key]['view_count'] = $log->view_count;
             $result[$key]['click_count'] = $log->view_count;
-
-            // $detailsDatum = $detailsData
-            //     ->where('banner_analytic_id', $log->id)
-            //     ->flatten()
-            //     ->toArray();
-
             $result[$key]['log']['total_buy'] = !empty($log->getBannePurchases->total_buy) ? $log->getBannePurchases->total_buy:0;
-             //$this->prepareFilteredCount($detailsDatum);
             $result[$key]['log']['total_buy_attempt'] = !empty($log->getBannePurchases->total_buy_attempt) ? $log->getBannePurchases->total_buy_attempt:0;
             $result[$key]['log']['total_cancel'] = !empty($log->getBannePurchases->total_cancel) ? $log->getBannePurchases->total_cancel:0;
-
+            $result[$key]['log']['product_purchases_id'] = !empty($log->getBannePurchases->id) ? $log->getBannePurchases->id:0;
         }
         return Datatables::collection($result)
             ->addIndexColumn()
@@ -166,10 +160,7 @@ class BannerAnalyticService
             })
             ->rawColumns(['action'])
             ->make(true);
-
-
     }
-
 
     /**
      * @param $detailsDatum
@@ -218,13 +209,15 @@ class BannerAnalyticService
             $array['total_buy_attempt'] = 0;
             $array['click']=0;
             $array['banner_id'] = 0;
+            $array['product_purchases_id'] = 0;
         } else {
             $total_buy_attempt = 0;
             $total_cancel = 0;
             $total_buy = 0;
-            $click=0;
-            $banner_id=0;
-            foreach ($detailsDatum as $key=>$infolog) {
+            $click = 0;
+            $banner_id = 0;
+            $product_purchases = 0;
+            foreach ($detailsDatum as $key => $infolog) {
                 if(!empty($infolog[0])){
                 if ($infolog[0]['action_type'] == 'buy_failure') {
                     $total_buy_attempt = +$infolog[0]['total_count'];
@@ -238,17 +231,21 @@ class BannerAnalyticService
                 if ($infolog[0]['action_type'] == 'click') {
                     $click = +$infolog[0]['total_count'];
                 }
+                if (isset($infolog[0]['banner_product_purchase_id'])) {
+                    $product_purchases = $infolog[0]['banner_product_purchase_id'];
+                }
+
                 $banner_id=$infolog[0]['banner_id'];
             }
             }
             $array['total_buy_attempt'] = $total_buy_attempt;
             $array['total_cancel'] = $total_cancel;
             $array['total_buy'] = $total_buy;
-            $array['click']=$click;
+            $array['click'] = $click;
             $array['banner_id'] = $banner_id;
+            $array['product_purchases_id'] = $product_purchases;
         }
         return $array;
-
     }
 
 
@@ -281,4 +278,34 @@ class BannerAnalyticService
             ->rawColumns(['date'])
             ->make(true);
     }
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @param [type] $request
+     * @return void
+     */
+    public function bannerAnaliticPurchaseDetailReportData($id, $request){
+        if (!empty($request->input('from')) && !empty($request->input('to'))) {
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('from') . '00:00:00')->toDateTimeString();
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('to') . '23:59:59')->toDateTimeString();
+
+            $data = $this->bannerAnalyticDetailsRepository->getPurchaseDetailsByIdDateTodate($id, $from, $to);
+            //            $data = AgentDeeplinkDetail::->get();
+
+            // dd($data);
+        } else {
+            $from = Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00';
+            $to = Carbon::now()->toDateString() . ' 23:59:59';
+            $data = $this->bannerAnalyticDetailsRepository->getPurchaseDetailsByIdDateTodate($id, $from, $to);
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('date', function ($data) {
+                return date('d-m-Y H:i:s', strtotime($data->created_at));
+            })
+            ->rawColumns(['date'])
+            ->make(true);
+    }
+
 }

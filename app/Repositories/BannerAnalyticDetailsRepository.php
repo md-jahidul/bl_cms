@@ -59,12 +59,6 @@ class BannerAnalyticDetailsRepository extends BaseRepository
     {
         $from = is_null($from) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $from . ' 00:00:00')->toDateTimeString();
         $to = is_null($to) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $to . '23:59:59')->toDateTimeString();
-// dd($from,$to);
-        // $users = DB::table('users')
-        // ->join('contacts', 'users.id', '=', 'contacts.user_id')
-        // ->join('orders', 'users.id', '=', 'orders.user_id')
-        // ->select('users.*', 'contacts.phone', 'orders.price')
-        // ->get();
         // return BannerProductPurchaseDetail::selectRaw('error_desc as error_title, count(distinct id) total_count, banner_product_purchase_id')
         //     // ->with('getProductPurchaseBannerInfo')
         //     ->join('banner_product_purchases.')
@@ -90,5 +84,17 @@ class BannerAnalyticDetailsRepository extends BaseRepository
     public function getDetailsById($id)
     {
         return $this->model->where('banner_analytic_id', $id)->get();
+    }
+
+
+    /**
+     * @param $id
+     * @param null $from
+     * @param null $to
+     * @return mixed
+     */
+    public function getPurchaseDetailsByIdDateTodate($id, $from = null, $to = null)
+    {
+        return BannerProductPurchaseDetail::where('banner_product_purchase_id', $id)->whereBetween('created_at', [$from, $to])->get();
     }
 }
