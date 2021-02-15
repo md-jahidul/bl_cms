@@ -16,4 +16,8 @@ class BannerAnalytic extends Model
     {
         return $this->belongsTo(Banner::class, 'banner_id', 'id');
     }
+
+    public function getBannePurchases(){
+        return $this->belongsTo(BannerProductPurchase::class, 'banner_id', 'banner_id');
+    }
 }

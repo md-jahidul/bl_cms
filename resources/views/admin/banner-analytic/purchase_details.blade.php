@@ -1,6 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Banner Analytics Report')
-@section('card_name', "Banner Analytics Report")
+@section('title', 'Banner Analytic Purchase Details')
+@section('card_name', "Banner Analytic Purchase Report")
+
+@section('action')
+    <a href="{{ url('banner-analytic') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+        Report
+        List </a>
+@endsection
 
 @section('content')
     <section>
@@ -12,10 +18,12 @@
                             <tr>
                                 <td>From:</td>
                                 <td><input type="text" class="datepicker form-control" id="from" name="from"
-                                           autocomplete="off" placeholder="Select Start Date"></td>
+                                           autocomplete="off"
+                                           value="@if(!empty($from)){{date("Y-m-d", strtotime($from))}} @endif"></td>
                                 <td>To:</td>
                                 <td><input type="text" class="datepicker form-control" id="to" name="to"
-                                           autocomplete="off" placeholder="Select End Date"></td>
+                                           autocomplete="off"
+                                           value="@if(!empty($to)){{date("Y-m-d", strtotime($to))}} @endif"></td>
                                 <td><input id="submit" value="Search" class="btn btn-sm btn-success " type="button">
                                 </td>
                             </tr>
@@ -29,15 +37,12 @@
                                id="question_list_table" role="grid">
                             <thead>
                             <tr>
-                                <th width="5%">Sl.</th>
-                                <th width="10%">Banner</th>
-                                <th width="10%">Code</th>
-                                <th width="10%">Total View</th>
-                                <th width="7%">Total Click</th>
-                                <th width="7%">Buy Success</th>
-                                <th width="7%">Buy Failure</th>
-                                <th width="7%">Buy Cancel</th>
-                                <th width="5%">Action</th>
+                                <th width="5%">ID</th>
+                                <th width="15%">Msisdn</th>
+                                <th width="12%">Action Type</th>
+                                <th width="10%">Session time</th>
+                                <th width="30%">Error</th>
+                                <th width="15%">Date</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -53,6 +58,7 @@
 @push('style')
     <link rel="stylesheet" type="text/css"
           href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
@@ -90,34 +96,32 @@
             $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'}).val();
             $('#question_list_table').DataTable({
                 processing: true,
-                serverSide: false,
+                serverSide: true,
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 pageLength: 10,
                 ajax: {
-                    'url': "{{ route('banner-analytic.index') }}",
+                    'url': "{{ route('banner-analytic.purchase.report.details',$purchasesId) }}",
                     'data': function (data) {
                         let fromdate = $('#from').val();
+                        ;
                         let todate = $('#to').val();
                         if (fromdate !== "") {
-                            data.searchByFromdate = fromdate;
+                            data.from = fromdate;
                         }
                         if (fromdate !== "") {
-                            data.searchByTodate = todate;
+                            data.to = todate;
                         }
                     }
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'banner_name', name: 'banner_name'},
-                    {data: 'code', name: 'code'},
-                    {data: 'tview', name: 'view_count'},
-                    {data: 'click_count', name: 'click_count'},
-                    {data: 'total_buy', name: 'total_buy'},
-                    {data: 'buy_attempt', name: 'buy_attempt'},
-                    {data: 'total_cancel', name: 'total_cancel'},
+                    {data: 'msisdn', name: 'msisdn'},
+                    {data: 'action_type', name: 'action_type'},
+                    {data: 'session_time', name: 'session_time'},
+                    {data: 'error_desc', name: 'error_title'},
                     {
-                        data: 'action',
-                        name: 'action',
+                        data: 'date',
+                        name: 'date',
                         orderable: true,
                         searchable: true
                     },
@@ -127,13 +131,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7]
+                            columns: [1, 2, 3, 4, 5]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7]
+                            columns: [1, 2, 3, 4, 5]
                         }
                     }
                 ]

@@ -54,4 +54,21 @@ class BannerAnalyticController extends Controller
         $deeplinkId = $id;
         return view('admin.banner-analytic.details', compact('deeplinkId', 'from', 'to'));
     }
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @param Request $request
+     * @return void
+     */
+    public function purchaseDetailreport($id = null, Request $request)
+    {
+        $from = ($request->has('from')) ? $request->input('from') : null;
+        $to = ($request->has('to')) ? $request->input('to') : null;
+        if ($request->ajax()) {
+            return $this->bannerAnalyticService->bannerAnaliticPurchaseDetailReportData($id, $request);
+        }
+        $purchasesId = $id;
+        return view('admin.banner-analytic.purchase_details', compact('purchasesId', 'from', 'to'));
+    }
 }
