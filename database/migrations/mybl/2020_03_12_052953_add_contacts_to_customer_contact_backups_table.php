@@ -14,7 +14,7 @@ class AddContactsToCustomerContactBackupsTable extends Migration
     public function up()
     {
         Schema::table('customer_contact_backups', function (Blueprint $table) {
-            $table->longText('contacts')->after('contact_backup');
+            $table->longText('contacts')->after('customer_id');
         });
     }
 
