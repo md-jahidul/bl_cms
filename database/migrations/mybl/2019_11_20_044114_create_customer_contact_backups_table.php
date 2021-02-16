@@ -16,7 +16,7 @@ class CreateCustomerContactBackupsTable extends Migration
         Schema::create('customer_contact_backups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
-            $table->json('contact_backup');
+            //$table->json('contact_backup');
             $table->integer('total_contact');
             $table->timestamps();
         });
