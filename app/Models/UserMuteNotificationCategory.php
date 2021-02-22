@@ -25,4 +25,9 @@ class UserMuteNotificationCategory extends Model
         'user_id',
         'category_id',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'user_id', 'id');
+    }
 }

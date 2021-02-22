@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Jobs\NotificationSend;
 use App\Models\NotificationSchedule;
+use App\Repositories\UserMuteNotificationCategoryRepository;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\PushNotificationSendService;
@@ -47,15 +48,17 @@ class NotificationScheduler extends Command
      * @param NotificationService $notificationService
      * @param PushNotificationSendService $pushNotificationSendService
      * @param CustomerService $customerService
+     * @param UserMuteNotificationCategoryRepository $userMuteNotificationCategoryRepository
      * @return mixed
      */
     public function handle(
         NotificationService $notificationService,
         PushNotificationSendService $pushNotificationSendService,
-        CustomerService $customerService
+        CustomerService $customerService,
+        UserMuteNotificationCategoryRepository $userMuteNotificationCategoryRepository
     ) {
         try {
-            $user_phone = [];
+            $userPhones = [];
             $currentTime = Carbon::now()->format('Y-m-d H:i:s');
             $activeSchedule = NotificationSchedule::where('start', '<=', $currentTime)
                 ->where('end', '>=', $currentTime)
@@ -67,7 +70,7 @@ class NotificationScheduler extends Command
                 $category = $activeSchedule->notificationCategory;
                 $notificationDraft = $activeSchedule->notificationDraft;
                 $checkCustomer = false;
-                if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                if ($notificationDraft->device_type != "all" || $notificationDraft->customer_type != "all") {
                     $checkCustomer = true;
                 }
                 $path = $this->getPath($activeSchedule->file_name);
@@ -84,52 +87,48 @@ class NotificationScheduler extends Command
                     'image_url' => $notificationDraft->image
                 ];
 
+                $muteUsersPhone = $userMuteNotificationCategoryRepository->getUsersPhoneByCategory($category->id);
+
+                /*
+                 * Reading and parsing users from the uploaded spreadsheet
+                 */
                 foreach ($reader->getSheetIterator() as $sheet) {
                     if ($sheet->getIndex() > 0) {
                         break;
                     }
-
                     foreach ($sheet->getRowIterator() as $row) {
                         $cells = $row->getCells();
-                        $number = $cells[0]->getValue();
-                        $user_phone [] = $number;
-
-                        if (count($user_phone) == 300) {
-                            if($checkCustomer) {
-                                $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
-                            }
-
-                            $notification =  $pushNotificationSendService->getNotificationArray(
-                                $notificationData,
-                                $user_phone,
-                                $notificationDraft
-                            );
-                            //$notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
-                            NotificationSend::dispatch($notification, $notification_id, $user_phone,
-                                $notificationService)
-                                ->onQueue('notification');
-                            $user_phone = [];
-                        }
+                        $userPhones [] = $cells[0]->getValue();;
                     }
                 }
                 $reader->close();
 
-                if (!empty($user_phone)) {
-                    if($checkCustomer) {
-                        $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
+                /*
+                 * Preparing chunks after removing users with notification off for this notification category
+                 */
+                $filteredUserPhones = array_diff($userPhones, $muteUsersPhone);
+                $filteredUserPhoneChunks = array_chunk($filteredUserPhones, 300);
+
+                /*
+                 * Dispatching chunks of users to notification send job
+                 */
+                foreach ($filteredUserPhoneChunks as $userPhoneChunk) {
+                    if ($checkCustomer) {
+                        $userPhoneChunk = $customerService->getCustomerList([], $userPhoneChunk, $notification_id);
                     }
 
-                    $notification =  $pushNotificationSendService->getNotificationArray(
+                    $notification = $pushNotificationSendService->getNotificationArray(
                         $notificationData,
-                        $user_phone,
+                        $userPhoneChunk,
                         $notificationDraft
                     );
-                    //$notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
-                    NotificationSend::dispatch($notification, $notification_id, $user_phone, $notificationService)
+
+                    NotificationSend::dispatch($notification, $notification_id, $userPhoneChunk,
+                        $notificationService)
                         ->onQueue('notification');
                 }
 
-                // Setting the task status to completed to avoid duplicity
+                // Setting the task status to 'completed' to avoid duplicity from dispatching the same job
                 NotificationSchedule::where('id', $activeSchedule->id)->update(['status' => 'completed']);
                 Log::info('Success: Notification sending from excel');
                 return [
