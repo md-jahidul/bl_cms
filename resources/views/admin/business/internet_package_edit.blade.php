@@ -291,10 +291,10 @@
                         </div>
                         <div class="col-md-6 col-xs-12">
 
-                            <label>Banner Photo Name<span class="text-danger">*</span></label>
+                            <label>Banner Photo Name</label>
                             <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">
 
-                            <input type="text" class="form-control banner_name" value="{{$internet->banner_name}}" required name="banner_name" placeholder="Photo Name">
+                            <input type="text" class="form-control banner_name" value="{{$internet->banner_name}}" name="banner_name" placeholder="Photo Name">
 
                             <small class="text-info">
                                 <strong>i.e:</strong> package-banner (no spaces)<br>

@@ -42,7 +42,6 @@ class BusinessInternetPackageRequest extends FormRequest
                 'price' => 'required',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_internet_packages,url_slug,' . $id,
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_internet_packages,url_slug_bn,' . $id,
-                'banner_name' => 'required|regex:/^\S*$/u',
             ];
         } else {
             return [
@@ -60,7 +59,6 @@ class BusinessInternetPackageRequest extends FormRequest
                 'price' => 'required',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_internet_packages,url_slug',
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_internet_packages,url_slug_bn',
-                'banner_name' => 'required|regex:/^\S*$/u',
             ];
         }
     }
