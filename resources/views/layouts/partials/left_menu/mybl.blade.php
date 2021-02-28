@@ -286,6 +286,12 @@
                     </a>
                 </li>
 
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Filter
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
