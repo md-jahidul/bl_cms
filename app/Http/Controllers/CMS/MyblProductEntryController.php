@@ -6,14 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
-use App\Models\MyBlProductTab;
 use App\Services\ProductCoreService;
+use App\Services\ProductTagService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,15 +26,21 @@ class MyblProductEntryController extends Controller
      * @var ProductCoreService
      */
     protected $service;
+    /**
+     * @var ProductTagService
+     */
+    private $productTagService;
 
     /**
      * MyblProductEntryController constructor.
      * @param ProductCoreService $service
+     * @param ProductTagService $productTagService
      */
-    public function __construct(ProductCoreService $service)
+    public function __construct(ProductCoreService $service, ProductTagService $productTagService)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->productTagService = $productTagService;
     }
 
     /**
@@ -74,8 +78,11 @@ class MyblProductEntryController extends Controller
         $details = $this->service->getProductDetails($product_code);
 
         $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
+        $tags = $this->productTagService
+            ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
+            ->pluck('title', 'id');
 
-        return view('admin.my-bl-products.product-details', compact('details', 'internet_categories'));
+        return view('admin.my-bl-products.product-details', compact('details', 'internet_categories', 'tags'));
     }
 
     /**

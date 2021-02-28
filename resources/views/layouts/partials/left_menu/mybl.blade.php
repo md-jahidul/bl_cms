@@ -53,6 +53,17 @@
         <li class="{{ is_active_url('mybl/core-product') }} nav-item"><a href="{{route('mybl.product.index')}}"><i
                     class="la la-list"></i>
                 <span class="menu-title" >Products</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(route('mybl.product.index')) }}">
+                    <a class="menu-item" href="{{ route('mybl.product.index') }}">
+                        <i class="ft-list"></i>Products</a>
+                </li>
+                <li class="{{ is_active_match(route('product-tags.index'))}}">
+                    <a class="menu-item" href="{{ route('product-tags.index') }}">
+                        <i class="ft-tag"></i>Product Tags</a>
+                </li>
+            </ul>
         </li>
     @endif
 
