@@ -44,14 +44,14 @@
                                     @endif
                                 </div>
                                 @if($parent_id != 0)
-                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
-                                        <label for="url">Redirect Url</label>
-                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url'))
-                                            <div class="help-block">  {{ $errors->first('url') }}</div>
-                                        @endif
-                                    </div>
+{{--                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
+{{--                                        <label for="url">Redirect Url</label>--}}
+{{--                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url">--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('url'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('url') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
 
                                     <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
                                         <label for="url_slug_en" class="required">Url Slug EN</label>
@@ -69,6 +69,30 @@
                                         @if ($errors->has('url_slug_bn'))
                                             <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
                                         @endif
+                                    </div>
+
+                                    <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">
+                                        <label for="alias">Alias</label>
+                                        <input type="text" name="alias" required class="form-control" placeholder="Enter alias">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('alias'))
+                                            <div class="help-block">  {{ $errors->first('alias') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Page Header</label>
+                                        <textarea class="form-control" name="page_header" id="" cols="30" rows="4"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Page Header BN</label>
+                                        <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Schema Markup</label>
+                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4"></textarea>
                                     </div>
 
                                     <div class="col-md-6">

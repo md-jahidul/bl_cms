@@ -13,7 +13,7 @@ class Priyojon extends Model
         'banner_image_url',
         'banner_mobile_view',
         'alt_text_en',
-        'url',
+        'alias',
         'url_slug_en',
         'url_slug_bn',
         'page_header',
