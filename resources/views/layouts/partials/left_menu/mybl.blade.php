@@ -52,7 +52,18 @@
     @if( auth()->user()->can_view('MyblProductEntry') )
         <li class="{{ is_active_url('mybl/core-product') }} nav-item"><a href="{{route('mybl.product.index')}}"><i
                     class="la la-list"></i>
-                <span class="menu-title" >Products</span></a>
+                <span class="menu-title">Products</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(route('mybl.product.index')) }}">
+                    <a class="menu-item" href="{{ route('mybl.product.index') }}">
+                        <i class="ft-list"></i>Products</a>
+                </li>
+                <li class="{{ is_active_match(route('product-tags.index'))}}">
+                    <a class="menu-item" href="{{ route('product-tags.index') }}">
+                        <i class="ft-tag"></i>Product Tags</a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -101,7 +112,7 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
             <ul class="menu-content">
                 {{--page--}}
-            <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
+                <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
                     <a class="menu-item" href="{{ route('notificationCategory.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-server"></i>Category List
@@ -196,6 +207,12 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                 </li>
+
+                <li class="{{ is_active_url('banner-analytic')}}">
+                    <a class="menu-item" href="{{ route('banner-analytic.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-external-link-square"></i>Banner Analytics</a>
+                </li>
             </ul>
         </li>
     @endif
@@ -272,6 +289,12 @@
                     </a>
                 </li>
 
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Filter
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
@@ -428,7 +451,6 @@
         </li>
     @endif
 
-
     @if( auth()->user()->can_view('MigratePlan'))
         <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Deeplink Report</span></a>
@@ -457,6 +479,7 @@
             <i class="la la-code-fork"></i>Support Messages</a>
     </li>
 
+    <!-- Agent Deep link Menu -->
     <li class=" nav-item"><a href="#"><i class="la la-users"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Agent List</span></a>
         <ul class="menu-content">
@@ -474,8 +497,16 @@
             </li>
         </ul>
     </li>
-
+    <li class="{{ is_active_url('developer/api/debug') }}">
+        <a class="menu-item" href="{{ route('support-message') }}">
+            <i class="la la-code-fork"></i>Support Messages</a>
+    </li>
 @endif
-    {{--------------------------------------------------------------------------------------------------------------------}}
-    {{---------------------------------------------------------My-BL App End----------------------------------------------}}
-    {{--------------------------------------------------------------------------------------------------------------------}}
+
+
+
+{{--------------------------------------------------------------------------------------------------------------------}}
+{{---------------------------------------------------------My-BL App End----------------------------------------------}}
+{{--------------------------------------------------------------------------------------------------------------------}}
+
+

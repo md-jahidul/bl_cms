@@ -231,7 +231,7 @@ class NotificationService
      */
     public function getMuteUserPhoneList($category_id)
     {
-       return $this->notificationRepository->getMuteUserPhoneList($category_id);
+        return $this->notificationRepository->getMuteUserPhoneList($category_id);
     }
 
 

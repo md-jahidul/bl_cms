@@ -195,7 +195,7 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control" required>
+                                                    <select name="other_attributes" class="form-control select2" required>
                                                         <option value="">Select a Product</option>
                                                         @foreach ($products as $value)
                                                             <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
@@ -358,8 +358,19 @@
                     $("#append_div").html(product_html);
                     $(".product-list").select2({
                         placeholder: "Select a product",
+                        minimumInputLength:3,
+                        allowClear: true,
+                        selectOnClose:true,
                         ajax: {
-                            url: "{{ route('myblslider.active-products') }}",
+                            url: "{{ route('notification.productlist.dropdown') }}",
+                            dataType: 'json',
+                            data: function (params) {
+                                var query = {
+                                    productCode: params.term
+                                }
+                                // Query parameters will be ?search=[term]&type=public
+                                return query;
+                            },
                             processResults: function (data) {
                                 // Transforms the top-level key of the response object from 'items' to 'results'
                                 return {

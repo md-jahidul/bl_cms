@@ -1,26 +1,21 @@
 @extends('layouts.admin')
-@section('title', 'Notification Purchase Report')
-@section('card_name', 'Notification Purchase Report')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Purchases List</li>
-@endsection
+@section('title', 'Banner Analytics Report')
+@section('card_name', "Banner Analytics Report")
+
 @section('content')
     <section>
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="row" style="margin-bottom: -20px;">
                     <div class="col-md-12" style="margin-top: 10px;">
-                        <table border="0" cellspacing="5" cellpadding="5" style="float: right">
+                        <table border="0" cellspacing="5" cellpadding="5">
                             <tr>
-                                <td>Notification Title:</td>
-                                <td><input type="text" class="form-control" id="title" name="title" autocomplete="off" placeholder="Notification Title">
-                                </td>
-                                <td>Purchase From:</td>
+                                <td>From:</td>
                                 <td><input type="text" class="datepicker form-control" id="from" name="from"
-                                           autocomplete="off" placeholder="Select Date"></td>
-                                <td>Purchase To:</td>
+                                           autocomplete="off" placeholder="Select Start Date"></td>
+                                <td>To:</td>
                                 <td><input type="text" class="datepicker form-control" id="to" name="to"
-                                           autocomplete="off" placeholder="Select Date"></td>
+                                           autocomplete="off" placeholder="Select End Date"></td>
                                 <td><input id="submit" value="Search" class="btn btn-sm btn-success " type="button">
                                 </td>
                             </tr>
@@ -29,18 +24,19 @@
 
                 </div>
                 <div class="row table-responsive">
-
                     <div class="col-md-12 pt-2 pb-2">
                         <table class="table table-striped table-bordered dataTable"
                                id="question_list_table" role="grid">
                             <thead>
                             <tr>
                                 <th width="5%">Sl.</th>
-                                <th width="10%">Title</th>
-                                <th width="7%">Total</th>
-                                <th width="7%">Buy</th>
-                                <th width="7%">Failure</th>
-                                <th width="7%">Cancel</th>
+                                <th width="10%">Banner</th>
+                                <th width="10%">Code</th>
+                                <th width="10%">Total View</th>
+                                <th width="7%">Total Click</th>
+                                <th width="7%">Buy Success</th>
+                                <th width="7%">Buy Failure</th>
+                                <th width="7%">Buy Cancel</th>
                                 <th width="5%">Action</th>
                             </tr>
                             </thead>
@@ -77,9 +73,9 @@
             margin-bottom: -70px;
         }
 
-        /*div#question_list_table_length {*/
-        /*    margin-bottom: -50px;*/
-        /*}*/
+        div#question_list_table_length {
+            margin-bottom: -50px;
+        }
     </style>
 @endpush
 
@@ -92,40 +88,33 @@
     <script>
         $(function () {
             $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'}).val();
-
             $('#question_list_table').DataTable({
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 pageLength: 10,
                 ajax: {
-                    'url': "{{ route('purchase.from_notification.list') }}",
+                    'url': "{{ route('banner-analytic.index') }}",
                     'data': function (data) {
                         let fromdate = $('#from').val();
                         let todate = $('#to').val();
-                        let title = $('#title').val();
                         if (fromdate !== "") {
                             data.searchByFromdate = fromdate;
                         }
                         if (fromdate !== "") {
                             data.searchByTodate = todate;
                         }
-
-                        if (title !== "") {
-                            data.searchByTitle = title;
-                        }
-
                     }
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    // {data: 'product_code', name: 'product_code'},
-                    {data: 'notification_title', name: 'notification_title'},
-                    {data: 'total_view', name: 'total_view'},
+                    {data: 'banner_name', name: 'banner_name'},
+                    {data: 'code', name: 'code'},
+                    {data: 'tview', name: 'view_count'},
+                    {data: 'click_count', name: 'click_count'},
                     {data: 'total_buy', name: 'total_buy'},
-                    {data: 'total_buy_attempt', name: 'total_buy_attempt'},
+                    {data: 'buy_attempt', name: 'buy_attempt'},
                     {data: 'total_cancel', name: 'total_cancel'},
-
                     {
                         data: 'action',
                         name: 'action',
@@ -138,13 +127,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6]
+                            columns: [1, 2, 3, 4, 5, 6, 7]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6]
+                            columns: [1, 2, 3, 4, 5, 6, 7]
                         }
                     }
                 ]
@@ -153,8 +142,6 @@
                 $('#question_list_table').DataTable().ajax.reload();
             });
         });
-
-
         $("#submit").click(function () {
             $('#question_list_table').DataTable().ajax.reload();
         });

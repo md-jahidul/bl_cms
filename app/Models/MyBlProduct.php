@@ -55,6 +55,17 @@ class MyBlProduct extends Model
         return $this->hasMany(MyBlProductTab::class, 'product_code', 'product_code');
     }
 
+    public function tags()
+    {
+        return $this->hasManyThrough(
+            ProductTag::class,
+            MyBlProductTag::class,
+            'product_code',
+            'id',
+            'product_code',
+            'product_tag_id'
+        );
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */

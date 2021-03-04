@@ -145,10 +145,10 @@ class AgentService
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
                 "link" => $fullLink,
                 "androidInfo" => [
-                    "androidPackageName" => "com.arena.banglalinkmela.app"
+                    "androidPackageName" => "com.arena.banglalinkmela.app.qa"
                 ],
                 "iosInfo" => [
-                    "iosBundleId" => "com.Banglalink.My-Banglalink"
+                    "iosBundleId" => "com.Banglalink.My-Banglalink.qa"
                 ]
             ]
         ];
