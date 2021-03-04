@@ -23,12 +23,11 @@ class PriyojonRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameters()['priyojon'];
         return [
             'title_en' => 'required',
             'title_bn' => 'required',
-            'url_slug_en' => 'unique:priyojons,url_slug_en,' . $id,
-            'url_slug_bn' => 'unique:priyojons,url_slug_bn,' . $id,
+            'url_slug_en' => 'unique:priyojons,url_slug_en,' . $this->id,
+            'url_slug_bn' => 'unique:priyojons,url_slug_bn,' . $this->id,
         ];
     }
 }

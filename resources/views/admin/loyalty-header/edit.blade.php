@@ -25,6 +25,7 @@
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
+                                <input type="hidden" name="id" value="{{ $priyojonLanding->id }}">
                                 <input type="hidden" name="parent_id" value="{{ $priyojonLanding->parent_id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
@@ -47,15 +48,15 @@
                                 </div>
 
                                 @if($priyojonLanding->parent_id != 0)
-                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
-                                        <label for="url">Redirect Url</label>
-                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url"
-                                               value="{{ $priyojonLanding->url }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url'))
-                                            <div class="help-block">  {{ $errors->first('url') }}</div>
-                                        @endif
-                                    </div>
+{{--                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
+{{--                                        <label for="url">Redirect Url</label>--}}
+{{--                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url"--}}
+{{--                                               value="{{ $priyojonLanding->url }}">--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('url'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('url') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
 
                                     <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
                                         <label for="url_slug_en" class="required">Url Slug EN</label>
@@ -77,17 +78,27 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">
+                                        <label for="alias">Alias</label>
+                                        <input type="text" name="alias" required class="form-control" placeholder="Enter alias"
+                                               value="{{ $priyojonLanding->alias }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('alias'))
+                                            <div class="help-block">  {{ $errors->first('alias') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-4">
                                         <label>Page Header</label>
                                         <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonLanding->page_header }}</textarea>
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label>Page Header BN</label>
                                         <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label>Schema Markup</label>
                                         <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
                                     </div>

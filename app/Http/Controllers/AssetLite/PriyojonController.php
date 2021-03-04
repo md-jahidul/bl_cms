@@ -71,7 +71,7 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-       
+
         return view('admin.loyalty-header.create', compact('menu_items', 'parent_id'));
     }
 
