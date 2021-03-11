@@ -197,7 +197,7 @@
                                         @endphp
                                         <select multiple
                                                 class="form-control tags"
-                                                name="tags[]" required>
+                                                name="tags[]">
                                             <option value=""></option>
 
                                             @foreach ($tags as $key => $tag)
