@@ -833,8 +833,8 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-        $firstTag = ProductTag::where('id', $request->tags[0])->first();
-        $data['tag'] = $firstTag->title;
+        $firstTag = $request->tags ? ProductTag::where('id', $request->tags[0])->first() : [];
+        $data['tag'] = $firstTag->title ?? "";
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -847,9 +847,7 @@ class ProductCoreService
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
 
-            if ($request->has('tags')) {
-                $this->syncProductTags($product_code, $request->tags);
-            }
+            $this->syncProductTags($product_code, $request->tags);
 
             if ($request->has('offer_section_slug')) {
                 MyBlProductTab::where('product_code', $product_code)->delete();
