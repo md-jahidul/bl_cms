@@ -16,7 +16,8 @@ class CreateBannerProductPurchasesTable extends Migration
         Schema::create('banner_product_purchases', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('banner_id');
+            $table->integer('slider_id');
+            $table->integer('slider_image_id');
             $table->string('product_code');
             $table->integer('total_buy')->default(0);
             $table->integer('total_buy_attempt')->default(0);

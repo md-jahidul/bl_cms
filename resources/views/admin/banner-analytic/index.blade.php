@@ -6,6 +6,39 @@
     <section>
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
+                <div class="col-md-12 mt-1">
+                    <div class="row pr-1">
+
+                        <div class="col-md-3" style="background-color: #0B3A29; color: white; text-align: center; padding: 8px; border-radius: 10px 0px 0px 10px;">
+                            <b><p>
+                                    Active banners<br>
+                                    {{$numberOfActiveBanner}}
+                                </p>
+                            </b>
+                        </div>
+                        <div class="col-md-3" style="background-color: #0d1c29; color: white; text-align: center; padding: 8px;">
+                            <b><p>
+                                    Banners viewed<br>
+                                    {{$viewCount}}
+                                </p>
+                            </b>
+                        </div>
+                        <div class="col-md-3" style="background-color: #1b5c2e; color: white; text-align: center; padding: 8px;">
+                            <b><p>
+                                    Purchase success <br>
+                                    {{$successPurchaseCount}}
+                                </p>
+                            </b>
+                        </div>
+                        <div class="col-md-3" style="background-color: indianred; color: white; text-align: center; padding: 8px; border-radius: 0px 10px 10px 0px;">
+                            <b><p>
+                                    Purchase failures <br>
+                                    {{$failPurchaseFailCount}}
+                                </p>
+                            </b>
+                        </div>
+                    </div>
+                </div>
                 <div class="row" style="margin-bottom: -20px;">
                     <div class="col-md-12" style="margin-top: 10px;">
                         <table border="0" cellspacing="5" cellpadding="5">
@@ -30,14 +63,16 @@
                             <thead>
                             <tr>
                                 <th width="5%">Sl.</th>
-                                <th width="10%">Banner</th>
-                                <th width="10%">Code</th>
+                                <th width="10%">Slider</th>
+                                <th width="10%">Image Name</th>
                                 <th width="10%">Total View</th>
                                 <th width="7%">Total Click</th>
                                 <th width="7%">Buy Success</th>
                                 <th width="7%">Buy Failure</th>
                                 <th width="7%">Buy Cancel</th>
-                                <th width="5%">Action</th>
+                                <th width="7%">Schedule Time</th>
+                                <th width="7%">Duration Time</th>
+                                {{--                                <th width="5%">Action</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -109,18 +144,20 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'banner_name', name: 'banner_name'},
-                    {data: 'code', name: 'code'},
+                    {data: 'banner_image_name', name: 'banner_image_name'},
                     {data: 'tview', name: 'view_count'},
                     {data: 'click_count', name: 'click_count'},
                     {data: 'total_buy', name: 'total_buy'},
                     {data: 'buy_attempt', name: 'buy_attempt'},
                     {data: 'total_cancel', name: 'total_cancel'},
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true
-                    },
+                    {data: 'schedule_date', name: 'schedule_date'},
+                    {data: 'totalDuration', name: 'totalDuration'},
+                    // {
+                    //     data: 'tview',
+                    //     name: 'view_count',
+                    //     orderable: true,
+                    //     searchable: true
+                    // },
                 ],
                 dom: 'Bfrtip',
                 buttons: [

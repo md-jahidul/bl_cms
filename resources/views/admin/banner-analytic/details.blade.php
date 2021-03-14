@@ -38,8 +38,10 @@
                             <thead>
                             <tr>
                                 <th width="5%">ID</th>
+                                <th width="10%">Slider name</th>
+                                <th width="10%">Image name</th>
                                 <th width="15%">Msisdn</th>
-                                <th width="12%">Action Type</th>
+                                <th width="12%">Action</th>
                                 <th width="10%">Session time</th>
                                 <th width="30%">Error</th>
                                 <th width="15%">Date</th>
@@ -115,6 +117,8 @@
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'slider_name', name: 'slider_name'},
+                    {data: 'slider_image_name', name: 'slider_image_name'},
                     {data: 'msisdn', name: 'msisdn'},
                     {data: 'action_type', name: 'action_type'},
                     {data: 'session_time', name: 'session_time'},

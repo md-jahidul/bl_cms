@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BannerAnalyticService;
+use App\Models\BannerProductPurchase;
 
 class BannerAnalyticController extends Controller
 {
@@ -29,13 +30,18 @@ class BannerAnalyticController extends Controller
      */
     public function index(Request $request)
     {
+        $numberOfActiveBanner=$this->bannerAnalyticService->numberOfActiveBanner();
+        $viewCount=$this->bannerAnalyticService->findAll()->sum('view_count');
+        $successPurchaseCount=$this->bannerAnalyticService->numberOfPurchase('total_buy');
+        $failPurchaseFailCount=$this->bannerAnalyticService->numberOfPurchase('total_buy_attempt');
+
         if ($request->ajax()) {
             if (($request->has('searchByFromdate') && !empty($request->input('searchByFromdate'))) && ($request->has('searchByTodate') && !empty($request->input('searchByTodate')))) {
                 return $this->bannerAnalyticService->bannerAnaliticReporFilterData($request);
             }
             return $this->bannerAnalyticService->bannerAnaliticReportData($request);
         }
-        return view('admin.banner-analytic.index');
+        return view('admin.banner-analytic.index',compact('numberOfActiveBanner','viewCount','successPurchaseCount','failPurchaseFailCount'));
     }
 
     /**

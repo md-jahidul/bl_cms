@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Slider;
+use App\Models\SliderImage;
 
 class BannerAnalytic extends Model
 {
@@ -18,6 +20,17 @@ class BannerAnalytic extends Model
     }
 
     public function getBannePurchases(){
-        return $this->belongsTo(BannerProductPurchase::class, 'banner_id', 'banner_id');
+
+        return $this->hasOne(BannerProductPurchase::class, 'slider_id','slider_id')->where('slider_image_id', $this->slider_image_id);
+    }
+
+    public function getSlider()
+    {
+        return $this->belongsTo(Slider::class, 'slider_id', 'id');
+    }
+
+    public function getSliderImage()
+    {
+        return $this->belongsTo(SliderImage::class, 'slider_image_id', 'id');
     }
 }
