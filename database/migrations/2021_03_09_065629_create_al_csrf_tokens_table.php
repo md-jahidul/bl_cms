@@ -16,6 +16,7 @@ class CreateAlCsrfTokensTable extends Migration
         Schema::create('al_csrf_tokens', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('token')->index()->nullable();
+            $table->string('secret_key')->index()->nullable();
             $table->dateTime('expires_at')->index()->nullable();
             $table->timestamps();
         });
