@@ -392,6 +392,14 @@ class BannerAnalyticService
         }
         return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('session_time', function ($data) {
+                if(!empty($data->session_time)){
+                    $session_time=$data->session_time/1000 . ' Sec';
+                }else{
+                    $session_time=$data->session_time;
+                }
+                return $session_time ;
+            })
             ->editColumn('slider_name', function ($data) {
                 return $data->getAnalyticInfo->getSlider->title;
             })
