@@ -65,7 +65,7 @@ class ContextualCardIconController extends Controller
     public function store(ContextualCardIconRequest $request)
     {
         session()->flash('message', $this->contextualCardIconService->storeContextualCardIcon($request->all())->getContent());
-        return redirect(route('contextualcard-icons'));
+        return redirect(route('contextualcard-icons.index'));
     }
 
     /**
@@ -103,17 +103,8 @@ class ContextualCardIconController extends Controller
     {
 //        dd($request->all());
         session()->flash('success', $this->contextualCardIconService->updateContextualCard($request->all(), $id)->getContent());
-        return redirect(route('contextualcard-icons'));
+        return redirect(route('contextualcard-icons.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }
