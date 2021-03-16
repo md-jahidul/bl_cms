@@ -208,6 +208,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                 </li>
+                <li class="{{ is_active_url('contextualcard-icons') . is_active_url('contextualcard/create')}}">
+                    <a class="menu-item" href="{{ route('contextualcard-icons.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-external-link-square"></i>Contextual Card Icons</a>
+                </li>
             </ul>
         </li>
     @endif

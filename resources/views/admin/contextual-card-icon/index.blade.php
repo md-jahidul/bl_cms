@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Contextual Card')
-@section('card_name', 'Contextual Card')
+@section('title', 'Contextual Card Icons')
+@section('card_name', 'Contextual Card Icons')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Contextual Card  list</li>
+    <li class="breadcrumb-item active">Contextual Card Icon list</li>
 @endsection
 @section('action')
-    <a href="{{route('contextualcard.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Contextual Card
+    <a href="{{route('contextual.card.icons.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Contextual Card Icon
     </a>
 @endsection
 
@@ -16,45 +16,52 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Contextual Card List</h1>
+{{--                        <h1 class="card-title pl-1">Contextual Card Icon List</h1>--}}
                     </div>
                 </div>
             </div>
             <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
+                <div class="card-body card-dashboard table-responsive">
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
                             <th width='10%'>ID</th>
-                            <th width='20%'>Title</th>
-                            <th width='30%'>Description</th>
-{{--                            <th width='10%'>Image</th>--}}
-{{--                            <th width='30%'>Action</th>--}}
+                            <th width='20%'>Card number</th>
+                            <th width='10%'>Category</th>
+                            <th width='10%'>Icon</th>
+                            <th width='10%'>Remark</th>
+                            <th width='30%'>Date</th>
+                            <th width='30%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($contextualCards as $contextualCard)
                             <tr>
                                 <td width='10%' >{{$contextualCard->id}}</td>
-                                <td width='20%' >{{$contextualCard->title}}</td>
-                                <td width='30%' >{{$contextualCard->description}}</td>
+                                <td width='20%' >{{$contextualCard->card_number}}</td>
+                                <td width='10%' >{{$contextualCard->category}}</td>
+                                <td width='10%' >
+                                    <img style="height:50px;width:100px" src="{{asset($contextualCard->icon)}}" alt="" srcset="">
+                                 </td>
+                                <td width='10%' >{{$contextualCard->remark}}</td>
+                                <td width='10%' >{{$contextualCard->created_at}}</td>
 {{--                                <td width='10%' ><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>--}}
-{{--                                <td width='30%' >--}}
-{{--                                    <div class="row justify-content-md-center no-gutters">--}}
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <a role="button" href="{{route('contextualcard.show',$contextualCard->id)}}" class="btn btn-outline-info"><i class="la la-info"></i></a>--}}
+                                <td width='20%' >
+                                    <div class="row justify-content-md-center no-gutters">
+{{--                                        <div class="col-md-6">--}}
+{{--                                            <a role="button" href="{{route('contextualcard.icons.show',$contextualCard->id)}}" class="btn btn-outline-info mr-1"><i class="la la-info"></i></a>--}}
 {{--                                        </div>--}}
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <a role="button" href="{{route('contextualcard.edit',$contextualCard->id)}}" class="btn btn-outline-success">--}}
-{{--                                                <i class="la la-pencil"></i>--}}
-{{--                                            </a>--}}
+{{--                                        <div class="col-md-6">--}}
+                                            <a role="button" href="{{route('contextualcardicon.edit',$contextualCard->id)}}" class="btn btn-outline-success">
+                                                <i class="la la-pencil"></i>
+                                            </a>
 {{--                                        </div>--}}
 {{--                                        <div class="col-md-3">--}}
 {{--                                            <button  data-id="{{$contextualCard->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>--}}
 {{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
+                                    </div>
+                                </td>
                             </tr>
 
                         @endforeach
@@ -133,7 +140,7 @@
 
         $(document).ready(function () {
             $('#Example1').DataTable({
-                dom: 'Bfrtip',
+                // dom: 'Blfrtip',
                 buttons: [],
                 paging: true,
                 searching: true,
