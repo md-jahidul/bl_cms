@@ -207,6 +207,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                 </li>
+                <li class="{{ is_active_url('contextualcard-icons') . is_active_url('contextualcard/create')}}">
+                    <a class="menu-item" href="{{ route('contextualcard-icons.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-external-link-square"></i>Contextual Card Icons</a>
+                </li>
 
                 <li class="{{ is_active_url('banner-analytic')}}">
                     <a class="menu-item" href="{{ route('banner-analytic.index') }}"
@@ -446,7 +451,8 @@
     @endif
 
     @if( auth()->user()->can_view('Setting') )
-        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
+        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i
+                    class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
         </li>
     @endif
@@ -502,11 +508,6 @@
             <i class="la la-code-fork"></i>Support Messages</a>
     </li>
 @endif
-
-
-
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
-
-

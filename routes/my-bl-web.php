@@ -149,6 +149,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // contextual cards
     Route::resource('contextualcard', 'CMS\ContextualCardController');
     Route::get('card/destroy/{id}', 'CMS\ContextualCardController@destroy');
+    Route::resource('contextualcardicon', 'CMS\ContextualCardIconController');
+    Route::get('contextualcard-icons', 'CMS\ContextualCardIconController@index')->name('contextualcard-icons.index');
+    Route::get('contextualcard-icons/create', 'CMS\ContextualCardIconController@create')->name('contextual.card.icons.create');
+    Route::POST('contextualcard-icons/store', 'CMS\ContextualCardIconController@store')->name('contextualcard.icons.store');
+    Route::get('contextualcard-icons/edit/{id}', 'CMS\ContextualCardIconController@edit')->name('contextualcard.icons.edit');
+    Route::PUT('contextualcard-icons/update/{id}', 'CMS\ContextualCardIconController@update')->name('contextualcard.icon.update');
 
     // Notification categorys
     Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
