@@ -34,7 +34,7 @@ class ContextualCardIconService
     {
         $data['icon'] = 'storage/' . $data['icon']->store('contextualcardicon');
         $this->save($data);
-        return new Response("Contextual Card has been successfully created");
+        return new Response("Contextual Card Icon has been successfully created");
     }
 
 
