@@ -30,10 +30,10 @@ class BannerAnalyticController extends Controller
      */
     public function index(Request $request)
     {
-        $numberOfActiveBanner=$this->bannerAnalyticService->numberOfActiveBanner();
-        $viewCount=$this->bannerAnalyticService->findAll()->sum('view_count');
-        $successPurchaseCount=$this->bannerAnalyticService->numberOfPurchase('total_buy');
-        $failPurchaseFailCount=$this->bannerAnalyticService->numberOfPurchase('total_buy_attempt');
+        $numberOfActiveBanner = $this->bannerAnalyticService->numberOfActiveBanner();
+        $viewCount = $this->bannerAnalyticService->findAll()->sum('view_count');
+        $successPurchaseCount = $this->bannerAnalyticService->numberOfPurchase('total_buy');
+        $failPurchaseFailCount = $this->bannerAnalyticService->numberOfPurchase('total_buy_attempt');
 
         if ($request->ajax()) {
             if (($request->has('searchByFromdate') && !empty($request->input('searchByFromdate'))) && ($request->has('searchByTodate') && !empty($request->input('searchByTodate')))) {
@@ -41,7 +41,7 @@ class BannerAnalyticController extends Controller
             }
             return $this->bannerAnalyticService->bannerAnaliticReportData($request);
         }
-        return view('admin.banner-analytic.index',compact('numberOfActiveBanner','viewCount','successPurchaseCount','failPurchaseFailCount'));
+        return view('admin.banner-analytic.index', compact('numberOfActiveBanner', 'viewCount', 'successPurchaseCount', 'failPurchaseFailCount'));
     }
 
     /**
@@ -60,6 +60,7 @@ class BannerAnalyticController extends Controller
         $deeplinkId = $id;
         return view('admin.banner-analytic.details', compact('deeplinkId', 'from', 'to'));
     }
+
     /**
      * Undocumented function
      *
