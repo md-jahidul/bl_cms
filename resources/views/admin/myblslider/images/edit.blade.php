@@ -211,6 +211,7 @@
                             </div>
 
                             <div class="col-md-8">
+                                {{$imageInfo->image_url}}
                                 <img style="height:100px;width:200px" id="img_display"
                                      src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
                             </div>

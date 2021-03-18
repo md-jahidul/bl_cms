@@ -121,7 +121,7 @@ class BannerAnalyticService
                 return $actionBtn;
             })
             ->addColumn('image', function ($result) {
-                return $image = '<img src="' . config('filesystems.file_base_url') . $result['image'] . '" style="max-width: 100px;">';
+                return $image = '<img src="' .asset($result['image']) . '" style="max-width: 100px;">';
 
             })
             ->addColumn('tview', function ($result) {
@@ -266,7 +266,7 @@ class BannerAnalyticService
                 return $actionBtn;
             })
             ->addColumn('image', function ($result) {
-                return $image = '<img src="' . config('filesystems.file_base_url') . $result['image'] . '" style="max-width: 100px;">';
+                return $image = '<img src="' . asset($result['image']). '" style="max-width: 100px;">';
 
             })
             ->addColumn('tview', function ($result) {
