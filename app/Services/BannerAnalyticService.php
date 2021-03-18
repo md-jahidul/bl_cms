@@ -74,7 +74,7 @@ class BannerAnalyticService
             $searchByFromdate,
             $searchByTodate
         );
-
+//dd($purchaseDetailsData);
         $from = is_null($searchByFromdate) ? Carbon::now()->subMonths(1)->toDateString() . ' 00:00:00' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByFromdate . ' 00:00:00')->toDateTimeString();
         $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
         $data = $this->bannerAnalyticRepository->getBannerAnalytic($from, $to);
@@ -316,6 +316,7 @@ class BannerAnalyticService
             $array['total_buy'] = $total_buy;
 
         }
+
         return $array;
 
     }
@@ -326,6 +327,7 @@ class BannerAnalyticService
      */
     public function preparePurchaseFilteredCount($detailsDatum)
     {
+//        dd($detailsDatum);
         if (empty($detailsDatum)) {
             $array['total_buy'] = 0;
             $array['total_cancel'] = 0;
@@ -342,23 +344,26 @@ class BannerAnalyticService
             $product_purchases = 0;
             foreach ($detailsDatum as $key => $infolog) {
                 if (!empty($infolog[0])) {
-                    if ($infolog[0]['action_type'] == 'buy_failure') {
-                        $total_buy_attempt = +$infolog[0]['total_count'];
+                foreach ($infolog as $key => $info) {
+
+                    if ($info['action_type'] == 'buy_failure') {
+                        $total_buy_attempt = +$info['total_count'];
                     }
-                    if ($infolog[0]['action_type'] == 'buy_success') {
-                        $total_buy = +$infolog[0]['total_count'];
+                    if ($info['action_type'] == 'buy_success') {
+                        $total_buy = +$info['total_count'];
                     }
-                    if ($infolog[0]['action_type'] == 'cancel') {
-                        $total_cancel = +$infolog[0]['total_count'];
+                    if ($info['action_type'] == 'cancel') {
+                        $total_cancel = +$info['total_count'];
                     }
-                    if ($infolog[0]['action_type'] == 'click') {
-                        $click = +$infolog[0]['total_count'];
+                    if ($info['action_type'] == 'click') {
+                        $click = +$info['total_count'];
                     }
-                    if (isset($infolog[0]['banner_product_purchase_id'])) {
-                        $product_purchases = $infolog[0]['banner_product_purchase_id'];
+                    if (isset($info['banner_product_purchase_id'])) {
+                        $product_purchases = $info['banner_product_purchase_id'];
                     }
 
-                    $banner_id = $infolog[0]['slider_id'];
+                    $banner_id = $info['slider_id'];
+                }
                 }
             }
             $array['total_buy_attempt'] = $total_buy_attempt;
