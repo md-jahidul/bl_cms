@@ -9,28 +9,32 @@
                 <div class="col-md-12 mt-1">
                     <div class="row pr-1">
 
-                        <div class="col-md-3" style="background-color: #0B3A29; color: white; text-align: center; padding: 8px; border-radius: 10px 0px 0px 10px;">
+                        <div class="col-md-3"
+                             style="background-color: #0B3A29; color: white; text-align: center; padding: 8px; border-radius: 10px 0px 0px 10px;">
                             <b><p>
                                     Active banners<br>
                                     {{$numberOfActiveBanner}}
                                 </p>
                             </b>
                         </div>
-                        <div class="col-md-3" style="background-color: #0d1c29; color: white; text-align: center; padding: 8px;">
+                        <div class="col-md-3"
+                             style="background-color: #0d1c29; color: white; text-align: center; padding: 8px;">
                             <b><p>
                                     Banners viewed<br>
                                     {{$viewCount}}
                                 </p>
                             </b>
                         </div>
-                        <div class="col-md-3" style="background-color: #1b5c2e; color: white; text-align: center; padding: 8px;">
+                        <div class="col-md-3"
+                             style="background-color: #1b5c2e; color: white; text-align: center; padding: 8px;">
                             <b><p>
                                     Purchase success <br>
                                     {{$successPurchaseCount}}
                                 </p>
                             </b>
                         </div>
-                        <div class="col-md-3" style="background-color: indianred; color: white; text-align: center; padding: 8px; border-radius: 0px 10px 10px 0px;">
+                        <div class="col-md-3"
+                             style="background-color: indianred; color: white; text-align: center; padding: 8px; border-radius: 0px 10px 10px 0px;">
                             <b><p>
                                     Purchase failures <br>
                                     {{$failPurchaseFailCount}}
@@ -65,11 +69,12 @@
                                 <th width="5%">Sl.</th>
                                 <th width="10%">Slider</th>
                                 <th width="10%">Image Name</th>
-                                <th width="10%">Total View</th>
-                                <th width="7%">Total Click</th>
-                                <th width="7%">Buy Success</th>
-                                <th width="7%">Buy Failure</th>
-                                <th width="7%">Buy Cancel</th>
+                                <th width="5%">Image</th>
+                                <th width="5%">Total View</th>
+                                <th width="5%">Total Click</th>
+                                <th width="5%">Buy Success</th>
+                                <th width="5%">Buy Failure</th>
+                                <th width="5%">Buy Cancel</th>
                                 <th width="7%">Schedule Time</th>
                                 <th width="7%">Duration Time</th>
                                 {{--                                <th width="5%">Action</th>--}}
@@ -145,6 +150,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'banner_name', name: 'banner_name'},
                     {data: 'banner_image_name', name: 'banner_image_name'},
+                    {data: 'image', name: 'image'},
                     {data: 'tview', name: 'view_count'},
                     {data: 'click_count', name: 'click_count'},
                     {data: 'total_buy', name: 'total_buy'},
@@ -164,13 +170,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7,8,8]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7,8,9]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     }
                 ]

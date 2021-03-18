@@ -81,16 +81,17 @@ class BannerAnalyticService
 
         $result = [];
         foreach ($data as $key => $log) {
-            $stTime=(!empty($log->getSliderImage->start_date))?date('d-m-Y', strtotime($log->getSliderImage->start_date)):'';
-            $enTime=(!empty($log->getSliderImage->end_date))?date('d-m-Y', strtotime($log->getSliderImage->end_date)):'';
+            $stTime = (!empty($log->getSliderImage->start_date)) ? date('d-m-Y', strtotime($log->getSliderImage->start_date)) : '';
+            $enTime = (!empty($log->getSliderImage->end_date)) ? date('d-m-Y', strtotime($log->getSliderImage->end_date)) : '';
             $result[$key]['id'] = $log->id;
             $result[$key]['banner_id'] = $log->slider_id;
 //            $result[$key]['banner_image_name'] = $log->getSliderImage->titel;
             $result[$key]['banner_name'] = $log->getSlider->title;
             $result[$key]['banner_image_name'] = $log->getSliderImage->title;
+            $result[$key]['image'] = $log->getSliderImage->image_url;
             $result[$key]['view_count'] = $log->view_count;
             $result[$key]['click_count'] = $log->view_count;
-            $result[$key]['schedule_date'] =$stTime.'  -> '.$enTime;
+            $result[$key]['schedule_date'] = $stTime . '  -> ' . $enTime;
             $result[$key]['totalDuration'] = $this->scheduleDateCalculaton([
                 'start_date' => $log->getSliderImage->start_date,
                 'end_date' => $log->getSliderImage->end_date,
@@ -112,39 +113,43 @@ class BannerAnalyticService
         }
         return Datatables::collection($result)
             ->addIndexColumn()
-            ->addColumn('banner_image_name', function ($result) use ($from, $to)  {
+            ->addColumn('banner_image_name', function ($result) use ($from, $to) {
 
                 $url = route('banner-analytic.report.details', $result['id']);
-                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '&banner_id=2">'.$result['banner_image_name'].'</a>';
+                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '&banner_id=2">' . $result['banner_image_name'] . '</a>';
 
                 return $actionBtn;
+            })
+            ->addColumn('image', function ($result) {
+                return $image = '<img src="' . config('filesystems.file_base_url') . $result['image'] . '" style="max-width: 100px;">';
+
             })
             ->addColumn('tview', function ($result) {
-                return  $result['log']['click'] + $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
+                return $result['log']['click'] + $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
 
             })
-            ->addColumn('click_count', function ($result) use ($from, $to)  {
+            ->addColumn('click_count', function ($result) use ($from, $to) {
 
                 $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
-                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '&banner_id=2">'.$result['log']['click'].'</a>';
+                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '&banner_id=2">' . $result['log']['click'] . '</a>';
 
                 return $actionBtn;
             })
-            ->addColumn('total_buy', function ($result) use ($from, $to)   {
+            ->addColumn('total_buy', function ($result) use ($from, $to) {
                 if ($result['log']['product_purchases_id'] !== 0) {
-                $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
-                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '">'.$result['log']['total_buy'].'</a>';
-                }else{
-                    $actionBtn=$result['log']['total_buy'];
+                    $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
+                    $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '">' . $result['log']['total_buy'] . '</a>';
+                } else {
+                    $actionBtn = $result['log']['total_buy'];
                 }
                 return $actionBtn;
             })
-            ->addColumn('buy_attempt', function ($result) use ($from, $to)   {
+            ->addColumn('buy_attempt', function ($result) use ($from, $to) {
                 if ($result['log']['product_purchases_id'] !== 0) {
-                $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
-                $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '">'.$result['log']['total_buy_attempt'].'</a>';
-            }else{
-                    $actionBtn=$result['log']['total_cancel'];
+                    $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
+                    $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '">' . $result['log']['total_buy_attempt'] . '</a>';
+                } else {
+                    $actionBtn = $result['log']['total_cancel'];
                 }
                 return $actionBtn;
             })
@@ -152,8 +157,8 @@ class BannerAnalyticService
                 if ($result['log']['product_purchases_id'] !== 0) {
                     $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
                     $actionBtn = '<a href="' . $url . '?from=' . $from . '&to=' . $to . '">' . $result['log']['total_cancel'] . '</a>';
-                }else{
-                    $actionBtn=$result['log']['total_cancel'];
+                } else {
+                    $actionBtn = $result['log']['total_cancel'];
                 }
                 return $actionBtn;
             })
@@ -168,17 +173,20 @@ class BannerAnalyticService
 //                }
 //                return $actionBtn;
 //            })
-            ->rawColumns(['banner_image_name','click_count','total_buy','buy_attempt','total_cancel'])
+            ->rawColumns(['banner_image_name', 'click_count', 'total_buy', 'buy_attempt', 'total_cancel', 'image'])
             ->make(true);
     }
-     public function numberOfActiveBanner(){
-        return $this->sliderImageRepository->findBy(['is_active'=>1])->count();
-     }
 
-     public function numberOfPurchase($totalBuy='total_buy'){
+    public function numberOfActiveBanner()
+    {
+        return $this->sliderImageRepository->findBy(['is_active' => 1])->count();
+    }
+
+    public function numberOfPurchase($totalBuy = 'total_buy')
+    {
         return BannerProductPurchase::sum("$totalBuy");
 //        return BannerProductPurchase::select(DB::Raw("SUM(total_buy)"))->get();
-     }
+    }
 
     /**
      * @param $date
@@ -231,14 +239,15 @@ class BannerAnalyticService
         $to = is_null($searchByTodate) ? Carbon::now()->toDateString() . ' 23:59:59' : Carbon::createFromFormat('Y-m-d H:i:s', $searchByTodate . '23:59:59')->toDateTimeString();
         $result = [];
         foreach ($data as $key => $log) {
-            $stTime=(!empty($log->getSliderImage->start_date))?date('d-m-Y', strtotime($log->getSliderImage->start_date)):'';
-            $enTime=(!empty($log->getSliderImage->end_date))?date('d-m-Y', strtotime($log->getSliderImage->end_date)):'';
+            $stTime = (!empty($log->getSliderImage->start_date)) ? date('d-m-Y', strtotime($log->getSliderImage->start_date)) : '';
+            $enTime = (!empty($log->getSliderImage->end_date)) ? date('d-m-Y', strtotime($log->getSliderImage->end_date)) : '';
             $result[$key]['id'] = $log->id;
             $result[$key]['banner_name'] = $log->getSlider->title;
             $result[$key]['banner_image_name'] = $log->getSliderImage->title;
+            $result[$key]['image'] = $log->getSliderImage->image_url;
             $result[$key]['view_count'] = $log->view_count;
             $result[$key]['click_count'] = $log->view_count;
-            $result[$key]['schedule_date'] =$stTime.'  -> '.$enTime;
+            $result[$key]['schedule_date'] = $stTime . '  -> ' . $enTime;
             $result[$key]['totalDuration'] = $this->scheduleDateCalculaton([
                 'start_date' => $log->getSliderImage->start_date,
                 'end_date' => $log->getSliderImage->end_date,
@@ -253,35 +262,38 @@ class BannerAnalyticService
             ->addIndexColumn()
             ->addColumn('banner_image_name', function ($result) {
                 $url = route('banner-analytic.report.details', $result['id']);
-                $actionBtn = '<a href="' . $url . '">'.$result['banner_image_name'].'</a>';
+                $actionBtn = '<a href="' . $url . '">' . $result['banner_image_name'] . '</a>';
                 return $actionBtn;
+            })
+            ->addColumn('image', function ($result) {
+                return $image = '<img src="' . config('filesystems.file_base_url') . $result['image'] . '" style="max-width: 100px;">';
+
             })
             ->addColumn('tview', function ($result) {
                 return $result['click_count'] + $result['log']['total_buy'] + $result['log']['total_buy_attempt'] + $result['log']['total_cancel'];
             })
             ->addColumn('click_count', function ($result) {
                 $url = route('banner-analytic.report.details', $result['id']);
-                $actionBtn = '<a href="' . $url . '">'.$result['click_count'].'</a>';
+                $actionBtn = '<a href="' . $url . '">' . $result['click_count'] . '</a>';
                 return $actionBtn;
 
             })
             ->addColumn('total_buy', function ($result) {
                 $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
-                $actionBtn = '<a href="' . $url . '">'.$result['log']['total_buy'].'</a>';
+                $actionBtn = '<a href="' . $url . '">' . $result['log']['total_buy'] . '</a>';
                 return $actionBtn;
             })
             ->addColumn('buy_attempt', function ($result) {
                 $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
-                $actionBtn = '<a href="' . $url . '">'.$result['log']['total_buy_attempt'].'</a>';
+                $actionBtn = '<a href="' . $url . '">' . $result['log']['total_buy_attempt'] . '</a>';
                 return $actionBtn;
             })
             ->addColumn('total_cancel', function ($result) {
                 $url = route('banner-analytic.purchase.report.details', $result['log']['product_purchases_id']);
-                $actionBtn = '<a href="' . $url . '">'.$result['log']['total_cancel'].'</a>';
+                $actionBtn = '<a href="' . $url . '">' . $result['log']['total_cancel'] . '</a>';
                 return $actionBtn;
             })
-
-            ->rawColumns(['banner_image_name','click_count','total_buy','buy_attempt','total_cancel'])
+            ->rawColumns(['banner_image_name', 'click_count', 'total_buy', 'buy_attempt', 'total_cancel', 'image'])
             ->make(true);
     }
 
@@ -344,26 +356,26 @@ class BannerAnalyticService
             $product_purchases = 0;
             foreach ($detailsDatum as $key => $infolog) {
                 if (!empty($infolog[0])) {
-                foreach ($infolog as $key => $info) {
+                    foreach ($infolog as $key => $info) {
 
-                    if ($info['action_type'] == 'buy_failure') {
-                        $total_buy_attempt = +$info['total_count'];
-                    }
-                    if ($info['action_type'] == 'buy_success') {
-                        $total_buy = +$info['total_count'];
-                    }
-                    if ($info['action_type'] == 'cancel') {
-                        $total_cancel = +$info['total_count'];
-                    }
-                    if ($info['action_type'] == 'click') {
-                        $click = +$info['total_count'];
-                    }
-                    if (isset($info['banner_product_purchase_id'])) {
-                        $product_purchases = $info['banner_product_purchase_id'];
-                    }
+                        if ($info['action_type'] == 'buy_failure') {
+                            $total_buy_attempt = +$info['total_count'];
+                        }
+                        if ($info['action_type'] == 'buy_success') {
+                            $total_buy = +$info['total_count'];
+                        }
+                        if ($info['action_type'] == 'cancel') {
+                            $total_cancel = +$info['total_count'];
+                        }
+                        if ($info['action_type'] == 'click') {
+                            $click = +$info['total_count'];
+                        }
+                        if (isset($info['banner_product_purchase_id'])) {
+                            $product_purchases = $info['banner_product_purchase_id'];
+                        }
 
-                    $banner_id = $info['slider_id'];
-                }
+                        $banner_id = $info['slider_id'];
+                    }
                 }
             }
             $array['total_buy_attempt'] = $total_buy_attempt;
@@ -398,12 +410,12 @@ class BannerAnalyticService
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('session_time', function ($data) {
-                if(!empty($data->session_time)){
-                    $session_time=$data->session_time/1000 . ' Sec';
-                }else{
-                    $session_time=$data->session_time;
+                if (!empty($data->session_time)) {
+                    $session_time = $data->session_time / 1000 . ' Sec';
+                } else {
+                    $session_time = $data->session_time;
                 }
-                return $session_time ;
+                return $session_time;
             })
             ->editColumn('slider_name', function ($data) {
                 return $data->getAnalyticInfo->getSlider->title;
