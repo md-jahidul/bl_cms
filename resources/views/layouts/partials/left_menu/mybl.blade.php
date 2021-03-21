@@ -292,6 +292,11 @@
                         <i class="la la-align-center"></i> Data Pack Filter
                     </a>
                 </li>
+                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('internetOffer/create')}}">
+                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-globe"></i> Recharge Offer</a>
+                </li>
             </ul>
         </li>
     @endif
