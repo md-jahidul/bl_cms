@@ -498,6 +498,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 //
     Route::post('special-pack/filter/sort/save', 'CMS\SpecialCallRateFilterController@saveSortFilter')
         ->name('special.filter.sort.save');
+
+    Route::post('special-pack/filter/sms/save', 'CMS\SpecialCallRateFilterController@saveSmsFilter')
+        ->name('special-pack.filter.sms.save');
+    Route::get('special-pack/filter/sms', 'CMS\SpecialCallRateFilterController@getSmsFilter')
+        ->name('special-pack.filter.sms.list');
+
+    Route::post('special-pack/filter/internet/save', 'CMS\SpecialCallRateFilterController@saveInternetFilter')
+        ->name('special-pack.filter.internet.save');
+    Route::get('special-pack/filter/internet', 'CMS\SpecialCallRateFilterController@getInternetFilter')
+        ->name('special-pack.filter.internet.list');
+
+
     // SMS
 
     Route::get('sms-pack/filter/create', 'CMS\SmsPackFilterController@create')
