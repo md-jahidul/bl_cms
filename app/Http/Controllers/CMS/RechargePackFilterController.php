@@ -28,8 +28,20 @@ class RechargePackFilterController extends Controller
      */
     public function create()
     {
-        return view('admin.offer-recharge.config.create');
+        $existing_sort_filters = $this->service->getAll()->sort()->active()->get();
+
+        $sort_filters = [];
+        foreach ($existing_sort_filters as $item) {
+            $filters = json_decode($item->filter, true);
+            $sort_filters [] = $filters['value'];
+        }
+        return view('admin.offer-recharge.config.create', compact('sort_filters'));
     }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getPriceFilter(Request $request)
     {
         $builder = $this->service->getAll()->price()->active();
@@ -37,7 +49,10 @@ class RechargePackFilterController extends Controller
         return $this->service->preparePriceFilterForDatatable($builder, $request);
     }
 
-
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getInternetFilter(Request $request)
     {
         $builder = $this->service->getAll()->internet()->active();
@@ -45,6 +60,10 @@ class RechargePackFilterController extends Controller
         return $this->service->preparePriceFilterForDatatable($builder, $request);
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getValidityFilter(Request $request)
     {
         $builder = $this->service->getAll()->validity()->active();
@@ -52,6 +71,10 @@ class RechargePackFilterController extends Controller
         return $this->service->preparePriceFilterForDatatable($builder, $request);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function savePriceFilter(Request $request)
     {
         $validate = Validator::make(
@@ -65,7 +88,7 @@ class RechargePackFilterController extends Controller
         if ($validate->fails()) {
             $response = [
                 'success' => 'FAILED',
-                'errors'  => $validate->errors()->first()
+                'errors' => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
@@ -73,19 +96,23 @@ class RechargePackFilterController extends Controller
         return $this->service->addFilter($request, 'price', 'tk.');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteFilter(Request $request)
     {
         $validate = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exists:internet_pack_filters,id'
+                'id' => 'required|exists:recharge_pack_filters,id'
             ]
         );
 
         if ($validate->fails()) {
             $response = [
                 'success' => 'FAILED',
-                'errors'  => $validate->errors()->first()
+                'errors' => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
@@ -93,6 +120,10 @@ class RechargePackFilterController extends Controller
         return $this->service->delFilter($request);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function saveInternetFilter(Request $request)
     {
         $validate = Validator::make(
@@ -106,7 +137,7 @@ class RechargePackFilterController extends Controller
         if ($validate->fails()) {
             $response = [
                 'success' => 'FAILED',
-                'errors'  => $validate->errors()->first()
+                'errors' => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
@@ -114,6 +145,10 @@ class RechargePackFilterController extends Controller
         return $this->service->addFilter($request, 'internet', 'mb');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function saveValidityFilter(Request $request)
     {
@@ -128,11 +163,108 @@ class RechargePackFilterController extends Controller
         if ($validate->fails()) {
             $response = [
                 'success' => 'FAILED',
-                'errors'  => $validate->errors()->first()
+                'errors' => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
 
         return $this->service->addFilter($request, 'validation', 'days');
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getMinutesFilter(Request $request)
+    {
+        $builder = $this->service->getAll()->minutes()->active();
+
+        return $this->service->preparePriceFilterForDatatable($builder, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getSmsFilter(Request $request)
+    {
+        $builder = $this->service->getAll()->sms()->active();
+
+        return $this->service->preparePriceFilterForDatatable($builder, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveMinutesFilter(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'lower' => 'required|numeric|max:2000',
+                'upper' => 'numeric|gt:lower|max:2000'
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addFilter($request, 'minutes', 'minutes');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveSmsFilter(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'lower' => 'required|numeric|max:2000',
+                'upper' => 'numeric|gt:lower|max:2000'
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addFilter($request, 'sms', 'sms');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function saveSortFilter(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'filters' => 'required|array',
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addSortFilter($request);
     }
 }

@@ -15,13 +15,22 @@
                     <div class="card collapse-icon accordion-icon-rotate">
                         <!---------------  Price Config ------------------------------------>
 
-                        @include('admin.offer-recharge.config._partials.price_config_form')
-                        <!---------------  Internet Config ------------------------------------>
+                    @include('admin.offer-recharge.config._partials.price_config_form')
+                    <!---------------  Internet Config ------------------------------------>
 
-                        @include('admin.offer-recharge.config._partials.internet_config_form')
+                    @include('admin.offer-recharge.config._partials.internet_config_form')
 
-                        <!---------------  Validation Config ------------------------------------>
-                       @include('admin.offer-recharge.config._partials.validity_config_form')
+                    <!---------------  Minutes Config ------------------------------------>
+                    @include('admin.offer-recharge.config._partials.minutes_config_form')
+
+                    <!---------------  SMS Config ------------------------------------>
+                    @include('admin.offer-recharge.config._partials.sms_config_form')
+
+                    <!---------------  Validation Config ------------------------------------>
+                    @include('admin.offer-recharge.config._partials.validity_config_form')
+
+                    <!---------------  Sorting Config ------------------------------------>
+                        @include('admin.offer-recharge.config._partials.sorting_config_form')
 
                     </div>
                 </div>
@@ -39,10 +48,10 @@
     <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/custom.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-{{--    <link rel="stylesheet" type="text/css"
-          href="{{asset('app-assets')}}/vendors/css/forms/toggle/bootstrap-switch.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('app-assets')}}/css/plugins/forms/switch.css">--}}
+    {{--    <link rel="stylesheet" type="text/css"
+              href="{{asset('app-assets')}}/vendors/css/forms/toggle/bootstrap-switch.min.css">
+        <link rel="stylesheet" type="text/css"
+              href="{{asset('app-assets')}}/css/plugins/forms/switch.css">--}}
     <style>
         .add-button {
             margin-top: 1.9rem !important;
@@ -52,8 +61,8 @@
             text-align: right;
         }
 
-        .dataTable{
-            width: 100%!important;
+        .dataTable {
+            width: 100% !important;
         }
     </style>
 @endpush
@@ -61,9 +70,9 @@
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
-{{--    <script src="{{asset('app-assets')}}/vendors/js/forms/toggle/bootstrap-switch.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/forms/toggle/bootstrap-checkbox.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/forms/switch.js" type="text/javascript"></script>--}}
+    {{--    <script src="{{asset('app-assets')}}/vendors/js/forms/toggle/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="{{asset('app-assets')}}/vendors/js/forms/toggle/bootstrap-checkbox.min.js" type="text/javascript"></script>
+        <script src="{{asset('app-assets')}}/js/scripts/forms/switch.js" type="text/javascript"></script>--}}
 
     <script>
         $(function () {

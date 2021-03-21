@@ -1,11 +1,11 @@
 <div class="card collapse-icon accordion-icon-rotate left">
-    <div id="price_heading" class="card-header">
-        <a data-toggle="collapse" data-parent="#settings_panel" href="#price_config"
-           aria-expanded="true"
-           aria-controls="price_config" class="card-title lead">Price Filter</a>
+    <div id="minutes_heading" class="card-header">
+        <a data-toggle="collapse" data-parent="#settings_panel" href="#minutes_config"
+           aria-expanded="false"
+           aria-controls="minutes_config" class="card-title lead">Minutes Filter</a>
     </div>
 </div>
-<div id="price_config" role="tabpanel" aria-labelledby="price_heading" class="collapse show">
+<div id="minutes_config" role="tabpanel" aria-labelledby="minutes_heading" class="collapse">
     <div class="card-content">
         <div class="card-body">
             <div class="row">
@@ -15,46 +15,34 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-money"></i>Create Price
+                            <h4 class="form-section"><i class="la la-globe"></i>Create Minutes
                                 Filter</h4>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="lower_price">Lower<small
+                                        <label for="minutes_lower_price">Lower<small
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
-                                               value="@if(old('lower')){{old('lower')}}@endif"
-                                               id="lower_price" min="1"
-                                               class="form-control price_filter_input limit-input"
-                                               placeholder="Max 2000" name="lower">
+                                               id="minutes_lower_price" min="1"
+                                               class="form-control minutes_filter_input"
+                                               placeholder="Max. 2000" name="lower">
                                         <small class="form-text text-muted">Enter
-                                            amount in Tk.</small>
-                                        @error('lower')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                            amount in minutes</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="upper_price">Upper</label>
+                                        <label for="minutes_upper_price">Upper</label>
                                         <input required type="number"
-                                               value="@if(old('upper')){{old('upper')}}@endif"
-                                               id="upper_price"
-                                               class="form-control price_filter_input limit-input"
-                                               placeholder="Max 2000" name="upper" min="1">
+                                               id="minutes_upper_price"
+                                               class="form-control minutes_filter_input"
+                                               placeholder="Max. 2000" name="upper">
                                         <small class="form-text text-muted">Enter
-                                            amount in Tk.</small>
-                                        @error('lower')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                            amount in minutes</small>
                                     </div>
                                 </div>
                                 <div class="col-md-1 add-button">
-                                    <button type="button" id="add_price_filter"
+                                    <button type="button" id="add_minutes_filter"
                                             class="btn btn-sm btn-icon btn-outline-info" title="Save">
                                         <i class="la la-save"></i>Save
                                     </button>
@@ -64,9 +52,10 @@
                     </form>
                 </div>
                 <div class="offset-1 col-md-4">
-                    <h5>Price Filter List</h5>
-                    <table class="table table-striped table-bordered base-style"
-                           id="price_filter_table" role="grid" aria-describedby="Example1_info">
+                    <h5>Minutes Filter List</h5>
+                    <table class="table table-striped table-bordered base-style dataTable"
+                           style="width: 100%!important;"
+                           id="minutes_filter_table" role="grid" aria-describedby="Example1_info">
                         <thead>
                         <tr>
                             <th class="filter_data">Sl.</th>
@@ -84,22 +73,20 @@
 </div>
 
 @push('page-js')
-
     <script>
-
-        let priceFilterTable = null;
+        let minutesFilterTable = null;
         $(function () {
 
-            let savePriceFilter = function (param) {
+            let saveMinutesFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('recharge-pack.filter.price.save')}}',
+                    url: '{{route('recharge-pack.filter.minutes.save')}}',
                     method: 'post',
                     data: param
                 });
             }
-            // datatable for price filter
+            // datatable for internet filter
 
-            priceFilterTable = $("#price_filter_table").dataTable({
+            iminutesFilterTable = $("#minutes_filter_table").dataTable({
                 scrollX: true,
                 processing: true,
                 searching: false,
@@ -107,7 +94,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('recharge-pack.filter.price.list') }}',
+                    url: '{{ route('recharge-pack.filter.minutes.list') }}',
                 },
                 columns: [
                     {
@@ -133,7 +120,7 @@
                         className: 'filter_data',
                         render: function (data, type, row) {
                             return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-sm btn-icon btn-outline-danger price-filter-del" data-id="` + row.id + `"><i class="la la-remove"></i></button>
+                            <button type="button" class="btn btn-sm btn-icon btn-outline-danger minutes-filter-del" data-id="` + row.id + `"><i class="la la-remove"></i></button>
                           </div>`
                         }
                     }
@@ -143,12 +130,13 @@
                 }
             });
 
-            $('#add_price_filter').on('click', function (e) {
-                e.preventDefault();
-                let lower_price = $("#lower_price").val();
-                let upper_price = $("#upper_price").val();
 
-                if (upper_price != '' && parseInt(lower_price) > parseInt(upper_price)) {
+            $('#add_minutes_filter').on('click', function (e) {
+                e.preventDefault();
+                let lower_price = $("#minutes_lower_price").val();
+                let upper_price = $("#minutes_upper_price").val();
+
+                if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
                         'Input Error!',
                         'Lower input cannot be greater than Upper Input',
@@ -178,7 +166,7 @@
                     return false;
                 }
 
-                let callSavePriceFilter = savePriceFilter(new function () {
+                let callSaveMinutesFilter = saveMinutesFilter(new function () {
                     this._token = '{{csrf_token()}}';
                     this.lower = lower_price;
                     if (upper_price != '') {
@@ -186,20 +174,18 @@
                     }
                 })
 
-                callSavePriceFilter.done(function (data) {
-                    $('#price_filter_table').DataTable().ajax.reload();
+                callSaveMinutesFilter.done(function (data) {
+                    $('#minutes_filter_table').DataTable().ajax.reload();
                     Swal.fire(
                         'Success!',
                         'Successfully Added',
                         'success',
                     );
-                    $("#lower_price").val('');
-                    $("#upper_price").val('');
+                    $("#minutes_lower_price").val('');
+                    $("#minutes_upper_price").val('');
 
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    // If fail
-                    //console.log("error:" , jqXHR.responseJSON);
                     let errorResponse = jqXHR.responseJSON;
                     Swal.fire(
                         'Error!',
@@ -209,7 +195,7 @@
                 });
             })
 
-            $(document).on('click', '.price-filter-del', function (e) {
+            $(document).on('click', '.minutes-filter-del', function (e) {
                 e.preventDefault();
                 let id = $(this).data('id');
                 let call = null;
@@ -235,7 +221,7 @@
                         });
 
                         call.done(function () {
-                            $('#price_filter_table').DataTable().ajax.reload();
+                            $('#minutes_filter_table').DataTable().ajax.reload();
                             Swal.fire(
                                 'Success!',
                                 'Successfully Deleted',
@@ -255,15 +241,13 @@
                 });
             })
 
-            $(document).on('input', '.price_filter_input', function () {
+            $(document).on('input','.minutes_filter_input',function () {
                 let input = $(this).val();
-
-                if (input == 0) $(this).val('');
-
-                if (input > 2000) {
+                if(input == 0) $(this).val('');
+                if(input > 2000){
                     Swal.fire(
                         'Input Error!',
-                        'Price Value must be less than 2000 tk',
+                        'Minutes value must be less than 2000 mins',
                         'error',
                     );
 
