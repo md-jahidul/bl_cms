@@ -135,7 +135,7 @@
                 let lower_price = $("#internet_lower_price").val();
                 let upper_price = $("#internet_upper_price").val();
 
-                if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
+                if (upper_price != '' && parseInt(lower_price) > parseInt(upper_price)) {
                     Swal.fire(
                         'Input Error!',
                         'Lower input cannot be greater than Upper Input',
@@ -239,12 +239,12 @@
             })
 
 
-            $(document).on('input','.internet_filter_input',function () {
+            $(document).on('input', '.internet_filter_input', function () {
                 let input = $(this).val();
 
-                if(input == 0) $(this).val('');
+                if (input == 0) $(this).val('');
 
-                if(input > 102400){
+                if (input > 102400) {
                     Swal.fire(
                         'Input Error!',
                         'Internet value must be less than 100GB(102400 MB)',

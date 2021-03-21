@@ -19,11 +19,19 @@ class RechargePackFilterService
         $this->filter_types = OfferFilterType::all()->pluck('id', 'slug');
     }
 
+    /**
+     * @return RechargePackFilter
+     */
     public function getAll()
     {
         return new RechargePackFilter();
     }
 
+    /**
+     * @param Builder $itemBuilder
+     * @param Request $request
+     * @return array
+     */
     public function preparePriceFilterForDatatable(Builder $itemBuilder, Request $request)
     {
         $draw = $request->draw;
@@ -31,10 +39,10 @@ class RechargePackFilterService
         $items = $itemBuilder->get();
 
         $response = [
-            'draw'  =>  $draw,
-            'recordsTotal'  =>  $all_items_count,
-            'recordsFiltered'  =>  $all_items_count,
-            'data'  =>  []
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
         ];
 
         $items->each(function ($item) use (&$response) {
@@ -42,10 +50,10 @@ class RechargePackFilterService
             $filter = json_decode($item->filter, true);
 
             $response['data'][] = [
-                'id'      =>  $item->id,
-                'lower'   =>  $filter['lower'],
-                'upper'   =>  $filter['upper'],
-                'unit'   =>  $filter['unit']
+                'id' => $item->id,
+                'lower' => $filter['lower'],
+                'upper' => $filter['upper'],
+                'unit' => $filter['unit']
             ];
         });
 
@@ -57,6 +65,12 @@ class RechargePackFilterService
         return $response;
     }
 
+    /**
+     * @param Request $request
+     * @param $type
+     * @param $unit
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addFilter(Request $request, $type, $unit)
     {
         $lower = $request->lower;
@@ -68,7 +82,7 @@ class RechargePackFilterService
                 'filter' => json_encode([
                     'lower' => $lower,
                     'upper' => $upper,
-                    'unit'  => $unit
+                    'unit' => $unit
                 ]),
             ]);
 
@@ -86,6 +100,10 @@ class RechargePackFilterService
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delFilter(Request $request)
     {
         try {
@@ -105,7 +123,10 @@ class RechargePackFilterService
         }
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addSortFilter(Request $request)
     {
         DB::beginTransaction();
@@ -122,7 +143,7 @@ class RechargePackFilterService
                 RechargePackFilter::create([
                     'offer_filter_type_id' => $this->filter_types['sort'],
                     'filter' => json_encode([
-                        'name'  => $filter['name'],
+                        'name' => $filter['name'],
                         'value' => $filter['value']
                     ]),
                 ]);

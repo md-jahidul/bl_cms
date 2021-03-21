@@ -387,9 +387,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-pack/filter/validity', 'CMS\InternetPackFilterController@getValidityFilter')
         ->name('internet-pack.filter.validity.list');
 
+
+
     //RECHARGE OFFER
     Route::get('recharge-pack/filter/create', 'CMS\RechargePackFilterController@create')
         ->name('recharge-pack.filter.create');
+
     Route::post('recharge-pack/price/save', 'CMS\RechargePackFilterController@savePriceFilter')
         ->name('recharge-pack.filter.price.save');
     Route::get('recharge-pack/filter/price', 'CMS\RechargePackFilterController@getPriceFilter')
@@ -407,6 +410,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('recharge-internet-pack.filter.validity.save');
     Route::get('recharge-internet-pack/filter/validity', 'CMS\RechargePackFilterController@getValidityFilter')
         ->name('recharge-internet-pack.filter.validity.list');
+
+
+    Route::post('recharge-pack/filter/minutes/save', 'CMS\RechargePackFilterController@saveMinutesFilter')
+        ->name('recharge-pack.filter.minutes.save');
+    Route::get('recharge-pack/filter/minutes', 'CMS\RechargePackFilterController@getMinutesFilter')
+        ->name('recharge-pack.filter.minutes.list');
+
+    Route::post('recharge-pack/filter/sms/save', 'CMS\RechargePackFilterController@saveSmsFilter')
+        ->name('recharge-pack.filter.sms.save');
+    Route::get('recharge-pack/filter/sms', 'CMS\RechargePackFilterController@getSmsFilter')
+        ->name('recharge-pack.filter.sms.list');
+
+    Route::post('recharge-pack/filter/sort/save', 'CMS\RechargePackFilterController@saveSortFilter')
+        ->name('recharge-pack.filter.sort.save');
 
     // MINUTES
     Route::get('minute-pack/filter/create', 'CMS\MinutePackFilterController@create')
