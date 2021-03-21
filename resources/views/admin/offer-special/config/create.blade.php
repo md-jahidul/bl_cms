@@ -13,14 +13,20 @@
             <div class="card-content">
                 <div id="settings_panel" role="tablist" aria-multiselectable="true">
                     <div class="card collapse-icon accordion-icon-rotate">
-                        <!---------------  Price Config ------------------------------------>
+                    <!---------------  Price Config ------------------------------------>
 
-                        @include('admin.offer-special.config._partials.price_config_form')
-                        <!---------------  Internet Config ------------------------------------>
+                    @include('admin.offer-special.config._partials.price_config_form')
+                    <!---------------  Internet Config ------------------------------------>
 
-                        @include('admin.offer-special.config._partials.minute_config_form')
+                    @include('admin.offer-special.config._partials.internet_config_form')
 
-                        <!---------------  Validation Config ------------------------------------>
+                    @include('admin.offer-special.config._partials.minute_config_form')
+
+                    <!---------------  SMS Config ------------------------------------>
+                    @include('admin.offer-special.config._partials.sms_config_form')
+
+
+                    <!---------------  Validation Config ------------------------------------>
                        @include('admin.offer-special.config._partials.validity_config_form')
 
                     <!---------------  Sorting Config ------------------------------------>

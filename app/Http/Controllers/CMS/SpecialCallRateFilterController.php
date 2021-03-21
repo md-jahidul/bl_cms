@@ -157,4 +157,78 @@ class SpecialCallRateFilterController extends Controller
 
         return $this->service->addSortFilter($request);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveSmsFilter(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'lower' => 'required|numeric|max:2000',
+                'upper' => 'numeric|gt:lower|max:2000'
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' => 'FAILED',
+                'errors'  => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addFilter($request, 'sms', 'sms');
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getSmsFilter(Request $request)
+    {
+        $builder = $this->service->getAll()->sms()->active();
+
+        return $this->service->preparePriceFilterForDatatable($builder, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function saveInternetFilter(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'lower' => 'required|numeric|max:102400',
+                'upper' => 'numeric|gt:lower|max:102400'
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' => 'FAILED',
+                'errors'  => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addFilter($request, 'internet', 'mb');
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getInternetFilter(Request $request)
+    {
+        $builder = $this->service->getAll()->internet()->active();
+
+        return $this->service->preparePriceFilterForDatatable($builder, $request);
+    }
+
 }
