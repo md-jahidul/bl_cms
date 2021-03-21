@@ -458,6 +458,29 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('minute-pack/filter/sort/save', 'CMS\MinutePackFilterController@saveSortFilter')
         ->name('minute.filter.sort.save');
 
+    // SPECIAL CALL RATE FILTER
+    Route::get('special-pack/filter/create', 'CMS\SpecialCallRateFilterController@create')
+        ->name('special-pack.filter.create');
+    Route::post('special-pack/price/save', 'CMS\SpecialCallRateFilterController@savePriceFilter')
+        ->name('special-pack.filter.price.save');
+    Route::get('special-pack/filter/price', 'CMS\SpecialCallRateFilterController@getPriceFilter')
+        ->name('special-pack.filter.price.list');
+
+    Route::post('special-pack/filter/delete', 'CMS\SpecialCallRateFilterController@deleteFilter')
+        ->name('special-pack.filter.delete');
+//
+    Route::post('special-pack/filter/minute/save', 'CMS\SpecialCallRateFilterController@saveMinuteFilter')
+        ->name('special-pack.filter.minute.save');
+    Route::get('special-pack/filter/minute', 'CMS\SpecialCallRateFilterController@getMinuteFilter')
+        ->name('special-pack.filter.minute.list');
+//
+    Route::post('special-pack/filter/validity/save', 'CMS\SpecialCallRateFilterController@saveValidityFilter')
+        ->name('special-pack.filter.validity.save');
+    Route::get('special-pack/filter/validity', 'CMS\SpecialCallRateFilterController@getValidityFilter')
+        ->name('special-pack.filter.validity.list');
+//
+    Route::post('special-pack/filter/sort/save', 'CMS\SpecialCallRateFilterController@saveSortFilter')
+        ->name('special.filter.sort.save');
     // SMS
 
     Route::get('sms-pack/filter/create', 'CMS\SmsPackFilterController@create')

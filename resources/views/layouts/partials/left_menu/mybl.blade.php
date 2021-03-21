@@ -190,7 +190,8 @@
             <ul class="menu-content">
                 {{--page--}}
                 <li class="{{ is_active_url('myblslider') . is_active_url('myblslider/addImage/') . is_active_url('myblslider/create') . is_active_url('myblslider/edit') }}">
-                    <a class="menu-item" href="{{ route('myblslider.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('myblslider.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
                 </li>
                 <li class="{{ is_active_url('banner') . is_active_url('banner/create')}}">
@@ -304,6 +305,12 @@
                     <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-globe"></i> Recharge Offer</a>
+                </li>
+                <li class="{{is_active_url('special-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-phone-call"></i> Special call rate Filter
+                    </a>
                 </li>
             </ul>
         </li>
@@ -507,11 +514,7 @@
                 </a>
             </li>
         </ul>
-    </li>
-    <li class="{{ is_active_url('developer/api/debug') }}">
-        <a class="menu-item" href="{{ route('support-message') }}">
-            <i class="la la-code-fork"></i>Support Messages</a>
-    </li>
+
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
