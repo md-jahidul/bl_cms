@@ -28,6 +28,7 @@
                             <th>Title</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Feed Seen</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -41,6 +42,7 @@
                                 <td>{{(isset($feed->title)?$feed->title:'')}}</td>
                                 <td>{{$feed->start_date}}</td>
                                 <td>{{$feed->end_date}}</td>
+                                <td>{{$feed->view_count}}</td>
                                 <td>{{$feed->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
                                     <div class="row">
