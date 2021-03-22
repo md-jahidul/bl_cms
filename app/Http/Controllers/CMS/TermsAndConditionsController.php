@@ -6,6 +6,7 @@ use App\Http\Requests\SaveTermsAndConditionsRequest;
 use App\Models\TermsConditions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class TermsAndConditionsController extends Controller
 {
@@ -25,9 +26,13 @@ class TermsAndConditionsController extends Controller
     {
         TermsConditions::updateOrCreate(
             ['platform' => 'app', 'feature_name' => $request->feature_name],
-            ['terms_conditions' => $request->terms_conditions, 'feature_name' => $request->feature_name]
+            [
+                'terms_conditions' => $request->terms_conditions,
+                'feature_name' => $request->feature_name,
+                'terms_conditions_bn' => $request->terms_conditions_bn
+            ]
         );
-
+        Session::flash('message', 'Terms and conditions update successfully !!');
         return redirect()->back();
     }
 }
