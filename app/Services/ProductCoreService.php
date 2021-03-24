@@ -129,10 +129,15 @@ class ProductCoreService
         return $type;
     }
 
+    public function storeMyBlProduct($data)
+    {
+
+    }
+
     /**
      * @param $data
      * @param $simId
-     * @return void
+     * @return bool
      */
     public function storeProductCore($data, $simId)
     {
@@ -151,7 +156,9 @@ class ProductCoreService
             $data['content_type'] = $this->getType($data['offer_category_id']);
             $data['sim_type'] = $simId;
             $this->save($data);
+            return true;
         }
+        return false;
     }
 
     /**

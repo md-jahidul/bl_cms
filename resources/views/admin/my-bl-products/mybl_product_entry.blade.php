@@ -7,6 +7,9 @@
 @section('action')
     <form method="post" action="{{route('mybl.product.download')}}">
         {{csrf_field()}}
+        <a href="{{route('mybl.product.create')}}" class="btn btn-info">
+            Create Product
+        </a>
         <button type="submit" class="btn btn-info btn-sm"><i class="la la-download"></i>Export Current Products</button>
     </form>
 @endsection
@@ -17,7 +20,7 @@
                 <div class="card-body card-dashboard">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
+                            <form class="form" method="POST" id="uploadProduct" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="message">Upload Product List</label>
@@ -29,9 +32,11 @@
                                     <input type="file" class="dropify" name="product_file" data-height="80"
                                            data-allowed-file-extensions="xlsx" required/>
                                 </div>
-                                <div class="col-md-12" >
+                                <div class="col-md-12">
                                     <div class="form-group float-right" style="margin-top:15px;">
-                                        <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                                        <button class="btn btn-success" style="width:100%;padding:7.5px 12px"
+                                                type="submit">Submit
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -51,12 +56,14 @@
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
 
     <script>

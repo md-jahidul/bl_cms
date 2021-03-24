@@ -93,7 +93,21 @@ class MyblProductEntryController extends Controller
         return view('admin.my-bl-products.mybl_product_entry');
     }
 
+    /**
+     * @return Factory|View
+     */
+    public function create()
+    {
+        $tags = $this->productTagService
+            ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
+            ->pluck('title', 'id');
+        return view('admin.my-bl-products.create-product', compact('tags'));
+    }
 
+    public function store(Request $request)
+    {
+
+    }
 
     /**
      * @param Request $request
