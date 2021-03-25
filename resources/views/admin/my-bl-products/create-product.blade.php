@@ -28,7 +28,8 @@
                     <form class="form"
                           action="{{ route('mybl.product.store')}}"
                           enctype="multipart/form-data"
-                          method="POST">
+                          method="POST"
+                          novalidate>
                         @csrf
                         {{ method_field('PUT') }}
                         <div class="form-body">
@@ -39,6 +40,27 @@
                                         <select name="sim_type" required class="form-control">
                                             <option value="1">PREPAID</option>
                                             <option value="2">POSTPAID</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="sim_type" class="required">Content Type</label>
+                                        <select name="content_type" class="form-control filter" id="content_type" required>
+                                            <option value="">---Select Content Type---</option>
+                                            <option value="data">DATA</option>
+                                            <option value="mix">MIX BUNDLES</option>
+                                            <option value="voice">VOICE BUNDLES</option>
+                                            <option value="sms">SMS BUNDLES</option>
+                                            <option value="scr">SPECIAL CALL RATE</option>
+                                            <option value="recharge_offer">RECHARGE OFFER</option>
+                                            <option value="ma loan">MA LOAN</option>
+                                            <option value="data loan">DATA LOAN</option>
+                                            <option value="gift">GIFT</option>
+                                            <option value="volume request">VOLUME REQUEST</option>
+                                            <option value="volume transfer">VOLUME TRANSFER</option>
+                                            {{--<option value="bonus">BONUS</option>--}}
                                         </select>
                                     </div>
                                 </div>
@@ -59,33 +81,26 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="content_type">Content Type</label>
-                                        <input class="form-control" required name="content_type">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
                                         <label>Short Description</label>
                                         <input class="form-control" name="short_description">
                                     </div>
                                 </div>
-                                @if( $details->details->activation_ussd)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Activation USSD </label>
-                                            <input class="form-control" name="activation_ussd">
-                                        </div>
-                                    </div>
-                                @endif
-                                @if( $details->details->balance_check_ussd)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Balance USSD</label>
-                                            <input class="form-control" name="balance_check_ussd">
-                                        </div>
-                                    </div>
-                                @endif
+{{--                                @if( $details->details->activation_ussd)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Activation USSD </label>--}}
+{{--                                            <input class="form-control" name="activation_ussd">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+{{--                                @if( $details->details->balance_check_ussd)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Balance USSD</label>--}}
+{{--                                            <input class="form-control" name="balance_check_ussd">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>MRP Price</label>
@@ -93,39 +108,44 @@
                                     </div>
                                 </div>
 
-                                @if($details->details->data_volume)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
+{{--                                @if($details->details->data_volume)--}}
+
+                                <slot id="offer_types"></slot>
+
+<!--                                    <div class="col-md-4">
+                                        <div class="form-group package_type">
                                             <label>Data Volume </label>
                                             <input class="form-control" name="data_volume">
                                         </div>
-                                    </div>
-                                @endif
-                                @if($details->details->minute_volume)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Minute Volume </label>
-                                            <input class="form-control" name="minute_volume">
-                                        </div>
-                                    </div>
-                                @endif
+                                    </div>-->
 
-                                @if($details->details->sms_volume)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>SMS Volume </label>
-                                            <input class="form-control" name="sms_volume">
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($details->details->sms_volume)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>SMS Volume </label>
-                                            <input class="form-control" name="sms_value" required>
-                                        </div>
-                                    </div>
-                                @endif
+{{--                                @endif--}}
+
+{{--                                @if($details->details->minute_volume)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Minute Volume </label>--}}
+{{--                                            <input class="form-control" name="minute_volume">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+
+{{--                                @if($details->details->sms_volume)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>SMS Volume </label>--}}
+{{--                                            <input class="form-control" name="sms_volume">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+{{--                                @if($details->details->sms_volume)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>SMS Volume </label>--}}
+{{--                                            <input class="form-control" name="sms_value" required>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Validity </label>
@@ -138,6 +158,14 @@
                                         <input class="form-control" name="has_renew_code">
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Auto Renewable Code</label>
+                                        <input class="form-control" name="auto_renew_code">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Auto Renewable Code</label>
@@ -150,7 +178,7 @@
                                 {{--                                @if(strtolower($details->details->content_type) == 'data')--}}
                                 @if(1)
                                     @php
-                                        $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
+                                        //$tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
                                     @endphp
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -160,12 +188,12 @@
                                                     name="offer_section_slug[]" required>
                                                 <option value="">Please Select Data Section</option>
 
-                                                @foreach ($internet_categories as $key => $category)
-                                                    <option
-                                                        {{ in_array($key, $tabs, false) ? 'selected' : '' }}
-                                                        value="{{ $key }}">  {{$category}}
-                                                    </option>
-                                                @endforeach
+{{--                                                @foreach ($internet_categories as $key => $category)--}}
+{{--                                                    <option--}}
+{{--                                                        {{ in_array($key, $tabs, false) ? 'selected' : '' }}--}}
+{{--                                                        value="{{ $key }}">  {{$category}}--}}
+{{--                                                    </option>--}}
+{{--                                                @endforeach--}}
 
                                             </select>
                                         </div>
@@ -175,6 +203,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tags </label>
+{{--                                        @php--}}
+{{--                                            $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];--}}
+{{--                                        @endphp--}}
                                         <select multiple
                                                 class="form-control tags"
                                                 name="tags[]" required>
@@ -182,7 +213,7 @@
 
                                             @foreach ($tags as $key => $tag)
                                                 <option
-                                                    {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
+{{--                                                    {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}--}}
                                                     value="{{ $key }}">  {{$tag}}
                                                 </option>
                                             @endforeach
@@ -197,8 +228,8 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="form-label small">Show From</label>
-                                                <input class="form-control" id="show_from" name="show_from"
-                                                       placeholder="Show From Time" autocomplete="off">
+                                                <input class="form-control" id="show_from" name="show_from" value=""
+                                                       placeholder="Show From Time" autocomplete="on">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label small">Hide From</label>
@@ -222,24 +253,23 @@
                                             <label class="small">Show</label>
                                         </li>
                                         <li class="list-inline-item">
-                                            <input type="radio" name="is_visible"
-                                                   value="0" {{$details->is_visible ? '' : 'checked'}}>
+{{--                                            <input type="radio" name="is_visible"--}}
+{{--                                                   value="0" {{$details->is_visible ? '' : 'checked'}}>--}}
                                             <label class="small">Hide</label>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
-                                        <input type="checkbox" id="show_in_home" value="1" name="show_in_app"
-                                               @if($details->show_in_home) checked @endif>
+                                        <input type="checkbox" id="show_in_home" value="1" name="show_in_app">
+{{--                                               @if($details->show_in_home) checked @endif>--}}
                                         <label for="show_in_home">Show in Home</label>
                                     </fieldset>
                                 </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
-                                               name="is_rate_cutter_offer"
-                                               @if($details->is_rate_cutter_offer) checked @endif>
+                                               name="is_rate_cutter_offer">
                                         <label for="show_in_home">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
@@ -250,25 +280,34 @@
                                                 <small class="danger text-muted">{{ $errors->first('media') }}</small>
                                             </p>
                                         @endif
-                                        @if ($details->media)
-                                            <input type="file"
-                                                   id="input-file-now-custom-1"
-                                                   class="dropify"
-                                                   name="media"
-                                                   data-default-file="{{ url('storage/' .$details->media) }}"
-                                            />
-                                        @else
-                                            <input type="file" id="input-file-now" name="media" class="dropify"/>
-                                        @endif
+{{--                                        @if ($details->media)--}}
+{{--                                            <input type="file"--}}
+{{--                                                   id="input-file-now-custom-1"--}}
+{{--                                                   class="dropify"--}}
+{{--                                                   name="media"--}}
+{{--                                                   data-default-file="{{ url('storage/' .$details->media) }}"--}}
+{{--                                            />--}}
+{{--                                        @else--}}
+{{--                                            <input type="file" id="input-file-now" name="media" class="dropify"/>--}}
+{{--                                        @endif--}}
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-info btn-block">
-                                            <i class="ft-save"></i> Create Product
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button id="save" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
                                 </div>
+
+{{--                                <div class="form-actions col-md-2">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <button type="submit" class="btn btn-info btn-block">--}}
+{{--                                            <i class="ft-save"></i> Create Product--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                     </form>
@@ -339,8 +378,8 @@
                 format: 'YYYY/MM/DD h:mm A'
             }
         });
-        $('#show_from').val("{{$details->show_from ? \Carbon\Carbon::parse($details->show_from)->format('Y/m/d h:i A') : ''}}");
-        $('#hide_from').val("{{$details->hide_from ? \Carbon\Carbon::parse($details->hide_from)->format('Y/m/d h:i A') : ''}}");
+        $('#show_from').val("");
+        $('#hide_from').val("");
         //$('#hide_from').val('');
 
         $('#show_from,#hide_from').on('cancel.daterangepicker', function (ev, picker) {
@@ -355,5 +394,69 @@
                 'error': 'Choose correct Image file'
             }
         });
+
+
+
+        $('#content_type').on('change', function () {
+            let type = $(this).val();
+            let offer_types = $('#offer_types');
+
+            let data = `<div class="col-md-4">
+                    <div class="form-group package_type">
+                    <label>Data Volume </label>
+                    <input class="form-control" name="data_volume">
+                    </div>
+                    </div>`
+
+            let voiceVol = `<div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Minute Volume </label>
+                                    <input class="form-control" name="minute_volume">
+                                </div>
+                            </div>`
+            let smsVol = `<div class="col-md-4">
+                              <div class="form-group">
+                                  <label>SMS Volume </label>
+                                  <input class="form-control" name="sms_volume">
+                              </div>
+                          </div>`
+
+            let callRate = `<div class="col-md-4">
+                              <div class="form-group">
+                                  <label>Call Rate</label>
+                                  <input type="number" class="form-control" name="sms_volume">
+                              </div>
+                          </div>`
+
+            let callRateUnit = `<div class="col-md-4">
+                              <div class="form-group">
+                                  <label>Call Rate Unit</label>
+                                  <input class="form-control" name="call_rate_unit">
+                              </div>
+                          </div>`
+
+            offer_types.empty()
+
+            if (
+                type === 'data' ||
+                type === 'volume request' ||
+                type === 'volume transfer' ||
+                type === 'data loan' ||
+                type === 'gift'
+            ) {
+                offer_types.append(data)
+            } else if (type === 'mix' || type === 'recharge_offer') {
+                offer_types.append(data + minuteVol + smsVol)
+            } else if (type === 'voice') {
+                offer_types.append(voiceVol)
+            } else if (type === 'sms') {
+                offer_types.append(smsVol)
+            } else if (type === 'src') {
+                offer_types.append(callRate + callRateUnit)
+            } else if (type === 'ma loan') {
+                offer_types.empty()
+            }
+        })
+
     </script>
 @endpush

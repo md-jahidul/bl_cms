@@ -839,6 +839,8 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
+
+
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = $firstTag->title;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
@@ -849,7 +851,7 @@ class ProductCoreService
 
         try {
             DB::beginTransaction();
-
+//            dd($request->all());
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
 

@@ -76,7 +76,7 @@ class MyblProductEntryController extends Controller
         }
 
         $details = $this->service->getProductDetails($product_code);
-
+//        dd($details);
         $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
@@ -101,7 +101,9 @@ class MyblProductEntryController extends Controller
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
-        return view('admin.my-bl-products.create-product', compact('tags'));
+        $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
+//        dd($internet_categories);
+        return view('admin.my-bl-products.create-product', compact('tags', 'internet_categories'));
     }
 
     public function store(Request $request)
