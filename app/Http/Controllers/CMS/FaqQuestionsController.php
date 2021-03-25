@@ -51,7 +51,9 @@ class FaqQuestionsController extends Controller
         $request->validate([
             'category' => 'bail|required|exists:faq_categories,id',
             'question' => 'bail|required|string',
-            'answer' => 'bail|required|string'
+            'question_bn' => 'bail|required|string',
+            'answer' => 'bail|required|string',
+            'answer_bn' => 'bail|required|string'
         ]);
 
         return $this->service->store($request, 'app');

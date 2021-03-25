@@ -30,11 +30,20 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="title_en" class="required">Privacy and Policy</label>
+                                <div class="col-md-6">
+                                    <label for="title_en" class="required">Privacy and Policy (English)</label>
                                     <textarea id="privacy-policy" name="privacy_policy" required>
                                         @if($privacy_policy)
                                             {{ $privacy_policy->privacy_policy }}
+                                        @endif
+                                    </textarea>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="title_en" class="required">Privacy and Policy (Bangla)</label>
+                                    <textarea id="privacy-policy" name="privacy_policy_bn" required>
+                                        @if($privacy_policy)
+                                            {{ $privacy_policy->privacy_policy_bn }}
                                         @endif
                                     </textarea>
                                 </div>
