@@ -13,10 +13,10 @@ class CreateContextualCardLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('contextual_card_log', function (Blueprint $table) {
+        Schema::create('contextual_card_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('contextual_card_id');
-            $table->string('mssdn' ,20);
+            $table->string('msisdn' ,20);
             $table->integer('is_read')->default(0);
             $table->integer('is_delete')->default(0);
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateContextualCardLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contextual_card_log');
+        Schema::dropIfExists('contextual_card_logs');
     }
 }
