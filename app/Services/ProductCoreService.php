@@ -11,6 +11,7 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Models\ProductTag;
+use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductTagRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDeepLinkRepository;
@@ -61,10 +62,15 @@ class ProductCoreService
      * @var MyBlProductTagRepository
      */
     private $myBlProductTagRepository;
+    /**
+     * @var MyBlProductRepository
+     */
+    private $myBlProductRepository;
 
     /**
      * ProductCoreService constructor.
      * @param ProductCoreRepository $productCoreRepository
+     * @param MyBlProductRepository $myBlProductRepository
      * @param SearchDataRepository $searchRepository
      * @param TagCategoryRepository $tagRepository
      * @param ProductDeepLinkRepository $productDeepLinkRepository
@@ -72,12 +78,14 @@ class ProductCoreService
      */
     public function __construct(
         ProductCoreRepository $productCoreRepository,
+        MyBlProductRepository $myBlProductRepository,
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
         MyBlProductTagRepository $myBlProductTagRepository
     ) {
         $this->productCoreRepository = $productCoreRepository;
+        $this->myBlProductRepository = $myBlProductRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->productDeepLinkRepository = $productDeepLinkRepository;
@@ -928,6 +936,87 @@ class ProductCoreService
 
             $model = ProductCore::where('product_code', $product_code);
             $model->update($data_request);
+
+            $this->resetProductRedisKeys();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+
+        return Redirect::back()->with('success', 'Product updated Successfully');
+    }
+
+    /**
+     * Update my-bl products
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function storeMyblProducts($request)
+    {
+        $data['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+
+        if ($request->file('media')) {
+            $file = $request->media;
+            $path = $file->storeAs(
+                'products/images',
+                $data['product_code'] . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $data['media'] = $path;
+        }/* else {
+            $data['media'] = null;
+        }*/
+
+        $firstTag = ProductTag::where('id', $request->tags[0])->first();
+        $data['tag'] = $firstTag->title;
+        $data['show_in_home'] = isset($request->show_in_app) ? true : false;
+        $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
+        $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
+        $data['is_visible'] = $request->is_visible;
+
+        try {
+            DB::beginTransaction();
+            $this->myBlProductRepository->save($data);
+
+            if ($request->has('tags')) {
+                $this->syncProductTags($data['product_code'], $request->tags);
+            }
+            if ($request->has('offer_section_slug')) {
+                foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
+                    $data_section_slug['product_code'] = $data['product_code'];
+                    $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
+                    MyBlProductTab::create($data_section_slug);
+                }
+            }
+
+            $data_request = $request->all();
+            unset($data_request['_token']);
+            unset($data_request['_method']);
+            unset($data_request['tags']);
+            unset($data_request['media']);
+            unset($data_request['show_in_app']);
+            unset($data_request['is_rate_cutter_offer']);
+            unset($data_request['offer_section_slug']);
+            unset($data_request['offer_section_title']);
+            unset($data_request['show_from']);
+            unset($data_request['hide_from']);
+            unset($data_request['is_visible']);
+
+            $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+            $data_request['auto_renew_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
+            $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
+
+            $data_request['platform'] = 'app';
+            $data_request['data_volume_unit'] = 'MB';
+            $data_request['validity_unit'] = ($data_request['validity'] > 1) ? 'Days' : 'Day';
+
+            $this->save($data_request);
 
             $this->resetProductRedisKeys();
 

@@ -102,13 +102,12 @@ class MyblProductEntryController extends Controller
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
         $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
-//        dd($internet_categories);
         return view('admin.my-bl-products.create-product', compact('tags', 'internet_categories'));
     }
 
     public function store(Request $request)
     {
-
+        return $this->service->storeMyblProducts($request);
     }
 
     /**
