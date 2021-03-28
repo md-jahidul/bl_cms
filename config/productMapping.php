@@ -46,7 +46,8 @@ return [
             3 => 'Completed Schedule',
             4 => 'To be Shown'
 
-        ]
+        ],
+        'max_no_of_pin_to_top' => 5
     ],
     /*'pcat' => [
         'columns' => [
