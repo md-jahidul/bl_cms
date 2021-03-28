@@ -174,20 +174,19 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label>Select Data Section</label>
-                                    <select multiple
-                                            class="form-control data-section"
-                                            name="offer_section_slug[]" required>
-                                        <option value="">Please Select Data Section</option>
-                                            @foreach ($internet_categories as $key => $category)
-                                                <option
-                                                    value="{{ $key }}">  {{$category}}
-                                                </option>
-                                            @endforeach
-
-                                    </select>
-                                </div>
+{{--                                <div class="form-group col-md-4">--}}
+{{--                                    <label>Select Data Section</label>--}}
+{{--                                    <select multiple--}}
+{{--                                            class="form-control data-section"--}}
+{{--                                            name="offer_section_slug[]" required>--}}
+{{--                                        <option value="">Please Select Data Section</option>--}}
+{{--                                            @foreach ($internet_categories as $key => $category)--}}
+{{--                                                <option--}}
+{{--                                                    value="{{ $key }}">  {{$category}}--}}
+{{--                                                </option>--}}
+{{--                                            @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
 
 
                                 <div class="col-md-4">
@@ -376,6 +375,7 @@
 
 
         $('#content_type').on('change', function () {
+
             let type = $(this).val();
             let offer_types = $('#offer_types');
 
@@ -405,6 +405,18 @@
                                   <input class="form-control" name="call_rate_unit">
                                 </div>`
 
+            let sectionType = `<div class="form-group col-md-4">
+                                    <label>Select Data Section</label>
+                                    <select multiple
+                                            class="form-control data-section"
+                                            name="offer_section_slug[]" required>
+                                        <option value="">Please Select Data Section</option>
+                                        @foreach ($internet_categories as $key => $category)
+                                           <option value="{{ $key }}">  {{$category}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>`
+
             offer_types.empty()
 
             if (
@@ -414,7 +426,7 @@
                 type === 'data loan' ||
                 type === 'gift'
             ) {
-                offer_types.append(data)
+                offer_types.append(data + sectionType)
             } else if (type === 'mix' || type === 'recharge_offer') {
                 offer_types.append(data + voiceVol + smsVol)
             } else if (type === 'voice') {
@@ -426,6 +438,12 @@
             } else if (type === 'ma loan') {
                 offer_types.empty()
             }
+
+            $('.data-section').select2({
+                placeholder: 'Please Select Data Section',
+                maximumSelectionLength: 5,
+                allowClear: true
+            });
         })
 
     </script>
