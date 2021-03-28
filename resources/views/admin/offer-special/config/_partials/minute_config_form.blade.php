@@ -2,7 +2,7 @@
     <div id="minute_heading" class="card-header">
         <a data-toggle="collapse" data-parent="#settings_panel" href="#minute_config"
            aria-expanded="false"
-           aria-controls="minute_config" class="card-title lead">Minutes Filter</a>
+           aria-controls="minute_config" class="card-title lead">Paisa / Minutes Filter</a>
     </div>
 </div>
 <div id="minute_config" role="tabpanel" aria-labelledby="minute_heading" class="collapse">
@@ -15,7 +15,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-globe"></i>Create Minutes
+                            <h4 class="form-section"><i class="la la-globe"></i>Create Paisa / Minutes
                                 Filter</h4>
                             <div class="row">
                                 <div class="col-md-4">
@@ -27,7 +27,7 @@
                                                class="form-control minute_filter_input limit-input"
                                                placeholder="Min 1" name="lower">
                                         <small class="form-text text-muted">Enter
-                                            amount in minutes</small>
+                                            amount in Paisa / minutes</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -38,7 +38,7 @@
                                                class="form-control minute_filter_input limit-input"
                                                placeholder="Max 2000" name="upper">
                                         <small class="form-text text-muted">Enter
-                                            amount in minutes</small>
+                                            amount in Paisa / minutes</small>
                                     </div>
                                 </div>
                                 <div class="col-md-1 add-button">
@@ -52,7 +52,7 @@
                     </form>
                 </div>
                 <div class="offset-1 col-md-4">
-                    <h5>Minute Filter List</h5>
+                    <h5>Paisa / Minute Filter List</h5>
                     <table class="table table-striped table-bordered base-style"
                            id="minute_filter_table" role="grid" aria-describedby="Example1_info">
                         <thead>
@@ -248,7 +248,7 @@
                 if(input > 2000){
                     Swal.fire(
                         'Input Error!',
-                        'Minute value must be less than 2000 Minutes',
+                        'Paisa / Minute value must be less than 2000 Paisa / Minutes',
                         'error',
                     );
 

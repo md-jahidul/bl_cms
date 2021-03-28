@@ -80,8 +80,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group ">
                                         <label for="image" class="required">Upload contextual Card Icon:</label>
-                                        <div class="input-group ">
-                                            <div class="custom-file">
+{{--                                        <div class="input-group ">--}}
+{{--                                            <div class="custom-file">--}}
                                                 <input
                                                     required
                                                     data-validation-required-message="Card Icon is required"
@@ -109,19 +109,18 @@
 
                                                     value="{{ old("icon") ? old("icon") : '' }}"
                                                     name="icon" id="icon" type="file"
-                                                    class="custom-file-input @error('icon') is-invalid @enderror"
+                                                    class="custom-file-input @error('icon') is-invalid @enderror dropify"
                                                 >
-                                                <label class="custom-file-label" for="icon">Upload icon...</label>
-                                            </div>
-                                        </div>
+{{--                                                <label class="custom-file-label" for="icon">Upload icon...</label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                         <div class="help-block">
                                             <small class="text-info">
                                                 Card Icon aspact ratio must be in 1:1
                                             </small>
                                         </div>
                                         <div id="massage"></div>
-                                        <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -172,6 +171,7 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 
 
@@ -179,9 +179,24 @@
 
 @endpush
 @push('page-js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $("#showApplyModel").click(function () {
             $('#').modal('show')
-        }
+        });
+        $(document).ready(function () {
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct image file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
+        });
     </script>
 @endpush

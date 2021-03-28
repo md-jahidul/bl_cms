@@ -80,7 +80,7 @@ class SpecialCallRateFilterController extends Controller
         $validate = Validator::make(
             $request->all(),
             [
-                'id' => 'required|exists:minutes_pack_filters,id'
+                'id' => 'required|exists:special_call_rate_filters,id'
             ]
         );
 

@@ -38,7 +38,6 @@ class SpecialCallRateFilterService
         $draw = $request->draw;
         $all_items_count = $itemBuilder->count();
         $items = $itemBuilder->get();
-
         $response = [
             'draw'  =>  $draw,
             'recordsTotal'  =>  $all_items_count,
@@ -49,7 +48,9 @@ class SpecialCallRateFilterService
         $items->each(function ($item) use (&$response) {
 
             $filter = json_decode($item->filter, true);
-
+            if($filter['unit']=='minutes'){
+                $filter['unit']='Paisa/Min';
+            }
             $response['data'][] = [
                 'id'      =>  $item->id,
                 'lower'   =>  $filter['lower'],

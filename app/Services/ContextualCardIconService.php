@@ -49,7 +49,7 @@ class ContextualCardIconService
         $contextualCard = $this->findOne($id);
         if (isset($data['icon'])) {
             $data['icon'] = 'storage/' . $data['icon']->store('contextualcardicon');
-            unlink($contextualCard->icon);
+//            unlink($contextualCard->icon);
             $contextualCard->update($data);
         } else {
             $data['icon'] = $contextualCard->icon;

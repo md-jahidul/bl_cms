@@ -72,14 +72,14 @@
                             </div>
 
                             <div class="col-md-12 mb-1">
-                                    <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($contextualCard->icon)}}" alt="" srcset="">
+{{--                                    <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($contextualCard->icon)}}" alt="" srcset="">--}}
                                 <input type="hidden" value="yes" name="value_exist">
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label for="image" class="">Upload contextual Card Icon:</label>
-                                    <div class="input-group ">
-                                        <div class="custom-file">
+{{--                                    <div class="input-group ">--}}
+{{--                                        <div class="custom-file">--}}
                                             <input
 
                                                 accept="image/*"
@@ -103,14 +103,13 @@
                                                         }
                                                     })"
 
-
-                                                value="{{ old("icon") ? old("icon") : '' }}"
+                                                data-default-file="{{ asset($contextualCard->icon) }}"
+                                                value="{{ asset($contextualCard->icon) ? asset($contextualCard->icon) : '' }}"
                                                 name="icon" id="icon" type="file"
-                                                class="custom-file-input @error('icon') is-invalid @enderror"
-                                            >
-                                            <label class="custom-file-label" for="icon">Upload icon...</label>
-                                        </div>
-                                    </div>
+                                                class="custom-file-input @error('icon') is-invalid @enderror dropify">
+{{--                                            <label class="custom-file-label" for="icon">Upload icon...</label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="help-block">
                                         <small class="text-info">
                                             Card Icon aspact ratio must be in 1:1
@@ -160,11 +159,23 @@
 
 
 @push('style')
-
-@endpush
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+@endpush<link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @push('page-js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-
-
+        $(document).ready(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct image file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
+        });
     </script>
 @endpush
