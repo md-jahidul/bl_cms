@@ -35,9 +35,12 @@ class ContextualCardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.contextual-card.index')->with('contextualCards', $this->contextualCardService->findAll());
+        if ($request->ajax()) {
+            return $this->contextualCardService->prepareDataForDatatable($request);
+        }
+        return view('admin.contextual-card.index');
     }
 
     /**
@@ -53,7 +56,7 @@ class ContextualCardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ContextualCardRequest $request)
@@ -66,7 +69,7 @@ class ContextualCardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -78,7 +81,7 @@ class ContextualCardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(ContextualCards $contextualcard)
@@ -89,8 +92,8 @@ class ContextualCardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(ContextualCardRequest $request, $id)
@@ -102,7 +105,7 @@ class ContextualCardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

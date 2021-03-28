@@ -5,9 +5,11 @@
     <li class="breadcrumb-item active">Contextual Card Icon list</li>
 @endsection
 @section('action')
+    @if(count($contextualCards)<1)
     <a href="{{route('contextual.card.icons.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Create Contextual Card Icon
     </a>
+    @endif
 @endsection
 
 @section('content')
@@ -16,7 +18,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-{{--                        <h1 class="card-title pl-1">Contextual Card Icon List</h1>--}}
+{{-- <h1 class="card-title pl-1">Contextual Card Icon List</h1>--}}
                     </div>
                 </div>
             </div>
@@ -31,7 +33,8 @@
                             <th width='10%'>Category</th>
                             <th width='10%'>Icon</th>
                             <th width='10%'>Remark</th>
-                            <th width='30%'>Date</th>
+                            <th width='10%'>Create Date</th>
+                            <th width='10%'>Update Date</th>
                             <th width='30%'>Action</th>
                         </tr>
                         </thead>
@@ -46,6 +49,7 @@
                                  </td>
                                 <td width='10%' >{{$contextualCard->remark}}</td>
                                 <td width='10%' >{{$contextualCard->created_at}}</td>
+                                <td width='10%' >{{$contextualCard->updated_at}}</td>
 {{--                                <td width='10%' ><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>--}}
                                 <td width='20%' >
                                     <div class="row justify-content-md-center no-gutters">
