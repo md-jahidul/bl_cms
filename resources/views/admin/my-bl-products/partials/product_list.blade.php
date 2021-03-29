@@ -107,7 +107,8 @@
                         name: 'product_code',
                         render: function (data, type, row) {
                             let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
-                            return '<a href="' + detail_question_url + '">' + row.product_code + '</a>';
+                            let pin_sign = row.pin_to_top ? "<i class='la la-thumb-tack' title='Product marked as pin to top'></i>" : "";
+                            return '<a href="' + detail_question_url + '">' + row.product_code  + '</a> <b> ' + pin_sign + '</b>';
                         }
                     },
 
