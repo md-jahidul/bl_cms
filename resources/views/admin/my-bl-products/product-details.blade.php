@@ -268,6 +268,20 @@
                                 </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
+                                        <input type="checkbox" id="pin_to_top" value="1" name="pin_to_top"
+                                               @if($details->pin_to_top) checked @endif
+                                            {{$disablePinToTop ? 'disabled' : ''}}>
+                                        <label for="pin_to_top">Pin to Top</label>
+                                        @if($disablePinToTop)
+                                            <label for="pin_to_top" class="small red">
+                                                Maximum range for pin to top has been exceeded.
+                                                To pin this product to top , please unpin any other product and retry.
+                                            </label>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer"
                                                @if($details->is_rate_cutter_offer) checked @endif>

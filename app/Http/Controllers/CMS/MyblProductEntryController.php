@@ -76,13 +76,18 @@ class MyblProductEntryController extends Controller
         }
 
         $details = $this->service->getProductDetails($product_code);
-
+//        dd($details);
         $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
 
-        return view('admin.my-bl-products.product-details', compact('details', 'internet_categories', 'tags'));
+        $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
+
+        $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
+
+        return view('admin.my-bl-products.product-details',
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop'));
     }
 
     /**
@@ -93,7 +98,22 @@ class MyblProductEntryController extends Controller
         return view('admin.my-bl-products.mybl_product_entry');
     }
 
+    /**
+     * @return Factory|View
+     */
+    public function create()
+    {
+        $tags = $this->productTagService
+            ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
+            ->pluck('title', 'id');
+        $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
+        return view('admin.my-bl-products.create-product', compact('tags', 'internet_categories'));
+    }
 
+    public function store(Request $request)
+    {
+        return $this->service->storeMyblProducts($request);
+    }
 
     /**
      * @param Request $request
