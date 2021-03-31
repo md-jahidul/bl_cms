@@ -70,7 +70,7 @@
                                 <th width="10%">Slider</th>
                                 <th width="10%">Image Name</th>
                                 <th width="5%">Image</th>
-                                <th width="5%">Total View</th>
+                                <th width="5%">Total</th>
                                 <th width="5%">Total Click</th>
                                 <th width="5%">Buy Success</th>
                                 <th width="5%">Buy Failure</th>
