@@ -455,7 +455,15 @@ class BannerAnalyticService
             ->editColumn('date', function ($data) {
                 return date('d-m-Y H:i:s', strtotime($data->created_at));
             })
-            ->rawColumns(['date'])
+            ->editColumn('session_time', function ($data) {
+                if(!empty($data->session_time)){
+                    $time=$data->session_time/1000 ;//.'sec';
+                }else{
+                    $time=null;
+                }
+                return $time;
+            })
+            ->rawColumns(['date','session_time'])
             ->make(true);
     }
 
