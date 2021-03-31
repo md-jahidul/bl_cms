@@ -13,6 +13,7 @@ use App\Models\ProductDetail;
 use App\Models\ProductTag;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductTagRepository;
+use App\Repositories\ProductActivityRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDeepLinkRepository;
 use App\Repositories\SearchDataRepository;
@@ -54,6 +55,10 @@ class ProductCoreService
     protected $tagRepository;
     protected $productDeepLinkRepository;
 
+    protected const CREATE = "create";
+    protected const UPDATE = "update";
+    protected const DELETE = "delete";
+    protected const PLATFORM = "app";
     /**
      * @var array
      */
@@ -66,11 +71,16 @@ class ProductCoreService
      * @var MyBlProductRepository
      */
     private $myBlProductRepository;
+    /**
+     * @var ProductActivityRepository
+     */
+    private $productActivityRepository;
 
     /**
      * ProductCoreService constructor.
      * @param ProductCoreRepository $productCoreRepository
      * @param MyBlProductRepository $myBlProductRepository
+     * @param ProductActivityRepository $productActivityRepository
      * @param SearchDataRepository $searchRepository
      * @param TagCategoryRepository $tagRepository
      * @param ProductDeepLinkRepository $productDeepLinkRepository
@@ -79,6 +89,7 @@ class ProductCoreService
     public function __construct(
         ProductCoreRepository $productCoreRepository,
         MyBlProductRepository $myBlProductRepository,
+        ProductActivityRepository $productActivityRepository,
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
@@ -86,6 +97,7 @@ class ProductCoreService
     ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->myBlProductRepository = $myBlProductRepository;
+        $this->productActivityRepository = $productActivityRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->productDeepLinkRepository = $productDeepLinkRepository;
@@ -926,6 +938,10 @@ class ProductCoreService
                 );
             }
 
+            $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+            $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->renew_product_code));
+            $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
+
             $data_history = $core_product[0];
 
             $data_history['created_by'] = Auth::user()->id;
@@ -934,9 +950,16 @@ class ProductCoreService
 
             ProductCoreHistory::create($data_history);
 
-            $model = ProductCore::where('product_code', $product_code);
-            $model->update($data_request);
+            $model = ProductCore::where('product_code', $product_code)->first();
 
+            $others = [
+                'activity_type' => self::UPDATE,
+                'platform' => self::PLATFORM
+            ];
+
+            $this->productActivityRepository->storeProductActivity($data_request, $others, $model);
+
+            $model->update($data_request);
             $this->resetProductRedisKeys();
 
             DB::commit();
@@ -1009,13 +1032,20 @@ class ProductCoreService
             unset($data_request['is_visible']);
 
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
-            $data_request['auto_renew_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
+            $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
             $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
 
             $data_request['platform'] = 'app';
             $data_request['data_volume_unit'] = 'MB';
             $data_request['validity_unit'] = ($data_request['validity'] > 1) ? 'Days' : 'Day';
 
+            $others = [
+               'activity_type' => self::CREATE,
+               'platform' => self::PLATFORM
+            ];
+
+            $this->productActivityRepository->storeProductActivity($data_request, $others);
+//            dd($data_request);
             $this->save($data_request);
 
             $this->resetProductRedisKeys();
@@ -1025,8 +1055,7 @@ class ProductCoreService
             DB::rollback();
             throw new Exception($e->getMessage());
         }
-
-        return Redirect::back()->with('success', 'Product updated Successfully');
+        return Redirect::route('mybl.product.create')->with('success', 'Product updated Successfully');
     }
 
     public function downloadMyblProducts()

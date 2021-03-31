@@ -76,7 +76,7 @@ class MyblProductEntryController extends Controller
         }
 
         $details = $this->service->getProductDetails($product_code);
-//        dd($details);
+
         $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])

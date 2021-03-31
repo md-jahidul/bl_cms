@@ -10,6 +10,18 @@ class ProductActivity extends Model
         'user_id',
         'product_code',
         'activity_type',
-        'platform'
+        'platform',
+        'updated_data'
     ];
+
+    protected $casts = [
+        'updated_data' => 'array'
+    ];
+
+    public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

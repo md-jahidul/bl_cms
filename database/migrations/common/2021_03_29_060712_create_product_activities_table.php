@@ -19,6 +19,7 @@ class CreateProductActivitiesTable extends Migration
             $table->string('product_code')->nullable();
             $table->string('activity_type')->nullable();
             $table->string('platform')->nullable()->comment('app, web');
+            $table->json('updated_data')->nullable();
             $table->timestamp('created_at');
         });
     }
