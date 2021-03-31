@@ -100,7 +100,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label>Schema Markup</label>
-                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
+                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->schema_markup }}</textarea>
                                     </div>
 
                                     <div class="col-md-6">
