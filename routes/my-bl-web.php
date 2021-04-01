@@ -629,6 +629,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
             'FeedCategoryController@updatePosition')->name('categories.update_position');
     });
 
+    /*
+     * Product Activities
+     */
+    Route::get('mybl-product-activities', 'CMS\ProductActivityController@index')
+        ->name('product-activities.history');
+    Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
+        ->name('product-activities.details');
+
+
 });
 
 // 4G Map View Route

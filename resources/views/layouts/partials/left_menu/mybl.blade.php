@@ -59,6 +59,12 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
+
+                <li class="{{ is_active_match(route('product-activities.history')) }}">
+                    <a class="menu-item" href="{{ route('product-activities.history') }}">
+                        <i class="la la-history"></i>Products Activities</a>
+                </li>
+
                 <li class="{{ is_active_match(route('product-tags.index'))}}">
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
