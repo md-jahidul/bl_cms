@@ -101,6 +101,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
+    // Base Msisdn
+
+    Route::get('mybl-slider/base-msisdn-list', 'CMS\BaseMsisdnController@index')->name('myblslider.baseMsisdnList.index');
+    Route::get('mybl-slider/base-msisdn-create', 'CMS\BaseMsisdnController@create')->name('myblslider.base.msisdn.create');
+
     // minute
     Route::resource('minuteOffer', 'CMS\MinuteOfferController');
     Route::get('minuteOffer/destroy/{id}', 'CMS\MinuteOfferController@destroy');

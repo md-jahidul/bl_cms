@@ -45,6 +45,7 @@
                                             <input type="radio" name="user_type" value="propaid" id="input-radio-18">
                                             <label for="input-radio-18" class="mr-3">Propaid</label>
 
+
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>
                                             @endif
@@ -170,11 +171,70 @@
                                                    placeholder="Please enter link" />
                                         </div>
                                     </div>--}}
+
                                     <div id="append_div" class="col-md-6">
                                     </div>
                                     <div class="col-md-8">
                                         <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt=""
                                              srcset="">
+                                    </div>
+
+
+                                    <div class="form-group col-md-12" id="BannerSegmentWiseDiv">
+                                        <label><b>Banner segment wise CTA</b></label>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Base Group</th>
+                                                <th>Segment Action</th>
+                                                <th>CTA Action</th>
+                                                <th>Status</th>
+                                                <th class="text-center" style="width: 2%">
+                                                    <i data-repeater-create
+                                                       class="la la-plus-circle text-info cursor-pointer"  id="repeater-button" ></i>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody data-repeater-list="segment_wise_cta"  id="cta_table">
+                                            <tr data-repeater-item>
+                                                <td>
+                                                    <select class="form-control" id="segment_action" name="segment_action">
+                                                        <option value="">Select Group</option>
+                                                        <option value="">Group 1</option>
+                                                        <option value="">Group 2</option>
+                                                        <option value="">Group 3</option>
+                                                        <option value="">Group 4</option>
+
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="segment_action" name="segment_action">
+                                                        <option value="">Select Action</option>
+                                                        @foreach ($actionList as $key => $value)
+                                                            <option value="{{ $key }}">
+                                                                {{ $value }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </td>
+                                                <td><input class="form-control" name="cta_action_text" type="text"></td>
+                                                <td>
+                                                    <select name="cta_status" class="form-control ">
+                                                      <option value="1">Yes</option>
+                                                      <option value="0">No</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <i data-repeater-delete
+                                                       class="la la-trash-o text-danger cursor-pointer"></i>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+
+
                                     </div>
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
@@ -206,6 +266,7 @@
 @endpush
 
 @push('page-js')
+    {{--    <script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
@@ -218,6 +279,24 @@
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script>
 
+
+
+        $('#input-radio-15,#input-radio-16,#input-radio-17,#input-radio-18,#input-radio-19').click(function () {
+            if ($('#input-radio-19').is(':checked')) {
+                $("#CustomMsisdnSegmentDiv").addClass('show').removeClass('hidden');
+            } else {
+                $("#CustomMsisdnSegmentDiv").addClass('hidden').removeClass('show');
+            }
+        });
+
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Excel File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
         $(function () {
             var content = "";
             var url_html;
@@ -265,9 +344,9 @@
                     $("#append_div").html(product_html);
                     $(".product-list").select2({
                         placeholder: "Select a product",
-                        minimumInputLength:3,
+                        minimumInputLength: 3,
                         allowClear: true,
-                        selectOnClose:true,
+                        selectOnClose: true,
                         ajax: {
                             url: "{{ route('notification.productlist.dropdown') }}",
                             dataType: 'json',
@@ -304,6 +383,7 @@
             });
 
             $("#navigate_action").select2();
+
 
 
         })
