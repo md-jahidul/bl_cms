@@ -183,7 +183,6 @@
                         name: 'user',
                         width: '15%',
                         render: function (data, type, row) {
-                            console.log(row)
                             return row.user
                         }
                     },
@@ -191,7 +190,8 @@
                         name: 'product_code',
                         width: '5%',
                         render: function (data, type, row) {
-                            return row.product_code
+                            let details_url = "{{ URL('product-activities-details/') }}" + "/" + row.id;
+                            return `<a href=" ` + details_url + `" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `">`+row.product_code+`"</a>`
                         }
                     },
                     {
@@ -223,9 +223,9 @@
                         className: 'text-center',
                         width: '5%',
                         render: function (data, type, row) {
-                            let add_question_url = "{{ URL('faq/questions/create/') }}" +"/" + row.id;
+                            let details_url = "{{ URL('product-activities-details/') }}" + "/" + row.id;
                             return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-sm btn-icon btn-outline-primary edit" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `"><i class="la la-eye"></i> Details</button>
+                            <a href=" ` + details_url + `" class="btn btn-sm btn-icon btn-outline-primary edit" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `"><i class="la la-eye"></i> Details</a>
                           </div>`
                         }
                     }

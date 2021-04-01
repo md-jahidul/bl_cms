@@ -1010,6 +1010,18 @@ class ProductCoreService
             if ($request->has('tags')) {
                 $this->syncProductTags($data['product_code'], $request->tags);
             }
+
+//            if ($request->has('offer_section_slug')) {
+////                MyBlProductTab::where('product_code', $product_code)->delete();
+//                foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
+//                    $model_tab = MyBlProductTab::where('product_code', $product_code);
+//
+//                    $data_section_slug['product_code'] = $product_code;
+//                    $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
+//
+//                    $model_tab->updateOrCreate($data_section_slug);
+//                }
+//            }
             if ($request->has('offer_section_slug')) {
                 foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
                     $data_section_slug['product_code'] = $data['product_code'];

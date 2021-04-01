@@ -524,11 +524,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
             'FeedCategoryController@updatePosition')->name('categories.update_position');
     });
 
-    ##### Product Activities
+    /*
+     * Product Activities
+     */
     Route::get('mybl-product-activities', 'CMS\ProductActivityController@index')
         ->name('product-activities.history');
-//    Route::get('product-activities-ajax', 'CMS\ProductActivityController@ajaxDataList')
-//        ->name('product-activities.ajax');
+    Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
+        ->name('product-activities.details');
 
 
 });

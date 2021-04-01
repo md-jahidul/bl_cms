@@ -40,14 +40,7 @@ class ProductActivityController extends Controller
 //        $activities = $this->activityService->findAll();
 
         if ($request->ajax()) {
-//            $builder = $this->activityService->findAll('', '', [
-//                'column' => 'created_at',
-//                'direction' => "DESC"
-//            ]);
-
             $builder = $this->activityService->getAll()->latest();
-
-//            dd($builder);
             return $this->activityService->prepareDataForDatatable($builder, $request);
         }
         return view('admin.mybl-product-activity.index', compact('activities'));
@@ -57,10 +50,11 @@ class ProductActivityController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return Application|Factory|Response|View
      */
     public function show($id)
     {
-        //return view('admin.banner.show');
+        $activity = $this->activityService->findOne($id);
+        return view('admin.mybl-product-activity.view_details', compact('activity'));
     }
 }

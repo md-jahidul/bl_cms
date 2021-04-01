@@ -72,6 +72,7 @@ class ProductActivityService
 
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
+                'id' => $item->id,
                 'user' => $item->user->name,
                 'product_code' => $item->product_code,
                 'activity_type' => $item->activity_type,
