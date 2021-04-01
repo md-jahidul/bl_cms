@@ -906,12 +906,9 @@ class ProductCoreService
             unset($data_request['hide_from']);
             unset($data_request['is_visible']);
 
-            if (isset($data_request['data_volume'])) {
-                $data_request['data_volume'] = substr(
-                    $data_request['data_volume'],
-                    0,
-                    strrpos($data_request['data_volume'], ' ')
-                );
+            if (isset($data_request['internet_volume_mb'])) {
+                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
+                $data_request['data_volume_unit'] = ($data_request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
             }
 
             if (isset($data_request['sms_volume'])) {
@@ -1004,9 +1001,11 @@ class ProductCoreService
         $data['is_visible'] = $request->is_visible;
 
         if ($request->content_type == "data") {
-            $firstTab = MyBlInternetOffersCategory::findOrFail($request->offer_section_slug[0]);
-            $data['offer_section_title'] = $firstTab->name;
-            $data['offer_section_slug'] = $firstTab->slug;
+            if (isset($request->offer_section_slug)) {
+                $firstTab = MyBlInternetOffersCategory::findOrFail($request->offer_section_slug[0]);
+            }
+            $data['offer_section_title'] = isset($firstTab) ? $firstTab->name : 'Power Pack';
+            $data['offer_section_slug'] = isset($firstTab) ? $firstTab->slug : 'power_pack';
         }
 
         try {
@@ -1045,6 +1044,13 @@ class ProductCoreService
             $data_request['platform'] = 'app';
             $data_request['data_volume_unit'] = 'MB';
             $data_request['validity_unit'] = ($data_request['validity'] > 1) ? 'Days' : 'Day';
+
+            if (isset($request->internet_volume_mb)) {
+                $data_request['data_volume'] = $request['internet_volume_mb'] / 1024;
+                $data_request['data_volume_unit'] = ($request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
+            }
+
+//            dd($data_request);
 
             $others = [
                'activity_type' => self::CREATE,

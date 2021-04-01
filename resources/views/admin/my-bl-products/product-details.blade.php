@@ -139,10 +139,10 @@
                                 @if($details->details->data_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Data Volume </label>
+                                            <label>Data Volume (MB)</label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->data_volume }} {{ $details->details->data_volume_unit }}"
-                                                   name="data_volume">
+                                                   value="{{ $details->details->internet_volume_mb }}"
+                                                   name="internet_volume_mb">
                                         </div>
                                     </div>
                                 @endif
