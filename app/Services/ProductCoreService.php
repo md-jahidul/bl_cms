@@ -1003,6 +1003,12 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
 
+        if ($request->content_type == "data") {
+            $firstTab = MyBlInternetOffersCategory::findOrFail($request->offer_section_slug[0]);
+            $data['offer_section_title'] = $firstTab->name;
+            $data['offer_section_slug'] = $firstTab->slug;
+        }
+
         try {
             DB::beginTransaction();
             $this->myBlProductRepository->save($data);
@@ -1011,17 +1017,6 @@ class ProductCoreService
                 $this->syncProductTags($data['product_code'], $request->tags);
             }
 
-//            if ($request->has('offer_section_slug')) {
-////                MyBlProductTab::where('product_code', $product_code)->delete();
-//                foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
-//                    $model_tab = MyBlProductTab::where('product_code', $product_code);
-//
-//                    $data_section_slug['product_code'] = $product_code;
-//                    $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
-//
-//                    $model_tab->updateOrCreate($data_section_slug);
-//                }
-//            }
             if ($request->has('offer_section_slug')) {
                 foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
                     $data_section_slug['product_code'] = $data['product_code'];
@@ -1057,7 +1052,6 @@ class ProductCoreService
             ];
 
             $this->productActivityRepository->storeProductActivity($data_request, $others);
-//            dd($data_request);
             $this->save($data_request);
 
             $this->resetProductRedisKeys();
