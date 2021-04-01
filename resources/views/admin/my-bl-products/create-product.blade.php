@@ -381,7 +381,7 @@
             let data = `<div class="col-md-4">
                     <div class="form-group package_type">
                     <label>Data Volume (MB)</label>
-                    <input type="number" class="form-control" name="data_volume">
+                    <input type="number" class="form-control" name="internet_volume_mb">
                     </div>
                     </div>`
 
