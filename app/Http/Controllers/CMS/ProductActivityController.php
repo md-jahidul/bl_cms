@@ -37,13 +37,11 @@ class ProductActivityController extends Controller
      */
     public function index(Request $request)
     {
-//        $activities = $this->activityService->findAll();
-
         if ($request->ajax()) {
             $builder = $this->activityService->getAll()->latest();
             return $this->activityService->prepareDataForDatatable($builder, $request);
         }
-        return view('admin.mybl-product-activity.index', compact('activities'));
+        return view('admin.mybl-product-activity.index');
     }
 
     /**
