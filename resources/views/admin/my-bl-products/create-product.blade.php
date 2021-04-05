@@ -25,7 +25,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong> Product Cretae Form</strong></h5><hr>
+                    <h5 class="menu-title"><strong> Product Create Form</strong></h5><hr>
                     <div class="card-body card-dashboard">
                     <form class="form"
                           action="{{ route('mybl.product.store')}}"
@@ -261,7 +261,6 @@
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="show_in_home" value="1" name="show_in_app">
-                                        {{--                                               @if($details->show_in_home) checked @endif>--}}
                                         <label for="show_in_home">Show in Home</label>
                                     </fieldset>
                                 </div>
@@ -382,7 +381,7 @@
             let data = `<div class="col-md-4">
                     <div class="form-group package_type">
                     <label>Data Volume (MB)</label>
-                    <input type="number" class="form-control" name="data_volume">
+                    <input type="number" class="form-control" name="internet_volume_mb">
                     </div>
                     </div>`
 
