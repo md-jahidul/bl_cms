@@ -200,11 +200,9 @@
                                                 <td>
                                                     <select class="form-control" id="segment_action" name="segment_action">
                                                         <option value="">Select Group</option>
-                                                        <option value="">Group 1</option>
-                                                        <option value="">Group 2</option>
-                                                        <option value="">Group 3</option>
-                                                        <option value="">Group 4</option>
-
+                                                        @foreach($baseGroups as $group)
+                                                            <option value="{{$group->id}}">{{$group->title}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
