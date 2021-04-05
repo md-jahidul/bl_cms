@@ -105,7 +105,7 @@ class MyblProductEntryController extends Controller
         return view('admin.my-bl-products.create-product', compact('tags', 'internet_categories'));
     }
 
-    public function store(Request $request)
+    public function store(UpdateMyblProductRequest $request)
     {
         return $this->service->storeMyblProducts($request);
     }
