@@ -4,9 +4,27 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\BaseMsisdnService;
+use App\Http\Requests\BaseMsisdnRequest;
+use Illuminate\Support\Facades\Storage;
 
 class BaseMsisdnController extends Controller
 {
+    /**
+     * @var BaseMsisdnService
+     */
+    private $baseMsisdnService;
+
+    /**
+     * BaseMsisdnController constructor.
+     * @param \App\Services\BaseMsisdnService $baseMsisdnService
+     */
+    public function __construct(BaseMsisdnService $baseMsisdnService)
+    {
+        $this->baseMsisdnService = $baseMsisdnService;
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,9 +54,12 @@ class BaseMsisdnController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BaseMsisdnRequest $request)
     {
-        //
+
+        $response = $this->baseMsisdnService->storeBaseMsisdnGroup($request);
+        Session()->flash('message', $response->content());
+        return redirect(route('myblslider.baseMsisdnList.index'));
     }
 
     /**

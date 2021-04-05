@@ -25,13 +25,12 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                    <form novalidate class="form" action="{{route('myblslider.store')}}" method="POST">
+                    <form novalidate class="form" action="{{route('myblslider.base.msisdn.store')}}" method="POST" enctype="multipart/form-data" >
                         @csrf
-                         @method('post')
+                        @method('post')
                         <div class="form-body">
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="title" class="required">Title:</label>
                                         <input
@@ -51,23 +50,19 @@
 
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="is_active">Active Status:</label>
-                                            <select class="form-control" id="is_active"
-                                                    name="is_active">
+                                            <label for="is_active" class="required">Active Status:</label>
+                                            <select class="form-control" id="status"
+                                                    name="status">
                                                 <option value="1"> Active</option>
                                                 <option value="0">Inactive</option>
                                             </select>
                                         </div>
+                                        @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
-
-
-                                    <div id="append_div" class="col-md-6">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt=""
-                                             srcset="">
-                                    </div>
-
 
                                     <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">
                                         <label><b>Msisdn for Banner segment</b></label>
@@ -77,29 +72,36 @@
 
                                         </div>
                                         <div class="form-group" id="customMsisdnExcel">
-                                            <input type="file" class="dropify" name="product_file" data-height="80"
+                                            <input type="file" class="dropify" name="msisdn_file" data-height="100"
                                                    data-allowed-file-extensions="xlsx csv"/>
                                         </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('msisdn_file'))
+                                            <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>
+                                        @endif
                                         <div class="form-group hidden" id="customMsisdn">
                                             <textarea class="form-control" name="custom_msisdn" cols="2"
                                                       placeholder="019000000000,01400000000"></textarea>
                                         </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('custom_msisdn'))
+                                            <div class="help-block">  {{ $errors->first('custom_msisdn') }}</div>
+                                        @endif
                                     </div>
-
-
-
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success round px-2">
+                                    <i class="la la-check-square-o"></i> Submit
+                                </button>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-success round px-2">
-                                <i class="la la-check-square-o"></i> Submit
-                            </button>
-                        </div>
                     </form>
-                </div>
-            </div>
 
-        </div>
+                </div>
+
+            </div>
+            </div>
 
     </section>
 
@@ -115,18 +117,18 @@
 
 @endpush
 @push('page-js')
-   <script>
-       $('input[name$="segment_type"]').click(function () {
-           if ($('input[name$="segment_type"]').is(':checked')) {
-               // alert("it's checked");
-               $("#customMsisdnExcel").addClass('hidden');
-               $("#customMsisdn").addClass('show').removeClass('hidden');
-               // $("#Cars" + test).show();
-           } else {
-               $("#customMsisdnExcel").addClass('show').removeClass('hidden');
-               $("#customMsisdn").addClass('hidden').removeClass('show');
-           }
-       });
+    <script>
+        $('input[name$="segment_type"]').click(function () {
+            if ($('input[name$="segment_type"]').is(':checked')) {
+                // alert("it's checked");
+                $("#customMsisdnExcel").addClass('hidden');
+                $("#customMsisdn").addClass('show').removeClass('hidden');
+                // $("#Cars" + test).show();
+            } else {
+                $("#customMsisdnExcel").addClass('show').removeClass('hidden');
+                $("#customMsisdn").addClass('hidden').removeClass('show');
+            }
+        });
         $(function () {
             $('.dropify').dropify({
                 messages: {
@@ -138,7 +140,6 @@
             });
 
             $("#navigate_action").select2();
-
 
 
         })
