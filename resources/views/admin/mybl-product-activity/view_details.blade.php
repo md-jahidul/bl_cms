@@ -48,7 +48,7 @@
                                     <th style="background: rgb(229,182,147)" colspan="2">Old Data</th>
                                     <th style="background: rgba(160,208,136,0.88)" colspan="2">New Changes</th>
                                 </tr>
-                                @foreach($activity->updated_data['new'] as $key => $data)
+                                @foreach($activity->updated_data['old'] as $key => $data)
                                     <tr>
                                         <th width="20%">{{ str_replace('_', ' ', ucfirst($key)) }}</th>
                                         <td>{{ $data }}</td>

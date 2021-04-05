@@ -191,7 +191,7 @@
                         width: '5%',
                         render: function (data, type, row) {
                             let details_url = "{{ URL('product-activities-details/') }}" + "/" + row.id;
-                            return `<a href=" ` + details_url + `" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `">`+row.product_code+`"</a>`
+                            return `<a href=" ` + details_url + `" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `">`+row.product_code+`</a>`
                         }
                     },
                     {
