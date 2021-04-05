@@ -53,13 +53,14 @@
                                                disabled>
                                     </div>
                                 </div>
-
-                                <div class="col-md-4">
-                                    <div kclass="form-group">
+                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                         <label for="product_code">Product Code</label>
-                                        <input class="form-control" value="{{ $details->details->product_code }}"
-                                               disabled>
-                                    </div>
+                                        <input type="hidden" class="form-control" name="mybl_product_id" value="{{ $details->id }}">
+                                        <input class="form-control" name="product_code" value="{{ $details->details->product_code }}" readonly>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-4">
