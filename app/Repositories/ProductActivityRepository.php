@@ -31,7 +31,6 @@ class ProductActivityRepository extends BaseRepository
         $productActivity['activity_type'] = $others['activity_type'];
         $productActivity['platform'] = $others['platform'];
         $productActivity['updated_data']['new'] = $data;
-
         $this->model->create($productActivity);
     }
 }

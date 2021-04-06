@@ -436,6 +436,7 @@ class ProductCoreService
 
         $builder = new MyBlProduct();
         $builder = $builder->where('status', 1);
+        $builder = $builder->latest();
         /*        if ($request->status) {
           $builder = MyBlProduct::where('status', $request->status);
           } */
@@ -477,7 +478,7 @@ class ProductCoreService
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
-
+//        dd($items);
         $response = [
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
@@ -1051,8 +1052,6 @@ class ProductCoreService
                 $data_request['data_volume'] = $request['internet_volume_mb'] / 1024;
                 $data_request['data_volume_unit'] = ($request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
             }
-
-//            dd($data_request);
 
             $others = [
                'activity_type' => self::CREATE,
