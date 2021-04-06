@@ -200,6 +200,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
                 </li>
+                <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
+                    <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Base MSISDN</a>
+                </li>
                 <li class="{{ is_active_url('banner') . is_active_url('banner/create')}}">
                     <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-image"></i>My-BL Banner</a>

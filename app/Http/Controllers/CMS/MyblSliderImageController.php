@@ -14,6 +14,7 @@ use App\Services\AlSliderComponentTypeService;
 use App\Models\SliderImage;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use App\Services\BaseMsisdnService;
 
 class MyblSliderImageController extends Controller
 {
@@ -21,6 +22,7 @@ class MyblSliderImageController extends Controller
     private $sliderImageService;
     private $sliderService;
     private $sliderTypeService;
+    private $baseMsisdnService;
 
 
     /**
@@ -28,15 +30,18 @@ class MyblSliderImageController extends Controller
      * @param MyblSliderImageService $sliderImageService
      * @param MyblSliderService $sliderService
      * @param AlSliderComponentTypeService $sliderTypeService
+     * @param BaseMsisdnService $baseMsisdnService
      */
     public function __construct(
         MyblSliderImageService $sliderImageService,
         MyblSliderService $sliderService,
-        AlSliderComponentTypeService $sliderTypeService
+        AlSliderComponentTypeService $sliderTypeService,
+        BaseMsisdnService $baseMsisdnService
     ) {
         $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
+        $this->baseMsisdnService = $baseMsisdnService;
         $this->middleware('auth');
     }
 
@@ -49,6 +54,7 @@ class MyblSliderImageController extends Controller
      */
     public function index($sliderId)
     {
+
         $slider_information = $this->sliderService->findOne($sliderId);
         return view(
             'admin.myblslider.images.index',
@@ -64,8 +70,9 @@ class MyblSliderImageController extends Controller
      */
     public function create($sliderId)
     {
+        $baseGroups = $this->baseMsisdnService->findAll();
         $slider_information = $this->sliderService->findOne($sliderId);
-        return view('admin.myblslider.images.create', compact('sliderId', 'slider_information'));
+        return view('admin.myblslider.images.create', compact('sliderId', 'slider_information','baseGroups'));
     }
 
     /**return redirect(route('myblslider.index'));
