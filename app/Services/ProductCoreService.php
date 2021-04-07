@@ -833,12 +833,14 @@ class ProductCoreService
         }*/
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
-        $data['tag'] = $firstTag->title;
+        $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+
+//        dd($data);
 
         try {
             DB::beginTransaction();
@@ -848,6 +850,8 @@ class ProductCoreService
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
+            } else {
+                $this->myBlProductTagRepository->deleteByProductCode($product_code);
             }
 
             if ($request->has('offer_section_slug')) {
