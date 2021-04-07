@@ -33,7 +33,9 @@ class FaqQuestionsService
             FaqQuestion::create([
                 'category_id' => $request->category,
                 'question' => $request->question,
+                'question_bn' => $request->question_bn,
                 'answer' => $request->answer,
+                'answer_bn' => $request->answer_bn,
                 'platform' => $platform,
             ]);
 
@@ -85,7 +87,9 @@ class FaqQuestionsService
         $question->update([
             'category_id' => $request->category,
             'question' => $request->question,
+            'question_bn' => $request->question_bn,
             'answer' => $request->answer,
+            'answer_bn' => $request->answer_bn,
         ]);
 
         session()->flash('success', 'FAQ Question Updated Successfully');
