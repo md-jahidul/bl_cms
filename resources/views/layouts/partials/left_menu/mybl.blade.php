@@ -298,6 +298,12 @@
                         <i class="la la-align-center"></i> Data Pack Filter
                     </a>
                 </li>
+                <li class="{{is_active_url('special-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-phone-call"></i> Special call rate Filter
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
