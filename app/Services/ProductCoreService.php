@@ -478,7 +478,7 @@ class ProductCoreService
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
-//        dd($items);
+
         $response = [
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
@@ -862,8 +862,8 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-        $firstTag = $request->tags ? ProductTag::where('id', $request->tags[0])->first() : [];
-        $data['tag'] = $firstTag->title ?? "";
+        $firstTag = ProductTag::where('id', $request->tags[0])->first();
+        $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -879,6 +879,8 @@ class ProductCoreService
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
+            } else {
+                $this->myBlProductTagRepository->deleteByProductCode($product_code);
             }
 
             if ($request->has('offer_section_slug')) {
