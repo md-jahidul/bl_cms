@@ -304,6 +304,11 @@
                         <i class="ft-phone-call"></i> Special call rate Filter
                     </a>
                 </li>
+                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-globe"></i> Recharge Offer</a>
+                </li>
             </ul>
         </li>
     @endif
