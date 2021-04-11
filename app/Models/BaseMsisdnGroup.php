@@ -10,4 +10,9 @@ class BaseMsisdnGroup extends Model
         'title',
         'status'
     ];
+
+    public function baseMsisdns()
+    {
+        return $this->hasMany(BaseMsisdn::class, 'group_id', 'id');
+    }
 }

@@ -8,6 +8,7 @@ class BaseMsisdn extends Model
 {
     protected $fillable = [
         'group_id',
-        'msisdn'
+        'msisdn',
+        'created_at'
     ];
 }

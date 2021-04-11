@@ -29,7 +29,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody>
                         @foreach($baseList as $key=>$list)
                             <tr>
                                 <td>{{$key+1}}</td>
@@ -37,7 +37,7 @@
                                 <td>{{date("d-M-Y h:i:s A", strtotime($list->created_at))}}</td>
                                 <td>{{$list->status==1?'Active':'Inactive'}}</td>
                                 <td>
-                                    <a href="" class="btn btn-xs btn-info">Edit</a>
+                                    <a href="{{ route('myblslider.base.msisdn.edit', $list->id) }}" class="btn btn-xs btn-info">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -2,9 +2,7 @@
 @section('title', 'Base Create')
 
 @php
-    $name = 'Create ';
-
-
+    $name = ($page == 'create') ? 'Create' : 'Edit';
 @endphp
 
 @section('card_name', "Base Msisdn")
@@ -25,9 +23,14 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                    <form novalidate class="form" action="{{route('myblslider.base.msisdn.store')}}" method="POST" enctype="multipart/form-data" >
-                        @csrf
+                    @if($page == "create")
+                        <form novalidate class="form" action="{{route('myblslider.base.msisdn.store')}}" method="POST" enctype="multipart/form-data">
                         @method('post')
+                    @else
+                        <form novalidate class="form" action="{{route('myblslider.base.msisdn.update', $baseMsisdn->id)}}" method="POST" enctype="multipart/form-data">
+                        @method('put')
+                    @endif
+                        @csrf
                         <div class="form-body">
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
@@ -40,7 +43,7 @@
                                             data-validation-required-message="Title is required"
                                             data-validation-regex-message="Title must start with alphabets"
                                             data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                            value="@if(old('title')) {{old('title')}} @endif" required id="title"
+                                            value="{{isset($baseMsisdn) ? $baseMsisdn->title : ''}}" id="title"
                                             type="text" class="form-control @error('title') is-invalid @enderror"
                                             placeholder="Title" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
@@ -53,8 +56,8 @@
                                             <label for="is_active" class="required">Active Status:</label>
                                             <select class="form-control" id="status"
                                                     name="status">
-                                                <option value="1"> Active</option>
-                                                <option value="0">Inactive</option>
+                                                <option value="1" {{ isset($baseMsisdn) && $baseMsisdn->status == 1 ? 'selected' : ''  }}> Active</option>
+                                                <option value="0" {{ isset($baseMsisdn) && $baseMsisdn->status == 0 ? 'selected' : ''  }}>Inactive</option>
                                             </select>
                                         </div>
                                         @error('status')
@@ -89,6 +92,17 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                @if($page == "edit")
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <a href="{{ route('myblslider.baseMsisdn.excel-export', $baseMsisdn->id) }}"
+                                               class="btn btn-secondary"><i class="la la-download"></i> Excel Export</a>
+                                        </div>
+                                    </div>
+                                    @include('admin.myblslider.base.msisdn-table', $baseMsisdn)
+                                @endif
+
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-success round px-2">
@@ -97,12 +111,9 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
-
             </div>
-            </div>
-
+        </div>
     </section>
 
 
@@ -140,8 +151,6 @@
             });
 
             $("#navigate_action").select2();
-
-
         })
     </script>
 @endpush
