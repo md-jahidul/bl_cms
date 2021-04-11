@@ -28,7 +28,8 @@ class PrivacyPolicyController extends Controller
         PrivacyPolicy::updateOrCreate([
            'platform' => 'app'
         ], [
-           'privacy_policy' => $request->privacy_policy
+           'privacy_policy' => $request->privacy_policy,
+           'privacy_policy_bn' => $request->privacy_policy_bn
         ]);
 
         return redirect()->back()->with('success', 'Privacy Policy are Saved');

@@ -10,6 +10,7 @@
 namespace App\Repositories;
 
 use App\Models\Slider;
+use App\Models\SliderImage;
 use DB;
 
 class SliderRepository extends BaseRepository
@@ -19,5 +20,10 @@ class SliderRepository extends BaseRepository
     public function getAppSlider()
     {
         return $this->modelName::with('sliderImages')->where('platform', 'App')->get();
+    }
+
+    public function getSliderImage()
+    {
+        return $this->belongsTo(SliderImage::class, 'banner_id', 'id');
     }
 }

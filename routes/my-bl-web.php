@@ -188,6 +188,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
 
 
+
     // Support Messages
     Route::get('support-message', 'CMS\SupportMessageRatingController@index')->name('support-message');
     Route::post('support-message', 'CMS\SupportMessageRatingController@index')->name('support.message.list');
@@ -387,6 +388,44 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-pack/filter/validity', 'CMS\InternetPackFilterController@getValidityFilter')
         ->name('internet-pack.filter.validity.list');
 
+
+
+    //RECHARGE OFFER
+    Route::get('recharge-pack/filter/create', 'CMS\RechargePackFilterController@create')
+        ->name('recharge-pack.filter.create');
+
+    Route::post('recharge-pack/price/save', 'CMS\RechargePackFilterController@savePriceFilter')
+        ->name('recharge-pack.filter.price.save');
+    Route::get('recharge-pack/filter/price', 'CMS\RechargePackFilterController@getPriceFilter')
+        ->name('recharge-pack.filter.price.list');
+    Route::post('recharge-pack/filter/delete', 'CMS\RechargePackFilterController@deleteFilter')
+        ->name('recharge-pack.filter.delete');
+
+    Route::post('recharge-internet-pack/filter/internet/save', 'CMS\RechargePackFilterController@saveInternetFilter')
+        ->name('recharge-internet-pack.filter.internet.save');
+    Route::get('recharge-internet-pack/filter/internet', 'CMS\RechargePackFilterController@getInternetFilter')
+        ->name('recharge-internet-pack.filter.internet.list');
+
+
+    Route::post('recharge-internet-pack/filter/validity/save', 'CMS\RechargePackFilterController@saveValidityFilter')
+        ->name('recharge-internet-pack.filter.validity.save');
+    Route::get('recharge-internet-pack/filter/validity', 'CMS\RechargePackFilterController@getValidityFilter')
+        ->name('recharge-internet-pack.filter.validity.list');
+
+
+    Route::post('recharge-pack/filter/minutes/save', 'CMS\RechargePackFilterController@saveMinutesFilter')
+        ->name('recharge-pack.filter.minutes.save');
+    Route::get('recharge-pack/filter/minutes', 'CMS\RechargePackFilterController@getMinutesFilter')
+        ->name('recharge-pack.filter.minutes.list');
+
+    Route::post('recharge-pack/filter/sms/save', 'CMS\RechargePackFilterController@saveSmsFilter')
+        ->name('recharge-pack.filter.sms.save');
+    Route::get('recharge-pack/filter/sms', 'CMS\RechargePackFilterController@getSmsFilter')
+        ->name('recharge-pack.filter.sms.list');
+
+    Route::post('recharge-pack/filter/sort/save', 'CMS\RechargePackFilterController@saveSortFilter')
+        ->name('recharge-pack.filter.sort.save');
+
     // MINUTES
     Route::get('minute-pack/filter/create', 'CMS\MinutePackFilterController@create')
         ->name('minute-pack.filter.create');
@@ -410,6 +449,41 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::post('minute-pack/filter/sort/save', 'CMS\MinutePackFilterController@saveSortFilter')
         ->name('minute.filter.sort.save');
+
+    // SPECIAL CALL RATE FILTER
+    Route::get('special-pack/filter/create', 'CMS\SpecialCallRateFilterController@create')
+        ->name('special-pack.filter.create');
+    Route::post('special-pack/price/save', 'CMS\SpecialCallRateFilterController@savePriceFilter')
+        ->name('special-pack.filter.price.save');
+    Route::get('special-pack/filter/price', 'CMS\SpecialCallRateFilterController@getPriceFilter')
+        ->name('special-pack.filter.price.list');
+
+    Route::post('special-pack/filter/delete', 'CMS\SpecialCallRateFilterController@deleteFilter')
+        ->name('special-pack.filter.delete');
+//
+    Route::post('special-pack/filter/minute/save', 'CMS\SpecialCallRateFilterController@saveMinuteFilter')
+        ->name('special-pack.filter.minute.save');
+    Route::get('special-pack/filter/minute', 'CMS\SpecialCallRateFilterController@getMinuteFilter')
+        ->name('special-pack.filter.minute.list');
+//
+    Route::post('special-pack/filter/validity/save', 'CMS\SpecialCallRateFilterController@saveValidityFilter')
+        ->name('special-pack.filter.validity.save');
+    Route::get('special-pack/filter/validity', 'CMS\SpecialCallRateFilterController@getValidityFilter')
+        ->name('special-pack.filter.validity.list');
+//
+    Route::post('special-pack/filter/sort/save', 'CMS\SpecialCallRateFilterController@saveSortFilter')
+        ->name('special.filter.sort.save');
+
+    Route::post('special-pack/filter/sms/save', 'CMS\SpecialCallRateFilterController@saveSmsFilter')
+        ->name('special-pack.filter.sms.save');
+    Route::get('special-pack/filter/sms', 'CMS\SpecialCallRateFilterController@getSmsFilter')
+        ->name('special-pack.filter.sms.list');
+
+    Route::post('special-pack/filter/internet/save', 'CMS\SpecialCallRateFilterController@saveInternetFilter')
+        ->name('special-pack.filter.internet.save');
+    Route::get('special-pack/filter/internet', 'CMS\SpecialCallRateFilterController@getInternetFilter')
+        ->name('special-pack.filter.internet.list');
+
 
     // SMS
 
@@ -505,6 +579,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
 
+//    Banner Analytic
+//    Route::resource('banner-analytic', 'CMS\BannerAnalyticController');
+    Route::get('banner-analytic', 'CMS\BannerAnalyticController@index')->name('banner-analytic.index');
+    Route::Get('banner-analytic/data', 'CMS\BannerAnalyticController@data')->name('banner-analytic.data');
+    Route::Get('banner-analytic/report/details/{id}', 'CMS\BannerAnalyticController@detailreport')->name('banner-analytic.report.details');
+    Route::Get('banner-analytic/purchase/report/details/{id}', 'CMS\BannerAnalyticController@purchaseDetailreport')->name('banner-analytic.purchase.report.details');
 
     /*
      *  Feed Routes

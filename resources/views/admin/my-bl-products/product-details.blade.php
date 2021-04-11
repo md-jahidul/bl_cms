@@ -197,7 +197,7 @@
                                         @endphp
                                         <select multiple
                                                 class="form-control tags"
-                                                name="tags[]" required>
+                                                name="tags[]">
                                             <option value=""></option>
 
                                             @foreach ($tags as $key => $tag)
@@ -264,6 +264,20 @@
                                         <input type="checkbox" id="show_in_home" value="1" name="show_in_app"
                                                @if($details->show_in_home) checked @endif>
                                         <label for="show_in_home">Show in Home</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="pin_to_top" value="1" name="pin_to_top"
+                                               @if($details->pin_to_top) checked @endif
+                                            {{$disablePinToTop ? 'disabled' : ''}}>
+                                        <label for="pin_to_top">Pin to Top</label>
+                                        @if($disablePinToTop)
+                                            <label for="pin_to_top" class="small red">
+                                                Maximum range for pin to top has been exceeded.
+                                                To pin this product to top , please unpin any other product and retry.
+                                            </label>
+                                        @endif
                                     </fieldset>
                                 </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">

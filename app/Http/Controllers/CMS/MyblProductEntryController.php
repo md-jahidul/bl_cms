@@ -82,7 +82,12 @@ class MyblProductEntryController extends Controller
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
 
-        return view('admin.my-bl-products.product-details', compact('details', 'internet_categories', 'tags'));
+        $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
+
+        $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
+
+        return view('admin.my-bl-products.product-details',
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop'));
     }
 
     /**
