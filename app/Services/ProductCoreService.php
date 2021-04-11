@@ -463,6 +463,7 @@ class ProductCoreService
             $link = $this->productDeepLinkRepository->findOneProductLink($item->product_code);
             $response['data'][] = [
                 'product_code' => $item->product_code,
+                'pin_to_top' => $item->pin_to_top,
                 'renew_product_code' => $item->details->renew_product_code,
                 'recharge_product_code' => $item->details->recharge_product_code,
                 'connection_type' => $item->details->sim_type,
@@ -839,6 +840,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
 
 //        dd($data);
 
@@ -880,6 +882,7 @@ class ProductCoreService
             unset($data_request['show_from']);
             unset($data_request['hide_from']);
             unset($data_request['is_visible']);
+            unset($data_request['pin_to_top']);
 
             if (isset($data_request['data_volume'])) {
                 $data_request['data_volume'] = substr(
