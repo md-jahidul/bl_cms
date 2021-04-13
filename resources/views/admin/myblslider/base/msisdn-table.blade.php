@@ -4,7 +4,7 @@
     <tr>
         <th width="5%"># SL</th>
         <th width="55%">Title</th>
-        <th width="20%">Last Updated At</th>
+{{--        <th width="20%">Last Updated At</th>--}}
     </tr>
     </thead>
     <tbody>
@@ -52,12 +52,12 @@
                             return row.msisdn;
                         }
                     },
-                    {
-                        name: 'created_at',
-                        render: function (data, type, row) {
-                            return row.created_at;
-                        }
-                    }
+                    // {
+                    //     name: 'created_at',
+                    //     render: function (data, type, row) {
+                    //         return row.created_at;
+                    //     }
+                    // }
                 ],
                 "fnCreatedRow": function (row, data, index) {
                     $('td', row).eq(0).html(index + 1);
