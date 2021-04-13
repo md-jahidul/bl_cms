@@ -118,6 +118,8 @@
 
                             @php
                                 $actionList = Helper::navigationActionList();
+
+                                /*dd($actionList)*/
                             @endphp
 
                             <div class="form-group col-md-6 mb-2">
@@ -211,7 +213,6 @@
                             </div>
 
                             <div class="col-md-8">
-                                {{$imageInfo->image_url}}
                                 <img style="height:100px;width:200px" id="img_display"
                                      src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
                             </div>
@@ -221,6 +222,118 @@
                                          class=" btn btn-success">Submit
                                  </button>
                              </div>--}}
+
+                            <div class="form-group col-md-12" id="BannerSegmentWiseDiv">
+                                <label><b>Banner segment wise CTA</b></label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Base Group</th>
+                                        <th>Segment Action</th>
+                                        <th>CTA Action</th>
+                                        <th>Status</th>
+                                        <th class="text-center" style="width: 2%">
+                                            <i data-repeater-create
+                                               class="la la-plus-circle text-info cursor-pointer"
+                                               id="repeater-button">
+                                            </i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody data-repeater-list="segment_wise_cta" id="cta_table">
+                                    @foreach($imageInfo->baseImageCats as $data)
+                                        <tr data-repeater-item>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="group_id">
+                                                    <option value="">Select Group</option>
+                                                    @foreach($baseGroups as $group)
+                                                        <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="action_name">
+                                                    <option value="">Select Action</option>
+                                                    @foreach ($actionList as $key => $value)
+                                                        <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
+                                            </td>
+                                            <td>
+                                                <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">
+                                                    <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>
+                                                    <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <i data-repeater-delete
+                                                   class="la la-trash-o text-danger cursor-pointer"></i>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+{{--                            <div class="form-group col-md-12" id="BannerSegmentWiseDiv">--}}
+{{--                                <label><b>Banner segment wise CTA</b></label>--}}
+{{--                                <table class="table table-bordered">--}}
+{{--                                    <thead>--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Base Group</th>--}}
+{{--                                        <th>Segment Action</th>--}}
+{{--                                        <th>CTA Action</th>--}}
+{{--                                        <th>Status</th>--}}
+{{--                                        <th class="text-center" style="width: 2%">--}}
+{{--                                            <i data-repeater-create--}}
+{{--                                               class="la la-plus-circle text-info cursor-pointer"--}}
+{{--                                               id="repeater-button">--}}
+{{--                                            </i>--}}
+{{--                                        </th>--}}
+{{--                                    </tr>--}}
+{{--                                    </thead>--}}
+{{--                                    <tbody data-repeater-list="segment_wise_cta"  id="cta_table">--}}
+{{--                                    <tr data-repeater-item>--}}
+{{--                                        <td>--}}
+{{--                                            <select class="form-control" id="segment_group" name="group_id">--}}
+{{--                                                <option value="">Select Group</option>--}}
+{{--                                                @foreach($baseGroups as $group)--}}
+{{--                                                    <option value="{{$group->id}}">{{$group->title}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <select class="form-control" id="segment_action" name="action_name">--}}
+{{--                                                <option value="">Select Action</option>--}}
+{{--                                                @foreach ($actionList as $key => $value)--}}
+{{--                                                    <option value="{{ $key }}">--}}
+{{--                                                        {{ $value }}--}}
+{{--                                                    </option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <input class="form-control" name="action_url_or_code" type="text">--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <select name="status" class="form-control ">--}}
+{{--                                                <option value="1">Yes</option>--}}
+{{--                                                <option value="0">No</option>--}}
+{{--                                            </select>--}}
+{{--                                        </td>--}}
+{{--                                        <td class="text-center align-middle">--}}
+{{--                                            <i data-repeater-delete--}}
+{{--                                               class="la la-trash-o text-danger cursor-pointer"></i>--}}
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                    </tbody>--}}
+{{--                                </table>--}}
+{{--                            </div>--}}
 
                             <div class="form-group col-md-12">
                                 <button style="float: right" type="submit" id="submitForm"
@@ -276,6 +389,7 @@
     <script>
 
         $(function () {
+            $('#BannerSegmentWiseDiv').repeater();
 
             var date = new Date();
             date.setDate(date.getDate());

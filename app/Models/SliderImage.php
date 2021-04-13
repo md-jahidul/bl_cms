@@ -33,4 +33,9 @@ class SliderImage extends Model
     {
         return $this->belongsTo(Slider::class);
     }
+
+    public function baseImageCats()
+    {
+        return $this->hasMany(BaseImageCta::class, 'banner_id', 'id');
+    }
 }

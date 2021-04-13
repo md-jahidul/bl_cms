@@ -123,13 +123,14 @@ class MyblSliderImageController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Factory|\Illuminate\Contracts\Foundation\Application|View
      */
     public function edit($sliderImageId)
     {
-        $imageInfo = SliderImage::find($sliderImageId);
+        $imageInfo = $this->sliderImageService->findOne($sliderImageId, 'baseImageCats');
         $products  = $this->sliderImageService->getActiveProducts();
-        return view('admin.myblslider.images.edit', compact('imageInfo', 'products'));
+        $baseGroups = $this->baseMsisdnService->findAll();
+        return view('admin.myblslider.images.edit', compact('imageInfo', 'products', 'baseGroups'));
     }
 
     /**
@@ -141,7 +142,12 @@ class MyblSliderImageController extends Controller
      */
     public function update(SliderImageUpdateRequest $request, $id)
     {
-        session()->flash('success', $this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
+        $response = $this->sliderImageService->updateSliderImage($request->all(), $id);
+        if ($response->status() == 500) {
+            session()->flash('error', $response->getContent());
+        } else {
+            session()->flash('success', $response->getContent());
+        }
         return redirect()->back();
     }
 

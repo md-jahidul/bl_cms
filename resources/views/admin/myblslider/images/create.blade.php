@@ -191,14 +191,16 @@
                                                 <th>Status</th>
                                                 <th class="text-center" style="width: 2%">
                                                     <i data-repeater-create
-                                                       class="la la-plus-circle text-info cursor-pointer"  id="repeater-button" ></i>
+                                                       class="la la-plus-circle text-info cursor-pointer"
+                                                       id="repeater-button">
+                                                    </i>
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody data-repeater-list="segment_wise_cta"  id="cta_table">
                                             <tr data-repeater-item>
                                                 <td>
-                                                    <select class="form-control" id="segment_action" name="segment_action">
+                                                    <select class="form-control" id="segment_action" name="group_id">
                                                         <option value="">Select Group</option>
                                                         @foreach($baseGroups as $group)
                                                             <option value="{{$group->id}}">{{$group->title}}</option>
@@ -206,7 +208,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control" id="segment_action" name="segment_action">
+                                                    <select class="form-control" id="segment_action" name="action_name">
                                                         <option value="">Select Action</option>
                                                         @foreach ($actionList as $key => $value)
                                                             <option value="{{ $key }}">
@@ -214,11 +216,12 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-
                                                 </td>
-                                                <td><input class="form-control" name="cta_action_text" type="text"></td>
                                                 <td>
-                                                    <select name="cta_status" class="form-control ">
+                                                    <input class="form-control" name="action_url_or_code" type="text">
+                                                </td>
+                                                <td>
+                                                    <select name="status" class="form-control ">
                                                       <option value="1">Yes</option>
                                                       <option value="0">No</option>
                                                     </select>
@@ -230,10 +233,8 @@
                                             </tr>
                                             </tbody>
                                         </table>
-
-
-
                                     </div>
+
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
                                                 class="btn btn-success round px-2">
@@ -264,7 +265,7 @@
 @endpush
 
 @push('page-js')
-    {{--    <script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>--}}
+{{--        <script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
@@ -367,7 +368,6 @@
                     $(".other-info-div").remove();
                 }
             })
-
         });
 
         $(function () {
@@ -379,12 +379,7 @@
                     'error': 'Choose correct file format'
                 }
             });
-
             $("#navigate_action").select2();
-
-
-
         })
     </script>
-
 @endpush
