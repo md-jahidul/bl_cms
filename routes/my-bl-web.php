@@ -102,10 +102,26 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Slider Image
 
     // Base Msisdn
+    Route::get('mybl-slider/base-msisdn-list', 'CMS\BaseMsisdnController@index')
+        ->name('myblslider.baseMsisdnList.index');
 
-    Route::get('mybl-slider/base-msisdn-list', 'CMS\BaseMsisdnController@index')->name('myblslider.baseMsisdnList.index');
-    Route::get('mybl-slider/base-msisdn-create', 'CMS\BaseMsisdnController@create')->name('myblslider.base.msisdn.create');
-    Route::post('mybl-slider/base-msisdn-store', 'CMS\BaseMsisdnController@store')->name('myblslider.base.msisdn.store');
+    Route::get('mybl-slider/base-msisdn-list-table/{id}', 'CMS\BaseMsisdnController@getBaseMsisdn')
+        ->name('myblslider.baseMsisdnList.table');
+
+    Route::get('mybl-slider/base-msisdn-excel-export/{id}', 'CMS\BaseMsisdnController@msisdnExcelExport')
+        ->name('myblslider.baseMsisdn.excel-export');
+
+    Route::get('mybl-slider/base-msisdn-create', 'CMS\BaseMsisdnController@create')
+        ->name('myblslider.base.msisdn.create');
+
+    Route::post('mybl-slider/base-msisdn-store', 'CMS\BaseMsisdnController@store')
+        ->name('myblslider.base.msisdn.store');
+
+    Route::get('mybl-slider/base-msisdn-edit/{id}', 'CMS\BaseMsisdnController@edit')
+        ->name('myblslider.base.msisdn.edit');
+
+    Route::put('mybl-slider/base-msisdn-update/{id}', 'CMS\BaseMsisdnController@update')
+        ->name('myblslider.base.msisdn.update');
 
     // minute
     Route::resource('minuteOffer', 'CMS\MinuteOfferController');
