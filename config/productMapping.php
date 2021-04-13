@@ -47,7 +47,7 @@ return [
             4 => 'To be Shown'
 
         ],
-        'max_no_of_pin_to_top' => 5
+        'max_no_of_pin_to_top' => 150
     ],
     /*'pcat' => [
         'columns' => [
