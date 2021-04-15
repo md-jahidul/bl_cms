@@ -920,22 +920,6 @@ class ProductCoreService
                 );
             }
 
-            if (isset($data_request['minute_volume'])) {
-                $data_request['minute_volume'] = substr(
-                    $data_request['minute_volume'],
-                    0,
-                    strrpos($data_request['minute_volume'], ' ')
-                );
-            }
-
-            if (isset($data_request['validity'])) {
-                $data_request['validity'] = substr(
-                    $data_request['validity'],
-                    0,
-                    strrpos($data_request['validity'], ' ')
-                );
-            }
-
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->renew_product_code));
             $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));

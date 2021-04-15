@@ -106,46 +106,80 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>Offer Breakdown En</label>
+                                    <label>Display Title En</label>
                                     <input class="form-control" name="display_title_en">
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>Offer Breakdown En</label>
+                                    <label>Display Title En</label>
                                     <input class="form-control" name="display_title_bn">
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('activation_ussd') ? ' error' : '' }}">
-                                    <label for="name">Activation USSD</label>
-                                    <input class="form-control" name="activation_ussd" required id="name">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('activation_ussd'))
-                                        <div class="help-block">{{ $errors->first('activation_ussd') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-4 {{ $errors->has('activation_ussd') ? ' error' : '' }}">--}}
+{{--                                    <label for="name">Activation USSD</label>--}}
+{{--                                    <input class="form-control" name="activation_ussd" required id="name">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('activation_ussd'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('activation_ussd') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-4 {{ $errors->has('balance_check_ussd') ? ' error' : '' }}">
-                                    <label for="name">Balance Check USSD</label>
-                                    <input class="form-control" name="balance_check_ussd" required id="name">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('balance_check_ussd'))
-                                        <div class="help-block">{{ $errors->first('balance_check_ussd') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-4 {{ $errors->has('balance_check_ussd') ? ' error' : '' }}">--}}
+{{--                                    <label for="name">Balance Check USSD</label>--}}
+{{--                                    <input class="form-control" name="balance_check_ussd" required id="name">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('balance_check_ussd'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('balance_check_ussd') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 <div class="form-group col-md-4 {{ $errors->has('short_description') ? ' error' : '' }}">
-                                        <label>Short Description</label>
-                                        <input class="form-control" name="short_description">
+                                        <label class="required">Short Description</label>
+                                        <input class="form-control" name="short_description" required>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_description'))
                                         <div class="help-block">{{ $errors->first('short_description') }}</div>
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-4 {{ $errors->has('display_sd_vat_tax') ? ' error' : '' }}">
+                                    <label>Display SD Vat Tax</label>
+                                    <input class="form-control" name="display_sd_vat_tax">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('display_sd_vat_tax'))
+                                        <div class="help-block">{{ $errors->first('display_sd_vat_tax') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('points') ? ' error' : '' }}">
+                                    <label>Points</label>
+                                    <input type="number" class="form-control" name="points">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('points'))
+                                        <div class="help-block">{{ $errors->first('points') }}</div>
+                                    @endif
+                                </div>
+
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>MRP Price</label>
                                         <input class="form-control" name="mrp_price">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input class="form-control" name="price">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Vat</label>
+                                        <input type="text" step="0.001" class="form-control" name="vat"
+                                               oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));">
                                     </div>
                                 </div>
 
@@ -157,6 +191,25 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('validity'))
                                         <div class="help-block">{{ $errors->first('validity') }}</div>
+                                    @endif
+                                </div>
+
+                                @php
+                                    $validityUnits = ['hour', 'hours', 'day', 'days'];
+                                @endphp
+
+                                <div class="form-group col-md-4 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
+                                    <label for="duration_category_id" class="validity_unit">Validity Unit</label>
+                                    <select class="form-control required duration_categories" name="validity_unit"
+                                            id="validity_unit" required>
+                                        <option value="">---Select Validity Unit---</option>
+                                        @foreach($validityUnits as $value)
+                                            <option value="{{ $value }}">{{ ucfirst($value) }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('duration_category_id'))
+                                        <div class="help-block">{{ $errors->first('duration_category_id') }}</div>
                                     @endif
                                 </div>
 
@@ -417,7 +470,7 @@
                                 </div>`
 
             offer_types.empty()
-
+            console.log(type)
             if (
                 type === 'data' ||
                 type === 'volume request' ||
@@ -432,7 +485,7 @@
                 offer_types.append(voiceVol)
             } else if (type === 'sms') {
                 offer_types.append(smsVol)
-            } else if (type === 'src') {
+            } else if (type === 'scr') {
                 offer_types.append(callRate + callRateUnit)
             } else if (type === 'ma loan') {
                 offer_types.empty()
