@@ -587,6 +587,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::Get('banner-analytic/purchase/report/details/{id}', 'CMS\BannerAnalyticController@purchaseDetailreport')->name('banner-analytic.purchase.report.details');
 
     /*
+    * Refer And Earn
+    */
+    Route::resource('mybl-refer-and-earn', 'CMS\BandhoSimImageController');
+
+    /*
      *  Feed Routes
      */
     Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {

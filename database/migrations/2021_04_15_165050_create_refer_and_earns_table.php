@@ -16,6 +16,7 @@ class CreateReferAndEarnsTable extends Migration
         Schema::create('refer_and_earns', function (Blueprint $table) {
             $table->increments('id');
             $table->string('campaign_title');
+            $table->string('icon');
             $table->string('dashboard_card_title');
             $table->string('dashboard_card_title_bn');
             $table->string('dashboard_card_sub_title');
@@ -26,12 +27,15 @@ class CreateReferAndEarnsTable extends Migration
             $table->string('refer_card_title_bn');
             $table->string('refer_card_sub_title');
             $table->string('refer_card_sub_title_bn');
+            $table->string('redeem_card_title');
+            $table->string('redeem_card_title_bn');
+            $table->string('redeem_card_sub_title');
+            $table->string('redeem_card_sub_title_bn');
             $table->string('referrer_product_code');
             $table->string('referee_product_code');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->string('status');
-
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
