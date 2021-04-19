@@ -23,9 +23,9 @@
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @if(isset($campaign))
-                                @method('post')
-                            @else
                                 @method('put')
+                            @else
+                                @method('post')
                             @endif
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
@@ -92,17 +92,26 @@
 
                                     <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
                                         <label for="product_code" class="required">Referrer Product Code</label>
-                                        <select class="product_code" name="referrer_product_code"
-                                                data-url="{{ url('product-core/match') }}"
-                                                required data-validation-required-message="Please select product code">
-                                            <option value="">Select product code</option>
-{{--                                            {{ dd($campaign->referrer_product_code) }}--}}
-                                            @foreach($products as $productCodes)
-                                                <option value="{{ $productCodes['product_code'] }}"
-                                                    selected>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="text-warning">If product exists in the list, select dropdown. otherwise, type then enter</span>
+                                        @if(isset($campaign))
+                                            <input required maxlength="200"
+                                                   data-validation-required-message="Please select product code"
+                                                   data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                                   value="{{ isset($campaign) ? $campaign->referrer_product_code : old('dashboard_card_title_bn') }}"
+                                                   id="dashboard_card_title_bn"
+                                                   type="text" class="form-control"
+                                                   placeholder="Please select product code" name="referrer_product_code">
+                                        @else
+                                            <select class="product_code" name="referrer_product_code"
+                                                    data-url="{{ url('product-core/match') }}"
+                                                    required data-validation-required-message="Please select product code">
+                                                <option value="">Select product code</option>
+    {{--                                            {{ dd($campaign->referrer_product_code) }}--}}
+                                                @foreach($products as $productCodes)
+                                                    <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="text-warning">If product exists in the list, select dropdown. otherwise, type then enter</span>
+                                        @endif
                                         <div class="help-block"></div>
                                         @if ($errors->has('referrer_product_code'))
                                             <div class="help-block">{{ $errors->first('referrer_product_code') }}</div>
@@ -111,16 +120,26 @@
 
                                     <div class="form-group col-md-6 {{ $errors->has('referee_product_code') ? ' error' : '' }}">
                                         <label for="referee_product_code" class="required">Referee Product Code</label>
-                                        <select class="product_code" name="referee_product_code"
-                                                data-url="{{ url('product-core/match') }}"
-                                                required data-validation-required-message="Please select product code">
-                                            <option value="">Select product code</option>
-                                            @foreach($products as $productCodes)
-                                                <option
-                                                    value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="text-warning">If product exists in the list, select dropdown. otherwise, type then enter</span>
+                                        @if(isset($campaign))
+                                            <input required maxlength="200"
+                                                   data-validation-required-message="Please select product code"
+                                                   data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                                   value="{{ isset($campaign) ? $campaign->referee_product_code : old('dashboard_card_title_bn') }}"
+                                                   id="dashboard_card_title_bn"
+                                                   type="text" class="form-control"
+                                                   placeholder="Please select product code" name="referee_product_code">
+                                        @else
+                                            <select class="product_code" name="referee_product_code"
+                                                    data-url="{{ url('product-core/match') }}"
+                                                    required data-validation-required-message="Please select product code">
+                                                <option value="">Select product code</option>
+                                                @foreach($products as $productCodes)
+                                                    <option
+                                                        value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="text-warning">If product exists in the list, select dropdown. otherwise, type then enter</span>
+                                        @endif
                                         <div class="help-block"></div>
                                         @if ($errors->has('referee_product_code'))
                                             <div class="help-block">{{ $errors->first('referee_product_code') }}</div>
@@ -132,7 +151,7 @@
                                         <div class='input-group'>
                                             <input type='text' class="form-control" name="start_date" id="start_date"
                                                    placeholder="Please select start date"
-                                                   value="{{ old("start_date") ? old("start_date") : '' }}"
+                                                   value="{{ isset($campaign) ? $campaign->start_date : old('start_date') }}"
                                                    autocomplete="off"/>
                                         </div>
                                         <div class="help-block"></div>
@@ -145,7 +164,7 @@
                                         <label for="end_date">End Date</label>
                                         <input type="text" name="end_date" id="end_date" class="form-control"
                                                placeholder="Please select end date"
-                                               value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="off">
+                                               value="{{ isset($campaign) ? $campaign->end_date : old('end_date') }}" autocomplete="off">
                                         <div class="help-block"></div>
                                         @if ($errors->has('end_date'))
                                             <div class="help-block">{{ $errors->first('end_date') }}</div>
@@ -161,7 +180,7 @@
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="@if(old('refer_card_title')) {{old('refer_card_title')}} @endif"
+                                               value="{{ isset($campaign) ? $campaign->refer_card_title : old('refer_card_title') }}"
                                                id="title"
                                                type="text" class="form-control @error('refer_card_title') is-invalid @enderror"
                                                placeholder="Enter title in English" name="refer_card_title">
@@ -174,7 +193,7 @@
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="@if(old('refer_card_title_bn')) {{old('refer_card_title_bn')}} @endif"
+                                               value="{{ isset($campaign) ? $campaign->refer_card_title_bn : old('refer_card_title_bn') }}"
                                                id="refer_card_title_bn"
                                                type="text" class="form-control"
                                                placeholder="Enter title in English" name="refer_card_title_bn">
@@ -186,7 +205,7 @@
                                         <textarea rows="10" id="refer_card_sub_title"
                                                   name="refer_card_sub_title"
                                                   class="form-control js_editor_box @error('refer_card_sub_title') is-invalid @enderror"
-                                                  placeholder="Enter dashboard in English">{{ old('refer_card_sub_title') ? old('refer_card_sub_title') : '' }}</textarea>
+                                                  placeholder="Enter dashboard in English">{{ isset($campaign) ? $campaign->refer_card_sub_title : old('refer_card_sub_title') }}</textarea>
                                         <small
                                             class="text-danger"> @error('refer_card_sub_title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
@@ -197,7 +216,7 @@
                                         <textarea rows="10" id="refer_card_sub_title_bn"
                                                   name="refer_card_sub_title_bn"
                                                   class="form-control js_editor_box @error('refer_card_sub_title_bn') is-invalid @enderror"
-                                                  placeholder="Enter dashboard in Bangla">{{ old('refer_card_sub_title_bn') ? old('refer_card_sub_title_bn') : '' }}</textarea>
+                                                  placeholder="Enter dashboard in Bangla">{{ isset($campaign) ? $campaign->refer_card_sub_title_bn : old('refer_card_sub_title_bn') }}</textarea>
                                         <small
                                             class="text-danger"> @error('refer_card_sub_title_bn') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
@@ -208,7 +227,7 @@
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="@if(old('redeem_card_title')) {{old('redeem_card_title')}} @endif"
+                                               value="{{ isset($campaign) ? $campaign->redeem_card_title : old('redeem_card_title') }}"
                                                id="redeem_card_title"
                                                type="text" class="form-control @error('redeem_card_title') is-invalid @enderror"
                                                placeholder="Enter title in English" name="redeem_card_title">
@@ -222,8 +241,8 @@
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="@if(old('redeem_card_title_bn')) {{old('redeem_card_title_bn')}} @endif"
-                                               id="refer_card_title_bn"
+                                               value="{{ isset($campaign) ? $campaign->redeem_card_title_bn : old('redeem_card_title_bn') }}"
+                                               id="redeem_card_title_bn"
                                                type="text" class="form-control"
                                                placeholder="Enter title in English" name="redeem_card_title_bn">
                                         <div class="help-block"></div>
@@ -234,7 +253,7 @@
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="@if(old('redeem_card_sub_title')) {{old('redeem_card_sub_title')}} @endif"
+                                               value="{{ isset($campaign) ? $campaign->redeem_card_sub_title : old('redeem_card_sub_title') }}"
                                                id="redeem_card_sub_title"
                                                type="text" class="form-control @error('redeem_card_sub_title') is-invalid @enderror"
                                                placeholder="Enter title in English" name="redeem_card_sub_title">
@@ -248,7 +267,7 @@
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="@if(old('redeem_card_sub_title_bn')) {{old('redeem_card_sub_title_bn')}} @endif"
+                                               value="{{ isset($campaign) ? $campaign->redeem_card_sub_title_bn : old('redeem_card_sub_title_bn') }}"
                                                id="redeem_card_sub_title_bn"
                                                type="text" class="form-control"
                                                placeholder="Enter title in English" name="redeem_card_sub_title_bn">
@@ -258,9 +277,11 @@
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                            <input type="radio" name="status" value="1" id="input-radio-15">
+                                            <input type="radio" name="status" value="1" id="input-radio-15"
+                                                {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16" checked>
+                                            <input type="radio" name="status" value="0" id="input-radio-16"
+                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block">  {{ $errors->first('status') }}</div>
@@ -276,7 +297,8 @@
                                                    name="icon"
                                                    class="dropify_image"
                                                    data-height="80"
-                                                   data-allowed-file-extensions="png jpg gif"/>
+                                                   data-default-file="{{ isset($campaign->icon) ? url('/' .$campaign->icon) : ''}}"
+                                                       data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block"></div>
                                             <small
                                                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>
@@ -291,8 +313,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </form>
@@ -320,7 +340,7 @@
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+{{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript"
@@ -329,10 +349,23 @@
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
     <script>
-        $("#post-input").hide();
         $(document).ready(function () {
 
-           var $select = $('.product_code').selectize({
+            var date = new Date();
+            date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                showClose: true,
+            });
+
+            $('#end_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false, //Important! See issue #1075
+                showClose: true,
+
+            });
+
+           $('.product_code').selectize({
                 create: true,
             });
 
@@ -341,8 +374,6 @@
             // var selected_objects = $.map(selectize, function(value) {
             //     return selectize.options[value];
             // });
-
-            console.log(selected_objects)
 
             $('.dropify_image').dropify({
                 messages: {

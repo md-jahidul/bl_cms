@@ -41,7 +41,7 @@
                                 <td>
                                     {{--                                            <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                     <a href="{{ route('mybl-refer-and-earn.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("mybl-refer-and-earn/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                    <a href="#" remove="{{ url("mybl-refer-and-earn/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>

@@ -97,21 +97,24 @@ class MyBlReferAndEarnController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = $this->referAndEarnService->updateCampaign($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect(route('mybl-refer-and-earn.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function destroy($id)
     {
-        //
+        $this->referAndEarnService->deleteCampaign($id);
+        return url('mybl-refer-and-earn');
     }
 }

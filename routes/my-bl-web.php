@@ -188,7 +188,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
 
 
-
     // Support Messages
     Route::get('support-message', 'CMS\SupportMessageRatingController@index')->name('support-message');
     Route::post('support-message', 'CMS\SupportMessageRatingController@index')->name('support.message.list');
@@ -387,7 +386,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('internet-pack.filter.validity.save');
     Route::get('internet-pack/filter/validity', 'CMS\InternetPackFilterController@getValidityFilter')
         ->name('internet-pack.filter.validity.list');
-
 
 
     //RECHARGE OFFER
@@ -589,7 +587,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
     * Refer And Earn
     */
-    Route::resource('mybl-refer-and-earn', 'CMS\MyBlReferAndEarnController');
+    Route::resource('mybl-refer-and-earn', 'CMS\MyBlReferAndEarnController')->except(['show', 'destroy']);
+    Route::get('mybl-refer-and-earn/destroy/{id}', 'CMS\MyBlReferAndEarnController@destroy');
 
     /*
      *  Feed Routes

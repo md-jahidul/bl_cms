@@ -44,19 +44,13 @@ class MyblReferAndEarnService
      */
     public function storeCampaign($data)
     {
-
         if (!empty($data['icon'])) {
             $data['icon'] = 'storage/' . $data['icon']->store('refer_and_earn');
         }
         $data['referrer_product_code'] = str_replace(' ', '', strtoupper($data['referrer_product_code']));
         $data['referee_product_code'] = str_replace(' ', '', strtoupper($data['referee_product_code']));
-
-//        dd($data);
-
         $this->save($data);
-
-
-        return new Response("Refer and earn camping has been successfully created");
+        return new Response("Refer and earn campaign has been successfully created");
     }
 
     /**
@@ -65,19 +59,20 @@ class MyblReferAndEarnService
      * @param $id
      * @return Response
      */
-    public function updateMigratePlan($data, $id)
+    public function updateCampaign($data, $id)
     {
-        $referAndEarnRepository = $this->findOne($id);
+        $referAndEarn = $this->findOne($id);
+        if (isset($data['icon'])) {
+            $data['icon'] = 'storage/' . $data['icon']->store('refer_and_earn');
 
-        if (isset($data['image_url'])) {
-            $data['image_url'] = 'storage/' . $data['image_url']->store('plan');
-            unlink($referAndEarnRepository->image_url);
+//            if ($referAndEarn->icon) {
+//                unlink($referAndEarn->icon);
+//            }
         }
-
-        $referAndEarnRepository->update($data);
-
-        return Response('Migrate Plan has been successfully updated');
-
+        $data['referrer_product_code'] = str_replace(' ', '', strtoupper($data['referrer_product_code']));
+        $data['referee_product_code'] = str_replace(' ', '', strtoupper($data['referee_product_code']));
+        $referAndEarn->update($data);
+        return Response('Refer and earn campaign has been successfully updated');
     }
 
     /**
@@ -85,11 +80,11 @@ class MyblReferAndEarnService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteMigratePlan($id)
+    public function deleteCampaign($id)
     {
-        $referAndEarnRepository = $this->findOne($id);
-        $referAndEarnRepository->delete();
-        return Response('Migrate Plan has been successfully deleted');
+        $referAndEarn = $this->findOne($id);
+        $referAndEarn->delete();
+        return Response('Refer and earn campaign has been successfully deleted');
     }
 
     /**
