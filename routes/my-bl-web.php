@@ -443,7 +443,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('internet-pack.filter.validity.list');
 
 
-
     //RECHARGE OFFER
     Route::get('recharge-pack/filter/create', 'CMS\RechargePackFilterController@create')
         ->name('recharge-pack.filter.create');
@@ -639,6 +638,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::Get('banner-analytic/data', 'CMS\BannerAnalyticController@data')->name('banner-analytic.data');
     Route::Get('banner-analytic/report/details/{id}', 'CMS\BannerAnalyticController@detailreport')->name('banner-analytic.report.details');
     Route::Get('banner-analytic/purchase/report/details/{id}', 'CMS\BannerAnalyticController@purchaseDetailreport')->name('banner-analytic.purchase.report.details');
+
+    /*
+    * Refer And Earn
+    */
+    Route::resource('mybl-refer-and-earn', 'CMS\MyBlReferAndEarnController')->except(['show', 'destroy']);
+    Route::get('mybl-refer-and-earn/destroy/{id}', 'CMS\MyBlReferAndEarnController@destroy');
 
     /*
      *  Feed Routes

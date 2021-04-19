@@ -312,16 +312,27 @@
                         <i class="la la-align-center"></i> Data Pack Filter
                     </a>
                 </li>
+<<<<<<< HEAD
                 <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-globe"></i> Recharge Offer</a>
                 </li>
+=======
+>>>>>>> feature/refer-and-earn
                 <li class="{{is_active_url('special-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="ft-phone-call"></i> Special call rate Filter
                     </a>
+<<<<<<< HEAD
+=======
+                </li>
+                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-globe"></i> Recharge Offer</a>
+>>>>>>> feature/refer-and-earn
                 </li>
             </ul>
         </li>
@@ -525,7 +536,26 @@
                 </a>
             </li>
         </ul>
+    </li>
 
+    <!-- Agent Deep link Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-dollar"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Refer And Earn</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Campaign List
+                </a>
+            </li>
+{{--            <li class="{{is_active_url('agent/deeplink/report')}}">--}}
+{{--                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-list"></i> Report--}}
+{{--                </a>--}}
+{{--            </li>--}}
+        </ul>
+    </li>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
