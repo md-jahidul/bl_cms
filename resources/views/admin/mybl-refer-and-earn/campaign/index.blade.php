@@ -1,14 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Feed')
-@section('card_name', 'Feed')
+@section('title', 'Refer And Earn')
+@section('card_name', 'Refer And Earn')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Feed List</li>
+    <li class="breadcrumb-item active">Campaign List</li>
 @endsection
 
 @section('action')
-    <a href="{{route('feeds.create')}}" class="btn btn-primary round btn-glow px-2"><i
+    <a href="{{route('mybl-refer-and-earn.create')}}" class="btn btn-primary round btn-glow px-2"><i
             class="la la-plus"></i>
-        Create Feed
+        Create Campaign
     </a>
 @endsection
 
@@ -23,49 +23,27 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Title</th>
+                            <th>Campaign Title</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Feed Seen</th>
-                            <th>Status</th>
+{{--                            <th>Product Code</th>--}}
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($feeds as $feed)
+                        @foreach ($referEarnCampaigns as $data)
                             <tr>
-                                <td>{{$feed->id}}</td>
-                                <td>{{$feed->type}}</td>
-                                <td>{{(isset($feed->category->title)?$feed->category->title:'')}}</td>
-                                <td>{{(isset($feed->title)?$feed->title:'')}}</td>
-                                <td>{{$feed->start_date}}</td>
-                                <td>{{$feed->end_date}}</td>
-                                <td>{{$feed->view_count}}</td>
-                                <td>{{$feed->status == 1 ? 'Active' : 'Inactive'}}</td>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $data->campaign_title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{$data->start_date}}</td>
+                                <td>{{$data->end_date}}</td>
+{{--                                <td>{{$data->view_count}}</td>--}}
                                 <td>
-                                    <div class="row">
-                                        <div class="col-md-2 m-1">
-                                            <a role="button" title="Edit Feed"
-                                               href="{{route('feeds.edit',$feed->id)}}"
-                                               class="btn-pancil btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-2 m-1">
-                                            <button data-id="{{$feed->id}}" title="Delete Feed"
-                                                    class="btn btn-outline-danger delete" onclick=""><i
-                                                    class="la la-trash"></i></button>
-                                            <form id="delete-form-{{$feed->id}}"
-                                                  action="{{route('feeds.destroy',$feed->id)}}"
-                                                  method="POST"
-                                                  style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </div>
-                                    </div>
+                                    {{--                                            <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
+                                    <a href="{{ route('mybl-refer-and-earn.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("mybl-refer-and-earn/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                        <i class="la la-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

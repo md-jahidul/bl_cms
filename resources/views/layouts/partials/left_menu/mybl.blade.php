@@ -487,7 +487,26 @@
                 </a>
             </li>
         </ul>
+    </li>
 
+    <!-- Agent Deep link Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-dollar"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Refer And Earn</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+                <a class="menu-item" href="{{ route('deeplink.agent.list') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Campaign List
+                </a>
+            </li>
+{{--            <li class="{{is_active_url('agent/deeplink/report')}}">--}}
+{{--                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-list"></i> Report--}}
+{{--                </a>--}}
+{{--            </li>--}}
+        </ul>
+    </li>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}

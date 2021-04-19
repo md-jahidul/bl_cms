@@ -589,7 +589,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
     * Refer And Earn
     */
-    Route::resource('mybl-refer-and-earn', 'CMS\BandhoSimImageController');
+    Route::resource('mybl-refer-and-earn', 'CMS\MyBlReferAndEarnController');
 
     /*
      *  Feed Routes
