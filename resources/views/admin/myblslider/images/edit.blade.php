@@ -24,7 +24,7 @@
                             <div class="form-group col-md-12">
                                 <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
                                     <input type="radio" name="user_type" value="all" id="radio-15"
-                                           @if($imageInfo->user_type == "all") {{ 'checked' }} @endif checked>
+                                           @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
                                     <label for="input-radio-15" class="mr-3">All</label>
                                     <input type="radio" name="user_type" value="prepaid"
                                            id="radio-16" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
@@ -35,6 +35,10 @@
                                     <input type="radio" name="user_type" value="propaid"
                                            id="radio-18" @if($imageInfo->user_type == "propaid") {{ 'checked' }} @endif>
                                     <label for="input-radio-18" class="mr-3">Propaid</label>
+
+                                    <input type="radio" name="segment_wise_banner" value="propaid"
+                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>
+                                    <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
                                 </div>
                             </div>
 

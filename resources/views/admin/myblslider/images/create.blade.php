@@ -45,6 +45,10 @@
                                             <input type="radio" name="user_type" value="propaid" id="input-radio-18">
                                             <label for="input-radio-18" class="mr-3">Propaid</label>
 
+                                            <input type="radio" name="user_type" value="segment_wise_banner"
+                                                   id="segment_wise_banner">
+                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
+
 
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>

@@ -62,6 +62,7 @@ class MyblSliderImageService
                     // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
                     $image['other_attributes'] = $other_attributes;
                 }
+//                dd($image);
                 $sliderImg = $this->save($image);
 //                dd($image['segment_wise_cta']);
                 foreach ($image['segment_wise_cta'] as $segmentCTA) {
