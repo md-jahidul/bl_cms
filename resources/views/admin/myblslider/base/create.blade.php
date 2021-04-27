@@ -34,8 +34,8 @@
                         <div class="form-body">
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="title" class="required">Title:</label>
+                                    <div class="form-group col-md-12 mb-2">
+                                        <label for="title" class="required">Base Msisdn Group Title:</label>
                                         <input
                                             required
                                             maxlength="200"
@@ -50,28 +50,27 @@
                                         <div class="help-block"></div>
                                     </div>
 
-
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="is_active" class="required">Active Status:</label>
-                                            <select class="form-control" id="status"
-                                                    name="status">
-                                                <option value="1" {{ isset($baseMsisdn) && $baseMsisdn->status == 1 ? 'selected' : ''  }}> Active</option>
-                                                <option value="0" {{ isset($baseMsisdn) && $baseMsisdn->status == 0 ? 'selected' : ''  }}>Inactive</option>
-                                            </select>
-                                        </div>
-                                        @error('status')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+{{--                                    <div class="col-6">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label for="is_active" class="required">Active Status:</label>--}}
+{{--                                            <select class="form-control" id="status"--}}
+{{--                                                    name="status">--}}
+{{--                                                <option value="1" {{ isset($baseMsisdn) && $baseMsisdn->status == 1 ? 'selected' : ''  }}> Active</option>--}}
+{{--                                                <option value="0" {{ isset($baseMsisdn) && $baseMsisdn->status == 0 ? 'selected' : ''  }}>Inactive</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                        @error('status')--}}
+{{--                                        <span class="invalid-feedback" role="alert">--}}
+{{--                                            <strong>{{ $message }}</strong>--}}
+{{--                                        </span>--}}
+{{--                                        @enderror--}}
+{{--                                    </div>--}}
 
                                     <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">
                                         <label><b>Msisdn for Banner segment</b></label>
                                         <div class="form-group">
                                             <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">
-                                            <label for="input-radio-19" class="mr-3">Individual</label>
+                                            <label for="input-radio-19" class="mr-3">Comma-separated Number</label>
                                             <div class="help-block"></div>
                                         </div>
                                         <div class="form-group" id="customMsisdnExcel">
@@ -84,7 +83,7 @@
                                             <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>
                                         @endif
                                         <div class="form-group hidden" id="customMsisdn">
-                                            <textarea class="form-control" name="custom_msisdn" cols="2"
+                                            <textarea class="form-control" name="custom_msisdn" cols="3" rows="5"
                                                       placeholder="019000000000,01400000000"></textarea>
                                         </div>
                                         <div class="help-block"></div>
@@ -144,7 +143,7 @@
         $(function () {
             $('.dropify').dropify({
                 messages: {
-                    'default': 'Browse for an Image File to upload',
+                    'default': 'Browse for an XLSX or CSV File to upload',
                     'replace': 'Click to replace',
                     'remove': 'Remove',
                     'error': 'Choose correct file format'
