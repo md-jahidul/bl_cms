@@ -113,7 +113,7 @@
                                     @php
                                         $actionList = Helper::navigationActionList();
                                     @endphp
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-6 mb-2" id="slider_action">
                                         <label for="redirect_url">Slider Action </label>
                                         <select id="navigate_action" name="redirect_url"
                                                 class="browser-default custom-select">
@@ -172,15 +172,14 @@
                                         </div>
                                     </div>--}}
 
-                                    <div id="append_div" class="col-md-6">
-                                    </div>
-                                    <div class="col-md-8">
+{{--                                    <div id="append_div" class="col-md-6"></div>--}}
+                                    <div class="col-md-8 mb-2">
                                         <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt=""
                                              srcset="">
                                     </div>
 
 
-                                    <div class="form-group col-md-12 mt-2" id="BannerSegmentWiseDiv">
+                                    <div class="form-group col-md-12 hidden" id="BannerSegmentWiseDiv">
                                         <label><b>Banner segment wise CTA</b></label>
                                         <table class="table table-bordered">
                                             <thead>
@@ -279,99 +278,100 @@
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script>
 
-
-
-        $('#input-radio-15,#input-radio-16,#input-radio-17,#input-radio-18,#input-radio-19').click(function () {
-            if ($('#input-radio-19').is(':checked')) {
-                $("#CustomMsisdnSegmentDiv").addClass('show').removeClass('hidden');
-            } else {
-                $("#CustomMsisdnSegmentDiv").addClass('hidden').removeClass('show');
-            }
-        });
-
-        $('.dropify').dropify({
-            messages: {
-                'default': 'Browse for an Excel File to upload',
-                'replace': 'Click to replace',
-                'remove': 'Remove',
-                'error': 'Choose correct file format'
-            }
-        });
         $(function () {
-            var content = "";
-            var url_html;
-            var product_html;
-            var parse_data;
-            let dial_html, other_attributes = '';
-            var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
 
-            if (js_data) {
-                parse_data = JSON.parse(js_data);
-                other_attributes = parse_data.other_attributes;
-                if (other_attributes) {
-                    content = other_attributes.content;
-                }
-            }
-
-
-            // add dial number
-            dial_html = ` <div class="form-group other-info-div">
-                                        <label>Dial Number</label>
-                                        <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
-                                        <div class="help-block"></div>
-                                    </div>`;
-
-            url_html = ` <div class="form-group other-info-div">
-                                        <label>Redirect External URL</label>
-                                        <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
-                                        <div class="help-block"></div>
-                                    </div>`;
-            product_html = ` <div class="form-group other-info-div">
-                                        <label>Select a product</label>
-                                        <select class="product-list form-control"  name="other_attributes" required></select>
-                                        <div class="help-block"></div>
-                                    </div>`;
-
-
-            $('#navigate_action').on('change', function () {
-                let action = $(this).val();
-                console.log(action);
-                if (action == 'DIAL') {
-                    $("#append_div").html(dial_html);
-                } else if (action == 'URL') {
-                    $("#append_div").html(url_html);
-                } else if (action == 'PURCHASE') {
-                    $("#append_div").html(product_html);
-                    $(".product-list").select2({
-                        placeholder: "Select a product",
-                        minimumInputLength: 3,
-                        allowClear: true,
-                        selectOnClose: true,
-                        ajax: {
-                            url: "{{ route('notification.productlist.dropdown') }}",
-                            dataType: 'json',
-                            data: function (params) {
-                                var query = {
-                                    productCode: params.term
-                                }
-                                // Query parameters will be ?search=[term]&type=public
-                                return query;
-                            },
-                            processResults: function (data) {
-                                // Transforms the top-level key of the response object from 'items' to 'results'
-                                return {
-                                    results: data
-                                };
-                            }
-                        }
-                    });
+            $("input[name=user_type]").click(function () {
+                if ($(this).val() === "segment_wise_banner") {
+                    $("#BannerSegmentWiseDiv").addClass('show').removeClass('hidden');
+                    $("#slider_action").addClass('hidden').removeClass('show');
                 } else {
-                    $(".other-info-div").remove();
+                    $("#BannerSegmentWiseDiv").addClass('hidden').removeClass('show');
+                    $("#slider_action").addClass('show').removeClass('hidden');
                 }
-            })
-        });
+            });
 
-        $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Excel File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+            $(function () {
+                var content = "";
+                var url_html;
+                var product_html;
+                var parse_data;
+                let dial_html, other_attributes = '';
+                var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
+
+                if (js_data) {
+                    parse_data = JSON.parse(js_data);
+                    other_attributes = parse_data.other_attributes;
+                    if (other_attributes) {
+                        content = other_attributes.content;
+                    }
+                }
+
+
+                // add dial number
+                dial_html = ` <div class="form-group other-info-div">
+                                            <label>Dial Number</label>
+                                            <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
+                                            <div class="help-block"></div>
+                                        </div>`;
+
+                url_html = ` <div class="form-group other-info-div">
+                                            <label>Redirect External URL</label>
+                                            <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
+                                            <div class="help-block"></div>
+                                        </div>`;
+                product_html = ` <div class="form-group other-info-div">
+                                            <label>Select a product</label>
+                                            <select class="product-list form-control"  name="other_attributes" required></select>
+                                            <div class="help-block"></div>
+                                        </div>`;
+
+
+                $('#navigate_action').on('change', function () {
+                    let action = $(this).val();
+                    console.log(action);
+                    if (action == 'DIAL') {
+                        $("#append_div").html(dial_html);
+                    } else if (action == 'URL') {
+                        $("#append_div").html(url_html);
+                    } else if (action == 'PURCHASE') {
+                        $("#append_div").html(product_html);
+                        $(".product-list").select2({
+                            placeholder: "Select a product",
+                            minimumInputLength: 3,
+                            allowClear: true,
+                            selectOnClose: true,
+                            ajax: {
+                                url: "{{ route('notification.productlist.dropdown') }}",
+                                dataType: 'json',
+                                data: function (params) {
+                                    var query = {
+                                        productCode: params.term
+                                    }
+                                    // Query parameters will be ?search=[term]&type=public
+                                    return query;
+                                },
+                                processResults: function (data) {
+                                    // Transforms the top-level key of the response object from 'items' to 'results'
+                                    return {
+                                        results: data
+                                    };
+                                }
+                            }
+                        });
+                    } else {
+                        $(".other-info-div").remove();
+                    }
+                })
+            });
+
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Image File to upload',
