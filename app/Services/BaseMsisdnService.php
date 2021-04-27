@@ -173,8 +173,10 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request, $id) {
                 $baseGroup = $this->findOne($id);
                 $baseGroup->update($request->all());
-                BaseMsisdn::where('group_id', $baseGroup->id)->delete();
-                $this->uploadPrepare($request, $baseGroup);
+                if (isset($request->msisdn_file) || !empty($request->custom_msisdn)) {
+                    BaseMsisdn::where('group_id', $baseGroup->id)->delete();
+                    $this->uploadPrepare($request, $baseGroup);
+                }
                 return Response('Upload successfully completed !');
             });
         } catch (\Exception $e) {

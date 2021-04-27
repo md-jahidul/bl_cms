@@ -24,7 +24,7 @@
                             <div class="form-group col-md-12">
                                 <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
                                     <input type="radio" name="user_type" value="all" id="radio-15"
-                                           @if($imageInfo->user_type == "all") {{ 'checked' }} @endif checked>
+                                           @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
                                     <label for="input-radio-15" class="mr-3">All</label>
                                     <input type="radio" name="user_type" value="prepaid"
                                            id="radio-16" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
@@ -32,9 +32,9 @@
                                     <input type="radio" name="user_type" value="postpaid"
                                            id="radio-17" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
                                     <label for="input-radio-17" class="mr-3">Postpaid</label>
-                                    <input type="radio" name="user_type" value="propaid"
-                                           id="radio-18" @if($imageInfo->user_type == "propaid") {{ 'checked' }} @endif>
-                                    <label for="input-radio-18" class="mr-3">Propaid</label>
+                                    <input type="radio" name="user_type" value="segment_wise_banner"
+                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>
+                                    <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
                                 </div>
                             </div>
 
@@ -223,12 +223,12 @@
                                  </button>
                              </div>--}}
 
-                            <div class="form-group col-md-12" id="BannerSegmentWiseDiv">
+                            <div class="form-group col-md-12 mt-2" id="BannerSegmentWiseDiv">
                                 <label><b>Banner segment wise CTA</b></label>
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>Base Group</th>
+                                        <th>Base Msisdn</th>
                                         <th>Segment Action</th>
                                         <th>CTA Action</th>
                                         <th>Status</th>
@@ -241,7 +241,9 @@
                                     </tr>
                                     </thead>
                                     <tbody data-repeater-list="segment_wise_cta" id="cta_table">
-                                    @foreach($imageInfo->baseImageCats as $data)
+{{--                                    {{ dd() }}--}}
+                                    @if(!$imageInfo->baseImageCats->isEmpty())
+                                        @foreach($imageInfo->baseImageCats as $data)
                                         <tr data-repeater-item>
                                             <td>
                                                 <select class="form-control" id="segment_action" name="group_id">
@@ -276,6 +278,42 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @else
+                                        <tr data-repeater-item>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="group_id">
+                                                    <option value="">Select Group</option>
+                                                    @foreach($baseGroups as $group)
+                                                        <option value="{{$group->id}}">{{$group->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="action_name">
+                                                    <option value="">Select Action</option>
+                                                    @foreach ($actionList as $key => $value)
+                                                        <option value="{{ $key }}">
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="action_url_or_code" type="text">
+                                            </td>
+                                            <td>
+                                                <select name="status" class="form-control ">
+                                                    <option value="">--Select--</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <i data-repeater-delete
+                                                   class="la la-trash-o text-danger cursor-pointer"></i>
+                                            </td>
+                                        </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>

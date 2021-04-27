@@ -62,11 +62,15 @@ class MyblSliderImageService
                     // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
                     $image['other_attributes'] = $other_attributes;
                 }
+
                 $sliderImg = $this->save($image);
-//                dd($image['segment_wise_cta']);
-                foreach ($image['segment_wise_cta'] as $segmentCTA) {
-                    $segmentCTA['banner_id'] = $sliderImg->id;
-                    BaseImageCta::create($segmentCTA);
+                if (!empty($image['segment_wise_cta'][0]['group_id']) &&
+                    !empty($image['segment_wise_cta'][0]['action_name'])
+                ) {
+                    foreach ($image['segment_wise_cta'] as $segmentCTA) {
+                        $segmentCTA['banner_id'] = $sliderImg->id;
+                        BaseImageCta::create($segmentCTA);
+                    }
                 }
             });
             return new Response("Image has been successfully added");
@@ -130,12 +134,14 @@ class MyblSliderImageService
 
                 $sliderImage->update($data);
 
-//                dd($image['segment_wise_cta']);
-                BaseImageCta::where('banner_id', $id)->delete();
-
-                foreach ($data['segment_wise_cta'] as $segmentCTA) {
-                    $segmentCTA['banner_id'] = $id;
-                    BaseImageCta::create($segmentCTA);
+                if (!empty($data['segment_wise_cta'][0]['group_id']) &&
+                    !empty($data['segment_wise_cta'][0]['action_name'])
+                ) {
+                    BaseImageCta::where('banner_id', $id)->delete();
+                    foreach ($data['segment_wise_cta'] as $segmentCTA) {
+                        $segmentCTA['banner_id'] = $id;
+                        BaseImageCta::create($segmentCTA);
+                    }
                 }
             });
             return response("Image has has been successfully updated");

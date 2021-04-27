@@ -42,9 +42,9 @@
                                             <label for="input-radio-16" class="mr-3">Prepaid</label>
                                             <input type="radio" name="user_type" value="postpaid" id="input-radio-17">
                                             <label for="input-radio-17" class="mr-3">Postpaid</label>
-                                            <input type="radio" name="user_type" value="propaid" id="input-radio-18">
-                                            <label for="input-radio-18" class="mr-3">Propaid</label>
-
+                                            <input type="radio" name="user_type" value="segment_wise_banner"
+                                                   id="segment_wise_banner">
+                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
 
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>
@@ -180,12 +180,12 @@
                                     </div>
 
 
-                                    <div class="form-group col-md-12" id="BannerSegmentWiseDiv">
+                                    <div class="form-group col-md-12 mt-2" id="BannerSegmentWiseDiv">
                                         <label><b>Banner segment wise CTA</b></label>
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th>Base Group</th>
+                                                <th>Base Msisdn</th>
                                                 <th>Segment Action</th>
                                                 <th>CTA Action</th>
                                                 <th>Status</th>
@@ -222,6 +222,7 @@
                                                 </td>
                                                 <td>
                                                     <select name="status" class="form-control ">
+                                                      <option value="">--Select--</option>
                                                       <option value="1">Yes</option>
                                                       <option value="0">No</option>
                                                     </select>
