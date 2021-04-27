@@ -72,13 +72,14 @@
                                         <div class="form-group">
                                             <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">
                                             <label for="input-radio-19" class="mr-3">Individual</label>
-
+                                            <div class="help-block"></div>
                                         </div>
                                         <div class="form-group" id="customMsisdnExcel">
                                             <input type="file" class="dropify" name="msisdn_file" data-height="100"
                                                    data-allowed-file-extensions="xlsx csv"/>
+                                            <div class="help-block"></div>
                                         </div>
-                                        <div class="help-block"></div>
+{{--                                        <div class="help-block"></div>--}}
                                         @if ($errors->has('msisdn_file'))
                                             <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>
                                         @endif
