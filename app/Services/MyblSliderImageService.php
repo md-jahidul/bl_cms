@@ -143,6 +143,13 @@ class MyblSliderImageService
                         BaseImageCta::create($segmentCTA);
                     }
                 }
+                if (
+                    $data['user_type'] == 'all' ||
+                    $data['user_type'] == 'prepaid' ||
+                    $data['user_type'] == 'postpaid'
+                ) {
+                    BaseImageCta::where('banner_id', $id)->delete();
+                }
             });
             return response("Image has has been successfully updated");
         } catch (\Exception $e) {
