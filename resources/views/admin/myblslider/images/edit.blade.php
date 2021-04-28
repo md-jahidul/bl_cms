@@ -23,52 +23,52 @@
 
                             <div class="form-group col-md-12">
                                 <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
-                                    <input type="radio" name="user_type" value="all" id="all"
-                                           @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
-                                    <label for="all" class="mr-3 cursor-pointer">All</label>
+                                    <input type="radio" name="user_type" value="all" id="radio-15"
+                                    @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
+                                    <label for="input-radio-15" class="mr-3">All</label>
                                     <input type="radio" name="user_type" value="prepaid"
-                                           id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
-                                    <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
+                                           id="radio-16" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
+                                    <label for="input-radio-16" class="mr-3">Prepaid</label>
                                     <input type="radio" name="user_type" value="postpaid"
-                                           id="postpaid" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
-                                    <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
+                                           id="radio-17" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
+                                    <label for="input-radio-17" class="mr-3">Postpaid</label>
                                     <input type="radio" name="user_type" value="segment_wise_banner"
                                            id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>
-                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>
+                                    <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
                                 </div>
                             </div>
 
 
                             <div class="form-group col-md-6">
                                 <label for="title">Title: <small
-                                            class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <input
-                                        required
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Title is required"
-                                        data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                        value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
-                                        type="text"
-                                        class="form-control @error('title') is-invalid @enderror"
-                                        placeholder="Title" name="title">
+                                    required
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Title is required"
+                                    data-validation-regex-message="Title must start with alphabets"
+                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                    value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
+                                    type="text"
+                                    class="form-control @error('title') is-invalid @enderror"
+                                    placeholder="Title" name="title">
                                 <small
-                                        class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
                                 <label for="alt_text">Alt Text: </label>
                                 <input
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-regex-message="Alt Text must start with alphabets"
-                                        data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
-                                        value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
-                                        class="form-control @error('alt_text') is-invalid @enderror"
-                                        placeholder="Alt text" name="alt_text">
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-regex-message="Alt Text must start with alphabets"
+                                    data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
+                                    value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
+                                    class="form-control @error('alt_text') is-invalid @enderror"
+                                    placeholder="Alt text" name="alt_text">
                                 <small
-                                        class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
@@ -122,8 +122,7 @@
                                 /*dd($actionList)*/
                             @endphp
 
-                            <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
-                                id="slider_action">
+                            <div class="form-group col-md-6 mb-2">
                                 <label for="redirect_url">Slider Action </label>
                                 <select id="navigate_action" name="redirect_url" class="browser-default custom-select">
                                     <option value="">Select Action</option>
@@ -135,6 +134,7 @@
                                 </select>
                                 <div class="help-block"></div>
                             </div>
+
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -155,7 +155,7 @@
                                         Shortcut icon should be in
                                         16:9 aspect ratio</small><br>
                                     <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
                                 </div>
                             </div>
@@ -197,14 +197,14 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control select2" required>
-                                                        <option value="">Select a Product</option>
-                                                        @foreach ($products as $value)
-                                                            <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
-                                                                {{ $value['text'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select name="other_attributes" class="form-control select2" required>
+                                                    <option value="">Select a Product</option>
+                                                    @foreach ($products as $value)
+                                                        <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
+                                                            {{ $value['text'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             @endif
                                             <div class="help-block"></div>
                                         </div>
@@ -223,8 +223,7 @@
                                  </button>
                              </div>--}}
 
-                            <div class="form-group col-md-12 mt-2 {{ $imageInfo->user_type == "segment_wise_banner" ? 'show' : 'hidden' }}"
-                                 id="BannerSegmentWiseDiv">
+                            <div class="form-group col-md-12 mt-2" id="BannerSegmentWiseDiv">
                                 <label><b>Banner segment wise CTA</b></label>
                                 <table class="table table-bordered">
                                     <thead>
@@ -242,43 +241,43 @@
                                     </tr>
                                     </thead>
                                     <tbody data-repeater-list="segment_wise_cta" id="cta_table">
-{{--                                    {{ dd() }}--}}
+                                    {{--                                    {{ dd() }}--}}
                                     @if(!$imageInfo->baseImageCats->isEmpty())
                                         @foreach($imageInfo->baseImageCats as $data)
-                                        <tr data-repeater-item>
-                                            <td>
-                                                <select class="form-control" id="segment_action" name="group_id">
-                                                    <option value="">Select Group</option>
-                                                    @foreach($baseGroups as $group)
-                                                        <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control" id="segment_action" name="action_name">
-                                                    <option value="">Select Action</option>
-                                                    @foreach ($actionList as $key => $value)
-                                                        <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
-                                                            {{ $value }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
-                                            </td>
-                                            <td>
-                                                <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">
-                                                    <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>
-                                                    <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>
-                                                </select>
-                                            </td>
-                                            <td class="text-center align-middle">
-                                                <i data-repeater-delete
-                                                   class="la la-trash-o text-danger cursor-pointer"></i>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            <tr data-repeater-item>
+                                                <td>
+                                                    <select class="form-control" id="segment_action" name="group_id">
+                                                        <option value="">Select Group</option>
+                                                        @foreach($baseGroups as $group)
+                                                            <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="segment_action" name="action_name">
+                                                        <option value="">Select Action</option>
+                                                        @foreach ($actionList as $key => $value)
+                                                            <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
+                                                                {{ $value }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
+                                                </td>
+                                                <td>
+                                                    <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">
+                                                        <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>
+                                                        <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <i data-repeater-delete
+                                                       class="la la-trash-o text-danger cursor-pointer"></i>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     @else
                                         <tr data-repeater-item>
                                             <td>
@@ -319,60 +318,60 @@
                                 </table>
                             </div>
 
-{{--                            <div class="form-group col-md-12" id="BannerSegmentWiseDiv">--}}
-{{--                                <label><b>Banner segment wise CTA</b></label>--}}
-{{--                                <table class="table table-bordered">--}}
-{{--                                    <thead>--}}
-{{--                                    <tr>--}}
-{{--                                        <th>Base Group</th>--}}
-{{--                                        <th>Segment Action</th>--}}
-{{--                                        <th>CTA Action</th>--}}
-{{--                                        <th>Status</th>--}}
-{{--                                        <th class="text-center" style="width: 2%">--}}
-{{--                                            <i data-repeater-create--}}
-{{--                                               class="la la-plus-circle text-info cursor-pointer"--}}
-{{--                                               id="repeater-button">--}}
-{{--                                            </i>--}}
-{{--                                        </th>--}}
-{{--                                    </tr>--}}
-{{--                                    </thead>--}}
-{{--                                    <tbody data-repeater-list="segment_wise_cta"  id="cta_table">--}}
-{{--                                    <tr data-repeater-item>--}}
-{{--                                        <td>--}}
-{{--                                            <select class="form-control" id="segment_group" name="group_id">--}}
-{{--                                                <option value="">Select Group</option>--}}
-{{--                                                @foreach($baseGroups as $group)--}}
-{{--                                                    <option value="{{$group->id}}">{{$group->title}}</option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            <select class="form-control" id="segment_action" name="action_name">--}}
-{{--                                                <option value="">Select Action</option>--}}
-{{--                                                @foreach ($actionList as $key => $value)--}}
-{{--                                                    <option value="{{ $key }}">--}}
-{{--                                                        {{ $value }}--}}
-{{--                                                    </option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            <input class="form-control" name="action_url_or_code" type="text">--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            <select name="status" class="form-control ">--}}
-{{--                                                <option value="1">Yes</option>--}}
-{{--                                                <option value="0">No</option>--}}
-{{--                                            </select>--}}
-{{--                                        </td>--}}
-{{--                                        <td class="text-center align-middle">--}}
-{{--                                            <i data-repeater-delete--}}
-{{--                                               class="la la-trash-o text-danger cursor-pointer"></i>--}}
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                    </tbody>--}}
-{{--                                </table>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="form-group col-md-12" id="BannerSegmentWiseDiv">--}}
+                            {{--                                <label><b>Banner segment wise CTA</b></label>--}}
+                            {{--                                <table class="table table-bordered">--}}
+                            {{--                                    <thead>--}}
+                            {{--                                    <tr>--}}
+                            {{--                                        <th>Base Group</th>--}}
+                            {{--                                        <th>Segment Action</th>--}}
+                            {{--                                        <th>CTA Action</th>--}}
+                            {{--                                        <th>Status</th>--}}
+                            {{--                                        <th class="text-center" style="width: 2%">--}}
+                            {{--                                            <i data-repeater-create--}}
+                            {{--                                               class="la la-plus-circle text-info cursor-pointer"--}}
+                            {{--                                               id="repeater-button">--}}
+                            {{--                                            </i>--}}
+                            {{--                                        </th>--}}
+                            {{--                                    </tr>--}}
+                            {{--                                    </thead>--}}
+                            {{--                                    <tbody data-repeater-list="segment_wise_cta"  id="cta_table">--}}
+                            {{--                                    <tr data-repeater-item>--}}
+                            {{--                                        <td>--}}
+                            {{--                                            <select class="form-control" id="segment_group" name="group_id">--}}
+                            {{--                                                <option value="">Select Group</option>--}}
+                            {{--                                                @foreach($baseGroups as $group)--}}
+                            {{--                                                    <option value="{{$group->id}}">{{$group->title}}</option>--}}
+                            {{--                                                @endforeach--}}
+                            {{--                                            </select>--}}
+                            {{--                                        </td>--}}
+                            {{--                                        <td>--}}
+                            {{--                                            <select class="form-control" id="segment_action" name="action_name">--}}
+                            {{--                                                <option value="">Select Action</option>--}}
+                            {{--                                                @foreach ($actionList as $key => $value)--}}
+                            {{--                                                    <option value="{{ $key }}">--}}
+                            {{--                                                        {{ $value }}--}}
+                            {{--                                                    </option>--}}
+                            {{--                                                @endforeach--}}
+                            {{--                                            </select>--}}
+                            {{--                                        </td>--}}
+                            {{--                                        <td>--}}
+                            {{--                                            <input class="form-control" name="action_url_or_code" type="text">--}}
+                            {{--                                        </td>--}}
+                            {{--                                        <td>--}}
+                            {{--                                            <select name="status" class="form-control ">--}}
+                            {{--                                                <option value="1">Yes</option>--}}
+                            {{--                                                <option value="0">No</option>--}}
+                            {{--                                            </select>--}}
+                            {{--                                        </td>--}}
+                            {{--                                        <td class="text-center align-middle">--}}
+                            {{--                                            <i data-repeater-delete--}}
+                            {{--                                               class="la la-trash-o text-danger cursor-pointer"></i>--}}
+                            {{--                                        </td>--}}
+                            {{--                                    </tr>--}}
+                            {{--                                    </tbody>--}}
+                            {{--                                </table>--}}
+                            {{--                            </div>--}}
 
                             <div class="form-group col-md-12">
                                 <button style="float: right" type="submit" id="submitForm"
@@ -428,17 +427,6 @@
     <script>
 
         $(function () {
-            $("input[name=user_type]").click(function () {
-                if ($(this).val() === "segment_wise_banner") {
-                    $("#BannerSegmentWiseDiv").addClass('show').removeClass('hidden');
-                    $("#slider_action").addClass('hidden').removeClass('show');
-                } else {
-                    $("#BannerSegmentWiseDiv").addClass('hidden').removeClass('show');
-                    $("#slider_action").addClass('show').removeClass('hidden');
-                }
-            });
-
-
             $('#BannerSegmentWiseDiv').repeater();
 
             var date = new Date();
