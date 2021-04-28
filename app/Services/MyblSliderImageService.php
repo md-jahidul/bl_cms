@@ -88,7 +88,7 @@ class MyblSliderImageService
         $products = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data','voice','sms', 'mix']);
+                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
             }
         )->get();
 
@@ -96,8 +96,8 @@ class MyblSliderImageService
 
         foreach ($products as $product) {
             $data [] = [
-                'id'    => $product->details->product_code,
-                'text' =>  $product->details->product_code . ' - (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+                'id' => $product->details->product_code,
+                'text' => $product->details->product_code . ' - (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
             ];
         }
 
@@ -134,7 +134,8 @@ class MyblSliderImageService
 
                 $sliderImage->update($data);
 
-                if (!empty($data['segment_wise_cta'][0]['group_id']) &&
+                if (
+                    !empty($data['segment_wise_cta'][0]['group_id']) &&
                     !empty($data['segment_wise_cta'][0]['action_name'])
                 ) {
                     BaseImageCta::where('banner_id', $id)->delete();
@@ -142,6 +143,14 @@ class MyblSliderImageService
                         $segmentCTA['banner_id'] = $id;
                         BaseImageCta::create($segmentCTA);
                     }
+                }
+
+                if (
+                    $data['user_type'] == 'all' ||
+                    $data['user_type'] == 'prepaid' ||
+                    $data['user_type'] == 'postpaid'
+                ) {
+                    BaseImageCta::where('banner_id', $id)->delete();
                 }
             });
             return response("Image has has been successfully updated");

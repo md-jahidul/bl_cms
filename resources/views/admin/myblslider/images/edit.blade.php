@@ -23,18 +23,18 @@
 
                             <div class="form-group col-md-12">
                                 <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
-                                    <input type="radio" name="user_type" value="all" id="radio-15"
+                                    <input type="radio" name="user_type" value="all" id="all"
                                            @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
-                                    <label for="input-radio-15" class="mr-3">All</label>
+                                    <label for="all" class="mr-3 cursor-pointer">All</label>
                                     <input type="radio" name="user_type" value="prepaid"
-                                           id="radio-16" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
-                                    <label for="input-radio-16" class="mr-3">Prepaid</label>
+                                           id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
+                                    <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
                                     <input type="radio" name="user_type" value="postpaid"
-                                           id="radio-17" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
-                                    <label for="input-radio-17" class="mr-3">Postpaid</label>
+                                           id="postpaid" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
+                                    <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
                                     <input type="radio" name="user_type" value="segment_wise_banner"
                                            id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>
-                                    <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
+                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>
                                 </div>
                             </div>
 
@@ -122,7 +122,8 @@
                                 /*dd($actionList)*/
                             @endphp
 
-                            <div class="form-group col-md-6 mb-2">
+                            <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
+                                id="slider_action">
                                 <label for="redirect_url">Slider Action </label>
                                 <select id="navigate_action" name="redirect_url" class="browser-default custom-select">
                                     <option value="">Select Action</option>
@@ -134,7 +135,6 @@
                                 </select>
                                 <div class="help-block"></div>
                             </div>
-
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -223,7 +223,8 @@
                                  </button>
                              </div>--}}
 
-                            <div class="form-group col-md-12 mt-2" id="BannerSegmentWiseDiv">
+                            <div class="form-group col-md-12 mt-2 {{ $imageInfo->user_type == "segment_wise_banner" ? 'show' : 'hidden' }}"
+                                 id="BannerSegmentWiseDiv">
                                 <label><b>Banner segment wise CTA</b></label>
                                 <table class="table table-bordered">
                                     <thead>
@@ -427,6 +428,17 @@
     <script>
 
         $(function () {
+            $("input[name=user_type]").click(function () {
+                if ($(this).val() === "segment_wise_banner") {
+                    $("#BannerSegmentWiseDiv").addClass('show').removeClass('hidden');
+                    $("#slider_action").addClass('hidden').removeClass('show');
+                } else {
+                    $("#BannerSegmentWiseDiv").addClass('hidden').removeClass('show');
+                    $("#slider_action").addClass('show').removeClass('hidden');
+                }
+            });
+
+
             $('#BannerSegmentWiseDiv').repeater();
 
             var date = new Date();
