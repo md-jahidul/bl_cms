@@ -26,7 +26,7 @@ class BaseMsisdnRequest extends FormRequest
 
         return [
             'title' => 'required|max:200|unique:base_msisdn_groups,title,'. $this->id,
-            'status' => 'required',
+//            'status' => 'required',
 //            'msisdn_file'=>'sometimes|in:csv,xlsx,xls',
 //            'custom_msisdn'=>'sometimes|required'
             ];
@@ -36,7 +36,7 @@ class BaseMsisdnRequest extends FormRequest
     {
         return [
             'title.unique' => 'This title already exists ',
-            'msisdn_file.required' => 'Please select file only xlsx or csv',
+//            'msisdn_file.required' => 'Please select file only xlsx or csv',
         ];
     }
 }
