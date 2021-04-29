@@ -17,8 +17,8 @@ class CreateReferrersTable extends Migration
             $table->bigIncrements('id');
             $table->integer('refer_and_earn_id');
             $table->string('msisdn')->index('referrers_msisdn_index');
-            $table->string('referral_code')->index('referrers_referral_code_index');
-            $table->string('status');
+            $table->string('referral_code', 20)->index('referrers_referral_code_index');
+            $table->string('status', 20);
 
             $table->timestamps();
         });
