@@ -250,7 +250,7 @@
                                         {{--                                        @endphp--}}
                                         <select multiple
                                                 class="form-control tags"
-                                                name="tags[]" required>
+                                                name="tags[]">
                                             <option value=""></option>
 
                                             @foreach ($tags as $key => $tag)
@@ -305,7 +305,7 @@
                                             <label for="show">Show</label>
                                         </li>
                                         <li class="list-inline-item">
-                                            <input type="radio" name="is_visible" value="0" id="hide">
+                                            <input type="radio" name="is_visible" value="0" id="hide" checked>
                                             <label for="hide">Hide</label>
                                         </li>
                                     </ul>
