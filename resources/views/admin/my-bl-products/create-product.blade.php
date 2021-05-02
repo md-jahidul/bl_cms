@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                    <label for="product_code">Product Code</label>
+                                    <label for="product_code" class="required">Product Code</label>
                                     <input class="form-control" name="product_code" required
                                            data-validation-required-message="Please enter product code">
                                     <div class="help-block"></div>
@@ -79,7 +79,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('name') ? ' error' : '' }}">
-                                        <label for="name">Title</label>
+                                        <label for="name" class="required">Title</label>
                                         <input class="form-control" name="name" required id="name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name'))
@@ -88,7 +88,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('commercial_name_en') ? ' error' : '' }}">
-                                    <label for="name">Commercial Name En</label>
+                                    <label for="name" class="required">Commercial Name En</label>
                                     <input class="form-control" name="commercial_name_en" required id="name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('commercial_name_en'))
@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('commercial_name_bn') ? ' error' : '' }}">
-                                    <label for="name">Commercial Name Bn</label>
+                                    <label for="name" class="required">Commercial Name Bn</label>
                                     <input class="form-control" name="commercial_name_bn" required id="name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('commercial_name_bn'))
@@ -111,7 +111,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label>Display Title En</label>
+                                    <label>Display Title Bn</label>
                                     <input class="form-control" name="display_title_bn">
                                 </div>
 
@@ -186,7 +186,7 @@
                                 <slot id="offer_types"></slot>
 
                                 <div class="form-group col-md-4 {{ $errors->has('validity') ? ' error' : '' }}">
-                                    <label>Validity </label>
+                                    <label class="required">Validity </label>
                                     <input type="number" class="form-control" required name="validity">
                                     <div class="help-block"></div>
                                     @if ($errors->has('validity'))
@@ -195,11 +195,11 @@
                                 </div>
 
                                 @php
-                                    $validityUnits = ['hour', 'hours', 'day', 'days'];
+                                    $validityUnits = [/*'hour', 'hours', */'day', 'days'];
                                 @endphp
 
                                 <div class="form-group col-md-4 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
-                                    <label for="duration_category_id" class="validity_unit">Validity Unit</label>
+                                    <label for="duration_category_id" class="validity_unit required">Validity Unit</label>
                                     <select class="form-control required duration_categories" name="validity_unit"
                                             id="validity_unit" required>
                                         <option value="">---Select Validity Unit---</option>
@@ -298,7 +298,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label>Visibility (show/hide in app)</label>
+                                    <label class="required">Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <input type="radio" name="is_visible" value="1" id="show">
