@@ -15,12 +15,12 @@ class CreateRefereesTable extends Migration
     {
         Schema::create('referees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('refer_and_earn_id');
-            $table->string('referrer_msisdn');
-            $table->string('referee_msisdn');
+            $table->integer('referrer_id')->index('referees_referrer_id_index');
+            $table->string('referee_msisdn')->index('referees_referee_msisdn_index');
             $table->boolean('is_invited')->default(false);
             $table->boolean('is_reminded')->default(false);
-            $table->dateTime('remind_after');
+            $table->dateTime('remind_after')->nullable();
+            $table->boolean('is_new')->default(false);
             $table->string('status', 20);
 
             $table->timestamps();
