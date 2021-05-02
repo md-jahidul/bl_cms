@@ -94,7 +94,8 @@ class ProductCoreService
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
         MyBlProductTagRepository $myBlProductTagRepository
-    ) {
+    )
+    {
         $this->productCoreRepository = $productCoreRepository;
         $this->myBlProductRepository = $myBlProductRepository;
         $this->productActivityRepository = $productActivityRepository;
@@ -861,7 +862,6 @@ class ProductCoreService
         }*/
 
 
-
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = $firstTag->title;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
@@ -978,7 +978,7 @@ class ProductCoreService
         }*/
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
-        $data['tag'] = $firstTag->title;
+        $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -1036,8 +1036,8 @@ class ProductCoreService
             }
 
             $others = [
-               'activity_type' => self::CREATE,
-               'platform' => self::PLATFORM
+                'activity_type' => self::CREATE,
+                'platform' => self::PLATFORM
             ];
 
             $this->productActivityRepository->storeProductActivity($data_request, $others);
