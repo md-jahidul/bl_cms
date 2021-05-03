@@ -119,7 +119,57 @@
                                 @include('layouts.partials.app-service.financial')
                             </slot>
 
-                              <div class="col-md-6">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                <label> URL (url slug) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug}}" required name="url_slug" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> najat-app (no spaces)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug') }}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL BN <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" required value="{{$appServiceProduct->url_slug_bn}}" name="url_slug_bn" placeholder="URL BN">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug_bn') }}
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header English (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header">{{$appServiceProduct->page_header}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{$appServiceProduct->page_header_bn}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceProduct->schema_markup}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+
+                            <div class="col-md-6">
                                 <label></label>
                                 <div class="form-group">
                                     <label for="title" class="mr-1">Status:</label>
@@ -130,40 +180,6 @@
                                     <label for="inactive">Inactive</label>
                                 </div>
                             </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$appServiceProduct->url_slug}}" required name="url_slug" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> najat-app (no spaces)<br>
-                                </small>
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header">{{$appServiceProduct->page_header}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header_bn">{{$appServiceProduct->page_header_bn}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceProduct->schema_markup}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                </small>
-                            </div>
-
-
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">

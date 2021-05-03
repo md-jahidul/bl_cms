@@ -142,6 +142,10 @@ class AboutUsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'url_slug' => 'required|unique:about_us_banglalink,url_slug',
+            'url_slug_bn' => 'required|unique:about_us_banglalink,url_slug_bn'
+        ]);
         $response = $this->aboutUsService->storeAboutUsInfo($request);
         Session::flash('message', $response->getContent());
         return redirect('about-us');
@@ -168,6 +172,10 @@ class AboutUsController extends Controller
      */
     public function update(Request $request, AboutUsBanglalink $aboutUs)
     {
+        $request->validate([
+            'url_slug' => 'required|unique:about_us_banglalink,url_slug,' . $aboutUs->id,
+            'url_slug_bn' => 'required|unique:about_us_banglalink,url_slug_bn,' . $aboutUs->id
+        ]);
         $response = $this->aboutUsService->updateAboutUsInfo($request, $aboutUs);
 
         if ($response) {

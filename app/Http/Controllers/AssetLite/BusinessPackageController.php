@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessPackageRequest;
 use App\Services\BusinessPackageService;
 use Illuminate\Http\Request;
 use Session;
@@ -51,7 +52,7 @@ class BusinessPackageController extends Controller {
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
      */
-    public function store(Request $request) {
+    public function store(BusinessPackageRequest $request) {
         
          $response = $this->packageService->savePackage($request);
          
@@ -127,7 +128,7 @@ class BusinessPackageController extends Controller {
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
      */
-    public function update(Request $request) {
+    public function update(BusinessPackageRequest $request) {
         
          $response = $this->packageService->updatePackage($request);
         

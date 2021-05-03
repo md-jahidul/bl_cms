@@ -125,8 +125,6 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Desktop)</label>
                                     <div class="custom-file">
-{{--                                        {{ dd($bannerImage->banner_image['banner_image_url']) }}--}}
-{{--                                        <input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
                                         <input type="file" name="banner_image[banner_image_url]" data-height="90" class="dropify"
                                                data-default-file="{{ isset($beAPartner->banner_image['banner_image_url']) ? config('filesystems.file_base_url') . $beAPartner->banner_image['banner_image_url'] : '' }}">
                                     </div>
@@ -152,14 +150,51 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text English</label>
                                     <input type="text" name="banner_image[alt_text_en]" id="alt_text" class="form-control"
                                            placeholder="Enter alt text" value="{{ isset($beAPartner->banner_image['alt_text_en']) ? $beAPartner->banner_image['alt_text_en'] : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text Bangla</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($beAPartner->alt_text_bn) ? $beAPartner->alt_text_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">{{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <h5><strong>Be A Partner SEO Page Info</strong></h5>
+                                <div class="form-actions col-md-12 mt-0"></div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('page_header') ? ' error' : '' }}">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header">{{ isset($beAPartner->page_header) ? $beAPartner->page_header : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header_bn">{{ isset($beAPartner->page_header_bn) ? $beAPartner->page_header_bn : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('schema_markup') ? ' error' : '' }}">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" rows="7" name="schema_markup">{{ isset($beAPartner->schema_markup) ? $beAPartner->schema_markup : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
                                 </div>
 
                                 <div class="form-actions col-md-12">

@@ -61,14 +61,6 @@ class RoamingGeneralService {
      */
     public function updateCategory($request) {
         try {
-
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'page_url' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
             //file upload in storege
             $webPath = $request['old_web'];
             if ($request['banner_web'] != "") {
@@ -89,7 +81,7 @@ class RoamingGeneralService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->catRepo->updateCategory($webPath, $mobilePath, $request);
 
 
@@ -109,7 +101,7 @@ class RoamingGeneralService {
             return $response;
         }
     }
-    
+
 
     /**
      * Change category sorting
@@ -119,7 +111,7 @@ class RoamingGeneralService {
         $response = $this->catRepo->changeCategorySorting($request);
         return $response;
     }
- 
+
 
     /**
      * Get Roaming general pages
@@ -145,7 +137,7 @@ class RoamingGeneralService {
         $response = $this->pagesRepo->getPageComponents($pageId);
         return $response;
     }
-    
+
        /**
      * Change category sorting
      * @return Response
@@ -159,7 +151,7 @@ class RoamingGeneralService {
      * @return Response
      */
     public function deleteComponent($comId) {
-        
+
          try {
 
             $response = $this->pagesRepo->deleteComponent($comId);
@@ -178,8 +170,8 @@ class RoamingGeneralService {
             return $response;
         }
     }
-    
-    
+
+
     /**
      * update roaming category
      * @return Response
@@ -195,9 +187,9 @@ class RoamingGeneralService {
             ]);
 
 
-            //save data in database 
+            //save data in database
             $update = $this->pagesRepo->updatePage($request);
-            
+
 
             $response = [
                 'success' => 1,

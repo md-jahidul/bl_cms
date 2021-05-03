@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\PriyojonRequest;
 use App\Models\Priyojon;
 use App\Services\AboutPageService;
 use App\Services\PriyojonService;
@@ -63,6 +64,29 @@ class PriyojonController extends Controller
         return view('admin.loyalty-header.index', compact('priyojons', 'parent_id', 'menu_items'));
     }
 
+    public function create($parent_id = 0)
+    {
+        $menu_id = $parent_id;
+        while ($menu_id != 0) {
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
+        }
+        $menu_items = $this->priyojonItems;
+
+        return view('admin.loyalty-header.create', compact('menu_items', 'parent_id'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse|Redirector
+     */
+    public function store(PriyojonRequest $request)
+    {
+        $parentId =  $request->parent_id;
+        $response = $this->priyojonService->storePriyojon($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
+    }
 
     /**
      * @param $id
@@ -85,7 +109,7 @@ class PriyojonController extends Controller
      * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(PriyojonRequest $request, $id)
     {
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->updatePriyojon($request->all(), $id);
@@ -93,26 +117,17 @@ class PriyojonController extends Controller
         return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
     }
 
-    /**
-     * @param $slug
-     * @return Factory|View
-     */
-    public function aboutPageView($slug)
+    public function landingPageBanner(Request $request, $id)
     {
-        $details = $this->aboutPageService->findAboutDetail($slug);
-
-//        dd($details);
-        return view('admin.about-pages.about_page', compact('slug', 'details'));
+        $parentId =  $request->parent_id;
+        $response = $this->priyojonService->bannerUpload($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse|Redirector
-     */
-    public function aboutPageUpdate(Request $request)
+    public function destroyMenu($parentId, $id)
     {
-        $response = $this->aboutPageService->updateAboutPage($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect(route('about-page', $request->slug));
+        $this->priyojonService->deleteMenu($id);
+        return url("priyojon/$parentId/child-menu");
     }
 }

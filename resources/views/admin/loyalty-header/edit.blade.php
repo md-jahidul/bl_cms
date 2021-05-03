@@ -25,6 +25,7 @@
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
+                                <input type="hidden" name="id" value="{{ $priyojonLanding->id }}">
                                 <input type="hidden" name="parent_id" value="{{ $priyojonLanding->parent_id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
@@ -46,7 +47,74 @@
                                     @endif
                                 </div>
 
+                                @if($priyojonLanding->parent_id != 0)
+{{--                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
+{{--                                        <label for="url">Redirect Url</label>--}}
+{{--                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url"--}}
+{{--                                               value="{{ $priyojonLanding->url }}">--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('url'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('url') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
 
+                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                                        <label for="url_slug_en" class="required">Url Slug EN</label>
+                                        <input type="text" name="url_slug_en"  required class="form-control" placeholder="Enter Url Slug EN"
+                                        value="{{ $priyojonLanding->url_slug_en }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('url_slug_en'))
+                                            <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                        <label for="url" class="required">Url Slug BN</label>
+                                        <input type="text" name="url_slug_bn" required class="form-control" placeholder="Enter Url Slug BN"
+                                         value="{{ $priyojonLanding->url_slug_bn }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('url_slug_bn'))
+                                            <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">
+                                        <label for="alias">Alias</label>
+                                        <input type="text" name="alias" required class="form-control" placeholder="Enter alias"
+                                               value="{{ $priyojonLanding->alias }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('alias'))
+                                            <div class="help-block">  {{ $errors->first('alias') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Page Header</label>
+                                        <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonLanding->page_header }}</textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Page Header BN</label>
+                                        <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Schema Markup</label>
+                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->schema_markup }}</textarea>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label></label>
+                                        <div class="form-group">
+                                            <label for="title" class="mr-1">Status:</label>
+                                            <input type="radio" name="status" value="1" id="active" {{ $priyojonLanding->status == 1 ? "checked" : '' }}>
+                                            <label for="active" class="mr-1">Active</label>
+
+                                            <input type="radio" name="status" value="0" id="inactive" {{ $priyojonLanding->status == 0 ? "checked" : '' }}>
+                                            <label for="inactive">Inactive</label>
+                                        </div>
+                                    </div>
+                                @endif
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -63,8 +131,8 @@
             </div>
         </div>
     </section>
-
-    <section>
+    @if($priyojonLanding->parent_id == 0)
+        <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -72,7 +140,7 @@
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('banner_image_press_news.upload') }}"
+                              action="{{ route('priyojon.banner', $priyojonLanding->id) }}"
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
@@ -83,7 +151,7 @@
                                         {{--                                        {{ dd($bannerImage->items['banner_image_url']) }}--}}
                                         {{--                                        <input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
                                         <input type="file" name="banner_image_url" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($pressBannerImage->banner_image_url) ? config('filesystems.file_base_url') . $pressBannerImage->banner_image_url : '' }}">
+                                               data-default-file="{{ isset($priyojonLanding->banner_image_url) ? config('filesystems.file_base_url') . $priyojonLanding->banner_image_url : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
@@ -97,7 +165,7 @@
                                     <div class="custom-file">
                                         {{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
                                         <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($pressBannerImage->banner_mobile_view) ? config('filesystems.file_base_url') . $pressBannerImage->banner_mobile_view : '' }}">
+                                               data-default-file="{{ isset($priyojonLanding->banner_mobile_view) ? config('filesystems.file_base_url') . $priyojonLanding->banner_mobile_view : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -110,7 +178,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($pressBannerImage->alt_text_en) ? $pressBannerImage->alt_text_en : '' }}">
+                                           placeholder="Enter alt text" value="{{ isset($priyojonLanding->alt_text_en) ? $priyojonLanding->alt_text_en : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
@@ -132,6 +200,7 @@
             </div>
         </div>
     </section>
+    @endif
 @stop
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">

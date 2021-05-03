@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Services\DynamicRouteService;
 use App\Services\MetaTagService;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
@@ -17,30 +19,61 @@ class FixedPageController extends Controller
      * @var $metaTagService
      */
     private $metaTagService;
+    /**
+     * @var DynamicRouteService
+     */
+    private $dynamicRouteService;
 
-    public function __construct(MetaTagService $metaTagService)
-    {
+    public function __construct(
+        MetaTagService $metaTagService,
+        DynamicRouteService $dynamicRouteService
+    ) {
         $this->metaTagService = $metaTagService;
+        $this->dynamicRouteService = $dynamicRouteService;
         $this->middleware('auth');
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function homeComponent()
     {
         $pages = Page::all();
         return view('admin.pages.fixed.index', compact('pages'));
+    }
+
+    public function fixedPageList()
+    {
+        $pages = $this->metaTagService->findAll();
+        return view('admin.pages.fixed-page.index', compact('pages'));
     }
 
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function metaTagsEdit($id)
+    public function fixedPageCreate()
     {
-        $metaTag = $this->metaTagService->findMetaTag($id);
-        return view('admin.pages.fixed.metatags', compact('metaTag'));
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
+        return view('admin.pages.fixed-page.create', compact('dynamicRoutes'));
+    }
+
+    public function fixedPageStore(Request $request)
+    {
+        $response = $this->metaTagService->storeFixedPageTag($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect("fixed-pages");
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function fixedPageEdit($id)
+    {
+        $page = $this->metaTagService->findOne($id);
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
+        return view('admin.pages.fixed-page.edit', compact('page', 'dynamicRoutes'));
     }
 
     /**
@@ -49,11 +82,23 @@ class FixedPageController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function metaTagsUpdate(Request $request, $pageId, $id)
+    public function fixedPageUpdate(Request $request, $id)
     {
         $response = $this->metaTagService->updateMetaTag($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect("fixed-pages/$pageId/meta-tags");
+        return redirect("fixed-pages");
+    }
+
+    /**
+     * @param $id
+     * @return UrlGenerator|string
+     * @throws Exception
+     */
+    public function deleteFixedPage($id)
+    {
+        $response = $this->metaTagService->deleteFixedPage($id);
+        Session::flash('message', $response->getContent());
+        return url('/fixed-pages');
     }
 
     /**

@@ -70,5 +70,7 @@ class PartnerOfferTableSeeder extends Seeder
                 'avail_bn'   => "সারাহ টাইপ করুন এবং $randSMS এ একটি এসএমএস প্রেরণ করুন",
             ]);
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }

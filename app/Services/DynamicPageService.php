@@ -91,7 +91,7 @@ class DynamicPageService
             unset($data['old_web_img']);
             unset($data['old_mob_img']);
             unset($data['old_banner_name']);
-            $data['url_slug'] = str_replace(str_split('\/:*?" -<>|'), '_', strtolower($data['url_slug']));
+            $data['url_slug'] = str_replace(str_split('\/:*?" _<>|'), '-', strtolower($data['url_slug']));
             $this->pageRepo->savePage($data);
             $response = [
                 'success' => 1,
