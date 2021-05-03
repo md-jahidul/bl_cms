@@ -1055,7 +1055,7 @@ class ProductCoreService
             DB::rollback();
             throw new Exception($e->getMessage());
         }
-        return Redirect::route('mybl.product.create')->with('success', 'Product updated Successfully');
+        return Redirect::route('mybl.product.index')->with('success', 'Product updated Successfully');
     }
 
     public function downloadMyblProducts()

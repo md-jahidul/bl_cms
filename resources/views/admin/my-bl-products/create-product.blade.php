@@ -16,7 +16,7 @@
 
 @section('action')
     <a href="{{ route('mybl.product.index') }}" class="btn btn-info btn-sm btn-glow px-2">
-        Back To Product List
+        Back To Product List GGG
     </a>
 @endsection
 
@@ -31,7 +31,7 @@
                           action="{{ route('mybl.product.store')}}"
                           enctype="multipart/form-data"
                           method="POST"
-                          novalidate>
+                          id="commentForm">
                         @csrf
                             <div class="row">
                                 <div class="col-md-4">
@@ -347,6 +347,9 @@
         .form-group .help-block ul {
             padding-left: 0; !important;
         }
+        .error {
+            color: red !important;
+        }
     </style>
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
@@ -361,10 +364,15 @@
 
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+
+
     <script>
-
-
         $(function () {
+
+            $("#commentForm").validate();
 
             $('.data-section').select2({
                 placeholder: 'Please Select Data Section',
@@ -432,33 +440,38 @@
             let offer_types = $('#offer_types');
 
             let data = `<div class="col-md-4">
-                    <div class="form-group package_type">
-                    <label>Data Volume (MB)</label>
-                    <input type="number" class="form-control" name="internet_volume_mb">
-                    </div>
-                    </div>`
+                            <div class="form-group package_type">
+                                <label class="required">Data Volume (MB)</label>
+                                <input type="number" class="form-control" name="internet_volume_mb" required>
+                                <div class="help-block"></div>
+                            </div>
+                        </div>`
 
             let voiceVol = `<div class="form-group col-md-4">
-                                <label>Minute Volume </label>
-                                <input type="number" class="form-control" name="minute_volume">
+                                <label class="required">Minute Volume </label>
+                                <input type="number" class="form-control" name="minute_volume" required>
+                                <div class="help-block"></div>
                             </div>`
             let smsVol = `<div class="form-group col-md-4">
-                              <label>SMS Volume </label>
-                              <input type="number" class="form-control" name="sms_volume">
+                              <label class="required">SMS Volume </label>
+                              <input type="number" class="form-control" name="sms_volume" required>
+                                <div class="help-block"></div>
                           </div>`
 
             let callRate = `<div class="form-group col-md-4">
-                              <label>Call Rate</label>
-                              <input type="number" class="form-control" name="sms_volume">
+                              <label class="required">Call Rate</label>
+                              <input type="number" class="form-control" name="call_rate" required>
+                              <div class="help-block"></div>
                            </div>`
 
             let callRateUnit = `<div class="form-group col-md-4">
-                                  <label>Call Rate Unit</label>
-                                  <input class="form-control" name="call_rate_unit">
+                                  <label class="required">Call Rate Unit</label>
+                                  <input class="form-control" name="call_rate_unit" required>
+                                  <div class="help-block"></div>
                                 </div>`
 
             let sectionType = `<div class="form-group col-md-4">
-                                    <label>Select Data Section</label>
+                                    <label class="required">Select Data Section</label>
                                     <select multiple
                                             class="form-control data-section"
                                             name="offer_section_slug[]" required>
@@ -467,6 +480,7 @@
                                            <option value="{{ $key }}">  {{$category}}</option>
                                         @endforeach
                                     </select>
+                                    <div class="help-block"></div>
                                 </div>`
 
             offer_types.empty()
