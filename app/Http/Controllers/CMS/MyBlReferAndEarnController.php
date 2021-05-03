@@ -41,7 +41,7 @@ class MyBlReferAndEarnController extends Controller
     public function index()
     {
         $referEarnCampaigns = $this->referAndEarnService->findAll();
-        return view('admin.mybl-refer-and-earn.campaign.index', compact('referEarnCampaigns'));
+        return view('admin.mybl-campaign.refer-and-earn.index', compact('referEarnCampaigns'));
     }
 
     /**
@@ -52,7 +52,7 @@ class MyBlReferAndEarnController extends Controller
     public function create()
     {
         $products = $this->productCoreService->findAll();
-        return view('admin.mybl-refer-and-earn.campaign.create-edit', compact('products'));
+        return view('admin.mybl-campaign.refer-and-earn.create-edit', compact('products'));
     }
 
     /**
@@ -89,7 +89,7 @@ class MyBlReferAndEarnController extends Controller
     {
         $products = $this->productCoreService->findAll();
         $campaign = $this->referAndEarnService->findOne($id);
-        return view('admin.mybl-refer-and-earn.campaign.create-edit', compact('products', 'campaign'));
+        return view('admin.mybl-campaign.refer-and-earn.create-edit', compact('products', 'campaign'));
     }
 
     /**
