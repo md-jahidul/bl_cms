@@ -22,6 +22,8 @@ class CreateRefereesTable extends Migration
             $table->dateTime('remind_after')->nullable();
             $table->boolean('is_new')->default(false);
             $table->string('status', 20);
+            $table->dateTime('redeem_at')->nullable();
+            $table->dateTime('claimed_at')->nullable();
 
             $table->timestamps();
         });
