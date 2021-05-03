@@ -14,6 +14,7 @@ class Product extends Model
         [
             'product_code',
             'url_slug',
+            'url_slug_bn',
             'schema_markup',
             'page_header',
             'page_header_bn',

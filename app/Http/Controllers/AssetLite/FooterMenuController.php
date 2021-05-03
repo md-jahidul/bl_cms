@@ -6,6 +6,7 @@ use App\Http\Requests\StoreFooterMenuRequest;
 use App\Models\FooterMenu;
 use App\Models\Menu;
 use App\Services\DynamicPageService;
+use App\Services\DynamicRouteService;
 use App\Services\FooterMenuService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -26,7 +27,7 @@ class FooterMenuController extends Controller
     /**
      * @var DynamicPageService
      */
-    private $dynamicPageService;
+    private $dynamicRouteService;
 
     /**
      * @var array $menuItems
@@ -36,12 +37,14 @@ class FooterMenuController extends Controller
     /**
      * FooterMenuController constructor.
      * @param FooterMenuService $footerMenuService
-     * @param DynamicPageService $dynamicPageService
+     * @param DynamicRouteService $dynamicRouteService
      */
-    public function __construct(FooterMenuService $footerMenuService, DynamicPageService $dynamicPageService)
-    {
+    public function __construct(
+        FooterMenuService $footerMenuService,
+        DynamicRouteService $dynamicRouteService
+    ) {
         $this->footerMenuService = $footerMenuService;
-        $this->dynamicPageService = $dynamicPageService;
+        $this->dynamicRouteService = $dynamicRouteService;
         $this->middleware('auth');
     }
 
@@ -84,14 +87,14 @@ class FooterMenuController extends Controller
      */
     public function create($parent_id = 0)
     {
-        $dynamicPages = $this->dynamicPageService->findAll();
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
         $this->footerMenuItems[] = ['en_label_text' => 'Create'];
         $footer_menu_id = $parent_id;
         while ($footer_menu_id != 0) {
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
-        return view('admin.footer-menu.create', compact('parent_id', 'footer_menu_items', 'dynamicPages'));
+        return view('admin.footer-menu.create', compact('parent_id', 'footer_menu_items', 'dynamicRoutes'));
     }
 
 
@@ -119,7 +122,7 @@ class FooterMenuController extends Controller
     public function edit($id)
     {
         $footerMenu = $this->footerMenuService->findOrFail($id);
-        $dynamicPages = $this->dynamicPageService->findAll();
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
         $this->footerMenuItems[] = ['en_label_text' => $footerMenu->en_label_text];
 
         $footer_menu_id = $footerMenu->parent_id;
@@ -127,7 +130,7 @@ class FooterMenuController extends Controller
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
-        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items', 'dynamicPages'));
+        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items', 'dynamicRoutes'));
     }
 
     /**

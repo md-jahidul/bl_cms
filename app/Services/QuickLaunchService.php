@@ -52,6 +52,8 @@ class QuickLaunchService
         }
         $data['display_order'] = ++$count;
         $data['type'] = $type;
+
+//        dd($data);
         $this->save($data);
         return new Response('Quick Launch added successfully');
     }

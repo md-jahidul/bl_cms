@@ -307,6 +307,11 @@
             <a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Loyalty</span></a>
             <ul class="menu-content">
+                <li class="{{ is_active_url('lms-offer-category') . is_active_url('lms-offer-category/create')}}">
+                    <a class="menu-item" href="{{ url('lms-offer-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> LMS Offer Categories</a>
+                </li>
+
                 <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
                     <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Partner and Offers</a>
@@ -323,6 +328,13 @@
                         <i class="la la-exclamation-circle"></i>About Priyojon
                     </a>
                 </li>
+                <li class="{{ is_active_url('lms-about-page/banner-image') }}">
+                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-exclamation-circle"></i>About Page Banner
+                    </a>
+                </li>
+
                 <li class="{{ is_active_url('about-page/reward_points')}}">
                     <a class="menu-item" href="{{ url('about-page/reward_points') }}"
                        data-i18n="nav.templates.vert.classic_menu">
@@ -493,14 +505,14 @@
                             </li>
                         @endif
 
-                        @if( auth()->user()->can_view('FixedPage') )
-                            <li class="{{ is_active_url('fixed-pages') }}">
-                                <a class="menu-item" href="{{ url('fixed-pages') }}"
+{{--                        @if( auth()->user()->can_view('home-page/component') )--}}
+                            <li class="{{ is_active_url('home-page/component') }}">
+                                <a class="menu-item" href="{{ url('home-page/component') }}"
                                    data-i18n="nav.templates.vert.classic_menu">
-                                    <i class="la la-file-image-o"></i> Fixed Page
+                                    <i class="la la-file-image-o"></i> Home Component
                                 </a>
                             </li>
-                        @endif
+{{--                        @endif           --}}
 
                         <li class="{{ is_active_url('store-locations/entry') }}">
                             <a class="menu-item" href="{{ url('store-locations/entry') }}"
@@ -542,9 +554,18 @@
                 </li>
             @endif
 
+{{--            @if( auth()->user()->can_view('FixedPage') )--}}
+                <li class="{{ is_active_url('fixed-pages') }}">
+                    <a class="menu-item" href="{{ url('fixed-pages') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-file-image-o"></i> Fixed Page
+                    </a>
+                </li>
+{{--            @endif--}}
+
             <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
                         class="la la-futbol-o"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
+                    <span class="menu-title" data-i18n="nav.templates.main">Dynamic Pages</span></a>
             </li>
             <li class="{{ is_active_url('/popular-search') }} nav-item">
                 <a href="{{ url('popular-search') }}">
@@ -712,6 +733,15 @@
             </ul>
         </li>
     @endif
+
+
+{{--    @if( auth()->user()->can_view('LeadManagement') )--}}
+        <li class="{{ is_active_url(route('dynamic-routes.index')) }}">
+            <a class="menu-item" href="{{ route('dynamic-routes.index') }}"
+               data-i18n="nav.templates.vert.classic_menu"><i
+                    class="la la-list"></i> Dynamic Routes</a>
+        </li>
+{{--    @endif--}}
 
 
     <hr>
