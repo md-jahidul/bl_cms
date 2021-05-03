@@ -863,7 +863,7 @@ class ProductCoreService
 
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
-        $data['tag'] = $firstTag->title;
+        $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -1050,7 +1050,7 @@ class ProductCoreService
             DB::rollback();
             throw new Exception($e->getMessage());
         }
-        return Redirect::route('mybl.product.create')->with('success', 'Product updated Successfully');
+        return Redirect::route('mybl.product.index')->with('success', 'Product updated Successfully');
     }
 
     public function downloadMyblProducts()

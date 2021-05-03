@@ -41,8 +41,7 @@
                                         <label for="sim_type">Connection Type</label>
                                         <input class="form-control"
                                                value="@if($details->details->sim_type == 1) PREPAID @else POSTPAID @endif"
-                                               disabled
-                                        >
+                                               disabled>
                                     </div>
                                 </div>
 
@@ -182,20 +181,22 @@
                                 @if($details->details->data_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Data Volume (MB)</label>
+                                            <label class="required">Data Volume (MB)</label>
                                             <input class="form-control"
                                                    value="{{ $details->details->internet_volume_mb }}"
-                                                   name="internet_volume_mb">
+                                                   name="internet_volume_mb" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
                                 @if($details->details->minute_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Minute Volume </label>
+                                            <label class="required">Minute Volume </label>
                                             <input class="form-control"
                                                    value="{{ $details->details->minute_volume }}"
-                                                   name="minute_volume">
+                                                   name="minute_volume" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
@@ -203,21 +204,38 @@
                                 @if($details->details->sms_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>SMS Volume </label>
+                                            <label class="required">SMS Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->sms_volume }} SMS" name="sms_volume">
+                                                   value="{{ $details->details->sms_volume }} SMS" name="sms_volume" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
                                 @if($details->details->sms_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>SMS Volume </label>
-                                            <input class="form-control"
-                                                   value="{{ $details->details->sms_volume }} SMS">
+                                            <label class="required">SMS Volume </label>
+                                            <input class="form-control" value="{{ $details->details->sms_volume }} SMS" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
+                                @if(strtolower($details->details->content_type) == 'scr')
+                                    <div class="form-group col-md-4">
+                                        <label class="required">Call Rate</label>
+                                        <input type="number" class="form-control" name="call_rate" required
+                                               value="{{ $details->details->call_rate }}">
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="required">Call Rate Unit</label>
+                                        <input class="form-control" name="call_rate_unit" required
+                                               value="{{ $details->details->call_rate_unit }}">
+                                        <div class="help-block"></div>
+                                    </div>
+                                @endif
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="required">Validity </label>
@@ -264,8 +282,12 @@
                                     </div>
                                 </div>
 
-
-                                @if(strtolower($details->details->content_type) == 'data')
+{{--                                {{ dd($details->details->content_type) }}--}}
+                                @if(  $details->details->content_type == 'data' ||
+                                      $details->details->content_type == 'data loan' ||
+                                      $details->details->content_type == 'gift' ||
+                                      $details->details->content_type == 'volume transfer'
+                                    )
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
                                     @endphp
@@ -295,33 +317,17 @@
                                         @php
                                             $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];
                                         @endphp
-                                        <select multiple
-                                                class="form-control tags"
-                                                name="tags[]" required>
+                                        <select multiple class="form-control tags" name="tags[]">
                                             <option value=""></option>
-
                                             @foreach ($tags as $key => $tag)
-                                                <option
-                                                    {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
+                                                <option {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
                                                     value="{{ $key }}">  {{$tag}}
                                                 </option>
                                             @endforeach
-
                                         </select>
                                     </div>
                                 </div>
-                                {{--                                <div class="col-md-4">--}}
-                                {{--                                    <div class="form-group">--}}
-                                {{--                                        <label>Tag </label>--}}
-                                {{--                                        <input class="form-control" name="tag" value="{{ $details->tag }}"--}}
-                                {{--                                               placeholder="e.g. Hot, New etc">--}}
-                                {{--                                        @if($errors->has('tag'))--}}
-                                {{--                                            <p class="text-left">--}}
-                                {{--                                                <small class="danger text-muted">{{ $errors->first('tag') }}</small>--}}
-                                {{--                                            </p>--}}
-                                {{--                                        @endif--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Schedule Availability </label>
@@ -422,6 +428,15 @@
 @endsection
 
 @push('style')
+    <style>
+        .form-group .help-block ul {
+            padding-left: 0; !important;
+        }
+        .error {
+            color: red !important;
+        }
+    </style>
+
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
 
