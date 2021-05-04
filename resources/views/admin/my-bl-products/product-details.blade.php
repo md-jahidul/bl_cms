@@ -65,7 +65,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="name" class="required">Title</label>
+                                        <label for="name" class="required">Name</label>
                                         <input class="form-control" value="{{ $details->details->name }}" name="name"
                                                id="name" required>
                                         <div class="help-block"></div>
@@ -181,14 +181,27 @@
                                 @if($details->details->data_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="required">Data Volume (MB)</label>
+                                            <label class="required">Data Volume</label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->internet_volume_mb }}"
+                                                   value="{{ $details->details->data_volume }}"
                                                    name="internet_volume_mb" required>
                                             <div class="help-block"></div>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="required">Data Volume Unit</label>
+                                            <select class="form-control" name="data_volume_unit" required>
+                                                <option value="">--Select Unit--</option>
+                                                <option {{ ($details->details->data_volume_unit == "MB" ) ? 'selected' : '' }} value="MB">MB</option>
+                                                <option {{ ($details->details->data_volume_unit == "GB" ) ? 'selected' : '' }} value="GB">GB</option>
+                                            </select>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
                                 @endif
+
                                 @if($details->details->minute_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">

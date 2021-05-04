@@ -912,9 +912,15 @@ class ProductCoreService
             unset($data_request['is_visible']);
             unset($data_request['pin_to_top']);
 
-            if (isset($data_request['internet_volume_mb'])) {
-                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
-                $data_request['data_volume_unit'] = ($data_request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
+//            if (isset($data_request['internet_volume_mb'])) {
+//                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
+//                $data_request['data_volume_unit'] = ($data_request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
+//            }
+
+            if (isset($request->internet_volume_mb)) {
+                $data_request['data_volume_unit'] = $request['data_volume_unit'];
+                $data_request['internet_volume_mb'] = ($request['data_volume_unit'] == "GB") ? $request['internet_volume_mb'] * 1024 : $request['internet_volume_mb'];
+                $data_request['data_volume'] = $request['internet_volume_mb'];
             }
 
             if (isset($data_request['sms_volume'])) {
@@ -945,7 +951,6 @@ class ProductCoreService
             ];
 
             $this->productActivityRepository->storeProductActivity($data_request, $others, $model);
-
             $model->update($data_request);
             $this->resetProductRedisKeys();
 
@@ -1032,19 +1037,18 @@ class ProductCoreService
             $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
 
             $data_request['platform'] = 'app';
-            $data_request['data_volume_unit'] = 'MB';
-            $data_request['validity_unit'] = ($data_request['validity'] > 1) ? 'Days' : 'Day';
+            $data_request['validity_unit'] = $request['validity_unit'];
 
             if (isset($request->internet_volume_mb)) {
-                $data_request['data_volume'] = $request['internet_volume_mb'] / 1024;
-                $data_request['data_volume_unit'] = ($request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
+                $data_request['data_volume_unit'] = $request['data_volume_unit'];
+                $data_request['internet_volume_mb'] = ($request['data_volume_unit'] == "GB") ? $request['internet_volume_mb'] * 1024 : $request['internet_volume_mb'];
+                $data_request['data_volume'] = $request['internet_volume_mb'];
             }
 
             $others = [
                 'activity_type' => self::CREATE,
                 'platform' => self::PLATFORM
             ];
-
             $this->productActivityRepository->storeProductActivity($data_request, $others);
             $this->save($data_request);
 
