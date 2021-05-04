@@ -138,7 +138,7 @@ class BaseMsisdnService
         }
         foreach (array_chunk($insertData, 1000) as $key => $smallerArray) {
             foreach ($smallerArray as $index => $value) {
-                $temp[$index] = $value;
+                $temp[$index] = str_replace(' ', '', $value);
             }
             BaseMsisdn::insert($temp);
         }

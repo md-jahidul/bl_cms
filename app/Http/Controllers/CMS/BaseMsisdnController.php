@@ -34,7 +34,8 @@ class BaseMsisdnController extends Controller
      */
     public function index()
     {
-        $baseList = $this->baseMsisdnService->findAll();
+        $orderBy = ['column' => 'created_at', 'direction' => 'DESC'];
+        $baseList = $this->baseMsisdnService->findBy([''], '', $orderBy);
         return view('admin.myblslider.base.index', compact('baseList'));
     }
 
