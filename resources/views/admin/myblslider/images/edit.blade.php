@@ -43,7 +43,6 @@
                                 <label for="title">Title: <small
                                             class="text-danger">*</small> </label>
                                 <input
-                                        required
                                         maxlength="200"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="Title is required"
@@ -58,8 +57,8 @@
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
-                                <label for="alt_text">Alt Text: </label>
-                                <input
+                                <label for="alt_text" class="required">Alt Text: </label>
+                                <input  required
                                         maxlength="200"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-regex-message="Alt Text must start with alphabets"
