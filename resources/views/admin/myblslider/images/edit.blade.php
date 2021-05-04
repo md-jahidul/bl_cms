@@ -233,7 +233,7 @@
                                         <th>Base Msisdn</th>
                                         <th>Segment Action</th>
                                         <th>CTA Action</th>
-                                        <th>Status</th>
+{{--                                        <th>Status</th>--}}
                                         <th class="text-center" style="width: 2%">
                                             <i data-repeater-create
                                                class="la la-plus-circle text-info cursor-pointer"
@@ -268,12 +268,12 @@
                                                 <td>
                                                     <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
                                                 </td>
-                                                <td>
-                                                    <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">
-                                                        <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>
-                                                        <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>
-                                                    </select>
-                                                </td>
+    {{--                                            <td>--}}
+    {{--                                                <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">--}}
+    {{--                                                    <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>--}}
+    {{--                                                    <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>--}}
+    {{--                                                </select>--}}
+    {{--                                            </td>--}}
                                                 <td class="text-center align-middle">
                                                     <i data-repeater-delete
                                                        class="la la-trash-o text-danger cursor-pointer"></i>

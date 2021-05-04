@@ -54,7 +54,6 @@
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="title" class="required">Title:</label>
                                         <input
-                                            required
                                             maxlength="200"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Title is required"
@@ -67,7 +66,7 @@
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="alt_text">Alt Text: </label>
+                                        <label for="alt_text" class="required">Alt Text: </label>
                                         <input
                                             maxlength="200"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
@@ -75,7 +74,7 @@
                                             data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
                                             value="@if(old('alt_text')) {{old('alt_text')}} @endif" id="alt_text"
                                             type="text" class="form-control @error('alt_text') is-invalid @enderror"
-                                            placeholder="Alt text" name="alt_text">
+                                            placeholder="Alt text" name="alt_text" required>
                                         <small class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
@@ -187,7 +186,7 @@
                                                 <th>Base Msisdn</th>
                                                 <th>Segment Action</th>
                                                 <th>CTA Action</th>
-                                                <th>Status</th>
+{{--                                                <th>Status</th>--}}
                                                 <th class="text-center" style="width: 2%">
                                                     <i data-repeater-create
                                                        class="la la-plus-circle text-info cursor-pointer"
@@ -219,13 +218,13 @@
                                                 <td>
                                                     <input class="form-control" name="action_url_or_code" type="text">
                                                 </td>
-                                                <td>
-                                                    <select name="status" class="form-control ">
-                                                      <option value="">--Select--</option>
-                                                      <option value="1">Yes</option>
-                                                      <option value="0">No</option>
-                                                    </select>
-                                                </td>
+{{--                                                <td>--}}
+{{--                                                    <select name="status" class="form-control ">--}}
+{{--                                                      <option value="">--Select--</option>--}}
+{{--                                                      <option value="1">Yes</option>--}}
+{{--                                                      <option value="0">No</option>--}}
+{{--                                                    </select>--}}
+{{--                                                </td>--}}
                                                 <td class="text-center align-middle">
                                                     <i data-repeater-delete
                                                        class="la la-trash-o text-danger cursor-pointer"></i>

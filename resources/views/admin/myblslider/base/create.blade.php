@@ -66,7 +66,12 @@
 {{--                                        @enderror--}}
 {{--                                    </div>--}}
 
+
+
                                     <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">
+                                        <h5><strong class="text-success ml-1">Create For New Msisdn List</strong></h5>
+                                        <div class="form-actions mt-0"></div>
+
                                         <label><b>Msisdn for Banner segment</b></label>
                                         <div class="form-group">
                                             <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">
@@ -84,7 +89,7 @@
                                         @endif
                                         <div class="form-group hidden" id="customMsisdn">
                                             <textarea class="form-control" name="custom_msisdn" cols="3" rows="5"
-                                                      placeholder="019000000000,01400000000"></textarea>
+                                                      placeholder="01900000000,01400000000"></textarea>
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('custom_msisdn'))
@@ -94,6 +99,9 @@
                                 </div>
 
                                 @if($page == "edit")
+                                    <h5><strong class="text-info ml-1">Previous Msisdn List</strong></h5>
+                                    <div class="form-actions mt-0"></div>
+
                                     <div class="col-6">
                                         <div class="form-group">
                                             <a href="{{ route('myblslider.baseMsisdn.excel-export', $baseMsisdn->id) }}"
@@ -101,6 +109,8 @@
                                         </div>
                                     </div>
                                     @include('admin.myblslider.base.msisdn-table', $baseMsisdn)
+
+
                                 @endif
 
                             </div>
