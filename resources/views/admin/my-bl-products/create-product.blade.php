@@ -265,6 +265,20 @@
                                 </div>
 
                                 <div class="col-md-4">
+                                    <label class="required">Visibility (show/hide in app)</label>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="is_visible" value="1" id="show">
+                                            <label for="show">Show</label>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="is_visible" value="0" id="hide" checked>
+                                            <label for="hide">Hide</label>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Schedule Availability </label>
                                         <div class="row">
@@ -295,20 +309,6 @@
                                             <small class="danger text-muted">{{ $errors->first('media') }}</small>
                                         </p>
                                     @endif
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label class="required">Visibility (show/hide in app)</label>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <input type="radio" name="is_visible" value="1" id="show">
-                                            <label for="show">Show</label>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <input type="radio" name="is_visible" value="0" id="hide" checked>
-                                            <label for="hide">Hide</label>
-                                        </li>
-                                    </ul>
                                 </div>
 
                                 <div class="col-md-2 icheck_minimal skin mt-2">
