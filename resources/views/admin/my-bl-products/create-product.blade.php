@@ -79,7 +79,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('name') ? ' error' : '' }}">
-                                        <label for="name" class="required">Title</label>
+                                        <label for="name" class="required">Name</label>
                                         <input class="form-control" name="name" required id="name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name'))
@@ -441,11 +441,22 @@
 
             let data = `<div class="col-md-4">
                             <div class="form-group package_type">
-                                <label class="required">Data Volume (MB)</label>
+                                <label class="required">Data Volume</label>
                                 <input type="number" class="form-control" name="internet_volume_mb" required>
                                 <div class="help-block"></div>
                             </div>
                         </div>`
+
+            let dataUnit = `<div class="form-group col-md-4">
+                                    <label class="required">Data Volume Unit</label>
+                                    <select class="form-control"
+                                            name="data_volume_unit" required>
+                                        <option value="">---Select Unit---</option>
+                                        <option value="MB">MB</option>
+                                        <option value="GB">GB</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>`
 
             let voiceVol = `<div class="form-group col-md-4">
                                 <label class="required">Minute Volume </label>
@@ -492,9 +503,9 @@
                 type === 'data loan' ||
                 type === 'gift'
             ) {
-                offer_types.append(data + sectionType)
+                offer_types.append(data + dataUnit + sectionType)
             } else if (type === 'mix' || type === 'recharge_offer') {
-                offer_types.append(data + voiceVol + smsVol)
+                offer_types.append(data + dataUnit + voiceVol + smsVol)
             } else if (type === 'voice') {
                 offer_types.append(voiceVol)
             } else if (type === 'sms') {
