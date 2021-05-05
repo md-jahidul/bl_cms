@@ -318,8 +318,8 @@
                                                         value="{{ $key }}">  {{$category}}
                                                     </option>
                                                 @endforeach
-
                                             </select>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
