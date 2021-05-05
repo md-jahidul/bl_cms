@@ -11,7 +11,9 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Models\ProductTag;
+use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductTagRepository;
+use App\Repositories\ProductActivityRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDeepLinkRepository;
 use App\Repositories\SearchDataRepository;
@@ -53,6 +55,10 @@ class ProductCoreService
     protected $tagRepository;
     protected $productDeepLinkRepository;
 
+    protected const CREATE = "create";
+    protected const UPDATE = "update";
+    protected const DELETE = "delete";
+    protected const PLATFORM = "app";
     /**
      * @var array
      */
@@ -61,10 +67,20 @@ class ProductCoreService
      * @var MyBlProductTagRepository
      */
     private $myBlProductTagRepository;
+    /**
+     * @var MyBlProductRepository
+     */
+    private $myBlProductRepository;
+    /**
+     * @var ProductActivityRepository
+     */
+    private $productActivityRepository;
 
     /**
      * ProductCoreService constructor.
      * @param ProductCoreRepository $productCoreRepository
+     * @param MyBlProductRepository $myBlProductRepository
+     * @param ProductActivityRepository $productActivityRepository
      * @param SearchDataRepository $searchRepository
      * @param TagCategoryRepository $tagRepository
      * @param ProductDeepLinkRepository $productDeepLinkRepository
@@ -72,12 +88,17 @@ class ProductCoreService
      */
     public function __construct(
         ProductCoreRepository $productCoreRepository,
+        MyBlProductRepository $myBlProductRepository,
+        ProductActivityRepository $productActivityRepository,
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
         MyBlProductTagRepository $myBlProductTagRepository
-    ) {
+    )
+    {
         $this->productCoreRepository = $productCoreRepository;
+        $this->myBlProductRepository = $myBlProductRepository;
+        $this->productActivityRepository = $productActivityRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->productDeepLinkRepository = $productDeepLinkRepository;
@@ -151,7 +172,9 @@ class ProductCoreService
             $data['content_type'] = $this->getType($data['offer_category_id']);
             $data['sim_type'] = $simId;
             $this->save($data);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -408,6 +431,7 @@ class ProductCoreService
 
         $builder = new MyBlProduct();
         $builder = $builder->where('status', 1);
+        $builder = $builder->latest();
         /*        if ($request->status) {
           $builder = MyBlProduct::where('status', $request->status);
           } */
@@ -884,12 +908,15 @@ class ProductCoreService
             unset($data_request['is_visible']);
             unset($data_request['pin_to_top']);
 
-            if (isset($data_request['data_volume'])) {
-                $data_request['data_volume'] = substr(
-                    $data_request['data_volume'],
-                    0,
-                    strrpos($data_request['data_volume'], ' ')
-                );
+//            if (isset($data_request['internet_volume_mb'])) {
+//                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
+//                $data_request['data_volume_unit'] = ($data_request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
+//            }
+
+            if (isset($request->internet_volume_mb)) {
+                $data_request['data_volume_unit'] = $request['data_volume_unit'];
+                $data_request['internet_volume_mb'] = ($request['data_volume_unit'] == "GB") ? $request['internet_volume_mb'] * 1024 : $request['internet_volume_mb'];
+                $data_request['data_volume'] = $request['internet_volume_mb'];
             }
 
             if (isset($data_request['sms_volume'])) {
@@ -900,21 +927,9 @@ class ProductCoreService
                 );
             }
 
-            if (isset($data_request['minute_volume'])) {
-                $data_request['minute_volume'] = substr(
-                    $data_request['minute_volume'],
-                    0,
-                    strrpos($data_request['minute_volume'], ' ')
-                );
-            }
-
-            if (isset($data_request['validity'])) {
-                $data_request['validity'] = substr(
-                    $data_request['validity'],
-                    0,
-                    strrpos($data_request['validity'], ' ')
-                );
-            }
+            $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+            $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->renew_product_code));
+            $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
 
             $data_history = $core_product[0];
 
@@ -924,9 +939,15 @@ class ProductCoreService
 
             ProductCoreHistory::create($data_history);
 
-            $model = ProductCore::where('product_code', $product_code);
-            $model->update($data_request);
+            $model = ProductCore::where('product_code', $product_code)->first();
 
+            $others = [
+                'activity_type' => self::UPDATE,
+                'platform' => self::PLATFORM
+            ];
+
+            $this->productActivityRepository->storeProductActivity($data_request, $others, $model);
+            $model->update($data_request);
             $this->resetProductRedisKeys();
 
             DB::commit();
@@ -936,6 +957,107 @@ class ProductCoreService
         }
 
         return Redirect::back()->with('success', 'Product updated Successfully');
+    }
+
+    /**
+     * Update my-bl products
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function storeMyblProducts($request)
+    {
+        $data['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+
+        if ($request->file('media')) {
+            $file = $request->media;
+            $path = $file->storeAs(
+                'products/images',
+                $data['product_code'] . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $data['media'] = $path;
+        }/* else {
+            $data['media'] = null;
+        }*/
+
+        $firstTag = ProductTag::where('id', $request->tags[0])->first();
+        $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
+        $data['show_in_home'] = isset($request->show_in_app) ? true : false;
+        $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
+        $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
+        $data['is_visible'] = $request->is_visible;
+        $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
+
+        if ($request->content_type == "data") {
+            if (isset($request->offer_section_slug)) {
+                $firstTab = MyBlInternetOffersCategory::findOrFail($request->offer_section_slug[0]);
+            }
+            $data['offer_section_title'] = isset($firstTab) ? $firstTab->name : 'Power Pack';
+            $data['offer_section_slug'] = isset($firstTab) ? $firstTab->slug : 'power_pack';
+        }
+
+        try {
+            DB::beginTransaction();
+            $this->myBlProductRepository->save($data);
+
+            if ($request->has('tags')) {
+                $this->syncProductTags($data['product_code'], $request->tags);
+            }
+
+            if ($request->has('offer_section_slug')) {
+                foreach ($request->offer_section_slug ?? [] as $offerSectionId) {
+                    $data_section_slug['product_code'] = $data['product_code'];
+                    $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
+                    MyBlProductTab::create($data_section_slug);
+                }
+            }
+
+            $data_request = $request->all();
+            unset($data_request['_token']);
+            unset($data_request['_method']);
+            unset($data_request['tags']);
+            unset($data_request['media']);
+            unset($data_request['show_in_app']);
+            unset($data_request['is_rate_cutter_offer']);
+            unset($data_request['offer_section_slug']);
+            unset($data_request['offer_section_title']);
+            unset($data_request['show_from']);
+            unset($data_request['hide_from']);
+            unset($data_request['is_visible']);
+            unset($data_request['pin_to_top']);
+
+            $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+            $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
+            $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
+
+            $data_request['platform'] = 'app';
+            $data_request['validity_unit'] = $request['validity_unit'];
+
+            if (isset($request->internet_volume_mb)) {
+                $data_request['data_volume_unit'] = $request['data_volume_unit'];
+                $data_request['internet_volume_mb'] = ($request['data_volume_unit'] == "GB") ? $request['internet_volume_mb'] * 1024 : $request['internet_volume_mb'];
+                $data_request['data_volume'] = $request['internet_volume_mb'];
+            }
+
+            $others = [
+                'activity_type' => self::CREATE,
+                'platform' => self::PLATFORM
+            ];
+            $this->productActivityRepository->storeProductActivity($data_request, $others);
+            $this->save($data_request);
+
+            $this->resetProductRedisKeys();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
+        }
+        return Redirect::route('mybl.product.index')->with('success', 'Product updated Successfully');
     }
 
     public function downloadMyblProducts()

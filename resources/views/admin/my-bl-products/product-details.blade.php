@@ -22,13 +22,16 @@
 
 @section('content')
     <section>
-        <div class="card card-info mb-0" style="padding-left:10px">
-            <div class="card-content">
-                <div class="card-body">
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h5 class="menu-title"><strong> Product Details Info</strong></h5><hr>
+                    <div class="card-body card-dashboard">
                     <form class="form"
                           action="{{ route('mybl.product.update',  $details->details->product_code )}}"
                           enctype="multipart/form-data"
-                          method="POST">
+                          method="POST"
+                          novalidate>
                         @csrf
                         {{ method_field('PUT') }}
                         <div class="form-body">
@@ -38,59 +41,119 @@
                                         <label for="sim_type">Connection Type</label>
                                         <input class="form-control"
                                                value="@if($details->details->sim_type == 1) PREPAID @else POSTPAID @endif"
-                                               disabled
-                                        >
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="product_code">Product Code</label>
-                                        <input class="form-control" value="{{ $details->details->product_code }}"
                                                disabled>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Title</label>
-                                        <input class="form-control" value="{{ $details->details->name }}" name="name"
-                                               id="name">
-                                    </div>
-                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="content_type">Content Type</label>
                                         <input class="form-control"
                                                value="{{ ucfirst($details->details->content_type) }}"
-                                               name="content_type">
+                                               disabled>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                        <label for="product_code">Product Code</label>
+                                        <input type="hidden" class="form-control" name="mybl_product_id" value="{{ $details->id }}">
+                                        <input class="form-control" name="product_code" value="{{ $details->details->product_code }}" readonly>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Short Description</label>
-                                        <input class="form-control" value="{{ $details->details->short_description }}"
-                                               name="short_description">
+                                        <label for="name" class="required">Name</label>
+                                        <input class="form-control" value="{{ $details->details->name }}" name="name"
+                                               id="name" required>
+                                        <div class="help-block"></div>
                                     </div>
                                 </div>
-                                @if( $details->details->activation_ussd)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Activation USSD </label>
-                                            <input class="form-control"
-                                                   value="{{ $details->details->activation_ussd }}"
-                                                   name="activation_ussd">
-                                        </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('commercial_name_en') ? ' error' : '' }}">
+                                    <label for="name" class="required">Commercial Name En</label>
+                                    <input class="form-control" name="commercial_name_en" required id="name"
+                                           value="{{ $details->details->commercial_name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('commercial_name_en'))
+                                        <div class="help-block">{{ $errors->first('commercial_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('commercial_name_bn') ? ' error' : '' }}">
+                                    <label for="name" class="required">Commercial Name Bn</label>
+                                    <input class="form-control" name="commercial_name_bn" required id="name"
+                                           value="{{ $details->details->commercial_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('commercial_name_bn'))
+                                        <div class="help-block">{{ $errors->first('commercial_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Display Title En</label>
+                                    <input class="form-control" name="display_title_en"
+                                           value="{{ $details->details->display_title_en }}">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Display Title Bn</label>
+                                    <input class="form-control" name="display_title_bn"
+                                           value="{{ $details->details->display_title_bn }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="required">Short Description</label>
+                                        <input class="form-control" value="{{ $details->details->short_description }}"
+                                               name="short_description" required>
+                                        <div class="help-block"></div>
                                     </div>
-                                @endif
-                                @if( $details->details->balance_check_ussd)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Balance USSD</label>
-                                            <input class="form-control"
-                                                   value="{{ $details->details->balance_check_ussd }}"
-                                                   name="balance_check_ussd">
-                                        </div>
-                                    </div>
-                                @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('display_sd_vat_tax') ? ' error' : '' }}">
+                                    <label>Display SD Vat Tax</label>
+                                    <input class="form-control" name="display_sd_vat_tax"
+                                           value="{{ $details->details->display_sd_vat_tax }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('display_sd_vat_tax'))
+                                        <div class="help-block">{{ $errors->first('display_sd_vat_tax') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('points') ? ' error' : '' }}">
+                                    <label>Points</label>
+                                    <input type="number" class="form-control" name="points"
+                                           value="{{ $details->details->points }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('points'))
+                                        <div class="help-block">{{ $errors->first('points') }}</div>
+                                    @endif
+                                </div>
+
+{{--                                @if( $details->details->activation_ussd)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Activation USSD </label>--}}
+{{--                                            <input class="form-control"--}}
+{{--                                                   value="{{ $details->details->activation_ussd }}"--}}
+{{--                                                   name="activation_ussd">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+{{--                                @if( $details->details->balance_check_ussd)--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Balance USSD</label>--}}
+{{--                                            <input class="form-control"--}}
+{{--                                                   value="{{ $details->details->balance_check_ussd }}"--}}
+{{--                                                   name="balance_check_ussd">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>MRP Price</label>
@@ -98,23 +161,55 @@
                                                name="mrp_price">
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input class="form-control" name="price"
+                                               value="{{ $details->details->price }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Vat</label>
+                                        <input class="form-control" name="vat"
+                                        value="{{ $details->details->vat }}">
+                                    </div>
+                                </div>
+
                                 @if($details->details->data_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Data Volume </label>
+                                            <label class="required">Data Volume</label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->data_volume }} {{ $details->details->data_volume_unit }}"
-                                                   name="data_volume">
+                                                   value="{{ $details->details->data_volume }}"
+                                                   name="internet_volume_mb" required>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="required">Data Volume Unit</label>
+                                            <select class="form-control" name="data_volume_unit" required>
+                                                <option value="">--Select Unit--</option>
+                                                <option {{ ($details->details->data_volume_unit == "MB" ) ? 'selected' : '' }} value="MB">MB</option>
+                                                <option {{ ($details->details->data_volume_unit == "GB" ) ? 'selected' : '' }} value="GB">GB</option>
+                                            </select>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
+
                                 @if($details->details->minute_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Minute Volume </label>
+                                            <label class="required">Minute Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->minute_volume }} Minutes"
-                                                   name="minute_volume">
+                                                   value="{{ $details->details->minute_volume }}"
+                                                   name="minute_volume" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
@@ -122,50 +217,90 @@
                                 @if($details->details->sms_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>SMS Volume </label>
+                                            <label class="required">SMS Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->sms_volume }} SMS" name="sms_volume">
+                                                   value="{{ $details->details->sms_volume }} SMS" name="sms_volume" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
                                 @if($details->details->sms_volume)
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>SMS Volume </label>
-                                            <input class="form-control"
-                                                   value="{{ $details->details->sms_volume }} SMS">
+                                            <label class="required">SMS Volume </label>
+                                            <input class="form-control" value="{{ $details->details->sms_volume }} SMS" required>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Validity </label>
-                                        <input class="form-control"
-                                               value="{{ $details->details->validity }} {{ ucfirst($details->details->validity_unit) }}"
-                                               name="validity">
+                                @if(strtolower($details->details->content_type) == 'scr')
+                                    <div class="form-group col-md-4">
+                                        <label class="required">Call Rate</label>
+                                        <input type="number" class="form-control" name="call_rate" required
+                                               value="{{ $details->details->call_rate }}">
+                                        <div class="help-block"></div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Has Auto Renew Code? </label>
-                                        <input class="form-control"
-                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}"
-                                               disabled>
-                                    </div>
-                                </div>
-                                @if($details->details->renew_product_code)
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Auto Renewable Code</label>
-                                            <input class="form-control"
-                                                   value="{{ $details->details->renew_product_code }}"
-                                                   disabled>
-                                        </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="required">Call Rate Unit</label>
+                                        <input class="form-control" name="call_rate_unit" required
+                                               value="{{ $details->details->call_rate_unit }}">
+                                        <div class="help-block"></div>
                                     </div>
                                 @endif
-                            </div>
-                            <div class="row">
-                                @if(strtolower($details->details->content_type) == 'data')
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="required">Validity </label>
+                                        <input class="form-control"
+                                               value="{{ $details->details->validity }}"
+                                               name="validity" required>
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $validityUnits = [/*'hour', 'hours', */'day', 'days'];
+                                @endphp
+
+                                <div class="form-group col-md-4 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
+                                    <label for="duration_category_id" class="validity_unit required">Validity Unit</label>
+                                    <select class="form-control required duration_categories" name="validity_unit" id="validity_unit" required>
+                                        <option value="">---Select Validity Unit---</option>
+                                        @foreach($validityUnits as $value)
+                                            <option value="{{ $value }}" {{ $value == strtolower($details->details->validity_unit) ? 'selected' : '' }}>{{ ucfirst($value) }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('duration_category_id'))
+                                        <div class="help-block">{{ $errors->first('duration_category_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Recharge Product Code</label>
+                                        <input class="form-control" name="recharge_product_code"
+                                               value="{{ $details->details->recharge_product_code }}">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Auto Renewable Code</label>
+                                        <input class="form-control" name="renew_product_code"
+                                               value="{{ $details->details->renew_product_code }}"
+                                               >
+                                    </div>
+                                </div>
+
+{{--                                {{ dd($details->details->content_type) }}--}}
+                                @if(  $details->details->content_type == 'data' ||
+                                      $details->details->content_type == 'data loan' ||
+                                      $details->details->content_type == 'gift' ||
+                                      $details->details->content_type == 'volume transfer'
+                                    )
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
                                     @endphp
@@ -183,8 +318,8 @@
                                                         value="{{ $key }}">  {{$category}}
                                                     </option>
                                                 @endforeach
-
                                             </select>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
@@ -195,33 +330,17 @@
                                         @php
                                             $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];
                                         @endphp
-                                        <select multiple
-                                                class="form-control tags"
-                                                name="tags[]">
+                                        <select multiple class="form-control tags" name="tags[]">
                                             <option value=""></option>
-
                                             @foreach ($tags as $key => $tag)
-                                                <option
-                                                    {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
+                                                <option {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
                                                     value="{{ $key }}">  {{$tag}}
                                                 </option>
                                             @endforeach
-
                                         </select>
                                     </div>
                                 </div>
-                                {{--                                <div class="col-md-4">--}}
-                                {{--                                    <div class="form-group">--}}
-                                {{--                                        <label>Tag </label>--}}
-                                {{--                                        <input class="form-control" name="tag" value="{{ $details->tag }}"--}}
-                                {{--                                               placeholder="e.g. Hot, New etc">--}}
-                                {{--                                        @if($errors->has('tag'))--}}
-                                {{--                                            <p class="text-left">--}}
-                                {{--                                                <small class="danger text-muted">{{ $errors->first('tag') }}</small>--}}
-                                {{--                                            </p>--}}
-                                {{--                                        @endif--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Schedule Availability </label>
@@ -244,18 +363,39 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <label>Product Image</label>
+                                    <div class="form-group">
+                                        @if($errors->has('media'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('media') }}</small>
+                                            </p>
+                                        @endif
+                                        @if ($details->media)
+                                            <input type="file"
+                                                   id="input-file-now-custom-1"
+                                                   class="dropify"
+                                                   name="media"
+                                                   data-default-file="{{ url('storage/' .$details->media) }}"/>
+                                        @else
+                                            <input type="file" id="input-file-now" name="media" class="dropify"/>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <label>Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
-                                            <input type="radio" name="is_visible"
+                                            <input type="radio" name="is_visible" id="show"
                                                    value="1" {{$details->is_visible ? 'checked' : ''}}>
-                                            <label class="small">Show</label>
+                                            <label for="show">Show</label>
                                         </li>
                                         <li class="list-inline-item">
-                                            <input type="radio" name="is_visible"
+                                            <input type="radio" name="is_visible" id="hide"
                                                    value="0" {{$details->is_visible ? '' : 'checked'}}>
-                                            <label class="small">Hide</label>
+                                            <label for="hide">Hide</label>
                                         </li>
                                     </ul>
                                 </div>
@@ -280,7 +420,7 @@
                                         @endif
                                     </fieldset>
                                 </div>
-                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                <div class="col-md-3 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer"
@@ -288,44 +428,42 @@
                                         <label for="show_in_home">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        @if($errors->has('media'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('media') }}</small>
-                                            </p>
-                                        @endif
-                                        @if ($details->media)
-                                            <input type="file"
-                                                   id="input-file-now-custom-1"
-                                                   class="dropify"
-                                                   name="media"
-                                                   data-default-file="{{ url('storage/' .$details->media) }}"
-                                            />
-                                        @else
-                                            <input type="file" id="input-file-now" name="media" class="dropify"/>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-info btn-block">
-                                            <i class="ft-save"></i> Update
+
+                                {{--                                <div class="col-md-4">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <button type="submit" class="btn btn-info btn-block">--}}
+                                {{--                                            <i class="ft-save"></i> Update--}}
+                                {{--                                        </button>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button id="save" class="btn btn-primary"><i
+                                                class="la la-refresh"></i> Update
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    </div>
                 </div>
             </div>
-
         </div>
-
     </section>
 @endsection
 
 @push('style')
+    <style>
+        .form-group .help-block ul {
+            padding-left: 0; !important;
+        }
+        .error {
+            color: red !important;
+        }
+    </style>
+
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
 
@@ -393,6 +531,7 @@
         });
 
         $('.dropify').dropify({
+            height: 70,
             messages: {
                 'default': 'Browse for an Image to upload',
                 'replace': 'Click to replace',
