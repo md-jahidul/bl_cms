@@ -223,11 +223,32 @@
 
                         <div class="col-md-4 col-xs-12">
                             <div class="form-group">
-                                <label>URL Slug <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="url_slug" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> 5gb-hot-offer (no spaces)<br>
-                                </small>
+                                <div class="mb-1">
+                                    <label>URL Slug EN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
+                                        value="{{ old('url_slug') }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> 5gb-hot-offer (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div>
+                                    <label>URL Slug BN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN"
+                                        value="{{ old('url_slug_bn') }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> ৫জিবি-অফার (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -340,7 +361,7 @@
 
 @endpush
 @push('page-js')
-
+ <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 

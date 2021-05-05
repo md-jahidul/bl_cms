@@ -34,8 +34,13 @@ class RoamingCategoryRepository extends BaseRepository {
             $category->banner_web = $webPath;
             $category->banner_mobile = $mobilePath;
             $category->alt_text = $request->alt_text;
+            $category->alt_text_bn = $request->alt_text_bn;
             $category->url_slug = $request->page_url;
+            $category->url_slug_bn = $request->page_url_bn;
             $category->banner_name = $request->banner_name;
+            $category->banner_name_web_bn = $request->banner_name_web_bn;
+            $category->banner_name_mobile_en = $request->banner_name_mobile_en;
+            $category->banner_name_mobile_bn = $request->banner_name_mobile_bn;
             $category->page_header = $request->html_header;
             $category->page_header_bn = $request->page_header_bn;
             $category->schema_markup = $request->schema_markup;

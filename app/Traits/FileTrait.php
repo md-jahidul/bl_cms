@@ -25,6 +25,14 @@ trait FileTrait {
         $path = $file->store(
                 $directoryPath, $this->disk
         );
+
+//        $path = $file->storeAs(
+//            $directoryPath,
+//            $fileName,
+//            $this->disk
+//        );
+//        return $path;
+
 //        $path = $file->storeAs(
 //                $directoryPath, $fileName, $this->disk
 //        );
@@ -38,7 +46,6 @@ trait FileTrait {
 //            return $renamedPath;
 //        }
 
-
         return $path;
     }
 
@@ -46,24 +53,21 @@ trait FileTrait {
      * Rename after upload
      * @param file name
      * @param directoryPath - Directory path relative to base upload path
-     * @return file path
+     * @return string path
      * @Dev Bulbul Mahmud Nito || 30/03/2020
      */
-    protected function rename($path, $fileName, $directoryPath) {
-        return $path;
+    protected function rename($path, $fileName, $directoryPath)
+    {
+        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
 
-//        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
-//
-//        $pathToArray = explode('/', $path);
-//        $imgName = end($pathToArray);
-//        $mimeArray = explode('.', $imgName);
-//        $mime = end($mimeArray);
-//
-//        $newName = $directoryPath . "/" . $fileName . "." . $mime;
-//        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
-//
-//        @rename($oldImg, $newPath);
-//        return $newName;
+        $pathToArray = explode('/', $path);
+        $imgName = end($pathToArray);
+        $mimeArray = explode('.', $imgName);
+        $mime = end($mimeArray);
+        $newName = $directoryPath . "/" . $fileName . "." . $mime;
+        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
+        rename($oldImg, $newPath);
+        return $newName;
     }
 
     /**

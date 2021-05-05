@@ -117,32 +117,37 @@
                                 @include('layouts.partials.app-service.financial')
                             </slot>
 
-
-
-                            <div class="col-md-6">
-                                <label></label>
-                                <div class="form-group">
-                                    <label for="title" class="mr-1">Status:</label>
-                                    <input type="radio" name="status" value="1" id="active" checked>
-                                    <label for="active" class="mr-1">Active</label>
-
-                                    <input type="radio" name="status" value="0" id="inactive">
-                                    <label for="inactive">Inactive</label>
-                                </div>
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL EN <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN" id="url_slug">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> najat-app (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug') }}
+                                    </div>
+                                @endif
                             </div>
 
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="url_slug" placeholder="URL">
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL BN <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> najat-app (no spaces)<br>
+                                    <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
                                 </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug_bn') }}
+                                    </div>
+                                @endif
                             </div>
 
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header English (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
@@ -165,7 +170,17 @@
                                 </small>
                             </div>
 
+                            <div class="col-md-6">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" checked>
+                                    <label for="active" class="mr-1">Active</label>
 
+                                    <input type="radio" name="status" value="0" id="inactive">
+                                    <label for="inactive">Inactive</label>
+                                </div>
+                            </div>
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
@@ -195,6 +210,7 @@
 @push('page-js')
 <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>

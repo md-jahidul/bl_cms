@@ -30,6 +30,7 @@ class EthicsRepository extends BaseRepository {
             $page->banner_mobile = $mobilePath;
             $page->alt_text = $request->alt_text;
             $page->page_header = $request->page_header;
+            $page->page_header_bn = $request->page_header_bn;
             $page->schema_markup = $request->schema_markup;
             $page->save();
 
@@ -45,8 +46,8 @@ class EthicsRepository extends BaseRepository {
         return $response;
     }
 
- 
 
-    
+
+
 
 }

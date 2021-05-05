@@ -150,15 +150,10 @@ class ProductCoreService
         return $type;
     }
 
-    public function storeMyBlProduct($data)
-    {
-
-    }
-
     /**
      * @param $data
      * @param $simId
-     * @return bool
+     * @return void
      */
     public function storeProductCore($data, $simId)
     {
@@ -478,7 +473,7 @@ class ProductCoreService
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
-//        dd($items);
+
         $response = [
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
@@ -492,6 +487,7 @@ class ProductCoreService
             $link = $this->productDeepLinkRepository->findOneProductLink($item->product_code);
             $response['data'][] = [
                 'product_code' => $item->product_code,
+                'pin_to_top' => $item->pin_to_top,
                 'renew_product_code' => $item->details->renew_product_code,
                 'recharge_product_code' => $item->details->recharge_product_code,
                 'connection_type' => $item->details->sim_type,
@@ -861,23 +857,27 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
-        $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
+        $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
+
+//        dd($data);
 
         try {
             DB::beginTransaction();
-//            dd($request->all());
+
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
+            } else {
+                $this->myBlProductTagRepository->deleteByProductCode($product_code);
             }
 
             if ($request->has('offer_section_slug')) {
@@ -906,6 +906,7 @@ class ProductCoreService
             unset($data_request['show_from']);
             unset($data_request['hide_from']);
             unset($data_request['is_visible']);
+            unset($data_request['pin_to_top']);
 
 //            if (isset($data_request['internet_volume_mb'])) {
 //                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
@@ -989,6 +990,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
 
         if ($request->content_type == "data") {
             if (isset($request->offer_section_slug)) {
@@ -1026,6 +1028,7 @@ class ProductCoreService
             unset($data_request['show_from']);
             unset($data_request['hide_from']);
             unset($data_request['is_visible']);
+            unset($data_request['pin_to_top']);
 
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));

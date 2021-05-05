@@ -120,6 +120,7 @@ class BusinessInternetRepository extends BaseRepository {
             'alt_text' => $request->alt_text,
             'banner_name' => $request->banner_name,
             'url_slug' => $request->url_slug,
+            'url_slug_bn' => $request->url_slug_bn,
             'schema_markup' => $request->schema_markup,
             'page_header' => $request->page_header,
             'page_header_bn' => $request->page_header_bn,
