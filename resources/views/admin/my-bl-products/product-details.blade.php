@@ -331,7 +331,6 @@
                                             $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];
                                         @endphp
                                         <select multiple class="form-control tags" name="tags[]">
-                                        <select multiple
                                                 class="form-control tags"
                                                 name="tags[]">
                                             <option value=""></option>
