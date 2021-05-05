@@ -150,15 +150,10 @@ class ProductCoreService
         return $type;
     }
 
-    public function storeMyBlProduct($data)
-    {
-
-    }
-
     /**
      * @param $data
      * @param $simId
-     * @return bool
+     * @return void
      */
     public function storeProductCore($data, $simId)
     {
@@ -862,7 +857,6 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
@@ -994,6 +988,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
 
         if ($request->content_type == "data") {
             if (isset($request->offer_section_slug)) {
@@ -1031,6 +1026,7 @@ class ProductCoreService
             unset($data_request['show_from']);
             unset($data_request['hide_from']);
             unset($data_request['is_visible']);
+            unset($data_request['pin_to_top']);
 
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));

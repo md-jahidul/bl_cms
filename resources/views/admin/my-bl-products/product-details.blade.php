@@ -318,8 +318,8 @@
                                                         value="{{ $key }}">  {{$category}}
                                                     </option>
                                                 @endforeach
-
                                             </select>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                 @endif
@@ -331,8 +331,6 @@
                                             $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];
                                         @endphp
                                         <select multiple class="form-control tags" name="tags[]">
-                                                class="form-control tags"
-                                                name="tags[]">
                                             <option value=""></option>
                                             @foreach ($tags as $key => $tag)
                                                 <option {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
@@ -408,7 +406,7 @@
                                         <label for="show_in_home">Show in Home</label>
                                     </fieldset>
                                 </div>
-                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="pin_to_top" value="1" name="pin_to_top"
                                                @if($details->pin_to_top) checked @endif
@@ -422,7 +420,7 @@
                                         @endif
                                     </fieldset>
                                 </div>
-                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                <div class="col-md-3 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer"
