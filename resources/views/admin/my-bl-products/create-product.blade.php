@@ -71,7 +71,8 @@
                                 <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <input class="form-control" name="product_code" required
-                                           data-validation-required-message="Please enter product code">
+                                           data-validation-required-message="Please enter product code"
+                                           value="{{ old("product_code") ? old("product_code") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
@@ -80,7 +81,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('name') ? ' error' : '' }}">
                                         <label for="name" class="required">Name</label>
-                                        <input class="form-control" name="name" required id="name">
+                                        <input class="form-control" name="name" required id="name"
+                                        value="{{ old("name") ? old("name") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name'))
                                         <div class="help-block">{{ $errors->first('name') }}</div>
@@ -89,7 +91,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('commercial_name_en') ? ' error' : '' }}">
                                     <label for="name" class="required">Commercial Name En</label>
-                                    <input class="form-control" name="commercial_name_en" required id="name">
+                                    <input class="form-control" name="commercial_name_en" required id="name"
+                                           value="{{ old("commercial_name_en") ? old("commercial_name_en") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('commercial_name_en'))
                                         <div class="help-block">{{ $errors->first('commercial_name_en') }}</div>
@@ -98,7 +101,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('commercial_name_bn') ? ' error' : '' }}">
                                     <label for="name" class="required">Commercial Name Bn</label>
-                                    <input class="form-control" name="commercial_name_bn" required id="name">
+                                    <input class="form-control" name="commercial_name_bn" required id="name"
+                                           value="{{ old("commercial_name_bn") ? old("commercial_name_bn") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('commercial_name_bn'))
                                         <div class="help-block">{{ $errors->first('commercial_name_bn') }}</div>
@@ -107,12 +111,14 @@
 
                                 <div class="form-group col-md-4">
                                     <label>Display Title En</label>
-                                    <input class="form-control" name="display_title_en">
+                                    <input class="form-control" name="display_title_en"
+                                           value="{{ old("display_title_en") ? old("display_title_en") : '' }}">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label>Display Title Bn</label>
-                                    <input class="form-control" name="display_title_bn">
+                                    <input class="form-control" name="display_title_bn"
+                                           value="{{ old("display_title_bn") ? old("display_title_bn") : '' }}">
                                 </div>
 
 {{--                                <div class="form-group col-md-4 {{ $errors->has('activation_ussd') ? ' error' : '' }}">--}}
@@ -135,7 +141,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('short_description') ? ' error' : '' }}">
                                         <label class="required">Short Description</label>
-                                        <input class="form-control" name="short_description" required>
+                                        <input class="form-control" name="short_description" required
+                                               value="{{ old("short_description") ? old("short_description") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_description'))
                                         <div class="help-block">{{ $errors->first('short_description') }}</div>
@@ -144,7 +151,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('display_sd_vat_tax') ? ' error' : '' }}">
                                     <label>Display SD Vat Tax</label>
-                                    <input class="form-control" name="display_sd_vat_tax">
+                                    <input class="form-control" name="display_sd_vat_tax"
+                                           value="{{ old("display_sd_vat_tax") ? old("display_sd_vat_tax") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('display_sd_vat_tax'))
                                         <div class="help-block">{{ $errors->first('display_sd_vat_tax') }}</div>
@@ -153,7 +161,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('points') ? ' error' : '' }}">
                                     <label>Points</label>
-                                    <input type="number" class="form-control" name="points">
+                                    <input type="number" class="form-control" name="points"
+                                           value="{{ old("points") ? old("points") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('points'))
                                         <div class="help-block">{{ $errors->first('points') }}</div>
@@ -164,14 +173,16 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>MRP Price</label>
-                                        <input class="form-control" name="mrp_price">
+                                        <input class="form-control" name="mrp_price"
+                                               value="{{ old("mrp_price") ? old("mrp_price") : '' }}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input class="form-control" name="price">
+                                        <input class="form-control" name="price"
+                                               value="{{ old("price") ? old("price") : '' }}">
                                     </div>
                                 </div>
 
@@ -179,7 +190,8 @@
                                     <div class="form-group">
                                         <label>Vat</label>
                                         <input type="text" step="0.001" class="form-control" name="vat"
-                                               oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));">
+                                               oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                               value="{{ old("vat") ? old("vat") : '' }}">
                                     </div>
                                 </div>
 
@@ -187,7 +199,8 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('validity') ? ' error' : '' }}">
                                     <label class="required">Validity </label>
-                                    <input type="number" class="form-control" required name="validity">
+                                    <input type="number" class="form-control" required name="validity"
+                                           value="{{ old("price") ? old("price") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('validity'))
                                         <div class="help-block">{{ $errors->first('validity') }}</div>
@@ -204,7 +217,7 @@
                                             id="validity_unit" required>
                                         <option value="">---Select Validity Unit---</option>
                                         @foreach($validityUnits as $value)
-                                            <option value="{{ $value }}">{{ ucfirst($value) }}</option>
+                                            <option value="{{ $value }}" {{ old("validity_unit") == $value ? 'selected' : '' }}>{{ ucfirst($value) }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -216,14 +229,16 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Auto Renewable Code</label>
-                                        <input class="form-control" name="auto_renew_code">
+                                        <input class="form-control" name="auto_renew_code"
+                                               value="{{ old("auto_renew_code") ? old("auto_renew_code") : '' }}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Recharge Product Code</label>
-                                        <input class="form-control" name="recharge_product_code">
+                                        <input class="form-control" name="recharge_product_code"
+                                               value="{{ old("recharge_product_code") ? old("recharge_product_code") : '' }}">
                                     </div>
                                 </div>
 
@@ -245,9 +260,6 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tags </label>
-                                        {{--                                        @php--}}
-                                        {{--                                            $thisProductTags = $details->tags->pluck('id')->toArray() ?? [];--}}
-                                        {{--                                        @endphp--}}
                                         <select multiple
                                                 class="form-control tags"
                                                 name="tags[]">
@@ -255,8 +267,7 @@
 
                                             @foreach ($tags as $key => $tag)
                                                 <option
-                                                    {{--                                                    {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}--}}
-                                                    value="{{ $key }}">  {{$tag}}
+                                                    value="{{ $key }}" {{ old("tags") == $value ? 'selected' : '' }}>  {{$tag}}
                                                 </option>
                                             @endforeach
 
@@ -284,13 +295,15 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="form-label small">Show From</label>
-                                                <input class="form-control" id="show_from" name="show_from" value=""
-                                                       placeholder="Show From Time" autocomplete="on">
+                                                <input class="form-control" id="show_from" name="show_from"
+                                                       placeholder="Show From Time" autocomplete="on"
+                                                       value="{{ old("show_from") ? old("show_from") : '' }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label small">Hide From</label>
                                                 <input class="form-control" id="hide_from" name="hide_from"
-                                                       placeholder="Hide From Time" autocomplete="off">
+                                                       placeholder="Hide From Time" autocomplete="off"
+                                                       value="{{ old("hide_from") ? old("hide_from") : '' }}">
                                             </div>
                                         </div>
                                         @if($errors->has('tag'))
