@@ -23,18 +23,18 @@
 
                             <div class="form-group col-md-12">
                                 <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
-                                    <input type="radio" name="user_type" value="all" id="radio-15"
-                                           @if($imageInfo->user_type == "all") {{ 'checked' }} @endif checked>
-                                    <label for="input-radio-15" class="mr-3">All</label>
+                                    <input type="radio" name="user_type" value="all" id="all"
+                                    @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
+                                    <label for="all" class="mr-3 cursor-pointer">All</label>
                                     <input type="radio" name="user_type" value="prepaid"
-                                           id="radio-16" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
-                                    <label for="input-radio-16" class="mr-3">Prepaid</label>
+                                           id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
+                                    <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
                                     <input type="radio" name="user_type" value="postpaid"
-                                           id="radio-17" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
-                                    <label for="input-radio-17" class="mr-3">Postpaid</label>
-                                    <input type="radio" name="user_type" value="propaid"
-                                           id="radio-18" @if($imageInfo->user_type == "propaid") {{ 'checked' }} @endif>
-                                    <label for="input-radio-18" class="mr-3">Propaid</label>
+                                           id="postpaid" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
+                                    <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
+                                    <input type="radio" name="user_type" value="segment_wise_banner"
+                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>
+                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>
                                 </div>
                             </div>
 
@@ -43,7 +43,6 @@
                                 <label for="title">Title: <small
                                             class="text-danger">*</small> </label>
                                 <input
-                                        required
                                         maxlength="200"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="Title is required"
@@ -58,8 +57,8 @@
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
-                                <label for="alt_text">Alt Text: </label>
-                                <input
+                                <label for="alt_text" class="required">Alt Text: </label>
+                                <input  required
                                         maxlength="200"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-regex-message="Alt Text must start with alphabets"
@@ -118,9 +117,12 @@
 
                             @php
                                 $actionList = Helper::navigationActionList();
+
+                                /*dd($actionList)*/
                             @endphp
 
-                            <div class="form-group col-md-6 mb-2">
+                            <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
+                                 id="slider_action">
                                 <label for="redirect_url">Slider Action </label>
                                 <select id="navigate_action" name="redirect_url" class="browser-default custom-select">
                                     <option value="">Select Action</option>
@@ -179,7 +181,7 @@
                               @endif--}}
 
 
-                            <div id="append_div" class="col-md-6">
+                            <div id="append_div" class="col-md-6 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}">
                                 @if(isset($imageInfo))
                                     @if($info = json_decode(json_encode($imageInfo->other_attributes)))
                                         <div class="form-group other-info-div">
@@ -195,7 +197,7 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control" required>
+                                                    <select name="other_attributes" class="form-control select2" required>
                                                         <option value="">Select a Product</option>
                                                         @foreach ($products as $value)
                                                             <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
@@ -211,7 +213,6 @@
                             </div>
 
                             <div class="col-md-8">
-                                {{$imageInfo->image_url}}
                                 <img style="height:100px;width:200px" id="img_display"
                                      src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
                             </div>
@@ -221,6 +222,157 @@
                                          class=" btn btn-success">Submit
                                  </button>
                              </div>--}}
+
+                            <div class="form-group col-md-12 mt-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'hidden' : 'show' }}"
+                                 id="BannerSegmentWiseDiv">
+                                <label><b>Banner segment wise CTA</b></label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Base Msisdn</th>
+                                        <th>Segment Action</th>
+                                        <th>CTA Action</th>
+{{--                                        <th>Status</th>--}}
+                                        <th class="text-center" style="width: 2%">
+                                            <i data-repeater-create
+                                               class="la la-plus-circle text-info cursor-pointer"
+                                               id="repeater-button">
+                                            </i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody data-repeater-list="segment_wise_cta" id="cta_table">
+{{--                                    {{ dd() }}--}}
+                                    @if(!$imageInfo->baseImageCats->isEmpty())
+                                        @foreach($imageInfo->baseImageCats as $data)
+                                        <tr data-repeater-item>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="group_id">
+                                                    <option value="">Select Group</option>
+                                                    @foreach($baseGroups as $group)
+                                                        <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="action_name">
+                                                    <option value="">Select Action</option>
+                                                    @foreach ($actionList as $key => $value)
+                                                        <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
+                                            </td>
+{{--                                            <td>--}}
+{{--                                                <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">--}}
+{{--                                                    <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>--}}
+{{--                                                    <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>--}}
+{{--                                                </select>--}}
+{{--                                            </td>--}}
+                                            <td class="text-center align-middle">
+                                                <i data-repeater-delete
+                                                   class="la la-trash-o text-danger cursor-pointer"></i>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                        <tr data-repeater-item>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="group_id">
+                                                    <option value="">Select Group</option>
+                                                    @foreach($baseGroups as $group)
+                                                        <option value="{{$group->id}}">{{$group->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="action_name">
+                                                    <option value="">Select Action</option>
+                                                    @foreach ($actionList as $key => $value)
+                                                        <option value="{{ $key }}">
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="action_url_or_code" type="text">
+                                            </td>
+                                            <td>
+                                                <select name="status" class="form-control ">
+                                                    <option value="">--Select--</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <i data-repeater-delete
+                                                   class="la la-trash-o text-danger cursor-pointer"></i>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+
+{{--                            <div class="form-group col-md-12" id="BannerSegmentWiseDiv">--}}
+{{--                                <label><b>Banner segment wise CTA</b></label>--}}
+{{--                                <table class="table table-bordered">--}}
+{{--                                    <thead>--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Base Group</th>--}}
+{{--                                        <th>Segment Action</th>--}}
+{{--                                        <th>CTA Action</th>--}}
+{{--                                        <th>Status</th>--}}
+{{--                                        <th class="text-center" style="width: 2%">--}}
+{{--                                            <i data-repeater-create--}}
+{{--                                               class="la la-plus-circle text-info cursor-pointer"--}}
+{{--                                               id="repeater-button">--}}
+{{--                                            </i>--}}
+{{--                                        </th>--}}
+{{--                                    </tr>--}}
+{{--                                    </thead>--}}
+{{--                                    <tbody data-repeater-list="segment_wise_cta"  id="cta_table">--}}
+{{--                                    <tr data-repeater-item>--}}
+{{--                                        <td>--}}
+{{--                                            <select class="form-control" id="segment_group" name="group_id">--}}
+{{--                                                <option value="">Select Group</option>--}}
+{{--                                                @foreach($baseGroups as $group)--}}
+{{--                                                    <option value="{{$group->id}}">{{$group->title}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <select class="form-control" id="segment_action" name="action_name">--}}
+{{--                                                <option value="">Select Action</option>--}}
+{{--                                                @foreach ($actionList as $key => $value)--}}
+{{--                                                    <option value="{{ $key }}">--}}
+{{--                                                        {{ $value }}--}}
+{{--                                                    </option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <input class="form-control" name="action_url_or_code" type="text">--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <select name="status" class="form-control ">--}}
+{{--                                                <option value="1">Yes</option>--}}
+{{--                                                <option value="0">No</option>--}}
+{{--                                            </select>--}}
+{{--                                        </td>--}}
+{{--                                        <td class="text-center align-middle">--}}
+{{--                                            <i data-repeater-delete--}}
+{{--                                               class="la la-trash-o text-danger cursor-pointer"></i>--}}
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                    </tbody>--}}
+{{--                                </table>--}}
+{{--                            </div>--}}
 
                             <div class="form-group col-md-12">
                                 <button style="float: right" type="submit" id="submitForm"
@@ -276,6 +428,19 @@
     <script>
 
         $(function () {
+            $('#BannerSegmentWiseDiv').repeater();
+
+            $("input[name=user_type]").click(function () {
+                if ($(this).val() === "segment_wise_banner") {
+                    $("#BannerSegmentWiseDiv").addClass('show').removeClass('hidden');
+                    $("#slider_action").addClass('hidden').removeClass('show');
+                    $("#append_div").addClass('hidden').removeClass('show');
+                } else {
+                    $("#BannerSegmentWiseDiv").addClass('hidden').removeClass('show');
+                    $("#slider_action").addClass('show').removeClass('hidden');
+                    $("#append_div").addClass('show').removeClass('hidden');
+                }
+            });
 
             var date = new Date();
             date.setDate(date.getDate());
@@ -359,8 +524,19 @@
                     $("#append_div").html(product_html);
                     $(".product-list").select2({
                         placeholder: "Select a product",
+                        minimumInputLength:3,
+                        allowClear: true,
+                        selectOnClose:true,
                         ajax: {
-                            url: "{{ route('myblslider.active-products') }}",
+                            url: "{{ route('notification.productlist.dropdown') }}",
+                            dataType: 'json',
+                            data: function (params) {
+                                var query = {
+                                    productCode: params.term
+                                }
+                                // Query parameters will be ?search=[term]&type=public
+                                return query;
+                            },
                             processResults: function (data) {
                                 // Transforms the top-level key of the response object from 'items' to 'results'
                                 return {

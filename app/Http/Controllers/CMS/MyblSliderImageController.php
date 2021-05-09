@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Services\BaseMsisdnService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class MyblSliderImageController extends Controller
     private $sliderImageService;
     private $sliderService;
     private $sliderTypeService;
+    private $baseMsisdnService;
 
 
     /**
@@ -32,11 +34,13 @@ class MyblSliderImageController extends Controller
     public function __construct(
         MyblSliderImageService $sliderImageService,
         MyblSliderService $sliderService,
-        AlSliderComponentTypeService $sliderTypeService
+        AlSliderComponentTypeService $sliderTypeService,
+        BaseMsisdnService $baseMsisdnService
     ) {
         $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
+        $this->baseMsisdnService = $baseMsisdnService;
         $this->middleware('auth');
     }
 
@@ -64,8 +68,9 @@ class MyblSliderImageController extends Controller
      */
     public function create($sliderId)
     {
+        $baseGroups = $this->baseMsisdnService->findAll();
         $slider_information = $this->sliderService->findOne($sliderId);
-        return view('admin.myblslider.images.create', compact('sliderId', 'slider_information'));
+        return view('admin.myblslider.images.create', compact('sliderId', 'slider_information','baseGroups'));
     }
 
     /**return redirect(route('myblslider.index'));
@@ -122,7 +127,9 @@ class MyblSliderImageController extends Controller
     {
         $imageInfo = SliderImage::find($sliderImageId);
         $products  = $this->sliderImageService->getActiveProducts();
-        return view('admin.myblslider.images.edit', compact('imageInfo', 'products'));
+        $baseGroups = $this->baseMsisdnService->findAll();
+        dd($imageInfo->baseImageCats);
+        return view('admin.myblslider.images.edit', compact('imageInfo', 'products', 'baseGroups'));
     }
 
     /**
