@@ -242,8 +242,7 @@
                                     </tr>
                                     </thead>
                                     <tbody data-repeater-list="segment_wise_cta" id="cta_table">
-{{--                                    {{ dd() }}--}}
-                                    @if(!$imageInfo->baseImageCats->isEmpty())
+                                    @if(!empty($imageInfo->baseImageCats))
                                         @foreach($imageInfo->baseImageCats as $data)
                                         <tr data-repeater-item>
                                             <td>
@@ -301,13 +300,6 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="action_url_or_code" type="text">
-                                            </td>
-                                            <td>
-                                                <select name="status" class="form-control ">
-                                                    <option value="">--Select--</option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
-                                                </select>
                                             </td>
                                             <td class="text-center align-middle">
                                                 <i data-repeater-delete

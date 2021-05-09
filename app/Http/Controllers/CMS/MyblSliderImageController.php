@@ -128,7 +128,6 @@ class MyblSliderImageController extends Controller
         $imageInfo = SliderImage::find($sliderImageId);
         $products  = $this->sliderImageService->getActiveProducts();
         $baseGroups = $this->baseMsisdnService->findAll();
-        dd($imageInfo->baseImageCats);
         return view('admin.myblslider.images.edit', compact('imageInfo', 'products', 'baseGroups'));
     }
 
