@@ -59,6 +59,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->alt_text = $request->alt_text;
         $service->banner_name = $request->banner_name;
         $service->url_slug = $request->url_slug;
+        $service->url_slug_bn = $request->url_slug_bn;
         $service->schema_markup = $request->schema_markup;
         $service->page_header = $request->page_header;
         $service->page_header_bn = $request->page_header_bn;
@@ -214,6 +215,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->alt_text = $request->alt_text;
         $service->banner_name = $request->banner_name;
         $service->url_slug = $request->url_slug;
+        $service->url_slug_bn = $request->url_slug_bn;
         $service->schema_markup = $request->schema_markup;
         $service->page_header = $request->page_header;
         $service->page_header_bn = $request->page_header_bn;

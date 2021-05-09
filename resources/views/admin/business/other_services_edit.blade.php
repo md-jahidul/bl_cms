@@ -2,7 +2,13 @@
 @section('title', 'Edit Business Enterprise Service')
 @section('card_name', 'Enterprise Solution')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
+    @php
+        $url = str_replace(url('/'), '', url()->previous());
+        $previousUrl = substr($url, 1);
+    @endphp
+
+<li class="breadcrumb-item active"> <a href="{{ url($previousUrl) }}">
+        {{ $previousUrl != "business-other-services" ? 'Slider List' : 'Service List' }}</a></li>
 <li class="breadcrumb-item active"> Edit</li>
 @endsection
 @section('action')
@@ -13,6 +19,7 @@
 
     <form method="POST" action="{{ route('business.other.update')}}" class="form home_news_form" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -267,11 +274,32 @@
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
-                                <label>URL Slug <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="url_slug" value="{{$service->url_slug}}" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> enterprise-solution (no spaces)<br>
-                                </small>
+                                <div class="mb-1">
+                                    <label>URL Slug EN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
+                                           value="{{ $service->url_slug }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> 5gb-hot-offer (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div>
+                                    <label>URL Slug BN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN"
+                                           value="{{ $service->url_slug_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> ৫জিবি-অফার (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -386,7 +414,7 @@
 
 @endpush
 @push('page-js')
-
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 

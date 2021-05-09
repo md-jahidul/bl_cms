@@ -24,15 +24,6 @@
                         <form role="form" action="{{ url("menu/$menu->id") }}" method="POST" novalidate>
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $menu->parent_id }}">
-                                <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="code" class="required">Title</label>
-                                    <input type="text" name="code"  class="form-control" placeholder="Enter pagename" readonly
-                                           value="{{ $menu->code }}" required data-validation-required-message="Enter footer menu title">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
-                                    @endif
-                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">English Label</label>
@@ -54,11 +45,54 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 {{ $errors->has('url') ? ' error' : '' }}">
-                                    <label for="url" class="required">URL</label>
-                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL"
-                                           value="{{ $menu->url }}" required data-validation-required-message="Enter footer menu url">
-                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
+{{--                                    <label for="url" class="required">Redirect URL English</label>--}}
+{{--                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL"--}}
+{{--                                           value="{{ $menu->url }}" required data-validation-required-message="Enter footer menu url">--}}
+{{--                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('url'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('url') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+{{--                                <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">--}}
+{{--                                    <label for="url_bn">Redirect URL Bangla</label>--}}
+{{--                                    <input type="text" name="url_bn" class="form-control" placeholder="Enter URL in Bangla"--}}
+{{--                                           value="{{ $menu->url_bn }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('url_bn'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('url_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }} {{ ($menu->external_site == 1) ? 'd-none' : '' }}" id="pageDynamic">
+                                    <label for="code">Page URL</label>
+                                    <select class="select2 form-control" name="code">
+                                        <option value="">---Select Page---</option>
+                                        @foreach($dynamicRoutes as $route)
+                                            <option value="{{ $route->key }}" {{ ($route->key == $menu->code) ? 'selected' : '' }}>{{ $route->url }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('key'))
+                                        <div class="help-block">  {{ $errors->first('key') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-2 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="external_link">Is External Menu:</label>
+                                        <input type="checkbox" name="external_site" value="1" id="external_link" {{ old("url") ? 'checked' : '' }}
+                                            {{ ($menu->external_site == 1) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-10 {{ $errors->has('url') ? ' error' : '' }} {{ ($menu->external_site == 1) ? '' : 'd-none' }}" id="externalLink">
+                                    <label for="url">External URL</label>
+                                    <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
+                                           value="{{ $menu->url }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
@@ -108,7 +142,23 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    <script>
+        $(function () {
+            var externalLink = $('#externalLink');
+            var pageDynamic = $('#pageDynamic');
 
+            $('#external_link').click(function () {
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                    pageDynamic.addClass('d-none');
+                }else{
+                    pageDynamic.removeClass('d-none')
+                    externalLink.addClass('d-none')
+                }
+            })
+
+        })
+    </script>
 @endpush
 
 

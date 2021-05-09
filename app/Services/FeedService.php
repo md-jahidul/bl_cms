@@ -30,11 +30,11 @@ class FeedService
     /**
      * Get all feeds
      *
-     * @return FeedRepository|Collection|null
+     * @return void
      */
-    public function getAll()
+    public function getDataFeeds()
     {
-        return $this->feedRepository->getAll();
+        return $this->feedRepository->getFeeds();
     }
 
     /**

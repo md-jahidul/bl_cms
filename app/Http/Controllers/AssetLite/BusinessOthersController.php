@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessOtherPackageRequest;
 use App\Services\BusinessOthersService;
 use App\Services\BusinessPackageService;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class BusinessOthersController extends Controller {
      * @return Redirect
      * @Bulbul Mahmud Nito || 19/02/2020
      */
-    public function saveService(Request $request) {
+    public function saveService(BusinessOtherPackageRequest $request) {
 
         $response = $this->othersService->saveService($request);
 
@@ -70,7 +71,7 @@ class BusinessOthersController extends Controller {
             Session::flash('error', 'Service saving process failed!');
         }
 
-        return redirect('/business-other-services');
+        return redirect('/business-other-services')->withInput();
     }
 
 
@@ -280,7 +281,7 @@ class BusinessOthersController extends Controller {
      * @return Redirect
      * @Bulbul Mahmud Nito || 20/02/2020
      */
-    public function update(Request $request) {
+    public function update(BusinessOtherPackageRequest $request) {
 
 //        print_r($request->all()); die();
 

@@ -42,11 +42,17 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
+    Route::resource('lms-offer-category', 'AssetLite\LmsOfferCategoryController')->except('show', 'destroy');
+    Route::get('lms-offer-category/destroy/{id}', 'AssetLite\LmsOfferCategoryController@destroy');
+
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
-    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update', 'edit']);
+    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['create', 'store', 'update', 'edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
+//    Route::get('priyojon/{id?}/create', 'AssetLite\PriyojonController@create');
+    Route::post('priyojon-landing-page-banner/{id}', 'AssetLite\PriyojonController@landingPageBanner')
+        ->name('priyojon.banner');
 //    Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
-//    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
+    Route::get('priyojon/{parentId}/destroy/{id}', 'AssetLite\PriyojonController@destroyMenu');
 
     // MENU  ====================================
     Route::get('menu/create', 'AssetLite\MenuController@create');
@@ -275,7 +281,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'AssetLite\PartnerOfferController@create');
     Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'AssetLite\PartnerOfferController@store')
         ->name('partner_offer_store');
-    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'AssetLite\PartnerOfferController@edit')
+    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/{campaign?}', 'AssetLite\PartnerOfferController@edit')
         ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
         ->name('partner_offer_update');
@@ -290,10 +296,21 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
-    // About Pages ================================
-    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
-    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
-        ->name('about-page.update');
+    // LMS About Pages ================================
+    Route::get('about-page/{slug}', 'AssetLite\LmsAboutPageController@index')->name('about-page');
+    Route::put('about-page/update', 'AssetLite\LmsAboutPageController@aboutPageUpdate')->name('about-page.update');
+
+    // LMS About Pages Banner Image ================================
+    Route::get('lms-about-page/banner-image', 'AssetLite\LmsAboutBannerController@viewBannerImage');
+    Route::post('about-page/banner-image/upload', 'AssetLite\LmsAboutBannerController@bannerUpload');
+
+//    Route::get('ethics-compliance', 'AssetLite\LmsAboutPageController@index');
+//    Route::post('ethics/update-page-info', 'AssetLite\LmsAboutPageController@updatePageInfo');
+    Route::post('lms/benefit-save/{slug}', 'AssetLite\LmsAboutPageController@saveBenefit');
+    Route::get('about-page/benefit-edit/{id}', 'AssetLite\LmsAboutPageController@benefitEdit');
+//    Route::get('about-page/sort-benefit-file', 'AssetLite\LmsAboutPageController@sortFiles');
+    Route::get('about-page/benefit-status-change/{id}', 'AssetLite\LmsAboutPageController@chanbgeStatus');
+    Route::get('about-page/benefit-delete/{slug}/{id}', 'AssetLite\LmsAboutPageController@fileDelete');
 
 
     // Dynamic Pages ================================
@@ -334,7 +351,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Fixed  ====================================
-    Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
+    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent');
+    Route::get('fixed-pages', 'AssetLite\FixedPageController@fixedPageList');
+    Route::get('fixed-pages/create', 'AssetLite\FixedPageController@fixedPageCreate');
+    Route::post('fixed-pages/store', 'AssetLite\FixedPageController@fixedPageStore');
+    Route::get('fixed-pages/edit/{id}', 'AssetLite\FixedPageController@fixedPageEdit');
+    Route::post('fixed-pages/update/{id}', 'AssetLite\FixedPageController@fixedPageUpdate');
+    Route::get('fixed-pages/delete/{id}', 'AssetLite\FixedPageController@deleteFixedPage');
+
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
@@ -454,7 +478,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('business-package/save', 'AssetLite\BusinessPackageController@store')->name('business.package.save');
 
     Route::get('business-package-edit/{packageId}', 'AssetLite\BusinessPackageController@edit');
-    Route::post('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
+    Route::put('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
 
     //__Category Internet Package
@@ -462,7 +486,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-internet-create', 'AssetLite\BusinessInternetController@internetCreate');
     Route::post('business-internet-save', 'AssetLite\BusinessInternetController@saveInternetPackage');
     Route::get('business-internet-edit/{internetId}', 'AssetLite\BusinessInternetController@internetEdit');
-    Route::post('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
+    Route::put('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
     Route::post('business-internet-package-list', 'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
         ->name('business.internet.excel.save');
@@ -479,7 +503,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-others-sort-change', 'AssetLite\BusinessOthersController@sortChange');
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
     Route::get('business-others-service-edit/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@edit');
-    Route::post('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
+    Route::put('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
 
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
@@ -1102,4 +1126,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // Referral List
     Route::get('referral-list', 'AssetLite\ReferralListController@index');
+
+    // Dynamic Routes
+    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
+    Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 });

@@ -98,7 +98,26 @@ class MyblProductEntryController extends Controller
         return view('admin.my-bl-products.mybl_product_entry');
     }
 
+    /**
+     * @return Factory|View
+     */
+    public function create()
+    {
+        $tags = $this->productTagService
+            ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
+            ->pluck('title', 'id');
+        $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
 
+        $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
+        $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')));
+
+        return view('admin.my-bl-products.create-product', compact('tags', 'internet_categories', 'disablePinToTop'));
+    }
+
+    public function store(UpdateMyblProductRequest $request)
+    {
+        return $this->service->storeMyblProducts($request);
+    }
 
     /**
      * @param Request $request

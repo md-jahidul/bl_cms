@@ -42,7 +42,7 @@ class FeedController extends Controller
      */
     public function index()
     {
-        $feeds = $this->feedService->getAll();
+        $feeds = $this->feedService->getDataFeeds();
 //        dd($feeds);
         return view('admin.feed.index', compact('feeds'));
     }

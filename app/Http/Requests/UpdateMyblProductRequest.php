@@ -27,7 +27,9 @@ class UpdateMyblProductRequest extends FormRequest
      */
     public function rules()
     {
+//        dd($this->all());
         return [
+            'product_code' => 'required|unique:my_bl_products,product_code,' . $this->mybl_product_id,
            // 'offer_section_slug'    => 'string|exists:my_bl_internet_offers_categories,slug',
             'tag'                   => 'max:20',
             'show_in_app'           => 'boolean',

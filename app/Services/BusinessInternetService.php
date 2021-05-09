@@ -79,23 +79,6 @@ class BusinessInternetService {
     public function saveInternet($request) {
         try {
 
-            $request->validate([
-                'type' => 'required',
-                'product_commercial_name_en' => 'required',
-                'product_commercial_name_bn' => 'required',
-                'product_short_description' => 'required',
-                'activation_ussd_code' => 'required',
-                'balance_check_ussd_code' => 'required',
-                'data_volume' => 'required',
-                'volume_data_unit' => 'required',
-                'validity' => 'required',
-                'validity_unit' => 'required',
-                'mrp' => 'required',
-                'price' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
             //file upload in storege
             $photoNameWeb = $request['banner_name'] . '-web';
             $photoNameMob = $request['banner_name'] . '-mobile';
@@ -106,7 +89,7 @@ class BusinessInternetService {
             if (!empty($request['banner_photo'])) {
                 $bannerWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
             }
-            
+
             if (!empty($request['banner_mobile'])) {
                 $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
             }
@@ -134,23 +117,6 @@ class BusinessInternetService {
      */
     public function updateInternet($data) {
         try {
-
-            $data->validate([
-                'type' => 'required',
-                'product_commercial_name_en' => 'required',
-                'product_commercial_name_bn' => 'required',
-                'product_short_description' => 'required',
-                'activation_ussd_code' => 'required',
-                'balance_check_ussd_code' => 'required',
-                'data_volume' => 'required',
-                'volume_data_unit' => 'required',
-                'validity' => 'required',
-                'validity_unit' => 'required',
-                'mrp' => 'required',
-                'price' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
 
             //file upload in storege
 

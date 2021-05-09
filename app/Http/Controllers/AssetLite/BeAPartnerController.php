@@ -50,8 +50,7 @@ class BeAPartnerController extends Controller
     public function __construct(
         BeAPartnerService $beAPartnerService,
         ComponentService $componentService
-    )
-    {
+    ) {
         $this->beAPartnerService = $beAPartnerService;
         $this->componentService = $componentService;
     }

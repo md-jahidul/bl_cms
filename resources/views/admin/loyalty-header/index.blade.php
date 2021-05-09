@@ -12,9 +12,11 @@
     {!! $liHtml !!}
 @endsection
 @section('action')
-    {{--<a href="{{ url("tag-category/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-        {{--Add Tag--}}
-    {{--</a>--}}
+    @if($parent_id != 0)
+        <a href="{{ url("priyojon/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+            Add Menu
+        </a>
+    @endif
 @endsection
 @section('content')
     <section>
@@ -26,24 +28,33 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Title</th>
-                            <th width="2%">Action</th>
+                            <th>Title</th>
+                            @if($parent_id == 0)
+                                <th>Banner Image</th>
+                            @endif
+                            <th width="12%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($priyojons as $priyojon)
 
                                 <tr data-index="{{ $priyojon->id }}" data-position="{{ $priyojon->display_order }}">
-                                    <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $priyojon->title_en }}
-                                        {!!  ($parent_id == 0) ? "<a href='".url("priyojon/$priyojon->id/child-menu")."' class='btn-sm btn-outline-secondary border float-md-right'> Child Menu</a>" : '' !!}</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $priyojon->title_en }}{!! $priyojon->status == 0 ? '<span class="text-danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                    @if($parent_id == 0)
+                                        <td>
+                                            <img class="" src="{{ config('filesystems.file_base_url') . $priyojon->banner_image_url }}" alt="Slider Image" height="70" width="180">
+                                            {!!  ($parent_id == 0) ? "<a href='".url("priyojon/$priyojon->id/child-menu")."' class='btn-sm btn-outline-secondary border float-md-right'> Child Menu</a>" : '' !!}
+                                        </td>
+                                    @endif
                                     <td class="action" >
                                         <a href="{{ url('priyojon/'.$priyojon->id.'/edit') }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-
-                                        {{--<a href="#" remove="{{ url("priyojon-landing/$parent_id/destroy/$priyojon->id") }}"--}}
-                                           {{--class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $priyojon->id }}" title="Delete the user">--}}
-                                            {{--<i class="la la-trash"></i>--}}
-                                        {{--</a>--}}
+                                        @if($parent_id != 0)
+                                            <a href="#" remove="{{ url("priyojon/$parent_id/destroy/$priyojon->id") }}"
+                                               class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $priyojon->id }}" title="Delete the user">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                        @endif
                                     </td>
 
                                 </tr>

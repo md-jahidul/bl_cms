@@ -23,11 +23,12 @@ class StoreMenuRequest extends FormRequest
      */
     public function rules()
     {
+//        dd($this->all());
         return [
-            'code' => 'required',
+//            'code' => 'required',
             'en_label_text' => 'required',
             'bn_label_text' => 'required',
-            'url' => 'required|unique:menus',
+//            'url' => 'required|unique:menus',
             'status' => 'required',
         ];
     }
@@ -38,7 +39,7 @@ class StoreMenuRequest extends FormRequest
             'code.required' => "Enter menu title",
             'en_label_text.required' => "Enter menu english",
             'bn_label_text.required' => "Enter menu in Bangla",
-            'url.required' => "Enter menu url",
+//            'url.required' => "Enter menu url",
         ];
     }
 }

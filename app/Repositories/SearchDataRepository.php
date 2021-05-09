@@ -39,15 +39,16 @@ class SearchDataRepository extends BaseRepository {
         }
         return $save;
     }
-    
-    public function updateByCategory($keywordType, $categoryUrl){
-        $keywords = $this->model->where('keyword_type', $keywordType)->get();
-        foreach($keywords as $val){
-            $kwUrl = $val->url;
-            $urlArray = explode('/', $kwUrl);
-            $newUrl = $urlArray[0] . '/' . $categoryUrl . '/'. $urlArray[2] . '/' . $urlArray[3];
-            $this->model->where('id', $val->id)->update(['url' => $newUrl]);
-        }
+
+    public function updateByCategory($keywordType, $categoryUrl)
+    {
+        $keywords = $this->model->where('keyword_type', $keywordType)->first();
+//        foreach($keywords as $val){
+        $kwUrl = $keywords->url;
+        $urlArray = explode('/', $kwUrl);
+        $newUrl = $urlArray[0] . '/' . $categoryUrl . '/' . $urlArray[2] . '/' . $urlArray[3];
+        $this->model->where('id', $keywords->id)->update(['url' => $newUrl]);
+//        }
     }
 
 }
