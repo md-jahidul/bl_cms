@@ -544,7 +544,7 @@
         <div class="row mt-3">
             <div class="col-md-8">
                 <div>
-                    <h5 class="mb-1 mt-2 text-bold-600">Contact Restore Logs</h5>
+                    <h5 class="mb-1 mt-2 text-bold-600">Contact Number Restore Logs</h5>
                 </div>
             </div>
             <div class="col-md-4">
@@ -552,7 +552,7 @@
                        class="form-control datetime"
                        id="search-contact-restore-log"
                        value="{{ $current_date }}"
-                       min="{{ $last_date }}"
+                        {{-- min="{{ $last_date }}"--}}
                        max="{{ $current_date }}"
                        name="search_contact_log" >
             </div>
@@ -563,27 +563,21 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <div class="card">
-                                <div class="card-content  table-responsive">
-                                    <div class="card-body">
-                                        <table class="table table-bordered table-striped" id="contact_restore_logs_table">
-                                            <thead class="text-center alert-warning text-white">
-                                            <tr>
-                                                <th>Contact backup id</th>
-                                                <th>Message</th>
-                                                <th>Date time</th>
-                                                <th>Platform</th>
-                                                <th>Device os</th>
-                                                <th>Device model</th>
-                                                <th>Mobile number</th>
-                                                <th>Total number to be restore</th>
-                                                <th>Total restore</th>
-                                            </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="table table-bordered table-striped" id="contact_restore_logs_table">
+                                <thead class="text-center alert-warning text-white">
+                                <tr>
+                                    <th>Backup Id</th>
+                                    <th width="15%">Message</th>
+                                    <th>Date time</th>
+                                    <th>Platform</th>
+                                    <th>Device OS</th>
+                                    <th>Device model</th>
+                                    <th>Mobile number</th>
+                                    <th>Total Restore</th>
+                                    <th>Restored</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
