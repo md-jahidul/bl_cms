@@ -70,9 +70,9 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_sub_title">Description En</label>
-                                        <textarea rows="10" id="dashboard_card_sub_title"
+                                        <textarea rows="4" id="dashboard_card_sub_title"
                                                   name="dashboard_card_sub_title"
-                                                  class="form-control js_editor_box @error('dashboard_card_sub_title') is-invalid @enderror"
+                                                  class="form-control @error('dashboard_card_sub_title') is-invalid @enderror"
                                                   placeholder="Enter dashboard in English">{{ isset($campaign) ? $campaign->dashboard_card_sub_title : old('dashboard_card_sub_title') }}</textarea>
                                         <small class="text-danger"> @error('dashboard_card_sub_title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
@@ -80,9 +80,9 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_sub_title_bn">Description Bn</label>
-                                        <textarea rows="10" id="dashboard_card_sub_title_bn"
+                                        <textarea rows="4" id="dashboard_card_sub_title_bn"
                                                   name="dashboard_card_sub_title_bn"
-                                                  class="form-control js_editor_box @error('dashboard_card_sub_title_bn') is-invalid @enderror"
+                                                  class="form-control @error('dashboard_card_sub_title_bn') is-invalid @enderror"
                                                   placeholder="Enter dashboard in Bangla">{{ isset($campaign) ? $campaign->dashboard_card_sub_title_bn : old('dashboard_card_sub_title_bn') }}</textarea>
                                         <small
                                             class="text-danger"> @error('dashboard_card_sub_title_bn') {{ $message }} @enderror </small>
@@ -202,9 +202,9 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="refer_card_sub_title">Description En</label>
-                                        <textarea rows="10" id="refer_card_sub_title"
+                                        <textarea rows="4" id="refer_card_sub_title"
                                                   name="refer_card_sub_title"
-                                                  class="form-control js_editor_box @error('refer_card_sub_title') is-invalid @enderror"
+                                                  class="form-control @error('refer_card_sub_title') is-invalid @enderror"
                                                   placeholder="Enter dashboard in English">{{ isset($campaign) ? $campaign->refer_card_sub_title : old('refer_card_sub_title') }}</textarea>
                                         <small
                                             class="text-danger"> @error('refer_card_sub_title') {{ $message }} @enderror </small>
@@ -213,9 +213,9 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="refer_card_sub_title_bn">Description Bn</label>
-                                        <textarea rows="10" id="refer_card_sub_title_bn"
+                                        <textarea rows="4" id="refer_card_sub_title_bn"
                                                   name="refer_card_sub_title_bn"
-                                                  class="form-control js_editor_box @error('refer_card_sub_title_bn') is-invalid @enderror"
+                                                  class="form-control @error('refer_card_sub_title_bn') is-invalid @enderror"
                                                   placeholder="Enter dashboard in Bangla">{{ isset($campaign) ? $campaign->refer_card_sub_title_bn : old('refer_card_sub_title_bn') }}</textarea>
                                         <small
                                             class="text-danger"> @error('refer_card_sub_title_bn') {{ $message }} @enderror </small>
@@ -387,20 +387,20 @@
                 }
             });
 
-            $('.js_editor_box').each(function (k, v) {
-                $(this).summernote({
-                    toolbar: [
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        // ['table', ['table']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['view', ['fullscreen', 'codeview']]
-                    ],
-                    height: 110
-                });
-            });
+            // $('.js_editor_box').each(function (k, v) {
+            //     $(this).summernote({
+            //         toolbar: [
+            //             ['style', ['bold', 'italic', 'underline', 'clear']],
+            //             ['font', ['strikethrough', 'superscript', 'subscript']],
+            //             ['fontsize', ['fontsize']],
+            //             ['color', ['color']],
+            //             // ['table', ['table']],
+            //             ['para', ['ul', 'ol', 'paragraph']],
+            //             ['view', ['fullscreen', 'codeview']]
+            //         ],
+            //         height: 110
+            //     });
+            // });
         });
     </script>
 
