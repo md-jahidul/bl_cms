@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\MyBlFeed;
 use App\Repositories\FeedRepository;
 use App\Traits\CrudTrait;
 use Exception;
@@ -32,9 +33,59 @@ class FeedService
      *
      * @return void
      */
-    public function getDataFeeds()
+    public function getDataFeeds($request)
     {
-        return $this->feedRepository->getFeeds();
+//        return $this->feedRepository->getFeeds();
+
+        try {
+            $draw = $request->get('draw');
+            $start = $request->get('start');
+            $length = $request->get('length');
+
+            $builder = new MyBlFeed();
+
+            if ($request->star_count) {
+                $builder = $builder->where('rating', $request->star_count);
+            }
+
+            if ($request->order[0]['column'] == 2) {
+//                dd($request->order);
+                $builder = $builder->orderBy('rating', $request->order[0]['dir']);
+            }
+
+            $builder = $builder->whereHas('category', function ($q) use ($request) {
+                if ($request->category) {
+                    $q->where('page_name', 'LIKE', "%$request->page_name%");
+                }
+            }
+            )->with('category');
+
+//            if ($request->date_range != null) {
+//                $date = explode('-', $request->date_range);
+//                $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
+//                $to = str_replace('/', '-', $date[1]) . " " . "23:59:00";
+//                $builder = $builder->whereBetween('created_at', [$from, $to]);
+//            }
+
+            $all_items_count = $builder->count();
+
+            $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+
+//            dd($data);
+
+            return [
+                'data' => $data,
+                'draw' => $draw,
+                'recordsTotal' => $all_items_count,
+                'recordsFiltered' => $all_items_count
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+        }
     }
 
     /**

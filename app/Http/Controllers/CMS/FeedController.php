@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
@@ -42,9 +43,19 @@ class FeedController extends Controller
      */
     public function index()
     {
-        $feeds = $this->feedService->getDataFeeds();
-//        dd($feeds);
-        return view('admin.feed.index', compact('feeds'));
+//        if ($request->ajax()) {
+//            dd($request->ajax());
+//            dd('yes');
+//        }
+//
+//        $feeds = $this->feedService->getDataFeeds();
+        $categories = $this->feedCategoryService->getActiveAll();
+        return view('admin.feed.index', compact('categories'));
+    }
+
+    public function getFeedForAjax(Request $request)
+    {
+        return $this->feedService->getDataFeeds($request);
     }
 
     /**
