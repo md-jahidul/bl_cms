@@ -655,6 +655,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         Route::get('categories/update-position',
             'FeedCategoryController@updatePosition')->name('categories.update_position');
     });
+    Route::get('feed-list', 'CMS\FeedController@getFeedForAjax')->name('feed.ajax.request');
 
     /*
      * Product Activities
