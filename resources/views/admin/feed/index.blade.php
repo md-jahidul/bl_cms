@@ -70,7 +70,7 @@
                                 <th>Title</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Feed Seen</th>
+                                <th class="text-center">Feed Seen</th>
                                 <th width="12%">Action</th>
                             </tr>
                         </thead>
@@ -205,7 +205,7 @@
                     },
                     {
                         name: 'end_date',
-                        width: "8%",
+                        width: "10%",
                         render: function (data, type, row) {
                             return row.end_date;
                         }
@@ -213,8 +213,9 @@
                     {
                         name: 'feed_hit_counts_count',
                         width: "3%",
+                        className: 'text-center',
                         render: function (data, type, row) {
-                            return row.feed_hit_counts_count;
+                            return row.feed_hit_counts_count ? row.feed_hit_counts_count : 0;
                         }
                     },
 
