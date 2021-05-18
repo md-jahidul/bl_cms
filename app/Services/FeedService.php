@@ -5,9 +5,10 @@ namespace App\Services;
 use App\Models\MyBlFeed;
 use App\Repositories\FeedRepository;
 use App\Traits\CrudTrait;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Response;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class FeedService
 {
@@ -28,15 +29,18 @@ class FeedService
         $this->setActionRepository($feedRepository);
     }
 
+    public function feeds()
+    {
+        return $this->feedRepository->findByProperties([], ['title']);
+    }
+
     /**
      * Get all feeds
      *
-     * @return void
+     * @return array
      */
     public function getDataFeeds($request)
     {
-//        return $this->feedRepository->getFeeds();
-
         try {
             $draw = $request->get('draw');
             $start = $request->get('start');
@@ -44,42 +48,45 @@ class FeedService
 
             $builder = new MyBlFeed();
 
-            if ($request->star_count) {
-                $builder = $builder->where('rating', $request->star_count);
-            }
+            if ($request->date_range != null) {
+                $date = explode('--', $request->date_range);
+                $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
+                $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
 
-            if ($request->order[0]['column'] == 2) {
-//                dd($request->order);
-                $builder = $builder->orderBy('rating', $request->order[0]['dir']);
+                $builder = $builder->whereHas('feedHitCounts', function ($q) use ($from, $to) {
+                    $q->whereBetween('date', [$from, $to]);
+                })->withCount(['feedHitCounts' => function ($q) use ($from, $to) {
+                    $q->whereBetween('date', [$from, $to]);
+                    $q->select(DB::raw('sum(count)'));
+                }]);
+            } else {
+                $builder = $builder->withCount(['feedHitCounts' => function ($query) {
+                    $query->select(DB::raw('sum(count)'));
+                }]);
             }
 
             $builder = $builder->whereHas('category', function ($q) use ($request) {
                 if ($request->category) {
-                    $q->where('page_name', 'LIKE', "%$request->page_name%");
+                    $q->where('slug', $request->category);
                 }
-            }
-            )->with('category');
+            })->with('category');
 
-//            if ($request->date_range != null) {
-//                $date = explode('-', $request->date_range);
-//                $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
-//                $to = str_replace('/', '-', $date[1]) . " " . "23:59:00";
-//                $builder = $builder->whereBetween('created_at', [$from, $to]);
-//            }
+            if ($request->title) {
+                $builder = $builder->where('title', $request->title);
+            }
+
+            if ($request->type) {
+                $builder = $builder->where('type', $request->type);
+            }
 
             $all_items_count = $builder->count();
-
             $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
-
-//            dd($data);
-
             return [
                 'data' => $data,
                 'draw' => $draw,
                 'recordsTotal' => $all_items_count,
                 'recordsFiltered' => $all_items_count
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => 0,

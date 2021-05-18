@@ -43,14 +43,9 @@ class FeedController extends Controller
      */
     public function index()
     {
-//        if ($request->ajax()) {
-//            dd($request->ajax());
-//            dd('yes');
-//        }
-//
-//        $feeds = $this->feedService->getDataFeeds();
+        $feeds = $this->feedService->feeds();
         $categories = $this->feedCategoryService->getActiveAll();
-        return view('admin.feed.index', compact('categories'));
+        return view('admin.feed.index', compact('feeds', 'categories'));
     }
 
     public function getFeedForAjax(Request $request)
