@@ -48,22 +48,15 @@ class FeedService
 
             $builder = new MyBlFeed();
 
-            if ($request->date_range != null) {
-                $date = explode('--', $request->date_range);
-                $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
-                $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
-
-                $builder = $builder->whereHas('feedHitCounts', function ($q) use ($from, $to) {
-                    $q->whereBetween('date', [$from, $to]);
-                })->withCount(['feedHitCounts' => function ($q) use ($from, $to) {
-                    $q->whereBetween('date', [$from, $to]);
-                    $q->select(DB::raw('sum(count)'));
-                }]);
-            } else {
-                $builder = $builder->withCount(['feedHitCounts' => function ($query) {
-                    $query->select(DB::raw('sum(count)'));
-                }]);
-            }
+            $builder = $builder->withCount(['feedHitCounts' => function ($query) use ($request) {
+                if ($request->date_range != null) {
+                    $date = explode('--', $request->date_range);
+                    $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
+                    $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
+                    $query->whereBetween('date', [$from, $to]);
+                }
+                $query->select(DB::raw('sum(count)'));
+            }]);
 
             $builder = $builder->whereHas('category', function ($q) use ($request) {
                 if ($request->category) {
