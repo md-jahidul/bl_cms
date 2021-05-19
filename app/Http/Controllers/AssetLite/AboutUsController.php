@@ -158,8 +158,9 @@ class AboutUsController extends Controller
      * @param AboutUsBanglalink $aboutUs
      * @return Factory|View
      */
-    public function edit(AboutUsBanglalink $aboutUs)
+    public function edit($id)
     {
+        $aboutUs = $this->aboutUsService->findOne($id);
         return view('admin.about-us.create')->with('about', $aboutUs);
     }
 
@@ -170,8 +171,9 @@ class AboutUsController extends Controller
      * @param AboutUsBanglalink $aboutUs
      * @return Response
      */
-    public function update(Request $request, AboutUsBanglalink $aboutUs)
+    public function update(Request $request, $id)
     {
+        $aboutUs = $this->aboutUsService->findOne($id);
         $request->validate([
             'url_slug' => 'required|unique:about_us_banglalink,url_slug,' . $aboutUs->id,
             'url_slug_bn' => 'required|unique:about_us_banglalink,url_slug_bn,' . $aboutUs->id
