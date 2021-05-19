@@ -13,7 +13,8 @@ use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class ProductDetailService {
+class ProductDetailService
+{
 
     use CrudTrait;
     use FileTrait;
@@ -30,8 +31,9 @@ class ProductDetailService {
      * @param ProductRepository $productRepository
      */
     public function __construct(
-    ProductDetailRepository $productDetailRepository, ProductRepository $productRepository
-    ) {
+        ProductDetailRepository $productDetailRepository, ProductRepository $productRepository
+    )
+    {
         $this->productDetailRepository = $productDetailRepository;
         $this->productRepository = $productRepository;
         $this->setActionRepository($productDetailRepository);
@@ -46,7 +48,8 @@ class ProductDetailService {
      * @param $request
      * @param $id
      */
-    public function updateOtherRelatedProduct($request, $id) {
+    public function updateOtherRelatedProduct($request, $id)
+    {
 
         $otherRelatedProducts = OtherRelatedProduct::where('product_id', $id)->get();
         if (count($otherRelatedProducts) > 0) {
@@ -71,7 +74,8 @@ class ProductDetailService {
      * @param $requset
      * @param $id
      */
-    public function updateRelatedProduct($requset, $id) {
+    public function updateRelatedProduct($requset, $id)
+    {
         $products = RelatedProduct::where('product_id', $id)->get();
         if (count($products) > 0) {
             foreach ($products as $product) {
@@ -95,7 +99,8 @@ class ProductDetailService {
      * @param $productId
      * @return ResponseFactory|Response
      */
-    public function updateProductDetails($data, $productId) {
+    public function updateProductDetails($data, $productId)
+    {
         try {
 //            dd($data);
 
@@ -117,7 +122,7 @@ class ProductDetailService {
             }
 
             if (!empty($data['banner_image_mobile'])) {
-                 //delete old web photo
+                //delete old web photo
                 if ($data['old_mob_img'] != "") {
                     $this->deleteFile($data['old_mob_img']);
                 }
@@ -125,7 +130,6 @@ class ProductDetailService {
                 $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/product_details', $photoName);
                 $status = $data['banner_image_mobile'];
             }
-
 
 
             //only rename
@@ -160,7 +164,17 @@ class ProductDetailService {
                         }
                     }
                 }
-//                dd($data);
+
+                if (isset($data['other_attributes']['extra_validity_details_en'])
+                    && $data['other_attributes']['extra_validity_details_en'] == "<p><br></p>") {
+                    $data['other_attributes']['extra_validity_details_en'] = null;
+                }
+
+                if (isset($data['other_attributes']['extra_validity_details_bn'])
+                    && $data['other_attributes']['extra_validity_details_bn'] == "<p><br></p>") {
+                    $data['other_attributes']['extra_validity_details_bn'] = null;
+                }
+
 //                $this->productDetailRepository->saveProductDetails($update, $productId);
                 $productDetails->update($data);
                 $response = [
