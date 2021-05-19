@@ -46,16 +46,9 @@
                                          src="{{ config('filesystems.file_base_url') . $about->banner_image }}" id="imgDisplay">
                                 </td>
                                 <td width='10%'>
-                                    <div class="row justify-content-md-center no-gutters">
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('about-us.edit',$about->id)}}" class="btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            {{--<button data-id="{{$about->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>--}}
-                                        </div>
-                                    </div>
+                                    <a role="button" href="{{route('about-us.edit',$about->id)}}" class="btn btn-outline-success">
+                                        <i class="la la-pencil"></i>
+                                    </a>
                                 </td>
                             </tr>
 
