@@ -589,6 +589,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     */
     Route::resource('mybl-refer-and-earn', 'CMS\MyBlReferAndEarnController')->except(['show', 'destroy']);
     Route::get('mybl-refer-and-earn/destroy/{id}', 'CMS\MyBlReferAndEarnController@destroy');
+    Route::get('mybl-refer-and-earn/campaign-details/{campaign_id}', 'CMS\MyBlReferAndEarnController@getReferAndEarnAnalytics')
+        ->name('refer-and-earn.analytics');
+
 
     /*
      *  Feed Routes

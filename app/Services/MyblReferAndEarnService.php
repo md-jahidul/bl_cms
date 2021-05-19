@@ -97,5 +97,9 @@ class MyblReferAndEarnService
         return new Response('update successfully');
     }*/
 
+    public function analyticsData()
+    {
+
+    }
 
 }

@@ -106,6 +106,12 @@ class MyBlReferAndEarnController extends Controller
         return redirect(route('mybl-refer-and-earn.index'));
     }
 
+    public function getReferAndEarnAnalytics($id)
+    {
+        $analytics = $this->referAndEarnService->analyticsData($id);
+        return view('admin.mybl-campaign.refer-and-earn.analytics', compact('analytics'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
