@@ -548,20 +548,23 @@
         </div>
         {{--Contact restore logs--}}
         <div class="row mt-3">
-            <div class="col-md-8">
-                <div>
+{{--            <div class="row">--}}
+                <div class="col-md-8 mr-1">
                     <h5 class="mb-1 mt-2 text-bold-600">Contact Number Restore Logs</h5>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <input type='date'
-                       class="form-control datetime"
-                       id="search-contact-restore-log"
-                       value="{{ $current_date }}"
-                        {{-- min="{{ $last_date }}"--}}
-                       max="{{ $current_date }}"
-                       name="search_contact_log" >
-            </div>
+
+                <div class="col-md-3 mt-1 ml-5">
+                    <input type='text'
+                           placeholder="Date"
+                           class="form-control datetime contact_log_date"
+                           id="search-contact-restore-log"
+                           {{--                       value="{{ $current_date }}"--}}
+                           {{-- min="{{ $last_date }}"--}}
+                           {{--                       max="{{ $current_date }}"--}}
+                           name="search_contact_log" >
+                </div>
+{{--            </div>--}}
+
             <div class="col-md-12">
                 <hr/>
             </div>
@@ -597,8 +600,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/loaders/loaders.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-loader.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
-    @endpush
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+@endpush
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets') }}/vendors/js/pickers/daterange/daterangepicker.js"></script>
 
@@ -1018,6 +1024,61 @@
                 });
             }
 
+
+            function getOtpLoginData(number) {
+                $('#otp_login_table').DataTable().destroy();
+                $("#otp_login_table").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/otp-login-logs/" + number,
+                        data: {
+                            date: function () {
+                                return $("#date_otp_login").val();
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'request_time',
+                            render: function (data, type, row) {
+                                return row.date;
+                            }
+                        },
+                        {
+                            name: 'number',
+                            render: function (data, type, row) {
+                                return row.number;
+                            }
+                        },
+                        {
+                            name: 'response',
+                            render: function (data, type, row) {
+                                return row.response;
+                            }
+                        },
+                        {
+                            name: 'message',
+                            render: function (data, type, row) {
+                                return row.message;
+                            }
+                        },
+                        {
+                            name: 'status',
+                            render: function (data, type, row) {
+                                return row.status;
+                            }
+                        }
+                    ]
+                });
+            }
+
             $(document).on('input', '#date', function (e) {
                 e.preventDefault();
                 $('#audit_log_table').DataTable().ajax.reload();
@@ -1038,15 +1099,28 @@
                 $('#otp_login_table').DataTable().ajax.reload();
             });
 
+
+            // Contact Restore Log
+            var contact_restore_log = $('#search-contact-restore-log');
+
+            var date = new Date();
+            date.setDate(date.getDate());
+
+            contact_restore_log.datetimepicker({
+                format : 'YYYY-MM-DD',
+                showClose: true,
+                showClear: true,
+                maxDate: date
+            });
+            contact_restore_log.val('')
+
             $(document).on('input', '#search-contact-restore-log', function (e) {
                 e.preventDefault();
                 $('#contact_restore_logs_table').DataTable().ajax.reload();
             });
 
             function getContactRestoreLogsData(number) {
-
                 $('#contact_restore_logs_table').DataTable().destroy();
-
                 $("#contact_restore_logs_table").dataTable({
                     scrollX: true,
                     processing: true,
@@ -1061,6 +1135,9 @@
                         data: {
                             date: function () {
                                 return $("#search-contact-restore-log").val();
+                            },
+                            number: function () {
+                                return $('#search_input').val();
                             }
                         }
                     },
@@ -1079,6 +1156,7 @@
                         },
                         {
                             name: 'date_time',
+                            width: "20%",
                             render: function (data, type, row) {
                                 return row.date_time;
                             }
@@ -1122,6 +1200,11 @@
                     ]
                 });
             }
+
+            $('input[name="search_contact_log"]').on('dp.change',function (e) {
+                e.preventDefault();
+                $('#contact_restore_logs_table').DataTable().ajax.reload();
+            });
         })
 
 
