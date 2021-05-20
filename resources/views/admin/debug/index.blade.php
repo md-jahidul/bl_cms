@@ -548,7 +548,6 @@
         </div>
         {{--Contact restore logs--}}
         <div class="row mt-3">
-{{--            <div class="row">--}}
                 <div class="col-md-8 mr-1">
                     <h5 class="mb-1 mt-2 text-bold-600">Contact Number Restore Logs</h5>
                 </div>
@@ -558,12 +557,9 @@
                            placeholder="Date"
                            class="form-control datetime contact_log_date"
                            id="search-contact-restore-log"
-                           {{--                       value="{{ $current_date }}"--}}
-                           {{-- min="{{ $last_date }}"--}}
-                           {{--                       max="{{ $current_date }}"--}}
+                           autocomplete="off"
                            name="search_contact_log" >
                 </div>
-{{--            </div>--}}
 
             <div class="col-md-12">
                 <hr/>
@@ -599,14 +595,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/loaders/loaders.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-loader.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
 @endpush
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('app-assets') }}/vendors/js/pickers/daterange/daterangepicker.js"></script>
 
     <script>
         $(function () {
@@ -1101,23 +1097,39 @@
 
 
             // Contact Restore Log
-            var contact_restore_log = $('#search-contact-restore-log');
+            var contact_restore_log_date = $('#search-contact-restore-log');
 
             var date = new Date();
             date.setDate(date.getDate());
 
-            contact_restore_log.datetimepicker({
-                format : 'YYYY-MM-DD',
-                showClose: true,
-                showClear: true,
-                maxDate: date
+            contact_restore_log_date.daterangepicker({
+                autoUpdateInput: false,
+                showDropdowns: true,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY/MM/DD'
+                },
             });
-            contact_restore_log.val('')
 
-            $(document).on('input', '#search-contact-restore-log', function (e) {
-                e.preventDefault();
-                $('#contact_restore_logs_table').DataTable().ajax.reload();
+            contact_restore_log_date.on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY/MM/DD') + '--' + picker.endDate.format('YYYY/MM/DD'));
             });
+            contact_restore_log_date.on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+            // contact_restore_log.datetimepicker({
+            //     format : 'YYYY-MM-DD',
+            //     showClose: true,
+            //     showClear: true,
+            //     maxDate: date
+            // });
+            // contact_restore_log.val('')
+
+            // $(document).on('input', '#search-contact-restore-log', function (e) {
+            //     e.preventDefault();
+            //     $('#contact_restore_logs_table').DataTable().ajax.reload();
+            // });
 
             function getContactRestoreLogsData(number) {
                 $('#contact_restore_logs_table').DataTable().destroy();
@@ -1201,10 +1213,18 @@
                 });
             }
 
-            $('input[name="search_contact_log"]').on('dp.change',function (e) {
-                e.preventDefault();
+            contact_restore_log_date.on('apply.daterangepicker', function(ev, picker) {
                 $('#contact_restore_logs_table').DataTable().ajax.reload();
             });
+            contact_restore_log_date.on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#contact_restore_logs_table').DataTable().ajax.reload();
+            });
+
+            // $('input[name="search_contact_log"]').on('dp.change',function (e) {
+            //     e.preventDefault();
+            //     $('#contact_restore_logs_table').DataTable().ajax.reload();
+            // });
         })
 
 
