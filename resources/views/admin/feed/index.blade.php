@@ -137,7 +137,7 @@
                 ordering: false,
                 autoWidth: false,
                 pageLength: 10,
-                lengthChange: false,
+                lengthChange: true,
                 ajax: {
                     url: '{{ route('feed.ajax.request') }}',
                     {{--url: '{{ route('lead-list.ajex') }}',--}}
@@ -221,7 +221,7 @@
 
                     {
                         name: 'actions',
-                        width: "6%",
+                        width: "7%",
                         // className: 'filter_data',
                         render: function (data, type, row) {
                             let edit = "{{ URL('feeds') }}" + "/" + row.id + "/edit";
