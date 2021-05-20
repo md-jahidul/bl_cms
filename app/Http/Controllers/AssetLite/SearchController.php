@@ -21,7 +21,7 @@ class SearchController extends Controller {
 
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @param $type
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
@@ -34,7 +34,7 @@ class SearchController extends Controller {
 
     /**
      * Update search setting limit
-     * 
+     *
      * @param Request $request
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
@@ -46,7 +46,7 @@ class SearchController extends Controller {
 
     /**
      * Popular search create form
-     * 
+     *
      * @param NO
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
@@ -57,7 +57,7 @@ class SearchController extends Controller {
 
     /**
      * save Popular search
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 11/03/2020
@@ -78,7 +78,7 @@ class SearchController extends Controller {
 
     /**
      * Popular search edit form
-     * 
+     *
      * @param NO
      * @return Factory|View
      * @Bulbul Mahmud Nito || 12/03/2020
@@ -90,7 +90,7 @@ class SearchController extends Controller {
 
     /**
      * Popular search update
-     * 
+     *
      * @param NO
      * @return Factory|View
      * @Bulbul Mahmud Nito || 12/03/2020
@@ -105,10 +105,10 @@ class SearchController extends Controller {
 
         return redirect('/popular-search');
     }
-    
+
      /**
      * Keyword Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 20/03/2020
@@ -120,7 +120,7 @@ class SearchController extends Controller {
 
     /**
      * delete Popular search
-     * 
+     *
      * @param $kwId
      * @return Redirect
      * @Bulbul Mahmud Nito || 11/03/2020
@@ -139,7 +139,7 @@ class SearchController extends Controller {
 
     /**
      * Get product list by type
-     * 
+     *
      * @param NO
      * @return $response
      * @Bulbul Mahmud Nito || 11/03/2020
@@ -151,7 +151,7 @@ class SearchController extends Controller {
 
     /**
      * Change status of popular search
-     * 
+     *
      * @param $kwId
      * @return $response
      * @Bulbul Mahmud Nito || 12/03/2020
