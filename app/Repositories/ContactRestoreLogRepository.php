@@ -33,10 +33,11 @@ class ContactRestoreLogRepository extends BaseRepository
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $date = $request->date ? $request->date : Carbon::now()->toDateString();
-
         $query = MyBlContactRestoreLog::where('mobile_number', $number);
-        $query = $query->whereBetween('created_at', [$date . '  00:00:00', $date . '  23:59:59']);
+        if ($request->date) {
+            $query = $query->whereBetween('created_at', [$request->date . ' 00:00:00', $request->date . ' 23:59:59']);
+        }
+
         $all_items_count = $query->count();
         $items = $query->orderBy('created_at', 'desc')->skip($start)->take($length)->get();
 
