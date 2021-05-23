@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\OfferType;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Repositories\FrontEndDynamicRoutesRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
@@ -30,6 +31,10 @@ class ProductService
     protected $productDetailRepository;
     protected $searchRepository;
     protected $tagRepository;
+    /**
+     * @var FrontEndDynamicRoutesRepository
+     */
+    private $dynamicRoutesRepository;
 
     /**
      * ProductService constructor.
@@ -44,13 +49,15 @@ class ProductService
         ProductDetailRepository $productDetailRepository,
         ProductCoreRepository $productCoreRepository,
         SearchDataRepository $searchRepository,
-        TagCategoryRepository $tagRepository
+        TagCategoryRepository $tagRepository,
+        FrontEndDynamicRoutesRepository $dynamicRoutesRepository
     ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
+        $this->dynamicRoutesRepository = $dynamicRoutesRepository;
         $this->setActionRepository($productRepository);
     }
 
@@ -82,6 +89,24 @@ class ProductService
         return new Response('Product added successfully');
     }
 
+    public function findSIMType($type)
+    {
+        $simTypeEn = null;
+        $simTypeBn = null;
+        $findSIMType = $this->dynamicRoutesRepository->findByProperties(['key' => $type]);
+        foreach ($findSIMType as $data) {
+            if ($data->lang_type == 'en') {
+                $simTypeEn = str_replace('/en/', '', $data->url);
+            } elseif ($data->lang_type == 'bn') {
+                $simTypeBn = str_replace('/bn/', '', $data->url);
+            }
+        }
+        return [
+            'type_en' => $simTypeEn,
+            'type_bn' => $simTypeBn
+        ];
+    }
+
     //save Search Data
     private function _saveSearchData($product)
     {
@@ -90,17 +115,18 @@ class ProductService
 
         $url = "";
         if ($product->sim_category_id == 1) {
-            $url .= "prepaid/";
+            $data = $this->findSIMType('prepaid')['type_en'];
+            $url .= "$data/";
         }
         if ($product->sim_category_id == 2) {
-            $url .= "postpaid/";
+            $data = $this->findSIMType('postpaid')['type_en'];
+            $url .= "$data/";
         }
 
         //category url
         $url .= $product->offer_category->url_slug;
 
         $keywordType = "offer-" . $product->offer_category->alias;
-
 
         $type = "";
         if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
