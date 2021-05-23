@@ -52,8 +52,7 @@ class SearchService
         SearchDataRepository $dataRepo,
         ProductRepository $productRepo,
         FrontEndDynamicRoutesRepository $dynamicRoutesRepository
-    )
-    {
+    ) {
         $this->settingRepo = $settingRepo;
         $this->popularRepo = $popularRepo;
         $this->tagsRepo = $tagsRepo;
@@ -136,11 +135,10 @@ class SearchService
         return $this->dataRepo->saveData($productId, $name, $url, $type, $tag);
     }
 
-    public function prepareSearchData($request): array
+    public function prepareSearchData($request)
     {
         //save data in database
         $productId = $request->product;
-//            $keyword = $request->keyword;
         $type = $request->type;
 
         $product = $this->productRepo->findOrFail($productId);
@@ -178,13 +176,19 @@ class SearchService
             ];
         }
 
-        return [
+        $searchKeywordData = [
             'keyword' => $request->keyword,
             'keyword_bn' => $request->keyword_bn,
             'url' => "$simTypeEn/$categoryUrlEn/$product->url_slug",
             'url_bn' => "$simTypeBn/$categoryUrlBn/$product->url_slug_bn",
-            'product_id' => $productId
+            'type' => $request->type,
+            'product_id' => $productId,
         ];
+        if (!isset($request->search_keyword_id)) {
+            $totalPopularSearch = $this->findAll()->count();
+            $searchKeywordData['sort'] = $totalPopularSearch + 1;
+        }
+        return $searchKeywordData;
     }
 
     public function savePopularSearch($request)
@@ -192,6 +196,7 @@ class SearchService
         try {
             $request->validate([
                 'keyword' => 'required',
+                'keyword_bn' => 'required',
                 'type' => 'required',
                 'product' => 'required',
             ]);
@@ -208,18 +213,15 @@ class SearchService
             $popularSearchData = $this->prepareSearchData($request);
             $this->save($popularSearchData);
 
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Keywored is saved!"
             ];
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
@@ -227,31 +229,26 @@ class SearchService
     public function updatePopularSearch($request)
     {
         try {
-
             $request->validate([
-                'keyword_id' => 'required',
                 'keyword' => 'required',
+                'keyword_bn' => 'required',
+                'type' => 'required',
+                'product' => 'required',
             ]);
 
-
             //save data in database
-            $keywordId = $request->keyword_id;
-            $keyword = $request->keyword;
+            $searchKeyword = $this->popularRepo->findOne($request->search_keyword_id);
 
+            $popularSearchData = $this->prepareSearchData($request);
+            $searchKeyword->update($popularSearchData);
 
-            $this->popularRepo->updateKeyword($keywordId, $keyword);
-
-            $response = [
+            return [
                 'success' => 1,
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
             ];
-            return $response;
         }
     }
 
@@ -292,6 +289,11 @@ class SearchService
     {
         $response = $this->popularRepo->changeStatus($kwId);
         return $response;
+    }
+
+    public function offerWiseProducts($type)
+    {
+        return $this->productRepo->getProductsForSearch($type);
     }
 
 }

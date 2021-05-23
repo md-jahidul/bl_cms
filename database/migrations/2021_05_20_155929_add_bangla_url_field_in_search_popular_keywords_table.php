@@ -16,6 +16,7 @@ class AddBanglaUrlFieldInSearchPopularKeywordsTable extends Migration
         Schema::table('search_popular_keywords', function (Blueprint $table) {
             $table->string('keyword_bn')->after('keyword')->nullable();
             $table->string('url_bn')->after('url')->nullable();
+            $table->string('type')->after('url_bn')->nullable();
         });
     }
 
@@ -29,6 +30,7 @@ class AddBanglaUrlFieldInSearchPopularKeywordsTable extends Migration
         Schema::table('search_popular_keywords', function (Blueprint $table) {
             $table->dropColumn('keyword_bn');
             $table->dropColumn('url_bn');
+            $table->dropColumn('type');
         });
     }
 }
