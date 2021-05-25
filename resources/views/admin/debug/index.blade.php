@@ -542,20 +542,19 @@
         </div>
         {{--Contact restore logs--}}
         <div class="row mt-3">
-            <div class="col-md-8">
-                <div>
-                    <h5 class="mb-1 mt-2 text-bold-600">Contact Restore Logs</h5>
+                <div class="col-md-8 mr-1">
+                    <h5 class="mb-1 mt-2 text-bold-600">Contact Number Restore Logs</h5>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <input type='date'
-                       class="form-control datetime"
-                       id="search-contact-restore-log"
-                       value="{{ $current_date }}"
-                       min="{{ $last_date }}"
-                       max="{{ $current_date }}"
-                       name="search_contact_log" >
-            </div>
+
+                <div class="col-md-3 mt-1 ml-5">
+                    <input type='text'
+                           placeholder="Date"
+                           class="form-control datetime contact_log_date"
+                           id="search-contact-restore-log"
+                           autocomplete="off"
+                           name="search_contact_log" >
+                </div>
+
             <div class="col-md-12">
                 <hr/>
             </div>
@@ -563,27 +562,21 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <div class="card">
-                                <div class="card-content  table-responsive">
-                                    <div class="card-body">
-                                        <table class="table table-bordered table-striped" id="contact_restore_logs_table">
-                                            <thead class="text-center alert-warning text-white">
-                                            <tr>
-                                                <th>Contact backup id</th>
-                                                <th>Message</th>
-                                                <th>Date time</th>
-                                                <th>Platform</th>
-                                                <th>Device os</th>
-                                                <th>Device model</th>
-                                                <th>Mobile number</th>
-                                                <th>Total number to be restore</th>
-                                                <th>Total restore</th>
-                                            </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="table table-bordered table-striped" id="contact_restore_logs_table">
+                                <thead class="text-center alert-warning text-white">
+                                <tr>
+                                    <th>Backup Id</th>
+                                    <th width="15%">Message</th>
+                                    <th>Date time</th>
+                                    <th>Platform</th>
+                                    <th>Device OS</th>
+                                    <th>Device model</th>
+                                    <th>Mobile number</th>
+                                    <th>Total Restore</th>
+                                    <th>Restored</th>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -596,9 +589,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/loaders/loaders.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
 @endpush
 @push('page-js')
-
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js') }}"></script>
     <script>
         $(function () {
             $.fn.dataTable.ext.errMode = 'none';
@@ -1065,15 +1062,44 @@
                 $('#otp_login_table').DataTable().ajax.reload();
             });
 
-            $(document).on('input', '#search-contact-restore-log', function (e) {
-                e.preventDefault();
-                $('#contact_restore_logs_table').DataTable().ajax.reload();
+
+            // Contact Restore Log
+            var contact_restore_log_date = $('#search-contact-restore-log');
+
+            var date = new Date();
+            date.setDate(date.getDate());
+
+            contact_restore_log_date.daterangepicker({
+                autoUpdateInput: false,
+                showDropdowns: true,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY/MM/DD'
+                },
             });
 
+            contact_restore_log_date.on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY/MM/DD') + '--' + picker.endDate.format('YYYY/MM/DD'));
+            });
+            contact_restore_log_date.on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+            // contact_restore_log.datetimepicker({
+            //     format : 'YYYY-MM-DD',
+            //     showClose: true,
+            //     showClear: true,
+            //     maxDate: date
+            // });
+            // contact_restore_log.val('')
+
+            // $(document).on('input', '#search-contact-restore-log', function (e) {
+            //     e.preventDefault();
+            //     $('#contact_restore_logs_table').DataTable().ajax.reload();
+            // });
+
             function getContactRestoreLogsData(number) {
-
                 $('#contact_restore_logs_table').DataTable().destroy();
-
                 $("#contact_restore_logs_table").dataTable({
                     scrollX: true,
                     processing: true,
@@ -1088,6 +1114,9 @@
                         data: {
                             date: function () {
                                 return $("#search-contact-restore-log").val();
+                            },
+                            number: function () {
+                                return $('#search_input').val();
                             }
                         }
                     },
@@ -1106,6 +1135,7 @@
                         },
                         {
                             name: 'date_time',
+                            width: "20%",
                             render: function (data, type, row) {
                                 return row.date_time;
                             }
@@ -1149,6 +1179,19 @@
                     ]
                 });
             }
+
+            contact_restore_log_date.on('apply.daterangepicker', function(ev, picker) {
+                $('#contact_restore_logs_table').DataTable().ajax.reload();
+            });
+            contact_restore_log_date.on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#contact_restore_logs_table').DataTable().ajax.reload();
+            });
+
+            // $('input[name="search_contact_log"]').on('dp.change',function (e) {
+            //     e.preventDefault();
+            //     $('#contact_restore_logs_table').DataTable().ajax.reload();
+            // });
         })
     </script>
 @endpush
