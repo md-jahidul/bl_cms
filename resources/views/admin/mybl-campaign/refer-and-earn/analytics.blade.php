@@ -1,15 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Feed')
-@section('card_name', 'Feed')
+@section('title', 'Refer And Earn Analytics')
+@section('card_name', 'Refer And Earn Analytics')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Refer An List</li>
+    <li class="breadcrumb-item active">List</li>
 @endsection
 
 @section('action')
-{{--    <a href="{{route('feeds.create')}}" class="btn btn-primary round btn-glow px-2"><i--}}
-{{--            class="la la-plus"></i>--}}
-{{--        Create Feed--}}
-{{--    </a>--}}
+    <a href="{{ route('mybl-refer-and-earn.index') }}" class="btn btn-blue-grey  btn-glow px-2"><i class="la la-arrow-left"></i>
+        Back to Campaign
+    </a>
 @endsection
 
 @section('content')
@@ -23,50 +22,20 @@
                         <thead>
                         <tr>
                             <th>SL</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Title</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Feed Seen</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Campaign Title</th>
+                            <th>Total Referrer</th>
+                            <th>Total Referee</th>
+                            <th>Successfully Referrals</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($feeds as $feed)
+                        @foreach ($analytics as $data)
                             <tr>
-                                <td>{{$feed->id}}</td>
-                                <td>{{$feed->type}}</td>
-                                <td>{{(isset($feed->category->title)?$feed->category->title:'')}}</td>
-                                <td>{{(isset($feed->title)?$feed->title:'')}}</td>
-                                <td>{{$feed->start_date}}</td>
-                                <td>{{$feed->end_date}}</td>
-                                <td>{{$feed->view_count}}</td>
-                                <td>{{$feed->status == 1 ? 'Active' : 'Inactive'}}</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-md-2 m-1">
-                                            <a role="button" title="Edit Feed"
-                                               href="{{route('feeds.edit',$feed->id)}}"
-                                               class="btn-pancil btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-2 m-1">
-                                            <button data-id="{{$feed->id}}" title="Delete Feed"
-                                                    class="btn btn-outline-danger delete" onclick=""><i
-                                                    class="la la-trash"></i></button>
-                                            <form id="delete-form-{{$feed->id}}"
-                                                  action="{{route('feeds.destroy',$feed->id)}}"
-                                                  method="POST"
-                                                  style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{$data->campaign_title}}</td>
+                                <td>{{$data->referrers_count}}</td>
+                                <td>{{$data->total_referees}}</td>
+                                <td>{{$data->total_success}}</td>
                             </tr>
                         @endforeach
                         </tbody>

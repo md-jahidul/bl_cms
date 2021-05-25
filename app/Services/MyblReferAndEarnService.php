@@ -99,7 +99,48 @@ class MyblReferAndEarnService
 
     public function analyticsData()
     {
+        $referAndEarns = $this->referAndEarnRepository->referAndEarnData();
+        foreach ($referAndEarns as $key => $referAndEarn) {
+            $total_referees = $referAndEarn->referrers->sum('referees_count');
+            $total_success = collect($referAndEarn->referrers)->sum(function ($data) {
+                return $data->referees->sum(function ($value) {
+                    if ($value->status == 'redeemed') {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            $referAndEarns[$key]['total_referees'] = $total_referees;
+            $referAndEarns[$key]['total_success'] = $total_success;
+        }
+        return $referAndEarns;
+    }
 
+    public function detailsCampaign($id)
+    {
+        $referAndEarn = $this->referAndEarnRepository->referAndEarnData($id);
+//        return $referAndEarns;
+//        dd($referAndEarns);
+//        foreach ($referAndEarns as $key => $referAndEarn) {
+            $total_referees = $referAndEarn->referrers->sum('referees_count');
+            $total_success = collect($referAndEarn->referrers)->sum(function ($data) {
+                return $data->referees->sum(function ($value) {
+                    if ($value->status == 'redeemed') {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            $referAndEarn['total_referees'] = $total_referees;
+            $referAndEarn['total_success'] = $total_success;
+//        }
+        return $referAndEarn;
+//        dd('ggg');
+    }
+
+    public function refereeDetails($request, $id)
+    {
+        return $this->referAndEarnRepository->refereeInfo($request, $id);
     }
 
 }
