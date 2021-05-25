@@ -38,4 +38,9 @@ class MyBlFeed extends Model
     {
         return $this->belongsTo(MyBlFeedCategory::class, 'category_id', 'id');
     }
+
+    public function feedHitCounts()
+    {
+        return $this->hasMany(MyBlFeedHitCount::class, 'feed_id');
+    }
 }

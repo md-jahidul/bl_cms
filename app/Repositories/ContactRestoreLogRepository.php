@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\MyBlContactRestoreLog;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ContactRestoreLogRepository extends BaseRepository
 {
@@ -33,10 +33,15 @@ class ContactRestoreLogRepository extends BaseRepository
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $date = $request->date ? $request->date : Carbon::now()->toDateString();
-
         $query = MyBlContactRestoreLog::where('mobile_number', $number);
-        $query = $query->whereBetween('created_at', [$date . '  00:00:00', $date . '  23:59:59']);
+
+        if ($request->date) {
+            $date = explode('--', $request->date);
+            $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
+            $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
+            $query->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
+        }
+
         $all_items_count = $query->count();
         $items = $query->orderBy('created_at', 'desc')->skip($start)->take($length)->get();
 
