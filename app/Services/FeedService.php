@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\MyBlFeed;
 use App\Repositories\FeedRepository;
 use App\Traits\CrudTrait;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Response;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class FeedService
 {
@@ -27,14 +29,63 @@ class FeedService
         $this->setActionRepository($feedRepository);
     }
 
+    public function feeds()
+    {
+        return $this->feedRepository->findByProperties([], ['title']);
+    }
+
     /**
      * Get all feeds
      *
-     * @return void
+     * @return array
      */
-    public function getDataFeeds()
+    public function getDataFeeds($request)
     {
-        return $this->feedRepository->getFeeds();
+        try {
+            $draw = $request->get('draw');
+            $start = $request->get('start');
+            $length = $request->get('length');
+
+            $builder = new MyBlFeed();
+
+            $builder = $builder->withCount(['feedHitCounts' => function ($query) use ($request) {
+                if ($request->date_range != null) {
+                    $date = explode('--', $request->date_range);
+                    $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
+                    $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
+                    $query->whereBetween('date', [$from, $to]);
+                }
+                $query->select(DB::raw('sum(count)'));
+            }]);
+
+            $builder = $builder->whereHas('category', function ($q) use ($request) {
+                if ($request->category) {
+                    $q->where('slug', $request->category);
+                }
+            })->with('category');
+
+            if ($request->title) {
+                $builder = $builder->where('title', $request->title);
+            }
+
+            if ($request->type) {
+                $builder = $builder->where('type', $request->type);
+            }
+
+            $all_items_count = $builder->count();
+            $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+            return [
+                'data' => $data,
+                'draw' => $draw,
+                'recordsTotal' => $all_items_count,
+                'recordsFiltered' => $all_items_count
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+        }
     }
 
     /**
