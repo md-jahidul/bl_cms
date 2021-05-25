@@ -292,21 +292,21 @@
             <div class="col-md-12">
                 <div class="col-md-12" style="padding: 10px">
 
-                <div class="row">
-                    <div class="col-md-8">
-                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP and Login Logs</h5>
-                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mb-1 mt-2 text-bold-600">Recent OTP and Login Logs</h5>
+                        </div>
 
-                    <div class="col-md-4 mt-2">
-                        <input type='date'
-                               class="form-control datetime"
-                               id="date_otp_login"
-                               value="{{ $current_date }}"
-                               min="{{ $date_limit }}"
-                               max="{{ $current_date }}"
-                               name="date" >
+                        <div class="col-md-4 mt-2">
+                            <input type='date'
+                                   class="form-control datetime"
+                                   id="date_otp_login"
+                                   value="{{ $current_date }}"
+                                   min="{{ $date_limit }}"
+                                   max="{{ $current_date }}"
+                                   name="date">
+                        </div>
                     </div>
-                  </div>
                 </div>
 
                 <hr>
@@ -525,6 +525,11 @@
                                             <th>Date</th>
                                             <th>Msisdn</th>
                                             <th>Product Code</th>
+                                            <th>
+                                                Balance
+                                                <i class="la la-question-circle" style="cursor: pointer"
+                                                   title="Balance before purchase"></i>
+                                            </th>
                                             <th>Message</th>
                                             <th>Status</th>
                                             </thead>
@@ -554,7 +559,7 @@
                        value="{{ $current_date }}"
                        min="{{ $last_date }}"
                        max="{{ $current_date }}"
-                       name="search_contact_log" >
+                       name="search_contact_log">
             </div>
             <div class="col-md-12">
                 <hr/>
@@ -566,7 +571,8 @@
                             <div class="card">
                                 <div class="card-content  table-responsive">
                                     <div class="card-body">
-                                        <table class="table table-bordered table-striped" id="contact_restore_logs_table">
+                                        <table class="table table-bordered table-striped"
+                                               id="contact_restore_logs_table">
                                             <thead class="text-center alert-warning text-white">
                                             <tr>
                                                 <th>Contact backup id</th>
@@ -756,7 +762,14 @@
                             render: function (data, type, row) {
                                 return row.others;
                             }
-                        }, {
+                        },
+                        {
+                            name: 'balance',
+                            render: function (data, type, row) {
+                                return row.balance;
+                            }
+                        },
+                        {
                             name: 'message',
                             render: function (data, type, row) {
                                 return row.message;

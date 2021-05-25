@@ -64,7 +64,7 @@ class ApiDebugController extends Controller
         OtpRequestLogsService $otpRequestLogsService,
         ContactRestoreLogService $contactRestoreLogService
     ) {
-     
+
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
         $this->customerSummaryUsageService = $customerSummaryUsageService;
@@ -272,6 +272,7 @@ class ApiDebugController extends Controller
                 'date' => Carbon::parse($item->created_at)->toDateTimeString(),
                 'msisdn' => $item->msisdn,
                 'message' => $item->message,
+                'balance' => $item->data,
                 'others' => $item->others,
                 'status' => $item->status,
             ];
