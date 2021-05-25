@@ -531,6 +531,11 @@
                                             <th>Date</th>
                                             <th>Msisdn</th>
                                             <th>Product Code</th>
+                                            <th>
+                                                Balance
+                                                <i class="la la-question-circle" style="cursor: pointer"
+                                                   title="Balance before purchase"></i>
+                                            </th>
                                             <th>Message</th>
                                             <th>Status</th>
                                             </thead>
@@ -786,7 +791,14 @@
                             render: function (data, type, row) {
                                 return row.others;
                             }
-                        }, {
+                        },
+                        {
+                            name: 'balance',
+                            render: function (data, type, row) {
+                                return row.balance;
+                            }
+                        },
+                        {
                             name: 'message',
                             render: function (data, type, row) {
                                 return row.message;

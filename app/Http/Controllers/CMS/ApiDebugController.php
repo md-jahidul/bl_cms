@@ -302,6 +302,7 @@ class ApiDebugController extends Controller
                 'date' => Carbon::parse($item->created_at)->toDateTimeString(),
                 'msisdn' => $item->msisdn,
                 'message' => $item->message,
+                'balance' => $item->data,
                 'others' => $item->others,
                 'status' => $item->status,
             ];
