@@ -2,16 +2,19 @@
 
 namespace App\Services;
 
+use App\Models\BaseImageCta;
 use App\Models\MyBlProduct;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Http\Response;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\SliderImageRepository;
 
 class MyblSliderImageService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $sliderRepository
@@ -41,31 +44,40 @@ class MyblSliderImageService
      */
     public function storeSliderImage($image)
     {
-        $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
-        if (empty($image_data)) {
-            $i = 1;
-        } else {
-            $i = $image_data->sequence + 1;
+        try {
+            DB::transaction(function () use ($image) {
+                $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
+                if (empty($image_data)) {
+                    $i = 1;
+                } else {
+                    $i = $image_data->sequence + 1;
+                }
+                $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
+                $image['sequence'] = $i;
+                if (isset($image['other_attributes'])) {
+                    $other_attributes = [
+                        'type' => strtolower($image['redirect_url']),
+                        'content' => $image['other_attributes']
+                    ];
+                    // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
+                    $image['other_attributes'] = $other_attributes;
+                }
+
+                $sliderImg = $this->save($image);
+                if (!empty($image['segment_wise_cta'][0]['group_id']) &&
+                    !empty($image['segment_wise_cta'][0]['action_name'])
+                ) {
+                    foreach ($image['segment_wise_cta'] as $segmentCTA) {
+                        $segmentCTA['banner_id'] = $sliderImg->id;
+                        BaseImageCta::create($segmentCTA);
+                    }
+                }
+            });
+            return new Response("Image has been successfully added");
+        } catch (\Exception $e) {
+            Log::error('Slider Image store failed' . $e->getMessage());
+            return $e->getMessage();
         }
-
-        $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
-        $image['sequence'] = $i;
-
-
-        if (isset($image['other_attributes'])) {
-            $other_attributes = [
-                'type' => strtolower($image['redirect_url']),
-                'content' => $image['other_attributes']
-            ];
-
-           // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
-
-            $image['other_attributes'] = $other_attributes;
-        }
-
-        $this->save($image);
-
-        return new Response("Image has been successfully added");
     }
 
     public function getActiveProducts()
@@ -105,35 +117,45 @@ class MyblSliderImageService
      */
     public function updateSliderImage($data, $id)
     {
-        $sliderImage = $this->findOne($id);
+        try {
+            $sliderImage = $this->findOne($id);
+            DB::transaction(function () use ($data, $id, $sliderImage) {
+                if (isset($data['image_url'])) {
+                    $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
+                    $this->deleteFile($sliderImage->image_url);
+                }
+                if (isset($data['other_attributes'])) {
+                    $other_attributes = [
+                        'type' => strtolower($data['redirect_url']),
+                        'content' => $data['other_attributes']
+                    ];
+                    $data['other_attributes'] = $other_attributes;
+                }
 
-        if (!isset($data['image_url'])) {
-            $data['image_url'] = $sliderImage->image_url;
-        } else {
-            try {
-                unlink($sliderImage->image_url);
-            } catch (\Exception $e) {
-                Log::error('Slider Image not found' . $e->getMessage());
-            }
-            $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
+                $sliderImage->update($data);
+
+                if (!empty($data['segment_wise_cta'][0]['group_id']) &&
+                    !empty($data['segment_wise_cta'][0]['action_name'])
+                ) {
+                    BaseImageCta::where('banner_id', $id)->delete();
+                    foreach ($data['segment_wise_cta'] as $segmentCTA) {
+                        $segmentCTA['banner_id'] = $id;
+                        BaseImageCta::create($segmentCTA);
+                    }
+                }
+                if (
+                    $data['user_type'] == 'all' ||
+                    $data['user_type'] == 'prepaid' ||
+                    $data['user_type'] == 'postpaid'
+                ) {
+                    BaseImageCta::where('banner_id', $id)->delete();
+                }
+            });
+            return response("Image has has been successfully updated");
+        } catch (\Exception $e) {
+            Log::error('Slider Image store failed' . $e->getMessage());
+            return \response($e->getMessage(), 500);
         }
-
-
-        if (isset($data['other_attributes'])) {
-            $other_attributes = [
-                'type' => strtolower($data['redirect_url']),
-                'content' => $data['other_attributes']
-            ];
-
-           // $data['other_attributes'] = json_encode($other_attributes);
-
-            $data['other_attributes'] = $other_attributes;
-        }
-
-        $sliderImage->update($data);
-
-
-        return new Response("Image has has been successfully updated");
     }
 
 

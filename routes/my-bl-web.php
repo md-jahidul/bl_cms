@@ -100,6 +100,28 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
+    // Base Msisdn
+    Route::get('mybl-slider/base-msisdn-list', 'CMS\BaseMsisdnController@index')
+        ->name('myblslider.baseMsisdnList.index');
+
+    Route::get('mybl-slider/base-msisdn-list-table/{id}', 'CMS\BaseMsisdnController@getBaseMsisdn')
+        ->name('myblslider.baseMsisdnList.table');
+
+    Route::get('mybl-slider/base-msisdn-excel-export/{id}', 'CMS\BaseMsisdnController@msisdnExcelExport')
+        ->name('myblslider.baseMsisdn.excel-export');
+
+    Route::get('mybl-slider/base-msisdn-create', 'CMS\BaseMsisdnController@create')
+        ->name('myblslider.base.msisdn.create');
+
+    Route::post('mybl-slider/base-msisdn-store', 'CMS\BaseMsisdnController@store')
+        ->name('myblslider.base.msisdn.store');
+
+    Route::get('mybl-slider/base-msisdn-edit/{id}', 'CMS\BaseMsisdnController@edit')
+        ->name('myblslider.base.msisdn.edit');
+
+    Route::put('mybl-slider/base-msisdn-update/{id}', 'CMS\BaseMsisdnController@update')
+        ->name('myblslider.base.msisdn.update');
+
     // minute
     Route::resource('minuteOffer', 'CMS\MinuteOfferController');
     Route::get('minuteOffer/destroy/{id}', 'CMS\MinuteOfferController@destroy');
@@ -155,6 +177,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Notification
     Route::resource('notification', 'CMS\NotificationController');
+
+    Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
