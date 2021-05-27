@@ -27,10 +27,13 @@
                         </thead>
                         <tbody>
                             @foreach ($sliders as $slider)
+                                @php
+                                    $position = "<span class='text-info'>(Position: <span class='text-danger'>$slider->position</span>)</span>"
+                                @endphp
                                 <tr>
                                     <td width="10%">{{$slider->id}}</td>
                                     <td width="40%">
-                                        {{$slider->title}}
+                                        {{$slider->title}} {!! ($slider->component_id == 18) ? $position : ''  !!}
                                         <span class="badge badge-default badge-pill bg-primary float-right">{{$slider->sliderImages->count()}}</span>
 
                                     </td>

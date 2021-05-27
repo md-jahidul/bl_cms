@@ -118,8 +118,6 @@
 
                             @php
                                 $actionList = Helper::navigationActionList();
-
-                                /*dd($actionList)*/
                             @endphp
 
                             <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
@@ -243,43 +241,42 @@
                                     </tr>
                                     </thead>
                                     <tbody data-repeater-list="segment_wise_cta" id="cta_table">
-{{--                                    {{ dd() }}--}}
-                                    @if(!$imageInfo->baseImageCats->isEmpty())
+                                    @if(!empty($imageInfo->baseImageCats))
                                         @foreach($imageInfo->baseImageCats as $data)
-                                            <tr data-repeater-item>
-                                                <td>
-                                                    <select class="form-control" id="segment_action" name="group_id">
-                                                        <option value="">Select Group</option>
-                                                        @foreach($baseGroups as $group)
-                                                            <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="form-control" id="segment_action" name="action_name">
-                                                        <option value="">Select Action</option>
-                                                        @foreach ($actionList as $key => $value)
-                                                            <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
-                                                                {{ $value }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
-                                                </td>
-    {{--                                            <td>--}}
-    {{--                                                <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">--}}
-    {{--                                                    <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>--}}
-    {{--                                                    <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>--}}
-    {{--                                                </select>--}}
-    {{--                                            </td>--}}
-                                                <td class="text-center align-middle">
-                                                    <i data-repeater-delete
-                                                       class="la la-trash-o text-danger cursor-pointer"></i>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        <tr data-repeater-item>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="group_id">
+                                                    <option value="">Select Group</option>
+                                                    @foreach($baseGroups as $group)
+                                                        <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="segment_action" name="action_name">
+                                                    <option value="">Select Action</option>
+                                                    @foreach ($actionList as $key => $value)
+                                                        <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
+                                                            {{ $value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
+                                            </td>
+{{--                                            <td>--}}
+{{--                                                <select name="status" class="form-control outlet {{ ($data->status == 0) ? 'bg-danger' : '' }}">--}}
+{{--                                                    <option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>--}}
+{{--                                                    <option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Inactive</option>--}}
+{{--                                                </select>--}}
+{{--                                            </td>--}}
+                                            <td class="text-center align-middle">
+                                                <i data-repeater-delete
+                                                   class="la la-trash-o text-danger cursor-pointer"></i>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     @else
                                         <tr data-repeater-item>
                                             <td>
@@ -302,13 +299,6 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" name="action_url_or_code" type="text">
-                                            </td>
-                                            <td>
-                                                <select name="status" class="form-control ">
-                                                    <option value="">--Select--</option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
-                                                </select>
                                             </td>
                                             <td class="text-center align-middle">
                                                 <i data-repeater-delete

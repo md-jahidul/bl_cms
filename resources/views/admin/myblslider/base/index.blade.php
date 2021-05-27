@@ -24,7 +24,7 @@
                         <tr>
                             <th width="5%">ID</th>
                             <th width="55%">Title</th>
-                            <th width="20%">Crate Date</th>
+                            <th width="20%">Create Date</th>
                             <th width="10%">Status</th>
                             <th class="text-right">Action</th>
                         </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Services\BaseMsisdnService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,6 @@ use App\Services\AlSliderComponentTypeService;
 use App\Models\SliderImage;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use App\Services\BaseMsisdnService;
 
 class MyblSliderImageController extends Controller
 {
