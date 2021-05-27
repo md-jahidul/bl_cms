@@ -25,17 +25,24 @@
                             <th>Campaign Title</th>
                             <th>Total Referrer</th>
                             <th>Total Referee</th>
-                            <th>Successfully Referrals</th>
+                            <th>Successfully Redeemed</th>
+                            <th>Total Claimed</th>
+                            <th>Total Invited</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($analytics as $data)
+                            @php
+                                $total_invited = $data->total_referees - ($data->total_claimed + $data->total_success);
+                            @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{$data->campaign_title}}</td>
-                                <td>{{$data->referrers_count}}</td>
-                                <td>{{$data->total_referees}}</td>
-                                <td>{{$data->total_success}}</td>
+                                <td>{{ $data->campaign_title}}</td>
+                                <td>{{ $data->total_referrers}}</td>
+                                <td>{{ $data->total_referees}}</td>
+                                <td>{{ $data->total_success}}</td>
+                                <td>{{ $data->total_claimed }}</td>
+                                <td>{{ $total_invited }}</td>
                             </tr>
                         @endforeach
                         </tbody>

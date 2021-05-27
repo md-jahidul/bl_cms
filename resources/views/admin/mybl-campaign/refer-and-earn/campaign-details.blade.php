@@ -1,13 +1,13 @@
 @extends('layouts.admin')
-@section('title', 'Popup Purchase Detail')
-@section('card_name', 'Popup Purchase Detail')
+@section('title', 'Campaign Detail')
+@section('card_name', 'Campaign Detail')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Popup Detail History</li>
+    <li class="breadcrumb-item active">Campaign Detail History</li>
 @endsection
 
 @section('action')
-    <a href="{{ route('app-launch.report') }}" class="btn btn-primary round btn-glow px-2">
+    <a href="{{ route('mybl-refer-and-earn.index') }}" class="btn btn-primary round btn-glow px-2">
         <i class="la la-list"></i>
         Back to Campaign
     </a>
@@ -17,67 +17,139 @@
     <section>
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
+                <div class="card-header">
+                    <div>
+                        <h3><strong>{{$campaignDetails->campaign_title}}</strong></h3>
+                    </div><br>
 
-                <div class="card-body">
-                    <form class="form">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="control-label">Date Range</label>
-                                <input type="text" required name="date_range" id="from" class="form-control datetime"
-                                       placeholder="Pick Dates to filter" autocomplete="off">
+                    <div>
+                        <h5>Filter</h5>
+                    </div>
+                    <hr class="mt-0 mb-0">
+                    <div class="row mb-1">
+                        <div class="card-body">
+                        <form id="filter-form" class="form">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Date Range</label>
+                                    <input type="text" name="date_range" id="from" class="form-control datetime"
+                                           placeholder="Pick Dates to filter" autocomplete="off">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">MSISDN</label>
+                                    <input type="text" name="msisdn" placeholder="e.g: 019xxxxxxxx" class="form-control"
+                                           value="{{\Illuminate\Support\Facades\Input::get('msisdn') ?? old('msisdn')}}">
+                                </div>
+                                <div class="col-md-1">
+                                    <br>
+                                    <button type="submit" class="btn btn-info" value="search">
+                                        <i class="ft ft-search"> </i> Search
+                                    </button>
+                                </div>
+
+                                <div class="ml-2 col-md-3">
+                                    <br>
+                                    <button type="button" class="btn btn-warning" id="clear-filter">
+                                        <i class="ft ft-crosshair"> </i> Clear Filter
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="control-label">MSISDN</label>
-                                <input type="text" name="msisdn" placeholder="e.g: 019xxxxxxxx" class="form-control"
-                                       value="{{\Illuminate\Support\Facades\Input::get('msisdn') ?? old('msisdn')}}">
-                            </div>
-                            <div class="col-md-3">
-                                <br>
-                                <button type="submit" class="btn btn-info" value="search">
-                                    <i class="ft ft-search"> </i> Search
-                                </button>
+                        </form>
+                    </div>
+                    </div>
+                    <div>
+                        <h5>Campaign Stat</h5>
+                    </div>
+                    <hr class="mt-0">
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-12">
+                            <div class="card bg-gradient-directional-primary">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-rocket success text-white font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-white text-right">
+                                                <h3 class="text-white"><b>{{ $campaignDetails->total_referrers ?? 0 }}</b></h3>
+                                                <span>Total Referrer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-
-                <div class="card-header">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <table class="table">
-                                <tr>
-                                    <td><strong>Campaign Title</strong></td>
-                                    <td colspan="5">{{$campaignDetails->campaign_title}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Campaign Stat :</strong></td>
-                                    <td>
-                                        <span class="badge badge-info">
-                                            Total Referrer:
-                                            {{ $campaignDetails->referrers_count ?? 0 }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-secondary">
-                                            Total Referee:
-                                         {{ $campaignDetails->total_referees ?? 0 }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-success">
-                                            Successfully Referrals:
-                                            {{ $campaignDetails->total_success ?? 0 }}
-                                        </span>
-                                    </td>
-{{--                                    <td>--}}
-{{--                                        <span class="badge badge-warning">--}}
-{{--                                            Total Buy Failure:--}}
-{{--                                            {{ $popupPurchaseLogDetails->where('action_type', 'buy_failure')->count('action_type') ?? 0 }}--}}
-{{--                                        </span>--}}
-{{--                                    </td>--}}
-                                </tr>
-                            </table>
+                        <div class="col-xl-3 col-lg-6 col-12">
+                            <div class="card bg-gradient-directional-grey-blue">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-star text-white font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-white text-right">
+                                                <h3 class="text-white"><b>{{ $campaignDetails->total_referees ?? 0 }}</b></h3>
+                                                <span>Total Referee</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-12">
+                            <div class="card bg-gradient-directional-cyan">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-like text-white font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-white text-right">
+                                                <h3 class="text-white"><b>{{ $campaignDetails->total_success ?? 0 }}</b></h3>
+                                                <span>Total Redeemed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-12">
+                            <div class="card bg-gradient-directional-success">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-emoticon-smile text-white font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-white text-right">
+                                                <h3 class="text-white"><b>{{ $campaignDetails->total_claimed ?? 0 }}</b></h3>
+                                                <span>Total Claimed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                            $total_invited = $campaignDetails->total_referees - ($campaignDetails->total_claimed + $campaignDetails->total_success);
+                        @endphp
+                        <div class="col-xl-3 col-lg-6 col-12">
+                            <div class="card bg-gradient-directional-warning">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-paper-plane text-white font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-white text-right">
+                                                <h3 class="text-white"><b>{{$total_invited ?? 0 }}</b></h3>
+                                                <span>Total Invited</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,13 +173,14 @@
                                 <td width="10%">{{ $detail->msisdn }}</td>
                                 <td width="10%">{{ $detail->referral_code }}</td>
                                 <td width="15%">
-                                    {{\Carbon\Carbon::parse($detail->created_at)->format('d-m-Y h:i A')}}
+                                    {{$detail->created_at}}
+{{--                                    {{\Carbon\Carbon::parse($detail->created_at)->format('d-m-Y h:i A')}}--}}
                                 </td>
                                 <td width="3%">
                                     <a data-toggle="modal" data-target="#large"
                                        data-id="{{ $detail->id }}"
                                        href="{{--{{ route('refer-and-earn.campaign.details', $data->id) }}--}}"
-                                       role="button" class="btn-sm btn-bitbucket border-1 referee-details"> Details</a>
+                                       role="button" class="btn-sm btn-bitbucket border-1 referee-details"> Referees List</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -122,21 +195,13 @@
 
     {{--Modal Start--}}
         <div class="col-lg-4 col-md-6 col-sm-12">
-{{--            <div class="form-group">--}}
-{{--            <h5>Large Modal</h5>--}}
-{{--            <p>Add class <code>.modal-lg</code> with <code>.modal-dialog</code>                            to use large size of modal.</p>--}}
-{{--            <!-- Button trigger modal -->--}}
-{{--            <button type="button" class="btn btn-outline-success block btn-lg" data-toggle="modal"--}}
-{{--                    data-target="#large">--}}
-{{--                Launch Modal--}}
-{{--            </button>--}}
             <!-- Modal -->
             <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
                  aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel17">Basic Modal</h4>
+                            <h4 class="modal-title" id="myModalLabel17">Referees List</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -182,6 +247,12 @@
         table.dataTable tbody td {
             max-height: 40px;
         }
+        @media (min-width: 1200px){
+            .col-xl-3 {
+                flex: 0 0 25%;
+                max-width: 20% !important;
+            }
+        }
     </style>
 @endpush
 
@@ -198,12 +269,18 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+            $('#clear-filter').click(function () {
+                $('input[name="date_range"]').val('')
+                $('input[name="msisdn"]').val('')
+                $('#filter-form').submit();
+            })
+
             $('.datetime').daterangepicker({
                 timePicker: false,
                 singleDatePicker: false,
                 autoApply: true,
                 locale: {
-                    format: 'DD/MM/YYYY'
+                    format: 'YYYY/MM/DD'
                 }
             });
 
@@ -224,43 +301,22 @@
 
             $('.referee-details').click(function (){
                 var refererId = $(this).attr('data-id');
-                $(this).DataTable().ajax.reload();
 
                 $("#referee-info").dataTable({
-                    scrollX: true,
                     processing: true,
                     searching: false,
                     serverSide: true,
-                    ordering: false,
                     autoWidth: false,
                     pageLength: 10,
-                    lengthChange: false,
+                    lengthChange: true,
                     ajax: {
                         url: '{{ url('mybl-refer-and-earn/referee-details') }}' + "/" + refererId,
-                        {{--url: '{{ route('lead-list.ajex') }}',--}}
                         data: {
                             // applicant_name: function () {
                             //     return $('input[name="applicant_name"]').val();
                             // },
-                            // date_range: function () {
-                            //     return $('input[name="date_range"]').val();
-                            // },
-                            // lead_category: function () {
-                            //     return $('#lead_category').val();
-                            // },
                         }
                     },
-
-                    "drawCallback": function (settings) {
-                        // Here the response
-                        var response = settings.json;
-                        if (response.permission == false){
-                            $('#permission_error').show()
-                        }else {
-                            $('#permission_error').hide()
-                        }
-                    },
-
                     columns: [
                         {
                             name: 'sl',
@@ -280,7 +336,16 @@
                             name: 'status',
                             width: "6%",
                             render: function (data, type, row) {
-                                return row.status;
+                                const status = row.status[0].toUpperCase() + row.status.substring(1);
+                                let statusData = '';
+                                if (row.status === 'redeemed') {
+                                    statusData = `<span class="badge badge-info">`+status+`</span>`;
+                                } else if (row.status === 'claimed') {
+                                    statusData = `<span class="badge badge-success">`+status+`</span>`;
+                                } else {
+                                    statusData = `<span class="badge badge-warning">`+status+`</span>`;
+                                }
+                                return statusData;
                             }
                         },
                         {
@@ -297,56 +362,9 @@
 
                 });
 
-
-/*                $.ajax({
-                    url: "{{ url('mybl-refer-and-earn/referee-details') }}" + "/" + refererId,
-                    success: function(result){
-                        // console.log(result)
-                        var dataRow = '';
-
-                        dataRow += `
-                            <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                                   role="grid" aria-describedby="Example1_info" style="">
-                                <thead>
-                                <tr>
-                                    <th width="5%">SL</th>
-                                    <th width="10%">Referrals MSISDN</th>
-                                    <th width="12%">Referrals Code</th>
-                                    <th width="10%">Date</th>
-                                    <th width="10%">Details</th>
-                                </tr>
-                                </thead>
-                                <tbody id="referee-info">
-                        `
-                            dataRow += `
-                            <tr>
-                                <td>1</td>
-                                <td>GG</td>
-                                <td>HHH</td>
-                                <td>EE</td>
-                                <td>PP</td>
-                            </tr>
-                            `
-                            dataRow += `
-                            <tr>
-                                <td>2</td>
-                                <td>GG</td>
-                                <td>HHH</td>
-                                <td>EE</td>
-                                <td>PP</td>
-                            </tr>
-                            `
-
-
-                        dataRow += `
-                            </tbody>
-                        </table>
-                        `
-
-
-                        $(".modal-body").append(dataRow);
-                }});*/
-                // alert(camId);
+                $('.modal').on('hidden.bs.modal', function () {
+                    $("#referee-info").dataTable().fnDestroy();
+                })
             })
 
         });

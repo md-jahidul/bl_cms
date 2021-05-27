@@ -97,45 +97,52 @@ class MyblReferAndEarnService
         return new Response('update successfully');
     }*/
 
+    public function refereessStatus($referAndEarn, $status)
+    {
+        return collect($referAndEarn->referrers)->sum(function ($data) use ($status) {
+            return $data->referees->sum(function ($value) use ($status) {
+                if ($value->status == $status) {
+                    return true;
+                }
+                return false;
+            });
+        });
+    }
+
     public function analyticsData()
     {
         $referAndEarns = $this->referAndEarnRepository->referAndEarnData();
         foreach ($referAndEarns as $key => $referAndEarn) {
+            $total_referrers = $referAndEarn->referrers->count();
             $total_referees = $referAndEarn->referrers->sum('referees_count');
-            $total_success = collect($referAndEarn->referrers)->sum(function ($data) {
-                return $data->referees->sum(function ($value) {
-                    if ($value->status == 'redeemed') {
-                        return true;
-                    }
-                    return false;
-                });
-            });
+
+            $total_success = $this->refereessStatus($referAndEarn, 'redeemed');
+            $total_claimed = $this->refereessStatus($referAndEarn, 'claimed');
+
+            $referAndEarns[$key]['total_referrers'] = $total_referrers;
             $referAndEarns[$key]['total_referees'] = $total_referees;
             $referAndEarns[$key]['total_success'] = $total_success;
+            $referAndEarns[$key]['total_claimed'] = $total_claimed;
         }
         return $referAndEarns;
     }
 
-    public function detailsCampaign($id)
+    public function detailsCampaign($request, $id)
     {
-        $referAndEarn = $this->referAndEarnRepository->referAndEarnData($id);
-//        return $referAndEarns;
-//        dd($referAndEarns);
-//        foreach ($referAndEarns as $key => $referAndEarn) {
+
+        $referAndEarn = $this->referAndEarnRepository->referAndEarnData($request, $id);
+
+        $total_referrers = $referAndEarn->referrers->count();
             $total_referees = $referAndEarn->referrers->sum('referees_count');
-            $total_success = collect($referAndEarn->referrers)->sum(function ($data) {
-                return $data->referees->sum(function ($value) {
-                    if ($value->status == 'redeemed') {
-                        return true;
-                    }
-                    return false;
-                });
-            });
+
+            $total_success = $this->refereessStatus($referAndEarn, 'redeemed');
+            $total_claimed = $this->refereessStatus($referAndEarn, 'claimed');
+
+            $referAndEarn['total_referrers'] = $total_referrers;
             $referAndEarn['total_referees'] = $total_referees;
             $referAndEarn['total_success'] = $total_success;
-//        }
+            $referAndEarn['total_claimed'] = $total_claimed;
         return $referAndEarn;
-//        dd('ggg');
     }
 
     public function refereeDetails($request, $id)

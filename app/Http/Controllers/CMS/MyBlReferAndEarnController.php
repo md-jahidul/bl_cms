@@ -115,12 +115,13 @@ class MyBlReferAndEarnController extends Controller
     public function getReferAndEarnAnalytics()
     {
         $analytics = $this->referAndEarnService->analyticsData();
+//        return $analytics;
         return view('admin.mybl-campaign.refer-and-earn.analytics', compact('analytics'));
     }
 
-    public function campaignDetails($campaignId)
+    public function campaignDetails(Request $request, $campaignId)
     {
-        $campaignDetails = $this->referAndEarnService->detailsCampaign($campaignId);
+        $campaignDetails = $this->referAndEarnService->detailsCampaign($request, $campaignId);
 //        return $campaignDetails;
         return view('admin.mybl-campaign.refer-and-earn.campaign-details', compact('campaignDetails'));
     }
