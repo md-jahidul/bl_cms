@@ -28,25 +28,14 @@ class DynamicDeeplinkController extends Controller
     protected const INTERNET_PACK = 'internet_pack';
 
     /**
-     * AgentListController constructor.
-     * @param AgentService $agentService
+     * DynamicDeeplinkService constructor.
+     * @param DynamicDeeplinkService $dynamicDeeplinkService
      */
     public function __construct(DynamicDeeplinkService $dynamicDeeplinkService)
     {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->middleware('auth');
     }
-
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function index()
-//    {
-//        $agent = $this->agentService->agentList();
-//        return view('admin.agent-deeplink.index', compact('agent'));
-//    }
 
     /**
      * Show the form for creating a new resource.
@@ -56,6 +45,23 @@ class DynamicDeeplinkController extends Controller
     public function storeDeepLinkCreate(Request $request)
     {
         return $this->dynamicDeeplinkService->generateDeeplink(self::STORE, $request);
-//        return view('admin.agent-deeplink.create');
+    }
+
+    /**
+     * @param Request $request
+     * @return array|mixed
+     */
+    public function feedDeepLinkCreate(Request $request)
+    {
+        return $this->dynamicDeeplinkService->generateDeeplink(self::FEED, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|mixed
+     */
+    public function internetPackDeepLinkCreate(Request $request)
+    {
+        return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $request);
     }
 }

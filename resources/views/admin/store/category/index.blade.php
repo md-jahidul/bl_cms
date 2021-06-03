@@ -32,10 +32,6 @@
                                 <td>{{$storeCategory->id}}</td>
                                 <td>{{$storeCategory->name_en}}<span class="badge badge-default badge-pill bg-primary float-right"></span></td>
                                 <td>
-                                    <button type="button" class="btn btn-secondary click-copy" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                                        Tooltip on top
-                                    </button>
-
                                     <button class="btn btn-sm btn-icon btn-outline-success edit border-0 create_deep_link"
                                             title="Click for deep link" data-value="{{ $storeCategory->slug }}">
                                         <i class="la icon-link"></i>
@@ -56,19 +52,6 @@
 
             </div>
         </div>
-    </div>
-
-
-    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-1 text-center">
-        <h5 class="text-center">Manual</h5>
-        <div class="text-center">
-            <button type="button" class="btn btn-info manual" data-toggle="tooltip" data-original-title="Manual Triggered"
-                    data-trigger="manual">
-                On Manual Trigger
-            </button>
-        </div>
-        <p class="text-center mt-1">Use <code>data-trigger="manual"</code> for manual trigger.
-            You can do show/hide using js</p>
     </div>
 
 </section>
@@ -93,18 +76,12 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>--}}
 {{--   <script src="{{asset('app-assets/js/scripts/tooltip/tooltip.js')}}" type="text/javascript"></script>--}}
+   <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
    <script>
         var auto_save_url = "{{ url('myblCategory-sortable') }}";
+        var deep_link_create_url = "{{ url('store-deeplink/create?') }}category=";
 
         $(function () {
-            $('.click-copy').on('click', function() {
-                alert('hi')
-                $(this).tooltip('show');
-            });
-            // $('.manual').on('mouseout', function () {
-            //     $(this).tooltip('hide');
-            // });
-
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 
@@ -138,48 +115,49 @@
                 })
             })
 
-            $('.create_deep_link').click(function () {
-                let storeSlug = $(this).attr('data-value');
-                alert(storeSlug);
-                $.ajax({
-                    url: "{{ url('store-deeplink/create?') }}category=" + storeSlug,
-                    methods: "get",
-                    success: function (result) {
-                        console.log(result.status_code);
-                        if(result.status_code===200){
-                            Swal.fire(
-                                'Generated!',
-                                'Deep link generated successfully .<br><br> Link :  '+result.short_link,
-                                'success',
-                            );
-                        }else{
-                            Swal.fire(
-                                'Oops!',
-                                'Something went wrong please try again ',
-                                'error',
-                            );
-                        }
-                        setTimeout(redirect, 2000)
-                        function redirect() {
-                            $('#product_list').DataTable().ajax.reload();
-                        }
-                    }
-                });
-            })
+            {{--$('.create_deep_link').click(function () {--}}
+            {{--    let storeSlug = $(this).attr('data-value');--}}
+            {{--    $.ajax({--}}
+            {{--        url: "{{ url('store-deeplink/create?') }}category=" + storeSlug,--}}
+            {{--        methods: "get",--}}
+            {{--        success: function (result) {--}}
+            {{--            console.log(result.status_code);--}}
+            {{--            if(result.status_code===200){--}}
+            {{--                Swal.fire(--}}
+            {{--                    'Generated!',--}}
+            {{--                    'Deep link generated successfully .<br><br> Link :  '+result.short_link + '<br><br><button data-value="'+result.short_link+'" class="btn btn-secondary copy-deeplink">Copy</button>',--}}
+            {{--                    'success',--}}
+            {{--                );--}}
+            {{--            }else{--}}
+            {{--                Swal.fire(--}}
+            {{--                    'Oops!',--}}
+            {{--                    'Something went wrong please try again ',--}}
+            {{--                    'error',--}}
+            {{--                );--}}
+            {{--            }--}}
+            {{--            setTimeout(redirect, 2000)--}}
+            {{--            function redirect() {--}}
+            {{--                $('#product_list').DataTable().ajax.reload();--}}
+            {{--            }--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--})--}}
 
-            function copyDeepLinkCreate(deeplink){
-                const str = document.getElementById(deeplink).id;
-                const el = document.createElement('textarea');
-                el.value = str;
-                el.setAttribute('readonly', '');
-                el.style.position = 'absolute';
-                el.style.left = '-9999px';
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-
-            }
+            {{--$(document).on('click', '.copy-deeplink', function () {--}}
+            {{--    let deeplink = $(this).attr('data-value')--}}
+            {{--    const el = document.createElement('textarea');--}}
+            {{--    el.value = deeplink;--}}
+            {{--    el.setAttribute('readonly', '');--}}
+            {{--    el.style.position = 'absolute';--}}
+            {{--    el.style.left = '-9999px';--}}
+            {{--    document.body.appendChild(el);--}}
+            {{--    el.select();--}}
+            {{--    document.execCommand('copy');--}}
+            {{--    document.body.removeChild(el);--}}
+            {{--    $(this).text('Coped!!')--}}
+            {{--    $(this).removeClass('btn-secondary')--}}
+            {{--    $(this).addClass('btn-success')--}}
+            {{--})--}}
         })
 
         $(document).ready(function () {

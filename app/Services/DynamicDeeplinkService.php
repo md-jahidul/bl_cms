@@ -19,8 +19,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DynamicDeeplinkService
 {
-    use CrudTrait;
-
     /**
      * @var FirebaseDeepLinkService
      */
@@ -34,7 +32,6 @@ class DynamicDeeplinkService
         FirebaseDeepLinkService $firebaseDeepLinkService
     ) {
         $this->firebaseDeepLinkService = $firebaseDeepLinkService;
-//        $this->setActionRepository($aboutPageRepository);
     }
 
     /**
@@ -45,18 +42,11 @@ class DynamicDeeplinkService
     {
         $category = $request->category;
         $subCategory = $request->sub_category;
-
         if ($category && $subCategory) {
             $endPointURL = "$sectionType/$category/$subCategory";
         } else {
             $endPointURL = "$sectionType/$category";
         }
-//        dd($request->all());
-//
-//        $product = MyBlProduct::where('product_code', $product_code)->first();
-//        if (!$product) {
-//            throw new NotFoundHttpException();
-//        }
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
@@ -69,28 +59,16 @@ class DynamicDeeplinkService
                 ]
             ]
         ];
-
-//        $saveData = new ProductDeepLink();
-        $insert_item = array();
         $result = $this->firebaseDeepLinkService->post($body);
-//        dd($result);
         if ($result['status_code'] == 200) {
             $shortLink = $result['response']['shortLink'];
-//            $insert_item['product_code'] = $product_code;
-//            $insert_item['deep_link'] = $shortLink;
-
-            return ['short_link' => "$shortLink", 'status_code' => $result['status_code'], 'ms' => "successfuly created"];
-
-//            if ($saveData->create($insert_item)) {
-//                return ['short_link' => "$shortLink", 'status_code' => $result['status_code'], 'ms' => "successfuly created"];
-//            } else {
-//                return ['short_link' => "", 'status_code' => 500, 'ms' => "something is wrong"];
-//            }
-
+            return [
+                'short_link' => "$shortLink",
+                'status_code' => $result['status_code'],
+                'ms' => "Successfully created"
+            ];
         } else {
             return ['short_link' => "", 'status_code' => 500, 'ms' => "something is wrong"];
         }
-
-//        return $this->aboutPageRepository->findDetail($slug);
     }
 }

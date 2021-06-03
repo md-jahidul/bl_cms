@@ -641,8 +641,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      * Dynamic Deeplink
      */
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
-    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@deepLinkCreate');
-    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@deepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
 
 });
 

@@ -40,23 +40,22 @@
                                 <td>{{$category->slug}}</td>
                                 <td>{{$category->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
-                                    <div class="row">
-                                        <div class="col-md-2 m-1">
-                                            <a role="button" title="Edit Feed Category"
-                                               href="{{route('feeds.categories.edit',$category->id)}}"
-                                               class="btn-pancil btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-2 m-1">
-                                            <button data-id="{{$category->id}}" title="Delete Feed Category" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                            <form id="delete-form-{{$category->id}}" action="{{route('feeds.categories.destroy',$category->id)}}" method="POST"
-                                                  style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </div>
-                                    </div>
+                                    <button class="btn btn-icon btn-outline-success edit create_deep_link"
+                                            title="Click for deep link" data-value="{{ $category->slug }}">
+                                        <i class="la icon-link"></i>
+                                    </button>
+                                    <a role="button" title="Edit Feed Category"
+                                       href="{{route('feeds.categories.edit',$category->id)}}"
+                                       class="btn-pancil btn btn-outline-primary">
+                                        <i class="la la-pencil"></i>
+                                    </a>
+
+                                    <button data-id="{{$category->id}}" title="Delete Feed Category" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                    <form id="delete-form-{{$category->id}}" action="{{route('feeds.categories.destroy',$category->id)}}" method="POST"
+                                          style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -85,11 +84,12 @@
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
     <script>
         let auto_save_url = "{{ route('feeds.categories.update_position') }}";
+        let deep_link_create_url = "{{ url('feed-deeplink/create?') }}category=";
 
         $(document).ready(function () {
-
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 

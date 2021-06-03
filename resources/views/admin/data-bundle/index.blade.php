@@ -32,17 +32,18 @@
                         @foreach ($offerCategory as $key=>$internet_offer)
                             <tr>
                                 <td width='5%'>{{++$key}}</td>
-                                <td width='30%'>{{$internet_offer->name}}</td>
-                                <td width='30%'>{{$internet_offer->slug}}</td>
+                                <td width='10%'>{{$internet_offer->name}}</td>
+                                <td width='10%'>{{$internet_offer->slug}}</td>
                                 <td width='10%'>{{$internet_offer->sort}}</td>
-                                <td width='20%'>{{$internet_offer->created_at}}</td>
+                                <td width='15%'>{{$internet_offer->created_at}}</td>
                                 <td width='10%'>
-                                    <div class="btn-group" role="group">
-                                        <a role="button" href="{{route('mybl.internetOffer.category.edit',$internet_offer->id)}}" class="btn btn-outline-success">
-                                            <i class="la la-pencil"></i>
-                                        </a>
-                                        {{-- <button data-id="{{$internet_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button> --}}
-                                    </div>
+                                    <button class="btn btn-icon btn-outline-success edit create_deep_link"
+                                            title="Click for deep link" data-value="{{ $internet_offer->slug }}">
+                                        <i class="la icon-link"></i>
+                                    </button>
+                                    <a role="button" href="{{route('mybl.internetOffer.category.edit',$internet_offer->id)}}" class="btn btn-outline-primary">
+                                        <i class="la la-pencil"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -67,7 +68,9 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
     <script>
+        let deep_link_create_url = "{{ url('internet-pack-deeplink/create?') }}category=buy_internet&sub_category=";
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
