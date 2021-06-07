@@ -637,6 +637,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    //App MENU  ====================================
+    Route::get('mybl-menu/create', 'CMS\MyblAppMenuController@create');
+    Route::get('mybl-menu/{id}/child-menu/create', 'CMS\MyblAppMenuController@create');
+    Route::resource('mybl-menu', 'CMS\MyblAppMenuController')->only(['update', 'edit', 'store']);
+    Route::get('mybl-menu/{id?}/{child_menu?}', 'CMS\MyblAppMenuController@index');
+    Route::get('mybl-menu-auto-save', 'CMS\MyblAppMenuController@parentMenuSortable');
+    Route::get('mybl-menu/{parentId}/destroy/{id}', 'CMS\MyblAppMenuController@destroy');
 
 });
 
