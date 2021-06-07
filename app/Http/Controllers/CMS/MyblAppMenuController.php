@@ -45,11 +45,9 @@ class MyblAppMenuController extends Controller
      */
     public function index($parent_id = 0)
     {
-        $data = $this->menuService->menuList($parent_id);
-        $menus = $data['menus'];
-        $menu_items = $data['menu_items'];
-//        dd(!empty($menu_items));
-        return view('admin.mybl-menu.index', compact('menus', 'parent_id', 'menu_items'));
+        $menus = $this->menuService->menuList($parent_id);
+        $parentMenu = $this->menuService->findOne($parent_id);
+        return view('admin.mybl-menu.index', compact('menus', 'parent_id', 'parentMenu'));
     }
 
     /**
@@ -59,20 +57,15 @@ class MyblAppMenuController extends Controller
      */
     public function create($parent_id = 0)
     {
-        $this->menuItems[] = ['title_en' => 'Create'];
-//        $menu_id = $parent_id;
-//        while ($menu_id != 0) {
-//            $menu_id = $this->getBreadcrumbInfo($menu_id);
-//        }
-        $menu_items = $this->menuItems;
-        return view('admin.mybl-menu.create', compact('parent_id', 'menu_items'));
+        $parentMenu = $this->menuService->findOne($parent_id);
+        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param MyblAppMenuRequest $request
+     * @return Application|Redirector|RedirectResponse
      */
     public function store(MyblAppMenuRequest $request)
     {
@@ -95,18 +88,12 @@ class MyblAppMenuController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
         $menu = $this->menuService->findOrFail($id);
-        $this->menuItems[] = ['title_en' => $menu->title_en];
-//        $menu_id = $menu->parent_id;
-//        while ($menu_id != 0) {
-//            $menu_id = $this->getBreadcrumbInfo($menu_id);
-//        }
-        $menu_items = $this->menuItems;
-        return view('admin.mybl-menu.edit', compact('menu', 'menu_items'));
+        return view('admin.mybl-menu.edit', compact('menu'));
     }
 
     /**
@@ -132,7 +119,7 @@ class MyblAppMenuController extends Controller
      */
     public function destroy($parentId, $id)
     {
-        $response = $this->menuService->deleteMenu($id);
+        $this->menuService->deleteMenu($id);
         return ($parentId == 0) ? url('mybl-menu') : url("mybl-menu/" . $parentId . "/child-menu");
     }
 }

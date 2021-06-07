@@ -32,34 +32,13 @@ class MyblAppMenuService
         $this->setActionRepository($menuRepository);
     }
 
-    public function getBreadcrumbInfo($parent_id)
-    {
-//        dd($parent_id);
-        $temp = $this->menuRepository->findOneByProperties(['id' => $parent_id],
-            ['id', 'title_en', 'parent_id']
-        )->toArray();
-        $this->menuItems[] = $temp;
-//        dd($this->menuItems);
-        return $temp['parent_id'];
-    }
-
     /**
      * @param $parent_id
      * @return mixed
      */
     public function menuList($parent_id)
     {
-        $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
-        $menu = $this->menuRepository->findAll(null, null, $orderBy);
-        while ($parent_id != 0) {
-            $parentMenu = $this->getBreadcrumbInfo($parent_id);
-//            dd($parentMenu);
-        }
-        $menu_items = $parentMenu ?? [];
-        return [
-            'menus' => $menu,
-            'menu_items' => $menu_items
-        ];
+        return $this->menuRepository->allMenus($parent_id);
     }
 
     /**
@@ -116,6 +95,12 @@ class MyblAppMenuService
         $menu = $this->findOne($id);
         if (!empty($menu->icon)) {
             unlink($menu->icon);
+        }
+        $subMenus = $this->menuRepository->allMenus($menu->id);
+        if (!$subMenus->isEmpty()) {
+            foreach ($subMenus as $subMenu) {
+                $subMenu->delete();
+            }
         }
         $menu->delete();
         return [

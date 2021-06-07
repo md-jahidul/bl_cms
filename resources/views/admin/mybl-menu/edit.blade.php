@@ -2,15 +2,13 @@
 @section('title', 'Menu Edit')
 @section('card_name', 'Menu Edit')
 @section('breadcrumb')
-    @php
-        $liHtml = '<li class="breadcrumb-item"><a href="'. url('mybl-menu') .'">Menu</a></li>';
-        for($i = count($menu_items) - 1; $i >= 0; $i--){
-            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['title_en']  . '</li>' :
-                                  '<li class="breadcrumb-item"><a href="'. url("mybl-menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['title_en']  . '</a></li>';
-        }
-    @endphp
-
-    {!! $liHtml !!}
+    <li class="breadcrumb-item active"><a href="{{ url('mybl-menu') }}">Menu</a></li>
+    @if($menu->parent_id != 0)
+        <li class="breadcrumb-item active">
+            <a href="{{ ($menu->parent_id == 0) ? url('mybl-menu') : url("mybl-menu/$menu->parent_id/child-menu") }}">{{ $menu->title_en }}</a>
+        </li>
+    @endif
+    <li class="breadcrumb-item active">Edit</li>
 @endsection
 @section('action')
     <a href="{{ $menu->parent_id == 0 ? url('mybl-menu') : url("mybl-menu/$menu->parent_id/child-menu") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -44,14 +42,18 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-10 {{ $errors->has('icon') ? ' error' : '' }}">
-                                        <label for="alt_text">Icon</label>
-                                        <div class="custom-file">
-                                            <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
-                                                   data-default-file="{{ asset($menu->icon) }}">
+
+                                    @if($menu->parent_id != 0)
+                                        <div class="form-group col-md-10 {{ $errors->has('icon') ? ' error' : '' }}">
+                                            <label for="alt_text">Icon</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
+                                                       data-default-file="{{ asset($menu->icon) }}">
+                                            </div>
+                                            {{-- <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
                                         </div>
-                                        {{-- <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-                                    </div>
+                                    @endif
+
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">Status:</label>
