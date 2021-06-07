@@ -19,7 +19,6 @@ class CreateMyblAppMenusTable extends Migration
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->string('icon')->nullable();
-            $table->string('redirect_url')->nullable();
             $table->integer('display_order')->nullable();
             $table->string('key')->nullable();
             $table->tinyInteger('status')->nullable();
