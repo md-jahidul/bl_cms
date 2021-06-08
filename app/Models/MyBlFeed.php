@@ -21,6 +21,7 @@ class MyBlFeed extends Model
         'order',
         'status',
         'availability',
+        'show_in_home'
     ];
 
     protected $dates = ['start_date', 'end_date'];

@@ -103,7 +103,9 @@ class FeedService
         if (isset($data['file'])) {
             $data['file'] = 'storage/' . $data['file']->store('file');
         }
+        $data['show_in_home'] = isset($data['show_in_home']);
 
+//        dd($data);
         $this->feedRepository->save($data);
         return new Response("Feed has been successfully created");
     }
@@ -124,7 +126,7 @@ class FeedService
         if (isset($data['file'])) {
             $data['file'] = 'storage/' . $data['file']->store('file');
         }
-
+        $data['show_in_home'] = isset($data['show_in_home']);
         $feed = $this->feedRepository->findOne($id);
         $this->feedRepository->update($feed, $data);
         return new Response("Feed has been successfully updated");
