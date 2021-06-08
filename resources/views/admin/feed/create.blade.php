@@ -128,19 +128,6 @@
                                             <small id="massage"></small>
                                         </div>
                                     </div>
-                                    {{--<div id="file-input" class="form-group col-md-6 mb-2">
-                                        <div class="form-group">
-                                            <label for="file">Upload File :</label>
-                                            <input type="file"
-                                                   id="file"
-                                                   name="file"
-                                                   data-allowed-file-extensions="pdf doc docx xlx"
-                                                   class="dropify_file"/>
-                                            <div class="help-block"></div>
-                                            <small class="text-danger"> @error('file') {{ $message }} @enderror </small>
-                                            <small id="massage"></small>
-                                        </div>
-                                    </div>--}}
 
                                     <div id="post-input" class="form-group col-md-6 mb-2">
                                         <label for="post_url">Video Url: </label>
@@ -162,34 +149,13 @@
                                         <div class="help-block"></div>
                                     </div>
 
-                                    {{--<div class="form-group col-md-6 mb-2">
-                                        <label for="availability_input">Availability: </label>
-                                        <div
-                                            class="form-group {{ $errors->has('availability') ? ' error' : '' }}">
-
-                                            @foreach(\App\Enums\FeedAvailability::toArray() as $key => $value)
-                                                <label style="margin-right: 10px">
-                                                    @if($key === 'GUEST')
-                                                        <input minchecked="1"
-                                                               data-validation-minchecked-message="Please choose minimum one"
-                                                               type="checkbox" name="availability[]"
-                                                               value="{{$value}}" class="custom-input">
-                                                        {{$key}}
-                                                    @else
-                                                        <input type="checkbox" name="availability[]"
-                                                               value="{{$value}}" class="custom-input">
-                                                        {{$key}}
-                                                    @endif
-                                                </label>
-                                            @endforeach
-
-                                            @if ($errors->has('availability'))
-                                                <div
-                                                    class="help-block">  {{ $errors->first('availability') }}</div>
-                                            @endif
-                                            <div class="help-block"></div>
+                                    <div class="col-md-6">
+                                        <div class="form-group" id="show_in_home">
+                                            <label for="trending"></label><br>
+                                            <input type="checkbox" name="show_in_home" value="1" id="trending">
+                                            <label for="trending" class="ml-1"> <strong>Show In Home</strong></label><br>
                                         </div>
-                                    </div>--}}
+                                    </div>
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input">Status: </label>
@@ -302,7 +268,7 @@
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['view', ['fullscreen', 'codeview']]
                     ],
-                    height:200
+                    height:100
                 });
             });
         });
