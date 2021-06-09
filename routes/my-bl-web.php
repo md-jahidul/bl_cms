@@ -637,7 +637,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    //App Manage  ====================================
+    Route::resource('manage-category', 'CMS\MyblManageController');
 
+
+    Route::get('mybl-manage/create', 'CMS\MyblManageController@create');
+    Route::get('mybl-manage/{id}/child-menu/create', 'CMS\MyblManageController@create');
+    Route::resource('mybl-manage', 'CMS\MyblManageController')->only(['update', 'edit', 'store']);
+    Route::get('mybl-manage/{id?}/{child_menu?}', 'CMS\MyblManageController@index');
+    Route::get('mybl-manage-auto-save', 'CMS\MyblManageController@parentMenuSortable');
+    Route::get('mybl-manage/{parentId}/destroy/{id}', 'CMS\MyblManageController@destroy');
 });
 
 // 4G Map View Route
