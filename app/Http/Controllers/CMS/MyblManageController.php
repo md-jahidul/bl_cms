@@ -58,18 +58,18 @@ class MyblManageController extends Controller
      */
     public function store(MyblManageRequest $request)
     {
-        $response = $this->menuService->storeCategory($request->all());
+        $response = $this->manageService->storeCategory($request->all());
         Session::flash('success', $response->getContent());
         return redirect(route('manage-category.index'));
     }
 
     /**
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
-    public function parentMenuSortable(Request $request)
+    public function categorySortable(Request $request)
     {
-        return $this->menuService->tableSort($request);
+        return $this->manageService->tableSort($request);
     }
 
     /**
@@ -80,34 +80,33 @@ class MyblManageController extends Controller
      */
     public function edit($id)
     {
-        $menu = $this->menuService->findOrFail($id);
-        return view('admin.mybl-menu.edit', compact('menu'));
+        $category = $this->manageService->findOrFail($id);
+        return view('admin.mybl-manage.categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param MyblAppMenuRequest $request
+     * @param MyblManageRequest $request
      * @param int $id
-     * @return Application|Redirector|RedirectResponse
+     * @return Application|Redirector
      */
-    public function update(MyblAppMenuRequest $request, $id)
+    public function update(MyblManageRequest $request, $id)
     {
-        $parentId =  $request->parent_id;
-        $response = $this->menuService->updateMenu($request->all(), $id);
+        $response = $this->manageService->updateCategory($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(($parentId != 0) ? "mybl-menu/$parentId/child-menu" : 'mybl-menu');
+        return redirect(route('manage-category.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return Application|string|UrlGenerator
+     * @return Application|string
      */
-    public function destroy($parentId, $id)
+    public function destroy($id)
     {
-        $this->menuService->deleteMenu($id);
-        return ($parentId == 0) ? url('mybl-menu') : url("mybl-menu/" . $parentId . "/child-menu");
+        $this->manageService->deleteCategory($id);
+        return url(route('manage-category.index'));
     }
 }

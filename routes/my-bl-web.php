@@ -638,8 +638,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('product-activities.details');
 
     //App Manage  ====================================
-    Route::resource('manage-category', 'CMS\MyblManageController');
-
+    Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
+    Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
+        ->name('manage-category.destroy');
+    Route::get('manage-category/sort-auto-save', 'CMS\MyblManageController@categorySortable');
 
     Route::get('mybl-manage/create', 'CMS\MyblManageController@create');
     Route::get('mybl-manage/{id}/child-menu/create', 'CMS\MyblManageController@create');

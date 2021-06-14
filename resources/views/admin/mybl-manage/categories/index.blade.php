@@ -42,7 +42,7 @@
                                     </td>
                                     <td class="action" width="12%">
                                         <a href="{{ route('manage-category.edit', $data->id) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ route('manage-category.store') }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete the user">
+                                        <a href="#" remove="{{ route('manage-category.destroy', $data->id) }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete the user">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
@@ -71,7 +71,7 @@
 
 @push('page-js')
     <script>
-        var auto_save_url = "{{ url('mybl-menu-auto-save') }}";
+        var auto_save_url = "{{ url('manage-category/sort-auto-save') }}";
     </script>
 @endpush
 

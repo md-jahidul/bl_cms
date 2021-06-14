@@ -23,7 +23,7 @@ class MyblManageRepository extends BaseRepository
             ->get();
     }
 
-    public function menuTableSort($request)
+    public function manageTableSort($request)
     {
         $positions = $request->position;
         foreach ($positions as $position) {

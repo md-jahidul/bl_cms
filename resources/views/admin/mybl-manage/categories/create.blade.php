@@ -23,7 +23,7 @@
                         <form role="form" action="{{ route('manage-category.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="offset-2">
-                                    <div class="form-group col-md-10">
+                                    <div class="form-group col-md-10 {{ $errors->has('type') ? ' error' : '' }}">
                                         <label for="title" class="required">Choose Category Type</label><hr class="mt-0">
                                         <div class="row skin skin-square">
                                             <div class="col-md-4 col-sm-12">
@@ -39,6 +39,10 @@
                                                 <label for="service">Service</label>
                                             </div>
                                         </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('type'))
+                                            <div class="help-block">  {{ $errors->first('type') }}</div>
+                                        @endif
                                     </div>
 
                                     <div class="form-group col-md-10 {{ $errors->has('title_en') ? ' error' : '' }}">

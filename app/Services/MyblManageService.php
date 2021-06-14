@@ -7,6 +7,7 @@ use App\Repositories\MyblAppMenuRepository;
 use App\Repositories\MyblManageRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class MyblManageService
@@ -15,32 +16,28 @@ class MyblManageService
     use FileTrait;
 
     /**
-     * @var $menuRepository
+     * @var MyblManageRepository
      */
-    protected $menuRepository;
-    /**
-     * @var array
-     */
-    private $menuItems;
+    private $manageRepository;
 
     /**
      * MenuService constructor.
-     * @param MyblManageRepository $menuRepository
+     * @param MyblManageRepository $manageRepository
      */
-    public function __construct(MyblManageRepository $menuRepository)
+    public function __construct(MyblManageRepository $manageRepository)
     {
-        $this->menuRepository = $menuRepository;
-        $this->setActionRepository($menuRepository);
+        $this->manageRepository = $manageRepository;
+        $this->setActionRepository($manageRepository);
     }
 
-    /**
-     * @param $parent_id
-     * @return mixed
-     */
-    public function menuList($parent_id)
-    {
-        return $this->menuRepository->allMenus($parent_id);
-    }
+//    /**
+//     * @param $parent_id
+//     * @return mixed
+//     */
+//    public function menuList($parent_id)
+//    {
+//        return $this->manageRepository->allMenus($parent_id);
+//    }
 
     /**
      * @param $data
@@ -48,6 +45,7 @@ class MyblManageService
      */
     public function storeCategory($data)
     {
+        $data['display_order'] = $this->findAll()->count() + 1;
         $this->save($data);
         return new Response('Category added successfully!');
     }
@@ -58,26 +56,20 @@ class MyblManageService
      */
     public function tableSort($data)
     {
-        $this->menuRepository->menuTableSort($data);
-        return new Response('Footer menu added successfully');
+        $this->manageRepository->manageTableSort($data);
+        return new Response('Sorted successfully');
     }
 
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
-    public function updateMenu($data, $id)
+    public function updateCategory($data, $id)
     {
-        $menu = $this->findOne($id);
-        if (request()->hasFile('icon')) {
-            $data['icon'] = 'storage/' . $data['icon']->store('menu_icon');
-            if (!empty($menu->icon)) {
-                unlink($menu->icon);
-            }
-        }
-        $menu->update($data);
-        return Response('Menu updated successfully');
+        $category = $this->findOne($id);
+        $category->update($data);
+        return Response('Manage category updated successfully');
     }
 
     /**
@@ -85,21 +77,12 @@ class MyblManageService
      * @return array
      * @throws \Exception
      */
-    public function deleteMenu($id)
+    public function deleteCategory($id)
     {
-        $menu = $this->findOne($id);
-        if (!empty($menu->icon)) {
-            unlink($menu->icon);
-        }
-        $subMenus = $this->menuRepository->allMenus($menu->id);
-        if (!$subMenus->isEmpty()) {
-            foreach ($subMenus as $subMenu) {
-                $subMenu->delete();
-            }
-        }
-        $menu->delete();
+        $category = $this->findOne($id);
+        $category->delete();
         return [
-            'message' => 'Menu delete successfully',
+            'message' => 'Category deleted successfully',
         ];
     }
 }
