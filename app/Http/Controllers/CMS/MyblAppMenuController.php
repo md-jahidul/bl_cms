@@ -56,11 +56,11 @@ class MyblAppMenuController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create($parent_id = 0)
-    {
-        $parentMenu = $this->menuService->findOne($parent_id);
-        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu'));
-    }
+//    public function create($parent_id = 0)
+//    {
+//        $parentMenu = $this->menuService->findOne($parent_id);
+//        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu'));
+//    }
 
     /**
      * Store a newly created resource in storage.
@@ -118,9 +118,9 @@ class MyblAppMenuController extends Controller
      * @param  int  $id
      * @return Application|string|UrlGenerator
      */
-    public function destroy($parentId, $id)
-    {
-        $this->menuService->deleteMenu($id);
-        return ($parentId == 0) ? url('mybl-menu') : url("mybl-menu/" . $parentId . "/child-menu");
-    }
+//    public function destroy($parentId, $id)
+//    {
+//        $this->menuService->deleteMenu($id);
+//        return ($parentId == 0) ? url('mybl-menu') : url("mybl-menu/" . $parentId . "/child-menu");
+//    }
 }
