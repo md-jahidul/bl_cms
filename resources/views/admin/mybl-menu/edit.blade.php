@@ -70,7 +70,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="la la-refresh"></i> Update</button>
                                 </div>
-{{--                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">--}}
+                                <input type="hidden" name="parent_id" value="{{ $menu->parent_id }}">
                             </div>
                         </form>
                     </div>
