@@ -46,6 +46,7 @@ class MyblAppMenuController extends Controller
     public function index($parent_id = 0)
     {
         $menus = $this->menuService->menuList($parent_id);
+//        dd($menus->count() );
         $parentMenu = $this->menuService->findOne($parent_id);
         return view('admin.mybl-menu.index', compact('menus', 'parent_id', 'parentMenu'));
     }

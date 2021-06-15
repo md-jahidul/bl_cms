@@ -8,16 +8,18 @@
     @endif
 @endsection
 @section('action')
-    <a href="{{ $parent_id == 0 ? url('mybl-menu/create') : url("mybl-menu/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Menu
-    </a>
+{{--    @if($menus->count() != 4)--}}
+{{--        <a href="{{ $parent_id == 0 ? url('mybl-menu/create') : url("mybl-menu/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--            Add Menu--}}
+{{--        </a>--}}
+{{--    @endif--}}
 @endsection
 @section('content')
     <section>
         <div class="card col-sm-12">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title">{{ $parent_id != 0 ? "Sub Categories" : 'Categories' }} List</h4>
+                    <h4 class="menu-title mb-2">{{ $parent_id != 0 ? "Sub Categories" : 'Categories' }} List  ( <small class="text-info">Draggable and auto save items </small>)</h4>
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
@@ -36,9 +38,9 @@
                                     <td>{{ $menu->title_en  }} {!! $menu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td class="action" width="5%">
                                         <a href="{{ url('mybl-menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("mybl-menu/$parent_id/destroy/$menu->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
-                                            <i class="la la-trash"></i>
-                                        </a>
+{{--                                        <a href="#" remove="{{ url("mybl-menu/$parent_id/destroy/$menu->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">--}}
+{{--                                            <i class="la la-trash"></i>--}}
+{{--                                        </a>--}}
                                     </td>
                                     @if($parent_id == 0)
                                        <td class="text-center" width="10%">
