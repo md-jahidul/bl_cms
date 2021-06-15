@@ -36,8 +36,20 @@ class MyblManageController extends Controller
     public function index()
     {
         $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
-        $manageCategories = $this->manageService->findAll(null, null, $orderBy);
+        $manageCategories = $this->manageService->findAll(null, ['manageItems'], $orderBy);
         return view('admin.mybl-manage.categories.index', compact('manageCategories'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function manageItemsList($parent_id)
+    {
+        $manageItems = $this->manageService->itemList($parent_id);
+//        dd($manageItems);
+        return view('admin.mybl-manage.index', compact('manageItems', 'parent_id'));
     }
 
     /**
@@ -46,6 +58,16 @@ class MyblManageController extends Controller
      * @return Application|Factory|View
      */
     public function create()
+    {
+        return view('admin.mybl-manage.categories.create');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function createItem()
     {
         return view('admin.mybl-manage.categories.create');
     }

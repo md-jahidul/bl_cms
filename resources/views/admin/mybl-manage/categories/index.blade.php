@@ -32,13 +32,15 @@
                         <tbody id="sortable">
                         @if(count($manageCategories) == !0)
                             @foreach($manageCategories as $data)
+{{--                                {{ dd($data->manageItems->count()) }}--}}
 {{--                                @php($childNumber = count($data->children))--}}
                                 <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
                                     <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td class="pt-1">{{ $data->title_en  }} {!! $data->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td class="pt-1">{{ $data->type  }}</td>
                                     <td class="text-center" width="10%">
-                                        <a href="{{--{{ url("mybl-menu/$data->id/child-menu") }}--}}" class="btn btn-outline-success">Child Menus <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
+                                        <a href="{{ url("mybl-manage-items/$data->id") }}" class="btn btn-outline-success">Child Menus
+                                            <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{ $data->manageItems->count() }}</span></a>
                                     </td>
                                     <td class="action" width="12%">
                                         <a href="{{ route('manage-category.edit', $data->id) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
