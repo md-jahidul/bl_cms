@@ -16,10 +16,12 @@ class CreateMyblManageItemsTable extends Migration
         Schema::create('mybl_manage_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('manage_categories_id');
+            $table->string('type')->nullable();
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->string('component_identifier')->nullable();
             $table->string('image_url')->nullable();
+            $table->boolean('show_for_guest')->default(0);
             $table->json('other_info')->nullable();
             $table->integer('display_order')->nullable();
             $table->tinyInteger('status')->nullable();

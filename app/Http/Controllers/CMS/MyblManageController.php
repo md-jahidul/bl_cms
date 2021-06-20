@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Requests\MyblManageRequest;
+use App\Repositories\MyblManageItemRepository;
 use App\Services\MyblManageService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -18,14 +19,20 @@ class MyblManageController extends Controller
      * @var MyblManageService
      */
     private $manageService;
+    /**
+     * @var MyblManageItemRepository
+     */
+    private $manageItemRepository;
 
     /**
      * MyblAppMenuController constructor.
      */
     public function __construct(
-        MyblManageService $manageService
+        MyblManageService $manageService,
+        MyblManageItemRepository $manageItemRepository
     ) {
         $this->manageService = $manageService;
+        $this->manageItemRepository = $manageItemRepository;
     }
 
     /**
@@ -48,8 +55,8 @@ class MyblManageController extends Controller
     public function manageItemsList($parent_id)
     {
         $manageItems = $this->manageService->itemList($parent_id);
-//        dd($manageItems);
-        return view('admin.mybl-manage.index', compact('manageItems', 'parent_id'));
+        $parentMenu = $this->manageService->findOne($parent_id);
+        return view('admin.mybl-manage.index', compact('manageItems', 'parentMenu'));
     }
 
     /**
@@ -67,9 +74,10 @@ class MyblManageController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function createItem()
+    public function createItem($parent_id)
     {
-        return view('admin.mybl-manage.categories.create');
+        $parentMenu = $this->manageService->findOne($parent_id);
+        return view('admin.mybl-manage.create', compact('parent_id', 'parentMenu'));
     }
 
     /**
@@ -86,12 +94,34 @@ class MyblManageController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param MyblManageRequest $request
+     * @return Application|Redirector
+     */
+    public function storeItem(Request $request, $parent_id)
+    {
+        $response = $this->manageService->storeItem($request->all());
+        Session::flash('success', $response->getContent());
+        return redirect(route("mybl-manage-items.index", $parent_id));
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function categorySortable(Request $request)
     {
         return $this->manageService->tableSort($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function itemSortable(Request $request)
+    {
+        return $this->manageService->itemTableSort($request);
     }
 
     /**
@@ -104,6 +134,20 @@ class MyblManageController extends Controller
     {
         $category = $this->manageService->findOrFail($id);
         return view('admin.mybl-manage.categories.edit', compact('category'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Application|Factory|View
+     */
+    public function editItem($parent_id, $id)
+    {
+        $manageCategory = $this->manageService->findOne($parent_id);
+        $item = $this->manageItemRepository->findOrFail($id);
+//        dd($item);
+        return view('admin.mybl-manage.edit', compact('item', 'manageCategory'));
     }
 
     /**
@@ -121,6 +165,20 @@ class MyblManageController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param MyblManageRequest $request
+     * @param int $id
+     * @return Application|Redirector
+     */
+    public function updateItem(Request $request, $parent_id, $id)
+    {
+        $response = $this->manageService->updateItem($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect(route("mybl-manage-items.index", $parent_id));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -130,5 +188,16 @@ class MyblManageController extends Controller
     {
         $this->manageService->deleteCategory($id);
         return url(route('manage-category.index'));
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Application|string
+     */
+    public function destroyItem($parent_id, $id)
+    {
+        $this->manageService->deleteItem($id);
+        return url(route("mybl-manage-items.index", $parent_id));
     }
 }

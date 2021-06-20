@@ -36,10 +36,10 @@
 {{--                                @php($childNumber = count($data->children))--}}
                                 <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
                                     <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
-                                    <td class="pt-1">{{ $data->title_en  }} {!! $data->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                    <td class="pt-1">{{ $data->title_en  }} {!! $data->status == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                     <td class="pt-1">{{ $data->type  }}</td>
                                     <td class="text-center" width="10%">
-                                        <a href="{{ url("mybl-manage-items/$data->id") }}" class="btn btn-outline-success">Child Menus
+                                        <a href="{{ url("mybl-manage-items/$data->id") }}" class="btn btn-outline-dark">Item List
                                             <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{ $data->manageItems->count() }}</span></a>
                                     </td>
                                     <td class="action" width="12%">

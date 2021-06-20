@@ -10,6 +10,6 @@ class MyblManageCategory extends Model
 
     public function manageItems()
     {
-        return $this->hasMany(MyblManageCategory::class, 'id', 'manage_category_id');
+        return $this->hasMany(MyblManageItem::class, 'manage_categories_id', 'id');
     }
 }

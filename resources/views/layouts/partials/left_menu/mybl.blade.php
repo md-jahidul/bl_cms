@@ -499,8 +499,8 @@
             </li>
         </ul>
 
-    <li class="{{ is_active_url('mybl-manage') }}">
-        <a class="menu-item" href="{{ url('mybl-manage') }}">
+    <li class="{{ is_active_url('manage-category') }}">
+        <a class="menu-item" href="{{ route('manage-category.index') }}">
             <i class="la la-medium"></i>Manage</a>
     </li>
 @endif

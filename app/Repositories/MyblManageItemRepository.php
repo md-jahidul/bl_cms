@@ -15,7 +15,7 @@ class MyblManageItemRepository extends BaseRepository
 {
     public $modelName = MyblManageItem::class;
 
-    public function manageTableSort($request)
+    public function itemTableSort($request)
     {
         $positions = $request->position;
         foreach ($positions as $position) {

@@ -15,14 +15,6 @@ class MyblManageRepository extends BaseRepository
 {
     public $modelName = MyblManageCategory::class;
 
-    public function allMenus($parent_id)
-    {
-        return $this->model->where('parent_id', $parent_id)
-            ->select('id', 'title_en', 'parent_id', 'icon', 'status')
-            ->orderBy('display_order', 'asc')
-            ->get();
-    }
-
     public function manageTableSort($request)
     {
         $positions = $request->position;
