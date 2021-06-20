@@ -107,6 +107,9 @@ class Helper
             "USAGE_HISTORY"           => "Usage History",
             "USSD_CODE_LIST"          => "View USSD code",
             "VOICE_BUNDLE"            => "Voice Bundles",
+
+            "4G_MAP"                  => "4G Map",
+            "MIGRATE_PLAN"            => "Migrate Plan",
         ];
     }
 
