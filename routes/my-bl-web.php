@@ -637,7 +637,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
-
+    // Home Component
+    Route::get('home-components', 'CMS/MyblHomeComponent@index');
 });
 
 // 4G Map View Route
