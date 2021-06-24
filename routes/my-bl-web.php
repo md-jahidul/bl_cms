@@ -281,6 +281,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
     Route::get('mybl/core-product/create', 'CMS\MyblProductEntryController@create')->name('mybl.product.create');
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
+    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
 
     Route::post(
         'mybl/core-product/download',

@@ -5,13 +5,38 @@
     <li class="breadcrumb-item active">MyBl Product Entry Panel</li>
 @endsection
 @section('action')
-    <form method="post" action="{{route('mybl.product.download')}}">
-        {{csrf_field()}}
-        <a href="{{route('mybl.product.create')}}" class="btn btn-info">
-            Create Product
-        </a>
-        <button type="submit" class="btn btn-info btn-sm"><i class="la la-download"></i>Export Current Products</button>
-    </form>
+    <table>
+        <tr>
+            <!-- Getting the redis reset key available for 12:00 AM to 3:59 AM -->
+            @if(in_array(\Carbon\Carbon::now()->format('H'), ["00", "01", "02", "03"]))
+                <td>
+                    <form method="post" action="{{route('mybl.product.redis')}}"
+                          onsubmit="return confirm('WARNING!!! This will reset the redis keys for available products. Do this only if you are aware of the impact. Sure to continue?')">
+                        {{csrf_field()}}
+                        <button class="btn btn-danger" type="submit">
+                            <i class="la la-adjust"></i>
+                            Reset Redis Key
+                        </button>
+                    </form>
+                </td>
+                <td> |</td>
+            @endif
+            <td>
+                <form method="post" action="{{route('mybl.product.download')}}">
+                    {{csrf_field()}}
+
+                    <a href="{{route('mybl.product.create')}}" class="btn btn-info">
+                        <i class="la la-save"></i>
+                        Create Product
+                    </a>
+                    <button type="submit" class="btn btn-info"><i class="la la-download"></i>Export Current
+                        Products
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
 @endsection
 @section('content')
     <section>
@@ -68,6 +93,9 @@
 
     <script>
         $(function () {
+
+            $
+
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Excel File to upload',
@@ -130,6 +158,7 @@
 
             });
         });
+
 
     </script>
 @endpush
