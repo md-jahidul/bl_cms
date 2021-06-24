@@ -8,6 +8,7 @@ use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -138,7 +139,11 @@ class MyblProductEntryController extends Controller
             $this->service->mapMyBlProduct($path);
 
             // reset product keys from redis
-            $this->service->resetProductRedisKeys();
+            /**
+             * Commenting reset redis key code according to BL requirement on 24 June 2021
+             */
+            //$this->service->resetProductRedisKeys();
+            $this->service->syncSearch();
 
             $response = [
                 'success' => 'SUCCESS'
@@ -180,5 +185,12 @@ class MyblProductEntryController extends Controller
     public function downloadMyblProducts()
     {
         return $this->service->downloadMyblProducts();
+    }
+
+    public function resetRedisProductKey()
+    {
+        //dd(in_array(\Carbon\Carbon::now()->format('H'), [0, 1, 2, 3]));
+        $this->service->resetProductRedisKeys();
+        return redirect()->back()->with('success', 'Redis key reset is successful!');
     }
 }
