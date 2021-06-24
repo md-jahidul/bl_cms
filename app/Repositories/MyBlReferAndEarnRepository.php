@@ -20,7 +20,7 @@ class MyBlReferAndEarnRepository extends BaseRepository
     public function referAndEarnData($request = null, $campaignId = null)
     {
         $data = $this->model
-            ->select('id', 'campaign_title')
+            ->select('id', 'campaign_title', 'referrer_product_code', 'referee_product_code')
             ->with(['referrers' => function ($q) use ($request) {
                 if (isset($request->date_range)) {
                     $date = explode(' - ', $request->date_range);
@@ -31,15 +31,12 @@ class MyBlReferAndEarnRepository extends BaseRepository
                 if (isset($request->msisdn)) {
                     $q->where('msisdn', $request->msisdn);
                 }
-
                 $q->select('id', 'refer_and_earn_id', 'msisdn', 'referral_code', 'created_at');
                 $q->withCount('referees');
                 $q->with(['referees' => function ($referees) {
                     $referees->select('id', 'referrer_id', 'status');
                 }]);
             }]);
-//            ->withCount('referrers');
-
 
         if (isset($campaignId)) {
             $data = $data->where('id', $campaignId);
@@ -47,10 +44,6 @@ class MyBlReferAndEarnRepository extends BaseRepository
         } else {
             $data = $data->get();
         }
-
-//        dd($data);
-
-//        dd($request->all());
 
         return $data;
     }
@@ -64,9 +57,11 @@ class MyBlReferAndEarnRepository extends BaseRepository
         $builder = new Referee();
 
         $builder = $builder->where('referrer_id', $id);
+        $builder = $builder->with('referral');
 
         $all_items_count = $builder->count();
         $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+
         return [
             'data' => $data,
             'draw' => $draw,

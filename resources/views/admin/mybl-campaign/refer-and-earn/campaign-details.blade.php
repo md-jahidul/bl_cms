@@ -159,26 +159,30 @@
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width="5%">SL</th>
+                            <th width="1%">SL</th>
                             <th width="10%">Referrals MSISDN</th>
                             <th width="12%">Referrals Code</th>
-                            <th width="10%">Date</th>
+
+                            <th width="12%">Total Invited</th>
+                            <th width="12%">Total Successful Refer</th>
+                            <th width="12%">Total Claim</th>
+
                             <th width="10%">Details</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($campaignDetails->referrers as $detail)
+                        @foreach ($campaignDetails->referrers_info as $detail)
                             <tr>
-                                <td width="5%">{{ $loop->iteration }}</td>
-                                <td width="10%">{{ $detail->msisdn }}</td>
-                                <td width="10%">{{ $detail->referral_code }}</td>
-                                <td width="15%">
-                                    {{$detail->created_at}}
-{{--                                    {{\Carbon\Carbon::parse($detail->created_at)->format('d-m-Y h:i A')}}--}}
-                                </td>
-                                <td width="3%">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $detail['msisdn'] }}</td>
+                                <td>{{ $detail['referral_code'] }}</td>
+
+                                <td>{{ $detail['total_invited'] }}</td>
+                                <td>{{ $detail['total_redeemed'] }}</td>
+                                <td>{{ $detail['total_claimed'] }}</td>
+                                <td>
                                     <a data-toggle="modal" data-target="#large"
-                                       data-id="{{ $detail->id }}"
+                                       data-id="{{ $detail['id'] }}"
                                        href="{{--{{ route('refer-and-earn.campaign.details', $data->id) }}--}}"
                                        role="button" class="btn-sm btn-bitbucket border-1 referee-details"> Referees List</a>
                                 </td>
@@ -194,7 +198,7 @@
 
 
     {{--Modal Start--}}
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-lg-12 col-md-6 col-sm-12">
             <!-- Modal -->
             <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
                  aria-hidden="true">
@@ -206,16 +210,22 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" style="overflow-x:auto;">
 
-                            <table class="table table-striped table-bordered"
+                            <table class="table table-striped table-bordered dataTable"
                                    role="grid" aria-describedby="Example1_info" id="referee-info">
                                 <thead>
                                 <tr>
                                     <th width="5%">SL</th>
                                     <th width="10%">Referees MSISDN</th>
-                                    <th width="12%">Referrals Status</th>
-                                    <th width="10%">Date</th>
+                                    <th width="10%">Referrals Code</th>
+                                    <th width="10%">Referees MSISDN</th>
+                                    <th width="12%">Status</th>
+                                    <th width="10%">Referees Product Code</th>
+                                    <th width="10%">Referees Reward Vol.</th>
+                                    <th width="10%">Referrals Product Code</th>
+                                    <th width="10%">Referrals Reward Vol.</th>
+                                    <th width="10%">Invited Date & Time</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -230,7 +240,6 @@
                     </div>
                 </div>
             </div>
-{{--        </div>--}}
         </div>
     {{--Modal End--}}
 
@@ -252,6 +261,9 @@
                 flex: 0 0 25%;
                 max-width: 20% !important;
             }
+        }
+        .modal-lg {
+            max-width: 95%; !important;
         }
     </style>
 @endpush
@@ -308,14 +320,11 @@
                     serverSide: true,
                     autoWidth: false,
                     pageLength: 10,
+                    ordering: false,
                     lengthChange: true,
                     ajax: {
                         url: '{{ url('mybl-refer-and-earn/referee-details') }}' + "/" + refererId,
-                        data: {
-                            // applicant_name: function () {
-                            //     return $('input[name="applicant_name"]').val();
-                            // },
-                        }
+                        data: {}
                     },
                     columns: [
                         {
@@ -323,6 +332,20 @@
                             width: "2%",
                             render: function () {
                                 return null;
+                            }
+                        },
+                        {
+                            name: 'referee_msisdn',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.referral.msisdn;
+                            }
+                        },
+                        {
+                            name: 'referee_msisdn',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.referral.referral_code;
                             }
                         },
                         {
@@ -348,6 +371,55 @@
                                 return statusData;
                             }
                         },
+
+                        {
+                            name: 'referee_product_code',
+                            width: "15%",
+                            render: function (data, type, row) {
+
+                                let dataInfo = "";
+                                if (row.status === 'redeemed' || row.status === 'claimed') {
+                                    dataInfo += "{{ $campaignDetails->referee_product_code }}"
+                                }
+                                return dataInfo;
+                            }
+                        },
+                        {
+                            name: 'referee_reward_vol',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                let dataInfo = "";
+                                if (row.status === 'redeemed' || row.status === 'claimed') {
+                                    dataInfo += "{{ $campaignDetails->referee_data }}"
+                                }
+                                return dataInfo;
+                            }
+                        },
+                        {
+                            name: 'referrer_product_code',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                let dataInfo = "";
+                                if (row.status === 'claimed') {
+                                    dataInfo += "{{ $campaignDetails->referrer_product_code }}";
+                                }
+                                return dataInfo;
+                            }
+                        },
+
+                        {
+                            name: 'referrer_reward_vol',
+                            width: "15%",
+                            render: function (data, type, row) {
+
+                                let dataInfo = "";
+                                if (row.status === 'claimed') {
+                                    dataInfo += "{{ $campaignDetails->referrer_data }}";
+                                }
+                                return dataInfo;
+                            }
+                        },
+
                         {
                             name: 'created_at',
                             width: "10%",
@@ -366,7 +438,6 @@
                     $("#referee-info").dataTable().fnDestroy();
                 })
             })
-
         });
     </script>
 @endpush
