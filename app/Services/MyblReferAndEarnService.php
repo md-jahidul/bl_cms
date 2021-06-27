@@ -88,11 +88,11 @@ class MyblReferAndEarnService
         return Response('Refer and earn campaign has been successfully deleted');
     }
 
-    public function campaignStatus($referAndEarn, $status)
+    public function campaignStatus($referAndEarn, $column, $colValue)
     {
-        return collect($referAndEarn->referrers)->sum(function ($data) use ($status) {
-            return $data->referees->sum(function ($value) use ($status) {
-                if ($value->status == $status) {
+        return collect($referAndEarn->referrers)->sum(function ($data) use ($column, $colValue) {
+            return $data->referees->sum(function ($value) use ($column, $colValue) {
+                if ($value->{$column} == $colValue) {
                     return true;
                 }
                 return false;
@@ -100,10 +100,10 @@ class MyblReferAndEarnService
         });
     }
 
-    public function referrersStatus($referAndEarn, $status)
+    public function referrersStatus($referAndEarn, $column, $value)
     {
-        return collect($referAndEarn->referees)->sum(function ($data) use ($status) {
-            if ($data->status == $status) {
+        return collect($referAndEarn->referees)->sum(function ($data) use ($column, $value) {
+            if ($data->{$column} == $value) {
                 return true;
             }
             return false;
@@ -117,13 +117,15 @@ class MyblReferAndEarnService
             $total_referrers = $referAndEarn->referrers->count();
             $total_referees = $referAndEarn->referrers->sum('referees_count');
 
-            $total_success = $this->campaignStatus($referAndEarn, 'redeemed');
-            $total_claimed = $this->campaignStatus($referAndEarn, 'claimed');
+            $total_success = $this->campaignStatus($referAndEarn, 'status', 'redeemed');
+            $total_claimed = $this->campaignStatus($referAndEarn, 'status', 'claimed');
+            $total_invited = $this->campaignStatus($referAndEarn, 'is_invited', 1);
 
             $referAndEarns[$key]['total_referrers'] = $total_referrers;
             $referAndEarns[$key]['total_referees'] = $total_referees;
             $referAndEarns[$key]['total_success'] = $total_success;
             $referAndEarns[$key]['total_claimed'] = $total_claimed;
+            $referAndEarns[$key]['total_invited'] = $total_invited;
         }
         return $referAndEarns;
     }
@@ -131,7 +133,6 @@ class MyblReferAndEarnService
     public function detailsCampaign($request, $id)
     {
         $referAndEarn = $this->referAndEarnRepository->referAndEarnData($request, $id);
-
         $referrerData = ProductCore::where('product_code', $referAndEarn->referrer_product_code)
             ->select('product_code', 'data_volume', 'data_volume_unit')
             ->first();
@@ -144,19 +145,21 @@ class MyblReferAndEarnService
 
         $total_referrers = $referAndEarn->referrers->count();
         $total_referees = $referAndEarn->referrers->sum('referees_count');
-        $total_success = $this->campaignStatus($referAndEarn, 'redeemed');
-        $total_claimed = $this->campaignStatus($referAndEarn, 'claimed');
+        $total_success = $this->campaignStatus($referAndEarn, 'status', 'redeemed');
+        $total_claimed = $this->campaignStatus($referAndEarn, 'status', 'claimed');
+        $total_invited = $this->campaignStatus($referAndEarn, 'is_invited', 1);
 
         $referAndEarn['total_referrers'] = $total_referrers;
         $referAndEarn['total_referees'] = $total_referees;
         $referAndEarn['total_success'] = $total_success;
         $referAndEarn['total_claimed'] = $total_claimed;
+        $referAndEarn['total_invited'] = $total_invited;
 
         $referrers = [];
         foreach ($referAndEarn->referrers as $referrer) {
-            $totalRedeemed = $this->referrersStatus($referrer, 'redeemed');
-            $totalClaimed = $this->referrersStatus($referrer, 'claimed');
-            $totalInvited = $this->referrersStatus($referrer, 'invited');
+            $totalRedeemed = $this->referrersStatus($referrer, 'status', 'redeemed');
+            $totalClaimed = $this->referrersStatus($referrer, 'status', 'claimed');
+            $totalInvited = $this->referrersStatus($referrer, 'is_invited', 1);
             $referrers[] = [
                 'id' => $referrer->id,
                 'referral_code' => $referrer->referral_code,

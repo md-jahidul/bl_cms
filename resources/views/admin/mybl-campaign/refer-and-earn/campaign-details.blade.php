@@ -73,7 +73,7 @@
                                             </div>
                                             <div class="media-body text-white text-right">
                                                 <h3 class="text-white"><b>{{ $campaignDetails->total_referrers ?? 0 }}</b></h3>
-                                                <span>Total Referrer</span>
+                                                <span>Total Referrals</span>
                                             </div>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="media-body text-white text-right">
                                                 <h3 class="text-white"><b>{{ $campaignDetails->total_referees ?? 0 }}</b></h3>
-                                                <span>Total Referee</span>
+                                                <span>Total Referees</span>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                                 <i class="icon-like text-white font-large-2 float-left"></i>
                                             </div>
                                             <div class="media-body text-white text-right">
-                                                <h3 class="text-white"><b>{{ $campaignDetails->total_success ?? 0 }}</b></h3>
+                                                <h3 class="text-white"><b>{{ $campaignDetails->total_success + $campaignDetails->total_claimed }}</b></h3>
                                                 <span>Total Redeemed</span>
                                             </div>
                                         </div>
@@ -131,9 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                        @php
-                            $total_invited = $campaignDetails->total_referees - ($campaignDetails->total_claimed + $campaignDetails->total_success);
-                        @endphp
+
                         <div class="col-xl-3 col-lg-6 col-12">
                             <div class="card bg-gradient-directional-warning">
                                 <div class="card-content">
@@ -143,7 +141,7 @@
                                                 <i class="icon-paper-plane text-white font-large-2 float-left"></i>
                                             </div>
                                             <div class="media-body text-white text-right">
-                                                <h3 class="text-white"><b>{{$total_invited ?? 0 }}</b></h3>
+                                                <h3 class="text-white"><b>{{ $campaignDetails->total_invited }}</b></h3>
                                                 <span>Total Invited</span>
                                             </div>
                                         </div>
