@@ -15,6 +15,7 @@ class CreateRefereesTable extends Migration
     {
         Schema::create('referees', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('refer_and_earn_id');
             $table->integer('referrer_id')->index('referees_referrer_id_index');
             $table->string('referee_msisdn')->index('referees_referee_msisdn_index');
             $table->boolean('is_invited')->default(false);
