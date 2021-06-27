@@ -34,7 +34,7 @@ class MyBlReferAndEarnRepository extends BaseRepository
                 $q->select('id', 'refer_and_earn_id', 'msisdn', 'referral_code', 'created_at');
                 $q->withCount('referees');
                 $q->with(['referees' => function ($referees) {
-                    $referees->select('id', 'referrer_id', 'status');
+                    $referees->select('id', 'referrer_id', 'status', 'is_invited');
                 }]);
             }]);
 
