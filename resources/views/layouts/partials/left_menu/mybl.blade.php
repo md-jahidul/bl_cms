@@ -60,6 +60,11 @@
                         <i class="ft-list"></i>Products</a>
                 </li>
 
+                <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
+                    <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
+                        <i class="ft-x-square"></i>Inactive Products</a>
+                </li>
+
                 <li class="{{ is_active_match(route('product-activities.history')) }}">
                     <a class="menu-item" href="{{ route('product-activities.history') }}">
                         <i class="la la-history"></i>Products Activities</a>
