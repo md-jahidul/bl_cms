@@ -946,7 +946,11 @@ class ProductCoreService
 
             $this->productActivityRepository->storeProductActivity($data_request, $others, $model);
             $model->update($data_request);
-            $this->resetProductRedisKeys();
+            /**
+             * Commenting reset redis key code according to BL requirement on 24 June 2021
+             */
+            //$this->resetProductRedisKeys();
+            $this->syncSearch();
 
             DB::commit();
         } catch (Exception $e) {
@@ -1048,7 +1052,11 @@ class ProductCoreService
             $this->productActivityRepository->storeProductActivity($data_request, $others);
             $this->save($data_request);
 
-            $this->resetProductRedisKeys();
+            /**
+             * Commenting reset redis key code according to BL requirement on 24 June 2021
+             */
+            //$this->resetProductRedisKeys();
+            $this->syncSearch();
 
             DB::commit();
         } catch (Exception $e) {
@@ -1165,7 +1173,7 @@ class ProductCoreService
         }
     }
 
-    public function resetProductRedisKeys()
+    public function resetProductRedisKeys(): void
     {
         $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
         $keys = Redis::keys('available_products:*');
@@ -1174,11 +1182,16 @@ class ProductCoreService
         foreach ($keys as $key) {
             $values [] = str_replace($pattern, '', $key);
         }
-        //Log::info(json_encode($values));
         if (!empty($values)) {
             Redis::del($values);
+            Log::info('Redis key for available_products has been reset at:' . Carbon::now()->toDateTimeString() .
+                ' by user id : ' . Auth::id() . '. Total no of deleted key = ' . count($keys)
+            );
         }
+    }
 
+    public function syncSearch(): void
+    {
         try {
             Artisan::call('sync:search:offers');
         } catch (Exception $exception) {
