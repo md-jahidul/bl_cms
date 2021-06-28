@@ -439,6 +439,10 @@ class ProductCoreService
             $builder = $builder->where('show_in_home', $request->show_in_home);
         }
 
+        if ($request->pinned_products != "") {
+            $builder = $builder->where('pin_to_top', $request->pinned_products);
+        }
+
         $bundles = ['mix', 'voice', 'sms'];
 
         $builder = $builder->whereHas(
