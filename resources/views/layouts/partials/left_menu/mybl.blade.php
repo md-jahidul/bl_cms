@@ -599,6 +599,11 @@
         </ul>
     </li>
 
+
+    <li class="{{ is_active_url('mybl-home-components') }}">
+        <a class="menu-item" href="{{ route('mybl.home.components') }}">
+            <i class="la la-puzzle-piece"></i>Home Components</a>
+    </li>
     <li class="{{ is_active_url('manage-category') }}">
         <a class="menu-item" href="{{ route('manage-category.index') }}">
             <i class="la la-medium"></i>Manage</a>
