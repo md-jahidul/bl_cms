@@ -499,6 +499,11 @@
             </li>
         </ul>
 
+
+    <li class="{{ is_active_url('mybl-home-components') }}">
+        <a class="menu-item" href="{{ route('mybl.home.components') }}">
+            <i class="la la-puzzle-piece"></i>Home Components</a>
+    </li>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}

@@ -18,8 +18,10 @@ class CreateMyblHomeComponentsTable extends Migration
             $table->string('component_key')->nullable();
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
+            $table->integer('display_order')->nullable();
             $table->boolean('is_api_call_enable')->nullable();
             $table->boolean('is_eligible')->nullable();
+            $table->boolean('is_fixed_position')->default(false);
             $table->timestamps();
         });
     }
