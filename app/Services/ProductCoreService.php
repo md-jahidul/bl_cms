@@ -439,6 +439,10 @@ class ProductCoreService
             $builder = $builder->where('show_in_home', $request->show_in_home);
         }
 
+        if ($request->pinned_products != "") {
+            $builder = $builder->where('pin_to_top', $request->pinned_products);
+        }
+
         $bundles = ['mix', 'voice', 'sms'];
 
         $builder = $builder->whereHas(
@@ -834,6 +838,24 @@ class ProductCoreService
         return MyBlProduct::with('details', 'tabs')->where('product_code', $product_code)->first();
     }
 
+    public function getInactiveProducts()
+    {
+        $myBlInactiveProducts = MyBlProduct::where('status', 0)->get()->pluck('product_code')->toArray();
+        return ProductCore::whereIn('product_code', $myBlInactiveProducts)->get();
+    }
+
+    public function activateProduct($productCode)
+    {
+        try {
+            MyBlProduct::where('product_code', $productCode)->update(['status' => 1]);
+            ProductCore::where('product_code', $productCode)->update(['status' => 1]);
+            return true;
+        } catch (Exception $exception) {
+            Log::error('Error while activating product having code: ' . $productCode . '. Message: ' . $exception->getMessage());
+            return false;
+        }
+    }
+
     /**
      * Update my-bl products
      *
@@ -1135,7 +1157,8 @@ class ProductCoreService
                     $product->detailTabs->pluck('name')->toArray()
                 ) ?: $product->offer_section_title);
                 $productTags = $product->tags;
-                $insert_data[23] = $productTags->count() ? implode(',', $productTags->pluck('title')->toArray()) : $product->tag;
+                $insert_data[23] = $productTags->count() ? implode(',',
+                    $productTags->pluck('title')->toArray()) : $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
                 $insert_data[26] = $product->details->display_sd_vat_tax;
