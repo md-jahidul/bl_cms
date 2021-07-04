@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class MyblHomeComponentService
 {
@@ -23,6 +24,8 @@ class MyblHomeComponentService
      * @var MyblSliderRepository
      */
     private $sliderRepository;
+
+    protected const REDIS_KEY = "mybl_home_component";
 
 
     /**
@@ -81,6 +84,7 @@ class MyblHomeComponentService
                     $update_menu->update();
                 }
             }
+            Redis::del(self::REDIS_KEY);
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -103,16 +107,15 @@ class MyblHomeComponentService
         $component = $this->findOne($id);
         $component->is_eligible = $component->is_eligible ? 0 : 1;
         $component->save();
+        Redis::del(self::REDIS_KEY);
         return response("Successfully status changed");
     }
 
     public function updateComponent($data)
     {
         $component = $this->findOne($data['id']);
-//        dd($request->all());
-//        dd($component);
-//        $component->is_eligible = $component->is_eligible ? 0 : 1;
         $component->update($data);
+        Redis::del(self::REDIS_KEY);
         return response("Component update successfully!");
     }
 }
