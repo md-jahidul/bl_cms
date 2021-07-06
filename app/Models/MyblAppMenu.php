@@ -9,6 +9,10 @@ class MyblAppMenu extends Model
 {
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'other_info' => 'array'
+    ];
+
     public function children(): HasMany
     {
         return $this->hasMany(MyblAppMenu::class, 'parent_id', 'id');

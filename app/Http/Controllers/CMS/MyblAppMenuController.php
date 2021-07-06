@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Http\Requests\MyblAppMenuRequest;
 use App\Services\MyblAppMenuService;
 use Illuminate\Contracts\Foundation\Application;
@@ -46,7 +47,6 @@ class MyblAppMenuController extends Controller
     public function index($parent_id = 0)
     {
         $menus = $this->menuService->menuList($parent_id);
-//        dd($menus->count() );
         $parentMenu = $this->menuService->findOne($parent_id);
         return view('admin.mybl-menu.index', compact('menus', 'parent_id', 'parentMenu'));
     }
@@ -56,11 +56,12 @@ class MyblAppMenuController extends Controller
      *
      * @return Application|Factory|View
      */
-//    public function create($parent_id = 0)
-//    {
-//        $parentMenu = $this->menuService->findOne($parent_id);
-//        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu'));
-//    }
+    public function create($parent_id = 0)
+    {
+        $parentMenu = $this->menuService->findOne($parent_id);
+        $ctaActions = Helper::navigationActionList();
+        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu', 'ctaActions'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -94,7 +95,8 @@ class MyblAppMenuController extends Controller
     public function edit($id)
     {
         $menu = $this->menuService->findOrFail($id);
-        return view('admin.mybl-menu.edit', compact('menu'));
+        $ctaActions = Helper::navigationActionList();
+        return view('admin.mybl-menu.edit', compact('menu', 'ctaActions'));
     }
 
     /**
@@ -118,9 +120,9 @@ class MyblAppMenuController extends Controller
      * @param  int  $id
      * @return Application|string|UrlGenerator
      */
-//    public function destroy($parentId, $id)
-//    {
-//        $this->menuService->deleteMenu($id);
-//        return ($parentId == 0) ? url('mybl-menu') : url("mybl-menu/" . $parentId . "/child-menu");
-//    }
+    public function destroy($parentId, $id)
+    {
+        $this->menuService->deleteMenu($id);
+        return ($parentId == 0) ? url('mybl-menu') : url("mybl-menu/" . $parentId . "/child-menu");
+    }
 }

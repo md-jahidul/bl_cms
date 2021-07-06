@@ -55,6 +55,20 @@
                                                 <div class="help-block">  {{ $errors->first('icon') }}</div>
                                             @endif
                                         </div>
+
+                                        <div class="form-group col-md-10 mb-2" id="slider_action">
+                                            <label for="redirect_url">CTA Action</label>
+                                            <select id="navigate_action" name="component_identifier"
+                                                    class="browser-default custom-select">
+                                                <option value="">Select Action</option>
+                                                @foreach ($ctaActions as $key => $value)
+                                                    <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="help-block"></div>
+                                        </div>
+
+                                        <div id="append_div" class="col-md-10"></div>
                                     @endif
 
                                     <div class="col-md-10">
@@ -114,8 +128,76 @@
                     'error': 'Choose correct file format'
                 }
             });
-
+            $("#navigate_action").select2();
         })
+
+        $(function () {
+            var content = "";
+            var url_html;
+            var product_html;
+            var parse_data;
+            let dial_html, other_attributes = '';
+            var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
+            if (js_data) {
+                parse_data = JSON.parse(js_data);
+                other_attributes = parse_data.other_attributes;
+                if (other_attributes) {
+                    content = other_attributes.content;
+                }
+            }
+            // add dial number
+            dial_html = ` <div class="form-group other-info-div">
+                                            <label>Dial Number</label>
+                                            <input type="text" name="other_info[content]" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
+                                            <div class="help-block"></div>
+                                        </div>`;
+            url_html = ` <div class="form-group other-info-div">
+                                            <label>Redirect External URL</label>
+                                            <input type="text" name="other_info[content]" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
+                                            <div class="help-block"></div>
+                                        </div>`;
+            product_html = ` <div class="form-group other-info-div">
+                                            <label>Select a product</label>
+                                            <select class="product-list form-control"  name="other_info[content]" required></select>
+                                            <div class="help-block"></div>
+                                        </div>`;
+            $('#navigate_action').on('change', function () {
+                let action = $(this).val();
+                console.log(action);
+                if (action == 'DIAL') {
+                    $("#append_div").html(dial_html);
+                } else if (action == 'URL') {
+                    $("#append_div").html(url_html);
+                } else if (action == 'PURCHASE') {
+                    $("#append_div").html(product_html);
+                    $(".product-list").select2({
+                        placeholder: "Select a product",
+                        // minimumInputLength: 3,
+                        allowClear: true,
+                        selectOnClose: true,
+                        ajax: {
+                            url: "{{ route('myblslider.active-products') }}",
+                            dataType: 'json',
+                            data: function (params) {
+                                var query = {
+                                    productCode: params.term
+                                }
+                                // Query parameters will be ?search=[term]&type=public
+                                return query;
+                            },
+                            processResults: function (data) {
+                                // Transforms the top-level key of the response object from 'items' to 'results'
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
+                } else {
+                    $(".other-info-div").remove();
+                }
+            })
+        });
     </script>
 @endpush
 
