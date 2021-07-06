@@ -10,11 +10,14 @@ use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class MyblManageService
 {
     use CrudTrait;
     use FileTrait;
+
+    protected const REDIS_KEY = "mybl_manage";
 
     /**
      * @var MyblManageRepository
@@ -56,6 +59,7 @@ class MyblManageService
     {
         $data['display_order'] = $this->findAll()->count() + 1;
         $this->save($data);
+        Redis::del(self::REDIS_KEY);
         return new Response('Category added successfully!');
     }
 
@@ -65,7 +69,6 @@ class MyblManageService
      */
     public function storeItem($data)
     {
-//        dd($data);
         if ($data['category_type'] == "slider" && $data['slider_type'] == 'video') {
             $data['component_identifier'] = $data['slider_type'];
             $data['other_info']['slider_type'] = $data['slider_type'];
@@ -86,6 +89,7 @@ class MyblManageService
         $data['display_order'] = $this->manageItemRepository
                 ->findByProperties(['manage_categories_id' => $data['manage_categories_id']], ['id'])->count() + 1;
         $this->manageItemRepository->save($data);
+        Redis::del(self::REDIS_KEY);
         return new Response('Category added successfully!');
     }
 
@@ -95,7 +99,6 @@ class MyblManageService
      */
     public function updateItem($data, $id)
     {
-//        dd($data);
         $item = $this->manageItemRepository->findOne($id);
 
         if ($data['category_type'] == "slider" && $data['slider_type'] == 'video') {
@@ -125,6 +128,7 @@ class MyblManageService
             $data['show_for_guest'] = isset($data['show_for_guest']) ? 1 : 0;
         }
         $item->update($data);
+        Redis::del(self::REDIS_KEY);
         return new Response('Item update successfully!');
     }
 
@@ -135,6 +139,7 @@ class MyblManageService
     public function tableSort($data)
     {
         $this->manageRepository->manageTableSort($data);
+        Redis::del(self::REDIS_KEY);
         return new Response('Sorted successfully');
     }
 
@@ -145,6 +150,7 @@ class MyblManageService
     public function itemTableSort($data)
     {
         $this->manageItemRepository->itemTableSort($data);
+        Redis::del(self::REDIS_KEY);
         return new Response('Sorted successfully');
     }
 
@@ -157,6 +163,7 @@ class MyblManageService
     {
         $category = $this->findOne($id);
         $category->update($data);
+        Redis::del(self::REDIS_KEY);
         return Response('Manage category updated successfully');
     }
 
@@ -169,6 +176,7 @@ class MyblManageService
     {
         $category = $this->findOne($id);
         $category->delete();
+        Redis::del(self::REDIS_KEY);
         return [
             'message' => 'Category deleted successfully',
         ];
@@ -186,6 +194,7 @@ class MyblManageService
             unlink($item->image_url);
         }
         $item->delete();
+        Redis::del(self::REDIS_KEY);
         return [
             'message' => 'Item deleted successfully',
         ];
