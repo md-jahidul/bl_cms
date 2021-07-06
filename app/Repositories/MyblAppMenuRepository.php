@@ -20,7 +20,7 @@ class MyblAppMenuRepository extends BaseRepository
     public function allMenus($parent_id)
     {
         return $this->model->where('parent_id', $parent_id)
-            ->select('id', 'title_en', 'parent_id', 'icon', 'status')
+            ->select('id', 'title_en', 'parent_id', 'component_identifier', 'icon', 'status')
             ->orderBy('display_order', 'asc')
             ->get();
     }

@@ -18,9 +18,11 @@ class CreateMyblAppMenusTable extends Migration
             $table->integer('parent_id')->default(0);
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
+            $table->string('component_identifier')->nullable();
             $table->string('icon')->nullable();
             $table->integer('display_order')->nullable();
             $table->string('key')->nullable();
+            $table->json('other_info')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
