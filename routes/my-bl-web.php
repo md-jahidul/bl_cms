@@ -638,6 +638,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    /*
+     * Dynamic Deeplink
+     */
+    Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
 
 });
 

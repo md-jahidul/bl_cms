@@ -60,6 +60,13 @@
                         <i class="ft-list"></i>Products</a>
                 </li>
 
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Category
+                    </a>
+                </li>
+
                 <li class="{{ is_active_match(route('product-activities.history')) }}">
                     <a class="menu-item" href="{{ route('product-activities.history') }}">
                         <i class="la la-history"></i>Products Activities</a>
@@ -303,12 +310,6 @@
                     </a>
                 </li>
 
-                <li class="{{is_active_url('mybl-internet-offer-category')}}">
-                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i> Data Pack Filter
-                    </a>
-                </li>
                 <li class="{{is_active_url('special-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
