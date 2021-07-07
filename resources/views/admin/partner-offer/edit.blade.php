@@ -127,11 +127,22 @@
                                 @endif
                             </div>
 
-                            <div id="free_text_value"
-                                 class="form-group col-md-8 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? '' : 'hidden' }}">
-                                <label for="offer_unit" class="required">Free Text Value</label>
-                                <input type="text" name="other_attributes[free_text_value]" class="form-control" placeholder="Enter any number of text"
-                                       value="{{ isset($partnerOffer->other_attributes['free_text_value']) ? $partnerOffer->other_attributes['free_text_value'] : '' }}">
+                            <div id="free_text_value_en"
+                                 class="form-group col-md-4 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? '' : 'hidden' }}">
+                                <label for="offer_unit" class="required">Free Text Value EN</label>
+                                <input type="text" name="other_attributes[free_text_value_en]" class="form-control" placeholder="Enter any number of text"
+                                       value="{{ isset($partnerOffer->other_attributes['free_text_value_en']) ? $partnerOffer->other_attributes['free_text_value_en'] : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('free_text_value'))
+                                    <div class="help-block">{{ $errors->first('free_text_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div id="free_text_value_bn"
+                                 class="form-group col-md-4 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? '' : 'hidden' }}">
+                                <label for="offer_unit" class="required">Free Text Value BN</label>
+                                <input type="text" name="other_attributes[free_text_value_bn]" class="form-control" placeholder="Enter any number of text"
+                                       value="{{ isset($partnerOffer->other_attributes['free_text_value_bn']) ? $partnerOffer->other_attributes['free_text_value_bn'] : '' }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('free_text_value'))
                                     <div class="help-block">{{ $errors->first('free_text_value') }}</div>
@@ -391,11 +402,13 @@
             if (offerScale === "free_text") {
                 $('#offer_unit').addClass('hidden')
                 $('#offer_value').addClass('hidden')
-                $('#free_text_value').removeClass('hidden')
+                $('#free_text_value_en').removeClass('hidden')
+                $('#free_text_value_bn').removeClass('hidden')
             } else {
                 $('#offer_unit').removeClass('hidden')
                 $('#offer_value').removeClass('hidden')
-                $('#free_text_value').addClass('hidden')
+                $('#free_text_value_en').addClass('hidden')
+                $('#free_text_value_bn').addClass('hidden')
             }
         })
     });
