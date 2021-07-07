@@ -63,6 +63,19 @@ class FirebaseDeepLinkService
         return static::makeMethod('post',$body, $headers);
     }
 
+    /**
+     * Make CURL request for GET request.
+     *
+     * @param string $url
+     * @param array $body
+     * @param array $headers
+     * @return string
+     */
+    public static function get(array $body = [], $headers = null)
+    {
+        return static::makeMethod('get', $body, $headers);
+    }
+
 
     /**
      * Make CURL request for a HTTP request.
