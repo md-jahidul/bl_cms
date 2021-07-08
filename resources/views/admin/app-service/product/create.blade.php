@@ -119,7 +119,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label> URL EN <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN" id="url_slug">
+                                <input type="text" class="form-control slug-convert" name="url_slug" placeholder="URL EN" id="url_slug">
                                 <small class="text-info">
                                     <strong>i.e:</strong> najat-app (no spaces and slash)<br>
                                 </small>
@@ -132,7 +132,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                 <label> URL BN <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN">
+                                <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN">
                                 <small class="text-info">
                                     <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
                                 </small>
@@ -143,9 +143,6 @@
                                 @endif
                             </div>
 
-
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header English (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header"></textarea>

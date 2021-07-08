@@ -23,7 +23,7 @@
                             <tr>
                                 <td width="3%">#</td>
                                 <th width="15%">Product Title</th>
-                                <th width="20%">Product Description</th>
+{{--                                <th width="15%">Product Description</th>--}}
                                 <th width="5%">Price</th>
 {{--                                <th width="5%">USSD</th>--}}
                                 <th width="5%">Tab</th>
@@ -41,7 +41,7 @@
                                     <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                        <td>{!! $product->description_en !!}</td>
+{{--                                        <td width="15%">{!! $product->description_en !!}</td>--}}
                                         <td>{{ $product->price_tk }}</td>
 {{--                                        <td>{{ $product->ussd_en }}</td>--}}
                                         <td>{{ $product->appServiceTab->name_en }}</td>
