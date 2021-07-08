@@ -120,8 +120,8 @@
                             </slot>
 
                             <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug}}" required name="url_slug" placeholder="URL">
+                                <label> URL (url slug)</label>
+                                <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug}}" name="url_slug" placeholder="URL">
                                 <small class="text-info">
                                     <strong>i.e:</strong> najat-app (no spaces)<br>
                                 </small>
@@ -133,8 +133,8 @@
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                <label> URL BN <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" required value="{{$appServiceProduct->url_slug_bn}}" name="url_slug_bn" placeholder="URL BN">
+                                <label> URL BN</label>
+                                <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug_bn}}" name="url_slug_bn" placeholder="URL BN">
                                 <small class="text-info">
                                     <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
                                 </small>
