@@ -118,7 +118,7 @@
                             </slot>
 
                             <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                <label> URL EN <span class="text-danger">*</span></label>
+                                <label> URL EN</label>
                                 <input type="text" class="form-control slug-convert" name="url_slug" placeholder="URL EN" id="url_slug">
                                 <small class="text-info">
                                     <strong>i.e:</strong> najat-app (no spaces and slash)<br>
@@ -131,7 +131,7 @@
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                <label> URL BN <span class="text-danger">*</span></label>
+                                <label> URL BN </label>
                                 <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN">
                                 <small class="text-info">
                                     <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
