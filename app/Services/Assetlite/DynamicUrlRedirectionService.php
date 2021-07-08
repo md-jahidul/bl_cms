@@ -26,6 +26,11 @@ class DynamicUrlRedirectionService
         $this->setActionRepository($redirectionRepository);
     }
 
+    /**
+     * Stores data to the DB
+     * @param $data
+     * @return Model
+     */
     public function storeData($data)
     {
         $data['created_by'] = Auth::user()->id;
@@ -34,6 +39,12 @@ class DynamicUrlRedirectionService
         return $this->save($data);
     }
 
+    /**
+     * Updates data to the specified row
+     * @param array $data
+     * @param $id
+     * @return bool
+     */
     public function updateData(array $data, $id)
     {
         if (isset($data['from_url']) && $data['to_url']) {
@@ -43,4 +54,13 @@ class DynamicUrlRedirectionService
         return $this->findOne($id)->update($data);
     }
 
+    /**
+     * Checks and returns boolean if an from url is already exists or not
+     * @param $fromUrl
+     * @return bool
+     */
+    public function ifRedirectionExist($fromUrl): bool
+    {
+        return $this->findBy(['from_url' => $fromUrl])->count() ? true : false;
+    }
 }
