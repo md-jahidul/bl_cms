@@ -66,7 +66,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('footer-menu/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
     Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update', 'edit', 'store']);
     Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
-    Route::get('footer-menu/{parent_id?}/{child_footer?}', 'AssetLite\FooterMenuController@index');  // always put it last
+    Route::get('footer-menu/{parent_id?}/{child_footer?}',
+        'AssetLite\FooterMenuController@index');  // always put it last
     Route::get('sort-autosave/parent-footer-sort', 'AssetLite\FooterMenuController@FooterMenuSortable');
 
 
@@ -176,6 +177,15 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')
         ->name('child-category');
 
+    /**
+     * Dynamic URL Redirection Routes
+     */
+    Route::resource('dynamic-url-redirection', 'AssetLite\DynamicUrlRedirectionController')->except([
+        'show',
+        'destroy'
+    ]);
+    Route::get('dynamic-url-redirection/toggle-status/{id}/{status}',
+        'AssetLite\DynamicUrlRedirectionController@toggleStatus')->name('dynamic-url-redirection.toggle-status');
 
     // OFFER SUB MENU =====================================
     Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
@@ -197,7 +207,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
         ->name('product.details-update');
 
-    Route::post('product-details/{simType}/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
+    Route::post('product-details/{simType}/{productId}/banner-image/related-product',
+        'AssetLite\ProductDetailsController@bannerImgRelatedPro')
         ->name('bannerImg-relatedPro');
 
     Route::get('product-details/{simType}/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
@@ -206,16 +217,20 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('product-details/{type}/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
         ->name('section-create');
 
-    Route::post('product-details/{simType}/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
+    Route::post('product-details/{simType}/{productDetailsId}/section-store',
+        'AssetLite\ProductDetailsController@storeSection')
         ->name('section-store');
 
-    Route::get('product-details/{simType}/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
+    Route::get('product-details/{simType}/{productDetailsId}/section-edit/{id}',
+        'AssetLite\ProductDetailsController@editSection')
         ->name('section-edit');
 
-    Route::post('product-details/{simType}/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
+    Route::post('product-details/{simType}/{productDetailsId}/section-update/{id}',
+        'AssetLite\ProductDetailsController@updateSection')
         ->name('section-update');
 
-    Route::get('product-details/{simType}/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
+    Route::get('product-details/{simType}/{productDetailsId}/section-delete/{id}',
+        'AssetLite\ProductDetailsController@sectionDestroy')
         ->name('section-destroy');
 
     Route::get('product-details/section-sortable', 'AssetLite\ProductDetailsController@sectionSortable');
@@ -231,7 +246,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\ProductDetailsController@componentCreate'
     )->name('component-create');
 
-    Route::post('product-details/{simType}/{productDetailsId}/components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
+    Route::post('product-details/{simType}/{productDetailsId}/components-store/{SectionId}',
+        'AssetLite\ProductDetailsController@componentStore')
         ->name('component-store');
 
     Route::get(
@@ -239,10 +255,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\ProductDetailsController@componentEdit'
     )->name('component-edit');
 
-    Route::put('product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+    Route::put('product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/update',
+        'AssetLite\ProductDetailsController@componentUpdate')
         ->name('component-update');
 
-    Route::get('product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
+    Route::get('product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/delete',
+        'AssetLite\ProductDetailsController@componentDestroy')
         ->name('component-delete');
 
     Route::get('component-sortable', 'AssetLite\ProductDetailsController@componentSortable');
@@ -417,14 +435,16 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
 
     Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
-    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+    Route::post('popular-search-update',
+        'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
 
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
 
     // Easy Payment Card ============================================
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
-    Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
+    Route::post('easy-payment-card-list',
+        'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
     Route::post('upload-payment-card-excel', 'AssetLite\EasyPaymentCardController@uploadCardByExcel')
         ->name('payment.card.excel.save');
     Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
@@ -439,13 +459,16 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //__category
     Route::get('business-category-get/{catId}', 'AssetLite\BusinessGeneralController@getCategory');
     Route::post('business/update-category', 'AssetLite\BusinessGeneralController@updateCategory');
-    Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
-    Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
+    Route::get('business-category-name-change',
+        'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
+    Route::get('business-category-home-status-change',
+        'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
     Route::post('business-category-banner-save', 'AssetLite\BusinessGeneralController@categoryBannerSave')
         ->name('business.category.banner.save');
 
 
-    Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
+    Route::get('business-category-sort-change',
+        'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
 
     //sliding speed
 
@@ -453,7 +476,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('business.sliding.speed.save');
 
     //__banner
-    Route::post('business-banner-photo-upload', 'AssetLite\BusinessGeneralController@bannerPhotoSave')->name('business.banner.photo.save');
+    Route::post('business-banner-photo-upload',
+        'AssetLite\BusinessGeneralController@bannerPhotoSave')->name('business.banner.photo.save');
 
     //__news
     Route::post('business-news-save', 'AssetLite\BusinessGeneralController@homeNewsSave')->name('business.news.save');
@@ -463,7 +487,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-news-delete/{id}', 'AssetLite\BusinessGeneralController@newsDelete');
 
     //__features
-    Route::post('business-feature-save', 'AssetLite\BusinessGeneralController@featureSave')->name('business.feature.save');
+    Route::post('business-feature-save',
+        'AssetLite\BusinessGeneralController@featureSave')->name('business.feature.save');
     Route::get('get-single-feature/{featureId}', 'AssetLite\BusinessGeneralController@getFeatureById');
     Route::get('business-feature-sort', 'AssetLite\BusinessGeneralController@featureSortChange');
     Route::get('business-feature-status-change/{id}', 'AssetLite\BusinessGeneralController@featureStatusChange');
@@ -479,7 +504,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('business-package/save', 'AssetLite\BusinessPackageController@store')->name('business.package.save');
 
     Route::get('business-package-edit/{packageId}', 'AssetLite\BusinessPackageController@edit');
-    Route::put('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
+    Route::put('business-package/update',
+        'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
 
     //__Category Internet Package
@@ -488,10 +514,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('business-internet-save', 'AssetLite\BusinessInternetController@saveInternetPackage');
     Route::get('business-internet-edit/{internetId}', 'AssetLite\BusinessInternetController@internetEdit');
     Route::put('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
-    Route::post('business-internet-package-list', 'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
+    Route::post('business-internet-package-list',
+        'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
         ->name('business.internet.excel.save');
-    Route::get('business-internet-status-change/{pakcageId}', 'AssetLite\BusinessInternetController@packageStatusChange');
+    Route::get('business-internet-status-change/{pakcageId}',
+        'AssetLite\BusinessInternetController@packageStatusChange');
     Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
 
@@ -508,14 +536,18 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
-    Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
-    Route::get('business-others-components-list/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@componentList');
+    Route::post('business-component-save',
+        'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
+    Route::get('business-others-components-list/{serviceId}/{type?}',
+        'AssetLite\BusinessOthersController@componentList');
 
-    Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
+    Route::get('business-others-component-edit/{serviceId}/{position}/{type}',
+        'AssetLite\BusinessOthersController@editComponent');
     Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')
         ->name("business.component.update");
 
-    Route::get('business-others-component-delete/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@deleteComponent');
+    Route::get('business-others-component-delete/{serviceId}/{position}/{type}',
+        'AssetLite\BusinessOthersController@deleteComponent');
     Route::get('business-other-component-sort', 'AssetLite\BusinessOthersController@sortComponent');
 
 
@@ -559,7 +591,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('roaming.operator.list.ajax');
     Route::post('roaming/operator-excel', 'AssetLite\RoamingOperatorController@uploadOperatorExcel')
         ->name('roaming.operator-excel.save');
-    Route::get('roaming-operator-status-change/{operatorId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
+    Route::get('roaming-operator-status-change/{operatorId}',
+        'AssetLite\RoamingOperatorController@operatorStatusChange');
     Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
 
     // Rate
@@ -609,12 +642,18 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // eCarrer ============================================
-    Route::get('life-at-banglalink/general', 'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
-    Route::get('life-at-banglalink/general/create', 'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
-    Route::post('life-at-banglalink/general/store', 'AssetLite\EcareerController@generalStore')->name('life.at.banglalink.general.store');
-    Route::get('life-at-banglalink/general/{id}/edit', 'AssetLite\EcareerController@generalEdit')->name('life.at.banglalink.general.edit');
-    Route::post('life-at-banglalink/general/{id}/update', 'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
-    Route::get('life-at-banglalink/general/destroy/{id}', 'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
+    Route::get('life-at-banglalink/general',
+        'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
+    Route::get('life-at-banglalink/general/create',
+        'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
+    Route::post('life-at-banglalink/general/store',
+        'AssetLite\EcareerController@generalStore')->name('life.at.banglalink.general.store');
+    Route::get('life-at-banglalink/general/{id}/edit',
+        'AssetLite\EcareerController@generalEdit')->name('life.at.banglalink.general.edit');
+    Route::post('life-at-banglalink/general/{id}/update',
+        'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
+    Route::get('life-at-banglalink/general/destroy/{id}',
+        'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
 
     // University
     Route::get('university', 'AssetLite\UniversityController@index')
@@ -629,66 +668,100 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // eCarrer Items ============================================
     Route::get('ecarrer-items/{parent_id}/list', 'AssetLite\EcareerItemController@index')->name('ecarrer.items.list');
-    Route::get('ecarrer-items/{parent_id}/create', 'AssetLite\EcareerItemController@create')->name('ecarrer.items.create');
-    Route::post('ecarrer-items/{parent_id}/store', 'AssetLite\EcareerItemController@store')->name('ecarrer.items.store');
-    Route::get('ecarrer-items/{parent_id}/{id}/edit', 'AssetLite\EcareerItemController@edit')->name('ecarrer.items.edit');
+    Route::get('ecarrer-items/{parent_id}/create',
+        'AssetLite\EcareerItemController@create')->name('ecarrer.items.create');
+    Route::post('ecarrer-items/{parent_id}/store',
+        'AssetLite\EcareerItemController@store')->name('ecarrer.items.store');
+    Route::get('ecarrer-items/{parent_id}/{id}/edit',
+        'AssetLite\EcareerItemController@edit')->name('ecarrer.items.edit');
 
-    Route::post('ecarrer-items/{parent_id}/{id}/update', 'AssetLite\EcareerItemController@update')->name('ecarrer.items.update');
-    Route::get('ecarrer-items/{parent_id}/destroy/{id}', 'AssetLite\EcareerItemController@destroy')->name('ecarrer.items.destroy');
+    Route::post('ecarrer-items/{parent_id}/{id}/update',
+        'AssetLite\EcareerItemController@update')->name('ecarrer.items.update');
+    Route::get('ecarrer-items/{parent_id}/destroy/{id}',
+        'AssetLite\EcareerItemController@destroy')->name('ecarrer.items.destroy');
     Route::get('ecarrer-items/photo-delete/{id}', 'AssetLite\EcareerItemController@deletePhoto');
 
     // eCarrer Life at banglalink teams =========================================================
     Route::get('life-at-banglalink/teams', 'AssetLite\EcareerController@teamsIndex')->name('life.at.banglalink.teams');
-    Route::get('life-at-banglalink/teams/create', 'AssetLite\EcareerController@teamsCreate')->name('life.at.banglalink.teams.create');
-    Route::post('life-at-banglalink/teams/store', 'AssetLite\EcareerController@teamsStore')->name('life.at.banglalink.teams.store');
+    Route::get('life-at-banglalink/teams/create',
+        'AssetLite\EcareerController@teamsCreate')->name('life.at.banglalink.teams.create');
+    Route::post('life-at-banglalink/teams/store',
+        'AssetLite\EcareerController@teamsStore')->name('life.at.banglalink.teams.store');
 
-    Route::get('life-at-banglalink/teams/{id}/edit', 'AssetLite\EcareerController@teamsEdit')->name('life.at.banglalink.teams.edit');
+    Route::get('life-at-banglalink/teams/{id}/edit',
+        'AssetLite\EcareerController@teamsEdit')->name('life.at.banglalink.teams.edit');
 
-    Route::post('life-at-banglalink/teams/{id}/update', 'AssetLite\EcareerController@teamsUpdate')->name('life.at.banglalink.teams.update');
-    Route::get('life-at-banglalink/teams/destroy/{id}', 'AssetLite\EcareerController@teamsDestroy')->name('life.at.banglalink.teams.destroy');
+    Route::post('life-at-banglalink/teams/{id}/update',
+        'AssetLite\EcareerController@teamsUpdate')->name('life.at.banglalink.teams.update');
+    Route::get('life-at-banglalink/teams/destroy/{id}',
+        'AssetLite\EcareerController@teamsDestroy')->name('life.at.banglalink.teams.destroy');
 
 
     // eCarrer Life at banglalink diversity =========================================================
-    Route::get('life-at-banglalink/diversity', 'AssetLite\EcareerController@diversityIndex')->name('life.at.banglalink.diversity');
-    Route::get('life-at-banglalink/diversity/create', 'AssetLite\EcareerController@diversityCreate')->name('life.at.banglalink.diversity.create');
-    Route::post('life-at-banglalink/diversity/store', 'AssetLite\EcareerController@diversityStore')->name('life.at.banglalink.diversity.store');
+    Route::get('life-at-banglalink/diversity',
+        'AssetLite\EcareerController@diversityIndex')->name('life.at.banglalink.diversity');
+    Route::get('life-at-banglalink/diversity/create',
+        'AssetLite\EcareerController@diversityCreate')->name('life.at.banglalink.diversity.create');
+    Route::post('life-at-banglalink/diversity/store',
+        'AssetLite\EcareerController@diversityStore')->name('life.at.banglalink.diversity.store');
 
-    Route::get('life-at-banglalink/diversity/{id}/edit', 'AssetLite\EcareerController@diversityEdit')->name('life.at.banglalink.diversity.edit');
+    Route::get('life-at-banglalink/diversity/{id}/edit',
+        'AssetLite\EcareerController@diversityEdit')->name('life.at.banglalink.diversity.edit');
 
-    Route::post('life-at-banglalink/diversity/{id}/update', 'AssetLite\EcareerController@diversityUpdate')->name('life.at.banglalink.diversity.update');
-    Route::get('life-at-banglalink/diversity/destroy/{id}', 'AssetLite\EcareerController@diversityDestroy')->name('life.at.banglalink.diversity.destroy');
+    Route::post('life-at-banglalink/diversity/{id}/update',
+        'AssetLite\EcareerController@diversityUpdate')->name('life.at.banglalink.diversity.update');
+    Route::get('life-at-banglalink/diversity/destroy/{id}',
+        'AssetLite\EcareerController@diversityDestroy')->name('life.at.banglalink.diversity.destroy');
 
 
     // eCarrer Life at banglalink Events & Activities =========================================================
-    Route::get('life-at-banglalink/events', 'AssetLite\EcareerController@eventsIndex')->name('life.at.banglalink.events');
-    Route::get('life-at-banglalink/events/create', 'AssetLite\EcareerController@eventsCreate')->name('life.at.banglalink.events.create');
-    Route::post('life-at-banglalink/events/store', 'AssetLite\EcareerController@eventsStore')->name('life.at.banglalink.events.store');
+    Route::get('life-at-banglalink/events',
+        'AssetLite\EcareerController@eventsIndex')->name('life.at.banglalink.events');
+    Route::get('life-at-banglalink/events/create',
+        'AssetLite\EcareerController@eventsCreate')->name('life.at.banglalink.events.create');
+    Route::post('life-at-banglalink/events/store',
+        'AssetLite\EcareerController@eventsStore')->name('life.at.banglalink.events.store');
 
-    Route::get('life-at-banglalink/events/{id}/edit', 'AssetLite\EcareerController@eventsEdit')->name('life.at.banglalink.events.edit');
+    Route::get('life-at-banglalink/events/{id}/edit',
+        'AssetLite\EcareerController@eventsEdit')->name('life.at.banglalink.events.edit');
 
-    Route::post('life-at-banglalink/events/{id}/update', 'AssetLite\EcareerController@eventsUpdate')->name('life.at.banglalink.events.update');
-    Route::get('life-at-banglalink/events/destroy/{id}', 'AssetLite\EcareerController@eventsDestroy')->name('life.at.banglalink.events.destroy');
+    Route::post('life-at-banglalink/events/{id}/update',
+        'AssetLite\EcareerController@eventsUpdate')->name('life.at.banglalink.events.update');
+    Route::get('life-at-banglalink/events/destroy/{id}',
+        'AssetLite\EcareerController@eventsDestroy')->name('life.at.banglalink.events.destroy');
 
 
     // eCarrer Life at banglalink Top Banner menu =========================================================
-    Route::get('life-at-banglalink/topbanner', 'AssetLite\EcareerController@topbannerIndex')->name('life.at.banglalink.topbanner');
-    Route::get('life-at-banglalink/topbanner/create', 'AssetLite\EcareerController@topbannerCreate')->name('life.at.banglalink.topbanner.create');
-    Route::post('life-at-banglalink/topbanner/store', 'AssetLite\EcareerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
+    Route::get('life-at-banglalink/topbanner',
+        'AssetLite\EcareerController@topbannerIndex')->name('life.at.banglalink.topbanner');
+    Route::get('life-at-banglalink/topbanner/create',
+        'AssetLite\EcareerController@topbannerCreate')->name('life.at.banglalink.topbanner.create');
+    Route::post('life-at-banglalink/topbanner/store',
+        'AssetLite\EcareerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
 
-    Route::get('life-at-banglalink/topbanner/{id}/edit', 'AssetLite\EcareerController@topbannerEdit')->name('life.at.banglalink.topbanner.edit');
+    Route::get('life-at-banglalink/topbanner/{id}/edit',
+        'AssetLite\EcareerController@topbannerEdit')->name('life.at.banglalink.topbanner.edit');
 
-    Route::post('life-at-banglalink/topbanner/{id}/update', 'AssetLite\EcareerController@topbannerUpdate')->name('life.at.banglalink.topbanner.update');
-    Route::get('life-at-banglalink/topbanner/destroy/{id}', 'AssetLite\EcareerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
+    Route::post('life-at-banglalink/topbanner/{id}/update',
+        'AssetLite\EcareerController@topbannerUpdate')->name('life.at.banglalink.topbanner.update');
+    Route::get('life-at-banglalink/topbanner/destroy/{id}',
+        'AssetLite\EcareerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
 
     // eCarrer Contact us  =========================================================
-    Route::get('life-at-banglalink/contact', 'AssetLite\EcareerController@contactIndex')->name('life.at.banglalink.contact');
-    Route::get('life-at-banglalink/contact/create', 'AssetLite\EcareerController@contactCreate')->name('life.at.banglalink.contact.create');
-    Route::post('life-at-banglalink/contact/store', 'AssetLite\EcareerController@contactStore')->name('life.at.banglalink.contact.store');
+    Route::get('life-at-banglalink/contact',
+        'AssetLite\EcareerController@contactIndex')->name('life.at.banglalink.contact');
+    Route::get('life-at-banglalink/contact/create',
+        'AssetLite\EcareerController@contactCreate')->name('life.at.banglalink.contact.create');
+    Route::post('life-at-banglalink/contact/store',
+        'AssetLite\EcareerController@contactStore')->name('life.at.banglalink.contact.store');
 
-    Route::get('life-at-banglalink/contact/{id}/edit', 'AssetLite\EcareerController@contactEdit')->name('life.at.banglalink.contact.edit');
+    Route::get('life-at-banglalink/contact/{id}/edit',
+        'AssetLite\EcareerController@contactEdit')->name('life.at.banglalink.contact.edit');
 
-    Route::post('life-at-banglalink/contact/{id}/update', 'AssetLite\EcareerController@contactUpdate')->name('life.at.banglalink.contact.update');
-    Route::get('life-at-banglalink/contact/destroy/{id}', 'AssetLite\EcareerController@contactDestroy')->name('life.at.banglalink.contact.destroy');
+    Route::post('life-at-banglalink/contact/{id}/update',
+        'AssetLite\EcareerController@contactUpdate')->name('life.at.banglalink.contact.update');
+    Route::get('life-at-banglalink/contact/destroy/{id}',
+        'AssetLite\EcareerController@contactDestroy')->name('life.at.banglalink.contact.destroy');
 
 
     // eCarrer Vacancy  =========================================================
@@ -698,74 +771,108 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::get('vacancy/pioneer/{id}/edit', 'AssetLite\EcareerController@pioneerEdit')->name('vacancy.pioneer.edit');
 
-    Route::post('vacancy/pioneer/{id}/update', 'AssetLite\EcareerController@pioneerUpdate')->name('vacancy.pioneer.update');
-    Route::get('vacancy/pioneer/destroy/{id}', 'AssetLite\EcareerController@pioneerDestroy')->name('vacancy.pioneer.destroy');
+    Route::post('vacancy/pioneer/{id}/update',
+        'AssetLite\EcareerController@pioneerUpdate')->name('vacancy.pioneer.update');
+    Route::get('vacancy/pioneer/destroy/{id}',
+        'AssetLite\EcareerController@pioneerDestroy')->name('vacancy.pioneer.destroy');
 
 
     // eCarrer Vacancy icon box =========================================================
     Route::get('vacancy/viconbox', 'AssetLite\EcareerController@viconboxIndex')->name('vacancy.viconbox');
-    Route::get('vacancy/viconbox/create', 'AssetLite\EcareerController@viconboxCreate')->name('vacancy.viconbox.create');
+    Route::get('vacancy/viconbox/create',
+        'AssetLite\EcareerController@viconboxCreate')->name('vacancy.viconbox.create');
     Route::post('vacancy/viconbox/store', 'AssetLite\EcareerController@viconboxStore')->name('vacancy.viconbox.store');
 
     Route::get('vacancy/viconbox/{id}/edit', 'AssetLite\EcareerController@viconboxEdit')->name('vacancy.viconbox.edit');
 
-    Route::post('vacancy/viconbox/{id}/update', 'AssetLite\EcareerController@viconboxUpdate')->name('vacancy.viconbox.update');
-    Route::get('vacancy/viconbox/destroy/{id}', 'AssetLite\EcareerController@viconboxDestroy')->name('vacancy.viconbox.destroy');
+    Route::post('vacancy/viconbox/{id}/update',
+        'AssetLite\EcareerController@viconboxUpdate')->name('vacancy.viconbox.update');
+    Route::get('vacancy/viconbox/destroy/{id}',
+        'AssetLite\EcareerController@viconboxDestroy')->name('vacancy.viconbox.destroy');
 
     // eCarrer Programs general =========================================================
-    Route::get('programs/progeneral/{type}/create', 'AssetLite\EcareerController@progeneralCreate')->name('programs.progeneral.create');
-    Route::post('programs/progeneral/store', 'AssetLite\EcareerController@progeneralStore')->name('programs.progeneral.store');
+    Route::get('programs/progeneral/{type}/create',
+        'AssetLite\EcareerController@progeneralCreate')->name('programs.progeneral.create');
+    Route::post('programs/progeneral/store',
+        'AssetLite\EcareerController@progeneralStore')->name('programs.progeneral.store');
 
-    Route::get('programs/progeneral/{id}/{type}/edit', 'AssetLite\EcareerController@progeneralEdit')->name('programs.progeneral.edit');
-    Route::post('programs/progeneral/{id}/update', 'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
-    Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
+    Route::get('programs/progeneral/{id}/{type}/edit',
+        'AssetLite\EcareerController@progeneralEdit')->name('programs.progeneral.edit');
+    Route::post('programs/progeneral/{id}/update',
+        'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
+    Route::get('programs/progeneral/destroy/{id}',
+        'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
 
-    Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
+    Route::get('programs/progeneral/{type}',
+        'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
 
 
     // eCarrer Programs icon box =========================================================
     Route::get('programs/proiconbox', 'AssetLite\EcareerController@proiconboxIndex')->name('programs.proiconbox');
-    Route::get('programs/proiconbox/create', 'AssetLite\EcareerController@proiconboxCreate')->name('programs.proiconbox.create');
-    Route::post('programs/proiconbox/store', 'AssetLite\EcareerController@proiconboxStore')->name('programs.proiconbox.store');
+    Route::get('programs/proiconbox/create',
+        'AssetLite\EcareerController@proiconboxCreate')->name('programs.proiconbox.create');
+    Route::post('programs/proiconbox/store',
+        'AssetLite\EcareerController@proiconboxStore')->name('programs.proiconbox.store');
 
-    Route::get('programs/proiconbox/{id}/edit', 'AssetLite\EcareerController@proiconboxEdit')->name('programs.proiconbox.edit');
+    Route::get('programs/proiconbox/{id}/edit',
+        'AssetLite\EcareerController@proiconboxEdit')->name('programs.proiconbox.edit');
 
-    Route::post('programs/proiconbox/{id}/update', 'AssetLite\EcareerController@proiconboxUpdate')->name('programs.proiconbox.update');
-    Route::get('programs/proiconbox/destroy/{id}', 'AssetLite\EcareerController@proiconboxDestroy')->name('programs.proiconbox.destroy');
+    Route::post('programs/proiconbox/{id}/update',
+        'AssetLite\EcareerController@proiconboxUpdate')->name('programs.proiconbox.update');
+    Route::get('programs/proiconbox/destroy/{id}',
+        'AssetLite\EcareerController@proiconboxDestroy')->name('programs.proiconbox.destroy');
 
     // eCarrer Programs Photo gallery =========================================================
     Route::get('programs/photogallery', 'AssetLite\EcareerController@photogalleryIndex')->name('programs.photogallery');
-    Route::get('programs/photogallery/create', 'AssetLite\EcareerController@photogalleryCreate')->name('programs.photogallery.create');
-    Route::post('programs/photogallery/store', 'AssetLite\EcareerController@photogalleryStore')->name('programs.photogallery.store');
+    Route::get('programs/photogallery/create',
+        'AssetLite\EcareerController@photogalleryCreate')->name('programs.photogallery.create');
+    Route::post('programs/photogallery/store',
+        'AssetLite\EcareerController@photogalleryStore')->name('programs.photogallery.store');
 
-    Route::get('programs/photogallery/{id}/edit', 'AssetLite\EcareerController@photogalleryEdit')->name('programs.photogallery.edit');
+    Route::get('programs/photogallery/{id}/edit',
+        'AssetLite\EcareerController@photogalleryEdit')->name('programs.photogallery.edit');
 
-    Route::post('programs/photogallery/{id}/update', 'AssetLite\EcareerController@photogalleryUpdate')->name('programs.photogallery.update');
-    Route::get('programs/photogallery/destroy/{id}', 'AssetLite\EcareerController@photogalleryDestroy')->name('programs.photogallery.destroy');
+    Route::post('programs/photogallery/{id}/update',
+        'AssetLite\EcareerController@photogalleryUpdate')->name('programs.photogallery.update');
+    Route::get('programs/photogallery/destroy/{id}',
+        'AssetLite\EcareerController@photogalleryDestroy')->name('programs.photogallery.destroy');
 
     // eCarrer Programs SAP Previous Batches =========================================================
     Route::get('programs/sapbatches', 'AssetLite\EcareerController@sapbatchesIndex')->name('programs.sapbatches');
-    Route::get('programs/sapbatches/create', 'AssetLite\EcareerController@sapbatchesCreate')->name('programs.sapbatches.create');
-    Route::post('programs/sapbatches/store', 'AssetLite\EcareerController@sapbatchesStore')->name('programs.sapbatches.store');
+    Route::get('programs/sapbatches/create',
+        'AssetLite\EcareerController@sapbatchesCreate')->name('programs.sapbatches.create');
+    Route::post('programs/sapbatches/store',
+        'AssetLite\EcareerController@sapbatchesStore')->name('programs.sapbatches.store');
 
-    Route::get('programs/sapbatches/{id}/edit', 'AssetLite\EcareerController@sapbatchesEdit')->name('programs.sapbatches.edit');
+    Route::get('programs/sapbatches/{id}/edit',
+        'AssetLite\EcareerController@sapbatchesEdit')->name('programs.sapbatches.edit');
 
-    Route::post('programs/sapbatches/{id}/update', 'AssetLite\EcareerController@sapbatchesUpdate')->name('programs.sapbatches.update');
-    Route::get('programs/sapbatches/destroy/{id}', 'AssetLite\EcareerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
+    Route::post('programs/sapbatches/{id}/update',
+        'AssetLite\EcareerController@sapbatchesUpdate')->name('programs.sapbatches.update');
+    Route::get('programs/sapbatches/destroy/{id}',
+        'AssetLite\EcareerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
     // eCarrer Programs Ennovators Previous Batches =========================================================
-    Route::get('programs/ennovatorbatches', 'AssetLite\EcareerController@ennovatorbatchesIndex')->name('programs.ennovatorbatches');
-    Route::get('programs/ennovatorbatches/create', 'AssetLite\EcareerController@ennovatorbatchesCreate')->name('programs.ennovatorbatches.create');
-    Route::post('programs/ennovatorbatches/store', 'AssetLite\EcareerController@ennovatorbatchesStore')->name('programs.ennovatorbatches.store');
+    Route::get('programs/ennovatorbatches',
+        'AssetLite\EcareerController@ennovatorbatchesIndex')->name('programs.ennovatorbatches');
+    Route::get('programs/ennovatorbatches/create',
+        'AssetLite\EcareerController@ennovatorbatchesCreate')->name('programs.ennovatorbatches.create');
+    Route::post('programs/ennovatorbatches/store',
+        'AssetLite\EcareerController@ennovatorbatchesStore')->name('programs.ennovatorbatches.store');
 
-    Route::get('programs/ennovatorbatches/{id}/edit', 'AssetLite\EcareerController@ennovatorbatchesEdit')->name('programs.ennovatorbatches.edit');
+    Route::get('programs/ennovatorbatches/{id}/edit',
+        'AssetLite\EcareerController@ennovatorbatchesEdit')->name('programs.ennovatorbatches.edit');
 
-    Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcareerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
-    Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcareerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
+    Route::post('programs/ennovatorbatches/{id}/update',
+        'AssetLite\EcareerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
+    Route::get('programs/ennovatorbatches/destroy/{id}',
+        'AssetLite\EcareerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
 
     # ecareer programs top tab
     Route::get('programs/tab-title', 'AssetLite\EcareerController@tabTitleIndex')->name('programs.tab.title');
-    Route::get('programs/tab-title/{id}/edit', 'AssetLite\EcareerController@tabTitleEdit')->name('programs.tab.title.edit');
-    Route::post('programs/tab-title/{id}/update', 'AssetLite\EcareerController@tabTitleUpdate')->name('programs.tab.title.update');
+    Route::get('programs/tab-title/{id}/edit',
+        'AssetLite\EcareerController@tabTitleEdit')->name('programs.tab.title.edit');
+    Route::post('programs/tab-title/{id}/update',
+        'AssetLite\EcareerController@tabTitleUpdate')->name('programs.tab.title.update');
     // Route::get('life-at-banglalink/topbanner/create', 'AssetLite\EcareerController@topbannerCreate')->name('life.at.banglalink.topbanner.create');
     // Route::post('programs/tab-title/store', 'AssetLite\EcareerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
     // Route::get('programs/tab-title/destroy/{id}', 'AssetLite\EcareerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
@@ -800,23 +907,33 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('app_service.details.store');
     Route::get('app-service/details/{type}/{id}/edit/{sectionID}', 'AssetLite\AppServiceProductDetailsController@edit')
         ->name('app_service.details.edit');
-    Route::put('app-service/details/{type}/{id}/update/{sectionID}', 'AssetLite\AppServiceProductDetailsController@update')
+    Route::put('app-service/details/{type}/{id}/update/{sectionID}',
+        'AssetLite\AppServiceProductDetailsController@update')
         ->name('app_service.details.update');
-    Route::get('app-service/sections/{type}/{id}/destroy/{sectionID}', 'AssetLite\AppServiceProductDetailsController@destroy')->name('app_service.sections.destroy');
-    Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
+    Route::get('app-service/sections/{type}/{id}/destroy/{sectionID}',
+        'AssetLite\AppServiceProductDetailsController@destroy')->name('app_service.sections.destroy');
+    Route::post('app-service/details/{type}/{id}/fixed-section/',
+        'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
         ->name('app_service.details.fixed-section');
     Route::get('/app-service-sections-sortable', 'AssetLite\AppServiceProductDetailsController@sectionsSortable');
     Route::get('/app-service-component-attribute-sortable', 'AssetLite\ComponentController@multiAttributeSortable');
 
     # App & Service component
-    Route::get('app-service/{type}/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
-    Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
-    Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
-    Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
+    Route::get('app-service/{type}/component/{id}/edit',
+        'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
+    Route::get('app-service/component/{type}/{id}',
+        'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
+    Route::get('app-service/component/create',
+        'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
+    Route::post('app-service/component/store',
+        'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
     // Get component multi attr
-    Route::get('app-service/component/itemattr', 'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
-    Route::post('app-service/component/itemattr/store', 'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
-    Route::post('app-service/component/itemattr/destory', 'AssetLite\ComponentController@conponentItemAttrDestroy')->name('appservice.component.itemattr.destory');
+    Route::get('app-service/component/itemattr',
+        'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
+    Route::post('app-service/component/itemattr/store',
+        'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
+    Route::post('app-service/component/itemattr/destory',
+        'AssetLite\ComponentController@conponentItemAttrDestroy')->name('appservice.component.itemattr.destory');
 
     // Lead Management
     Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')
@@ -830,7 +947,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('lead-product-permission-edit/{user_id}', 'AssetLite\LeadManagementController@productPermissionEditForm')
         ->name("permission.edit");
 
-    Route::post('lead-product-permission-update/{user_id}', 'AssetLite\LeadManagementController@productPermissionUpdate')
+    Route::post('lead-product-permission-update/{user_id}',
+        'AssetLite\LeadManagementController@productPermissionUpdate')
         ->name("permission.update");
 
     Route::get('lead-product-permission/destroy/{id}', 'AssetLite\LeadManagementController@permissionDelete');
@@ -869,7 +987,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('priceSlab.list.ajax');
     Route::post('product-price/slab-excel', 'AssetLite\ProductPriceSlabController@uploadPriceSlabExcel')
         ->name('priceSlab-excel.save');
-    Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
+    Route::get('product-price-slab-status-change/{rateId}',
+        'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
     Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
 
 
@@ -989,15 +1108,20 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Section Component Corporate Responsibility
     Route::get('corporate/cr-strategy-component/{section_id}/list', 'AssetLite\CorpCrStrategyComponentController@index')
         ->name('cr-strategy-component.index');
-    Route::get('corporate/cr-strategy-component/{section_id}/create', 'AssetLite\CorpCrStrategyComponentController@create')
+    Route::get('corporate/cr-strategy-component/{section_id}/create',
+        'AssetLite\CorpCrStrategyComponentController@create')
         ->name('cr-strategy-component.create');
-    Route::post('corporate/cr-strategy-component/{section_id}/store', 'AssetLite\CorpCrStrategyComponentController@store')
+    Route::post('corporate/cr-strategy-component/{section_id}/store',
+        'AssetLite\CorpCrStrategyComponentController@store')
         ->name('cr-strategy-component.store');
-    Route::get('corporate/cr-strategy-component/{section_id}/edit/{id}', 'AssetLite\CorpCrStrategyComponentController@edit')
+    Route::get('corporate/cr-strategy-component/{section_id}/edit/{id}',
+        'AssetLite\CorpCrStrategyComponentController@edit')
         ->name('cr-strategy-component.edit');
-    Route::put('corporate/cr-strategy-component/{section_id}/update/{id}', 'AssetLite\CorpCrStrategyComponentController@update')
+    Route::put('corporate/cr-strategy-component/{section_id}/update/{id}',
+        'AssetLite\CorpCrStrategyComponentController@update')
         ->name('cr-strategy-component.update');
-    Route::get('corporate/cr-strategy-component/{section_id}/destroy/{id}', 'AssetLite\CorpCrStrategyComponentController@destroy');
+    Route::get('corporate/cr-strategy-component/{section_id}/destroy/{id}',
+        'AssetLite\CorpCrStrategyComponentController@destroy');
     Route::get('corporate/cr-strategy-component-sort', 'AssetLite\CorpCrStrategyComponentController@sectionSortable');
 
     //CR-Strategy Details Component Corporate Responsibility
@@ -1036,15 +1160,19 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Case Study Component Corporate Responsibility Component
     Route::get('corporate/case-study-component/{section_id}/list', 'AssetLite\CorpCaseStudyComponentController@index')
         ->name('case-study-component.index');
-    Route::get('corporate/case-study-component/{section_id}/create', 'AssetLite\CorpCaseStudyComponentController@create')
+    Route::get('corporate/case-study-component/{section_id}/create',
+        'AssetLite\CorpCaseStudyComponentController@create')
         ->name('case-study-component.create');
     Route::post('corporate/case-study-component/{section_id}/store', 'AssetLite\CorpCaseStudyComponentController@store')
         ->name('case-study-component.store');
-    Route::get('corporate/case-study-component/{section_id}/edit/{id}', 'AssetLite\CorpCaseStudyComponentController@edit')
+    Route::get('corporate/case-study-component/{section_id}/edit/{id}',
+        'AssetLite\CorpCaseStudyComponentController@edit')
         ->name('case-study-component.edit');
-    Route::put('corporate/case-study-component/{section_id}/update/{id}', 'AssetLite\CorpCaseStudyComponentController@update')
+    Route::put('corporate/case-study-component/{section_id}/update/{id}',
+        'AssetLite\CorpCaseStudyComponentController@update')
         ->name('case-study-component.update');
-    Route::get('corporate/case-study-component/{section_id}/destroy/{id}', 'AssetLite\CorpCaseStudyComponentController@destroy');
+    Route::get('corporate/case-study-component/{section_id}/destroy/{id}',
+        'AssetLite\CorpCaseStudyComponentController@destroy');
     Route::get('corporate/case-study-component-sort', 'AssetLite\CorpCaseStudyComponentController@sectionSortable');
 
     //Case Study Details Corporate Responsibility
@@ -1116,17 +1244,20 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us-field.edit');
     Route::put('corporate/contact-us-field/{section_id}/update/{id}', 'AssetLite\CorpContactUsFieldController@update')
         ->name('contact-us-field.update');
-    Route::get('corporate/contact-us-field/{section_id}/destroy/{id}', 'AssetLite\CorpContactUsFieldController@destroy');
+    Route::get('corporate/contact-us-field/{section_id}/destroy/{id}',
+        'AssetLite\CorpContactUsFieldController@destroy');
 //    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
 
     // Corporate Responsibility Contact Us Info List
     Route::get('corporate/contact-us-info', 'AssetLite\CorporateRespContactUsController@customerContactInfoList')
         ->name('contact-us-info.list');
-    Route::get('corporate/contact-us/more-details/{id}', 'AssetLite\CorporateRespContactUsController@showCustomerDetails')
+    Route::get('corporate/contact-us/more-details/{id}',
+        'AssetLite\CorporateRespContactUsController@showCustomerDetails')
         ->name('contact-us.more_details');
 
     // Referral List
     Route::get('referral-list', 'AssetLite\ReferralListController@index');
+
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
