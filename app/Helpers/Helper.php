@@ -110,6 +110,11 @@ class Helper
 
             "4G_MAP"                  => "4G Map",
             "MIGRATE_PLAN"            => "Migrate Plan",
+            "BONDHO_SIM_OFFER"        => "Bondho SIM Offer",
+            "SWITCH_ACCOUNT"          => "Switch Account",
+            "CHECK_FOR_UPDATES"       => "Check for updates",
+            "REFER_AND_EARN"          => "Refer And Earn ",
+            "LANGUAGE"                => "Language",
         ];
     }
 
