@@ -212,7 +212,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
 
 
-
     // Support Messages
     Route::get('support-message', 'CMS\SupportMessageRatingController@index')->name('support-message');
     Route::post('support-message', 'CMS\SupportMessageRatingController@index')->name('support.message.list');
@@ -421,7 +420,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('internet-pack.filter.validity.list');
 
 
-
     //RECHARGE OFFER
     Route::get('recharge-pack/filter/create', 'CMS\RechargePackFilterController@create')
         ->name('recharge-pack.filter.create');
@@ -617,6 +615,19 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::Get('banner-analytic/data', 'CMS\BannerAnalyticController@data')->name('banner-analytic.data');
     Route::Get('banner-analytic/report/details/{id}', 'CMS\BannerAnalyticController@detailreport')->name('banner-analytic.report.details');
     Route::Get('banner-analytic/purchase/report/details/{id}', 'CMS\BannerAnalyticController@purchaseDetailreport')->name('banner-analytic.purchase.report.details');
+
+    /*
+    * Refer And Earn
+    */
+    Route::resource('mybl-refer-and-earn', 'CMS\MyBlReferAndEarnController')->except(['show', 'destroy']);
+    Route::get('mybl-refer-and-earn/destroy/{id}', 'CMS\MyBlReferAndEarnController@destroy');
+    Route::get('mybl-refer-and-earn/campaign-details/{id}', 'CMS\MyBlReferAndEarnController@campaignDetails')
+        ->name('refer-and-earn.campaign.details');
+    Route::get('mybl-refer-and-earn/analytics', 'CMS\MyBlReferAndEarnController@getReferAndEarnAnalytics')
+        ->name('refer-and-earn.analytics');
+
+    Route::get('mybl-refer-and-earn/referee-details/{id}', 'CMS\MyBlReferAndEarnController@refereeDetails');
+
 
     /*
      *  Feed Routes

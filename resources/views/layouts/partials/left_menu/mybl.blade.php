@@ -65,6 +65,14 @@
                         <i class="la la-history"></i>Products Activities</a>
                 </li>
 
+
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Categories
+                    </a>
+                </li>
+
                 <li class="{{ is_active_match(route('product-tags.index'))}}">
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
@@ -303,12 +311,6 @@
                     </a>
                 </li>
 
-                <li class="{{is_active_url('mybl-internet-offer-category')}}">
-                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i> Data Pack Filter
-                    </a>
-                </li>
                 <li class="{{is_active_url('special-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
@@ -498,6 +500,7 @@
                 </a>
             </li>
         </ul>
+    </li>
 
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
