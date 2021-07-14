@@ -91,7 +91,7 @@
 
 
                                     <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                        <label for="product_code" class="required">Referrer Product Code</label>
+                                        <label for="product_code" class="required">Referrer Prepaid Product Code</label>
                                         @if(isset($campaign))
                                             <input required maxlength="200"
                                                    data-validation-required-message="Please select product code"
@@ -119,7 +119,7 @@
                                     </div>
 
                                     <div class="form-group col-md-6 {{ $errors->has('referee_product_code') ? ' error' : '' }}">
-                                        <label for="referee_product_code" class="required">Referee Product Code</label>
+                                        <label for="referee_product_code" class="required">Referee Prepaid Product Code</label>
                                         @if(isset($campaign))
                                             <input required maxlength="200"
                                                    data-validation-required-message="Please select product code"
@@ -145,6 +145,63 @@
                                             <div class="help-block">{{ $errors->first('referee_product_code') }}</div>
                                         @endif
                                     </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                        <label for="product_code" class="required">Referrer Postpaid Product Code</label>
+                                        @if(isset($campaign))
+                                            <input required maxlength="200"
+                                                   data-validation-required-message="Please select product code"
+                                                   data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                                   value="{{ isset($campaign) ? $campaign->referrer_product_code_postpaid : old('dashboard_card_title_bn') }}"
+                                                   id="dashboard_card_title_bn"
+                                                   type="text" class="form-control"
+                                                   placeholder="Please select product code" name="referrer_product_code_postpaid">
+                                        @else
+                                            <select class="product_code" name="referrer_product_code_postpaid"
+                                                    data-url="{{ url('product-core/match') }}"
+                                                    required data-validation-required-message="Please select product code">
+                                                <option value="">Select product code</option>
+                                                {{--                                            {{ dd($campaign->referrer_product_code_postpaid) }}--}}
+                                                @foreach($products as $productCodes)
+                                                    <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="text-warning">If product exists in the list, select dropdown. otherwise, type then enter</span>
+                                        @endif
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('referrer_product_code_postpaid'))
+                                            <div class="help-block">{{ $errors->first('referrer_product_code_postpaid') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('referee_product_code_postpaid') ? ' error' : '' }}">
+                                        <label for="referee_product_code_postpaid" class="required">Referee Postpaid Product Code</label>
+                                        @if(isset($campaign))
+                                            <input required maxlength="200"
+                                                   data-validation-required-message="Please select product code"
+                                                   data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                                   value="{{ isset($campaign) ? $campaign->referee_product_code_postpaid : old('dashboard_card_title_bn') }}"
+                                                   id="dashboard_card_title_bn"
+                                                   type="text" class="form-control"
+                                                   placeholder="Please select product code" name="referee_product_code_postpaid">
+                                        @else
+                                            <select class="product_code" name="referee_product_code_postpaid"
+                                                    data-url="{{ url('product-core/match') }}"
+                                                    required data-validation-required-message="Please select product code">
+                                                <option value="">Select product code</option>
+                                                @foreach($products as $productCodes)
+                                                    <option
+                                                        value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="text-warning">If product exists in the list, select dropdown. otherwise, type then enter</span>
+                                        @endif
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('referee_product_code_postpaid'))
+                                            <div class="help-block">{{ $errors->first('referee_product_code_postpaid') }}</div>
+                                        @endif
+                                    </div>
+
 
                                     <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                         <label for="start_date">Start Date</label>

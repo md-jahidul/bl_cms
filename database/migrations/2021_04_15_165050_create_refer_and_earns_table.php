@@ -33,6 +33,8 @@ class CreateReferAndEarnsTable extends Migration
             $table->string('redeem_card_sub_title_bn')->nullable();
             $table->string('referrer_product_code')->nullable();
             $table->string('referee_product_code')->nullable();
+            $table->string('referrer_product_code_postpaid')->nullable();
+            $table->string('referee_product_code_postpaid')->nullable();
             $table->integer('remind_interval_days')->default(7);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
