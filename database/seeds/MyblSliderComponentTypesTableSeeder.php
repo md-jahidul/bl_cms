@@ -12,18 +12,33 @@ class MyblSliderComponentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Home', 'Dashboard', 'Internet', 'Bundle', 'History', 'Recharge Offers',
-            'Special Call Rate', 'Minute Packs', 'SMS Packs', 'Amer Offer'];
+        DB::statement("SET FOREIGN_KEY_CHECKS =0;");
+        DB::table('slider_component_types')->truncate();
+        $slider_types = [
+          1 => 'Home',
+          2 => 'Dashboard',
+          5 => 'Internet',
+          6 => 'Bundle',
+          7 => 'History',
+          13 => 'Recharge Offers',
+          14 => 'Special Call Rate',
+          15 => 'Minute Packs',
+          16 => 'SMS Packs',
+          17 => 'Amer Offer',
+          18 => 'Home Secondary Slider'
+        ];
 
         $slider_component_types = [];
 
-        foreach ($slider_types as $slider) {
+        foreach ($slider_types as $key => $slider) {
             $slider_component_types[] = [
+                'id' => $key,
                 'name' => $slider,
                 'slug' => str_replace(" ", "", $slider)
             ];
         }
 
         DB::table('slider_component_types')->insert($slider_component_types);
+        DB::statement("SET FOREIGN_KEY_CHECKS =1;");
     }
 }
