@@ -145,6 +145,26 @@
     @endif
 
 
+    <!-- Campaign Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Refer And Earn
+                </a>
+            </li>
+            {{--            <li class="{{is_active_url('agent/deeplink/report')}}">--}}
+            {{--                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "--}}
+            {{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+            {{--                    <i class="la la-list"></i> Report--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
+        </ul>
+    </li>
+
+
     @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>
@@ -486,25 +506,6 @@
                     <i class="la la-list"></i> Report
                 </a>
             </li>
-        </ul>
-    </li>
-
-    <!-- Agent Deep link Menu -->
-    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
-            <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
-        <ul class="menu-content">
-            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
-                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-list"></i> Refer And Earn
-                </a>
-            </li>
-{{--            <li class="{{is_active_url('agent/deeplink/report')}}">--}}
-{{--                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "--}}
-{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
-{{--                    <i class="la la-list"></i> Report--}}
-{{--                </a>--}}
-{{--            </li>--}}
         </ul>
     </li>
 @endif
