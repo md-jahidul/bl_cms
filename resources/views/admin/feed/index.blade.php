@@ -193,7 +193,9 @@
                         name: 'title',
                         width: "10%",
                         render: function (data, type, row) {
-                            return row.title;
+                            let status =  (row.status === 0) ? '<span class="text-danger"> (Inactive)</span>' : '';
+                            let showInHome =  (row.show_in_home === 1) ? '<span class="text-success"> (Showing In Home)</span>' : '';
+                            return  row.title + `<br>` + showInHome + ` ` + status;
                         }
                     },
                     {
