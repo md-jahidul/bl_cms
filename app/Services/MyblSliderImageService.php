@@ -142,6 +142,8 @@ class MyblSliderImageService
                         $segmentCTA['banner_id'] = $id;
                         BaseImageCta::create($segmentCTA);
                     }
+                } else {
+                    BaseImageCta::where('banner_id', $id)->delete();
                 }
                 if (
                     $data['user_type'] == 'all' ||
