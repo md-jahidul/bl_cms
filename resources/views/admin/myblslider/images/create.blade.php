@@ -171,7 +171,7 @@
                                         </div>
                                     </div>--}}
 
-{{--                                    <div id="append_div" class="col-md-6"></div>--}}
+                                    <div id="append_div" class="col-md-6"></div>
                                     <div class="col-md-8 mb-2">
                                         <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt=""
                                              srcset="">
