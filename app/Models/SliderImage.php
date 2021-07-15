@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\SliderType;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class SliderImage extends Model
@@ -37,5 +37,37 @@ class SliderImage extends Model
     public function baseImageCats()
     {
         return $this->hasMany(BaseImageCta::class, 'banner_id', 'id');
+    }
+
+    public function scopeStartEndDate($query)
+    {
+        $bdTimeZone = Carbon::now('Asia/Dhaka');
+        $dateTime = $bdTimeZone->toDateTimeString();
+
+        return $query->where(function ($query) use ($dateTime) {
+            $query->where('start_date', '<=', $dateTime)
+                ->orWhereNull('start_date');
+        })
+        ->where(function ($query) use ($dateTime) {
+            $query->where('end_date', '>=', $dateTime)
+                ->orWhereNull('end_date');
+        });
+    }
+
+    public function visibilityStatus(): bool
+    {
+        $bdTimeZone = Carbon::now('Asia/Dhaka');
+        $currentTime = $bdTimeZone->toDateTimeString();
+
+        $startDate = $this->start_date;
+        $endDate = $this->end_date;
+
+        if ($this->is_active == 1) {
+            if (!($currentTime >= $startDate) || !($currentTime <= $endDate)) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 }
