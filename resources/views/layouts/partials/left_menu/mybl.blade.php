@@ -123,6 +123,14 @@
                         <i class="la la-history"></i>Products Activities</a>
                 </li>
 
+
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Categories
+                    </a>
+                </li>
+
                 <li class="{{ is_active_match(route('product-tags.index'))}}">
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
@@ -207,6 +215,26 @@
             </ul>
         </li>
     @endif
+
+
+    <!-- Campaign Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Refer And Earn
+                </a>
+            </li>
+            {{--            <li class="{{is_active_url('agent/deeplink/report')}}">--}}
+            {{--                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "--}}
+            {{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+            {{--                    <i class="la la-list"></i> Report--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
+        </ul>
+    </li>
 
 
     @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
@@ -364,12 +392,6 @@
                     </a>
                 </li>
 
-                <li class="{{is_active_url('mybl-internet-offer-category')}}">
-                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i> Data Pack Filter
-                    </a>
-                </li>
                 <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
                        data-i18n="nav.templates.vert.classic_menu">

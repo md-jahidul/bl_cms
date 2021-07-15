@@ -30,12 +30,13 @@
                             <th width="10%">Type</th>
                             <th width="15%">Start Date</th>
                             <th width="15%">End Date</th>
-                            <th width="10%">Status</th>
+                            <th width="10%">Visibility</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
                         @foreach($slider_information->sliderImages as $index=>$slider_image)
+{{--                            {{ dd($slider_image->visibilityStatus()) }}--}}
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $slider_image->id }}</td>
@@ -46,10 +47,10 @@
                                 <td>{{ $slider_image->start_date }}</td>
                                 <td>{{ $slider_image->end_date }}</td>
                                 <td>
-                                    @if($slider_image->is_active == "1")
-                                        <span class="badge badge-success">Active</span>
+                                    @if($slider_image->visibilityStatus())
+                                        <span class="badge badge-success">Visible</span>
                                     @else
-                                        <span class="badge badge-danger">InActive</span>
+                                        <span class="badge badge-danger">Not Visible</span>
                                     @endif
                                 </td>
                                 <td class="action">
