@@ -63,7 +63,7 @@ class SliderImage extends Model
         $endDate = $this->end_date;
 
         if ($this->is_active == 1) {
-            if (!($currentTime >= $startDate) || !($currentTime <= $endDate)) {
+            if (isset($startDate) && !($currentTime >= $startDate) || isset($endDate) && !($currentTime <= $endDate)) {
                 return false;
             }
             return true;
