@@ -47,7 +47,7 @@ class FirebaseDeepLinkService
         return [
             'Content-Type: application/json',
             'Expect: 100-continue',
-            'Authorization: Bearer AIzaSyC2yh-bvbrSpZry4TMJYVXrPl3K7_58-go'
+//            'Authorization: Bearer AIzaSyC2yh-bvbrSpZry4TMJYVXrPl3K7_58-go'
         ];
     }
 
@@ -95,8 +95,7 @@ class FirebaseDeepLinkService
         static::makeRequest($ch,$body, $headers);
         $result = curl_exec($ch);
         $curl_info = curl_getinfo($ch);
-
-        dd($result);
+//        dd($result);
         if ($result != '' && !$result) {
             throw new BLServiceException($result);
         }
@@ -122,8 +121,7 @@ class FirebaseDeepLinkService
     private static function makeRequest($ch,$body, $headers)
     {
 
-        $url = static::getHost() /*. static::getApiToken()*/;
-//        dd($url);
+        $url = static::getHost() . static::getApiToken();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

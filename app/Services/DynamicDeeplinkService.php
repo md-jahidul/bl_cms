@@ -59,10 +59,10 @@ class DynamicDeeplinkService
                 ]
             ]
         ];
-//        $result = $this->firebaseDeepLinkService->post($body);
-        $result = $this->firebaseDeepLinkService->get($body);
+        $result = $this->firebaseDeepLinkService->post($body);
+//        $result = $this->firebaseDeepLinkService->get($body);
 
-        dd($result);
+//        dd($result);
         if ($result['status_code'] == 200) {
             $shortLink = $result['response']['shortLink'];
             return [
