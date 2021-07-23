@@ -366,7 +366,7 @@
 
                                 <div class="col-md-4">
                                     <label>Product Image</label>
-                                    <div class="form-group">
+                                    <div class="form-group mb-0">
                                         @if($errors->has('media'))
                                             <p class="text-left">
                                                 <small class="danger text-muted">{{ $errors->first('media') }}</small>
@@ -530,14 +530,78 @@
             $(this).val('');
         });
 
-        $('.dropify').dropify({
-            height: 70,
-            messages: {
-                'default': 'Browse for an Image to upload',
-                'replace': 'Click to replace',
-                'remove': 'Remove',
-                'error': 'Choose correct Image file'
-            }
+
+        $(function() {
+            // $('.dropify').dropify({ height: 100 });
+            // Used events
+            var drEvent = $('.dropify').dropify({ height: 100 });
+            drEvent.on('dropify.beforeClear', function(event, element) {
+                return confirm("Do you really want to delete?");
+            });
+            drEvent.on('dropify.afterClear', function(event, element) {
+                $.ajax({
+                    url: "{{ route('product.img.remove', $details->id)}}",
+                    type: 'Get',
+                    success: function (result) {
+                        if (result.status === "success") {
+                            swal.fire({
+                                title: result.massage,
+                                type: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            console.log(result.massage)
+                            swal.close();
+                            swal.fire({
+                                title: "Something went wrong",
+                                type: 'error',
+                            });
+                        }
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Failed to sync',
+                            type: 'error',
+                        });
+                    }
+                });
+            });
         });
+
+
+
+
+
+        $('#remove-img').click(function (e) {
+            e.preventDefault();
+
+            $('.dropify').dropify().resetPreview();
+            alert('ok')
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                html: jQuery('#syncBtn').html(),
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Sync it!'
+            }).then((result) => {
+                if (result.value) {
+                    swal.fire({
+                        title: 'Data Processing. Please Wait...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        onOpen: () => {
+                            swal.showLoading();
+                        }
+                    });
+
+
+                }
+            });
+
+        });
+
     </script>
 @endpush

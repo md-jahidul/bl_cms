@@ -301,6 +301,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
+    Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
+        ->name('product.img.remove');
+
     /*
      * Product Tags Routes
      */
