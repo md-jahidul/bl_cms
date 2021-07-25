@@ -1234,7 +1234,7 @@ class ProductCoreService
 
             return [
                 'status' => "success",
-                'massage' => "Image remove successfully!!"
+                'massage' => "Image removed successfully"
             ];
         } catch (Exception $exception) {
             return [
