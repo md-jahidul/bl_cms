@@ -68,6 +68,7 @@
                             <th>Start At</th>
                             <th>Key to reset</th>
                             <th>Status</th>
+                            <th>Created By</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -83,6 +84,7 @@
                                         {{ ucwords($schedule->status) }}
                                     </i>
                                 </td>
+                                <td>{{$schedule->user->name ?? 'N/A'}}</td>
                                 <td>
                                     <div class="btn-group" role="group">
                                         <a class="btn btn-sm btn-info" title="Edit"
@@ -105,9 +107,9 @@
                                         <form action="{{route('redis-reset-schedules.destroy', $schedule->id)}}"
                                               class="delete-form" method="post">
                                             @csrf @method('delete')
-                                            <button class="btn btn-sm btn-danger" title="Delete" type="submit">
-                                                <i class="la la-times"></i>
-                                            </button>
+{{--                                            <button class="btn btn-sm btn-danger" title="Delete" type="submit">--}}
+{{--                                                <i class="la la-times"></i>--}}
+{{--                                            </button>--}}
                                         </form>
                                     </div>
                                 </td>

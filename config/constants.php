@@ -8,7 +8,7 @@ return [
     ],
 
     'redis-keys' => [
-        'available-products' => 'available-products'
+        'available_products' => 'available_products'
     ],
 
     'status_bootstrap_classes' => [
