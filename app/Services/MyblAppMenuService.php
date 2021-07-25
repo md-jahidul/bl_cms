@@ -14,7 +14,8 @@ class MyblAppMenuService
     use CrudTrait;
     use FileTrait;
 
-    protected const REDIS_KEY = "mybl_app_menus";
+    protected const REDIS_AUTH_USER_KEY = "mybl_auth_user_menus";
+    protected const REDIS_GUEST_USER_KEY = "mybl_guest_user_menus";
 
     /**
      * @var $menuRepository
@@ -50,7 +51,6 @@ class MyblAppMenuService
      */
     public function storeMenu($data)
     {
-//        dd($data);
         $menu_count = count($this->menuRepository->findByProperties(['parent_id' => $data['parent_id']]));
         $data['display_order'] = ++$menu_count;
         $data['key'] = str_replace(' ', '_', strtolower($data['title_en']));
@@ -58,7 +58,7 @@ class MyblAppMenuService
             $data['icon'] = 'storage/' . $data['icon']->store('menu_icon');
         }
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
         return new Response('Menu added successfully');
     }
 
@@ -69,7 +69,7 @@ class MyblAppMenuService
     public function tableSort($data)
     {
         $this->menuRepository->menuTableSort($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
         return new Response('Footer menu added successfully');
     }
 
@@ -80,7 +80,6 @@ class MyblAppMenuService
      */
     public function updateMenu($data, $id)
     {
-//        dd($data);
         $menu = $this->findOne($id);
         if (request()->hasFile('icon')) {
             $data['icon'] = 'storage/' . $data['icon']->store('menu_icon');
@@ -89,7 +88,7 @@ class MyblAppMenuService
             }
         }
         $menu->update($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
         return Response('Menu updated successfully');
     }
 
@@ -111,7 +110,7 @@ class MyblAppMenuService
             }
         }
         $menu->delete();
-        Redis::del(self::REDIS_KEY);
+        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
         return [
             'message' => 'Menu delete successfully',
         ];
