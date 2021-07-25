@@ -7,20 +7,15 @@
 @section('action')
     <table>
         <tr>
-            <!-- Getting the redis reset key available for 12:00 AM to 3:59 AM -->
-            @if(in_array(\Carbon\Carbon::now()->format('H'), ["00", "01", "02", "03"]))
-                <td>
-                    <form method="post" action="{{route('mybl.product.redis')}}"
-                          onsubmit="return confirm('WARNING!!! This will reset the redis keys for available products. Do this only if you are aware of the impact. Sure to continue?')">
-                        {{csrf_field()}}
-                        <button class="btn btn-danger" type="submit">
-                            <i class="la la-adjust"></i>
-                            Reset Redis Key
-                        </button>
-                    </form>
-                </td>
-                <td> |</td>
-            @endif
+            <!--  Redis reset schedule button -->
+            <td>
+                <a class="btn btn-danger" href="{{route('redis-reset-schedules.index')}}">
+                    <i class="la la-adjust"></i>
+                    Redis Reset Schedule
+                </a>
+            </td>
+            <td> |</td>
+
             <td>
                 <form method="post" action="{{route('mybl.product.download')}}">
                     {{csrf_field()}}
