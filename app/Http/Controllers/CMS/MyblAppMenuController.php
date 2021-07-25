@@ -32,12 +32,12 @@ class MyblAppMenuController extends Controller
         $this->menuService = $menuService;
     }
 
-    public function getBreadcrumbInfo($parent_id)
-    {
-        $temp = (new Menu())->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
-        $this->menuItems[] = $temp;
-        return $temp['parent_id'];
-    }
+//    public function getBreadcrumbInfo($parent_id)
+//    {
+//        $temp = (new Menu())->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
+//        $this->menuItems[] = $temp;
+//        return $temp['parent_id'];
+//    }
 
     /**
      * Display a listing of the resource.
