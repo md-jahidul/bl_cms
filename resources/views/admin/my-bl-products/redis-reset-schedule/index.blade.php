@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Redis Reset Schedules')
-@section('card_name', 'Redis Reset Schedules')
+@section('card_name', ucwords($entryType) . ' Redis Reset Schedules')
 
 @section('content')
     <section>
@@ -48,9 +48,9 @@
                                     <button class="btn btn-success" type="submit">+ Add New Schedule</button>
                                 @endif
 
-                                <a href="" class="btn btn-warning right">
-                                    <i class="la la-list"></i>
-                                    Product List
+                                <a href="{{route('mybl.product.index')}}" class="btn btn-warning right">
+                                    <i class="la la-backward"></i>
+                                    Back to Product List
                                 </a>
                             </div>
                         </div>
@@ -151,11 +151,10 @@
             timePickerIncrement: 5,
             @if($entryType == 'edit')
             startDate: '{{date('Y-m-d H:i:s', strtotime($editingSchedule->start_at))}}',
-            minDate: '{{date('Y-m-d H:i:s', strtotime($editingSchedule->start_at))}}',
             @else
             startDate: date.getHours() > 3 ? '{{date('Y-m-d 1:00:00', strtotime('+ 1 day'))}}' : '{{date('Y-m-d H:i:s')}}',
-            minDate: date.getHours() > 3 ? '{{date('Y-m-d 1:00:00', strtotime('+ 1 day'))}}' : '{{date('Y-m-d H:i:s')}}',
             @endif
+            minDate: date.getHours() > 3 ? '{{date('Y-m-d 1:00:00', strtotime('+ 1 day'))}}' : '{{date('Y-m-d H:i:s')}}',
             locale: {
                 format: 'YYYY/MM/DD HH:mm'
             }
@@ -163,6 +162,8 @@
 
         @if($entryType == 'create')
             $('#start_at').val("");
+        @else
+            $("#start_at").trigger("click");
         @endif
 
         $('input[name="start_at"]').on('showCalendar.daterangepicker', function (ev, picker) {
