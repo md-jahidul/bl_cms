@@ -130,23 +130,21 @@
                                             </div>
 
                                             <div id="append_div" class="col-md-12 {{ $videoType ? 'hidden' : 'show' }}">
-                                                {{--                                                    @if(isset($imageInfo))--}}
-                                                {{--                                                    {{ dd($item->other_info) }}--}}
                                                 @if($info = $item->other_info)
                                                     <div class="form-group other-info-div">
                                                         @if($item->component_identifier == "DIAL")
                                                             <label> Dial Number</label>
-                                                            <input type="text" name="other_attributes" class="form-control" required
+                                                            <input type="text" name="other_info[content]" class="form-control" required
                                                                    value="@if($info) {{$info['content']}} @endif">
                                                         @endif
                                                         @if($item->component_identifier == "URL")
                                                             <label>Redirect URL</label>
-                                                            <input type="text" name="other_attributes" class="form-control" required
+                                                            <input type="text" name="other_info[content]" class="form-control" required
                                                                    value="@if($info) {{$info['content']}} @endif">
                                                         @endif
                                                         @if($item->component_identifier == "PURCHASE")
                                                             <label>Linked Product</label>
-                                                            <select name="other_attributes" class="form-control select2" required>
+                                                            <select name="other_info[content]" class="form-control select2" required>
                                                                 <option value="">Select a Product</option>
                                                                 @foreach ($products as $value)
                                                                     <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info['content']) ? 'selected' : '' }}>
