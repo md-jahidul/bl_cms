@@ -17,7 +17,11 @@ class MyblManageService
     use CrudTrait;
     use FileTrait;
 
-    protected const REDIS_KEY = "mybl_manage";
+//    protected const REDIS_KEY = "mybl_manage";
+
+    protected const REDIS_GUEST_USER_KEY = "mybl_guest_user_manage";
+    protected const REDIS_PREPAID_USER_KEY = "mybl_prepaid_user_manage";
+    protected const REDIS_POSTPAID_USER_KEY = "mybl_postpaid_user_manage";
 
     /**
      * @var MyblManageRepository
@@ -59,7 +63,11 @@ class MyblManageService
     {
         $data['display_order'] = $this->findAll()->count() + 1;
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return new Response('Category added successfully!');
     }
 
@@ -89,7 +97,11 @@ class MyblManageService
         $data['display_order'] = $this->manageItemRepository
                 ->findByProperties(['manage_categories_id' => $data['manage_categories_id']], ['id'])->count() + 1;
         $this->manageItemRepository->save($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return new Response('Category added successfully!');
     }
 
@@ -128,7 +140,11 @@ class MyblManageService
             $data['show_for_guest'] = isset($data['show_for_guest']) ? 1 : 0;
         }
         $item->update($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return new Response('Item update successfully!');
     }
 
@@ -139,7 +155,11 @@ class MyblManageService
     public function tableSort($data)
     {
         $this->manageRepository->manageTableSort($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return new Response('Sorted successfully');
     }
 
@@ -150,7 +170,11 @@ class MyblManageService
     public function itemTableSort($data)
     {
         $this->manageItemRepository->itemTableSort($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return new Response('Sorted successfully');
     }
 
@@ -163,7 +187,11 @@ class MyblManageService
     {
         $category = $this->findOne($id);
         $category->update($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return Response('Manage category updated successfully');
     }
 
@@ -176,7 +204,11 @@ class MyblManageService
     {
         $category = $this->findOne($id);
         $category->delete();
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return [
             'message' => 'Category deleted successfully',
         ];
@@ -194,7 +226,11 @@ class MyblManageService
             unlink($item->image_url);
         }
         $item->delete();
-        Redis::del(self::REDIS_KEY);
+        Redis::del([
+            self::REDIS_GUEST_USER_KEY,
+            self::REDIS_PREPAID_USER_KEY,
+            self::REDIS_POSTPAID_USER_KEY
+        ]);
         return [
             'message' => 'Item deleted successfully',
         ];
