@@ -41,7 +41,7 @@ class MyblHomeComponentSeeder extends Seeder
                 "is_api_call_enable" => true,
                 "is_eligible" => true,
                 "display_order" => 3,
-                "is_fixed_position" => true
+                "is_fixed_position" => false
             ],
             [
                 "component_key" => "amar_offer",
@@ -50,7 +50,7 @@ class MyblHomeComponentSeeder extends Seeder
                 "is_api_call_enable" => true,
                 "is_eligible" => false,
                 "display_order" => 4,
-                "is_fixed_position" => true
+                "is_fixed_position" => false
             ],
             [
                 "component_key" => "namaj_time",
@@ -131,6 +131,15 @@ class MyblHomeComponentSeeder extends Seeder
                 "is_api_call_enable" => true,
                 "is_eligible" => true,
                 "display_order" => 13,
+                "is_fixed_position" => false
+            ],
+            [
+                "component_key" => "my_bl_feature",
+                "title_en" => "Trending",
+                "title_bn" => "Trending BN",
+                "is_api_call_enable" => true,
+                "is_eligible" => true,
+                "display_order" => 14,
                 "is_fixed_position" => false
             ]
         ];
