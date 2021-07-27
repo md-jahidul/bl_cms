@@ -71,9 +71,13 @@ class FirebaseService
     public function testData()
     {
 
-        $path = base_path('test-analytic-bl-firebase-admin.json');
+        $path = base_path('mybanglalink-a95ab-firebase-adminsdk-fh494-c2370e5094.json');
 
         $factory = (new Factory)->withServiceAccount($path);
+
+//        $data = $factory->withGoogleAuthTokenCredentials();
+
+//        dd($data);
 
         $dynamicLinksDomain = 'https://pgf25.app.goo.gl/';
 //        $dynamicLinks = $this->factory->createDynamicLinksService($dynamicLinksDomain);
