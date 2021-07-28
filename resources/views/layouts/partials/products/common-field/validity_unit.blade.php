@@ -16,7 +16,7 @@
 
 <div class="form-group col-md-6 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
     <label for="duration_category_id" class="validity_unit">Validity Unit</label>
-    <select class="form-control required duration_categories validity_unit" name="validity_unit">
+    <select class="form-control required duration_categories" name="validity_unit" id="validity_unit">
         <option value="">---Select Validity Unit---</option>
         @foreach($validityUnits as $key => $value)
             <option value="{{ $key }}" {{ $key == $validityType ? 'selected' : '' }}>{{ $value }}</option>
