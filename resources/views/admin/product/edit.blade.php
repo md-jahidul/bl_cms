@@ -209,9 +209,9 @@
                 }
             })
 
-            $('#validity_unit').change(function () {
+            $('.validity_unit').change(function () {
                 let validityUnit = $(this).val();
-                let validate = $('#validity');
+                let validate = $('.validity');
                 if (validityUnit === "bill_period") {
                     validate.addClass('hidden')
                 }else {
