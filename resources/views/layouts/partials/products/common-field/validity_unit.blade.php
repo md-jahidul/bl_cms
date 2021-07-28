@@ -1,5 +1,11 @@
 @php
-    $validityUnits = ['hour', 'hours', 'day', 'days'];
+    $validityUnits = [
+        'hour'  => 'Hour',
+        'hours' => 'Hours',
+        'day'   => 'Day',
+        'days'  => 'Days',
+        'bill_period' => 'Bill Period'
+    ];
 
     if (isset($product->product_core['validity_unit'])){
         $validityType = $product->product_core['validity_unit'];
@@ -12,8 +18,8 @@
     <label for="duration_category_id" class="validity_unit">Validity Unit</label>
     <select class="form-control required duration_categories" name="validity_unit" id="validity_unit">
         <option value="">---Select Validity Unit---</option>
-        @foreach($validityUnits as $value)
-            <option value="{{ $value }}" {{ $value == $validityType ? 'selected' : '' }}>{{ ucfirst($value) }}</option>
+        @foreach($validityUnits as $key => $value)
+            <option value="{{ $key }}" {{ $key == $validityType ? 'selected' : '' }}>{{ $value }}</option>
         @endforeach
 {{--        TODO:: Duration Category Rework --}}
 {{--        @foreach($durations as $value)--}}
