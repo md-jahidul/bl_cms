@@ -1,4 +1,12 @@
-<div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }}">
+@php
+    if (isset($product->product_core['validity_unit'])){
+        $validityType = $product->product_core['validity_unit'];
+    }else{
+        $validityType = '';
+    }
+@endphp
+
+<div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }} {{ ($validityType == "bill_period") ? 'hidden' : '' }} validity">
     <label for="validity">Validity</label>
     <input type="number" name="validity" class="form-control validity" placeholder="Enter validity"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"

@@ -208,6 +208,16 @@
                     validityField.val(durationDays).prop('readonly', true);
                 }
             })
+
+            $('.validity_unit').change(function () {
+                let validityUnit = $(this).val();
+                let validate = $('.validity');
+                if (validityUnit === "bill_period") {
+                    validate.addClass('hidden')
+                }else {
+                    validate.removeClass('hidden')
+                }
+            })
         });
     </script>
 @endpush

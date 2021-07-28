@@ -103,12 +103,13 @@
 
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_scale') ? ' error' : '' }}">
                                 <label for="offer_scale" class="required">Offer Scale</label>
-                                <select class="form-control required" name="offer_scale" id="offer_type"
+                                <select class="form-control required" name="offer_scale" id="offer_scale"
                                         required data-validation-required-message="Please select offer scale">
                                     <option data-alias="" value="">---Select Offer Type---</option>
                                     <option value="Upto" {{ ($partnerOffer->offer_scale == "Upto") ? 'selected' : "" }}>Upto</option>
                                     <option value="Minimum" {{ ($partnerOffer->offer_scale == "Minimum") ? 'selected' : "" }}>Minimum</option>
                                     <option value="Fixed" {{ ($partnerOffer->offer_scale == "Fixed") ? 'selected' : "" }}>Fixed</option>
+                                    <option value="free_text" {{ ($partnerOffer->offer_scale == "free_text") ? 'selected' : "" }}>Free Text</option>
                                 </select>
                                 <div class="help-block"></div>
                                 @if ($errors->has('offer_scale'))
@@ -116,20 +117,41 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_value') ? ' error' : '' }}">
+                            <div id="offer_value" class="form-group col-md-4 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? 'hidden' : '' }}">
                                 <label for="offer_value" class="required">Offer Value</label>
                                 <input type="number" name="offer_value"  class="form-control" placeholder="Enter offer percentage in English"
-                                       value="{{ $partnerOffer->offer_value }}" required data-validation-required-message="Enter offer value">
+                                       value="{{ $partnerOffer->offer_value }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('offer_value'))
                                 <div class="help-block">  {{ $errors->first('offer_value') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_unit') ? ' error' : '' }}">
+                            <div id="free_text_value_en"
+                                 class="form-group col-md-4 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? '' : 'hidden' }}">
+                                <label for="offer_unit" class="required">Free Text Value EN</label>
+                                <input type="text" name="other_attributes[free_text_value_en]" class="form-control" placeholder="Enter any number of text"
+                                       value="{{ isset($partnerOffer->other_attributes['free_text_value_en']) ? $partnerOffer->other_attributes['free_text_value_en'] : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('free_text_value'))
+                                    <div class="help-block">{{ $errors->first('free_text_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div id="free_text_value_bn"
+                                 class="form-group col-md-4 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? '' : 'hidden' }}">
+                                <label for="offer_unit" class="required">Free Text Value BN</label>
+                                <input type="text" name="other_attributes[free_text_value_bn]" class="form-control" placeholder="Enter any number of text"
+                                       value="{{ isset($partnerOffer->other_attributes['free_text_value_bn']) ? $partnerOffer->other_attributes['free_text_value_bn'] : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('free_text_value'))
+                                    <div class="help-block">{{ $errors->first('free_text_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div id="offer_unit" class="form-group col-md-4 col-xs-12 {{ $partnerOffer->offer_scale == "free_text" ? 'hidden' : '' }}">
                                 <label for="offer_unit" class="required">Offer Unit</label>
-                                <select class="form-control required" name="offer_unit" id="offer_unit"
-                                        required data-validation-required-message="Please select offer unit">
+                                <select class="form-control required" name="offer_unit" id="offer_unit">
                                     <option data-alias="" value="">---Select Offer Unit---</option>
                                     <option value="Percentage" {{ ($partnerOffer->offer_unit == "Percentage") ? 'selected' : "" }}>Percentage</option>
                                     <option value="Taka" {{ ($partnerOffer->offer_unit == "Taka") ? 'selected' : "" }}>Taka</option>
@@ -141,8 +163,7 @@
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('get_offer_msg_en') ? ' error' : '' }}">
-                                <label for="get_offer_msg_en" class="required">Subscription SMS Info
-                                    (English)</label>
+                                <label for="get_offer_msg_en" class="required">Subscription SMS Info (English)</label>
                                 <input type="text" name="get_offer_msg_en" class="form-control"
                                        placeholder="Enter get send SMS text in English"
                                        value="{{ $partnerOffer->get_offer_msg_en }}" required
@@ -336,10 +357,6 @@
                                      src="{{ ($partnerOffer->campaign_img != '') ? config('filesystems.file_base_url') . $partnerOffer->campaign_img : config('filesystems.file_base_url'). 'assetlite/images/campaign-image/campaign-placeholder.png' }}">
                             </div>
 
-
-
-
-
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i
@@ -367,19 +384,34 @@
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 <script type="text/javascript">
-$(function () {
-var date = new Date();
-date.setDate(date.getDate());
-$('#start_date').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss',
-    showClose: true,
-});
-$('#end_date').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss',
-    useCurrent: false, //Important! See issue #1075
-    showClose: true,
-});
-});
+    $(function () {
+        var date = new Date();
+        date.setDate(date.getDate());
+        $('#start_date').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            showClose: true,
+        });
+        $('#end_date').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            useCurrent: false, //Important! See issue #1075
+            showClose: true,
+        });
+
+        $("#offer_scale").change(function () {
+            let offerScale = $(this).val();
+            if (offerScale === "free_text") {
+                $('#offer_unit').addClass('hidden')
+                $('#offer_value').addClass('hidden')
+                $('#free_text_value_en').removeClass('hidden')
+                $('#free_text_value_bn').removeClass('hidden')
+            } else {
+                $('#offer_unit').removeClass('hidden')
+                $('#offer_value').removeClass('hidden')
+                $('#free_text_value_en').addClass('hidden')
+                $('#free_text_value_bn').addClass('hidden')
+            }
+        })
+    });
 </script>
 @endpush
 
