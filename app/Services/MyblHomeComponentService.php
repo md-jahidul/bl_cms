@@ -105,7 +105,7 @@ class MyblHomeComponentService
     public function changeStatus($id)
     {
         $component = $this->findOne($id);
-        $component->is_eligible = $component->is_eligible ? 0 : 1;
+        $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
         Redis::del(self::REDIS_KEY);
         return response("Successfully status changed");

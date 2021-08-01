@@ -62,15 +62,15 @@
                                     data-component-id="{{ $component['component_id'] ?? 0 }}">
 {{--                                <tr>--}}
                                     <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                    <td>{{ $component['title_en'] }}{{--{!! $component->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}--}}</td>
+                                    <td>{{ $component['title_en'] }}</td>
                                     <td class="text-center">
                                         @if(isset($component['is_eligible']))
-                                            {{ $component['is_api_call_enable'] == 1 ? "Yes" : "No" }}
+                                            {{ $component['is_eligible'] == 1 ? "Yes" : "No" }}
                                         @endif
                                     </td>
                                     <td class="action" width="8%">
-                                        @if(isset($component['is_eligible']))
-                                            @if($component['is_eligible'] == 0)
+                                        @if(isset($component['is_api_call_enable']))
+                                            @if($component['is_api_call_enable'] == 0)
                                                 <a href="{{ route("components.status.update", $component['id']) }}" data-value="enable  {{ $component['title_en'] }}"
                                                    class="btn btn-danger border-0 change_status" title="Click to enable"> Disabled</a>
                                             @else
@@ -103,7 +103,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel17">Referees List</h4>
+                        <h4 class="modal-title" id="myModalLabel17">Home Component Edit</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -117,7 +117,7 @@
                                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                         <label for="title" class="required">Title EN</label>
                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter english label"
-                                               value="{{--{{ $menu->en_label_text }}--}}" required data-validation-required-message="Enter footer menu english label">
+                                               required data-validation-required-message="Enter footer menu english label">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_en'))
                                             <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -127,7 +127,7 @@
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                         <label for="title" class="required">Title BN</label>
                                         <input type="text" name="title_bn"  class="form-control" placeholder="Enter label in Bangla"
-                                               value="{{--{{ $menu->bn_label_text }}--}}" required data-validation-required-message="Enter label in Bangla">
+                                               required data-validation-required-message="Enter label in Bangla">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -137,12 +137,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">User Can Enable/Disable:</label> <br>
+                                            <input type="radio" name="is_eligible" value="1" id="active">
+                                            <label for="active" class="mr-1">Yes</label>
 
-                                            <input type="radio" name="is_api_call_enable" value="1" id="can_enable_yes" {{--@if($menu->status == 1) {{ 'checked' }} @endif--}}>
-                                            <label for="can_enable_yes" class="mr-1">Yes</label>
-
-                                            <input type="radio" name="is_api_call_enable" value="0" id="can_disable_no" {{--@if($menu->status == 0) {{ 'checked' }} @endif--}}>
-                                            <label for="can_disable_no">No</label>
+                                            <input type="radio" name="is_eligible" value="0" id="inactive">
+                                            <label for="inactive">No</label>
                                         </div>
                                     </div>
 
@@ -150,11 +149,11 @@
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">Status:</label>
 
-                                            <input type="radio" name="is_eligible" value="1" id="active" {{--@if($menu->status == 1) {{ 'checked' }} @endif--}}>
-                                            <label for="active" class="mr-1">Enable</label>
+                                            <input type="radio" name="is_api_call_enable" value="1" id="can_enable_yes">
+                                            <label for="can_enable_yes" class="mr-1">Enable</label>
 
-                                            <input type="radio" name="is_eligible" value="0" id="inactive" {{--@if($menu->status == 0) {{ 'checked' }} @endif--}}>
-                                            <label for="inactive">Disable</label>
+                                            <input type="radio" name="is_api_call_enable" value="0" id="can_disable_no">
+                                            <label for="can_disable_no">Disable</label>
                                         </div>
                                     </div>
                                 </div>
@@ -238,7 +237,6 @@
                         console.log(data)
                         if (data.status === "error") {
                             alert('Opps, something went wrong!!')
-                            {{--window.location.replace("{{ url('mybl-home-components') }}");--}}
                         }
                     },
                     error: function () {
