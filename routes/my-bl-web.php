@@ -187,6 +187,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')
         ->name('notification-schedule.send');
+    Route::get('push-notification-schedule/stop/{id}', 'CMS\PushNotificationController@stopSchedule')
+        ->name('notification-schedule.stop');
+    Route::get('push-notification-schedule/download/{id}', 'CMS\PushNotificationController@downloadCustomerFile')
+        ->name('notification-schedule.download');
     Route::post('target-wise-push-notification',
         'CMS\PushNotificationController@targetWiseNotificationSend')->name('target_wise_notification.send');
     Route::get('target-wise-notification-report',
