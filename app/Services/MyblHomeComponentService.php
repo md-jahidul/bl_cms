@@ -67,6 +67,7 @@ class MyblHomeComponentService
     public function tableSort($request)
     {
         try {
+            $fixedComponentCount = $this->findBy(['is_fixed_position' => 1])->count();
             $positions = $request->position;
             foreach ($positions as $position) {
                 $menu_id = $position['id'];
@@ -74,13 +75,13 @@ class MyblHomeComponentService
                 $componentId = $position['component_id'];
                 if ($componentId == 0) {
                     $update_menu = $this->findOne($menu_id);
-                    $update_menu['display_order'] = $new_position + 4;
+                    $update_menu['display_order'] = $new_position + $fixedComponentCount;
                     $update_menu->update();
                 } else {
                     $update_menu = $this->sliderRepository->findOneByProperties([
                         'id' => $menu_id, 'component_id' => $componentId
                     ]);
-                    $update_menu['position'] = $new_position + 4;
+                    $update_menu['position'] = $new_position + $fixedComponentCount;
                     $update_menu->update();
                 }
             }
