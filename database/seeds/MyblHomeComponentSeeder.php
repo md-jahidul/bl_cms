@@ -20,17 +20,17 @@ class MyblHomeComponentSeeder extends Seeder
                 "component_key" => "home_slider",
                 "title_en" => "Slider",
                 "title_bn" => "স্লাইডার",
+                "is_api_call_enable" => true,
+                "is_eligible" => false,
                 "display_order" => 1,
-                "is_api_call_enable" => false,
-                "is_eligible" => true,
                 "is_fixed_position" => true
             ],
             [
                 "component_key" => "balance_detail",
                 "title_en" => "Balance Details",
                 "title_bn" => "ব্যালেন্স বিস্তারিত",
-                "is_api_call_enable" => false,
-                "is_eligible" => true,
+                "is_api_call_enable" => true,
+                "is_eligible" => false,
                 "display_order" => 2,
                 "is_fixed_position" => true
             ],
