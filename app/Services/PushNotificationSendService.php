@@ -98,15 +98,19 @@ class PushNotificationSendService
     {
         try {
             $scheduleArr = explode('-', $data['schedule_time']);
-            $uploadedFile = $this->upload($data['customer_file'], 'notification-scheduler-files');
+
             $notificationDraftId = $data['id'];
 
             $checkScheduleExists = NotificationSchedule::where('notification_draft_id', $notificationDraftId)->first();
+            if (!empty($data['customer_file'])) {
+                $uploadedFile = $this->upload($data['customer_file'], 'notification-scheduler-files');
+            }
+
             if ($checkScheduleExists) {
                 $data = [
                     'title' => $data['title'],
                     'message' => $data['message'],
-                    'file_name' => $uploadedFile,
+                    'file_name' => $uploadedFile ?? $checkScheduleExists->file_name,
                     'start' => Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s'),
                     'end' => Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s'),
                     'status' => 'active'
@@ -119,7 +123,7 @@ class PushNotificationSendService
                 $notificationSchedule->notification_category_id = $data['category_id'];
                 $notificationSchedule->title = $data['title'];
                 $notificationSchedule->message = $data['message'];
-                $notificationSchedule->file_name = $uploadedFile;
+                $notificationSchedule->file_name = $uploadedFile ?? null;
                 $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
                 $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
                 $notificationSchedule->status = 'active';
@@ -138,6 +142,17 @@ class PushNotificationSendService
                 'message' => $e->getMessage(),
             ];
         }
+    }
+
+    public function stopSchedule($schedulerId)
+    {
+        return NotificationSchedule::where('id', $schedulerId)->update(['status' => 'inactive']);
+    }
+
+    public function downloadCustomerFile($schedulerId)
+    {
+        $schedule = NotificationSchedule::find($schedulerId);
+        return $this->download($schedule->file_name, 'customers.xlsx');
     }
 
 }

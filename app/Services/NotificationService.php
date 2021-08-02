@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\NotificationSchedule;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
 use App\Traits\CrudTrait;
@@ -115,6 +116,16 @@ class NotificationService
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $notification->update($data);
+        $schedule = $notification->schedule ?? null;
+        if ($schedule && $schedule->status == 'active') {
+            $payload = [
+                'title' => $data['title'],
+                'message' => $data['body'],
+            ];
+
+            NotificationSchedule::where('id', $schedule->id)->update($payload);
+        }
+
         return Response('Notification has been successfully updated');
     }
 
