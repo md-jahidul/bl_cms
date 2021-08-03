@@ -205,14 +205,6 @@
                 }
             });
 
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Excel File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
             $(function () {
                 var content = "";
                 var url_html;
