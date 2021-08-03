@@ -40,7 +40,7 @@
                                     <td class="pt-1">{{ $data->type  }}</td>
                                     <td class="text-center" width="10%">
                                         <a href="{{ url("mybl-manage-items/$data->id") }}" class="btn btn-outline-dark">Item List
-                                            <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{ $data->manageItems->count() }}</span></a>
+                                            <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{ $data->manage_items_count }}</span></a>
                                     </td>
                                     <td class="action" width="12%">
                                         <a href="{{ route('manage-category.edit', $data->id) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

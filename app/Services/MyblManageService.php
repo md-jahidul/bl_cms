@@ -17,8 +17,6 @@ class MyblManageService
     use CrudTrait;
     use FileTrait;
 
-//    protected const REDIS_KEY = "mybl_manage";
-
     protected const REDIS_GUEST_USER_KEY = "mybl_guest_user_manage";
     protected const REDIS_PREPAID_USER_KEY = "mybl_prepaid_user_manage";
     protected const REDIS_POSTPAID_USER_KEY = "mybl_postpaid_user_manage";
@@ -43,6 +41,42 @@ class MyblManageService
         $this->manageRepository = $manageRepository;
         $this->manageItemRepository = $manageItemRepository;
         $this->setActionRepository($manageRepository);
+    }
+
+    public function prepareCategoriesType($data)
+    {
+        return collect($data)->map(function ($category) {
+            $type = collect($category->manageItems)->map(function ($item) use ($category) {
+                if ($category->type == "slider") {
+                    if ($item->component_identifier == "video") {
+                        $typeText = "video";
+                    } else {
+                        $typeText = "image";
+                    }
+                } else {
+                    $typeText = $category->type;
+                }
+                return $typeText;
+            });
+
+            // Slider Type Define Image or Video or Both
+            if (in_array('image', $type->toArray()) && in_array('video', $type->toArray())) {
+                $category['type'] = $category->type . " (Image/Video)";
+            } elseif (in_array('video', $type->toArray())) {
+                $category['type'] = $category->type . " (Video)";
+            } elseif (in_array('image', $type->toArray())) {
+                $category['type'] = $category->type . " (Image)";
+            } else {
+                $category['type'] = $category->type;
+            }
+            return $category;
+        });
+    }
+
+    public function getCategories()
+    {
+        $categoriesWithItems = $this->manageRepository->categories();
+        return $this->prepareCategoriesType($categoriesWithItems);
     }
 
     /**

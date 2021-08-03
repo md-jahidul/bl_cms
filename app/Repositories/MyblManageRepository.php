@@ -27,4 +27,15 @@ class MyblManageRepository extends BaseRepository
         }
         return "success";
     }
+
+    public function categories()
+    {
+        return $this->model
+            ->withCount('manageItems')
+            ->with(['manageItems' => function ($q) {
+                $q->select('manage_categories_id', 'component_identifier');
+            }])
+            ->orderBy('display_order', 'ASC')
+            ->get();
+    }
 }

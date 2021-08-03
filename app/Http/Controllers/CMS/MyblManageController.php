@@ -42,8 +42,7 @@ class MyblManageController extends Controller
      */
     public function index()
     {
-        $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
-        $manageCategories = $this->manageService->findAll(null, ['manageItems'], $orderBy);
+        $manageCategories = $this->manageService->getCategories();
         return view('admin.mybl-manage.categories.index', compact('manageCategories'));
     }
 
