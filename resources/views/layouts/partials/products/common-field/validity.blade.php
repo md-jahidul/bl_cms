@@ -6,7 +6,7 @@
     }
 @endphp
 
-<div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }} {{ ($validityType == "bill_period") ? 'hidden' : '' }} validity">
+<div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }} {{ ($validityType == "free_text") ? 'hidden' : '' }} validity">
     <label for="validity">Validity</label>
     <input type="number" name="validity" class="form-control validity" placeholder="Enter validity"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
