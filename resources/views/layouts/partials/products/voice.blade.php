@@ -26,6 +26,8 @@
 
 @include('layouts.partials.products.common-field.validity')
 
+@include('layouts.partials.products.common-field.validity_free_text')
+
 @include('layouts.partials.products.common-field.ussd_code')
 
 @include('layouts.partials.products.common-field.balance_check')

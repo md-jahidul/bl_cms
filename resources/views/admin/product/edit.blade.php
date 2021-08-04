@@ -120,6 +120,9 @@
                                     @include('layouts.partials.products.common-field.call_rate')
                                     @include('layouts.partials.products.common-field.call_rate_unit')
                                     @include('layouts.partials.products.common-field.ussd_code')
+                                    @include('layouts.partials.products.common-field.validity_unit')
+                                    @include('layouts.partials.products.common-field.validity')
+                                    @include('layouts.partials.products.common-field.validity_free_text')
                                 </slot>
 
                                 <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
@@ -212,9 +215,12 @@
             $('.validity_unit').change(function () {
                 let validityUnit = $(this).val();
                 let validate = $('.validity');
-                if (validityUnit === "bill_period") {
+                let validateFreeText = $('.validity_free_text');
+                if (validityUnit === "free_text") {
                     validate.addClass('hidden')
+                    validateFreeText.removeClass('hidden')
                 }else {
+                    validateFreeText.addClass('hidden')
                     validate.removeClass('hidden')
                 }
             })

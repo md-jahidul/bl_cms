@@ -90,7 +90,6 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-        $data['validity_postpaid'] = ($data['validity_unit'] == "bill_period") ? "Bill period" : null;
         $product = $this->save($data);
         //save Search Data
         $this->_saveSearchData($product);

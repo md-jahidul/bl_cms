@@ -4,7 +4,7 @@
         'hours' => 'Hours',
         'day'   => 'Day',
         'days'  => 'Days',
-        'bill_period' => 'Bill Period'
+        'free_text' => 'Free Text'
     ];
 
     if (isset($product->product_core['validity_unit'])){

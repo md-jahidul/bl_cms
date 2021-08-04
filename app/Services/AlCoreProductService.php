@@ -136,7 +136,6 @@ class AlCoreProductService
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
             $data['sim_type'] = $simId;
-            $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
             $this->save($data);
         }
     }
