@@ -67,7 +67,7 @@ class MyblManageService
             } elseif (in_array('image', $type->toArray())) {
                 $category['type'] = $category->type . " (Image)";
             } else {
-                $category['type'] = $category->type;
+                $category['type'] = ($category->type == "game") ? $category->type . " (Redirect URL)" : $category->type . " (CTA Action)";
             }
             return $category;
         });
