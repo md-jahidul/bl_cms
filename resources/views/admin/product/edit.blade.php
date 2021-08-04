@@ -123,6 +123,7 @@
                                     @include('layouts.partials.products.common-field.validity_unit')
                                     @include('layouts.partials.products.common-field.validity')
                                     @include('layouts.partials.products.common-field.validity_free_text')
+                                    @include('layouts.partials.products.common-field.tag')
                                 </slot>
 
                                 <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
