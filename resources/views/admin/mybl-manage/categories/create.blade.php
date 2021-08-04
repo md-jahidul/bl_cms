@@ -28,15 +28,15 @@
                                         <div class="row skin skin-square">
                                             <div class="col-md-4 col-sm-12">
                                                 <input type="radio" name="type" value="game" id="game">
-                                                <label for="game">Game</label>
+                                                <label for="game">Game (<span class="text-warning">Redirect URL</span>)</label>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <input type="radio" name="type" value="slider" id="slider" >
-                                                <label for="slider">Slider</label>
+                                                <label for="slider">Slider (<span class="text-warning">Image/Video</span>)</label>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <input type="radio" name="type" value="service" id="service">
-                                                <label for="service">Service</label>
+                                                <label for="service">Service (<span class="text-warning">CTA Action</span>)</label>
                                             </div>
                                         </div>
                                         <div class="help-block"></div>
