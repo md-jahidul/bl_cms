@@ -15,8 +15,8 @@ class CreateMyblDynamicDeeplinksTable extends Migration
     {
         Schema::create('mybl_dynamic_deeplinks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('reference_id')->nullable();
-            $table->string('reference_model')->nullable();
+            $table->integer('referenceable_id')->nullable();
+            $table->string('referenceable_type')->nullable();
             $table->string('link')->nullable();
             $table->integer('clicked_android')->default(0);
             $table->integer('clicked_ios')->default(0);

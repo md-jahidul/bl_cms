@@ -22,6 +22,7 @@
                         <th width='5%'><i class="icon-cursor-move icons"></i></th>
                         <th width="10%">ID</th>
                         <th width="60%">Tittle</th>
+                        <th>Deep Link</th>
                         <th width="30%">Action</th>
                     </tr>
                     </thead>
@@ -31,11 +32,21 @@
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$storeCategory->id}}</td>
                                 <td>{{$storeCategory->name_en}}<span class="badge badge-default badge-pill bg-primary float-right"></span></td>
+                                <td class="deep-link-section-{{ $storeCategory->id }}">
+                                    @if(isset($storeCategory->dynamicLinks))
+                                        <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                data-toggle="tooltip" data-placement="button"
+                                                data-value="{{ $storeCategory->dynamicLinks->link }}"
+                                                title="Copy to Clipboard">Copy</button>
+                                    @else
+                                        <button class="btn-sm btn-icon btn-outline-success cursor-pointer create_deep_link remove-{{ $storeCategory->id }}"
+                                                title="Click for deep link" data-value="{{ $storeCategory->slug }}"
+                                                data-id="{{ $storeCategory->id }}">
+                                            <i  class="la icon-link remove-{{ $storeCategory->id }}" data-id="{{ $storeCategory->id }}"></i>
+                                        </button>
+                                    @endif
+                                </td>
                                 <td>
-                                    <button class="btn btn-sm btn-icon btn-outline-success edit border-0 create_deep_link"
-                                            title="Click for deep link" data-value="{{ $storeCategory->slug }}">
-                                        <i class="la icon-link"></i>
-                                    </button>
                                     <a role="button" data-toggle="tooltip" data-original-title="Edit Category Information" data-placement="left"
                                        href="{{route('storeCategory.edit',$storeCategory->id)}}" class="btn-sm btn-outline-primary border-2">
                                         <i class="la la-pencil"></i>

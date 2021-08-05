@@ -24,4 +24,9 @@ class MyBlInternetOffersCategory extends Model
             ]
         ];
     }
+
+    public function dynamicLinks()
+    {
+        return $this->morphOne(MyblDynamicDeeplink::class, 'referenceable');
+    }
 }

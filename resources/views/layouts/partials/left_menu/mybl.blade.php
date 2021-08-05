@@ -459,13 +459,17 @@
         <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Deeplink Report</span></a>
             <ul class="menu-content">
-                <li class="{{ is_active_url('products-deep-link-report') }}">
+                <li class="{{ is_active_url(route('products-deep-link-report')) }}">
                     <a class="menu-item" href="{{ route('products-deep-link-report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Product Deeplink</a>
                 </li>
 
-
+                <li class="{{ is_active_url('deeplink-analytic') }}">
+                    <a class="menu-item" href="{{ url('deeplink-analytic') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Deeplink Analytic</a>
+                </li>
             </ul>
         </li>
     @endif
