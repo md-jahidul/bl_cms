@@ -701,6 +701,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
     //App MENU  ====================================
     Route::get('mybl-menu/create', 'CMS\MyblAppMenuController@create');
     Route::get('mybl-menu/{id}/child-menu/create', 'CMS\MyblAppMenuController@create');

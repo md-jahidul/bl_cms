@@ -23,8 +23,9 @@
                             <th width='5%'>SL</th>
                             <th width='15%'>Name</th>
                             <th width='20%'>Slug</th>
-                            <th width='10%'>sort</th>
+                            <th width='10%'>Sort</th>
                             <th width='10%'>Date</th>
+                            <th width='3%'>Deep Link</th>
                             <th width='20%'>Action</th>
                         </tr>
                         </thead>
@@ -36,11 +37,27 @@
                                 <td width='10%'>{{$internet_offer->slug}}</td>
                                 <td width='10%'>{{$internet_offer->sort}}</td>
                                 <td width='15%'>{{$internet_offer->created_at}}</td>
+                                <td width='5%' class="deep-link-section-{{ $internet_offer->id }}">
+                                    @if(isset($internet_offer->dynamicLinks))
+                                        <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                data-toggle="tooltip" data-placement="button"
+                                                data-value="{{ $internet_offer->dynamicLinks->link }}"
+                                                title="Copy to Clipboard">Copy</button>
+                                    @else
+                                        <button class="btn-sm btn-icon btn-outline-success cursor-pointer create_deep_link remove-{{ $internet_offer->id }}"
+                                                title="Click for deep link" data-value="{{ $internet_offer->slug }}"
+                                                data-id="{{ $internet_offer->id }}">
+                                            <i  class="la icon-link remove-{{ $internet_offer->id }}" data-id="{{ $internet_offer->id }}"></i>
+                                        </button>
+                                    @endif
+                                </td>
+
                                 <td width='10%'>
-                                    <button class="btn btn-icon btn-outline-success edit create_deep_link"
-                                            title="Click for deep link" data-value="{{ $internet_offer->slug }}">
-                                        <i class="la icon-link"></i>
-                                    </button>
+{{--                                    <button class="btn btn-icon btn-outline-success edit create_deep_link"--}}
+{{--                                            title="Click for deep link" data-value="{{ $internet_offer->slug }}"--}}
+{{--                                            data-id="{{ $internet_offer->id }}">--}}
+{{--                                        <i class="la icon-link"></i>--}}
+{{--                                    </button>--}}
                                     <a role="button" href="{{route('mybl.internetOffer.category.edit',$internet_offer->id)}}" class="btn btn-outline-primary">
                                         <i class="la la-pencil"></i>
                                     </a>

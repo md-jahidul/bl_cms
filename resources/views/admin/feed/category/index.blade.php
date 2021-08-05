@@ -26,12 +26,15 @@
                             <th>Parent</th>
                             <th>Title</th>
                             <th>Slug</th>
-                            <th>status</th>
+                            <th>Status</th>
+                            <th>Deep Link</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
                         @foreach ($categories as $index => $category)
+
+{{--                            {{ dd($category->dynamicLinks->link) }}--}}
                             <tr data-index="{{ $category->id }}" data-position="{{ $category->ordering }}">
                                 <td><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$category->id}}</td>
@@ -39,11 +42,21 @@
                                 <td>{{$category->title}}</td>
                                 <td>{{$category->slug}}</td>
                                 <td>{{$category->status == 1 ? 'Active' : 'Inactive'}}</td>
+                                <td class="deep-link-section-{{ $category->id }}">
+                                    @if(isset($category->dynamicLinks))
+                                        <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                data-toggle="tooltip" data-placement="button"
+                                                data-value="{{ $category->dynamicLinks->link }}"
+                                                title="Copy to Clipboard">Copy</button>
+                                    @else
+                                        <button class="btn-sm btn-icon btn-outline-success cursor-pointer create_deep_link remove-{{ $category->id }}"
+                                                title="Click for deep link" data-value="{{ $category->slug }}"
+                                                data-id="{{ $category->id }}">
+                                            <i  class="la icon-link remove-{{ $category->id }}" data-id="{{ $category->id }}"></i>
+                                        </button>
+                                    @endif
+                                </td>
                                 <td>
-                                    <button class="btn btn-icon btn-outline-success edit create_deep_link"
-                                            title="Click for deep link" data-value="{{ $category->slug }}">
-                                        <i class="la icon-link"></i>
-                                    </button>
                                     <a role="button" title="Edit Feed Category"
                                        href="{{route('feeds.categories.edit',$category->id)}}"
                                        class="btn-pancil btn btn-outline-primary">
@@ -61,12 +74,10 @@
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </section>
-
 @endsection
 
 
@@ -85,6 +96,8 @@
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
     <script>
         let auto_save_url = "{{ route('feeds.categories.update_position') }}";
         let deep_link_create_url = "{{ url('feed-deeplink/create?') }}category=";

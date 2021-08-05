@@ -10,11 +10,13 @@
 namespace App\Services;
 
 use App\Repositories\AboutPageRepository;
+use App\Repositories\MyblDynamicDeeplinkRepository;
 use App\Repositories\PrizeRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DynamicDeeplinkService
@@ -23,22 +25,53 @@ class DynamicDeeplinkService
      * @var FirebaseDeepLinkService
      */
     private $firebaseDeepLinkService;
+    /**
+     * @var MyblDynamicDeeplinkRepository
+     */
+    private $dynamicDeeplinkRepository;
 
     /**
      * FirebaseDeepLinkService constructor.
      * @param FirebaseDeepLinkService $firebaseDeepLinkService
      */
     public function __construct(
-        FirebaseDeepLinkService $firebaseDeepLinkService
+        FirebaseDeepLinkService $firebaseDeepLinkService,
+        MyblDynamicDeeplinkRepository $dynamicDeeplinkRepository
     ) {
         $this->firebaseDeepLinkService = $firebaseDeepLinkService;
+        $this->dynamicDeeplinkRepository = $dynamicDeeplinkRepository;
+    }
+
+    /**
+     * @param $dynamicLinks
+     * @return Collection
+     */
+    public function prepareDeeplinkData($dynamicLinks): Collection
+    {
+        return collect($dynamicLinks)->map(function ($data) {
+            if (isset($data->referenceable->name)) {
+                $data['reference_name'] = $data->referenceable->name;
+            } elseif (isset($data->referenceable->name_en)) {
+                $data['reference_name'] = $data->referenceable->name_en;
+            } elseif (isset($data->referenceable->title)) {
+                $data['reference_name'] = $data->referenceable->title;
+            }
+            unset($data->referenceable);
+            return $data;
+        });
+    }
+
+    public function analyticData()
+    {
+        $dynamicLinks = $this->dynamicDeeplinkRepository->getAnalyticData();
+        return $this->prepareDeeplinkData($dynamicLinks);
     }
 
     /**
      * @param $slug
      * @return mixed
      */
-    public function generateDeeplink($sectionType, $request)
+    public function generateDeeplink($sectionType, $moduleData, $request)
     {
         $category = $request->category;
         $subCategory = $request->sub_category;
@@ -59,11 +92,13 @@ class DynamicDeeplinkService
                 ]
             ]
         ];
+
         $result = $this->firebaseDeepLinkService->post($body);
         if ($result['status_code'] == 200) {
             $shortLink = $result['response']['shortLink'];
+            $moduleData->dynamicLinks()->create(['link' => $shortLink]);
             return [
-                'short_link' => "$shortLink",
+                'short_link' => $shortLink,
                 'status_code' => $result['status_code'],
                 'ms' => "Successfully created"
             ];

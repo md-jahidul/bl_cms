@@ -4,7 +4,11 @@ namespace App\Http\Controllers\CMS;
 
 use App\Models\AgentList;
 use App\Models\AgentDeeplinkDetail;
+use App\Models\MyBlInternetOffersCategory;
 use App\Services\DynamicDeeplinkService;
+use App\Services\FeedCategoryService;
+use App\Services\MyBlInternetOffersCategoryService;
+use App\Services\StoreCategoryService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -26,15 +30,40 @@ class DynamicDeeplinkController extends Controller
     protected const STORE = 'store';
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
+    /**
+     * @var MyBlInternetOffersCategoryService
+     */
+    private $internetOffersCategoryService;
+    /**
+     * @var StoreCategoryService
+     */
+    private $storeCategoryService;
+    /**
+     * @var FeedCategoryService
+     */
+    private $feedCategoryService;
 
     /**
      * DynamicDeeplinkService constructor.
      * @param DynamicDeeplinkService $dynamicDeeplinkService
      */
-    public function __construct(DynamicDeeplinkService $dynamicDeeplinkService)
-    {
+    public function __construct(
+        DynamicDeeplinkService $dynamicDeeplinkService,
+        MyBlInternetOffersCategoryService $internetOffersCategoryService,
+        FeedCategoryService $feedCategoryService,
+        StoreCategoryService $storeCategoryService
+    ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
+        $this->internetOffersCategoryService = $internetOffersCategoryService;
+        $this->feedCategoryService = $feedCategoryService;
+        $this->storeCategoryService = $storeCategoryService;
         $this->middleware('auth');
+    }
+
+    public function analyticData()
+    {
+        $analytics = $this->dynamicDeeplinkService->analyticData();
+        return view('admin.deep-link-analytic.list', compact('analytics'));
     }
 
     /**
@@ -44,7 +73,8 @@ class DynamicDeeplinkController extends Controller
      */
     public function storeDeepLinkCreate(Request $request)
     {
-        return $this->dynamicDeeplinkService->generateDeeplink(self::STORE, $request);
+        $storeCat = $this->storeCategoryService->findOne($request->id);
+        return $this->dynamicDeeplinkService->generateDeeplink(self::STORE, $storeCat, $request);
     }
 
     /**
@@ -53,7 +83,8 @@ class DynamicDeeplinkController extends Controller
      */
     public function feedDeepLinkCreate(Request $request)
     {
-        return $this->dynamicDeeplinkService->generateDeeplink(self::FEED, $request);
+        $feedCat = $this->feedCategoryService->findOne($request->id);
+        return $this->dynamicDeeplinkService->generateDeeplink(self::FEED, $feedCat, $request);
     }
 
     /**
@@ -62,6 +93,7 @@ class DynamicDeeplinkController extends Controller
      */
     public function internetPackDeepLinkCreate(Request $request)
     {
-        return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $request);
+        $internetCat = $this->internetOffersCategoryService->findOne($request->id);
+        return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $internetCat, $request);
     }
 }
