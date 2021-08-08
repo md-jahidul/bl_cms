@@ -226,7 +226,7 @@ class MyblManageService
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
-        return Response('Manage category updated successfully');
+        return Response('Explore category updated successfully');
     }
 
     /**
