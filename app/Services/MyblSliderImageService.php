@@ -31,12 +31,25 @@ class MyblSliderImageService
         $this->setActionRepository($sliderImageRepository);
     }
 
-
-    public function itemList($sliderId, $type)
+    public function separatedActiveAndInactive($data): array
     {
-        return $this->sliderImageRepository->getSliderImage($sliderId, $type);
+        $activeImages = [];
+        $inActiveImages = [];
+        foreach ($data as $image) {
+            if ($image->is_active == 1 && $image->visibilityStatus()) {
+                $activeImages[] = $image;
+            } else {
+                $inActiveImages[] = $image;
+            }
+        }
+        return array_merge($activeImages, $inActiveImages);
     }
 
+    public function itemList($sliderId)
+    {
+        $sliderImages = $this->sliderImageRepository->getSliderImage($sliderId);
+        return $this->separatedActiveAndInactive($sliderImages);
+    }
 
     /**
      * Storing the banner resource
