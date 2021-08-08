@@ -53,10 +53,11 @@ class MyblSliderImageController extends Controller
      */
     public function index($sliderId)
     {
-        $slider_information = $this->sliderService->findOne($sliderId);
+        $slider = $this->sliderService->findOne($sliderId);
+        $sliderImages = $this->sliderImageService->itemList($sliderId);
         return view(
             'admin.myblslider.images.index',
-            compact('sliderId', 'slider_information')
+            compact('sliderId', 'slider', 'sliderImages')
         );
     }
 
