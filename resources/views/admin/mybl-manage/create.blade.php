@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Manage Item Create')
-@section('card_name', 'Manage Item Create')
+@section('title', 'Explore Item Create')
+@section('card_name', 'Explore Item Create')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('manage-category.index') }}">Category List</a></li>
     <li class="breadcrumb-item active">

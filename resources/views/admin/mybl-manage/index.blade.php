@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Manage Category List')
-@section('card_name', 'Manage Category List')
+@section('title', 'Explore Category List')
+@section('card_name', 'Explore Category List')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('manage-category') }}">Category List</a></li>
 {{--    @if($parent_id != 0)--}}
