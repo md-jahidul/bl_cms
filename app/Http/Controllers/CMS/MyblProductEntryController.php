@@ -210,4 +210,9 @@ class MyblProductEntryController extends Controller
         $this->service->resetProductRedisKeys();
         return redirect()->back()->with('success', 'Redis key reset is successful!');
     }
+
+    public function imageRemove($id)
+    {
+        return $this->service->imgRemove($id);
+    }
 }

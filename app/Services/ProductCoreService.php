@@ -1218,4 +1218,26 @@ class ProductCoreService
             Log::error('Product Search Content Generation Error');
         }
     }
+
+    public function imgRemove($id)
+    {
+        try {
+            $product = $this->myBlProductRepository->findOne($id);
+            if (!empty($product->media)) {
+                unlink('storage/' . $product->media);
+            }
+            $product->media = null;
+            $product->update();
+
+            return [
+                'status' => "success",
+                'massage' => "Image removed successfully"
+            ];
+        } catch (Exception $exception) {
+            return [
+                'status' => "failed",
+                'massage' => $exception->getMessage()
+            ];
+        }
+    }
 }
