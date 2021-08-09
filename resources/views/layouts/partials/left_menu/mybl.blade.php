@@ -51,6 +51,14 @@
                     </a>
                 </li>
             </ul>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_url('manage-category') }}">
+                    <a class="menu-item" href="{{ route('manage-category.index') }}">
+                        <i class="la la-medium"></i>Explore</a>
+                </li>
+            </ul>
+
         </li>
     @endif
 
@@ -543,10 +551,6 @@
         </ul>
     </li>
 
-    <li class="{{ is_active_url('manage-category') }}">
-        <a class="menu-item" href="{{ route('manage-category.index') }}">
-            <i class="la la-medium"></i>Explore</a>
-    </li>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
