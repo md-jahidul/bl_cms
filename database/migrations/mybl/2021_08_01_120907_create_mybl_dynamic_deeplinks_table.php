@@ -18,6 +18,7 @@ class CreateMyblDynamicDeeplinksTable extends Migration
             $table->integer('referenceable_id')->nullable();
             $table->string('referenceable_type')->nullable();
             $table->string('link')->nullable();
+            $table->string('deep_link')->nullable();
             $table->integer('clicked_android')->default(0);
             $table->integer('clicked_ios')->default(0);
             $table->timestamps();
