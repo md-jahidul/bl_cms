@@ -83,7 +83,7 @@ class DynamicDeeplinkService
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
-                "link" => "https://banglalink.net/$endPointURL",
+                "link" => env('APP_DEEP_LINK') . "$endPointURL",
                 "androidInfo" => [
                     "androidPackageName" => "com.arena.banglalinkmela.app"
                 ],
@@ -93,10 +93,18 @@ class DynamicDeeplinkService
             ]
         ];
 
+        dd($body);
+
         $result = $this->firebaseDeepLinkService->post($body);
         if ($result['status_code'] == 200) {
             $shortLink = $result['response']['shortLink'];
-            $moduleData->dynamicLinks()->create(['link' => $shortLink]);
+
+            // Store Deep-link Info
+            $data = [
+                'link' => $shortLink,
+                'deep_link' => $body['dynamicLinkInfo']['link']
+            ];
+            $moduleData->dynamicLinks()->create($data);
             return [
                 'short_link' => $shortLink,
                 'status_code' => $result['status_code'],
