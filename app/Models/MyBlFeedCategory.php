@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
 class MyBlFeedCategory extends Model
@@ -35,5 +36,13 @@ class MyBlFeedCategory extends Model
     public function parent()
     {
         return $this->belongsTo(self::class);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function dynamicLinks()
+    {
+        return $this->morphOne(MyblDynamicDeeplink::class, 'referenceable');
     }
 }
