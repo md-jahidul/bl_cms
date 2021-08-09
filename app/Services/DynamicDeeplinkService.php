@@ -93,8 +93,6 @@ class DynamicDeeplinkService
             ]
         ];
 
-        dd($body);
-
         $result = $this->firebaseDeepLinkService->post($body);
         if ($result['status_code'] == 200) {
             $shortLink = $result['response']['shortLink'];
