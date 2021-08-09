@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
@@ -651,7 +652,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-menu/{id?}/{child_menu?}', 'CMS\MyblAppMenuController@index');
     Route::get('mybl-menu-auto-save', 'CMS\MyblAppMenuController@parentMenuSortable');
     Route::get('mybl-menu/{parentId}/destroy/{id}', 'CMS\MyblAppMenuController@destroy');
+    //App Manage  ====================================
+    Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
+    Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
+        ->name('manage-category.destroy');
+    Route::get('manage-category/sort-auto-save', 'CMS\MyblManageController@categorySortable');
 
+    Route::prefix('mybl-manage-items/{category_id}')->group(function () {
+        Route::get('/', 'CMS\MyblManageController@manageItemsList')->name('mybl-manage-items.index');
+        Route::get('/create', 'CMS\MyblManageController@createItem')->name('mybl-manage-items.create');
+        Route::post('/store', 'CMS\MyblManageController@storeItem')->name('mybl-manage-items.store');
+        Route::get('/edit/{id}', 'CMS\MyblManageController@editItem')->name('mybl-manage-items.edit');
+        Route::put('/update/{id}', 'CMS\MyblManageController@updateItem')->name('mybl-manage-items.update');
+        Route::get('/destroy/{id}', 'CMS\MyblManageController@destroyItem')->name('mybl-manage-items.destroy');
+        Route::get('/sort-auto-save', 'CMS\MyblManageController@itemSortable');
+    });
 });
 
 // 4G Map View Route
