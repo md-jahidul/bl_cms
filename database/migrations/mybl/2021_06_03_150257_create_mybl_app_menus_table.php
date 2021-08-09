@@ -22,6 +22,7 @@ class CreateMyblAppMenusTable extends Migration
             $table->string('icon')->nullable();
             $table->integer('display_order')->nullable();
             $table->string('key')->nullable();
+            $table->string('deep_link_slug')->nullable();
             $table->json('other_info')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->timestamps();
