@@ -94,8 +94,7 @@ class ProductCoreService
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
         MyBlProductTagRepository $myBlProductTagRepository
-    )
-    {
+    ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->myBlProductRepository = $myBlProductRepository;
         $this->productActivityRepository = $productActivityRepository;
@@ -834,6 +833,24 @@ class ProductCoreService
         return MyBlProduct::with('details', 'tabs')->where('product_code', $product_code)->first();
     }
 
+    public function getInactiveProducts()
+    {
+        $myBlInactiveProducts = MyBlProduct::where('status', 0)->get()->pluck('product_code')->toArray();
+        return ProductCore::whereIn('product_code', $myBlInactiveProducts)->get();
+    }
+
+    public function activateProduct($productCode)
+    {
+        try {
+            MyBlProduct::where('product_code', $productCode)->update(['status' => 1]);
+            ProductCore::where('product_code', $productCode)->update(['status' => 1]);
+            return true;
+        } catch (Exception $exception) {
+            Log::error('Error while activating product having code: ' . $productCode . '. Message: ' . $exception->getMessage());
+            return false;
+        }
+    }
+
     /**
      * Update my-bl products
      *
@@ -1137,7 +1154,8 @@ class ProductCoreService
                     $product->detailTabs->pluck('name')->toArray()
                 ) ?: $product->offer_section_title);
                 $productTags = $product->tags;
-                $insert_data[23] = $productTags->count() ? implode(',', $productTags->pluck('title')->toArray()) : $product->tag;
+                $insert_data[23] = $productTags->count() ? implode(',',
+                    $productTags->pluck('title')->toArray()) : $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
                 $insert_data[26] = $product->details->display_sd_vat_tax;
@@ -1198,6 +1216,28 @@ class ProductCoreService
             Artisan::call('sync:search:offers');
         } catch (Exception $exception) {
             Log::error('Product Search Content Generation Error');
+        }
+    }
+
+    public function imgRemove($id)
+    {
+        try {
+            $product = $this->myBlProductRepository->findOne($id);
+            if (!empty($product->media)) {
+                unlink('storage/' . $product->media);
+            }
+            $product->media = null;
+            $product->update();
+
+            return [
+                'status' => "success",
+                'massage' => "Image removed successfully"
+            ];
+        } catch (Exception $exception) {
+            return [
+                'status' => "failed",
+                'massage' => $exception->getMessage()
+            ];
         }
     }
 }

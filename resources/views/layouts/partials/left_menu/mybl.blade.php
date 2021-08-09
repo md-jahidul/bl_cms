@@ -4,41 +4,61 @@
 @if(Auth::user()->type == 'mybl')
 
     @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
-        <li class="nav-item"><a href="#"><i class="la la-users"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
+
+        <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Settings & Others</span></a>
             <ul class="menu-content">
-                @if( auth()->user()->can_view('User') )
-                    <li class="{{ is_active_url('authorize/users')}}">
-                        <a class="menu-item" href="{{ url('authorize/users') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-user"></i> User</a>
-                    </li>
-                @endif
-
-
-                @if( auth()->user()->can_view('Roles') )
-                    <li class="{{ is_active_url('authorize/roles')}}">
-                        <a class="menu-item" href="{{ url('authorize/roles') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-cubes"></i> Role</a>
-                    </li>
-                @endif
-                @if( auth()->user()->can_view('Permissions') )
-                    <li class="{{ is_active_url('authorize/permissions')}}">
-                        <a class="menu-item" href="{{ url('authorize/permissions') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-check-square"></i> Permission</a>
-                    </li>
-                @endif
-
-                @if( auth()->user()->can_view('AccessLog') )
-                    <li class="{{ is_active_url('access-logs')}}">
-                        <a class="menu-item" href="{{ url('access-logs') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-lock"></i> Access Logs</a>
-                    </li>
-                @endif
+                <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
+                    <ul class="menu-content">
+                        @if( auth()->user()->can_view('User') )
+                            <li class="{{ is_active_url('authorize/users')}}">
+                                <a class="menu-item" href="{{ url('authorize/users') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-user"></i> User</a>
+                            </li>
+                        @endif
+                        @if( auth()->user()->can_view('Roles') )
+                            <li class="{{ is_active_url('authorize/roles')}}">
+                                <a class="menu-item" href="{{ url('authorize/roles') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-cubes"></i> Role</a>
+                            </li>
+                        @endif
+                        @if( auth()->user()->can_view('Permissions') )
+                            <li class="{{ is_active_url('authorize/permissions')}}">
+                                <a class="menu-item" href="{{ url('authorize/permissions') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-check-square"></i> Permission</a>
+                            </li>
+                        @endif
+                        @if( auth()->user()->can_view('AccessLog') )
+                            <li class="{{ is_active_url('access-logs')}}">
+                                <a class="menu-item" href="{{ url('access-logs') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-lock"></i> Access Logs</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
             </ul>
+
+            <ul class="menu-content">
+                <li class=" {{ is_active_url('mybl-menu') }}">
+                    <a class="menu-item" href="{{ url('mybl-menu') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-ellipsis-v"></i> Menu List
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_url('manage-category') }}">
+                    <a class="menu-item" href="{{ route('manage-category.index') }}">
+                        <i class="la la-medium"></i>Explore</a>
+                </li>
+            </ul>
+
         </li>
     @endif
 
@@ -58,6 +78,11 @@
                 <li class="{{ is_active_match(route('mybl.product.index')) }}">
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
+                </li>
+
+                <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
+                    <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
+                        <i class="ft-x-square"></i>Inactive Products</a>
                 </li>
 
                 <li class="{{ is_active_match(route('product-activities.history')) }}">
@@ -480,13 +505,17 @@
         <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Deeplink Report</span></a>
             <ul class="menu-content">
-                <li class="{{ is_active_url('products-deep-link-report') }}">
+                <li class="{{ is_active_url(route('products-deep-link-report')) }}">
                     <a class="menu-item" href="{{ route('products-deep-link-report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Product Deeplink</a>
                 </li>
 
-
+                <li class="{{ is_active_url('deeplink-analytic') }}">
+                    <a class="menu-item" href="{{ url('deeplink-analytic') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Deeplink Analytic</a>
+                </li>
             </ul>
         </li>
     @endif

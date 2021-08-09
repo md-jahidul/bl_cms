@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class MyBlStoreCategory extends Model
 {
@@ -24,4 +25,12 @@ class MyBlStoreCategory extends Model
     {
         return $this->hasMany(MyBlStoreSubCategory::class, 'category_id');
     }*/
+
+    /**
+     * @return MorphMany
+     */
+    public function dynamicLinks()
+    {
+        return $this->morphOne(MyblDynamicDeeplink::class, 'referenceable');
+    }
 }

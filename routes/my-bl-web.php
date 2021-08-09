@@ -293,6 +293,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
     Route::get('mybl/products/{product_code}', 'CMS\MyblProductEntryController@getProductDetails')
         ->name('mybl.products.details');
+    Route::get('mybl/inactive-products', 'CMS\MyblProductEntryController@inactiveProducts')
+        ->name('mybl.products.inactive-products');
+    Route::get('mybl/products/activate/{productCode}', 'CMS\MyblProductEntryController@activateProduct')
+        ->name('mybl.products.activate');
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');
@@ -300,6 +304,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
+
+    Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
+        ->name('product.img.remove');
 
     /*
      * Product Tags Routes
@@ -649,7 +656,36 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    //App MENU  ====================================
+    Route::get('mybl-menu/create', 'CMS\MyblAppMenuController@create');
+    Route::get('mybl-menu/{id}/child-menu/create', 'CMS\MyblAppMenuController@create');
+    Route::resource('mybl-menu', 'CMS\MyblAppMenuController')->only(['update', 'edit', 'store']);
+    Route::get('mybl-menu/{id?}/{child_menu?}', 'CMS\MyblAppMenuController@index');
+    Route::get('mybl-menu-auto-save', 'CMS\MyblAppMenuController@parentMenuSortable');
+    Route::get('mybl-menu/{parentId}/destroy/{id}', 'CMS\MyblAppMenuController@destroy');
+    /*
+     * Dynamic Deeplink
+     */
+    Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
 
+    //App Manage  ====================================
+    Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
+    Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
+        ->name('manage-category.destroy');
+    Route::get('manage-category/sort-auto-save', 'CMS\MyblManageController@categorySortable');
+
+    Route::prefix('mybl-manage-items/{category_id}')->group(function () {
+        Route::get('/', 'CMS\MyblManageController@manageItemsList')->name('mybl-manage-items.index');
+        Route::get('/create', 'CMS\MyblManageController@createItem')->name('mybl-manage-items.create');
+        Route::post('/store', 'CMS\MyblManageController@storeItem')->name('mybl-manage-items.store');
+        Route::get('/edit/{id}', 'CMS\MyblManageController@editItem')->name('mybl-manage-items.edit');
+        Route::put('/update/{id}', 'CMS\MyblManageController@updateItem')->name('mybl-manage-items.update');
+        Route::get('/destroy/{id}', 'CMS\MyblManageController@destroyItem')->name('mybl-manage-items.destroy');
+        Route::get('/sort-auto-save', 'CMS\MyblManageController@itemSortable');
+    });
 });
 
 // 4G Map View Route
