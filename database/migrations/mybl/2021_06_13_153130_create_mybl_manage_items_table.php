@@ -22,6 +22,7 @@ class CreateMyblManageItemsTable extends Migration
             $table->string('component_identifier')->nullable();
             $table->string('image_url')->nullable();
             $table->boolean('show_for_guest')->default(0);
+            $table->string('deep_link_slug')->nullable();
             $table->json('other_info')->nullable();
             $table->integer('display_order')->nullable();
             $table->tinyInteger('status')->nullable();
