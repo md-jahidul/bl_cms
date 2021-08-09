@@ -293,6 +293,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
     Route::get('mybl/products/{product_code}', 'CMS\MyblProductEntryController@getProductDetails')
         ->name('mybl.products.details');
+    Route::get('mybl/inactive-products', 'CMS\MyblProductEntryController@inactiveProducts')
+        ->name('mybl.products.inactive-products');
+    Route::get('mybl/products/activate/{productCode}', 'CMS\MyblProductEntryController@activateProduct')
+        ->name('mybl.products.activate');
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');

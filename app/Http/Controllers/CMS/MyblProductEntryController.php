@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -99,6 +100,22 @@ class MyblProductEntryController extends Controller
         return view('admin.my-bl-products.mybl_product_entry');
     }
 
+    public function inactiveProducts(Request $request)
+    {
+        $inactiveProducts = $this->service->getInactiveProducts();
+        return view('admin.my-bl-products.inactive_products', compact('inactiveProducts'));
+    }
+
+    public function activateProduct($productCode)
+    {
+        if ($this->service->activateProduct($productCode)) {
+            Session::flash('success', 'Product activated! Please find the product in product list');
+        } else {
+            Session::flash('success', 'Error while activating! Please retry');
+        }
+
+        return redirect()->back();
+    }
     /**
      * @return Factory|View
      */
