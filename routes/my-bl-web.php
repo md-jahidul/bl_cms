@@ -686,6 +686,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         Route::get('/destroy/{id}', 'CMS\MyblManageController@destroyItem')->name('mybl-manage-items.destroy');
         Route::get('/sort-auto-save', 'CMS\MyblManageController@itemSortable');
     });
+    // Home Component
+    Route::get('mybl-home-components', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
+    Route::get('mybl-home-components/edit/{id}', 'CMS\MyblHomeComponentController@edit')
+        ->name('mybl.home.components.edit');
+    Route::put('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
+        ->name('mybl.home.components.update');
+    Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
+    Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
+        ->name('components.status.update');
 });
 
 // 4G Map View Route
