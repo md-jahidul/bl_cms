@@ -83,9 +83,9 @@ class DynamicDeeplinkService
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
-                "link" => env('DEEP_LINK_BASE_URL') . "$endPointURL",
+                "link" => env('DEEP_LINK_BASE_URL', 'https://www.banglalink.net/cms/') . "$endPointURL",
                 "androidInfo" => [
-                    "androidPackageName" => "com.arena.banglalinkmela.app"
+                    "androidPackageName" => env('ANDROID_PACKAGE_NAME', 'com.arena.banglalinkmela.app')
                 ],
                 "iosInfo" => [
                     "iosBundleId" => "com.Banglalink.My-Banglalink"

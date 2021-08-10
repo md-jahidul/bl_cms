@@ -51,41 +51,15 @@
                     </a>
                 </li>
             </ul>
-        </li>
 
-{{--        <li class="nav-item"><a href="#"><i class="la la-users"></i>--}}
-{{--                <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>--}}
-{{--            <ul class="menu-content">--}}
-{{--                @if( auth()->user()->can_view('User') )--}}
-{{--                    <li class="{{ is_active_url('authorize/users')}}">--}}
-{{--                        <a class="menu-item" href="{{ url('authorize/users') }}"--}}
-{{--                           data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                                class="la la-user"></i> User</a>--}}
-{{--                    </li>--}}
-{{--                @endif--}}
-{{--                @if( auth()->user()->can_view('Roles') )--}}
-{{--                    <li class="{{ is_active_url('authorize/roles')}}">--}}
-{{--                        <a class="menu-item" href="{{ url('authorize/roles') }}"--}}
-{{--                           data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                                class="la la-cubes"></i> Role</a>--}}
-{{--                    </li>--}}
-{{--                @endif--}}
-{{--                @if( auth()->user()->can_view('Permissions') )--}}
-{{--                    <li class="{{ is_active_url('authorize/permissions')}}">--}}
-{{--                        <a class="menu-item" href="{{ url('authorize/permissions') }}"--}}
-{{--                           data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                                class="la la-check-square"></i> Permission</a>--}}
-{{--                    </li>--}}
-{{--                @endif--}}
-{{--                @if( auth()->user()->can_view('AccessLog') )--}}
-{{--                    <li class="{{ is_active_url('access-logs')}}">--}}
-{{--                        <a class="menu-item" href="{{ url('access-logs') }}"--}}
-{{--                           data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                                class="la la-lock"></i> Access Logs</a>--}}
-{{--                    </li>--}}
-{{--                @endif--}}
-{{--            </ul>--}}
-{{--        </li>--}}
+            <ul class="menu-content">
+                <li class="{{ is_active_url('manage-category') }}">
+                    <a class="menu-item" href="{{ route('manage-category.index') }}">
+                        <i class="la la-medium"></i>Explore</a>
+                </li>
+            </ul>
+
+        </li>
     @endif
 
     @if( auth()->user()->can_view('ShortCut') )

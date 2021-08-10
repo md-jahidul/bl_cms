@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
@@ -709,6 +708,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-menu/{id?}/{child_menu?}', 'CMS\MyblAppMenuController@index');
     Route::get('mybl-menu-auto-save', 'CMS\MyblAppMenuController@parentMenuSortable');
     Route::get('mybl-menu/{parentId}/destroy/{id}', 'CMS\MyblAppMenuController@destroy');
+    /*
+     * Dynamic Deeplink
+     */
+    Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
+
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
     Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
