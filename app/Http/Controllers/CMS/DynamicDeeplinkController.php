@@ -7,6 +7,7 @@ use App\Models\AgentDeeplinkDetail;
 use App\Models\MyBlInternetOffersCategory;
 use App\Services\DynamicDeeplinkService;
 use App\Services\FeedCategoryService;
+use App\Services\MyblAppMenuService;
 use App\Services\MyBlInternetOffersCategoryService;
 use App\Services\StoreCategoryService;
 use Illuminate\Contracts\Foundation\Application;
@@ -30,6 +31,7 @@ class DynamicDeeplinkController extends Controller
     protected const STORE = 'store';
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
+    protected const MENU = 'menu';
     /**
      * @var MyBlInternetOffersCategoryService
      */
@@ -42,6 +44,10 @@ class DynamicDeeplinkController extends Controller
      * @var FeedCategoryService
      */
     private $feedCategoryService;
+    /**
+     * @var MyblAppMenuService
+     */
+    private $appMenuService;
 
     /**
      * DynamicDeeplinkService constructor.
@@ -51,12 +57,14 @@ class DynamicDeeplinkController extends Controller
         DynamicDeeplinkService $dynamicDeeplinkService,
         MyBlInternetOffersCategoryService $internetOffersCategoryService,
         FeedCategoryService $feedCategoryService,
-        StoreCategoryService $storeCategoryService
+        StoreCategoryService $storeCategoryService,
+        MyblAppMenuService $appMenuService
     ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->internetOffersCategoryService = $internetOffersCategoryService;
         $this->feedCategoryService = $feedCategoryService;
         $this->storeCategoryService = $storeCategoryService;
+        $this->appMenuService = $appMenuService;
         $this->middleware('auth');
     }
 
@@ -95,5 +103,15 @@ class DynamicDeeplinkController extends Controller
     {
         $internetCat = $this->internetOffersCategoryService->findOne($request->id);
         return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $internetCat, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|mixed
+     */
+    public function menuDeepLinkCreate(Request $request)
+    {
+        $menu = $this->appMenuService->findOne($request->id);
+        return $this->dynamicDeeplinkService->generateDeeplink("others", $menu, $request);
     }
 }
