@@ -37,29 +37,31 @@
                                     <td title="Menu title">{{ $menu->title_en  }} {!! $menu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
 
                                     <td title="CTA action">{{ $menu->component_identifier }}</td>
-                                    <td width="5%" class="deep-link-section-{{ $menu->id }} text-right">
-                                        @if(isset($menu->dynamicLinks))
-                                            <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
-                                                    data-toggle="tooltip" data-placement="button"
-                                                    data-value="{{ $menu->dynamicLinks->link }}"
-                                                    title="Deeplink Copy to Clipboard">Copy</button>
-                                        @else
-                                            @if($menu->deep_link_slug)
-                                                <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
-                                                        title="Click for deep link"
-                                                        data-value="{{ $menu->deep_link_slug }}"
-                                                        data-id="{{ $menu->id }}">
-                                                    <i  class="la icon-link"></i>
-                                                </button>
+                                    @if($parent_id != 0)
+                                        <td width="5%" class="deep-link-section-{{ $menu->id }} text-right">
+                                            @if(isset($menu->dynamicLinks))
+                                                <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                        data-toggle="tooltip" data-placement="button"
+                                                        data-value="{{ $menu->dynamicLinks->link }}"
+                                                        title="Deeplink Copy to Clipboard">Copy</button>
                                             @else
-                                                <button class="btn-sm btn-outline-danger cursor-pointer"
-                                                        data-toggle="tooltip"
-                                                        title="Please select deeplink action in the edit form. then try to generate deeplink">
-                                                    <i  class="la icon-info"></i>
-                                                </button>
+                                                @if($menu->deep_link_slug)
+                                                    <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
+                                                            title="Click for deep link"
+                                                            data-value="{{ $menu->deep_link_slug }}"
+                                                            data-id="{{ $menu->id }}">
+                                                        <i  class="la icon-link"></i>
+                                                    </button>
+                                                @else
+                                                    <button class="btn-sm btn-outline-danger cursor-pointer"
+                                                            data-toggle="tooltip"
+                                                            title="Please select deeplink action in the edit form. then try to generate deeplink">
+                                                        <i  class="la icon-info"></i>
+                                                    </button>
+                                                @endif
                                             @endif
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
 
                                     <td class="action" width="5%">
                                         <a href="{{ url('mybl-menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
