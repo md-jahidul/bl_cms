@@ -50,10 +50,9 @@
                                                 <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
                                                        data-default-file="{{ asset($menu->icon) }}">
                                             </div>
-                                            {{-- <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
                                         </div>
 
-                                        <div class="form-group col-md-12" id="cta_action">
+                                        <div class="form-group col-md-10" id="cta_action">
                                             <label for="redirect_url">CTA Action</label>
                                             <select id="navigate_action" name="component_identifier"
                                                     class="browser-default custom-select">
@@ -66,7 +65,7 @@
                                             </select>
                                         </div>
 
-                                        <div id="append_div" class="col-md-12">
+                                        <div id="append_div" class="col-md-10">
                                             @if($info = $menu->other_info)
                                                 <div class="form-group other-info-div">
                                                     @if($menu->component_identifier == "DIAL")
@@ -93,7 +92,18 @@
                                                     <div class="help-block"></div>
                                                 </div>
                                             @endif
-                                            {{--                                                    @endif--}}
+                                        </div>
+
+                                        <div class="form-group col-md-10 mb-2">
+                                            <label for="redirect_url">Deeplink Action</label>
+                                            <select id="deeplink_action" name="deep_link_slug"
+                                                    class="browser-default custom-select" disabled>
+                                                <option value="">Select Action</option>
+                                                @foreach ($deeplinkActions as $key => $value)
+                                                    <option value="{{ $key }}" {{ $menu->deep_link_slug == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="help-block"></div>
                                         </div>
                                     @endif
 
@@ -139,6 +149,7 @@
                 }
             });
             $("#navigate_action").select2();
+            $("#deeplink_action").select2();
         })
 
         $(function () {

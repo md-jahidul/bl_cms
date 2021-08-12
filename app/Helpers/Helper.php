@@ -119,6 +119,51 @@ class Helper
     }
 
 
+    /**
+     * @return string[]
+     */
+    public static function deepLinkList(): array
+    {
+        return [
+            "amar_offers" => "Amar Offer",
+            "balance_details" => "Balance details > Balance",
+            "contact_backup" => "Contact Backup",
+            "change_password" => "Change Password",
+            "emergency_balance" => "Emergency Balance",
+            "fnf" => "FnF",
+            "manage" => "Manage",
+            "menu" => "Menu",
+            "mixed_bundles" => "Mixed Bundles",
+            "privacy_policy" => "Privacy Policy",
+            "recharge_offers" => "Recharge Offers",
+            "store" => "Store",
+            "store_locator" => "Store locator",
+            "usage_history" => "Usage History",
+            "4g_map" => "4G Map",
+            "migrate_plan" => "Migrate Plan",
+            "bondho_sim_offer" => "Bondho SIM Offer",
+            "switch_account" => "Switch Account",
+            "refer_and_earn" => "Refer And Earn",
+            "call_center" => "Call Center",
+            "edit_profile" => "Edit Profile",
+            "frequently_asked_questions" => "FAQ",
+            "home_rearrangement" => "Home Rearrangement",
+            "internet _configuration" => "Home Rearrangement",
+            "complaint_status" => "Complaint Status",
+            "new_complaint" => "New Complaint",
+            "notification_filter" => "Notification Filter",
+            "notification" => "Notification",
+            "notification_setting" => "Notification Setting",
+            "search" => "Search",
+            "sim_info" => "SIM Info",
+            "special_call_rate" => "Special Call Rate",
+            "switch_account/add_number" => "Switch Account/Add Number",
+            "terms_and_condition" => "Terms And Condition",
+            "ussd" => "USSD",
+        ];
+    }
+
+
 
     /**
      * OTP Token length list
