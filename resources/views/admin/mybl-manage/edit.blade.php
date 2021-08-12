@@ -160,7 +160,7 @@
                                             <div class="form-group col-md-12 mb-2">
                                                 <label for="redirect_url">Deeplink Action</label>
                                                 <select id="deeplink_action" name="deep_link_slug"
-                                                        class="browser-default custom-select" disabled>
+                                                        class="browser-default custom-select">
                                                     <option value="">Select Action</option>
                                                     @foreach ($deeplinkActions as $key => $value)
                                                         <option value="{{ $key }}" {{ $item->deep_link_slug == $key ? 'selected' : '' }}>{{ $value }}</option>
