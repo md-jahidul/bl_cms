@@ -1,15 +1,15 @@
 @extends('layouts.admin')
-@section('title', 'Refer And Earn')
-@section('card_name', 'Refer And Earn')
+@section('title', 'Flash Hour')
+@section('card_name', 'Flash Hour')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Campaign List</li>
 @endsection
 
 @section('action')
-    <a href="{{ route('refer-and-earn.analytics') }}" class="btn btn-amber round btn-glow px-2">
-        Analytics Data
-    </a>
-    <a href="{{route('mybl-refer-and-earn.create')}}" class="btn btn-primary round btn-glow px-2"><i
+{{--    <a href="{{ route('refer-and-earn.analytics') }}" class="btn btn-amber round btn-glow px-2">--}}
+{{--        Analytics Data--}}
+{{--    </a>--}}
+    <a href="{{route('flash-hour-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
             class="la la-plus"></i>
         Create Campaign
     </a>
@@ -25,7 +25,7 @@
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>SL</th>
                             <th>Campaign Title</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -34,18 +34,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($referEarnCampaigns as $data)
+                        @foreach ($flashHourCampaigns as $data)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{ $data->campaign_title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td>{{$data->start_date}}</td>
                                 <td>{{$data->end_date}}</td>
 {{--                                <td>{{$data->view_count}}</td>--}}
                                 <td>
                                     {{--                                            <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                     <a href="{{ route('refer-and-earn.campaign.details', $data->id) }}" role="button" class="btn-sm btn-warning border-1"> Activity</a>
-                                    <a href="{{ route('mybl-refer-and-earn.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("mybl-refer-and-earn/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                    <a href="{{ route('flash-hour-campaign.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("flash-hour-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
