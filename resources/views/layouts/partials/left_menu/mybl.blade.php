@@ -200,12 +200,21 @@
                     <i class="la la-list"></i> Refer And Earn
                 </a>
             </li>
-            {{--            <li class="{{is_active_url('agent/deeplink/report')}}">--}}
-            {{--                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "--}}
-            {{--                   data-i18n="nav.templates.vert.classic_menu">--}}
-            {{--                    <i class="la la-list"></i> Report--}}
-            {{--                </a>--}}
-            {{--            </li>--}}
+            <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('authorize/users')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-user"></i> Tasks</a>
+                    </li>
+                    <li class="{{ is_active_url('authorize/users')}}">
+                        <a class="menu-item" href="{{ url('authorize/users') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-user"></i> Campaign</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
