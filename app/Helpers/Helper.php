@@ -175,4 +175,14 @@ class Helper
         //dd($s . ' - ' . $e);
         return $s . ' - ' . $e;
     }
+
+    public static function urlRedirectionForList()
+    {
+        return [
+          'product' => 'Product',
+          'dynamic_link' => 'Dynamic Link',
+          'content' => 'Content',
+          'others' => 'Others'
+        ];
+    }
 }

@@ -94,6 +94,13 @@
                 <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
                         class="la la-tags"></i> Tag</a>
             </li>
+
+
+            <li class="{{ is_active_match(route('dynamic-url-redirection.index')) }}">
+                <a class="menu-item" href="{{ route('dynamic-url-redirection.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-tags"></i>URL Redirection</a>
+            </li>
         </ul>
     </li>
 
@@ -308,7 +315,8 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Loyalty</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('lms-offer-category') . is_active_url('lms-offer-category/create')}}">
-                    <a class="menu-item" href="{{ url('lms-offer-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                    <a class="menu-item" href="{{ url('lms-offer-category') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> LMS Offer Categories</a>
                 </li>
 
@@ -505,14 +513,14 @@
                             </li>
                         @endif
 
-{{--                        @if( auth()->user()->can_view('home-page/component') )--}}
-                            <li class="{{ is_active_url('home-page/component') }}">
-                                <a class="menu-item" href="{{ url('home-page/component') }}"
-                                   data-i18n="nav.templates.vert.classic_menu">
-                                    <i class="la la-file-image-o"></i> Home Component
-                                </a>
-                            </li>
-{{--                        @endif           --}}
+                        {{--                        @if( auth()->user()->can_view('home-page/component') )--}}
+                        <li class="{{ is_active_url('home-page/component') }}">
+                            <a class="menu-item" href="{{ url('home-page/component') }}"
+                               data-i18n="nav.templates.vert.classic_menu">
+                                <i class="la la-file-image-o"></i> Home Component
+                            </a>
+                        </li>
+                        {{--                        @endif           --}}
 
                         <li class="{{ is_active_url('store-locations/entry') }}">
                             <a class="menu-item" href="{{ url('store-locations/entry') }}"
@@ -554,14 +562,14 @@
                 </li>
             @endif
 
-{{--            @if( auth()->user()->can_view('FixedPage') )--}}
-                <li class="{{ is_active_url('fixed-pages') }}">
-                    <a class="menu-item" href="{{ url('fixed-pages') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-file-image-o"></i> Fixed Page
-                    </a>
-                </li>
-{{--            @endif--}}
+            {{--            @if( auth()->user()->can_view('FixedPage') )--}}
+            <li class="{{ is_active_url('fixed-pages') }}">
+                <a class="menu-item" href="{{ url('fixed-pages') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-file-image-o"></i> Fixed Page
+                </a>
+            </li>
+            {{--            @endif--}}
 
             <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
                         class="la la-futbol-o"></i>
@@ -711,7 +719,7 @@
                 <li class="{{ is_active_url(route('case-study-section.index')) }}">
                     <a class="menu-item" href="{{ route('case-study-section.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                       class="la la-list"></i> Case Study and Report</a>
+                            class="la la-list"></i> Case Study and Report</a>
                 </li>
 
                 <li class="nav-item"><a href="#"><i class="la la-book"></i>
@@ -735,13 +743,13 @@
     @endif
 
 
-{{--    @if( auth()->user()->can_view('LeadManagement') )--}}
-        <li class="{{ is_active_url(route('dynamic-routes.index')) }}">
-            <a class="menu-item" href="{{ route('dynamic-routes.index') }}"
-               data-i18n="nav.templates.vert.classic_menu"><i
-                    class="la la-list"></i> Dynamic Routes</a>
-        </li>
-{{--    @endif--}}
+    {{--    @if( auth()->user()->can_view('LeadManagement') )--}}
+    <li class="{{ is_active_url(route('dynamic-routes.index')) }}">
+        <a class="menu-item" href="{{ route('dynamic-routes.index') }}"
+           data-i18n="nav.templates.vert.classic_menu"><i
+                class="la la-list"></i> Dynamic Routes</a>
+    </li>
+    {{--    @endif--}}
 
 
     <hr>
