@@ -105,7 +105,7 @@
                                         @include('admin.mybl-campaign.flash-hour.partials.product-element')
                                     @endif
                                 </div>
-                                <!-- Product Selection Start -->
+                                <!-- Product Selection End -->
 
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-2">
@@ -115,7 +115,7 @@
                                                 {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
                                             <input type="radio" name="status" value="0" id="input-radio-16"
-                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }} checked>
+                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block">  {{ $errors->first('status') }}</div>

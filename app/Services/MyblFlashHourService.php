@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\ProductCore;
 use App\Repositories\MyBlFlashHourProductRepository;
 use App\Repositories\MyBlFlashHourRepository;
-use App\Repositories\MyBlReferAndEarnRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;

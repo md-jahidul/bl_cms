@@ -1,6 +1,6 @@
 <slot data-repeater-list="group-a" data-repeater-item>
     <div class="form-group col-md-6 mb-2">
-        <label for="desc_en">Description En</label>
+        <label for="desc_en" class="required">Description En</label>
         <textarea rows="3" id="desc_en"
                   name="desc_en" class="form-control @error('desc_en') is-invalid @enderror"
                   placeholder="Enter description in English">{{ isset($product) ? $product->desc_en : old('desc_en') }}</textarea>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="form-group col-md-6 mb-2">
-        <label for="desc_bn">Description Bn</label>
+        <label for="desc_bn" class="required">Description Bn</label>
         <textarea rows="3" id="desc_bn"
                   name="desc_bn"
                   class="form-control @error('desc_bn') is-invalid @enderror"
@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-group col-md-4 mb-2" id="cta_action">
-        <label for="product_code">Product Code</label>
+        <label for="product_code" class="required">Product Code</label>
         <select id="product_code" name="product_code"
                 class="browser-default custom-select product-list">
             <option value="">Select Product</option>
@@ -74,6 +74,5 @@
         </button>
     </div>
 
-    <hr>
-{{--    <div class="form-actions col-md-12 mt-0 text-danger"></div>--}}
+    <div class="form-actions col-md-12 mt-0 text-danger"></div>
 </slot>
