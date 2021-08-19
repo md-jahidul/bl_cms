@@ -160,6 +160,9 @@ class Helper
             "switch_account/add_number" => "Switch Account/Add Number",
             "terms_and_condition" => "Terms And Condition",
             "ussd" => "USSD",
+            "sms_packs" => "SMS Pack",
+            "voice_packs" => "Voice Bundle"
+
         ];
     }
 
