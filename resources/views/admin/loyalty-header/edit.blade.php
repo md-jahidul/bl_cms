@@ -21,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route("priyojon.update", $priyojonLanding->id) }}" method="POST" novalidate>
+                        <form role="form" action="{{ url("priyojon/ $priyojonLanding->id") }}" method="POST" novalidate>
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
