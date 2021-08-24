@@ -107,7 +107,6 @@ class Helper
             "USAGE_HISTORY"           => "Usage History",
             "USSD_CODE_LIST"          => "View USSD code",
             "VOICE_BUNDLE"            => "Voice Bundles",
-
             "4G_MAP"                  => "4G Map",
             "MIGRATE_PLAN"            => "Migrate Plan",
             "BONDHO_SIM_OFFER"        => "Bondho SIM Offer",
@@ -115,6 +114,7 @@ class Helper
             "CHECK_FOR_UPDATES"       => "Check for updates",
             "REFER_AND_EARN"          => "Refer And Earn ",
             "LANGUAGE"                => "Language",
+            "ORANGE_CLUB"             => "Orange Club"
         ];
     }
 
@@ -161,8 +161,8 @@ class Helper
             "terms_and_condition" => "Terms And Condition",
             "ussd" => "USSD",
             "sms_packs" => "SMS Pack",
-            "voice_packs" => "Voice Bundle"
-
+            "voice_packs" => "Voice Bundle",
+            "orange_club" => "Orange Club"
         ];
     }
 
