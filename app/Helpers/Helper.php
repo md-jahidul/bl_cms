@@ -115,6 +115,7 @@ class Helper
             "CHECK_FOR_UPDATES"       => "Check for updates",
             "REFER_AND_EARN"          => "Refer And Earn ",
             "LANGUAGE"                => "Language",
+            "ORANGE_CLUB"             => "Orange Club"
         ];
     }
 
