@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Task Create')
-@section('card_name', 'Task Create')
+@section('title', 'Campaign Create')
+@section('card_name', 'Campaign Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/tasks') }}"> Task List</a></li>
-    <li class="breadcrumb-item active"> Task Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/campaigns') }}"> Campaign List</a></li>
+    <li class="breadcrumb-item active"> Campaign Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('event-base-bonus/tasks') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('event-base-bonus/campaigns') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
 
@@ -16,48 +16,36 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{url('event-base-bonus/tasks')}}"
+                              action="{{url('event-base-bonus/campaigns')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Title En</label>
-                                        <input required maxlength="100"
+                                    <div class="form-group col-md-12 mb-2">
+                                        <label for="dashboard_card_title" class="required">Title</label>
+                                        <input required maxlength="200"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
                                                value="{{ old('title') }}"
                                                type="text" class="form-control"
-                                               placeholder="Enter title in English" name="title">
+                                               placeholder="Enter title" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Title Bn</label>
-                                        <input required maxlength="100"
-                                               data-validation-required-message="Title is required"
-                                               data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="{{ old('title_bn') }}"
-                                               type="text" class="form-control"
-                                               placeholder="Enter title in Bangla" name="title_bn">
-                                        <small class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_sub_title">Description En</label>
-                                        <textarea rows="4" required
-                                                  name="description"
+                                        <textarea rows="4"
+                                                  name="description_en"
                                                   class="form-control"
-                                                  placeholder="Enter description in English">{{ old('description') }}</textarea>
-                                        <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
+                                                  placeholder="Enter description in English">{{ old('description_en') }}</textarea>
+                                        <small class="text-danger"> @error('description_en') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_sub_title_bn">Description Bn</label>
-                                        <textarea rows="4" required
+                                        <textarea rows="4"
                                                   name="description_bn"
                                                   class="form-control"
                                                   placeholder="Enter description in Bangla">{{ old('description_bn') }}</textarea>
@@ -66,68 +54,44 @@
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Btn text En </label>
-                                        <input required maxlength="20"
+                                        <label for="dashboard_card_title" class="required">Start Date</label>
+                                        <input required maxlength="200"
                                                data-validation-required-message="Btn Text is required"
                                                data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
-                                               value="{{ old('btn_text') }}"
+                                               value="{{ old('start_date') }}"
                                                type="text" class="form-control"
-                                               placeholder="Enter Btn Text in English" name="btn_text">
-                                        <small class="text-danger"> @error('btn_text') {{ $message }} @enderror </small>
+                                               placeholder="Enter start date" name="start_date">
+                                        <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Btn text Bn </label>
-                                        <input required maxlength="20"
+                                        <label for="dashboard_card_title" class="required">End Date</label>
+                                        <input required maxlength="200"
                                                data-validation-required-message="Btn Text is required"
                                                data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
-                                               value="{{ old('btn_text_bn') }}"
+                                               value="{{ old('end_date') }}"
                                                type="text" class="form-control"
-                                               placeholder="Enter Btn Text in Bangla" name="btn_text_bn">
-                                        <small class="text-danger"> @error('btn_text_bn') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Recurrence Number </label>
-                                        <input required maxlength="100"
-                                               data-validation-required-message="Recurrence Number is required"
-                                               data-validation-maxlength-message="Recurrence Number can not be more then 100"
-                                               value="{{ old('recurrence_number') }}"
-                                               type="number" class="form-control"
-                                               placeholder="Recurrence Number" name="recurrence_number">
-                                        <small class="text-danger"> @error('recurrence_number') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Reward text </label>
-                                        <input required maxlength="30"
-                                               data-validation-required-message="Reward text is required"
-                                               data-validation-maxlength-message="Reward text can not be more then 200 Characters"
-                                               value="{{ old('reward_text') }}"
-                                               type="text" class="form-control"
-                                               placeholder="Enter Reward text" name="reward_text">
-                                        <small class="text-danger"> @error('reward_text') {{ $message }} @enderror </small>
+                                               placeholder="Enter end date" name="end_date">
+                                        <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
 
                                     <div class="form-group col-md-6 {{ $errors->has('reward_prepaid') ? ' error' : '' }}">
-                                        <label for="reward_prepaid" class="required"> Reward Prepaid </label>
+                                        <label for="reward_prepaid" class="required">Reward Prepaid</label>
 
-                                            <select class="product_code" name="reward_product_code_prepaid"
+                                            <select class="product_code" name="reward_prepaid"
                                                     data-url="{{ url('product-core/match') }}"
                                                     required data-validation-required-message="Please select Reward prepaid">
-                                                <option value="">Select product code  </option>
+                                                <option value="">Select product code</option>
                                                 @foreach($products as $productCodes)
                                                     <option
                                                         value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
                                                 @endforeach
 
                                             </select>
-                                            <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter  </span>
+                                            <span class="text-warning">If item exists in the list, select dropdown otherwise, type then enter</span>
 
                                         <div class="help-block"></div>
                                         @if ($errors->has('reward_prepaid'))
@@ -136,59 +100,24 @@
                                     </div>
 
                                     <div class="form-group col-md-6 {{ $errors->has('reward_postpaid') ? ' error' : '' }}">
-                                        <label for="reward_postpaid" class="required">Reward Postpaid </label>
+                                        <label for="reward_postpaid" class="required">Reward Postpaid</label>
 
-                                        <select class="product_code" name="reward_product_code_postpaid"
+                                        <select class="product_code" name="reward_postpaid"
                                                 data-url="{{ url('product-core/match') }}"
                                                 required data-validation-required-message="Please select Reward Postpaid">
-                                            <option value="">Select product code </option>
+                                            <option value="">Select product code</option>
                                             @foreach($products as $productCodes)
                                                 <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
                                             @endforeach
 
                                         </select>
-                                        <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter </span>
+                                        <span class="text-warning">If item exists in the list, select dropdown otherwise, type then enter</span>
 
                                         <div class="help-block"></div>
                                         @if ($errors->has('reward_postpaid'))
                                             <div class="help-block">{{ $errors->first('reward_postpaid') }}</div>
                                         @endif
                                     </div>
-
-                                    <div class="form-group col-md-6 {{ $errors->has('event') ? ' error' : '' }}">
-                                        <label for="product_code" class="required">Event</label>
-
-                                            <select class="product_code" name="event"
-                                                    data-url="{{ url('product-core/match') }}"
-                                                    required data-validation-required-message="Please select event">
-                                                <option value="">Select product code </option>
-                                                @foreach($events as $key => $value)
-                                                    <option value="{{ $key }}">{{ $value }} </option>
-                                                @endforeach
-
-                                            </select>
-                                            <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter </span>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('event'))
-                                            <div class="help-block">{{ $errors->first('event') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="status_input">Tracking Type: </label>
-                                        <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                            <input type="radio" name="tracking_type" value="1" id="input-radio-15"
-                                                {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
-                                            <label for="input-radio-15" class="mr-3">Automatic</label>
-                                            <input type="radio" name="tracking_type" value="0" id="input-radio-16"
-                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
-                                            <label for="input-radio-16" class="mr-3">Manual</label>
-                                            @if ($errors->has('tracking_type'))
-                                                <div class="help-block">  {{ $errors->first('tracking_type') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-
 
 
                                     <div class="form-group col-md-6 mb-2">
@@ -208,14 +137,14 @@
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image_url">Upload Icon </label>
+                                            <label for="image_url">Upload Icon</label>
                                             <input type="file"
                                                    id="image_url"
-                                                   name="icon_image"
+                                                   name="icon"
                                                    class="dropify_image"
                                                    data-height="80"
                                                    data-default-file="{{ isset($campaign->icon) ? url('/' .$campaign->icon) : ''}}"
-                                                   data-allowed-file-extensions="png jpg gif" required/>
+                                                   data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block"></div>
                                             <small
                                                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>

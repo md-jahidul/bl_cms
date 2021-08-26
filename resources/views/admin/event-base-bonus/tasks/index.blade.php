@@ -24,8 +24,8 @@
                                     <th>Title EN</th>
                                     <th>Btn text EN</th>
                                     <th>Recurrence number</th>
-                                    <th>Reword Prepaid</th>
-                                    <th>Reword Postpaid</th>
+                                    <th>Reward Prepaid</th>
+                                    <th>Reward Postpaid</th>
                                     <th>Reward Text</th>
                                     <th>Event</th>
                                     <th>Tracking type</th>
@@ -37,21 +37,26 @@
                                 @foreach($tasks as $task)
 
                                     <tr>
-                                        <td>{{ $task['title_en'] }}</td>
-                                        <td>{{ $task['btn_text_en'] }}</td>
+                                        <td>{{ $task['title'] }}</td>
+                                        <td>{{ $task['btn_text'] }}</td>
                                         <td>{{ $task['recurrence_number'] }}</td>
-                                        <td>{{ $task['reword_prepaid'] }}</td>
-                                        <td>{{ $task['reword_postpaid'] }}</td>
+                                        <td>{{ $task['reward_product_code_prepaid'] }}</td>
+                                        <td>{{ $task['reward_product_code_postpaid'] }}</td>
                                         <td>{{ $task['reward_text'] }}</td>
                                         <td>{{ $task['event'] }}</td>
-                                        <td>Tracking type</td>
+                                        <td>{{ $task['tracking_type'] }}</td>
                                         <td>{{ $task['status'] ? 'active':'inactive'}}</td>
-                                        <td><a href="#"  class="mr-3">
+                                        <td>
+                                            <a href="{{ url('event-base-bonus/tasks/'.$task['id']).'/edit' }}"  class="mr-3">
                                                 <i class="la la-pencil text-primary"></i>
                                             </a>
-                                            <a href="#" >
+                                            <a href="javascript:void(0);" onclick="event.preventDefault(); document.getElementById('logoutform-{{$task['id']}}').submit();">
                                                 <i class="la la-trash text-danger"></i>
                                             </a>
+                                            <form id="logoutform-{{$task['id']}}" action="{{ url('event-base-bonus/tasks/'.$task['id']) }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                @method('DELETE')
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

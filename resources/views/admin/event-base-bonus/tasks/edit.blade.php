@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Task Create')
-@section('card_name', 'Task Create')
+@section('title', 'Task Edit')
+@section('card_name', 'Task Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/tasks') }}"> Task List</a></li>
-    <li class="breadcrumb-item active"> Task Create</li>
+    <li class="breadcrumb-item active"> Task Edit</li>
 @endsection
 @section('action')
     <a href="{{ url('event-base-bonus/tasks') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -16,9 +16,10 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{url('event-base-bonus/tasks')}}"
+                              action="{{url('event-base-bonus/tasks/'.$task['id'])}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
                                     <div class="form-group col-md-6 mb-2">
@@ -26,7 +27,7 @@
                                         <input required maxlength="100"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="{{ old('title') }}"
+                                               value="{{ $task['title'] }}"
                                                type="text" class="form-control"
                                                placeholder="Enter title in English" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
@@ -38,7 +39,7 @@
                                         <input required maxlength="100"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="{{ old('title_bn') }}"
+                                               value="{{ $task['title_bn'] }}"
                                                type="text" class="form-control"
                                                placeholder="Enter title in Bangla" name="title_bn">
                                         <small class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
@@ -50,7 +51,7 @@
                                         <textarea rows="4" required
                                                   name="description"
                                                   class="form-control"
-                                                  placeholder="Enter description in English">{{ old('description') }}</textarea>
+                                                  placeholder="Enter description in English">{{ $task['description'] }}</textarea>
                                         <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
@@ -60,7 +61,7 @@
                                         <textarea rows="4" required
                                                   name="description_bn"
                                                   class="form-control"
-                                                  placeholder="Enter description in Bangla">{{ old('description_bn') }}</textarea>
+                                                  placeholder="Enter description in Bangla">{{ $task['description_bn'] }}</textarea>
                                         <small class="text-danger"> @error('description_bn') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
@@ -70,7 +71,7 @@
                                         <input required maxlength="20"
                                                data-validation-required-message="Btn Text is required"
                                                data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
-                                               value="{{ old('btn_text') }}"
+                                               value="{{ $task['btn_text'] }}"
                                                type="text" class="form-control"
                                                placeholder="Enter Btn Text in English" name="btn_text">
                                         <small class="text-danger"> @error('btn_text') {{ $message }} @enderror </small>
@@ -82,7 +83,7 @@
                                         <input required maxlength="20"
                                                data-validation-required-message="Btn Text is required"
                                                data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
-                                               value="{{ old('btn_text_bn') }}"
+                                               value="{{ $task['btn_text_bn'] }}"
                                                type="text" class="form-control"
                                                placeholder="Enter Btn Text in Bangla" name="btn_text_bn">
                                         <small class="text-danger"> @error('btn_text_bn') {{ $message }} @enderror </small>
@@ -94,7 +95,7 @@
                                         <input required maxlength="100"
                                                data-validation-required-message="Recurrence Number is required"
                                                data-validation-maxlength-message="Recurrence Number can not be more then 100"
-                                               value="{{ old('recurrence_number') }}"
+                                               value="{{ $task['recurrence_number'] }}"
                                                type="number" class="form-control"
                                                placeholder="Recurrence Number" name="recurrence_number">
                                         <small class="text-danger"> @error('recurrence_number') {{ $message }} @enderror </small>
@@ -106,7 +107,7 @@
                                         <input required maxlength="30"
                                                data-validation-required-message="Reward text is required"
                                                data-validation-maxlength-message="Reward text can not be more then 200 Characters"
-                                               value="{{ old('reward_text') }}"
+                                               value="{{ $task['reward_text'] }}"
                                                type="text" class="form-control"
                                                placeholder="Enter Reward text" name="reward_text">
                                         <small class="text-danger"> @error('reward_text') {{ $message }} @enderror </small>
@@ -123,7 +124,7 @@
                                                 <option value="">Select product code  </option>
                                                 @foreach($products as $productCodes)
                                                     <option
-                                                        value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                        value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $task['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
                                                 @endforeach
 
                                             </select>
@@ -143,7 +144,7 @@
                                                 required data-validation-required-message="Please select Reward Postpaid">
                                             <option value="">Select product code </option>
                                             @foreach($products as $productCodes)
-                                                <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $task['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
                                             @endforeach
 
                                         </select>
@@ -163,7 +164,7 @@
                                                     required data-validation-required-message="Please select event">
                                                 <option value="">Select product code </option>
                                                 @foreach($events as $key => $value)
-                                                    <option value="{{ $key }}">{{ $value }} </option>
+                                                    <option value="{{ $key }}"  {{$key == $task['event'] ? 'selected':''}}>{{ $value }} </option>
                                                 @endforeach
 
                                             </select>
@@ -178,10 +179,10 @@
                                         <label for="status_input">Tracking Type: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <input type="radio" name="tracking_type" value="1" id="input-radio-15"
-                                                {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
+                                                {{ $task['tracking_type'] == 1 ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Automatic</label>
                                             <input type="radio" name="tracking_type" value="0" id="input-radio-16"
-                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
+                                                {{ $task['tracking_type'] == 0 ? 'checked' : '' }}>
                                             <label for="input-radio-16" class="mr-3">Manual</label>
                                             @if ($errors->has('tracking_type'))
                                                 <div class="help-block">  {{ $errors->first('tracking_type') }}</div>
@@ -195,10 +196,10 @@
                                         <label for="status_input">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <input type="radio" name="status" value="1" id="input-radio-15"
-                                                {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
+                                                {{ $task['status'] == 0 ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
                                             <input type="radio" name="status" value="0" id="input-radio-16"
-                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
+                                                {{ $task['status'] == 0 ? 'checked' : '' }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block">  {{ $errors->first('status') }}</div>
@@ -214,7 +215,7 @@
                                                    name="icon_image"
                                                    class="dropify_image"
                                                    data-height="80"
-                                                   data-default-file="{{ isset($campaign->icon) ? url('/' .$campaign->icon) : ''}}"
+                                                   data-default-file="{{ url('/' .$task['icon_image']) }}"
                                                    data-allowed-file-extensions="png jpg gif" required/>
                                             <div class="help-block"></div>
                                             <small

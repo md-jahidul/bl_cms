@@ -24,20 +24,20 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon'             => 'image|mimes:jpeg,jpg,png',
-            'title_en'          => 'required|max:150',
-            'title_bn'          => 'required|max:150',
-            'description_en'    => 'required|max:150',
-            'description_bn'    => 'required|max:150',
-            'btn_text_en'       => 'required|max:150',
-            'btn_text_bn'       => 'required|max:150',
-            'recurrence_number' => 'required|numeric',
-            'reward_text'       => 'required|max:130',
-            'reward_prepaid'    => 'required|max:130',
-            'reward_postpaid'   => 'required|max:130',
-            'event'             => 'required|max:130',
-            'tracking_type'     => 'required|boolean',
-            'status'            => 'required|boolean',
+            'icon_image'                   => 'required|image|mimes:jpeg,jpg,png',
+            'title'                        => 'required|max:150',
+            'title_bn'                     => 'required|max:150',
+            'description'                  => 'required|max:250',
+            'description_bn'               => 'required|max:250',
+            'btn_text'                     => 'required|max:20',
+            'btn_text_bn'                  => 'required|max:20',
+            'recurrence_number'            => 'required|integer|between:1,100',
+            'reward_text'                  => 'required|max:30',
+            'reward_product_code_prepaid'  => 'required|max:50',
+            'reward_product_code_postpaid' => 'required|max:50',
+            'event'                        => 'required|max:100',
+            'tracking_type'                => 'required|boolean',
+            'status'                       => 'required|boolean',
         ];
     }
 }

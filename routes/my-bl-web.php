@@ -639,6 +639,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     * Event Base bonus
     */
     Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
+    Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
 
     /*
      *  Feed Routes
