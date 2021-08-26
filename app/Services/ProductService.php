@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\OfferType;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Repositories\DynamicRouteRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
@@ -30,6 +31,14 @@ class ProductService
     protected $productDetailRepository;
     protected $searchRepository;
     protected $tagRepository;
+    /**
+     * @var DynamicRouteRepository
+     */
+    private $dynamicRouteRepository;
+    /**
+     * @var DynamicUrlRedirectionService
+     */
+    private $dynamicUrlRedirectionService;
 
     /**
      * ProductService constructor.
@@ -38,13 +47,17 @@ class ProductService
      * @param ProductCoreRepository $productCoreRepository
      * @param SearchDataRepository $searchRepository
      * @param TagCategoryRepository $tagRepository
+     * @param DynamicRouteRepository $dynamicRouteRepository
+     * @param DynamicUrlRedirectionService $dynamicUrlRedirectionService
      */
     public function __construct(
         ProductRepository $productRepository,
         ProductDetailRepository $productDetailRepository,
         ProductCoreRepository $productCoreRepository,
         SearchDataRepository $searchRepository,
-        TagCategoryRepository $tagRepository
+        TagCategoryRepository $tagRepository,
+        DynamicRouteRepository $dynamicRouteRepository,
+        DynamicUrlRedirectionService $dynamicUrlRedirectionService
     ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
@@ -52,6 +65,8 @@ class ProductService
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->setActionRepository($productRepository);
+        $this->dynamicRouteRepository = $dynamicRouteRepository;
+        $this->dynamicUrlRedirectionService = $dynamicUrlRedirectionService;
     }
 
     public function produtcs()
@@ -156,6 +171,23 @@ class ProductService
     public function updateProduct($data, $type, $id)
     {
         $product = $this->productRepository->findByCode($type, $id);
+
+        /**
+         * Checking URL slugs and generating dynamic url redirection accordingly
+         */
+        if (!empty($data['url_slug']) && $product->url_slug !== $data['url_slug']) {
+            $urlPrefix = $this->generateProductUrlPrefix($product);
+            $from = $urlPrefix . $product->url_slug;
+            $to = $urlPrefix . $data['url_slug'];
+            $this->addUrlRedirection($from, $to, $product->product_code);
+        }
+        if (!empty($data['url_slug_bn']) && $product->url_slug_bn !== $data['url_slug_bn']) {
+            $urlPrefix = $this->generateProductUrlPrefix($product, 'bn');
+            $from = $urlPrefix . $product->url_slug_bn;
+            $to = $urlPrefix . $data['url_slug_bn'];
+            $this->addUrlRedirection($from, $to, $product->product_code);
+        }
+
 //        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
@@ -168,6 +200,52 @@ class ProductService
         //save Search Data
         $this->_saveSearchData($product);
         return Response('Product update successfully !');
+    }
+
+    /**
+     * Generates URL prefix
+     * @param $product
+     * @param string $lang
+     * @return string
+     */
+    public function generateProductUrlPrefix($product, $lang = 'en'): string
+    {
+        /**
+         * Fetching prefix from dynamic route
+         */
+        $dynamicRoutes = optional($this->dynamicRouteRepository->findByProperties([
+            'key' => $product->sim_category->alias ?? '',
+            'status' => 1
+        ]))->filter(function ($item) use ($lang) {
+            $langInSlug = explode('/', $item->url);
+            return in_array($lang, $langInSlug);
+        })->first();
+        $langUrlSlug = $lang === 'bn' ? 'url_slug_bn' : 'url_slug';
+
+        return $dynamicRoutes->url . '/' . $product->offer_category->$langUrlSlug . '/';
+    }
+
+    /**
+     * Adds a URL redirection in DB after checking if the from url is not already exists
+     * @param $from
+     * @param $to
+     * @param $identifier
+     */
+    public function addUrlRedirection($from, $to, $identifier): void
+    {
+        if (!$this->dynamicUrlRedirectionService->ifRedirectionExist($from)) {
+            $urlRedirectionData = [
+                'title' => 'Redirection for OLD url for Product: ' . $identifier,
+                'redirection_for' => 'product',
+                'identifier' => $identifier,
+                'from_url' => $from,
+                'to_url' => $to,
+                'status' => 1,
+                'created_by' => Auth::id()
+            ];
+
+            $this->dynamicUrlRedirectionService->save($urlRedirectionData);
+        }
     }
 
     /**
@@ -200,7 +278,8 @@ class ProductService
     public function unusedProductCore($type)
     {
         $simType = $type == "prepaid" ? 1 : 2;
-        $productCoreCode = $this->productCoreRepository->findByProperties(['sim_type' => $simType], ['product_code'])->toArray();
+        $productCoreCode = $this->productCoreRepository->findByProperties(['sim_type' => $simType],
+            ['product_code'])->toArray();
         $productCode = $this->productRepository->findByProperties([], ['product_code'])->toArray();
         $unusedProductCode = [];
         foreach ($productCoreCode as $key => $product) {

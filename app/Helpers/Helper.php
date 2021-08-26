@@ -115,6 +115,7 @@ class Helper
             "CHECK_FOR_UPDATES"       => "Check for updates",
             "REFER_AND_EARN"          => "Refer And Earn ",
             "LANGUAGE"                => "Language",
+            "ORANGE_CLUB"             => "Orange Club"
         ];
     }
 
@@ -174,5 +175,15 @@ class Helper
 
         //dd($s . ' - ' . $e);
         return $s . ' - ' . $e;
+    }
+
+    public static function urlRedirectionForList()
+    {
+        return [
+          'product' => 'Product',
+          'dynamic_link' => 'Dynamic Link',
+          'content' => 'Content',
+          'others' => 'Others'
+        ];
     }
 }
