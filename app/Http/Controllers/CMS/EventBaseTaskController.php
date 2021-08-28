@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Http\Requests\StoreTaskRequest;
-use App\Services\ProductCoreService;
 use App\Services\TaskService;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
+use App\Services\ProductCoreService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskRequest;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseTaskController extends Controller
@@ -47,16 +45,16 @@ class EventBaseTaskController extends Controller
 
     public function edit($id)
     {
-        $task = $this->taskService->findOne($id);
+        $task     = $this->taskService->findOne($id);
         $products = $this->productCoreService->findAll();
         $events   = $this->taskService->eventAll();
 
-        return view('admin.event-base-bonus.tasks.edit', compact('task','products','events'));
+        return view('admin.event-base-bonus.tasks.edit', compact('task', 'products', 'events'));
     }
 
     public function update(StoreTaskRequest $request, $id)
     {
-        $response = $this->taskService->update($request->except('_token','_method'), $id);
+        $response = $this->taskService->update($request->except('_token', '_method'), $id);
 
         Session::flash('message', 'Task Update successful');
 

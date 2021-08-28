@@ -196,7 +196,7 @@
                                         <label for="status_input">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <input type="radio" name="status" value="1" id="input-radio-15"
-                                                {{ $task['status'] == 0 ? 'checked' : '' }}>
+                                                {{ $task['status'] == 1 ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
                                             <input type="radio" name="status" value="0" id="input-radio-16"
                                                 {{ $task['status'] == 0 ? 'checked' : '' }}>
@@ -215,13 +215,14 @@
                                                    name="icon_image"
                                                    class="dropify_image"
                                                    data-height="80"
-                                                   data-default-file="{{ url('/' .$task['icon_image']) }}"
-                                                   data-allowed-file-extensions="png jpg gif" required/>
+                                                   data-default-file="{{ asset($task['icon_image']) }}"
+                                                   data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block"></div>
                                             <small
                                                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                             <small id="massage"></small>
                                         </div>
+                                        <input type="hidden" name="icon_image_old" value="{{$task['icon_image']}}">
                                     </div>
 
                                     <div class="form-actions col-md-12">
