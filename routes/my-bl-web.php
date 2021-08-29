@@ -27,7 +27,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('shortcuts/create', 'CMS\ShortCutController@create')->name('short_cuts.create');
     Route::get('shortcuts/{short_cut}/edit', 'CMS\ShortCutController@edit')->name('short_cuts.edit');
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
-    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');;
+    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
 
     //------ shortcuts -----------//
 
@@ -170,6 +170,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // contextual cards
     Route::resource('contextualcard', 'CMS\ContextualCardController');
     Route::get('card/destroy/{id}', 'CMS\ContextualCardController@destroy');
+    Route::resource('contextualcardicon', 'CMS\ContextualCardIconController');
+    Route::get('contextualcard-icons', 'CMS\ContextualCardIconController@index')->name('contextualcard-icons.index');
+    Route::get('contextualcard-icons/create', 'CMS\ContextualCardIconController@create')->name('contextual.card.icons.create');
+    Route::POST('contextualcard-icons/store', 'CMS\ContextualCardIconController@store')->name('contextualcard.icons.store');
+    Route::get('contextualcard-icons/edit/{id}', 'CMS\ContextualCardIconController@edit')->name('contextualcard.icons.edit');
+    Route::PUT('contextualcard-icons/update/{id}', 'CMS\ContextualCardIconController@update')->name('contextualcard.icon.update');
 
     // Notification categorys
     Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
@@ -183,10 +189,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
+    Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
+
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')
         ->name('notification-schedule.send');
+    Route::get('push-notification-schedule/stop/{id}', 'CMS\PushNotificationController@stopSchedule')
+        ->name('notification-schedule.stop');
+    Route::get('push-notification-schedule/download/{id}', 'CMS\PushNotificationController@downloadCustomerFile')
+        ->name('notification-schedule.download');
     Route::post('target-wise-push-notification',
         'CMS\PushNotificationController@targetWiseNotificationSend')->name('target_wise_notification.send');
     Route::get('target-wise-notification-report',
@@ -210,6 +222,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
     Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
+
 
 
     // Support Messages
@@ -250,8 +263,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::delete('appslider/images/{id}/delete',
         'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
 
-    // terms and conditions
-    Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
+
+    /*
+     * terms and conditions
+     */
+    Route::get('terms-conditions/{featureName}', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
     // privacy and policy
@@ -280,7 +296,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
     Route::get('mybl/core-product/create', 'CMS\MyblProductEntryController@create')->name('mybl.product.create');
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
-    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
+
+    /**
+     * Redis reset schedule routes
+     */
+    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')
+        ->name('mybl.product.redis');
+    Route::resource('redis-reset-schedules', 'CMS\RedisResetScheduleController');
+    Route::get('redis-reset-schedules/toggle-status/{id}', 'CMS\RedisResetScheduleController@toggleStatus')
+        ->name('redis-reset-schedules.toggle-status');
+
 
     Route::post(
         'mybl/core-product/download',
@@ -304,6 +329,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
+
+
 
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
@@ -337,6 +364,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('recharge.prefill-amounts.update');
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
+
+    /*
+    *  Balance Transfer
+    */
+
+    Route::get('balance-transfer/prefill-amounts', 'BalanceTransferController@createPrefillAmounts')
+        ->name('balance-transfer.prefill-amounts.create');
+    Route::post('balance-transfer/prefill-amounts', 'BalanceTransferController@storePrefillAmounts')
+        ->name('balance-transfer.prefill-amounts.store');
+
+    Route::get('balance-transfer/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 
     // search content
     Route::get('mybl-search/content', 'CMS\Search\InAppSearchContentController@create')
@@ -661,6 +699,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    /*
+     * Dynamic Deeplink
+     */
+    Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
     //App MENU  ====================================
     Route::get('mybl-menu/create', 'CMS\MyblAppMenuController@create');
     Route::get('mybl-menu/{id}/child-menu/create', 'CMS\MyblAppMenuController@create');
@@ -674,6 +719,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
+    Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
 
     //App Manage  ====================================
@@ -700,6 +747,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
+
+    // Flash Hour
+    Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
+    Route::get('flash-hour-campaign/destroy/{id}', 'CMS\MyBlFlashHourController@destroy');
+
+    Route::get('flash-hour-campaign/campaign-details/{id}', 'CMS\MyBlFlashHourController@campaignDetails')
+        ->name('refer-and-earn.campaign.details');
+    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
+        ->name('refer-and-earn.analytics');
+
+    Route::get('flash-hour-campaign/referee-details/{id}', 'CMS\MyBlFlashHourController@refereeDetails');
 });
 
 // 4G Map View Route

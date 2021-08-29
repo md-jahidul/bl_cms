@@ -15,7 +15,7 @@ class AddActionUrlToProductDeepLinkDetailsTable extends Migration
     {
         if (!Schema::hasColumn('product_deep_link_details', 'action_url')) {
             Schema::table('product_deep_link_details', function (Blueprint $table) {
-                $table->string('action_url')->nullable()->after('action_status');
+                $table->string('action_url')->default(true)->after('action_status');
             });
         }
 

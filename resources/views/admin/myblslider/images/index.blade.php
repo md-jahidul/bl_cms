@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Slider')
-@section('card_name', $slider_information->title." Slider")
+@section('card_name', $slider->title." Slider")
 @section('breadcrumb')
     <li class="breadcrumb-item active">Edit Image Info</li>
 @endsection
 @section('action')
-    <a href="{{route('myblslider.images.create',$slider_information->id)}}" class="btn btn-info btn-glow px-2">
+    <a href="{{route('myblslider.images.create',$slider->id)}}" class="btn btn-info btn-glow px-2">
         Add Image
     </a>
     <a href="{{route('myblslider.index')}}" class="btn btn-primary btn-glow px-2">
@@ -18,7 +18,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ ucwords($slider_information->title." ". "slider images") }}</strong>
+                    <h4 class="pb-1"><strong>{{ ucwords($slider->title." ". "slider images") }}</strong>
                     </h4>
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -30,12 +30,12 @@
                             <th width="10%">Type</th>
                             <th width="15%">Start Date</th>
                             <th width="15%">End Date</th>
-                            <th width="10%">Status</th>
+                            <th width="10%">Visibility</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
-                        @foreach($slider_information->sliderImages as $index=>$slider_image)
+                        @foreach($sliderImages as $index=>$slider_image)
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $slider_image->id }}</td>
@@ -46,10 +46,10 @@
                                 <td>{{ $slider_image->start_date }}</td>
                                 <td>{{ $slider_image->end_date }}</td>
                                 <td>
-                                    @if($slider_image->is_active == "1")
-                                        <span class="badge badge-success">Active</span>
+                                    @if($slider_image->visibilityStatus())
+                                        <span class="badge badge-success">Visible</span>
                                     @else
-                                        <span class="badge badge-danger">InActive</span>
+                                        <span class="badge badge-danger">Not Visible</span>
                                     @endif
                                 </td>
                                 <td class="action">

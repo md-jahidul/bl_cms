@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use App\Models\ProductDeepLink;
 
 /**
  * Class ProductCoreService
@@ -438,6 +439,10 @@ class ProductCoreService
             $builder = $builder->where('show_in_home', $request->show_in_home);
         }
 
+        if ($request->pinned_products != "") {
+            $builder = $builder->where('pin_to_top', $request->pinned_products);
+        }
+
         $bundles = ['mix', 'voice', 'sms'];
 
         $builder = $builder->whereHas(
@@ -487,17 +492,17 @@ class ProductCoreService
             $response['data'][] = [
                 'product_code' => $item->product_code,
                 'pin_to_top' => $item->pin_to_top,
-                'renew_product_code' => $item->details->renew_product_code,
-                'recharge_product_code' => $item->details->recharge_product_code,
-                'connection_type' => $item->details->sim_type,
-                'name' => $item->details->name,
-                'description' => $item->details->short_description,
-                'content_type' => ucfirst($item->details->content_type),
-                'family_name' => ucfirst($item->details->family_name),
+                'renew_product_code' => optional($item->details)->renew_product_code ?? "",
+                'recharge_product_code' => optional($item->details)->recharge_product_code ?? "",
+                'connection_type' => optional($item->details)->sim_type ?? "",
+                'name' => optional($item->details)->name ?? "",
+                'description' => optional($item->details)->short_description ?? "",
+                'content_type' => ucfirst(optional($item->details)->content_type ?? ""),
+                'family_name' => ucfirst(optional($item->details)->family_name ?? ""),
                 'offer_section' => ucfirst($item->offer_section_title),
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
-                'status' => $item->details->status,
+                'status' => optional($item->details)->status ?? "",
                 'is_visible' => $item->is_visible ? $activeSchedule : 'Hidden',
                 'show_from' => $item->show_from ? Carbon::parse($item->show_from)->format('d-m-Y h:i A') : '',
                 'hide_from' => $item->hide_from ? Carbon::parse($item->hide_from)->format('d-m-Y h:i A') : '',
@@ -882,8 +887,6 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
-
-//        dd($data);
 
         try {
             DB::beginTransaction();

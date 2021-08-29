@@ -91,6 +91,13 @@
                         <i class="ft-x-square"></i>Inactive Products</a>
                 </li>
 
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Category
+                    </a>
+                </li>
+
                 <li class="{{ is_active_match(route('product-activities.history')) }}">
                     <a class="menu-item" href="{{ route('product-activities.history') }}">
                         <i class="la la-history"></i>Products Activities</a>
@@ -215,6 +222,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{is_active_url('flash-hour-campaign')}}">
+                <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Flash Hour
+                </a>
+            </li>
         </ul>
     </li>
 
@@ -287,6 +300,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                 </li>
+                <li class="{{ is_active_url('contextualcard-icons') . is_active_url('contextualcard/create')}}">
+                    <a class="menu-item" href="{{ route('contextualcard-icons.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-external-link-square"></i>Contextual Card Icons</a>
+                </li>
 
                 <li class="{{ is_active_url('banner-analytic')}}">
                     <a class="menu-item" href="{{ route('banner-analytic.index') }}"
@@ -314,8 +332,7 @@
                         <i class="la la-phone-square"></i> Minute Offer</a>
                 </li>
                 <li class="{{is_active_url('smsOffer')}} {{is_active_url('smsOffer/create')}}">
-                    <a class="menu-item" href="{{ route('smsOffer.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('smsOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comments-o"></i> SMS Offer</a>
                 </li>
                 <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixedBundleOffer/create')}}">
@@ -329,8 +346,7 @@
                         <i class="la la-gift"></i> Near by Offer</a>
                 </li>
                 <li class="{{is_active_url('amarOffer')}} {{is_active_url('amarOffer/create')}}">
-                    <a class="menu-item" href="{{ route('amarOffer.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('amarOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cart-arrow-down"></i> Amar Offer</a>
                 </li>
 
@@ -371,16 +387,16 @@
                     </a>
                 </li>
 
+                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-globe"></i> Recharge Offer</a>
+                </li>
                 <li class="{{is_active_url('special-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="ft-phone-call"></i> Special call rate Filter
                     </a>
-                </li>
-                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
-                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-globe"></i> Recharge Offer</a>
                 </li>
             </ul>
         </li>
@@ -392,14 +408,19 @@
                 <span class="menu-title">Config</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
-                    <a class="menu-item" href="{{ route('otp-config.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('otp-config.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cog"></i>OTP Config</a>
                 </li>
 
                 <li class="{{ is_active_url('recharge/prefill-amounts')}}">
                     <a class="menu-item" href="{{ route('recharge.prefill-amounts.index') }}">
                         <i class="la la-money"></i>Recharge Prefill Amount</a>
+
+                </li>
+
+                <li class="{{ is_active_url('balance-transfer/prefill-amounts')}}">
+                    <a class="menu-item" href="{{ route('balance-transfer.prefill-amounts.create') }}">
+                        <i class="la la-money"></i>Balance Transfer Prefill Amount</a>
 
                 </li>
 
@@ -438,9 +459,20 @@
 
 
     @if( auth()->user()->can_view('TermsAndConditions') )
-        <li class="{{ is_active_url('/terms-conditions') }} nav-item"><a href="{{route('terms-conditions.show')}}"><i
-                    class="la la-legal"></i>
-                <span class="menu-title">Terms and Conditions</span></a>
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Terms and Conditions</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('/terms-conditions/general') }} nav-item">
+                    <a href="{{route('terms-conditions.show', ['feature_name' => 'general'])}}">
+                        <i class="la la-legal"></i>
+                        <span class="menu-title">T&C For App</span></a>
+                </li>
+                <li class="{{ is_active_url('/terms-conditions/balance_transfer') }} nav-item">
+                    <a href="{{route('terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
+                        <i class="la la-legal"></i><span class="menu-title">T&C For Balance Transfer</span>
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -457,6 +489,13 @@
         <li class="{{ is_active_url('app-version') . is_active_url('app-version/create')}}">
             <a class="menu-item" href="{{ route('app-version.index') }}" data-i18n="nav.templates.vert.classic_menu">
                 <i class="la la-code-fork"></i>App Version</a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('AppLaunch') )
+        <li class="{{ is_active_url('app-launch')}}">
+            <a class="menu-item" href="{{ route('app-launch.index') }}">
+                <i class="ft-alert-triangle"></i>App Launch Popup</a>
         </li>
     @endif
 
@@ -541,6 +580,7 @@
                 <i class="la la-code-fork"></i>Debug Panel</a>
         </li>
     @endif
+
 
     <li class="{{ is_active_url('developer/api/debug') }}">
         <a class="menu-item" href="{{ route('support-message') }}">

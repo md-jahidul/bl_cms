@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Http\Requests\MyblManageRequest;
 use App\Repositories\MyblManageItemRepository;
 use App\Services\MyblManageService;
@@ -75,8 +76,18 @@ class MyblManageController extends Controller
      */
     public function createItem($parent_id)
     {
+        $actionList = Helper::navigationActionList();
+        $deeplinkActions = Helper::deepLinkList();
         $parentMenu = $this->manageService->findOne($parent_id);
-        return view('admin.mybl-manage.create', compact('parent_id', 'parentMenu'));
+        return view(
+            'admin.mybl-manage.create',
+            compact(
+                'parent_id',
+                'parentMenu',
+                'actionList',
+                'deeplinkActions'
+            )
+        );
     }
 
     /**
@@ -145,8 +156,9 @@ class MyblManageController extends Controller
     {
         $manageCategory = $this->manageService->findOne($parent_id);
         $item = $this->manageItemRepository->findOrFail($id);
-//        dd($item);
-        return view('admin.mybl-manage.edit', compact('item', 'manageCategory'));
+        $deeplinkActions = Helper::deepLinkList();
+        $actionList = Helper::navigationActionList();
+        return view('admin.mybl-manage.edit', compact('item', 'manageCategory', 'deeplinkActions', 'actionList'));
     }
 
     /**

@@ -49,6 +49,10 @@ class AlCoreProductService
      * @var array
      */
     protected $config;
+    /**
+     * @var ProductService
+     */
+    private $productService;
 
     /**
      * ProductCoreService constructor.
@@ -59,11 +63,13 @@ class AlCoreProductService
     public function __construct(
         AlCoreProductRepository $alCoreProductRepository,
         SearchDataRepository $searchRepository,
-        TagCategoryRepository $tagRepository
+        TagCategoryRepository $tagRepository,
+        ProductService $productService
     ) {
         $this->alCoreProductRepository = $alCoreProductRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
+        $this->productService = $productService;
         $this->setActionRepository($alCoreProductRepository);
     }
 
@@ -660,10 +666,12 @@ class AlCoreProductService
 
         $url = "";
         if ($product->sim_category_id == 1) {
-            $url .= "prepaid/";
+            $data = $this->productService->findSIMType('prepaid')['type_en'];
+            $url .= "$data/";
         }
         if ($product->sim_category_id == 2) {
-            $url .= "postpaid/";
+            $data = $this->productService->findSIMType('postpaid')['type_en'];
+            $url .= "$data/";
         }
 
         //category url
@@ -674,23 +682,23 @@ class AlCoreProductService
 
         $type = "";
         if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'prepaid-internet';
         }
         if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'prepaid-voice';
         }
         if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'prepaid-bundle';
         }
         if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'postpaid-internet';
         }
         if ($product->offer_category_id > 3) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'others';
         }
 
