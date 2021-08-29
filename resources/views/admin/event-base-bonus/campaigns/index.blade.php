@@ -44,9 +44,6 @@
                                             <a href="{{ url('event-base-bonus/campaigns/'.$campaign['id']).'/edit' }}"  class="mr-3">
                                                 <i class="la la-pencil text-primary"></i>
                                             </a>
-                                            <a href="#" >
-                                                <i class="la la-trash text-danger"></i>
-                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -52,19 +52,19 @@ class EventBaseCampaignController extends Controller
     public function edit($id)
     {
         $campaign = $this->campaignService->findOne($id);
-        dd($campaign);
         $products = $this->productCoreService->findAll();
         $tasks = $this->taskService->findAll();
+        $taskIds = array_column($campaign['tasks'], 'id');
 
-        return view('admin.campaign.edit', compact('campaign'));
+        return view('admin.event-base-bonus.campaigns.edit', compact('campaign','products','tasks','taskIds'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreEventCampaignRequest $request, $id)
     {
-        $response = $this->campaignService->update($request->all(), $id);
-        //Session::flash('message', $response->getContent());
+        $response = $this->campaignService->update($request->except('_token', '_method'), $id);
+        Session::flash('message', 'Updated successful');
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/campaigns');
     }
 
     public function destroy($id)

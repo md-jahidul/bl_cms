@@ -16,20 +16,34 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{url('event-base-bonus/tasks/'.$task['id'])}}"
+                              action="{{url('event-base-bonus/campaigns/'.$campaign['id'])}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-12 mb-2">
+                                    <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Title</label>
                                         <input required maxlength="50"
                                                data-validation-required-message="Title is required"
                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                               value="{{ old('title') }}"
+                                               value="{{ $campaign['title'] }}"
                                                type="text" class="form-control"
                                                placeholder="Enter title" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="dashboard_card_title" class="required">Tasks</label>
+                                        <select class="select2 form-control" name="task_ids[]" multiple="multiple"
+                                                required data-validation-required-message="Please select task">
+                                            @foreach($tasks as $task)
+                                                <option value="{{ $task['id'] }}" {{in_array($task['id'], $taskIds) ? 'selected':''}}>{{ $task['title'] }}</option>
+                                            @endforeach
+
+                                        </select>
+                                        <small class="text-danger"> @error('task_ids') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
@@ -38,8 +52,8 @@
                                         <textarea rows="4"
                                                   name="description"
                                                   class="form-control"
-                                                  placeholder="Enter description in English">{{ old('description') }}</textarea>
-                                        <small class="text-danger"> @error('description_') {{ $message }} @enderror </small>
+                                                  >{{ $campaign['description'] }}</textarea>
+                                        <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
@@ -48,31 +62,23 @@
                                         <textarea rows="4"
                                                   name="description_bn"
                                                   class="form-control"
-                                                  placeholder="Enter description in Bangla">{{ old('description_bn') }}</textarea>
+                                                  >{{ $campaign['description_bn'] }}</textarea>
                                         <small class="text-danger"> @error('description_bn') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Start Date</label>
-                                        <input required maxlength="50"
-                                               data-validation-required-message="Btn Text is required"
-                                               data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
-                                               value="{{ old('start_date') }}"
-                                               type="date" class="form-control"
-                                               placeholder="Enter start date" name="start_date">
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               value="{{$campaign['start_date']}}"/>
                                         <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">End Date</label>
-                                        <input required maxlength="50"
-                                               data-validation-required-message="Btn Text is required"
-                                               data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
-                                               value="{{ old('end_date') }}"
-                                               type="date" class="form-control"
-                                               placeholder="Enter end date" name="end_date">
+                                        <input type='text' class="form-control" name="end_date" id="end_date"
+                                               value="{{$campaign['end_date']}}"/>
                                         <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
@@ -87,7 +93,7 @@
                                                 <option value="">Select product code</option>
                                                 @foreach($products as $productCodes)
                                                     <option
-                                                        value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                        value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $campaign['reward_product_code_prepaid'] ? 'selected':''}} >{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
                                                 @endforeach
 
                                             </select>
@@ -107,7 +113,7 @@
                                                 required data-validation-required-message="Please select Reward Postpaid">
                                             <option value="">Select product code</option>
                                             @foreach($products as $productCodes)
-                                                <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $campaign['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
                                             @endforeach
 
                                         </select>
@@ -119,25 +125,14 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-12 mb-2">
-                                        <label for="dashboard_card_title" class="required">Tasks</label>
-                                        <select class="select2" name="task_ids[]" multiple="multiple"
-                                                required data-validation-required-message="Please select task">
-                                            @foreach($tasks as $task)
-                                                <option value="{{ $task['id'] }}">{{ $task['title'] }}</option>
-                                            @endforeach
-
-                                        </select>
-                                        <small class="text-danger"> @error('task_ids') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                            <input type="radio" name="status" value="1" id="input-radio-15">
+                                            <input type="radio" name="status" value="1" id="input-radio-15"
+                                                {{ $campaign['status'] == 1 ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16">
+                                            <input type="radio" name="status" value="0" id="input-radio-16"
+                                                {{ $campaign['status'] == 0 ? 'checked' : '' }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block">  {{ $errors->first('status') }}</div>
@@ -153,11 +148,13 @@
                                                    name="icon_image"
                                                    class="dropify_image"
                                                    data-height="80"
-                                                   data-allowed-file-extensions="png jpg gif" required/>
+                                                   data-default-file="{{ asset($campaign['icon_image']) }}"
+                                                   data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block"></div>
                                             <small
                                                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                             <small id="massage"></small>
+                                            <input type="hidden" name="icon_image_old" value="{{$campaign['icon_image']}}">
                                         </div>
                                     </div>
 
@@ -181,24 +178,15 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
+    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
     <script>
         $(document).ready(function () {

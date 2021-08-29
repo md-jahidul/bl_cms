@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Exception\GuzzleException;
-
 class ApiService
 {
     public $client;
@@ -15,38 +13,22 @@ class ApiService
 
     public function get($url)
     {
-        try {
-            return $this->client->get($url);
-        } catch (GuzzleException $e) {
-            return $e->getMessage();
-        }
+        return $this->client->get($url);
     }
 
     public function post($url, $data)
     {
-        try {
-            return $this->client->post($url, ['form_params' => $data]);
-        } catch (GuzzleException $e) {
-            return $e->getMessage();
-        }
+        return $this->client->post($url, ['form_params' => $data]);
     }
 
     public function put($url, $data)
     {
-        try {
-            return $this->client->put($url, ['form_params' => $data]);
-        } catch (GuzzleException $e) {
-            return $e->getMessage();
-        }
+        return $this->client->put($url, ['form_params' => $data]);
     }
 
     public function delete($url)
     {
-        try {
-            return $this->client->delete($url);
-        } catch (GuzzleException $e) {
-            return $e->getMessage();
-        }
+        return $this->client->delete($url);
     }
 
 }

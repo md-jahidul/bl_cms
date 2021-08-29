@@ -65,7 +65,7 @@ class TaskService
 
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
-        $request  = $client->put($url, ['form_params' => $data]);
+        $request  = $client->put($url, $data);
         $response = $request->getStatusCode();
 
         return $response;
