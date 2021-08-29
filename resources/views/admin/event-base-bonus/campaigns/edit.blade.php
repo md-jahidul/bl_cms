@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Campaign Create')
-@section('card_name', 'Campaign Create')
+@section('title', 'Campaign Edit')
+@section('card_name', 'Campaign Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/campaigns') }}"> Campaign List</a></li>
-    <li class="breadcrumb-item active"> Campaign Create</li>
+    <li class="breadcrumb-item active"> Campaign Edit</li>
 @endsection
 @section('action')
     <a href="{{ url('event-base-bonus/campaigns') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -16,12 +16,12 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{url('event-base-bonus/campaigns')}}"
+                              action="{{url('event-base-bonus/tasks/'.$task['id'])}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-12 mb-2">
                                         <label for="dashboard_card_title" class="required">Title</label>
                                         <input required maxlength="50"
                                                data-validation-required-message="Title is required"
@@ -30,19 +30,6 @@
                                                type="text" class="form-control"
                                                placeholder="Enter title" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Tasks</label>
-                                        <select class="select2 form-control" name="task_ids[]" multiple="multiple"
-                                                required data-validation-required-message="Please select task">
-                                            @foreach($tasks as $task)
-                                                <option value="{{ $task['id'] }}">{{ $task['title'] }}</option>
-                                            @endforeach
-
-                                        </select>
-                                        <small class="text-danger"> @error('task_ids') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
@@ -68,16 +55,24 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Start Date</label>
-                                        <input type='text' class="form-control" name="start_date" id="start_date"
-                                               placeholder="Please select start date"/>
+                                        <input required maxlength="50"
+                                               data-validation-required-message="Btn Text is required"
+                                               data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
+                                               value="{{ old('start_date') }}"
+                                               type="date" class="form-control"
+                                               placeholder="Enter start date" name="start_date">
                                         <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">End Date</label>
-                                        <input type='text' class="form-control" name="end_date" id="end_date"
-                                               placeholder="Please select start date"/>
+                                        <input required maxlength="50"
+                                               data-validation-required-message="Btn Text is required"
+                                               data-validation-maxlength-message="Btn Text can not be more then 200 Characters"
+                                               value="{{ old('end_date') }}"
+                                               type="date" class="form-control"
+                                               placeholder="Enter end date" name="end_date">
                                         <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
@@ -122,6 +117,19 @@
                                         @if ($errors->has('reward_postpaid'))
                                             <div class="help-block">{{ $errors->first('reward_postpaid') }}</div>
                                         @endif
+                                    </div>
+
+                                    <div class="form-group col-md-12 mb-2">
+                                        <label for="dashboard_card_title" class="required">Tasks</label>
+                                        <select class="select2" name="task_ids[]" multiple="multiple"
+                                                required data-validation-required-message="Please select task">
+                                            @foreach($tasks as $task)
+                                                <option value="{{ $task['id'] }}">{{ $task['title'] }}</option>
+                                            @endforeach
+
+                                        </select>
+                                        <small class="text-danger"> @error('task_ids') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
@@ -173,17 +181,25 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-        <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+    {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
     <script>
         $(document).ready(function () {
 
