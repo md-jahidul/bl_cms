@@ -10,38 +10,21 @@ class EventBaseBonusCampaignService
     {
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns";
-        $request  = $client->get($url);
-        $response = json_decode($request->getBody(), true);
+        $response = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
-    }
-
-    public function eventAll()
-    {
-        return [
-            [
-                'title_en' => 'title 1',
-                'title_bn' => 'title 1',
-
-            ],
-            [
-                'title_en' => 'title 2',
-                'title_bn' => 'title 2',
-            ],
-        ];
     }
 
     public function findOne($id) : array
     {
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns/" . $id;
-        $request  = $client->get($url);
-        $response = json_decode($request->getBody(), true);
+        $response  = $client->CallAPI('GET',$url,[]);
 
         return $response['data'];
     }
 
-    public function store($data) : string
+    public function store($data) : array
     {
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_campaign');
@@ -53,14 +36,11 @@ class EventBaseBonusCampaignService
 
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns";
-        $request  = $client->post($url, $data);
-        $response = $request->getStatusCode();
 
-        return $response;
-
+        return $client->CallAPI("POST",$url, $data);
     }
 
-    public function update($data, $id) : string
+    public function update($data, $id) : array
     {
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_task');
@@ -75,10 +55,8 @@ class EventBaseBonusCampaignService
 
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns/" . $id;
-        $request  = $client->put($url, $data);
-        $response = $request->getStatusCode();
 
-        return $response;
+        return $client->CallAPI("PUT",$url, $data);
     }
 
     public function delete($id) : string
