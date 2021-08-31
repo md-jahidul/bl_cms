@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour')
-@section('card_name',"Flash Hour" )
+@section('title', 'Cash Back')
+@section('card_name',"Cash Back Campaign" )
 @section('breadcrumb')
     <li class="breadcrumb-item active">
         <a href="{{ route('cash-back-campaign.index') }}">Campaign List</a>
@@ -32,7 +32,7 @@
                             @endif
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-4">
                                         <label for="title" class="required">Campaign Name</label>
                                         <input required maxlength="250"
                                                data-validation-required-message="Title is required"
@@ -44,20 +44,7 @@
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group col-md-6 mb-2" id="cta_action">
-                                        <label for="redirect_url" class="required">Base Msisdn</label>
-                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
-                                                class="browser-default custom-select" required>
-                                            <option value="">Select Action</option>
-                                            @foreach ($baseMsisdnGroups as $key => $value)
-                                                <option value="{{ $value->id }}"
-                                                    {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <div class="form-group col-md-4 {{ $errors->has('start_date') ? ' error' : '' }}">
                                         <label for="start_date">Start Date</label>
                                         <div class='input-group'>
                                             <input type='text' class="form-control" name="start_date" id="start_date"
@@ -71,7 +58,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <div class="form-group col-md-4 {{ $errors->has('end_date') ? ' error' : '' }}">
                                         <label for="end_date">End Date</label>
                                         <input type="text" name="end_date" id="end_date" class="form-control"
                                                placeholder="Please select end date"
@@ -98,16 +85,19 @@
                                 <!-- Product Selection Start -->
                                 <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
                                     @if(isset($campaign))
-                                        @foreach($campaign->flashHourProducts as $product)
+                                        @foreach($campaign->cashBackProducts as $product)
                                             @include('admin.mybl-campaign.cash-back.partials.product-element', ['product' => $product])
                                         @endforeach
                                     @else
                                         @include('admin.mybl-campaign.cash-back.partials.product-element')
                                     @endif
                                 </div>
+
                                 <!-- Product Selection End -->
 
                                 <div class="row">
+                                    <div class="form-actions col-md-12 mt-0 text-danger"></div>
+
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Services\MyblCashBackService;
 use App\Services\ProductCoreService;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -68,7 +69,7 @@ class MyBlCashBackController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->myblFlashHourService->storeCampaign($request->all());
+        $response = $this->myblCashBackService->storeCampaign($request->all());
         Session::flash('message', $response->getContent());
         return redirect(route('cash-back-campaign.index'));
     }
@@ -81,10 +82,9 @@ class MyBlCashBackController extends Controller
      */
     public function edit($id)
     {
-        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $products = $this->productCoreService->findAll();
-        $campaign = $this->myblFlashHourService->findOne($id);
-        return view('admin.mybl-campaign.cash-back.create-edit', compact('products', 'campaign', 'baseMsisdnGroups'));
+        $campaign = $this->myblCashBackService->findOne($id);
+        return view('admin.mybl-campaign.cash-back.create-edit', compact('products', 'campaign'));
     }
 
     /**
@@ -96,40 +96,20 @@ class MyBlCashBackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->myblFlashHourService->updateCampaign($request->all(), $id);
+        $response = $this->myblCashBackService->updateCampaign($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('cash-back-campaign.index'));
     }
 
-    /**
-     * @return Application|Factory|View
-     */
-    public function getReferAndEarnAnalytics()
-    {
-        $analytics = $this->myblFlashHourService->analyticsData();
-        return view('admin.mybl-campaign.cash-back.analytics', compact('analytics'));
-    }
-
-    public function campaignDetails(Request $request, $campaignId)
-    {
-        $campaignDetails = $this->myblFlashHourService->detailsCampaign($request, $campaignId);
-        return view('admin.mybl-campaign.cash-back.campaign-details', compact('campaignDetails'));
-    }
-
-    public function refereeDetails(Request $request, $id)
-    {
-        return $this->myblFlashHourService->refereeDetails($request, $id);
-    }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Application|\Illuminate\Contracts\Routing\UrlGenerator|string
+     * @param $id
+     * @return Application|UrlGenerator|string
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        $this->myblFlashHourService->deleteCampaign($id);
+        $this->myblCashBackService->deleteCampaign($id);
         return url('cash-back-campaign');
     }
 }
