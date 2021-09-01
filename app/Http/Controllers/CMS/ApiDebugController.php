@@ -31,8 +31,30 @@ use Illuminate\View\View;
 class ApiDebugController extends Controller
 {
     /**
+     * @var BalanceService
+     * @var AuditLogsService
+     * @var BonusLogsService
+     * @var CustomerSummaryUsageService
+     * @var CustomerCallUsageService
+     * @var CustomerInternetUsageService
+     * @var CustomerSmsUsageService
+     * @var CustomerRechargeHistoryService
+     * @var CustomerRoamingUsageService
+     * @var CustomerSubscriptionUsageService
+     * @var OtpRequestLogsService
      * @var ContactRestoreLogService
      */
+    protected $balanceService;
+    protected $auditLogsService;
+    protected $bonusLogsService;
+    protected $customerSummaryUsageService;
+    protected $callUsageService;
+    protected $internetUsageService;
+    protected $smsUsageService;
+    protected $rechargeHistoryService;
+    protected $roamingUsageService;
+    protected $subscriptionUsageService;
+    protected $otpRequestLogsService;
     protected $contactRestoreLogService;
 
     /**
@@ -64,7 +86,7 @@ class ApiDebugController extends Controller
         OtpRequestLogsService $otpRequestLogsService,
         ContactRestoreLogService $contactRestoreLogService
     ) {
-     
+
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
         $this->customerSummaryUsageService = $customerSummaryUsageService;

@@ -26,6 +26,12 @@ class BalanceService extends BaseService
      */
     protected $customerService;
 
+    /**
+     * @var ProductLoanService
+     */
+
+    protected $loanService;
+
     protected $subscriptionProductService;
 
     /**
