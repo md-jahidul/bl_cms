@@ -700,12 +700,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
     Route::get('flash-hour-campaign/destroy/{id}', 'CMS\MyBlFlashHourController@destroy');
 
-    Route::get('flash-hour-campaign/campaign-details/{id}', 'CMS\MyBlFlashHourController@campaignDetails')
+    Route::get('flash-hour-analytic', 'CMS\MyBlFlashHourController@analyticReport')
         ->name('refer-and-earn.campaign.details');
-    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
-        ->name('refer-and-earn.analytics');
 
-    Route::get('flash-hour-campaign/referee-details/{id}', 'CMS\MyBlFlashHourController@refereeDetails');
+//    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
+//        ->name('refer-and-earn.analytics');
+//    Route::get('flash-hour-campaign/referee-details/{id}', 'CMS\MyBlFlashHourController@refereeDetails');
 });
 
 // 4G Map View Route
