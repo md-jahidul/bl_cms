@@ -758,6 +758,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('refer-and-earn.analytics');
 
     Route::get('flash-hour-campaign/referee-details/{id}', 'CMS\MyBlFlashHourController@refereeDetails');
+
+    // Cash Back Campaign
+    Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
+    Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
+
 });
 
 // 4G Map View Route
