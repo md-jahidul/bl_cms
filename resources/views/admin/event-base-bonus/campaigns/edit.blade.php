@@ -36,7 +36,7 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Tasks</label>
-                                        <select class="select2 form-control" name="task_ids[]" multiple="multiple"
+                                        <select class="select22 form-control" name="task_ids[]" multiple="multiple"
                                                 required data-validation-required-message="Please select task">
                                             @foreach($tasks as $task)
                                                 <option value="{{ $task['id'] }}" {{in_array($task['id'], $taskIds) ? 'selected':''}}>{{ $task['title'] }}</option>
@@ -190,6 +190,16 @@
 
     <script>
         $(document).ready(function () {
+
+            $(".select22").select2();
+            $(".select22").on("select2:select", function (evt) {
+                var element = evt.params.data.element;
+                var $element = $(element);
+
+                $element.detach();
+                $(this).append($element);
+                $(this).trigger("change");
+            });
 
             var date = new Date();
             date.setDate(date.getDate());
