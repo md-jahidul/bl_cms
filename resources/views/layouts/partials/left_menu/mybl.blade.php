@@ -222,10 +222,11 @@
                     </li>
                 </ul>
             </li>
+
             <li class="{{is_active_url('flash-hour-campaign')}}">
                 <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-list"></i> Flash Hour
+                    <i class="la la-hourglass-half"></i> Flash Hour
                 </a>
             </li>
             <li class="{{is_active_url('cash-back-campaign')}}">
@@ -236,6 +237,7 @@
             </li>
         </ul>
     </li>
+
 
     @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>

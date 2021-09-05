@@ -97,7 +97,7 @@
 
                                 <!-- Product Selection Start -->
                                 <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
-                                    @if(isset($campaign))
+                                    @if(isset($campaign) && !$campaign->flashHourProducts->isEmpty())
                                         @foreach($campaign->flashHourProducts as $product)
                                             @include('admin.mybl-campaign.flash-hour.partials.product-element', ['product' => $product])
                                         @endforeach

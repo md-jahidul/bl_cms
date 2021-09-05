@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ProductCore;
+use App\Repositories\FlashHourPurchaseReportRepository;
 use App\Repositories\MyBlFlashHourProductRepository;
 use App\Repositories\MyBlFlashHourRepository;
 use App\Traits\CrudTrait;
@@ -21,6 +22,10 @@ class MyblFlashHourService
      * @var MyBlFlashHourProductRepository
      */
     private $flashHourProductRepository;
+    /**
+     * @var FlashHourPurchaseReportRepository
+     */
+    private $purchaseReportRepository;
 
 
     /**
@@ -29,10 +34,12 @@ class MyblFlashHourService
      */
     public function __construct(
         MyBlFlashHourRepository $flashHourRepository,
-        MyBlFlashHourProductRepository $flashHourProductRepository
+        MyBlFlashHourProductRepository $flashHourProductRepository,
+        FlashHourPurchaseReportRepository $purchaseReportRepository
     ) {
         $this->flashHourRepository = $flashHourRepository;
         $this->flashHourProductRepository = $flashHourProductRepository;
+        $this->purchaseReportRepository = $purchaseReportRepository;
         $this->setActionRepository($flashHourRepository);
     }
 
@@ -54,6 +61,7 @@ class MyblFlashHourService
      */
     public function storeCampaign($data)
     {
+        $this->flashHourRepository->inactiveOldCampaign();
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
@@ -72,6 +80,7 @@ class MyblFlashHourService
      */
     public function updateCampaign($data, $id)
     {
+        $this->flashHourRepository->inactiveOldCampaign();
         $campaign = $this->findOne($id);
         $this->flashHourProductRepository->deleteCampaignWiseProduct($id);
         if (isset($data['product-group'])) {
@@ -96,46 +105,55 @@ class MyblFlashHourService
         return Response('Flash hour campaign has been successfully deleted');
     }
 
-    public function campaignStatus($campaign, $column, $colValue)
+    public function purchaseStatusCount($campaign, $column, $colValue)
     {
-        return collect($campaign->referrers)->sum(function ($data) use ($column, $colValue) {
-            return $data->referees->sum(function ($value) use ($column, $colValue) {
-                if ($value->{$column} == $colValue) {
-                    return true;
-                }
-                return false;
-            });
-        });
-    }
+        return collect($campaign->purchaseMsisdns)->sum(function ($data) use ($column, $colValue) {
 
-    public function referrersStatus($campaign, $column, $value)
-    {
-        return collect($campaign->referees)->sum(function ($data) use ($column, $value) {
-            if ($data->{$column} == $value) {
+//            dd($data);
+
+            if ($data->{$column} == $colValue) {
                 return true;
             }
             return false;
+
+//            return $data->referees->sum(function ($value) use ($column, $colValue) {
+//
+//            });
         });
     }
 
-    public function analyticsData()
+//    public function referrersStatus($campaign, $column, $value)
+//    {
+//        return collect($campaign->referees)->sum(function ($data) use ($column, $value) {
+//            if ($data->{$column} == $value) {
+//                return true;
+//            }
+//            return false;
+//        });
+//    }
+
+    public function analyticsData($date, $campaignId)
     {
-        $campaigns = $this->flashHourRepository->referAndEarnData();
-        foreach ($campaigns as $key => $campaign) {
-            $total_referrers = $campaign->referrers->count();
-            $total_referees = $campaign->referrers->sum('referees_count');
+        $purchaseCodes = $this->purchaseReportRepository->purchaseCodeWithMsisdn($date, $campaignId);
+        foreach ($purchaseCodes as $key => $purchaseCode) {
+//            $total_referrers = $referAndEarn->referrers->count();
+//            $total_referees = $referAndEarn->referrers->sum('referees_count');
 
-            $total_success = $this->campaignStatus($campaign, 'status', 'redeemed');
-            $total_claimed = $this->campaignStatus($campaign, 'status', 'claimed');
-            $total_invited = $this->campaignStatus($campaign, 'is_invited', 1);
+//            dd($purchaseCode->purchaseMsisdns);
 
-            $campaigns[$key]['total_referrers'] = $total_referrers;
-            $campaigns[$key]['total_referees'] = $total_referees;
-            $campaigns[$key]['total_success'] = $total_success;
-            $campaigns[$key]['total_claimed'] = $total_claimed;
-            $campaigns[$key]['total_invited'] = $total_invited;
+            $total_success = $this->purchaseStatusCount($purchaseCode, 'action_type', 'success');
+            $total_failed = $this->purchaseStatusCount($purchaseCode, 'action_type', 'failed');
+
+            $purchaseCodes[$key]['total_success'] = $total_success;
+            $purchaseCodes[$key]['total_failed'] = $total_failed;
         }
-        return $campaigns;
+
+//        dd($purchaseCodes);
+        return $purchaseCodes;
+//
+//
+//        dd($campaigns);
+//        return $campaigns;
     }
 
     public function detailsCampaign($request, $id)

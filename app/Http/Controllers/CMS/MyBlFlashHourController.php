@@ -114,10 +114,11 @@ class MyBlFlashHourController extends Controller
     /**
      * @return Application|Factory|View
      */
-    public function getReferAndEarnAnalytics()
+    public function analyticReport(Request $request, $campaignId)
     {
-        $analytics = $this->myblFlashHourService->analyticsData();
-        return view('admin.mybl-campaign.flash-hour.analytics', compact('analytics'));
+//        dd($request->all());
+        $analytics = $this->myblFlashHourService->analyticsData($request->all(), $campaignId);
+        return view('admin.mybl-campaign.flash-hour.analytic-report.index', compact('analytics'));
     }
 
     public function campaignDetails(Request $request, $campaignId)
