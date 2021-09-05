@@ -35,7 +35,7 @@
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Tasks</label>
-                                        <select class="select2 form-control" name="task_ids[]" multiple="multiple"
+                                        <select class="select22 form-control" name="task_ids[]" multiple="multiple"
                                                 required data-validation-required-message="Please select task">
                                             @foreach($tasks as $task)
                                                 <option value="{{ $task['id'] }}">{{ $task['title'] }}</option>
@@ -186,6 +186,16 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(document).ready(function () {
+
+            $(".select22").select2();
+            $(".select22").on("select2:select", function (evt) {
+                var element = evt.params.data.element;
+                var $element = $(element);
+
+                $element.detach();
+                $(this).append($element);
+                $(this).trigger("change");
+            });
 
             var date = new Date();
             date.setDate(date.getDate());
