@@ -17,6 +17,14 @@ class MyBlFlashHourRepository extends BaseRepository
 {
     public $modelName = MyblFlashHour::class;
 
+    public function inactiveOldCampaign()
+    {
+        $campaigns = $this->model->all();
+        foreach ($campaigns as $campaign) {
+            $campaign->update(['status' => 0]);
+        }
+    }
+
     public function referAndEarnData($request = null, $campaignId = null)
     {
         $data = $this->model
