@@ -72,6 +72,10 @@
 
 
         $('#find_analytics').click(function() {
+            if ($('#from_date').val() == '' || $('#to_date').val() == '') {
+                alert('Please select From Date/To Date');
+                return false;
+            }
             $.ajax({
                 url: "{{ url('event-base-bonus/analytics/find') }}",
                 method: "post",
@@ -83,11 +87,11 @@
                 dataType: "json",
                 success: function(result) {
                     task_analytics = result;
-                    console.log(task_analytics);
                     $('#analytics-table').show();
                     var table = $('#task_analytic_table').DataTable({
                         processing: true,
                         serverSide: false,
+                        destroy: true,
                         data: task_analytics,
                         columns: [{
                                 title: 'Campaign Title',
@@ -119,7 +123,7 @@
                         ],
                         "columnDefs": [{
                             "render": function(data, type, row) {
-                                var url = "event-base-bonus/analytics/view-details?campaign=" + row.campaign_id + "&task==" + row.task_id;
+                                var url = "event-base-bonus/analytics/" + row.campaign_id + "/" + row.task_id;
                                 var domElement = `<a href="{{ url("") }}/${url}"><button class="btn btn-success btn-sm">View User Details</span></button></a>`;
                                 return domElement;
                             },

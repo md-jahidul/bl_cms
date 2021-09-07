@@ -31,13 +31,17 @@ class EventBaseTaskAnalyticController extends Controller
 
     public function viewDetails($campaign, $task)
     {
-        return view('admin.event-base-bonus.analytic.view-detail');
+        $taskAnalyticUserDetails = $this->analyticsUserDetails($campaign, $task);
+
+        return view('admin.event-base-bonus.analytic.view-detail', compact('taskAnalyticUserDetails'));
     }
 
-    private function analyticsUserDetails(TaskAnalyticUserDetailRequest $request)
+    private function analyticsUserDetails($campaign, $task)
     {
-        $params = $request->all();
-        unset($params['_token']);
+        $params = [
+            'event_based_campaign_id' => $campaign,
+            'campaign_task_id' => $task
+        ];
 
         return $this->taskAnalyticService->filterAnalytic($params);
     }
