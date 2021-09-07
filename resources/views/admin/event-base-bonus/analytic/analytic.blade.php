@@ -118,9 +118,13 @@
                             }
                         ],
                         "columnDefs": [{
+                            "render": function(data, type, row) {
+                                var url = "event-base-bonus/analytics/view-details?campaign=" + row.campaign_id + "&task==" + row.task_id;
+                                var domElement = `<a href="{{ url("") }}/${url}"><button class="btn btn-success btn-sm">View User Details</span></button></a>`;
+                                return domElement;
+                            },
                             "targets": -1,
                             "data": null,
-                            "defaultContent": "<button  class='btn btn-success'>View User Details</button>"
                         }],
                         buttons: [{
                                 extend: 'csv',

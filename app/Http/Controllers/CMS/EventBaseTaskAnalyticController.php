@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Services\TaskAnalyticService;
 use App\Http\Requests\TaskAnalyticRequest;
 use App\Http\Requests\TaskAnalyticUserDetailRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class EventBaseTaskAnalyticController extends Controller
@@ -20,7 +21,7 @@ class EventBaseTaskAnalyticController extends Controller
 
     public function index()
     {
-        return view('admin.event-base-bonus.tasks.analytic');
+        return view('admin.event-base-bonus.analytic.analytic');
     }
 
     public function analytics(TaskAnalyticRequest $request)
@@ -28,7 +29,12 @@ class EventBaseTaskAnalyticController extends Controller
         return $this->taskAnalyticService->getAnalytics($request->all());
     }
 
-    public function analyticsUserDetails(TaskAnalyticUserDetailRequest $request)
+    public function viewDetails($campaign, $task)
+    {
+        return view('admin.event-base-bonus.analytic.view-detail');
+    }
+
+    private function analyticsUserDetails(TaskAnalyticUserDetailRequest $request)
     {
         $params = $request->all();
         unset($params['_token']);
