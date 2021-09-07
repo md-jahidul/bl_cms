@@ -4,11 +4,11 @@ namespace App\Services;
 
 class TaskService
 {
-    public function findAll() : array
+    public function findAll(): array
     {
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task";
-        $response  = $client->CallAPI('GET',$url,[]);
+        $response  = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
     }
@@ -17,21 +17,21 @@ class TaskService
     {
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/event-list";
-        $response  = $client->CallAPI('GET',$url,[]);
+        $response  = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
     }
 
-    public function findOne($id) : array
+    public function findOne($id): array
     {
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
-        $response  = $client->CallAPI('GET',$url,[]);
+        $response  = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
     }
 
-    public function store($data) : array
+    public function store($data): array
     {
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_task');
@@ -42,10 +42,10 @@ class TaskService
 
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task";
-        return $client->CallAPI("POST",$url, $data);
+        return $client->CallAPI("POST", $url, $data);
     }
 
-    public function update($data, $id) : array
+    public function update($data, $id): array
     {
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_task');
@@ -60,14 +60,14 @@ class TaskService
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
 
-        return $client->CallAPI("PUT",$url, $data);
+        return $client->CallAPI("PUT", $url, $data);
     }
 
-    public function delete($id) : array
+    public function delete($id): array
     {
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
 
-        return $client->CallAPI("DELETE",$url, []);
+        return $client->CallAPI("DELETE", $url, []);
     }
 }
