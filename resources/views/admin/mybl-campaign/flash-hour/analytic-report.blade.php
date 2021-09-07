@@ -3,6 +3,9 @@
 @section('card_name', 'Flash Hour Purchase Report')
 
 @section('breadcrumb')
+    <li class="breadcrumb-item active">
+        <a href="{{ route('flash-hour-campaign.index') }}">Campaign List</a>
+    </li>
     <li class="breadcrumb-item active">Purchase List</li>
 @endsection
 
@@ -47,15 +50,14 @@
                             @foreach($analytics as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-    {{--                                <td>{{ $data->title }}</td>--}}
                                     <td>{{ $data->product_code }}</td>
                                     <td>{{ $data->total_success ?? 0 }}</td>
                                     <td>{{ $data->total_failed ?? 0 }}</td>
                                     <td>
-                                   <a href="{{--{{route('app-launch.report-detail', $data->id)}}--}}"
-                                      class="btn btn-sm btn-info">
-                                       Details
-                                   </a>
+                                       <a href="{{ route('purchase-msisdn.list', [$campaignId, $data->id]) }}"
+                                          class="btn btn-sm btn-info product-details">
+                                           Details
+                                       </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -97,7 +99,6 @@
             $('#clearFilter').click(function (){
                 $('#from').val('')
             })
-
 
             $('.datetime').daterangepicker({
                 timePicker: false,

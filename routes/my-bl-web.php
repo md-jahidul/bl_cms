@@ -703,9 +703,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('flash-hour-analytic/{campaign_id}', 'CMS\MyBlFlashHourController@analyticReport')
         ->name('flash-hour-analytic.report');
 
+    Route::get('flash-hour-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlFlashHourController@purchaseMsisdnList')
+        ->name('purchase-msisdn.list');
+
+    Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
+
 //    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
 //        ->name('refer-and-earn.analytics');
-//    Route::get('flash-hour-campaign/referee-details/{id}', 'CMS\MyBlFlashHourController@refereeDetails');
 });
 
 // 4G Map View Route
