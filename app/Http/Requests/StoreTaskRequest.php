@@ -24,7 +24,7 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon_image'                   => 'required|file|mimetypes:jpeg,jpg,png,application/json,text/plain',
+            'icon_image'                   => 'required|file',
             'title'                        => 'required|max:150',
             'title_bn'                     => 'required|max:150',
             'description'                  => 'required|max:250',
