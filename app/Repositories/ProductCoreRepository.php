@@ -32,4 +32,20 @@ class ProductCoreRepository extends BaseRepository
     {
         return $this->model->where('product_code', $id)->first();
     }
+
+    /**
+     * @param $productCode
+     * @return string
+     */
+    public function getProductType($productCode): string
+    {
+        $product = $this->model->where('product_code', $productCode)->select('sim_type')->first();
+        $productType = "other";
+        if ($product->sim_type == 1) {
+            $productType = "prepaid";
+        } elseif ($product->sim_type == 2) {
+            $productType = "postpaid";
+        }
+        return $productType;
+    }
 }

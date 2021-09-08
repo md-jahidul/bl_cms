@@ -169,7 +169,7 @@
                         width: "6%",
                         render: function (data, type, row) {
                             let statusData = "";
-                            if (row.action_type === 'success') {
+                            if (row.action_type === 'buy_success') {
                                 statusData = `<span class="badge badge-success">`+row.action_type+`</span>`;
                             } else {
                                 statusData = `<span class="badge badge-danger">`+row.action_type+`</span>`;

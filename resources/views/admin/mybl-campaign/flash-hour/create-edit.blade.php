@@ -115,7 +115,8 @@
                                                 {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
                                             <input type="radio" name="status" value="0" id="input-radio-16"
-                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
+                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}
+                                                {{ !isset($campaign->status) ? "checked" : "" }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block">  {{ $errors->first('status') }}</div>
