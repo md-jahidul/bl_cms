@@ -124,7 +124,7 @@
                         "columnDefs": [{
                             "render": function(data, type, row) {
                                 var url = "event-base-bonus/analytics/" + row.campaign_id + "/" + row.task_id;
-                                var domElement = `<a href="{{ url("") }}/${url}"><button class="btn btn-success btn-sm">View User Details</span></button></a>`;
+                                var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View User Details</span></button></a>`;
                                 return domElement;
                             },
                             "targets": -1,
@@ -143,23 +143,6 @@
                                 }
                             }
                         ]
-                    });
-
-                    $('#task_analytic_table tbody').on('click', 'button', function() {
-                        var data = table.row($(this).parents('tr')).data();
-                        $.ajax({
-                            url: "{{ url('event-base-bonus/analytics/search') }}",
-                            method: "post",
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "event_based_campaign_id": data.campaign_id,
-                                "campaign_task_id": data.task_id
-                            },
-                            dataType: "json",
-                            success: function(result) {
-                                console.log(result);
-                            }
-                        });
                     });
                 }
             });

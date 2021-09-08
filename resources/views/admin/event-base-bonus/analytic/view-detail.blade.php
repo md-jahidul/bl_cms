@@ -16,6 +16,7 @@
                         <table class="table table-striped table-bordered text-center" id="task_analytic_table">
                             <thead>
                                 <tr>
+                                    <th>SL</th>
                                     <th>Msisdn</th>
                                     <th>No of Execution</th>
                                     <th>Status</th>
@@ -24,8 +25,9 @@
                             </thead>
 
                             <tbody>
-                                @foreach($taskAnalyticUserDetails as $taskAnalyticUserDetail)
+                                @foreach($taskAnalyticUserDetails as $key=>$taskAnalyticUserDetail)
                                 <tr>
+                                    <td>{{$key+1}}</td>
                                     <td>{{$taskAnalyticUserDetail['msisdn']}}</td>
                                     <td>{{$taskAnalyticUserDetail['no_of_execution']}}</td>
                                     <td>{{$taskAnalyticUserDetail['status']}}</td>
