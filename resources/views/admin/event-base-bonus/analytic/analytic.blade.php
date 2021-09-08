@@ -5,21 +5,19 @@
 <li class="breadcrumb-item active">Event Based Campaign Analytics</li>
 @endsection
 @section('content')
-<div class="col-md-12 mt-5">
-    <div class="row">
-        <div class="col-md-3">
-            <label for="dashboard_card_title" class="required">From Date</label>
-            <input required type='text' class="form-control" name="from_date" id="from_date" placeholder="Please select from date" />
-        </div>
-        <div class="col-md-3">
-            <label for="dashboard_card_title" class="required">To Date</label>
-            <input required type='text' class="form-control" name="to_date" id="to_date" placeholder="Please select to date" />
-        </div>
-        <div class="col-md-2">
-            <button id="find_analytics" class="btn btn-info mt-1"><i class="la la-download"></i>
-                Submit
-            </button>
-        </div>
+<div class="row" style="margin-bottom: -20px;">
+    <div class="col-md-12" style="margin-top: 10px;">
+        <table border="0" cellspacing="5" cellpadding="5" style="float: right">
+            <tr>
+                <td>From:</td>
+                <td> <input required type='text' class="form-control" name="from_date" id="from_date" placeholder="Please select from date" />
+                </td>
+                <td>To:</td>
+                <td> <input required type='text' class="form-control" name="to_date" id="to_date" placeholder="Please select to date" />
+                </td>
+                <td><input id="find_analytics" value="Submit" class="btn btn-sm btn-success " type="button"></td>
+            </tr>
+        </table>
     </div>
 </div>
 <section id="analytics-table" class="mt-2">
@@ -93,6 +91,7 @@
                         serverSide: false,
                         destroy: true,
                         data: task_analytics,
+                        dom: 'Blfrtip',
                         columns: [{
                                 title: 'Campaign Title',
                                 data: 'campaign_title'
