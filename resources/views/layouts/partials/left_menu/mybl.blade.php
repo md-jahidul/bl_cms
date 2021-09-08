@@ -196,7 +196,7 @@
                     <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
                 </li>
                 <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytics</a>
+                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
                 </li>
             </ul>
         </li>
