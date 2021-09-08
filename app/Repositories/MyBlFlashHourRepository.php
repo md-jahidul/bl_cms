@@ -89,7 +89,7 @@ class MyBlFlashHourRepository extends BaseRepository
 
         return [
             'data' => $data,
-//            'total_success' => 10,
+            'total_success' => 10,
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count

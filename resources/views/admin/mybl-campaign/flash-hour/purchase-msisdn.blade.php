@@ -34,34 +34,33 @@
                     </form>
                 </div>
 
-                <div class="card-header">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <table class="table">
-                                <tr>
-                                    <td><strong>Product Code:</strong></td>
-                                    <td colspan="5">{{--{{$popup->title}}--}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Popup Stat :</strong></td>
-                                    <td>
-                                        <span class="badge badge-success">
-                                            Total Purchase Success:
-                                        </span>
-                                        <strong>10</strong>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-danger">
-                                            Total Purchase Failed:
+{{--                <div class="card-header">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <table class="table">--}}
+{{--                                <tr>--}}
+{{--                                    <td><strong>Product Code:</strong></td>--}}
+{{--                                    <td colspan="5">--}}{{--{{$popup->title}}--}}{{--</td>--}}
+{{--                                </tr>--}}
+{{--                                <tr>--}}
+{{--                                    <td><strong>Popup Stat :</strong></td>--}}
+{{--                                    <td>--}}
+{{--                                        <span class="badge badge-success">--}}
+{{--                                            Total Purchase Success:--}}
+{{--                                        </span>--}}
+{{--                                        <strong>10</strong>--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <span class="badge badge-danger">--}}
+{{--                                            Total Purchase Failed:--}}
 {{--                                         {{ $popupPurchaseLogDetails->where('action_type', 'popup_cancel')->count('action_type') ?? 0 }}--}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+{{--                                        </span>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered dataTable"
@@ -148,10 +147,7 @@
                         date_range: function () {
                             return $('input[name="date_range"]').val();
                         }
-                    },
-                    dataSrc : function (row, data, index) {
-                        console.log(data)
-                    },
+                    }
                 },
                 columns: [
                     {
@@ -165,7 +161,6 @@
                         name: 'msisdn',
                         width: "15%",
                         render: function (data, type, row) {
-                            console.log(row)
                             return row.msisdn;
                         }
                     },
