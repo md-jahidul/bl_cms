@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Analytics')
-@section('card_name', 'Analytics')
+@section('title', 'Analytics Detail')
+@section('card_name', 'Analytics Detail')
 @section('breadcrumb')
 <li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/analytics') }}">Analytics</a></li>
 <li class="breadcrumb-item active">Analytic Details By User</li>
@@ -13,7 +13,7 @@
                 <div class="card-header"></div>
                 <div class="card-content">
                     <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered text-center" id="task_analytic_table">
+                        <table class="table table-striped table-bordered text-center" id="task_analytic_details">
                             <thead>
                                 <tr>
                                     <th>SL</th>
@@ -21,6 +21,8 @@
                                     <th>No of Execution</th>
                                     <th>Status</th>
                                     <th>Started at</th>
+                                    <th>Completed at</th>
+                                    <th>Claimed at</th>
                                 </tr>
                             </thead>
 
@@ -32,6 +34,8 @@
                                     <td>{{$taskAnalyticUserDetail['no_of_execution']}}</td>
                                     <td>{{$taskAnalyticUserDetail['status']}}</td>
                                     <td>{{$taskAnalyticUserDetail['started_at']}}</td>
+                                    <td>{{$taskAnalyticUserDetail['completed_at']}}</td>
+                                    <td>{{$taskAnalyticUserDetail['claimed_at']}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -57,4 +61,9 @@
 <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
 <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
 <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function() {
+        $('#task_analytic_details').DataTable();
+    });
+</script>
 @endpush

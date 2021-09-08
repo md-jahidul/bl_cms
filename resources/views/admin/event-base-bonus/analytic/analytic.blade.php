@@ -15,7 +15,7 @@
                 <td>To:</td>
                 <td> <input required type='text' class="form-control" name="to_date" id="to_date" placeholder="Please select to date" />
                 </td>
-                <td><input id="find_analytics" value="Submit" class="btn btn-sm btn-success " type="button"></td>
+                <td><input id="find_analytics" value="Go" class="btn btn-sm btn-success " type="button"></td>
             </tr>
         </table>
     </div>
@@ -50,101 +50,102 @@
 <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
 <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
 <script>
-    $('#analytics-table').hide();
-
     $(document).ready(function() {
         var date = new Date();
-        var task_analytics = {};
         date.setDate(date.getDate());
         $('#from_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             showClose: true,
+            defaultDate: date
         });
 
         $('#to_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false, //Important! See issue #1075
             showClose: true,
-
+            defaultDate: date
         });
 
-
-        $('#find_analytics').click(function() {
-            if ($('#from_date').val() == '' || $('#to_date').val() == '') {
-                alert('Please select From Date/To Date');
-                return false;
-            }
-            $.ajax({
+        $('#task_analytic_table').DataTable({
+            processing: true,
+            serverSide: false,
+            pageLength: 10,
+            destroy: true,
+            ajax: {
                 url: "{{ url('event-base-bonus/analytics/find') }}",
                 method: "post",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'from_date': $('#from_date').val(),
-                    'to_date': $('#to_date').val()
-                },
-                dataType: "json",
-                success: function(result) {
-                    task_analytics = result;
-                    $('#analytics-table').show();
-                    var table = $('#task_analytic_table').DataTable({
-                        processing: true,
-                        serverSide: false,
-                        destroy: true,
-                        data: task_analytics,
-                        dom: 'Blfrtip',
-                        columns: [{
-                                title: 'Campaign Title',
-                                data: 'campaign_title'
-                            },
-                            {
-                                title: 'Task Title',
-                                data: 'task_title'
-                            },
-                            {
-                                title: 'Event',
-                                data: 'event'
-                            },
-                            {
-                                title: 'Total In Progress',
-                                data: 'total_in_progress'
-                            },
-                            {
-                                title: 'Total Completed',
-                                data: 'total_completed'
-                            },
-                            {
-                                title: 'Total Claimed',
-                                data: 'total_claimed'
-                            },
-                            {
-                                title: 'Action'
-                            }
-                        ],
-                        "columnDefs": [{
-                            "render": function(data, type, row) {
-                                var url = "event-base-bonus/analytics/" + row.campaign_id + "/" + row.task_id;
-                                var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View User Details</span></button></a>`;
-                                return domElement;
-                            },
-                            "targets": -1,
-                            "data": null,
-                        }],
-                        buttons: [{
-                                extend: 'csv',
-                                exportOptions: {
-                                    columns: [1, 2, 3, 4, 5]
-                                }
-                            },
-                            {
-                                extend: 'excel',
-                                exportOptions: {
-                                    columns: [1, 2, 3, 4, 5]
-                                }
-                            }
-                        ]
-                    });
+                dataSrc: '',
+                data: function(data) {
+                    data._token = "{{ csrf_token() }}";
+                    data.from_date = $('#from_date').val();
+                    data.to_date = $('#to_date').val();
                 }
-            });
+            },
+            columns: [{
+                    title: 'SL'
+                },
+                {
+                    title: 'Campaign Title',
+                    data: 'campaign_title'
+                },
+                {
+                    title: 'Task Title',
+                    data: 'task_title'
+                },
+                {
+                    title: 'Event',
+                    data: 'event'
+                },
+                {
+                    title: 'Total In Progress',
+                    data: 'total_in_progress'
+                },
+                {
+                    title: 'Total Completed',
+                    data: 'total_completed'
+                },
+                {
+                    title: 'Total Claimed',
+                    data: 'total_claimed'
+                },
+                {
+                    title: 'Action'
+                }
+            ],
+            dom: 'Blfrtip',
+            "columnDefs": [{
+                    "targets": 0,
+                    "data": null,
+                },
+                {
+                    "targets": 7,
+                    "data": null,
+                    render: function(data, type, row) {
+                        var url = "event-base-bonus/analytics/" + row.campaign_id + "/" + row.task_id;
+                        var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View Details</span></button></a>`;
+                        return domElement;
+                    },
+                }
+            ],
+            buttons: [{
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5]
+                    }
+                }
+            ],
+            "fnCreatedRow": function(row, data, index) {
+                $('td', row).eq(0).html(index + 1);
+            }
+        });
+
+        $("#find_analytics").click(function() {
+            $('#task_analytic_table').DataTable().ajax.reload();
         });
     });
 </script>
