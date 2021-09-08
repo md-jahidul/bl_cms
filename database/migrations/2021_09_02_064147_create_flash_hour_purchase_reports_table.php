@@ -17,11 +17,6 @@ class CreateFlashHourPurchaseReportsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('mybl_flash_hours_id')->nullable();
             $table->string('product_code')->nullable();
-            $table->foreign('mybl_flash_hours_id')
-                ->references('id')
-                ->on('mybl_flash_hours')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->timestamps();
         });
     }

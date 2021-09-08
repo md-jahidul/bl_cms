@@ -6,6 +6,7 @@ use App\Models\ProductCore;
 use App\Repositories\FlashHourPurchaseReportRepository;
 use App\Repositories\MyBlFlashHourProductRepository;
 use App\Repositories\MyBlFlashHourRepository;
+use App\Repositories\ProductCoreRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
@@ -26,6 +27,10 @@ class MyblFlashHourService
      * @var FlashHourPurchaseReportRepository
      */
     private $purchaseReportRepository;
+    /**
+     * @var ProductCoreRepository
+     */
+    private $productCoreRepository;
 
 
     /**
@@ -35,11 +40,13 @@ class MyblFlashHourService
     public function __construct(
         MyBlFlashHourRepository $flashHourRepository,
         MyBlFlashHourProductRepository $flashHourProductRepository,
-        FlashHourPurchaseReportRepository $purchaseReportRepository
+        FlashHourPurchaseReportRepository $purchaseReportRepository,
+        ProductCoreRepository $productCoreRepository
     ) {
         $this->flashHourRepository = $flashHourRepository;
         $this->flashHourProductRepository = $flashHourProductRepository;
         $this->purchaseReportRepository = $purchaseReportRepository;
+        $this->productCoreRepository = $productCoreRepository;
         $this->setActionRepository($flashHourRepository);
     }
 
@@ -65,6 +72,8 @@ class MyblFlashHourService
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
+                $productType = $this->productCoreRepository->getProductType($product['product_code']);
+                $product['product_type'] = $productType;
                 $product['flash_hour_id'] = $campaign->id;
                 $this->flashHourProductRepository->save($product);
             }
@@ -85,6 +94,8 @@ class MyblFlashHourService
         $this->flashHourProductRepository->deleteCampaignWiseProduct($id);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
+                $productType = $this->productCoreRepository->getProductType($product['product_code']);
+                $product['product_type'] = $productType;
                 $product['flash_hour_id'] = $id;
                 $this->flashHourProductRepository->save($product);
             }
@@ -101,6 +112,7 @@ class MyblFlashHourService
     public function deleteCampaign($id)
     {
         $campaign = $this->findOne($id);
+        $this->purchaseReportRepository->deleteAllPurchaseReport($id);
         $campaign->delete();
         return Response('Flash hour campaign has been successfully deleted');
     }
@@ -119,8 +131,8 @@ class MyblFlashHourService
     {
         $purchaseCodes = $this->purchaseReportRepository->purchaseCodeWithMsisdn($date, $campaignId);
         foreach ($purchaseCodes as $key => $purchaseCode) {
-            $total_success = $this->purchaseStatusCount($purchaseCode, 'action_type', 'success');
-            $total_failed = $this->purchaseStatusCount($purchaseCode, 'action_type', 'failed');
+            $total_success = $this->purchaseStatusCount($purchaseCode, 'action_type', 'buy_success');
+            $total_failed = $this->purchaseStatusCount($purchaseCode, 'action_type', 'buy_failure');
 
             $purchaseCodes[$key]['total_success'] = $total_success;
             $purchaseCodes[$key]['total_failed'] = $total_failed;

@@ -117,16 +117,15 @@ class MyBlFlashHourController extends Controller
     public function analyticReport(Request $request, $campaignId)
     {
         $analytics = $this->myblFlashHourService->analyticsData($request->all(), $campaignId);
-        return view('admin.mybl-campaign.flash-hour.analytic-report', compact('analytics', 'campaignId'));
+        return view('admin.mybl-campaign.flash-hour.analytic-report.purchase-product', compact('analytics', 'campaignId'));
     }
 
     public function purchaseMsisdnList(Request $request, $campaignId, $purchaseProductId)
     {
-//        $campaign = $this->
         if ($request->ajax()) {
             return $this->myblFlashHourService->msisdnPurchaseDetails($request, $purchaseProductId);
         }
-        return view('admin.mybl-campaign.flash-hour.purchase-msisdn', compact('campaignId'));
+        return view('admin.mybl-campaign.flash-hour.analytic-report.purchase-msisdn', compact('campaignId'));
     }
 
     public function purchaseDetails(Request $request, $id)

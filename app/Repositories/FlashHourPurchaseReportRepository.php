@@ -33,4 +33,10 @@ class FlashHourPurchaseReportRepository extends BaseRepository
             ])
             ->get();
     }
+
+    public function deleteAllPurchaseReport($campaignId)
+    {
+//        dd($campaignId);
+        return $this->model->whereIn('mybl_flash_hours_id', [$campaignId])->delete();
+    }
 }
