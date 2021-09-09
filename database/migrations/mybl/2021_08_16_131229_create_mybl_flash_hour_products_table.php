@@ -17,6 +17,7 @@ class CreateMyblFlashHourProductsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('flash_hour_id');
             $table->string('product_code')->nullable();
+            $table->string('product_type')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->text('desc_en')->nullable();

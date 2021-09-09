@@ -68,7 +68,10 @@ class MyblFlashHourService
      */
     public function storeCampaign($data)
     {
-        $this->flashHourRepository->inactiveOldCampaign();
+        if ($data['status']) {
+            $this->flashHourRepository->inactiveOldCampaign();
+        }
+
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
@@ -89,7 +92,10 @@ class MyblFlashHourService
      */
     public function updateCampaign($data, $id)
     {
-        $this->flashHourRepository->inactiveOldCampaign();
+        if ($data['status']) {
+            $this->flashHourRepository->inactiveOldCampaign();
+        }
+
         $campaign = $this->findOne($id);
         $this->flashHourProductRepository->deleteCampaignWiseProduct($id);
         if (isset($data['product-group'])) {
