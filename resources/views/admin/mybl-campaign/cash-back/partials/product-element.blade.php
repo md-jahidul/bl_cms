@@ -1,18 +1,5 @@
 <slot data-repeater-list="group-a" data-repeater-item>
-    <div class="form-group col-md-4 mb-2" id="cta_action">
-        <label for="product_code" class="required">Product Code</label>
-        <select id="product_code" name="product_code"
-                class="browser-default custom-select product-list">
-            <option value="">Select Product</option>
-            @foreach ($products as $key => $value)
-                <option value="{{ $value->product_code }}"
-                    {{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}>{{ $value->commercial_name_en . " / " . $value->product_code }}</option>
-            @endforeach
-        </select>
-        <div class="help-block"></div>
-    </div>
-
-    <div class="form-group col-md-2 {{ $errors->has('recharge_amount') ? ' error' : '' }}">
+    <div class="form-group col-md-4 {{ $errors->has('recharge_amount') ? ' error' : '' }}">
         <label for="recharge_amount">Recharge Amount</label>
         <div class='input-group'>
             <input type='number' class="form-control" name="recharge_amount"
@@ -26,7 +13,7 @@
         @endif
     </div>
 
-    <div class="form-group col-md-3 {{ $errors->has('cash_back_amount') ? ' error' : '' }}">
+    <div class="form-group col-md-4 {{ $errors->has('cash_back_amount') ? ' error' : '' }}">
         <label for="cash_back_amount">Cash Back Amount</label>
         <input type="number" name="cash_back_amount" class="form-control"
                placeholder="Please select cash back amount"
@@ -36,8 +23,8 @@
             <div class="help-block">{{ $errors->first('cash_back_amount') }}</div>
         @endif
     </div>
-    <div class="form-group col-md-2 mb-2" id="cta_action">
-        <label for="redirect_url">Product Status</label>
+    <div class="form-group col-md-3 mb-2" id="cta_action">
+        <label for="redirect_url">Cashback Status</label>
         <select id="navigate_action" name="status"
                 class="browser-default custom-select">
             <option value="">Select Status</option>
