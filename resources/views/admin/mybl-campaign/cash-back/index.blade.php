@@ -6,13 +6,12 @@
 @endsection
 
 @section('action')
-    {{--    <a href="{{ route('refer-and-earn.analytics') }}" class="btn btn-amber round btn-glow px-2">--}}
-    {{--        Analytics Data--}}
-    {{--    </a>--}}
-    <a href="{{route('cash-back-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
-            class="la la-plus"></i>
-        Create Campaign
-    </a>
+    @if(!$cashBackCampaigns->count())
+        <a href="{{route('cash-back-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
+                class="la la-plus"></i>
+            Create Campaign
+        </a>
+    @endif
 @endsection
 
 @section('content')
@@ -28,21 +27,17 @@
                             <th>Campaign Title</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            {{--                            <th>Product Code</th>--}}
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($flashHourCampaigns as $data)
+                        @foreach ($cashBackCampaigns as $data)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td>{{$data->start_date}}</td>
                                 <td>{{$data->end_date}}</td>
-                                {{--                                <td>{{$data->view_count}}</td>--}}
                                 <td>
-                                    {{--                                            <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
-                                    {{--                                    <a href="{{ route('refer-and-earn.campaign.details', $data->id) }}" role="button" class="btn-sm btn-warning border-1"> Activity</a>--}}
                                     <a href="{{ route('cash-back-campaign.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("cash-back-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                         <i class="la la-trash"></i>

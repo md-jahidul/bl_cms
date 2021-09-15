@@ -45,8 +45,8 @@ class MyBlCashBackController extends Controller
      */
     public function index()
     {
-        $flashHourCampaigns = $this->myblCashBackService->findAll();
-        return view('admin.mybl-campaign.cash-back.index', compact('flashHourCampaigns'));
+        $cashBackCampaigns = $this->myblCashBackService->findAll();
+        return view('admin.mybl-campaign.cash-back.index', compact('cashBackCampaigns'));
     }
 
     /**
