@@ -37,7 +37,7 @@ class EventBaseCampaignController extends Controller
         $products = $this->productCoreService->findAll();
         $tasks = $this->taskService->findAll();
 
-        return view('admin.event-base-bonus.campaigns.create',compact('products','tasks'));
+        return view('admin.event-base-bonus.campaigns.create', compact('products', 'tasks'));
     }
 
     public function store(StoreEventCampaignRequest $request)
@@ -56,7 +56,7 @@ class EventBaseCampaignController extends Controller
         $tasks = $this->taskService->findAll();
         $taskIds = array_column($campaign['tasks'], 'id');
 
-        return view('admin.event-base-bonus.campaigns.edit', compact('campaign','products','tasks','taskIds'));
+        return view('admin.event-base-bonus.campaigns.edit', compact('campaign', 'products', 'tasks', 'taskIds'));
     }
 
     public function update(StoreEventCampaignRequest $request, $id)
