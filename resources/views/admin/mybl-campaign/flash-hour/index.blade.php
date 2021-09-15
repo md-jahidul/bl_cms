@@ -6,17 +6,15 @@
 @endsection
 
 @section('action')
-{{--    <a href="{{ route('refer-and-earn.analytics') }}" class="btn btn-amber round btn-glow px-2">--}}
-{{--        Analytics Data--}}
-{{--    </a>--}}
-    <a href="{{route('flash-hour-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
-            class="la la-plus"></i>
-        Create Campaign
-    </a>
+    @if(!$flashHourCampaigns->count())
+        <a href="{{route('flash-hour-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
+                class="la la-plus"></i>
+            Create Campaign
+        </a>
+    @endif
 @endsection
 
 @section('content')
-
     <section>
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
@@ -61,9 +59,6 @@
     </section>
 
 @endsection
-
-
-
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
