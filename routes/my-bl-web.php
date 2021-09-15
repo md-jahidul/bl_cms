@@ -352,8 +352,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
-
-
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
 
@@ -779,11 +777,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
     Route::get('mybl-home-components/edit/{id}', 'CMS\MyblHomeComponentController@edit')
         ->name('mybl.home.components.edit');
-    Route::put('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
+    Route::post('mybl-home-components/store', 'CMS\MyblHomeComponentController@store')
+        ->name('mybl.home.components.store');
+    Route::post('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
         ->name('mybl.home.components.update');
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
+    Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
+        ->name('mybl.home.components.destroy');
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
