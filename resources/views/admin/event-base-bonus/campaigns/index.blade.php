@@ -5,9 +5,11 @@
     <li class="breadcrumb-item active">Campaign List</li>
 @endsection
 @section('action')
+    @if(count($campaigns) < 1)
     <a href="{{ url('event-base-bonus/campaigns/create') }}" class="btn btn-outline-primary  round btn-glow px-2"><i class="la la-user-plus"></i>
         Add Campaign
     </a>
+    @endif
 @endsection
 @section('content')
 

@@ -67,19 +67,21 @@
                                         <div class="help-block"></div>
                                     </div>
 
+
+
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Start Date</label>
+                                        <label class="required">Start Date</label>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                value="{{$campaign['start_date']}}"/>
-                                        <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
+                                        <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">End Date</label>
+                                        <label class="required">End Date</label>
                                         <input type='text' class="form-control" name="end_date" id="end_date"
                                                value="{{$campaign['end_date']}}"/>
-                                        <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
+                                        <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
 
@@ -184,7 +186,6 @@
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 
@@ -212,7 +213,6 @@
                 format : 'YYYY-MM-DD HH:mm:ss',
                 useCurrent: false, //Important! See issue #1075
                 showClose: true,
-
             });
 
             $('.product_code').selectize({
