@@ -11,10 +11,11 @@ namespace App\Repositories;
 
 use App\Models\MyblFlashHour;
 use App\Models\MyblFlashHourProduct;
+use App\Models\MyblFlashHourReminder;
 use App\Models\Referee;
 use Carbon\Carbon;
 
-class MyBlFlashHourProductRepository extends BaseRepository
+class MyBlFlashHourReminderRepository extends BaseRepository
 {
-    public $modelName = MyblFlashHourProduct::class;
+    public $modelName = MyblFlashHourReminder::class;
 }
