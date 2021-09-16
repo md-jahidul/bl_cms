@@ -50,13 +50,7 @@
                                         <a href="{{ url('event-base-bonus/tasks/'.$task['id']).'/edit' }}" class="mr-3">
                                             <i class="la la-pencil text-primary"></i>
                                         </a>
-                                        <a href="javascript:void(0);" onclick="event.preventDefault(); document.getElementById('logoutform-{{$task['id']}}').submit();">
-                                            <i class="la la-trash text-danger"></i>
-                                        </a>
-                                        <form id="logoutform-{{$task['id']}}" action="{{ url('event-base-bonus/tasks/'.$task['id']) }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                            @method('DELETE')
-                                        </form>
+                                        <button data-id="{{$task['id']}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="border-0 btn btn-outline-danger delete"><i class="la la-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -75,5 +69,38 @@
     $('.task-tabel').DataTable({
         "scrollX": true
     });
+
+    $('.delete').click(function () {
+        var id = $(this).attr('data-id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            html: jQuery('.delete_btn').html(),
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "{{ url('event-base-bonus/tasks-del') }}/"+id,
+                    methods: "get",
+                    success: function (res) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success',
+                        );
+                        setTimeout(redirect, 2000)
+                        function redirect() {
+                            window.location.href = "{{ url('event-base-bonus/tasks') }}"
+                        }
+                    }
+                })
+            }
+        })
+    })
 </script>
 @endpush
