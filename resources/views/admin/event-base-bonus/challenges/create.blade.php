@@ -63,7 +63,7 @@
 
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Day </label>
-                                    <input required maxlength="100" data-validation-required-message="Day is required" value="{{ old('day') }}" type="number" class="form-control" placeholder="Day" name="day">
+                                    <input required min="1" max="7" data-validation-required-message="Day is required" value="{{ old('day') }}" type="number" class="form-control" placeholder="Day" name="day">
                                     <small class="text-danger"> @error('day') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
@@ -112,7 +112,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-2">
+                                <div class="form-group col-md-6 mb-2" id="task_pick_type">
                                     <label for="task_pick_type_input" class="required">Task Pick Type: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <input required type="radio" name="task_pick_type" value="0" id="input-radio-15" {{ (isset($challenge->task_pick_type) && $campaign->task_pick_type == 0) ? 'checked' : ''  }}>
@@ -123,6 +123,10 @@
                                         <div class="help-block"> {{ $errors->first('task_pick_type') }}</div>
                                         @endif
                                     </div>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-2">
+                                    <table class="table table-bordered display" id="day_specific_task_table"></table>
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2" id="task_per_day">
@@ -224,13 +228,55 @@
             }
         });
 
+        $('#task_pick_type').hide();
         $('#task_per_day').hide();
+        $('#day_specific_task_table').hide();
+
+        $('input[name=day]').keypress(function(e) {
+            $(event.target).val() > 7 ? alert('Max no of day exceed') : $('#task_pick_type').show();
+        });
 
         $('input[name=task_pick_type]').change(function($e) {
             if ($('input[name="task_pick_type"]:checked').val() == 0) {
                 $('#task_per_day').show();
             } else {
                 $('#task_per_day').hide();
+                days = $('input[name="day"]').val();
+                //tasks = "{{ $tasks }}";
+                tasks = [];
+                col = [];
+                if (days) {
+                    for (let i = 0; i < days; i++) {
+                        col.push({
+                            'day': 'Day-' + (i + 1),
+                            'task': 'b'
+                        });
+                    }
+                }
+                $('#day_specific_task_table').show();
+                $('#day_specific_task_table').DataTable({
+                    "bPaginate": false,
+                    searching: false,
+                    info: false,
+                    data: col,
+                    columns: [{
+                            "title": "Day",
+                            "data": 'day'
+                        },
+                        {
+                            "title": "Task",
+                            "data": "task"
+                        }
+                    ],
+                    "columnDefs": [{
+                        "targets": 1,
+                        "data": null,
+                        render: function(data, type, row) {
+                            var domElement = '<input type="text" name="tasks">';
+                            return domElement;
+                        },
+                    }],
+                });
             }
         });
     });

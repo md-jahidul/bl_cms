@@ -26,13 +26,13 @@ class EventBaseBonusChallengeService
 
     public function store($data): array
     {
+        dd($data);
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
         }
         $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
         $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
         $data['created_by']                   = auth()->user()->email;
-        $data['base_msisdn_id']               = 1;
 
         $client   = new ApiService();
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/challenges";

@@ -21,11 +21,12 @@
                         <table class="table table-striped table-bordered challenge-table">
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Start date</th>
-                                    <th>End date</th>
+                                    <th>Title En</th>
+                                    <th>Btn Text En</th>
                                     <th>Reward Prepaid</th>
                                     <th>Reward Postpaid</th>
+                                    <th>Reward Text</th>
+                                    <th>Day</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
