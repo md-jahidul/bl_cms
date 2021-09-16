@@ -129,10 +129,10 @@
                                     @endif
                                 </div>
 
-                                <!-- <div class="form-group col-md-6 mb-2">
+                                <div class="form-group col-md-6 mb-2 d-none">
                                     <label for="status_input">Tracking Type: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <input type="radio" name="tracking_type" value="1" id="input-radio-15" {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
+                                        <input checked type="radio" name="tracking_type" value="1" id="input-radio-15" {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
                                         <label for="input-radio-15" class="mr-3">Automatic</label>
                                         <input type="radio" name="tracking_type" value="0" id="input-radio-16" {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
                                         <label for="input-radio-16" class="mr-3">Manual</label>
@@ -140,7 +140,7 @@
                                         <div class="help-block"> {{ $errors->first('tracking_type') }}</div>
                                         @endif
                                     </div>
-                                </div> -->
+                                </div>
 
 
 
