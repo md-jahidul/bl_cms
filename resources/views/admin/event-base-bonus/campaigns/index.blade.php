@@ -4,13 +4,11 @@
 @section('breadcrumb')
 <li class="breadcrumb-item active">Campaign List</li>
 @endsection
-@if(count($campaigns) == 0)
 @section('action')
 <a href="{{ url('event-base-bonus/campaigns/create') }}" class="btn btn-outline-primary  round btn-glow px-2"><i class="la la-user-plus"></i>
     Add Campaign
 </a>
 @endsection
-@endif
 @section('content')
 
 <section id="configuration">
