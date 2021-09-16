@@ -706,6 +706,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
     * Event Base bonus
     */
+    Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
     Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
     Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
     Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');

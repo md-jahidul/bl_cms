@@ -69,4 +69,11 @@ class EventBaseTaskController extends Controller
 
         return redirect('/event-base-bonus/tasks');
     }
+
+    public function delete($id)
+    {
+        $this->taskService->delete($id);
+
+        return response()->json('delete successful');
+    }
 }
