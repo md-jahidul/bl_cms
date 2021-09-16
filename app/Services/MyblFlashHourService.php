@@ -78,6 +78,7 @@ class MyblFlashHourService
                 $productType = $this->productCoreRepository->getProductType($product['product_code']);
                 $product['product_type'] = $productType;
                 $product['flash_hour_id'] = $campaign->id;
+                unset($product['product_id']);
                 $this->flashHourProductRepository->save($product);
             }
         }
@@ -97,13 +98,14 @@ class MyblFlashHourService
         }
 
         $campaign = $this->findOne($id);
-        $this->flashHourProductRepository->deleteCampaignWiseProduct($id);
         if (isset($data['product-group'])) {
-            foreach ($data['product-group'] as $product) {
-                $productType = $this->productCoreRepository->getProductType($product['product_code']);
-                $product['product_type'] = $productType;
-                $product['flash_hour_id'] = $id;
-                $this->flashHourProductRepository->save($product);
+            foreach ($data['product-group'] as $data) {
+                $product = $this->flashHourProductRepository->findOne($data['product_id']);
+                $productType = $this->productCoreRepository->getProductType($data['product_code']);
+                $data['product_type'] = $productType;
+                $data['flash_hour_id'] = $id;
+                unset($data['product_id']);
+                $product->update($data);
             }
         }
         $campaign->update($data);

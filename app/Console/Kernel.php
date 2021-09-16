@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('notification:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('redis-reset:schedule')->withoutOverlapping()->everyMinute();
+        $schedule->command('flash-hour-reminder:schedule')->everyMinute();
     }
 
     /**

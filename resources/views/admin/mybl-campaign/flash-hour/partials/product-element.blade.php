@@ -1,4 +1,5 @@
 <slot data-repeater-list="group-a" data-repeater-item>
+    <input type="hidden" name="product_id" value="{{ isset($product) ? $product->id : "" }}">
     <div class="form-group col-md-6 mb-2">
         <label for="desc_en" class="required">Description En</label>
         <textarea rows="3" id="desc_en"
