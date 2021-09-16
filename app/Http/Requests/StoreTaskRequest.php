@@ -24,14 +24,13 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon_image'                   => 'image|mimes:jpeg,jpg,png',
             'title'                        => 'required|max:150',
             'title_bn'                     => 'required|max:150',
             'description'                  => 'required|max:250',
             'description_bn'               => 'required|max:250',
             'btn_text'                     => 'required|max:20',
             'btn_text_bn'                  => 'required|max:20',
-            'recurrence_number'            => 'required|integer|between:1,100',
+            'recurrence_number'            => 'required|integer',
             'reward_text'                  => 'required|max:30',
             'reward_product_code_prepaid'  => 'required|max:50',
             'reward_product_code_postpaid' => 'required|max:50',
