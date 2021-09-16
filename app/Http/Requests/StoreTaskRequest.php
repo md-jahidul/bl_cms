@@ -35,7 +35,6 @@ class StoreTaskRequest extends FormRequest
             'reward_product_code_prepaid'  => 'required|max:50',
             'reward_product_code_postpaid' => 'required|max:50',
             'event'                        => 'required|max:100',
-            'tracking_type'                => 'required|boolean',
             'status'                       => 'required|boolean',
         ];
     }
