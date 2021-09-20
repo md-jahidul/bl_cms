@@ -93,19 +93,19 @@ class MyblFlashHourService
      */
     public function updateCampaign($data, $id)
     {
-        if ($data['status']) {
-            $this->flashHourRepository->inactiveOldCampaign();
-        }
-
         $campaign = $this->findOne($id);
         if (isset($data['product-group'])) {
-            foreach ($data['product-group'] as $data) {
-                $product = $this->flashHourProductRepository->findOne($data['product_id']);
-                $productType = $this->productCoreRepository->getProductType($data['product_code']);
-                $data['product_type'] = $productType;
-                $data['flash_hour_id'] = $id;
-                unset($data['product_id']);
-                $product->update($data);
+            foreach ($data['product-group'] as $productData) {
+                $product = $this->flashHourProductRepository->findOne($productData['product_id']);
+                $productType = $this->productCoreRepository->getProductType($productData['product_code']);
+                $productData['product_type'] = $productType;
+                $productData['flash_hour_id'] = $id;
+                unset($productData['product_id']);
+                if ($product) {
+                    $product->update($productData);
+                } else {
+                    $this->flashHourProductRepository->save($productData);
+                }
             }
         }
         $campaign->update($data);
