@@ -9,7 +9,7 @@ class EventBaseBonusChallengeService
     public function findAll(): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/challenges";
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge";
         $response = $client->CallAPI('GET', $url, []);
 
         return $response['data'];

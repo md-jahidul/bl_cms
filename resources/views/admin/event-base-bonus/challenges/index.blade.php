@@ -32,8 +32,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($challenges as $challenge)
                                 <tr>
+                                    <td>{{$challenge['title']}}</td>
+                                    <td>{{$challenge['btn_text']}}</td>
+                                    <td>{{$challenge['reward_product_code_prepaid']}}</td>
+                                    <td>{{$challenge['reward_product_code_postpaid']}}</td>
+                                    <td>{{$challenge['reward_text']}}</td>
+                                    <td>{{$challenge['day']}}</td>
+                                    <td>{{$challenge['status']}}</td>
+                                    <td>
+                                        <a href="{{ url('event-base-bonus/challenge/'.$challenge['id']).'/edit' }}" class="mr-3">
+                                            <i class="la la-pencil text-primary"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" onclick="event.preventDefault(); document.getElementById('logoutform-{{$challenge['id']}}').submit();">
+                                            <i class="la la-trash text-danger"></i>
+                                        </a>
+                                        <form id="logoutform-{{$challenge['id']}}" action="{{ url('event-base-bonus/challenge/'.$challenge['id']) }}" method="POST">
+                                            {{ csrf_field() }}
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
