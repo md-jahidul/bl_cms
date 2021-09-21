@@ -94,13 +94,12 @@ class FlashHourReminderScheduler extends Command
                     $scheduleData = [];
                     $scheduleData['notification_draft_id'] = $notificationDraft->id;
                     $scheduleData['notification_category_id'] = $notificationCat->id;
-                    $scheduleData['title'] = "Flash Hour Product";
-                    $scheduleData['message'] = "Flash Hour product now available";
+                    $scheduleData['title'] = $notificationDraft->title;
+                    $scheduleData['message'] = $notificationDraft->body;
                     $scheduleData['start'] = $flashHourProduct->start_date;
                     $scheduleData['end'] = $flashHourProduct->end_date;
                     $scheduleData['file_name'] = $databaseFilePath;
                     $scheduleData['status'] = "active";
-
                     $flashHourProduct->notificationSchedule()->create($scheduleData);
                 }
                 $this->excelGenerator($productCodeWiseMsisdnList[$flashHourProduct->id], $fullPath);
