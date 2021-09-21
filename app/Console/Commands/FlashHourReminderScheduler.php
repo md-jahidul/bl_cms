@@ -88,7 +88,7 @@ class FlashHourReminderScheduler extends Command
 
                 $databaseFilePath = "notification-scheduler-files/flash-hour-reminder-$productCode" . '.xlsx';
                 $fullPath = "$basePath/$databaseFilePath";
-                $schedule = $notificationScheduleRepository->findOneByProperties(['file_name' => $databaseFilePath]);
+                $schedule = $flashHourProduct->notificationSchedule;
 
                 if (!$schedule) {
                     $scheduleData = [];
@@ -100,7 +100,8 @@ class FlashHourReminderScheduler extends Command
                     $scheduleData['end'] = $flashHourProduct->end_date;
                     $scheduleData['file_name'] = $databaseFilePath;
                     $scheduleData['status'] = "active";
-                    $notificationScheduleRepository->save($scheduleData);
+
+                    $flashHourProduct->notificationSchedule()->create($scheduleData);
                 }
                 $this->excelGenerator($productCodeWiseMsisdnList[$flashHourProduct->id], $fullPath);
             }
