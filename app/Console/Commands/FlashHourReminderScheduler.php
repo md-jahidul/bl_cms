@@ -8,6 +8,8 @@ use App\Repositories\NotificationCategoryRepository;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationScheduleRepository;
 use App\Traits\FileTrait;
+use Box\Spout\Common\Type;
+use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +17,10 @@ use Illuminate\Support\Facades\Log;
 class FlashHourReminderScheduler extends Command
 {
     use FileTrait;
+
+    protected const PROCESSED = 0;
+    protected const IN_PROGRESS = 1;
+    protected const FLASH_HOUR_SLUG = "flash_hour_reminder";
 
     /**
      * The name and signature of the console command.
@@ -60,8 +66,8 @@ class FlashHourReminderScheduler extends Command
         try {
             $basePath = env('UPLOAD_BASE_PATH');
 
-            $reminderList = $reminderRepository->findAll();
-            $notificationCat = $notificationCategoryRepository->findOneByProperties(['slug' => 'flash_hour_reminder']);
+            $reminderList = $reminderRepository->findByProperties(['status' => self::IN_PROGRESS]);
+            $notificationCat = $notificationCategoryRepository->findOneByProperties(['slug' => self::FLASH_HOUR_SLUG]);
 
             $notificationDraft = $notificationDraftRepository->findOneByProperties(
                 ['category_id' => $notificationCat->id]
@@ -69,31 +75,35 @@ class FlashHourReminderScheduler extends Command
 
             $productCodeWiseMsisdnList = [];
             foreach ($reminderList as $item) {
-                $flashHourProduct = $flashHourProductRepository->findOneByProperties(
-                    ['id' => $item->flash_hour_product_id]
-                );
-                $productCodeWiseMsisdnList[$flashHourProduct->product_code][] = $item->msisdn;
-                $databaseFilePath = "notification-scheduler-files/flash-hour-reminder-$flashHourProduct->product_code.xlsx";
-                $schedule = $notificationScheduleRepository->findOneByProperties(['file_name' => $databaseFilePath]);
+                $productCodeWiseMsisdnList[$item->flash_hour_product_id][] = $item->msisdn;
+                $item->update(['status' => self::PROCESSED]);
+            }
+
+            $productCodeWiseReminders = $reminderList->groupBy('flash_hour_product_id');
+            foreach ($productCodeWiseReminders as $product) {
+                $product = $product[0];
+                $flashHourProduct = $flashHourProductRepository->findOne($product->flash_hour_product_id);
+
+                $productCode = $flashHourProduct->product_code;
+
+                $databaseFilePath = "notification-scheduler-files/flash-hour-reminder-$productCode" . '.xlsx';
+                $fullPath = "$basePath/$databaseFilePath";
+                $schedule = $flashHourProduct->notificationSchedule;
 
                 if (!$schedule) {
                     $scheduleData = [];
                     $scheduleData['notification_draft_id'] = $notificationDraft->id;
                     $scheduleData['notification_category_id'] = $notificationCat->id;
                     $scheduleData['title'] = "Flash Hour Product";
-                    $scheduleData['message'] = "Flash Hour Product now available";
+                    $scheduleData['message'] = "Flash Hour product now available";
                     $scheduleData['start'] = $flashHourProduct->start_date;
                     $scheduleData['end'] = $flashHourProduct->end_date;
                     $scheduleData['file_name'] = $databaseFilePath;
                     $scheduleData['status'] = "active";
-                    $notificationScheduleRepository->save($scheduleData);
+
+                    $flashHourProduct->notificationSchedule()->create($scheduleData);
                 }
-            }
-            // Excel Generator
-            foreach ($productCodeWiseMsisdnList as $productCode => $msisdns) {
-                $databaseFilePath = "notification-scheduler-files/flash-hour-reminder-$productCode" . '.xlsx';
-                $fullPath = "$basePath/$databaseFilePath";
-                $this->excelGenerator($msisdns, $fullPath);
+                $this->excelGenerator($productCodeWiseMsisdnList[$flashHourProduct->id], $fullPath);
             }
         } catch (\Exception $e) {
             Log::info('Error:' . $e->getMessage());
@@ -106,6 +116,24 @@ class FlashHourReminderScheduler extends Command
 
     public function excelGenerator($msisdns, $fullPath)
     {
+        if (file_exists($fullPath)) {
+            $reader = ReaderFactory::createFromType(Type::XLSX);
+            $reader->open($fullPath);
+
+            $existingMsisdns = [];
+            foreach ($reader->getSheetIterator() as $sheet) {
+                if ($sheet->getIndex() > 0) {
+                    break;
+                }
+                foreach ($sheet->getRowIterator() as $row) {
+                    $cells = $row->getCells();
+                    $existingMsisdns[] = $cells[0]->getValue();
+                }
+            }
+            $msisdns = array_merge($msisdns, $existingMsisdns);
+            $reader->close();
+        }
+
         $writer = WriterEntityFactory::createXLSXWriter();
         $writer->openToFile($fullPath);
         foreach ($msisdns as $msisdn) {
