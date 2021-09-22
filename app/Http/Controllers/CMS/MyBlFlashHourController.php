@@ -32,6 +32,8 @@ class MyBlFlashHourController extends Controller
      */
     private $baseMsisdnService;
 
+    protected const FLASH_HOUR = "flash_hour";
+
     /**
      * MyBlFlashHourController constructor.
      * @param MyblFlashHourService $myblFlashHourService
@@ -78,7 +80,7 @@ class MyBlFlashHourController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->myblFlashHourService->storeCampaign($request->all());
+        $response = $this->myblFlashHourService->storeCampaign($request->all(), self::FLASH_HOUR);
         Session::flash('message', $response->getContent());
         return redirect(route('flash-hour-campaign.index'));
     }

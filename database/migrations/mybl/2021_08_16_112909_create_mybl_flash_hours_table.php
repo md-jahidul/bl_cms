@@ -15,10 +15,11 @@ class CreateMyblFlashHoursTable extends Migration
     {
         Schema::create('mybl_flash_hours', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('base_msisdn_groups_id')->nullable();
+            $table->unsignedBigInteger('base_msisdn_groups_id')->nullable()->index();
+            $table->string('reference_type')->nullable();
             $table->string('title')->nullable();
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
+            $table->dateTime('start_date')->nullable()->index();
+            $table->dateTime('end_date')->nullable()->index();
             $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });

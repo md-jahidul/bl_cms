@@ -22,6 +22,7 @@ class CreateMyblFlashHourProductsTable extends Migration
             $table->dateTime('end_date')->nullable();
             $table->text('desc_en')->nullable();
             $table->text('desc_bn')->nullable();
+            $table->string('thumbnail_img')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
             $table->foreign('flash_hour_id')
