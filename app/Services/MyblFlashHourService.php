@@ -66,12 +66,12 @@ class MyblFlashHourService
      * @param $data
      * @return Response
      */
-    public function storeCampaign($data)
+    public function storeCampaign($data, $reference_type)
     {
         if ($data['status']) {
             $this->flashHourRepository->inactiveOldCampaign();
         }
-
+        $data['reference_type'] = $reference_type;
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
