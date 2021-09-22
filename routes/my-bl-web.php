@@ -695,6 +695,26 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
+
+    // Flash Hour
+    Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
+    Route::get('flash-hour-campaign/destroy/{id}', 'CMS\MyBlFlashHourController@destroy');
+
+    Route::get('flash-hour-analytic/{campaign_id}', 'CMS\MyBlFlashHourController@analyticReport')
+        ->name('flash-hour-analytic.report');
+
+    Route::get('flash-hour-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlFlashHourController@purchaseMsisdnList')
+        ->name('purchase-msisdn.list');
+
+    Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
+
+//    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
+//        ->name('refer-and-earn.analytics');
+
+    // Cash Back Campaign
+    Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
+    Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
+
 });
 
 // 4G Map View Route
