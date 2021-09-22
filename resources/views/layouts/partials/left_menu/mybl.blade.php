@@ -208,6 +208,12 @@
                 </a>
             </li>
 
+            <li class="{{is_active_url('cash-back-campaign')}}">
+                <a class="menu-item" href="{{ route('cash-back-campaign.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-dollar"></i> Cash Back
+                </a>
+            </li>
         </ul>
     </li>
 
