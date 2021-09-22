@@ -56,7 +56,7 @@ class MyBlFlashHourController extends Controller
      */
     public function index()
     {
-        $flashHourCampaigns = $this->myblFlashHourService->findAll();
+        $flashHourCampaigns = $this->myblFlashHourService->findBy(['reference_type' => self::FLASH_HOUR]);
         return view('admin.mybl-campaign.flash-hour.index', compact('flashHourCampaigns'));
     }
 
