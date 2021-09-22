@@ -208,6 +208,12 @@
                 </a>
             </li>
 
+            <li class="{{is_active_url('mybl-campaign')}}">
+                <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Mybl Campaign
+                </a>
+            </li>
         </ul>
     </li>
 
