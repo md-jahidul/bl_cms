@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour Purchase Detail')
-@section('card_name', 'Flash Hour Purchase Detail')
+@section('title', 'Mybl Campaign Purchase Detail')
+@section('card_name', 'Mybl Campaign Purchase Detail')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">Popup Detail History</li>

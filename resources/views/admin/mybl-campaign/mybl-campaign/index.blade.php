@@ -1,13 +1,13 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour')
-@section('card_name', 'Flash Hour')
+@section('title', 'Mybl Campaign')
+@section('card_name', 'Mybl Campaign')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Campaign List</li>
 @endsection
 
 @section('action')
     @if(!$flashHourCampaigns->count())
-        <a href="{{route('flash-hour-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
+        <a href="{{route('mybl-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
                 class="la la-plus"></i>
             Create Campaign
         </a>
@@ -43,8 +43,8 @@
                                        class="btn btn-outline-secondary"> Analytic Report</a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('flash-hour-campaign.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("flash-hour-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                    <a href="{{ route('mybl-campaign.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("mybl-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>

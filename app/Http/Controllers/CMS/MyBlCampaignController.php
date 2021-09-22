@@ -32,7 +32,7 @@ class MyBlCampaignController extends Controller
      */
     private $baseMsisdnService;
 
-    protected const REFERENCE_TYPE = "mybl_campaign";
+    protected const MYBL_CAMPAIGN = "mybl_campaign";
 
     /**
      * MyBlFlashHourController constructor.
@@ -56,8 +56,8 @@ class MyBlCampaignController extends Controller
      */
     public function index()
     {
-        $flashHourCampaigns = $this->myblFlashHourService->findAll();
-        return view('admin.mybl-campaign.flash-hour.index', compact('flashHourCampaigns'));
+        $flashHourCampaigns = $this->myblFlashHourService->findBy(['reference_type' => self::MYBL_CAMPAIGN]);
+        return view('admin.mybl-campaign.mybl-campaign.index', compact('flashHourCampaigns'));
     }
 
     /**
@@ -80,9 +80,9 @@ class MyBlCampaignController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->myblFlashHourService->storeCampaign($request->all(), self::REFERENCE_TYPE);
+        $response = $this->myblFlashHourService->storeCampaign($request->all(), self::MYBL_CAMPAIGN);
         Session::flash('message', $response->getContent());
-        return redirect(route('flash-hour-campaign.index'));
+        return redirect(route('mybl-campaign.index'));
     }
 
     /**
@@ -110,7 +110,7 @@ class MyBlCampaignController extends Controller
     {
         $response = $this->myblFlashHourService->updateCampaign($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(route('flash-hour-campaign.index'));
+        return redirect(route('mybl-campaign.index'));
     }
 
     /**

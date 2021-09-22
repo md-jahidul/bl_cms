@@ -1,14 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour')
-@section('card_name',"Flash Hour" )
+@section('title', 'Mybl Campaign')
+@section('card_name',"Mybl Campaign" )
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        <a href="{{ route('flash-hour-campaign.index') }}">Campaign List</a>
+        <a href="{{ route('mybl-campaign.index') }}">Campaign List</a>
     </li>
     <li class="breadcrumb-item active">Create Campaign</li>
 @endsection
 @section('action')
-    <a href="{{ route('flash-hour-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+    <a href="{{ route('mybl-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
         Cancel
     </a>
 @endsection
@@ -22,7 +22,7 @@
                     <hr>
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{ (isset($campaign)) ? route('flash-hour-campaign.update', $campaign->id) : route('flash-hour-campaign.store')}}"
+                              action="{{ (isset($campaign)) ? route('mybl-campaign.update', $campaign->id) : route('mybl-campaign.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @if(isset($campaign))

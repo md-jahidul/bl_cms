@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour Purchase Report')
-@section('card_name', 'Flash Hour Purchase Report')
+@section('title', 'Mybl Campaign Purchase Report')
+@section('card_name', 'Mybl Campaign Purchase Report')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">

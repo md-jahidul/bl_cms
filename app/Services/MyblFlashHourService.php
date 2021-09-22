@@ -82,7 +82,7 @@ class MyblFlashHourService
                 $this->flashHourProductRepository->save($product);
             }
         }
-        return new Response("Flash hour campaign has been successfully created");
+        return new Response("Campaign has been successfully created");
     }
 
     /**
@@ -109,7 +109,7 @@ class MyblFlashHourService
             }
         }
         $campaign->update($data);
-        return Response('Flash hour campaign has been successfully updated');
+        return Response('Campaign has been successfully updated');
     }
 
     /**
@@ -122,7 +122,7 @@ class MyblFlashHourService
         $campaign = $this->findOne($id);
         $this->purchaseReportRepository->deleteAllPurchaseReport($id);
         $campaign->delete();
-        return Response('Flash hour campaign has been successfully deleted');
+        return Response('Campaign has been successfully deleted');
     }
 
     public function purchaseStatusCount($campaign, $column, $colValue)
