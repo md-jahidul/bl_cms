@@ -9,6 +9,7 @@ use App\Services\EventBaseBonusCampaignService;
 use App\Services\EventBaseBonusChallengeService;
 use App\Services\ProductCoreService;
 use App\Services\TaskService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseChallengeController extends Controller
@@ -42,10 +43,40 @@ class EventBaseChallengeController extends Controller
         return view('admin.event-base-bonus.challenges.create', compact('products', 'tasks'));
     }
 
-    public function store(Request $request)
+    public function edit($id)
     {
-        dd($request->all());
+        $tasks = $this->taskService->findAll();
+        $products = $this->productCoreService->findAll();
+        $challenge = $this->eventBaseBonusChallengeService->findOne($id);
+        $taskIds = [];
+
+        $challenge['start_date'] = Carbon::createFromTimestamp($challenge['start_date'])->toDateTimeString();;
+        $challenge['end_date'] = Carbon::createFromTimestamp($challenge['end_date'])->toDateTimeString();;
+
+        if ($challenge['task_pick_type']) {
+            foreach ($challenge['event_based_challenge_tasks'] as $task) {
+                $taskIds[$task['day_no']][] = $task['campaign_task_id'];
+            }
+
+            $taskIds = json_encode($taskIds);
+        } else {
+            $taskIds = array_column($challenge['event_based_challenge_tasks'], 'campaign_task_id');
+        }
+
+        return view('admin.event-base-bonus.challenges.edit', compact('products', 'tasks', 'challenge', 'taskIds'));
+    }
+
+    public function store(StoreEventChallengeRequest $request)
+    {
         $response = $this->eventBaseBonusChallengeService->store($request->except('_token'));
+
+        Session::flash('message', 'Campaign Challenge store successful');
+        return redirect('/event-base-bonus/challenges');
+    }
+
+    public function update(StoreEventChallengeRequest $request, $id)
+    {
+        $response = $this->eventBaseBonusChallengeService->update($request->except('_token', '_method'), $id);
 
         Session::flash('message', 'Campaign Challenge store successful');
         return redirect('/event-base-bonus/challenges');

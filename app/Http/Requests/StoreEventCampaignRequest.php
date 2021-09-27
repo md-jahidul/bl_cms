@@ -32,7 +32,7 @@ class StoreEventCampaignRequest extends FormRequest
             'end_date'                     => 'required|max:50',
             'reward_product_code_prepaid'  => 'required|max:50',
             'reward_product_code_postpaid' => 'required|max:50',
-            'task_ids'                     => 'required',
+            'challenge_ids'                     => 'required',
             'status'                       => 'required|boolean',
         ];
     }

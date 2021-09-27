@@ -26,12 +26,16 @@ class StoreEventChallengeRequest extends FormRequest
         return [
             'icon_image'                   => 'image|mimes:jpeg,jpg,png',
             'title'                        => 'required|max:150',
+            'title_bn'                     => 'required|max:150',
             'description'                  => 'required|max:250',
             'description_bn'               => 'required|max:250',
+            'btn_text'                     => 'required|max:250',
+            'btn_text_bn'                  => 'required|max:250',
             'start_date'                   => 'required|max:50',
             'end_date'                     => 'required|max:50',
             'reward_product_code_prepaid'  => 'required|max:50',
             'reward_product_code_postpaid' => 'required|max:50',
+            'reward_text'                  => 'required|max:50',
             'status'                       => 'required|boolean',
             'day'                          => 'required|integer',
             'task_pick_type'               => 'required|boolean'

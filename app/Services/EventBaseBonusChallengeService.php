@@ -18,7 +18,7 @@ class EventBaseBonusChallengeService
     public function findOne($id): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/challenges/" . $id;
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge/" . $id;
         $response  = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
@@ -26,7 +26,20 @@ class EventBaseBonusChallengeService
 
     public function store($data): array
     {
-        dd($data);
+        $challenge_data = $data;
+
+        $challenge_data['tasks'] = new \stdClass;
+
+        if ($data['task_pick_type']) {
+            foreach ($data['tasks'] as $key => $task) {
+                $challenge_data['tasks']->{$key + 1} = $task;
+            }
+        } else {
+            $challenge_data['tasks']->{0} = $data['tasks'][0];
+        }
+
+        $data = $challenge_data;
+
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
         }
@@ -35,13 +48,32 @@ class EventBaseBonusChallengeService
         $data['created_by']                   = auth()->user()->email;
 
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/challenges";
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge";
 
         return $client->CallAPI("POST", $url, $data);
     }
 
     public function update($data, $id): array
     {
+        $challenge_data = $data;
+
+        $challenge_data['tasks'] = new \stdClass;
+
+        if ($data['task_pick_type']) {
+            foreach ($data['day_tasks'] as $key => $task) {
+                $challenge_data['tasks']->{$key + 1} = $task;
+            }
+        } else {
+            $challenge_data['tasks']->{0} = $data['random_tasks'][0];
+        }
+
+        $data = $challenge_data;
+
+        unset($data['random_tasks']);
+        unset($data['day_tasks']);
+
+        //dd($data);
+
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
         } else {
@@ -54,7 +86,7 @@ class EventBaseBonusChallengeService
         $data['base_msisdn_id']               = 1;
 
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/challenges/" . $id;
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge/" . $id;
 
         return $client->CallAPI("PUT", $url, $data);
     }
