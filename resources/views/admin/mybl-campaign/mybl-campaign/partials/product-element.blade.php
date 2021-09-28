@@ -37,6 +37,13 @@
         <div class="help-block"></div>
     </div>
 
+    <div class="form-group col-md-2 mb-2">
+        <label for="show_in_home" class="">Show In Home</label><br>
+        <input type="checkbox" id="show_in_home" value="1" name="show_in_home"
+            {{ isset($product) && $product->show_in_home == 1 ? 'checked' : '' }}>
+        <div class="help-block"></div>
+    </div>
+
     <div class="form-group col-md-4 mb-2" id="cta_action">
         <label for="product_code" class="required">Product Code</label>
         <select id="product_code" name="product_code"
@@ -50,7 +57,7 @@
         <div class="help-block"></div>
     </div>
 
-    <div class="form-group col-md-3 {{ $errors->has('start_date') ? ' error' : '' }}">
+    <div class="form-group col-md-2 {{ $errors->has('start_date') ? ' error' : '' }}">
         <label for="start_date">Start Date</label>
         <div class='input-group'>
             <input type='text' class="form-control product_start_date" name="start_date"
@@ -64,7 +71,7 @@
         @endif
     </div>
 
-    <div class="form-group col-md-3 {{ $errors->has('end_date') ? ' error' : '' }}">
+    <div class="form-group col-md-2 {{ $errors->has('end_date') ? ' error' : '' }}">
         <label for="end_date">End Date</label>
         <input type="text" name="end_date" class="form-control product_end_date"
                placeholder="Please select end date"

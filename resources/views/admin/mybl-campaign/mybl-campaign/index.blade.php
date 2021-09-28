@@ -6,12 +6,12 @@
 @endsection
 
 @section('action')
-    @if(!$flashHourCampaigns->count())
+{{--    @if(!$flashHourCampaigns->count())--}}
         <a href="{{route('mybl-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
                 class="la la-plus"></i>
             Create Campaign
         </a>
-    @endif
+{{--    @endif--}}
 @endsection
 
 @section('content')

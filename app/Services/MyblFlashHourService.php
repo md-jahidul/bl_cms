@@ -81,6 +81,7 @@ class MyblFlashHourService
                 $productType = $this->productCoreRepository->getProductType($product['product_code']);
                 $product['product_type'] = $productType;
                 $product['flash_hour_id'] = $campaign->id;
+                $product['show_in_home'] = isset($product['show_in_home']) ? 1 : 0;
                 unset($product['product_id']);
                 $this->flashHourProductRepository->save($product);
             }
@@ -96,6 +97,7 @@ class MyblFlashHourService
      */
     public function updateCampaign($data, $id)
     {
+//        dd($data);
         $campaign = $this->findOne($id);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $productData) {
@@ -108,6 +110,7 @@ class MyblFlashHourService
                         unlink($product->thumbnail_img);
                     }
                 }
+                $productData['show_in_home'] = isset($productData['show_in_home']) ? 1 : 0;
                 $productData['product_type'] = $productType;
                 $productData['flash_hour_id'] = $id;
                 unset($productData['product_id']);
