@@ -800,6 +800,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
 
+    // Mybl Campaign
+    Route::resource('mybl-campaign', 'CMS\MyBlCampaignController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign/destroy/{id}', 'CMS\MyBlCampaignController@destroy');
+
+    Route::get('mybl-campaign-analytic/{campaign_id}', 'CMS\MyBlCampaignController@analyticReport')
+        ->name('mybl-campaign-analytic.report');
+
+    Route::get('mybl-campaign-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlCampaignController@purchaseMsisdnList')
+        ->name('purchase-msisdn.list');
+
+    Route::get('mybl-campaign-purchase-msisdn/{id}', 'CMS\MyBlCampaignController@purchaseDetails');
+
 //    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
 //        ->name('refer-and-earn.analytics');
 //    Route::get('flash-hour-campaign/referee-details/{id}', 'CMS\MyBlFlashHourController@refereeDetails');

@@ -17,7 +17,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class MyBlFlashHourController extends Controller
+class MyBlCampaignController extends Controller
 {
     /**
      * @var ProductCoreService
@@ -32,7 +32,7 @@ class MyBlFlashHourController extends Controller
      */
     private $baseMsisdnService;
 
-    protected const FLASH_HOUR = "flash_hour";
+    protected const MYBL_CAMPAIGN = "mybl_campaign";
 
     /**
      * MyBlFlashHourController constructor.
@@ -56,8 +56,8 @@ class MyBlFlashHourController extends Controller
      */
     public function index()
     {
-        $flashHourCampaigns = $this->myblFlashHourService->findBy(['reference_type' => self::FLASH_HOUR]);
-        return view('admin.mybl-campaign.flash-hour.index', compact('flashHourCampaigns'));
+        $flashHourCampaigns = $this->myblFlashHourService->findBy(['reference_type' => self::MYBL_CAMPAIGN]);
+        return view('admin.mybl-campaign.mybl-campaign.index', compact('flashHourCampaigns'));
     }
 
     /**
@@ -69,7 +69,7 @@ class MyBlFlashHourController extends Controller
     {
         $products = $this->productCoreService->findAll();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
-        return view('admin.mybl-campaign.flash-hour.create-edit', compact('products', 'baseMsisdnGroups'));
+        return view('admin.mybl-campaign.mybl-campaign.create-edit', compact('products', 'baseMsisdnGroups'));
     }
 
     /**
@@ -80,9 +80,9 @@ class MyBlFlashHourController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->myblFlashHourService->storeCampaign($request->all(), self::FLASH_HOUR);
+        $response = $this->myblFlashHourService->storeCampaign($request->all(), self::MYBL_CAMPAIGN);
         Session::flash('message', $response->getContent());
-        return redirect(route('flash-hour-campaign.index'));
+        return redirect(route('mybl-campaign.index'));
     }
 
     /**
@@ -96,7 +96,7 @@ class MyBlFlashHourController extends Controller
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $products = $this->productCoreService->findAll();
         $campaign = $this->myblFlashHourService->findOne($id);
-        return view('admin.mybl-campaign.flash-hour.create-edit', compact('products', 'campaign', 'baseMsisdnGroups'));
+        return view('admin.mybl-campaign.mybl-campaign.create-edit', compact('products', 'campaign', 'baseMsisdnGroups'));
     }
 
     /**
@@ -110,7 +110,7 @@ class MyBlFlashHourController extends Controller
     {
         $response = $this->myblFlashHourService->updateCampaign($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(route('flash-hour-campaign.index'));
+        return redirect(route('mybl-campaign.index'));
     }
 
     /**
@@ -119,7 +119,7 @@ class MyBlFlashHourController extends Controller
     public function analyticReport(Request $request, $campaignId)
     {
         $analytics = $this->myblFlashHourService->analyticsData($request->all(), $campaignId);
-        return view('admin.mybl-campaign.flash-hour.analytic-report.purchase-product', compact('analytics', 'campaignId'));
+        return view('admin.mybl-campaign.mybl-campaign.analytic-report.purchase-product', compact('analytics', 'campaignId'));
     }
 
     public function purchaseMsisdnList(Request $request, $campaignId, $purchaseProductId)
@@ -127,7 +127,7 @@ class MyBlFlashHourController extends Controller
         if ($request->ajax()) {
             return $this->myblFlashHourService->msisdnPurchaseDetails($request, $purchaseProductId);
         }
-        return view('admin.mybl-campaign.flash-hour.analytic-report.purchase-msisdn', compact('campaignId'));
+        return view('admin.mybl-campaign.mybl-campaign.analytic-report.purchase-msisdn', compact('campaignId'));
     }
 
     public function purchaseDetails(Request $request, $id)
@@ -144,6 +144,6 @@ class MyBlFlashHourController extends Controller
     public function destroy($id)
     {
         $this->myblFlashHourService->deleteCampaign($id);
-        return url('flash-hour-campaign');
+        return url('mybl-campaign');
     }
 }
