@@ -144,6 +144,6 @@ class MyBlCampaignController extends Controller
     public function destroy($id)
     {
         $this->myblFlashHourService->deleteCampaign($id);
-        return url('flash-hour-campaign');
+        return url('mybl-campaign');
     }
 }

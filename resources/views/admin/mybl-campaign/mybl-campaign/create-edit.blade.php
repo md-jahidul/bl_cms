@@ -99,10 +99,10 @@
                                 <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
                                     @if(isset($campaign) && !$campaign->flashHourProducts->isEmpty())
                                         @foreach($campaign->flashHourProducts as $product)
-                                            @include('admin.mybl-campaign.flash-hour.partials.product-element', ['product' => $product])
+                                            @include('admin.mybl-campaign.mybl-campaign.partials.product-element', ['product' => $product])
                                         @endforeach
                                     @else
-                                        @include('admin.mybl-campaign.flash-hour.partials.product-element')
+                                        @include('admin.mybl-campaign.mybl-campaign.partials.product-element')
                                     @endif
                                 </div>
                                 <!-- Product Selection End -->
@@ -160,9 +160,20 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
-
     <script>
         $(document).ready(function () {
+            $('.dropify_image').dropify({
+                messages: {
+                    'default': 'Browse for an Image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Image file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
+                }
+            });
+
             $(".product-list").select2()
             $('.report-repeater').repeater();
 
@@ -181,6 +192,20 @@
             }
 
             $('#repeater-button').click(function (){
+                $('.dropify_image').dropify({
+                    messages: {
+                        'default': 'Browse for an Image to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct Image file'
+                    },
+                    error: {
+                        'imageFormat': 'The image must be valid format'
+                    }
+                });
+
+                $('.dropify_image').prop('data-default-file', "")
+
                 $(".product-list").select2()
                 var date = new Date();
                 date.setDate(date.getDate());

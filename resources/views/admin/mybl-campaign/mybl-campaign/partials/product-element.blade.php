@@ -1,17 +1,35 @@
 <slot data-repeater-list="group-a" data-repeater-item>
     <input type="hidden" name="product_id" value="{{ isset($product) ? $product->id : "" }}">
-    <div class="form-group col-md-6 mb-2">
+
+    <div id="image-input" class="form-group col-md-4 mb-2">
+        <div class="form-group">
+            <label for="image_url">Thumbnail Image</label>
+            <input type="file"
+                   id="image_url"
+                   name="thumbnail_img"
+                   class="dropify_image"
+                   data-height="77"
+                   data-default-file="{{ isset($product) ? asset($product->thumbnail_img) : ''}}"
+                   data-allowed-file-extensions="png jpg gif"/>
+            <div class="help-block"></div>
+            <small
+                class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+            <small id="massage"></small>
+        </div>
+    </div>
+
+    <div class="form-group col-md-4 mb-2">
         <label for="desc_en" class="required">Description En</label>
-        <textarea rows="3" id="desc_en"
+        <textarea rows="4" id="desc_en"
                   name="desc_en" class="form-control @error('desc_en') is-invalid @enderror"
                   placeholder="Enter description in English">{{ isset($product) ? $product->desc_en : old('desc_en') }}</textarea>
         <small class="text-danger"> @error('desc_en') {{ $message }} @enderror </small>
         <div class="help-block"></div>
     </div>
 
-    <div class="form-group col-md-6 mb-2">
+    <div class="form-group col-md-4 mb-2">
         <label for="desc_bn" class="required">Description Bn</label>
-        <textarea rows="3" id="desc_bn"
+        <textarea rows="4" id="desc_bn"
                   name="desc_bn"
                   class="form-control @error('desc_bn') is-invalid @enderror"
                   placeholder="Enter description in Bangla">{{ isset($product) ? $product->desc_bn : old('desc_bn') }}</textarea>

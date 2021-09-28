@@ -75,6 +75,9 @@ class MyblFlashHourService
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
+                if ($reference_type == "mybl_campaign" && !empty($product['thumbnail_img'])) {
+                    $product['thumbnail_img'] = 'storage/' . $product['thumbnail_img']->store('mybl_campaign');
+                }
                 $productType = $this->productCoreRepository->getProductType($product['product_code']);
                 $product['product_type'] = $productType;
                 $product['flash_hour_id'] = $campaign->id;
@@ -98,6 +101,13 @@ class MyblFlashHourService
             foreach ($data['product-group'] as $productData) {
                 $product = $this->flashHourProductRepository->findOne($productData['product_id']);
                 $productType = $this->productCoreRepository->getProductType($productData['product_code']);
+
+                if (isset($productData['thumbnail_img'])) {
+                    $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
+                    if (!empty($product->thumbnail_img)) {
+                        unlink($product->thumbnail_img);
+                    }
+                }
                 $productData['product_type'] = $productType;
                 $productData['flash_hour_id'] = $id;
                 unset($productData['product_id']);
