@@ -9,7 +9,6 @@ use App\Services\EventBaseBonusCampaignService;
 use App\Services\EventBaseBonusChallengeService;
 use App\Services\ProductCoreService;
 use App\Services\TaskService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseChallengeController extends Controller
@@ -48,22 +47,8 @@ class EventBaseChallengeController extends Controller
         $tasks = $this->taskService->findAll();
         $products = $this->productCoreService->findAll();
         $challenge = $this->eventBaseBonusChallengeService->findOne($id);
-        $taskIds = [];
 
-        $challenge['start_date'] = Carbon::createFromTimestamp($challenge['start_date'])->toDateTimeString();;
-        $challenge['end_date'] = Carbon::createFromTimestamp($challenge['end_date'])->toDateTimeString();;
-
-        if ($challenge['task_pick_type']) {
-            foreach ($challenge['event_based_challenge_tasks'] as $task) {
-                $taskIds[$task['day_no']][] = $task['campaign_task_id'];
-            }
-
-            $taskIds = json_encode($taskIds);
-        } else {
-            $taskIds = array_column($challenge['event_based_challenge_tasks'], 'campaign_task_id');
-        }
-
-        return view('admin.event-base-bonus.challenges.edit', compact('products', 'tasks', 'challenge', 'taskIds'));
+        return view('admin.event-base-bonus.challenges.edit', compact('products', 'tasks', 'challenge'));
     }
 
     public function store(StoreEventChallengeRequest $request)
@@ -80,5 +65,14 @@ class EventBaseChallengeController extends Controller
 
         Session::flash('message', 'Campaign Challenge store successful');
         return redirect('/event-base-bonus/challenges');
+    }
+
+    public function delete($id)
+    {
+        $response = $this->taskService->delete($id);
+
+        Session::flash('message', 'Task delete successful');
+
+        return redirect('/event-base-bonus/tasks');
     }
 }

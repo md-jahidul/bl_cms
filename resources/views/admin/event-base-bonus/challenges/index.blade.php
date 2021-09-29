@@ -45,7 +45,7 @@
                                         <a href="{{ url('event-base-bonus/challenges/'.$challenge['id']).'/edit' }}" class="mr-3">
                                             <i class="la la-pencil text-primary"></i>
                                         </a>
-                                        <a class="d-none" href="javascript:void(0);" onclick="event.preventDefault(); document.getElementById('logoutform-{{$challenge['id']}}').submit();">
+                                        <a href="javascript:void(0);" onclick="event.preventDefault(); document.getElementById('logoutform-{{$challenge['id']}}').submit();">
                                             <i class="la la-trash text-danger"></i>
                                         </a>
                                         <form id="logoutform-{{$challenge['id']}}" action="{{ url('event-base-bonus/challenges/'.$challenge['id']) }}" method="POST">

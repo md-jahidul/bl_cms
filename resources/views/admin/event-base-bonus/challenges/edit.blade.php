@@ -152,7 +152,7 @@
                             <div class="row mb-1">
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="dashboard_card_title" class="required">Day </label>
+                                    <label for="dashboard_card_title" class="required">No of Challenge Days </label>
                                     <input required min="1" max="7" data-validation-required-message="Day is required" value="{{ $challenge['day'] }}" type="number" class="form-control" placeholder="Day" name="day">
                                     <small class="text-danger"> @error('day') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
@@ -182,27 +182,16 @@
                                                 <option value="{{ $task['id'] }}">{{ $task['title'] }}</option>
                                                 @endforeach
                                             </select>
-                                            <!-- <small class="text-danger"> @error('tasks') {{ $message }} @enderror </small>
-                                            <div class="help-block"></div> -->
                                         </div>
                                     </div>
 
                                     <div id="task_per_day" class="mb-2">
                                         <label for="dashboard_card_title">Task Per Day </label>
                                         <input value="{{ $challenge['task_per_day'] }}" type="number" class="form-control" placeholder="Task Per Day" name="task_per_day">
-                                        <!-- <small class="text-danger"> @error('task_per_day') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div> -->
                                     </div>
 
                                     <div id="random_select2_input">
-                                        <label for="task_pick_type_input">Select Tasks: </label>
-                                        <select class="select22 random-task-select form-control" multiple="multiple" name="random_tasks[0][]">
-                                            @foreach($tasks as $task)
-                                            <option value="{{ $task['id'] }}" {{ $challenge['task_pick_type'] == 0 ? in_array($task['id'], $taskIds) ? 'selected':'' : '' }}>{{ $task['title'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <small class="text-danger"> @error('tasks') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
+                                        <table class="table table-bordered display" id="random_task_table"></table>
                                     </div>
                                 </div>
 
@@ -293,37 +282,23 @@
             }
         });
 
-        //ordering
-        $("#day_specific_task_table").attr('class', 'ordering');
-
         //$('#task_pick_type').hide();
         $('#task_per_day').hide();
-        $('#day_specific_task_table').hide();
         $('#select2_tasks').hide();
-        $('#random_select2_input .random-task-select').select2({
-            placeholder: "Please Select Tasks"
-        });
-        $('#random_select2_input').hide();
 
         var days = "{{$challenge['day']}}";
         var task_pick_type = "{{$challenge['task_pick_type']}}";
+        var tasks = '<?= gettype($challenge['taskIds']) == 'string' ? $challenge['taskIds'] : "" ?>';
 
         if (task_pick_type == 1) {
-            var tasks = '<?= gettype($taskIds) == 'string' ? $taskIds : "" ?>';
-            var daywise_task = $.parseJSON(tasks);
-            var days = Object.keys(daywise_task).length;
-
-            $('#day_specific_task_table').show();
-            initTaskTable(days);
-            $('.task-select').each(function(k, v) {
-                $(this).val(daywise_task[k + 1]);
-                $(this).select2().trigger('change');
-            });
+            setTaskTable(tasks, "day_specific_task_table", task_pick_type, days);
         }
 
         if (task_pick_type == 0) {
+            $('#day_specific_task_table').hide();
             $('#task_per_day').show();
             $('#random_select2_input').show();
+            setTaskTable(tasks, "random_task_table", task_pick_type, days);
         }
 
         $('input[name=day]').keyup(function(e) {
@@ -341,11 +316,15 @@
         });
 
         $('input[name=task_pick_type]').change(function($e) {
+            days = $('input[name="day"]').val();
+
             if ($('input[name="task_pick_type"]:checked').val() == 0) {
                 $('#task_per_day').show();
                 $('#day_specific_task_table').hide();
+                $('#random_task_table').show();
                 $('#random_select2_input').show();
                 $('input[name=task_per_day]').val("1");
+                initializeTable($('input[name="task_pick_type"]:checked').val(), days);
             } else {
                 $('input[name=task_per_day]').val(1);
                 $('#task_per_day').hide();
@@ -354,22 +333,17 @@
                     $(".random-task-select").select2("destroy").select2();
                     $('#random_select2_input').hide();
                 }
-                days = $('input[name="day"]').val();
-                initTaskTable(days);
+                initializeTable($('input[name="task_pick_type"]:checked').val(), days);
             }
         });
 
-        $('input[name=task_per_day]').keyup(function($e) {
-            if ($(this).val()) {
-                $('#random_select2_input').show();
-                $('#random_select2_input .random-task-select').select2({
-                    placeholder: "Please Select Tasks"
-                });
-            } else {
+        $('input[name=task_per_day]').keyup(function(e) {
+            if (!$(this).val()) {
                 alert('Task Per Day must be atleast 1');
                 return false;
             }
-            //$('#random_select2_input .random-task-select').val(null).trigger('change');
+            task_pick_type = $('input[name="task_pick_type"]:checked').val();
+            initializeTable(task_pick_type, $('input[name=day]').val());
         });
 
         $(".select22").on("select2:select", function(evt) {
@@ -381,59 +355,106 @@
             $(this).trigger("change");
         });
 
-        $("#save").click(function() {
+        $("#save").click(function(e) {
             if (!$('input[name="task_pick_type"]:checked').val()) {
                 alert('Please Select Task Pick Type');
                 return false;
             }
 
-
             if ($('input[name="task_pick_type"]:checked').val() == 0) {
-                if (!$('input[name=task_per_day]').val()) {
+                if (!$('input[name="task_per_day"]').val()) {
                     alert('Please Select Task Per Day');
                     return false;
-                } else {
-                    let no_of_tasks = $('input[name=day]').val() * $('input[name=task_per_day]').val();
-
-                    if ($('.random-task-select').val().length >= no_of_tasks) {
-                        return true;
-                    } else {
-                        alert('You must select at least ' + no_of_tasks + ' tasks');
-                        return false;
-                    }
                 }
+
+                validateTaskTable("random_task_select") ? true : (e.preventDefault(), alert('Plesae select random tasks'));
             }
-            if ($('input[name="task_pick_type"]:checked').val()) {
-                let task_errors = [];
-                $("#daywise_task_select").each(function(k, v) {
-                    if ($(this).val().length == 0) {
-                        task_errors.push(0);
-                    }
-                });
 
-                if (task_errors.length) {
-                    alert('Plesae select day specific tasks');
-                    return false;
-                }
+            if ($('input[name="task_pick_type"]:checked').val() == 1) {
+                validateTaskTable("daywise_task_select") ? true : (e.preventDefault(), alert('Plesae select day specific tasks'));
             }
         });
     });
 
-    function initTaskTable(data) {
+    function initTaskTable(task_pick_type, days, table_id, taskList = null) {
         col = [];
-        if (data) {
-            for (let i = 0; i < data; i++) {
-                col.push({
-                    'day': 'Day-' + (i + 1),
-                    'task': 'b'
-                });
+        dataColumns = [];
+        columnDefs = [];
+
+        if (task_pick_type == "1") {
+            if (days) {
+                for (let i = 0; i < days; i++) {
+                    col.push({
+                        'day': i + 1,
+                        'task': i + 1
+                    });
+                }
             }
+            dataColumns = [{
+                    "title": "Day",
+                    "data": "day",
+                    "className": "width-3"
+                },
+                {
+                    "title": "Task",
+                    "data": "task"
+                },
+            ];
+
+            columnDefs = [{
+                "targets": 1,
+                "data": null,
+                render: function(data, type, row) {
+                    var domElement = '<div class="taskInput"></div>';
+                    return domElement;
+                },
+            }];
         }
+        if (task_pick_type == "0") {
+            taskPerDay = parseInt($('input[name="task_per_day"]').val());
+
+            if (days) {
+                for (let i = 0; i < days * taskPerDay; i++) {
+                    col.push({
+                        'day': i + 1,
+                        'task': i + 1
+                    });
+                }
+            }
+            dataColumns = [{
+                    "title": "*"
+                },
+                {
+                    "title": "Task",
+                    "data": "task"
+                },
+            ];
+
+            columnDefs = [{
+                    "targets": 0,
+                    "data": null,
+                    "className": "width-3",
+                    render: function(data, type, row) {
+                        var domElement = '<i class="icon-cursor-move icons"></i>';
+                        return domElement;
+                    }
+                },
+                {
+                    "targets": 1,
+                    "data": null,
+                    render: function(data, type, row) {
+                        var domElement = '<div class="taskInput"></div>';
+                        return domElement;
+                    },
+                }
+            ];
+        }
+
         //reset select2 selections
-        $(".task-select").val('').trigger('change');
-        $('#day_specific_task_table').show();
-        if (!$.fn.DataTable.isDataTable('#day_specific_task_table')) {
-            $('#day_specific_task_table').DataTable({
+        $('#' + table_id + " .task-select").val('').trigger('change');
+        $('#' + table_id).show();
+        if (!$.fn.DataTable.isDataTable('#' + table_id)) {
+            $('#' + table_id).DataTable({
                 'createdRow': function(row, data, dataIndex) {
                     $(row).attr('data-index', data['day']);
                     $(row).attr('data-position', data['day']);
@@ -442,52 +463,102 @@
                 searching: false,
                 info: false,
                 data: col,
-                columns: [{
-                        "title": "*"
-                    },
-                    {
-                        "title": "Task",
-                        "data": "task"
-                    }
-                ],
-                "columnDefs": [{
-                        "targets": 0,
-                        "data": null,
-                        "className": "width-3",
-                        render: function(data, type, row) {
-                            var domElement = '<i class="icon-cursor-move icons"></i>';
-                            return domElement;
-                        }
-                    },
-                    {
-                        "targets": 1,
-                        "data": null,
-                        render: function(data, type, row) {
-                            var domElement = '<div class="taskInput"></div>';
-                            return domElement;
-                        },
-                    }
-                ],
-            });
-            var select2_taskList = $('#select2_input').html();
-            $(".taskInput").each(function(e, v) {
-                $(this).html(select2_taskList);
-                $(".task-select").eq(e).select2({
-                    placeholder: "Select Tasks"
-                });
-                $(".task-select").eq(e).attr('name', 'day_tasks[' + e + '][]');
-                $(".task-select").eq(e).attr('id', 'daywise_task_select');
-            });
-            $(".ordering").sortable({
-                items: 'tbody tr',
-                stop: function(event, ui) {
-                    $(".taskInput").each(function(e, v) {
-                        $(".task-select").eq(e).select2();
-                        $(".task-select").eq(e).attr('name', 'day_tasks[' + e + '][]');
-                    });
-                }
+                columns: dataColumns,
+                columnDefs: columnDefs
             });
         }
+        var select2_taskList = $('#select2_input').html();
+        $('#' + table_id + ' .taskInput').each(function(e, v) {
+            $('#' + table_id + ' .taskInput').eq(e).html(select2_taskList);
+
+            if (task_pick_type == "1") {
+                $('#' + table_id + ' .task-select').eq(e).attr('name', 'day_tasks[' + e + '][]');
+                $('#' + table_id + ' .task-select').eq(e).attr('multiple', 'multiple');
+                $('#' + table_id + ' .task-select').eq(e).select2({
+                    placeholder: "Select Tasks"
+                });
+                $('#' + table_id + ' .task-select').eq(e).addClass('daywise_task_select');
+
+            } else {
+                //ordering
+                $('#' + table_id).addClass('ordering');
+                $($("#random_task_table").attr("class")).sortable({
+                    items: 'tbody tr',
+                    stop: function(event, ui) {
+                        $("#" + table_id + " " + ".taskInput").each(function(e, v) {
+                            $(".task-select").eq(e).select2({
+                                placeholder: "Select Tasks"
+                            });
+                            $(".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
+                        });
+                    }
+                });
+                $('#' + table_id + ' .task-select').eq(e).removeAttr('multiple');
+                $('#' + table_id + ' .task-select').eq(e).attr('name', 'random_tasks[' + e + '][]');
+                $('#' + table_id + ' .task-select').eq(e).select2({
+                    placeholder: "Select Tasks"
+                });
+                $('#' + table_id + ' .task-select').eq(e).addClass('random_task_select');
+                $('#' + table_id + " .task-select").val('').trigger('change');
+            }
+        });
+        if (taskList) {
+            if (task_pick_type == "1") {
+                $('#' + table_id + ' .task-select').each(function(k, v) {
+                    $(this).val(taskList[k + 1]).trigger('change');
+                });
+            } else {
+                console.log(taskList);
+                $.each(taskList[0], function(key, val) {
+                    console.log(val);
+                    $('#' + table_id + ' .task-select').eq(key).val(val).trigger('change');
+                });
+            }
+        }
+    }
+
+    function initializeTable(taskPickType, days) {
+        console.log(taskPickType);
+        if (taskPickType == "0") {
+            if ($.fn.DataTable.isDataTable('#random_task_table')) {
+                $('#random_task_table').DataTable().destroy();
+            }
+            initTaskTable(taskPickType, days, 'random_task_table');
+        }
+        if (taskPickType == "1") {
+            if ($.fn.DataTable.isDataTable('#day_specific_task_table')) {
+                $('#day_specific_task_table').DataTable().destroy();
+            }
+            initTaskTable(taskPickType, days, 'day_specific_task_table');
+        }
+    }
+
+    function validateTaskTable(tableId) {
+        let task_errors = [];
+        $("." + tableId).each(function(k, v) {
+            if (tableId = "daywise_task_select") {
+                if ($(this).val().length == 0) {
+                    task_errors.push(0);
+                }
+            } else {
+                if (!$(this).val()) {
+                    task_errors.push(0);
+                }
+            }
+        });
+
+        if (task_errors.length > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function setTaskTable(tasks, tableId, taskPickType, days) {
+        var daywise_task = $.parseJSON(tasks);
+        // var days = Object.keys(daywise_task).length;
+        $('#' + tableId).show();
+        initTaskTable(taskPickType, days, tableId, daywise_task);
     }
 </script>
 

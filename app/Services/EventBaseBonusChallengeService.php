@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Exception\ClientException;
+use Carbon\Carbon;
 
 class EventBaseBonusChallengeService
 {
@@ -21,6 +22,26 @@ class EventBaseBonusChallengeService
         $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge/" . $id;
         $response  = $client->CallAPI('GET', $url, []);
 
+        $challenge = $response['data'];
+
+        $taskIds = [];
+
+        $challenge['start_date'] = Carbon::createFromTimestamp($challenge['start_date'])->toDateTimeString();;
+        $challenge['end_date'] = Carbon::createFromTimestamp($challenge['end_date'])->toDateTimeString();;
+
+        if ($challenge['task_pick_type']) {
+            foreach ($challenge['event_based_challenge_tasks'] as $task) {
+                $taskIds[$task['day_no']][] = $task['campaign_task_id'];
+            }
+        } else {
+            foreach ($challenge['event_based_challenge_tasks'] as $task) {
+                $taskIds[0][] = $task['campaign_task_id'];
+            }
+        }
+
+        $challenge['taskIds'] = json_encode($taskIds);
+        $response['data'] = $challenge;
+
         return $response['data'];
     }
 
@@ -31,14 +52,20 @@ class EventBaseBonusChallengeService
         $challenge_data['tasks'] = new \stdClass;
 
         if ($data['task_pick_type']) {
-            foreach ($data['tasks'] as $key => $task) {
+            foreach ($data['day_tasks'] as $key => $task) {
                 $challenge_data['tasks']->{$key + 1} = $task;
             }
         } else {
-            $challenge_data['tasks']->{0} = $data['tasks'][0];
+            $challenge_data['tasks']->{0} = [];
+            foreach ($data['random_tasks'] as $key => $task) {
+                array_push($challenge_data['tasks']->{0}, $task[0]);
+            }
         }
 
         $data = $challenge_data;
+
+        unset($data['random_tasks']);
+        unset($data['day_tasks']);
 
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
@@ -64,15 +91,16 @@ class EventBaseBonusChallengeService
                 $challenge_data['tasks']->{$key + 1} = $task;
             }
         } else {
-            $challenge_data['tasks']->{0} = $data['random_tasks'][0];
+            $challenge_data['tasks']->{0} = [];
+            foreach ($data['random_tasks'] as $key => $task) {
+                array_push($challenge_data['tasks']->{0}, $task[0]);
+            }
         }
 
         $data = $challenge_data;
 
         unset($data['random_tasks']);
         unset($data['day_tasks']);
-
-        //dd($data);
 
         if (!empty($data['icon_image'])) {
             $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
