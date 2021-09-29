@@ -376,6 +376,15 @@
         });
     });
 
+    $("select").on("select2:select", function(evt) {
+        var element = evt.params.data.element;
+        var $element = $(element);
+
+        $element.detach();
+        $(this).append($element);
+        $(this).trigger("change");
+    });
+
     function initTaskTable(task_pick_type, days, table_id, taskList = null) {
         col = [];
         dataColumns = [];
@@ -475,24 +484,16 @@
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'day_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).attr('multiple', 'multiple');
                 $('#' + table_id + ' .task-select').eq(e).select2({
-                    placeholder: "Select Tasks"
+                    placeholder: "Select Tasks",
+                    tags: true,
+                    ordering: false,
+                    order: [
+                        0, 'desc'
+                    ]
                 });
                 $('#' + table_id + ' .task-select').eq(e).addClass('daywise_task_select');
 
             } else {
-                //ordering
-                $('#' + table_id).addClass('ordering');
-                $($("#random_task_table").attr("class")).sortable({
-                    items: 'tbody tr',
-                    stop: function(event, ui) {
-                        $("#" + table_id + " " + ".taskInput").each(function(e, v) {
-                            $(".task-select").eq(e).select2({
-                                placeholder: "Select Tasks"
-                            });
-                            $(".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
-                        });
-                    }
-                });
                 $('#' + table_id + ' .task-select').eq(e).removeAttr('multiple');
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'random_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).select2({
@@ -500,6 +501,21 @@
                 });
                 $('#' + table_id + ' .task-select').eq(e).addClass('random_task_select');
                 $('#' + table_id + " .task-select").val('').trigger('change');
+
+                //ordering
+                $('#' + table_id).addClass('ordering');
+                $('.ordering').sortable({
+                    containment: 'parent',
+                    items: 'tbody tr',
+                    stop: function(event, ui) {
+                        $("#" + table_id + " .taskInput").each(function(e, v) {
+                            $(".task-select").eq(e).select2({
+                                placeholder: "Select Tasks"
+                            });
+                            $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
+                        });
+                    }
+                });
             }
         });
         if (taskList) {
@@ -508,7 +524,6 @@
                     $(this).val(taskList[k + 1]).trigger('change');
                 });
             } else {
-                console.log(taskList);
                 $.each(taskList[0], function(key, val) {
                     console.log(val);
                     $('#' + table_id + ' .task-select').eq(key).val(val).trigger('change');

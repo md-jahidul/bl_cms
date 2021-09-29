@@ -246,7 +246,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(function() {
         var date = new Date();
@@ -456,19 +456,6 @@
                 $('#' + table_id + ' .task-select').eq(e).addClass('daywise_task_select');
 
             } else {
-                //ordering
-                $('#' + table_id).attr('class', 'ordering');
-                $($("#random_task_table").attr("class")).sortable({
-                    items: 'tbody tr',
-                    stop: function(event, ui) {
-                        $("#" + table_id + " " + ".taskInput").each(function(e, v) {
-                            $(".task-select").eq(e).select2({
-                                placeholder: "Select Tasks"
-                            });
-                            $(".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
-                        });
-                    }
-                });
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'random_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).select2({
                     placeholder: "Select Tasks"
@@ -478,6 +465,21 @@
         });
 
         $('#' + table_id + " .task-select").val('').trigger('change');
+
+        //ordering
+        $('#' + table_id).addClass('ordering');
+        $('.ordering').sortable({
+            containment: 'parent',
+            items: 'tbody tr',
+            stop: function(event, ui) {
+                $("#" + table_id + " .taskInput").each(function(e, v) {
+                    $(".task-select").eq(e).select2({
+                        placeholder: "Select Tasks"
+                    });
+                    $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
+                });
+            }
+        });
     }
 
     function initializeTable(taskPickType, days) {
