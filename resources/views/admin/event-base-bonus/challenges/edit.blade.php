@@ -347,15 +347,6 @@
             initializeTable(task_pick_type, $('input[name=day]').val());
         });
 
-        $(".select22").on("select2:select", function(evt) {
-            var element = evt.params.data.element;
-            var $element = $(element);
-
-            $element.detach();
-            $(this).append($element);
-            $(this).trigger("change");
-        });
-
         $("#save").click(function(e) {
             if (!$('input[name="task_pick_type"]:checked').val()) {
                 alert('Please Select Task Pick Type');
@@ -375,15 +366,6 @@
                 validateTaskTable("daywise_task_select") ? true : (e.preventDefault(), alert('Plesae select day specific tasks'));
             }
         });
-    });
-
-    $("select").on("select2:select", function(evt) {
-        var element = evt.params.data.element;
-        var $element = $(element);
-
-        $element.detach();
-        $(this).append($element);
-        $(this).trigger("change");
     });
 
     function initTaskTable(task_pick_type, days, table_id, taskList = null) {
@@ -485,14 +467,17 @@
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'day_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).attr('multiple', 'multiple');
                 $('#' + table_id + ' .task-select').eq(e).select2({
-                    placeholder: "Select Tasks",
-                    tags: true,
-                    ordering: false,
-                    order: [
-                        0, 'desc'
-                    ]
+                    placeholder: "Select Tasks"
                 });
                 $('#' + table_id + ' .task-select').eq(e).addClass('daywise_task_select');
+                $('#' + table_id + ' .select22').eq(e).on("select2:select", function(evt) {
+                    var element = evt.params.data.element;
+                    var $element = $(element);
+
+                    $element.detach();
+                    $(this).append($element);
+                    $(this).trigger("change");
+                });
 
             } else {
                 $('#' + table_id + ' .task-select').eq(e).removeAttr('multiple');
@@ -510,7 +495,7 @@
                     items: 'tbody tr',
                     stop: function(event, ui) {
                         $("#" + table_id + " .taskInput").each(function(e, v) {
-                            $(".task-select").eq(e).select2({
+                            $("#" + table_id + " " + ".task-select").eq(e).select2({
                                 placeholder: "Select Tasks"
                             });
                             $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
@@ -534,7 +519,6 @@
     }
 
     function initializeTable(taskPickType, days) {
-        console.log(taskPickType);
         if (taskPickType == "0") {
             if ($.fn.DataTable.isDataTable('#random_task_table')) {
                 $('#random_task_table').DataTable().destroy();
