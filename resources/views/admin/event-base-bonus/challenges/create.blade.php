@@ -453,7 +453,15 @@
                 $('#' + table_id + ' .task-select').eq(e).select2({
                     placeholder: "Select Tasks"
                 });
-                $('#' + table_id + ' .task-select').eq(e).addClass('daywise_task_select');
+                $('#' + table_id + ' .select22').eq(e).addClass('daywise_task_select');
+                $('#' + table_id + ' .select22').eq(e).on("select2:select", function(evt) {
+                    var element = evt.params.data.element;
+                    var $element = $(element);
+
+                    $element.detach();
+                    $(this).append($element);
+                    $(this).trigger("change");
+                });
 
             } else {
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'random_tasks[' + e + '][]');
@@ -461,25 +469,25 @@
                     placeholder: "Select Tasks"
                 });
                 $('#' + table_id + ' .task-select').eq(e).addClass('random_task_select');
+
+                //ordering
+                $('#' + table_id).addClass('ordering');
+                $('.ordering').sortable({
+                    containment: 'parent',
+                    items: 'tbody tr',
+                    stop: function(event, ui) {
+                        $("#" + table_id + " .taskInput").each(function(e, v) {
+                            $("#" + table_id + " " + ".task-select").eq(e).select2({
+                                placeholder: "Select Tasks"
+                            });
+                            $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
+                        });
+                    }
+                });
             }
         });
 
         $('#' + table_id + " .task-select").val('').trigger('change');
-
-        //ordering
-        $('#' + table_id).addClass('ordering');
-        $('.ordering').sortable({
-            containment: 'parent',
-            items: 'tbody tr',
-            stop: function(event, ui) {
-                $("#" + table_id + " .taskInput").each(function(e, v) {
-                    $(".task-select").eq(e).select2({
-                        placeholder: "Select Tasks"
-                    });
-                    $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
-                });
-            }
-        });
     }
 
     function initializeTable(taskPickType, days) {
