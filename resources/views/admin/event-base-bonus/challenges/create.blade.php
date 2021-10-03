@@ -211,9 +211,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/dropify/dropify.min.css') }}">
+<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/bootstrap-multiselect/bootstrap-multiselect.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
@@ -242,11 +241,11 @@
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 {{-- <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+<script type="text/javascript" src="{{ asset('app-assets/vendors/js/bootstrap-multiselect/bootstrap-multiselect.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('app-assets/vendors/js/dropify/dropfiy.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-<script src="{{ asset('app-assets/vendors/js/sortable/sortable.min.js') }}" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('app-assets/vendors/js/sortable/sortable.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         var date = new Date();
@@ -402,6 +401,11 @@
                     "title": "*"
                 },
                 {
+                    "title": "SL",
+                    "data": "day",
+                    "className": "width-3"
+                },
+                {
                     "title": "Task",
                     "data": "task"
                 },
@@ -417,7 +421,7 @@
                     }
                 },
                 {
-                    "targets": 1,
+                    "targets": 2,
                     "data": null,
                     render: function(data, type, row) {
                         var domElement = '<div class="taskInput"></div>';
@@ -480,6 +484,7 @@
                             $("#" + table_id + " " + ".task-select").eq(e).select2({
                                 placeholder: "Select Tasks"
                             });
+                            $("#" + table_id + ` tbody .ui-sortable-handle:eq(${e}) td`).eq(1).html(e + 1);
                             $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
                         });
                     }
