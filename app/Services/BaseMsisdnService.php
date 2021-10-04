@@ -23,6 +23,7 @@ use App\Models\BaseMsisdn;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -152,7 +153,10 @@ class BaseMsisdnService
     {
         try {
             return DB::transaction(function () use ($request) {
+
                 $baseGroup = $this->baseMsisdnGroupRepository->save($request->all());
+                $redisKey = "base_msisdn_$baseGroup->id";
+                Redis::del($redisKey);
                 $this->uploadPrepare($request, $baseGroup);
                 return Response('Upload successfully completed !');
             });
@@ -173,6 +177,8 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request, $id) {
                 $baseGroup = $this->findOne($id);
                 $baseGroup->update($request->all());
+                $redisKey = "base_msisdn_$baseGroup->id";
+                Redis::del($redisKey);
                 if (isset($request->msisdn_file) || !empty($request->custom_msisdn)) {
                     BaseMsisdn::where('group_id', $baseGroup->id)->delete();
                     $this->uploadPrepare($request, $baseGroup);
