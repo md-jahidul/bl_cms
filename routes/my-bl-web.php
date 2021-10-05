@@ -374,6 +374,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get(
         'deeplink-product-purchase-details',
         'CMS\ProductDeepLinkController@getDetails'
+
     )->name('deeplink-product-purchase-details');
     Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 

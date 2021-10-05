@@ -519,7 +519,8 @@
                             $("#" + table_id + " .task-select").eq(e).select2({
                                 placeholder: "Select Tasks"
                             });
-                            $("#" + table_id + ` tbody .ui-sortable-handle:eq(${e}) td`).eq(1).html(e + 1);
+                            $("#" + table_id + " tr").addClass('drag-handle');
+                            $(`#${table_id} tbody .drag-handle:eq(${e}) td:eq(1)`).html(e + 1);
                             $("#" + table_id + " .task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
                         });
                     }

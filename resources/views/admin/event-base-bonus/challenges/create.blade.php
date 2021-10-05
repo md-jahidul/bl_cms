@@ -448,6 +448,7 @@
             });
         }
         var select2_taskList = $('#select2_input').html();
+
         $('#' + table_id + ' .taskInput').each(function(e, v) {
             $('#' + table_id + ' .taskInput').eq(e).html(select2_taskList);
 
@@ -477,14 +478,14 @@
                 //ordering
                 $('#' + table_id).addClass('ordering');
                 $('.ordering').sortable({
-                    containment: 'parent',
                     items: 'tbody tr',
                     stop: function(event, ui) {
                         $("#" + table_id + " .taskInput").each(function(e, v) {
                             $("#" + table_id + " " + ".task-select").eq(e).select2({
                                 placeholder: "Select Tasks"
                             });
-                            $("#" + table_id + ` tbody .ui-sortable-handle:eq(${e}) td`).eq(1).html(e + 1);
+                            $("#" + table_id + " tr").addClass('drag-handle');
+                            $(`#${table_id} tbody .drag-handle:eq(${e}) td:eq(1)`).html(e + 1);
                             $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
                         });
                     }
