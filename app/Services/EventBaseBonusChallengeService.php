@@ -26,9 +26,6 @@ class EventBaseBonusChallengeService
 
         $taskIds = [];
 
-        $challenge['start_date'] = Carbon::createFromTimestamp($challenge['start_date'])->toDateTimeString();;
-        $challenge['end_date'] = Carbon::createFromTimestamp($challenge['end_date'])->toDateTimeString();;
-
         if ($challenge['task_pick_type']) {
             foreach ($challenge['event_based_challenge_tasks'] as $task) {
                 $taskIds[$task['day_no']][] = $task['campaign_task_id'];
