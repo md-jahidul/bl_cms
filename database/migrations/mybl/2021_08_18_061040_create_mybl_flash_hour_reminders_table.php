@@ -17,7 +17,8 @@ class CreateMyblFlashHourRemindersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('flash_hour_id');
             $table->unsignedBigInteger('flash_hour_product_id');
-            $table->string('msisdn')->nullable();
+            $table->string('msisdn')->nullable()->index();
+            $table->boolean('status')->nullable()->default(1)->comment("0 = processed, 1 = in progress");
 
             $table->foreign('flash_hour_id')
                 ->references('id')

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour')
-@section('card_name',"Flash Hour" )
+@section('title', 'Cash Back')
+@section('card_name',"Cash Back Campaign" )
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        <a href="{{ route('flash-hour-campaign.index') }}">Campaign List</a>
+        <a href="{{ route('cash-back-campaign.index') }}">Campaign List</a>
     </li>
     <li class="breadcrumb-item active">Create Campaign</li>
 @endsection
 @section('action')
-    <a href="{{ route('flash-hour-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+    <a href="{{ route('cash-back-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
         Cancel
     </a>
 @endsection
@@ -22,7 +22,7 @@
                     <hr>
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{ (isset($campaign)) ? route('flash-hour-campaign.update', $campaign->id) : route('flash-hour-campaign.store')}}"
+                              action="{{ (isset($campaign)) ? route('cash-back-campaign.update', $campaign->id) : route('cash-back-campaign.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @if(isset($campaign))
@@ -32,7 +32,7 @@
                             @endif
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-4">
                                         <label for="title" class="required">Campaign Name</label>
                                         <input required maxlength="250"
                                                data-validation-required-message="Title is required"
@@ -44,20 +44,7 @@
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group col-md-6 mb-2" id="cta_action">
-                                        <label for="redirect_url" class="required">Base Msisdn</label>
-                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
-                                                class="browser-default custom-select" required>
-                                            <option value="">Select Action</option>
-                                            @foreach ($baseMsisdnGroups as $key => $value)
-                                                <option value="{{ $value->id }}"
-                                                    {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <div class="form-group col-md-4 {{ $errors->has('start_date') ? ' error' : '' }}">
                                         <label for="start_date">Start Date</label>
                                         <div class='input-group'>
                                             <input type='text' class="form-control" name="start_date" id="start_date"
@@ -71,7 +58,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <div class="form-group col-md-4 {{ $errors->has('end_date') ? ' error' : '' }}">
                                         <label for="end_date">End Date</label>
                                         <input type="text" name="end_date" id="end_date" class="form-control"
                                                placeholder="Please select end date"
@@ -97,26 +84,29 @@
 
                                 <!-- Product Selection Start -->
                                 <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
-                                    @if(isset($campaign) && !$campaign->flashHourProducts->isEmpty())
-                                        @foreach($campaign->flashHourProducts as $product)
-                                            @include('admin.mybl-campaign.flash-hour.partials.product-element', ['product' => $product])
+                                    @if(isset($campaign))
+                                        @foreach($campaign->cashBackProducts as $product)
+                                            @include('admin.mybl-campaign.cash-back.partials.product-element', ['product' => $product])
                                         @endforeach
                                     @else
-                                        @include('admin.mybl-campaign.flash-hour.partials.product-element')
+                                        @include('admin.mybl-campaign.cash-back.partials.product-element')
                                     @endif
                                 </div>
+
                                 <!-- Product Selection End -->
 
                                 <div class="row">
+                                    <div class="form-actions col-md-12 mt-0 text-danger"></div>
+
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="status_input">Status: </label>
+                                        <label for="status_input">Campaign Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <input type="radio" name="status" value="1" id="input-radio-15"
                                                 {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
                                             <input type="radio" name="status" value="0" id="input-radio-16"
                                                 {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}
-                                                {{ !isset($campaign->status) ? "checked" : "" }}>
+                                                {{ isset($campaign->status) ? '' : 'checked' }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block">  {{ $errors->first('status') }}</div>
@@ -160,7 +150,6 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
-
     <script>
         $(document).ready(function () {
             $(".product-list").select2()
@@ -198,11 +187,6 @@
             dateTime(campaignEnd)
             dateTime(productStart)
             dateTime(productEnd)
-
-           // $('.product_code').selectize({
-           //      create: true,
-           //  });
-
         });
     </script>
 

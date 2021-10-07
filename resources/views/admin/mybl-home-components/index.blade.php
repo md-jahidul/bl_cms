@@ -5,9 +5,9 @@
     <li class="breadcrumb-item active"><strong>Components List</strong></li>
 @endsection
 @section('action')
-{{--    <a href="{{ url("slider/$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-{{--        Add Slider Image--}}
-{{--    </a>--}}
+    <a href="" class="btn btn-primary round btn-glow px-2 create_component" data-toggle="modal" data-target="#large" role="button">
+        <i class="la la-plus"></i>Add Component
+    </a>
 @endsection
 @section('content')
     <section>
@@ -30,16 +30,17 @@
                                 data-component-id="{{ $component['component_id'] ?? 0 }}">
                                 {{--                                <tr>--}}
                                 <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $component['title_en'] }}{{--{!! $component->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}--}}</td>
-                                {{--                                    <td class="action" width="8%">--}}
-                                {{--                                        @if($component->is_active == 0)--}}
-                                {{--                                            <a href="{{ route("update-component-status", [ $component->page_id, $component->id ]) }}"--}}
-                                {{--                                               class="btn btn-success border-0" title="Click to enable"> Enable</a>--}}
-                                {{--                                        @else--}}
-                                {{--                                            <a href="{{ route("update-component-status", [ $component->page_id, $component->id ]) }}"--}}
-                                {{--                                               role="button" class="btn btn-danger border-0" title="Click to disable"> Disable</a>--}}
-                                {{--                                        @endif--}}
-                                {{--                                    </td>--}}
+                                <td>{{ $component['title_en'] }}
+                                {{--{!! $component->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}--}}</td>
+                                {{--  <td class="action" width="8%">--}}
+                                {{--      @if($component->is_active == 0)--}}
+                                {{--          <a href="{{ route("update-component-status", [ $component->page_id, $component->id ]) }}"--}}
+                                {{--             class="btn btn-success border-0" title="Click to enable"> Enable</a>--}}
+                                {{--      @else--}}
+                                {{--          <a href="{{ route("update-component-status", [ $component->page_id, $component->id ]) }}"--}}
+                                {{--             role="button" class="btn btn-danger border-0" title="Click to disable"> Disable</a>--}}
+                                {{--      @endif--}}
+                                {{--  </td>--}}
                             </tr>
                         @endforeach
                         </tbody>
@@ -49,41 +50,45 @@
                     <h4 class="pt-2 pb-1 mb-0"><strong>Sortable Components</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
-                        <tr>
+                        <tr width="100%">
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th>Component Type</th>
+                            <th width="25%">Component Type</th>
                             <th class="text-center">User Can Enable/Disable</th>
-                            <th class="text-right">Action</th>
+                            <th width="25%" class="text-right">Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
                             @foreach($components['sortable_components'] as $index=> $component)
-                                <tr data-index="{{ $component['id'] }}" data-position="{{ $component['display_order'] }}"
-                                    data-component-id="{{ $component['component_id'] ?? 0 }}">
-{{--                                <tr>--}}
-                                    <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                                <tr width="3%" data-index="{{ $component['id'] }}" data-position="{{ $component['display_order'] }}"
+                                    data-component-id="{{ $component['component_id'] ?? 0 }}" style="width: 100%">
+                                    <td><i class="icon-cursor-move icons"></i></td>
                                     <td>{{ $component['title_en'] }}</td>
                                     <td class="text-center">
                                         @if(isset($component['is_eligible']))
                                             {{ $component['is_eligible'] == 1 ? "Yes" : "No" }}
                                         @endif
                                     </td>
-                                    <td class="action" width="8%">
+                                    <td class="action">
                                         @if(isset($component['is_api_call_enable']))
                                             @if($component['is_api_call_enable'] == 0)
                                                 <a href="{{ route("components.status.update", $component['id']) }}" data-value="enable  {{ $component['title_en'] }}"
-                                                   class="btn btn-danger border-0 change_status" title="Click to enable"> Disabled</a>
+                                                   class="btn btn-danger border-0 change_status" title="Click to enable">Disabled</a>
                                             @else
                                                 <a href="{{ route("components.status.update", $component['id']) }}" data-value="disable {{ $component['title_en'] }}"
-                                                   class="btn btn-success border-0 change_status" title="Click to disable"> Enabled</a>
+                                                   class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
                                             @endif
                                                 <a href="" data-id="{{ $component['id'] }}" data-toggle="modal" data-target="#large" role="button"
                                                    class="btn btn-info border-0 edit"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                <a href="#" remove="{{ route("mybl.home.components.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
+                                                    <i class="la la-trash"></i>
+                                                </a>
                                         @else
                                             <button type="button"
                                                   class="btn btn-secondary border-0" title="Click to disable" disabled="disabled"> Enabled</button>
                                             <button type="button"
                                                class="btn btn-secondary-info border-0"><i class="la la-pencil" aria-hidden="true" disabled="disabled"></i></button>
+                                            <button type="button"
+                                                    class="btn btn-secondary-info border-0"><i class="la la-trash" aria-hidden="true" disabled="disabled"></i></button>
                                         @endif
                                     </td>
                                 </tr>
@@ -108,7 +113,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" action="{{ route("mybl.home.components.update") }}" method="POST" novalidate>
+                    <form role="form" action="" method="POST"
+                         id="form" novalidate>
                         <div class="modal-body">
                             <div class="card-body card-dashboard">
                                 <div class="row">
@@ -140,7 +146,7 @@
                                             <input type="radio" name="is_eligible" value="1" id="active">
                                             <label for="active" class="mr-1">Yes</label>
 
-                                            <input type="radio" name="is_eligible" value="0" id="inactive">
+                                            <input type="radio" name="is_eligible" value="0" id="inactive" checked>
                                             <label for="inactive">No</label>
                                         </div>
                                     </div>
@@ -152,7 +158,7 @@
                                             <input type="radio" name="is_api_call_enable" value="1" id="can_enable_yes">
                                             <label for="can_enable_yes" class="mr-1">Enable</label>
 
-                                            <input type="radio" name="is_api_call_enable" value="0" id="can_disable_no">
+                                            <input type="radio" name="is_api_call_enable" value="0" id="can_disable_no" checked>
                                             <label for="can_disable_no">Disable</label>
                                         </div>
                                     </div>
@@ -160,11 +166,11 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="la la-check-square-o"></i> Update</button>
+                            <button type="submit" class="btn btn-primary" id="submit"></button>
                             <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
                         </div>
                     @csrf
-                    @method('PUT')
+                    @method('POST')
                     </form>
                 </div>
             </div>
@@ -187,15 +193,29 @@
 @push('page-js')
     <script>
         (function () {
+            let titleEn = $("input[name='title_en']");
+            let titleBn = $("input[name='title_bn']");
+            let active = $("#active");
+            let inactive = $("#inactive");
+            let enable_yes = $("#can_enable_yes");
+            let disable_no = $("#can_disable_no");
+
+            $('.create_component').click(function () {
+                $('#form').prop('action', "{{ route('mybl.home.components.store') }}")
+                $('#submit').text('Save')
+                titleEn.val('');
+                titleBn.val('');
+                inactive.prop("checked", true)
+                disable_no.prop("checked", true)
+            })
+
             $('.edit').click(function () {
+                $('#form').prop('action', "{{ route('mybl.home.components.update') }}")
+                $('#submit').text("Update")
+
                 let componentID = $(this).attr('data-id')
                 $("input[name='id']").val(componentID);
-                let titleEn = $("input[name='title_en']");
-                let titleBn = $("input[name='title_bn']");
-                let active = $("#active");
-                let inactive = $("#inactive");
-                let enable_yes = $("#can_enable_yes");
-                let disable_no = $("#can_disable_no");
+
 
                 $.ajax({
                     url: "{{ url("mybl-home-components/edit") }}/" + componentID,

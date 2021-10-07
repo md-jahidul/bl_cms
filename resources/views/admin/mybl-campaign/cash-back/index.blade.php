@@ -1,18 +1,20 @@
 @extends('layouts.admin')
-@section('title', 'Refer And Earn Analytics')
-@section('card_name', 'Refer And Earn Analytics')
+@section('title', 'Cash Back')
+@section('card_name', 'Cash Back')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">List</li>
+    <li class="breadcrumb-item active">Campaign List</li>
 @endsection
 
 @section('action')
-    <a href="{{ route('mybl-refer-and-earn.index') }}" class="btn btn-blue-grey  btn-glow px-2"><i class="la la-arrow-left"></i>
-        Back to Campaign
-    </a>
+    @if(!$cashBackCampaigns->count())
+        <a href="{{route('cash-back-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
+                class="la la-plus"></i>
+            Create Campaign
+        </a>
+    @endif
 @endsection
 
 @section('content')
-
     <section>
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
@@ -23,23 +25,24 @@
                         <tr>
                             <th>SL</th>
                             <th>Campaign Title</th>
-                            <th>Total Referrals</th>
-                            <th>Total Referees</th>
-                            <th>Successfully Redeemed</th>
-                            <th>Total Claimed</th>
-                            <th>Total Invited</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($analytics as $data)
+                        @foreach ($cashBackCampaigns as $data)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->campaign_title}}</td>
-                                <td>{{ $data->total_referrers}}</td>
-                                <td>{{ $data->total_referees}}</td>
-                                <td>{{ $data->total_success + $data->total_claimed }}</td>
-                                <td>{{ $data->total_claimed }}</td>
-                                <td>{{ $data->total_invited }}</td>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{$data->start_date}}</td>
+                                <td>{{$data->end_date}}</td>
+                                <td>
+                                    <a href="{{ route('cash-back-campaign.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("cash-back-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                        <i class="la la-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -51,9 +54,6 @@
     </section>
 
 @endsection
-
-
-
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">

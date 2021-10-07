@@ -32,6 +32,8 @@ class MyBlFlashHourController extends Controller
      */
     private $baseMsisdnService;
 
+    protected const FLASH_HOUR = "flash_hour";
+
     /**
      * MyBlFlashHourController constructor.
      * @param MyblFlashHourService $myblFlashHourService
@@ -78,7 +80,7 @@ class MyBlFlashHourController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->myblFlashHourService->storeCampaign($request->all());
+        $response = $this->myblFlashHourService->storeCampaign($request->all(), self::FLASH_HOUR);
         Session::flash('message', $response->getContent());
         return redirect(route('flash-hour-campaign.index'));
     }
@@ -114,21 +116,23 @@ class MyBlFlashHourController extends Controller
     /**
      * @return Application|Factory|View
      */
-    public function getReferAndEarnAnalytics()
+    public function analyticReport(Request $request, $campaignId)
     {
-        $analytics = $this->myblFlashHourService->analyticsData();
-        return view('admin.mybl-campaign.flash-hour.analytics', compact('analytics'));
+        $analytics = $this->myblFlashHourService->analyticsData($request->all(), $campaignId);
+        return view('admin.mybl-campaign.flash-hour.analytic-report.purchase-product', compact('analytics', 'campaignId'));
     }
 
-    public function campaignDetails(Request $request, $campaignId)
+    public function purchaseMsisdnList(Request $request, $campaignId, $purchaseProductId)
     {
-        $campaignDetails = $this->myblFlashHourService->detailsCampaign($request, $campaignId);
-        return view('admin.mybl-campaign.flash-hour.campaign-details', compact('campaignDetails'));
+        if ($request->ajax()) {
+            return $this->myblFlashHourService->msisdnPurchaseDetails($request, $purchaseProductId);
+        }
+        return view('admin.mybl-campaign.flash-hour.analytic-report.purchase-msisdn', compact('campaignId'));
     }
 
-    public function refereeDetails(Request $request, $id)
+    public function purchaseDetails(Request $request, $id)
     {
-        return $this->myblFlashHourService->refereeDetails($request, $id);
+        return $this->myblFlashHourService->msisdnPurchaseDetails($request, $id);
     }
 
     /**
