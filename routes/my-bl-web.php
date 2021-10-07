@@ -374,6 +374,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get(
         'deeplink-product-purchase-details',
         'CMS\ProductDeepLinkController@getDetails'
+
     )->name('deeplink-product-purchase-details');
     Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 
@@ -713,6 +714,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
     Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
+    Route::resource('event-base-bonus/challenges', 'CMS\EventBaseChallengeController')->except(['show']);
     /*
      *  Feed Routes
      */

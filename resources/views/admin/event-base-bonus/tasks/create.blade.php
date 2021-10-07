@@ -129,10 +129,10 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-2 d-none">
+                                <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Tracking Type: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <input checked type="radio" name="tracking_type" value="1" id="input-radio-15" {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
+                                        <input type="radio" name="tracking_type" value="1" id="input-radio-15" {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
                                         <label for="input-radio-15" class="mr-3">Automatic</label>
                                         <input type="radio" name="tracking_type" value="0" id="input-radio-16" {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
                                         <label for="input-radio-16" class="mr-3">Manual</label>
@@ -187,9 +187,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/dropify/dropify.min.css') }}">
+<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/bootstrap-multiselect/bootstrap-multiselect.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
@@ -198,8 +197,8 @@
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 {{-- <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+<script type="text/javascript" src="{{ asset('app-assets/vendors/js/bootstrap-multiselect/bootstrap-multiselect.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('app-assets/vendors/js/dropify/dropfiy.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
