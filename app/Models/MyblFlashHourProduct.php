@@ -14,6 +14,6 @@ class MyblFlashHourProduct extends Model
      */
     public function notificationSchedule(): MorphOne
     {
-        return $this->morphOne(NotificationSchedule::class, 'reference');
+        return $this->morphOne(NotificationSchedule::class, 'reference')->where('status', 'active');
     }
 }
