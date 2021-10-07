@@ -2,14 +2,17 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseMsisdnHelper;
 use App\Models\ProductCore;
 use App\Repositories\FlashHourPurchaseReportRepository;
 use App\Repositories\MyBlFlashHourProductRepository;
 use App\Repositories\MyBlFlashHourRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Traits\CrudTrait;
+use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class MyblFlashHourService
 {
@@ -31,6 +34,8 @@ class MyblFlashHourService
      * @var ProductCoreRepository
      */
     private $productCoreRepository;
+
+    protected const FLASH_HOUR_REDIS_KEY = "base_msisdn_";
 
 
     /**
@@ -61,6 +66,13 @@ class MyblFlashHourService
         return $this->flashHourRepository->getMigratePlanListList();
     }
 
+    public function addRedisKey($baseGroupId, $endDate)
+    {
+        $dayDiff = Carbon::now()->diffInDays($endDate) ?: 1;
+        $ttl = 60 * 60 * 24 * $dayDiff;
+        return BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroupId, $ttl);
+    }
+
     /**
      * Storing the Store resource
      * @param $data
@@ -69,9 +81,10 @@ class MyblFlashHourService
     public function storeCampaign($data, $reference_type)
     {
         if ($data['status']) {
-            $this->flashHourRepository->inactiveOldCampaign();
+            $this->addRedisKey($data['base_msisdn_groups_id'], $data['end_date']);
         }
         $data['reference_type'] = $reference_type;
+
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
@@ -99,6 +112,14 @@ class MyblFlashHourService
     {
 //        dd($data);
         $campaign = $this->findOne($id);
+
+        if ($data['status']) {
+            $this->addRedisKey($data['base_msisdn_groups_id'], $data['end_date']);
+        } else {
+            $redisKey = self::FLASH_HOUR_REDIS_KEY . $data['base_msisdn_groups_id'];
+            Redis::del($redisKey);
+        }
+
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $productData) {
                 $product = $this->flashHourProductRepository->findOne($productData['product_id']);
