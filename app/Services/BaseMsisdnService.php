@@ -9,28 +9,28 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseMsisdnHelper;
 use App\Repositories\BannerRepository;
 use App\Repositories\BaseMsisdnGroupRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
-use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\BaseMsisdnGroup;
 use App\Models\BaseMsisdn;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class BaseMsisdnService
 {
     use CrudTrait;
 
+    protected const FLASH_HOUR_REDIS_KEY = "base_msisdn_";
 
     /**
      * @var $baseMsisdnGroupRepository
@@ -101,6 +101,7 @@ class BaseMsisdnService
 
     protected function uploadPrepare($request, $baseGroup)
     {
+        $insertData = array();
         if ($request->hasFile('msisdn_file')) {
             $file = $request->file('msisdn_file');
             $path = $file->storeAs(
@@ -113,7 +114,6 @@ class BaseMsisdnService
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
             $reader->open($file_path);
-            $insertData = array();
             foreach ($reader->getSheetIterator() as $sheet) {
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
@@ -137,11 +137,20 @@ class BaseMsisdnService
                 return Response('Individual number field is empty');
             }
         }
+
         foreach (array_chunk($insertData, 1000) as $key => $smallerArray) {
             foreach ($smallerArray as $index => $value) {
                 $temp[$index] = str_replace(' ', '', $value);
             }
             BaseMsisdn::insert($temp);
+        }
+
+        // Redis delete and add
+        $redisKey = self::FLASH_HOUR_REDIS_KEY . $baseGroup->id;
+        $keyExpireTtl = Redis::ttl($redisKey);
+        if ($keyExpireTtl > 1) {
+            Redis::del($redisKey);
+            BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroup->id, $keyExpireTtl);
         }
     }
 
@@ -153,10 +162,7 @@ class BaseMsisdnService
     {
         try {
             return DB::transaction(function () use ($request) {
-
                 $baseGroup = $this->baseMsisdnGroupRepository->save($request->all());
-                $redisKey = "base_msisdn_$baseGroup->id";
-                Redis::del($redisKey);
                 $this->uploadPrepare($request, $baseGroup);
                 return Response('Upload successfully completed !');
             });
@@ -169,7 +175,7 @@ class BaseMsisdnService
     /**
      * @param $request
      * @param $id
-     * @return false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
+     * @return false|Application|ResponseFactory|Response|mixed
      */
     public function updateBaseMsisdnGroup($request, $id)
     {
@@ -177,8 +183,6 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request, $id) {
                 $baseGroup = $this->findOne($id);
                 $baseGroup->update($request->all());
-                $redisKey = "base_msisdn_$baseGroup->id";
-                Redis::del($redisKey);
                 if (isset($request->msisdn_file) || !empty($request->custom_msisdn)) {
                     BaseMsisdn::where('group_id', $baseGroup->id)->delete();
                     $this->uploadPrepare($request, $baseGroup);
