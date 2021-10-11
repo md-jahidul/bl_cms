@@ -177,49 +177,52 @@
 @endif
 
 
-<!-- Campaign Menu -->
-<li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
-        <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
-    <ul class="menu-content">
-        <li class=" {{is_active_url('mybl-refer-and-earn')}}">
-            <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} " data-i18n="nav.templates.vert.classic_menu">
-                <i class="la la-list"></i> Refer And Earn
-            </a>
-        </li>
-        <li class="nav-item"><a href="#"><i class="la la-users"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('event-base-bonus/tasks')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>
-                </li>
-                <li class="{{ is_active_url('event-base-bonus/campaigns')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
-                </li>
-                <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
-                </li>
-            </ul>
-        </li>
-        <li class="{{is_active_url('flash-hour-campaign')}}">
-            <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} " data-i18n="nav.templates.vert.classic_menu">
-                <i class="la la-list"></i> Flash Hour
-            </a>
-        </li>
-        <li class="{{is_active_url('cash-back-campaign')}}">
-            <a class="menu-item" href="{{ route('cash-back-campaign.index') }} "
-               data-i18n="nav.templates.vert.classic_menu">
-                <i class="la la-dollar"></i> Cash Back
-            </a>
-        </li>
+    <!-- Campaign Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Refer And Earn
+                </a>
+            </li>
+            <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('event-base-bonus/tasks')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>
+                    </li>
+                    <li class="{{ is_active_url('event-base-bonus/campaigns')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
+                    </li>
+                    <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
+                    </li>
+                </ul>
+            </li>
 
-        <li class="{{is_active_url('mybl-campaign')}}">
-            <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
-               data-i18n="nav.templates.vert.classic_menu">
-                <i class="la la-bullhorn"></i> Mybl Campaign
-            </a>
-        </li>
-    </ul>
-</li>
+            <li class="{{is_active_url('flash-hour-campaign')}}">
+                <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-hourglass-half"></i> Flash Hour
+                </a>
+            </li>
+
+            <li class="{{is_active_url('cash-back-campaign')}}">
+                <a class="menu-item" href="{{ route('cash-back-campaign.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-dollar"></i> Cash Back
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl-campaign')}}">
+                <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Mybl Campaign
+                </a>
+            </li>
+        </ul>
+    </li>
 
 @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
 <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
