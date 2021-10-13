@@ -294,11 +294,35 @@ class LeadRequestService
                 }
             } else {
                 // Excel Header Create
-                foreach ($products as $key => $items) {
-                    $bindData = $this->bindDynamicValues($items, 'form_data');
-                    unset($bindData['form_data']);
-                    foreach ($bindData as $field => $val) {
-                        $header[] = str_replace('_', ' ', ucwords($field));
+                if ($request->lead_category == 4) {
+                    $header = [
+                        "Id",
+                        "Lead category",
+                        "Status",
+                        "Created at",
+                        "Lead product",
+                        "Name",
+                        "Email",
+                        "Phone",
+                        "Gender",
+                        "Address",
+                        "Versity id",
+                        "Degree level",
+                        "Academic year",
+                        "Date of birth",
+                        "Type of degree",
+                        "Follow facebook",
+                        "Follow linkedIn",
+                        "University name",
+                        "University slug",
+                    ];
+                } else {
+                    foreach ($products as $key => $items) {
+                        $bindData = $this->bindDynamicValues($items, 'form_data');
+                        unset($bindData['form_data']);
+                        foreach ($bindData as $field => $val) {
+                            $header[] = str_replace('_', ' ', ucwords($field));
+                        }
                     }
                 }
                 $header = array_unique($header);
@@ -307,8 +331,34 @@ class LeadRequestService
                 foreach ($products as $product) {
                     $bindData = $this->bindDynamicValues($product, 'form_data');
                     unset($bindData['form_data']);
-                    $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
-                    $writer->addRow($row);
+                    if ($request->lead_category == 4) {
+                        $formData = $product['form_data'];
+                        $formattedData = [];
+                        $formattedData["id"] = $product['id'];
+                        $formattedData["lead_category"] = $product['lead_category'];
+                        $formattedData["status"] = $product['status'];
+                        $formattedData["created_at"] = $product['created_at'];
+                        $formattedData["lead_product"] = $product['lead_product'];
+                        $formattedData["name"] = $formData['name'] ?? "N/A";
+                        $formattedData["email"] = $formData['email'] ?? "N/A";
+                        $formattedData["phone"] = $formData['phone'] ?? "N/A";
+                        $formattedData["gender"] = $formData['gender'] ?? "N/A";
+                        $formattedData["address"] = $formData['address'] ?? "N/A";
+                        $formattedData["versity_id"] = $formData['versity_id'] ?? "N/A";
+                        $formattedData["degree_level"] = $formData['degree_level'] ?? "N/A";
+                        $formattedData["academic_year"] = $formData['academic_year'] ?? "N/A";
+                        $formattedData["date_of_birth"] = $formData['date_of_birth'] ?? "N/A";
+                        $formattedData["type_of_degree"] = $formData['type_of_degree'] ?? "N/A";
+                        $formattedData["follow_facebook"] = isset($formData['follow_facebook']) ? $formData['follow_facebook'] : "N/A";
+                        $formattedData["follow_linkedIn"] = isset($formData['follow_linkedIn']) ? $formData['follow_linkedIn'] : "N/A";
+                        $formattedData["university_name"] = $formData['university_name'] ?? "N/A";
+                        $formattedData["university_slug"] = $formData['university_slug'] ?? "N/A";
+                        $row = WriterEntityFactory::createRowFromArray($formattedData, $data_style);
+                        $writer->addRow($row);
+                    } else {
+                        $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+                        $writer->addRow($row);
+                    }
                 }
             }
             $writer->close();
