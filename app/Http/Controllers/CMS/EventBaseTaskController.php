@@ -22,15 +22,27 @@ class EventBaseTaskController extends Controller
 
     public function index()
     {
+        Session::forget('message');
         $tasks = $this->taskService->findAll();
+
+        if (isset($tasks['message'])) {
+            Session::flash('message', $tasks['message']);
+            $tasks = [];
+        }
 
         return view('admin.event-base-bonus.tasks.index', compact('tasks'));
     }
 
     public function create()
     {
+        Session::forget('message');
         $products = $this->productCoreService->findAll();
         $events   = $this->taskService->eventAll();
+
+        if (isset($events['message'])) {
+            Session::flash('message', $events['message']);
+            $events = [];
+        }
 
         return view('admin.event-base-bonus.tasks.create', compact('products', 'events'));
     }
@@ -38,16 +50,27 @@ class EventBaseTaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $response = $this->taskService->store($request->except('_token'));
-        Session::flash('message', 'Task store successful');
+
+        if (isset($events['message'])) {
+            Session::flash('message', $events['message']);
+        } else {
+            Session::flash('message', 'Task store successful');
+        }
 
         return redirect('/event-base-bonus/tasks');
     }
 
     public function edit($id)
     {
+        Session::forget('message');
         $task     = $this->taskService->findOne($id);
         $products = $this->productCoreService->findAll();
         $events   = $this->taskService->eventAll();
+
+        if (isset($task['message'])) {
+            Session::flash('message', $task['message']);
+            $task = [];
+        }
 
         return view('admin.event-base-bonus.tasks.edit', compact('task', 'products', 'events'));
     }
@@ -56,7 +79,12 @@ class EventBaseTaskController extends Controller
     {
         $response = $this->taskService->update($request->except('_token', '_method'), $id);
 
-        Session::flash('message', 'Task Update successful');
+        if (isset($task['message'])) {
+            Session::flash('message', $task['message']);
+            $task = [];
+        } else {
+            Session::flash('message', 'Task Update successful');
+        }
 
         return redirect('/event-base-bonus/tasks');
     }

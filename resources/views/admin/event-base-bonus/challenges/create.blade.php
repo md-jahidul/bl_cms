@@ -21,6 +21,16 @@
                             <h5 class="menu-title"><strong> Challenge Create Form</strong></h5>
                             <hr>
                             <div class="row mb-1">
+                                <div class="form-group col-md-6 mb-2" id="cta_action">
+                                    <label for="redirect_url" class="required">Select Base Msisdn Title</label>
+                                    <select id="base_msisdn_groups_id" name="base_msisdn_groups_id" class="browser-default custom-select" required>
+                                        <option value="">Select Action</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                        <option value="{{ $value->id }}" {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Title En</label>
                                     <input required maxlength="100" data-validation-required-message="Title is required" data-validation-maxlength-message="Title can not be more then 200 Characters" value="{{ old('title') }}" type="text" class="form-control" placeholder="Enter title in English" name="title">
@@ -284,28 +294,22 @@
         $('#day_specific_task_table').hide();
         $('#select2_tasks').hide();
         $('#random_select2_input').hide();
-
         $('input[name=day]').keyup(function(e) {
             task_pick_type = $('input[name="task_pick_type"]:checked').val();
             days = $(event.target).val();
-
             if ($(event.target).val() > 100) {
                 alert('Max no of day exceed');
                 $(event.target).val('1');
             }
-
             initializeTable(task_pick_type, days);
         });
-
         $('input[name=task_per_day]').keyup(function(e) {
             task_pick_type = $('input[name="task_pick_type"]:checked').val();
             initializeTable(task_pick_type, $('input[name=day]').val());
         });
-
         $('input[name=task_pick_type]').change(function($e) {
             task_pick_type = $('input[name="task_pick_type"]:checked').val();
             days = $('input[name=day]').val();
-
             if (task_pick_type == "0") {
                 $('#day_specific_task_table').hide();
                 $('#task_per_day').show();
@@ -316,37 +320,28 @@
                 $('input[name=task_per_day]').val('0');
                 $('#task_per_day').hide();
                 $('#random_select2_input').hide();
-
             }
-
             initializeTable(task_pick_type, days);
-
         });
-
         $(".select22").on("select2:select", function(evt) {
             var element = evt.params.data.element;
             var $element = $(element);
-
             $element.detach();
             $(this).append($element);
             $(this).trigger("change");
         });
-
         $("#save").click(function(e) {
             if (!$('input[name="task_pick_type"]:checked').val()) {
                 alert('Please Select Task Pick Type');
                 return false;
             }
-
             if ($('input[name="task_pick_type"]:checked').val() == 0) {
                 if (!$('input[name="task_per_day"]').val()) {
                     alert('Please Select Task Per Day');
                     return false;
                 }
-
                 validateTaskTable("random_task_select") ? true : (e.preventDefault(), alert('Plesae select random tasks'));
             }
-
             if ($('input[name="task_pick_type"]:checked').val() == 1) {
                 validateTaskTable("daywise_task_select") ? true : (e.preventDefault(), alert('Plesae select day specific tasks'));
             }
@@ -357,7 +352,6 @@
         col = [];
         dataColumns = [];
         columnDefs = [];
-
         if (task_pick_type == "1") {
             if (days) {
                 for (let i = 0; i < days; i++) {
@@ -377,7 +371,6 @@
                     "data": "task"
                 },
             ];
-
             columnDefs = [{
                 "targets": 1,
                 "data": null,
@@ -389,7 +382,6 @@
         }
         if (task_pick_type == "0") {
             taskPerDay = parseInt($('input[name="task_per_day"]').val());
-
             if (days) {
                 for (let i = 0; i < days * taskPerDay; i++) {
                     col.push({
@@ -402,11 +394,15 @@
                     "title": "*"
                 },
                 {
+                    "title": "SL",
+                    "data": "day",
+                    "className": "width-3"
+                },
+                {
                     "title": "Task",
                     "data": "task"
                 },
             ];
-
             columnDefs = [{
                     "targets": 0,
                     "data": null,
@@ -417,7 +413,7 @@
                     }
                 },
                 {
-                    "targets": 1,
+                    "targets": 2,
                     "data": null,
                     render: function(data, type, row) {
                         var domElement = '<div class="taskInput"></div>';
@@ -446,40 +442,44 @@
         var select2_taskList = $('#select2_input').html();
         $('#' + table_id + ' .taskInput').each(function(e, v) {
             $('#' + table_id + ' .taskInput').eq(e).html(select2_taskList);
-
             if (task_pick_type == "1") {
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'day_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).attr('multiple', 'multiple');
                 $('#' + table_id + ' .task-select').eq(e).select2({
                     placeholder: "Select Tasks"
                 });
-                $('#' + table_id + ' .task-select').eq(e).addClass('daywise_task_select');
-
+                $('#' + table_id + ' .select22').eq(e).addClass('daywise_task_select');
+                $('#' + table_id + ' .select22').eq(e).on("select2:select", function(evt) {
+                    var element = evt.params.data.element;
+                    var $element = $(element);
+                    $element.detach();
+                    $(this).append($element);
+                    $(this).trigger("change");
+                });
             } else {
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'random_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).select2({
                     placeholder: "Select Tasks"
                 });
                 $('#' + table_id + ' .task-select').eq(e).addClass('random_task_select');
-            }
-        });
-
-        $('#' + table_id + " .task-select").val('').trigger('change');
-
-        //ordering
-        $('#' + table_id).addClass('ordering');
-        $('.ordering').sortable({
-            containment: 'parent',
-            items: 'tbody tr',
-            stop: function(event, ui) {
-                $("#" + table_id + " .taskInput").each(function(e, v) {
-                    $(".task-select").eq(e).select2({
-                        placeholder: "Select Tasks"
-                    });
-                    $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
+                //ordering
+                $('#' + table_id).addClass('ordering');
+                $('.ordering').sortable({
+                    items: 'tbody tr',
+                    stop: function(event, ui) {
+                        $("#" + table_id + " .taskInput").each(function(e, v) {
+                            $("#" + table_id + " " + ".task-select").eq(e).select2({
+                                placeholder: "Select Tasks"
+                            });
+                            $("#" + table_id + " tr").addClass('drag-handle');
+                            $(`#${table_id} tbody .drag-handle:eq(${e}) td:eq(1)`).html(e + 1);
+                            $("#" + table_id + " " + ".task-select").eq(e).attr('name', 'random_tasks[' + e + '][]');
+                        });
+                    }
                 });
             }
         });
+        $('#' + table_id + " .task-select").val('').trigger('change');
     }
 
     function initializeTable(taskPickType, days) {
@@ -510,11 +510,9 @@
                 }
             }
         });
-
         if (task_errors.length > 0) {
             return false;
         }
-
         return true;
     }
 </script>
