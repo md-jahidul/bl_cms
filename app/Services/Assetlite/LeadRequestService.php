@@ -307,8 +307,34 @@ class LeadRequestService
                 foreach ($products as $product) {
                     $bindData = $this->bindDynamicValues($product, 'form_data');
                     unset($bindData['form_data']);
-                    $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
-                    $writer->addRow($row);
+                    if ($request->lead_category == 4) {
+                        $formData = $product['form_data'];
+                        $formattedData = [];
+                        $formattedData["id"] = $product['id'];
+                        $formattedData["lead_category"] = $product['lead_category'];
+                        $formattedData["status"] = $product['status'];
+                        $formattedData["created_at"] = $product['created_at'];
+                        $formattedData["lead_product"] = $product['lead_product'];
+                        $formattedData["name"] = $formData['name'];
+                        $formattedData["email"] = $formData['email'];
+                        $formattedData["phone"] = $formData['phone'];
+                        $formattedData["gender"] = $formData['gender'];
+                        $formattedData["address"] = $formData['address'];
+                        $formattedData["versity_id"] = $formData['versity_id'];
+                        $formattedData["degree_level"] = $formData['degree_level'];
+                        $formattedData["academic_year"] = $formData['academic_year'];
+                        $formattedData["date_of_birth"] = $formData['date_of_birth'];
+                        $formattedData["type_of_degree"] = $formData['type_of_degree'];
+                        $formattedData["follow_facebook"] = isset($formData['follow_facebook']) ? $formData['follow_facebook'] : "N/A";
+                        $formattedData["follow_linkedIn"] = isset($formData['follow_linkedIn']) ? $formData['follow_linkedIn'] : "N/A";
+                        $formattedData["university_name"] = $formData['university_name'];
+                        $formattedData["university_slug"] = $formData['university_slug'];
+                        $row = WriterEntityFactory::createRowFromArray($formattedData, $data_style);
+                        $writer->addRow($row);
+                    } else {
+                        $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+                        $writer->addRow($row);
+                    }
                 }
             }
             $writer->close();
