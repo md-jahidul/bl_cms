@@ -21,6 +21,16 @@
                             <h5 class="menu-title"><strong> Challenge Create Form</strong></h5>
                             <hr>
                             <div class="row mb-1">
+                                <div class="form-group col-md-6 mb-2" id="cta_action">
+                                    <label for="redirect_url" class="required">Select Base Msisdn Title</label>
+                                    <select id="base_msisdn_groups_id" name="msisdn_base_group_id" class="browser-default custom-select" required>
+                                        <option value="">Select Action</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                        <option value="{{ $value->id }}" {{ isset($challenge) && $challenge['msisdn_base_group_id'] == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Title En</label>
                                     <input required maxlength="100" data-validation-required-message="Title is required" data-validation-maxlength-message="Title can not be more then 200 Characters" value="{{ $challenge['title'] }}" type="text" class="form-control" placeholder="Enter title in English" name="title">
@@ -284,13 +294,10 @@
         //$('#task_pick_type').hide();
         $('#task_per_day').hide();
         $('#select2_tasks').hide();
-
         var days = "{{$challenge['day']}}";
         var task_pick_type = "{{$challenge['task_pick_type']}}";
         var tasks = '<?= gettype($challenge['taskIds']) == 'string' ? $challenge['taskIds'] : "" ?>';
-
         resetDataTable();
-
         if (parseInt(task_pick_type)) {
             setTaskTable(tasks, "day_specific_task_table", task_pick_type, days);
         } else {
@@ -299,28 +306,20 @@
             $('#random_select2_input').show();
             setTaskTable(tasks, "random_task_table", task_pick_type, days);
         }
-
         $('input[name=day]').keyup(function(e) {
             resetDataTable();
-
             days = $('input[name="day"]').val();
             task_pick_type = parseInt($('input[name="task_pick_type"]:checked').val());
-
             if (parseInt(days) > 100) {
                 alert('Max no of day exceed');
                 $(event.target).val('0');
-
                 return false;
             }
-
             initializeTable(task_pick_type, days);
-
         });
-
         $('input[name=task_pick_type]').change(function($e) {
             days = $('input[name="day"]').val();
             task_pick_type = $('input[name="task_pick_type"]:checked').val();
-
             if (parseInt(task_pick_type)) {
                 $('input[name=task_per_day]').val("");
                 $('#task_per_day').hide();
@@ -336,11 +335,9 @@
                 $('#random_select2_input').show();
                 $('input[name=task_per_day]').val("1");
                 initializeTable(task_pick_type, days);
-
             }
 
         });
-
         $('input[name=task_per_day]').keyup(function(e) {
             task_pick_type = $('input[name="task_pick_type"]:checked').val();
             if (parseInt($(this).val()) > 100) {
@@ -349,31 +346,25 @@
                 resetDataTable();
                 return false;
             }
-
             if (!$(this).val()) {
                 alert('Task Per Day must be atleast 1');
                 return false;
             }
             initializeTable(task_pick_type, $('input[name=day]').val());
         });
-
         $("#save").click(function(e) {
             task_pick_type = $('input[name="task_pick_type"]:checked').val();
-
             if (!$('input[name="task_pick_type"]:checked').val()) {
                 alert('Please Select Task Pick Type');
                 return false;
             }
-
             if (parseInt(task_pick_type) == 0) {
                 if (!$('input[name="task_per_day"]').val()) {
                     alert('Please Select Task Per Day');
                     return false;
                 }
-
                 validateTaskTable("random_task_select") ? true : (e.preventDefault(), alert('Plesae select random tasks'));
             }
-
             if (parseInt(task_pick_type)) {
                 validateTaskTable("daywise_task_select") ? true : (e.preventDefault(), alert('Plesae select day specific tasks'));
             }
@@ -384,7 +375,6 @@
         col = [];
         dataColumns = [];
         columnDefs = [];
-
         if (parseInt(task_pick_type)) {
             if (days) {
                 for (let i = 0; i < parseInt(days); i++) {
@@ -404,7 +394,6 @@
                     "data": "task"
                 },
             ];
-
             columnDefs = [{
                 "targets": 1,
                 "data": null,
@@ -415,12 +404,10 @@
             }];
         } else {
             taskPerDay = parseInt($('input[name="task_per_day"]').val());
-
             if (!taskPerDay) {
                 alert('Enter Task Per Day');
                 return false;
             }
-
             if (days) {
                 for (let i = 0; i < parseInt(days) * taskPerDay; i++) {
                     col.push({
@@ -442,7 +429,6 @@
                     "data": "task"
                 },
             ];
-
             columnDefs = [{
                     "targets": 0,
                     "data": null,
@@ -462,7 +448,6 @@
                 }
             ];
         }
-
         //reset select2 selections
         $('#' + table_id + " .task-select").val('').trigger('change');
         $('#' + table_id).show();
@@ -483,7 +468,6 @@
         var select2_taskList = $('#select2_input').html();
         $('#' + table_id + ' .taskInput').each(function(e, v) {
             $('#' + table_id + ' .taskInput').eq(e).html(select2_taskList);
-
             if (parseInt(task_pick_type)) {
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'day_tasks[' + e + '][]');
                 $('#' + table_id + ' .task-select').eq(e).attr('multiple', 'multiple');
@@ -494,12 +478,10 @@
                 $('#' + table_id + ' .select22').eq(e).on("select2:select", function(evt) {
                     var element = evt.params.data.element;
                     var $element = $(element);
-
                     $element.detach();
                     $(this).append($element);
                     $(this).trigger("change");
                 });
-
             } else {
                 $('#' + table_id + ' .task-select').eq(e).removeAttr('multiple');
                 $('#' + table_id + ' .task-select').eq(e).attr('name', 'random_tasks[' + e + '][]');
@@ -508,7 +490,6 @@
                 });
                 $('#' + table_id + ' .task-select').eq(e).addClass('random_task_select');
                 $('#' + table_id + " .task-select").val('').trigger('change');
-
                 //ordering
                 $('#' + table_id).addClass('ordering');
                 $('.ordering').sortable({
@@ -559,17 +540,14 @@
                 }
             }
         });
-
         if (task_errors.length > 0) {
             return false;
         }
-
         return true;
     }
 
     function setTaskTable(tasks, tableId, taskPickType, days) {
         var daywise_task = $.parseJSON(tasks);
-
         $('#' + tableId).show();
         initTaskTable(taskPickType, days, tableId, daywise_task);
     }

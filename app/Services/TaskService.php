@@ -2,65 +2,118 @@
 
 namespace App\Services;
 
-class TaskService
+class TaskService extends ApiService
 {
+    /**
+     * Prepare campaign host from env file
+     *
+     * @return string
+     */
+    public static function getHost($withurl = ''): string
+    {
+        return env('EVENT_BASE_API_HOST') . $withurl;
+    }
+
     public function findAll(): array
     {
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task";
-        $response  = $client->CallAPI('GET', $url, []);
+        try {
+            $url      = $this->getHost("/api/v1/campaign-task");
+            $response = $this->CallAPI('GET', $url, []);
 
-        return $response['data'];
+            return $response['data'];
+        } catch (\Exception $exception) {
+            $response = [
+                'data' => [],
+                'message' => $exception->getMessage()
+            ];
+
+            return $response;
+        }
     }
 
     public function eventAll()
     {
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/event-list";
-        $response  = $client->CallAPI('GET', $url, []);
+        try {
+            $url      = $this->getHost("/api/v1/event-list");
+            $response = $this->CallAPI('GET', $url, []);
 
-        return $response['data'];
+            return $response['data'];
+        } catch (\Exception $exception) {
+            $response = [
+                'data' => [],
+                'message' => $exception->getMessage()
+            ];
+
+            return $response;
+        }
     }
 
     public function findOne($id): array
     {
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
-        $response  = $client->CallAPI('GET', $url, []);
+        try {
+            $url      = $this->getHost("/api/v1/campaign-task/" . $id);
+            $response = $this->CallAPI('GET', $url, []);
 
-        return $response['data'];
+            return $response['data'];
+        } catch (\Exception $exception) {
+            $response = [
+                'data' => [],
+                'message' => $exception->getMessage()
+            ];
+
+            return $response;
+        }
     }
 
     public function store($data): array
     {
-        if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event_bonus_task', $data['icon_image']->getClientOriginalName());
-        }
-        $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-        $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
-        $data['created_by']                   = auth()->user()->email;
+        try {
+            if (!empty($data['icon_image'])) {
+                $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event_bonus_task', $data['icon_image']->getClientOriginalName());
+            }
+            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
+            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
+            $data['created_by']                   = auth()->user()->email;
 
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task";
-        return $client->CallAPI("POST", $url, $data);
+            $url      = $this->getHost("/api/v1/campaign-task");
+            $response = $this->CallAPI('POST', $url, []);
+
+            return $response['data'];
+        } catch (\Exception $exception) {
+            $response = [
+                'data' => [],
+                'message' => $exception->getMessage()
+            ];
+
+            return $response;
+        }
     }
 
     public function update($data, $id): array
     {
-        if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event_bonus_task', $data['icon_image']->getClientOriginalName());
-        } else {
-            $data['icon_image'] = $data['icon_image_old'];
+        try {
+            if (!empty($data['icon_image'])) {
+                $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event_bonus_task', $data['icon_image']->getClientOriginalName());
+            } else {
+                $data['icon_image'] = $data['icon_image_old'];
+            }
+            unset($data['icon_image_old']);
+            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
+            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
+            $data['created_by']                   = auth()->user()->email;
+
+            $url      = $this->getHost("/api/v1/campaign-task/" . $id);
+            $response = $this->CallAPI('PUT', $url, []);
+
+            return $response['data'];
+        } catch (\Exception $exception) {
+            $response = [
+                'data' => [],
+                'message' => $exception->getMessage()
+            ];
+
+            return $response;
         }
-        unset($data['icon_image_old']);
-        $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-        $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
-        $data['created_by']                   = auth()->user()->email;
-
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
-
-        return $client->CallAPI("PUT", $url, $data);
     }
 
     public function delete($id): array
