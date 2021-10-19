@@ -72,11 +72,11 @@
                                         class="form-control" id="is_active"
                                         name="is_active">
                                     <option value="1"
-                                            @if($storeCategory->is_active == "1") selected @endif>
+                                            @if(isset($storeCategory) && $storeCategory->is_active == "1") selected @endif>
                                         Active
                                     </option>
                                     <option value="0"
-                                            @if($storeCategory->is_active == "0") selected @endif>
+                                            @if(isset($storeCategory) && $storeCategory->is_active == "0") selected @endif>
                                         InActive
                                     </option>
                                 </select>

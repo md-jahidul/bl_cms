@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Services\DynamicRouteService;
 use App\Services\MetaTagService;
 use App\Services\MyblHomeComponentService;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,8 +39,14 @@ class MyblHomeComponentController extends Controller
     public function index()
     {
         $components = $this->componentService->findAllComponents();
-//        return $components;
         return view('admin.mybl-home-components.index', compact('components'));
+    }
+
+    public function store(Request $request)
+    {
+        $response = $this->componentService->storeComponent($request->all());
+        Session::flash('success', $response->getContent());
+        return redirect()->route('mybl.home.components');
     }
 
     public function componentStatusUpdate($id)
@@ -62,7 +69,18 @@ class MyblHomeComponentController extends Controller
     public function update(Request $request)
     {
         $response = $this->componentService->updateComponent($request->all());
-        Session::flash('massage', $response->getContent());
+        Session::flash('message', $response->getContent());
         return redirect()->route('mybl.home.components');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param $id
+     * @return Application|UrlGenerator|string
+     */
+    public function destroy($id)
+    {
+        $this->componentService->deleteComponent($id);
+        return url(route('mybl.home.components'));
     }
 }

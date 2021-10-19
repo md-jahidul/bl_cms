@@ -88,14 +88,18 @@ class MyblFlashHourService
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
+                if ($reference_type == "mybl_campaign" && !empty($product['thumbnail_img'])) {
+                    $product['thumbnail_img'] = 'storage/' . $product['thumbnail_img']->store('mybl_campaign');
+                }
                 $productType = $this->productCoreRepository->getProductType($product['product_code']);
                 $product['product_type'] = $productType;
                 $product['flash_hour_id'] = $campaign->id;
+                $product['show_in_home'] = isset($product['show_in_home']) ? 1 : 0;
                 unset($product['product_id']);
                 $this->flashHourProductRepository->save($product);
             }
         }
-        return new Response("Flash hour campaign has been successfully created");
+        return new Response("Campaign has been successfully created");
     }
 
     /**
@@ -106,6 +110,7 @@ class MyblFlashHourService
      */
     public function updateCampaign($data, $id)
     {
+//        dd($data);
         $campaign = $this->findOne($id);
 
         if ($data['status']) {
@@ -119,6 +124,14 @@ class MyblFlashHourService
             foreach ($data['product-group'] as $productData) {
                 $product = $this->flashHourProductRepository->findOne($productData['product_id']);
                 $productType = $this->productCoreRepository->getProductType($productData['product_code']);
+
+                if (isset($productData['thumbnail_img'])) {
+                    $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
+                    if (!empty($product->thumbnail_img)) {
+                        unlink($product->thumbnail_img);
+                    }
+                }
+                $productData['show_in_home'] = isset($productData['show_in_home']) ? 1 : 0;
                 $productData['product_type'] = $productType;
                 $productData['flash_hour_id'] = $id;
                 unset($productData['product_id']);
@@ -130,7 +143,7 @@ class MyblFlashHourService
             }
         }
         $campaign->update($data);
-        return Response('Flash hour campaign has been successfully updated');
+        return Response('Campaign has been successfully updated');
     }
 
     /**
@@ -143,7 +156,7 @@ class MyblFlashHourService
         $campaign = $this->findOne($id);
         $this->purchaseReportRepository->deleteAllPurchaseReport($id);
         $campaign->delete();
-        return Response('Flash hour campaign has been successfully deleted');
+        return Response('Campaign has been successfully deleted');
     }
 
     public function purchaseStatusCount($campaign, $column, $colValue)

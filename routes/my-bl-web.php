@@ -27,7 +27,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('shortcuts/create', 'CMS\ShortCutController@create')->name('short_cuts.create');
     Route::get('shortcuts/{short_cut}/edit', 'CMS\ShortCutController@edit')->name('short_cuts.edit');
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
-    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');;
+    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
 
     //------ shortcuts -----------//
 
@@ -47,8 +47,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Logde a Complain
     Route::get('mybl/settings/lodge/complaints', 'CMS\SettingController@lodgeComplain')->name('lodge_complaints');
-    Route::Post('mybl/settings/lodge/complain/store',
-        'CMS\SettingController@sotreLodgeComplain')->name('store_lodge_complaints');
+    Route::Post(
+        'mybl/settings/lodge/complain/store',
+        'CMS\SettingController@sotreLodgeComplain'
+    )->name('store_lodge_complaints');
 
 
     //App Version
@@ -170,6 +172,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // contextual cards
     Route::resource('contextualcard', 'CMS\ContextualCardController');
     Route::get('card/destroy/{id}', 'CMS\ContextualCardController@destroy');
+    Route::resource('contextualcardicon', 'CMS\ContextualCardIconController');
+    Route::get('contextualcard-icons', 'CMS\ContextualCardIconController@index')->name('contextualcard-icons.index');
+    Route::get('contextualcard-icons/create', 'CMS\ContextualCardIconController@create')->name('contextual.card.icons.create');
+    Route::POST('contextualcard-icons/store', 'CMS\ContextualCardIconController@store')->name('contextualcard.icons.store');
+    Route::get('contextualcard-icons/edit/{id}', 'CMS\ContextualCardIconController@edit')->name('contextualcard.icons.edit');
+    Route::PUT('contextualcard-icons/update/{id}', 'CMS\ContextualCardIconController@update')->name('contextualcard.icon.update');
 
     // Notification categorys
     Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
@@ -183,22 +191,38 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
+    Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
+
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')
         ->name('notification-schedule.send');
-    Route::post('target-wise-push-notification',
-        'CMS\PushNotificationController@targetWiseNotificationSend')->name('target_wise_notification.send');
-    Route::get('target-wise-notification-report',
-        'CMS\NotificationController@getTargetWiseNotificationReport')->name('target-wise-notification-report.report');
-    Route::get('target-wise-notification-report-details/{titel}',
-        'CMS\NotificationController@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report.report-details');
+    Route::get('push-notification-schedule/stop/{id}', 'CMS\PushNotificationController@stopSchedule')
+        ->name('notification-schedule.stop');
+    Route::get('push-notification-schedule/download/{id}', 'CMS\PushNotificationController@downloadCustomerFile')
+        ->name('notification-schedule.download');
+    Route::post(
+        'target-wise-push-notification',
+        'CMS\PushNotificationController@targetWiseNotificationSend'
+    )->name('target_wise_notification.send');
+    Route::get(
+        'target-wise-notification-report',
+        'CMS\NotificationController@getTargetWiseNotificationReport'
+    )->name('target-wise-notification-report.report');
+    Route::get(
+        'target-wise-notification-report-details/{titel}',
+        'CMS\NotificationController@getTargetWiseNotificationReportDetails'
+    )->name('target-wise-notification-report.report-details');
 
     // Get push notification purchase report
-    Route::get('purchase/from-notification/list',
-        'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
-    Route::get('purchase/from-notification/details/{id}',
-        'CMS\PushNotificationProductPurchaseController@details')->name('push.notification.purchase.report.details');
+    Route::get(
+        'purchase/from-notification/list',
+        'CMS\PushNotificationProductPurchaseController@index'
+    )->name('purchase.from_notification.list');
+    Route::get(
+        'purchase/from-notification/details/{id}',
+        'CMS\PushNotificationProductPurchaseController@details'
+    )->name('push.notification.purchase.report.details');
 
 
     Route::post(
@@ -210,6 +234,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
     Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
+
 
 
     // Support Messages
@@ -235,23 +260,36 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Store App Slider Image
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');
     Route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
-    Route::get('appslider/addImage/{sliderId}',
-        'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
+    Route::get(
+        'appslider/addImage/{sliderId}',
+        'CMS\StoreAppSliderImageController@index'
+    )->name('appsliderImage.index');
 
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index')->name('appslider.images.index');
-    Route::get('appslider/{id}/images/create',
-        'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
+    Route::get(
+        'appslider/{id}/images/create',
+        'CMS\StoreAppSliderImageController@create'
+    )->name('appslider.images.create');
     Route::post('appslider/images/store', 'CMS\StoreAppSliderImageController@store')->name('appslider.images.store');
     Route::get('appslider/images/{id}/edit', 'CMS\StoreAppSliderImageController@edit')->name('appslider.images.edit');
-    Route::put('appslider/images/{id}/update',
-        'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
-    Route::put('appslider/images/{id}/update',
-        'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
-    Route::delete('appslider/images/{id}/delete',
-        'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
+    Route::put(
+        'appslider/images/{id}/update',
+        'CMS\StoreAppSliderImageController@update'
+    )->name('appslider.images.update');
+    Route::put(
+        'appslider/images/{id}/update',
+        'CMS\StoreAppSliderImageController@update'
+    )->name('appslider.images.update');
+    Route::delete(
+        'appslider/images/{id}/delete',
+        'CMS\StoreAppSliderImageController@destroy'
+    )->name('appslider.images.destroy');
 
-    // terms and conditions
-    Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
+
+    /*
+     * terms and conditions
+     */
+    Route::get('terms-conditions/{featureName}', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
     // privacy and policy
@@ -280,7 +318,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
     Route::get('mybl/core-product/create', 'CMS\MyblProductEntryController@create')->name('mybl.product.create');
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
-    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
+
+    /**
+     * Redis reset schedule routes
+     */
+    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')
+        ->name('mybl.product.redis');
+    Route::resource('redis-reset-schedules', 'CMS\RedisResetScheduleController');
+    Route::get('redis-reset-schedules/toggle-status/{id}', 'CMS\RedisResetScheduleController@toggleStatus')
+        ->name('redis-reset-schedules.toggle-status');
+
 
     Route::post(
         'mybl/core-product/download',
@@ -318,12 +365,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
-    Route::get('mybl-products-deep-link-create/{product_code}',
-        'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
+    Route::get(
+        'mybl-products-deep-link-create/{product_code}',
+        'CMS\ProductDeepLinkController@create'
+    )->name('mybl-products-deep-link-create');
     Route::get('product-deep-link-report', 'CMS\ProductDeepLinkController@index')->name('products-deep-link-report');
     Route::get('product-deeplink-list', 'CMS\ProductDeepLinkController@data')->name('product-deeplink-list');
-    Route::get('deeplink-product-purchase-details',
-        'CMS\ProductDeepLinkController@getDetails')->name('deeplink-product-purchase-details');
+    Route::get(
+        'deeplink-product-purchase-details',
+        'CMS\ProductDeepLinkController@getDetails'
+    )->name('deeplink-product-purchase-details');
     Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 
 
@@ -337,6 +388,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('recharge.prefill-amounts.update');
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
+
+    /*
+    *  Balance Transfer
+    */
+
+    Route::get('balance-transfer/prefill-amounts', 'BalanceTransferController@createPrefillAmounts')
+        ->name('balance-transfer.prefill-amounts.create');
+    Route::post('balance-transfer/prefill-amounts', 'BalanceTransferController@storePrefillAmounts')
+        ->name('balance-transfer.prefill-amounts.store');
+
+    Route::get('balance-transfer/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 
     // search content
     Route::get('mybl-search/content', 'CMS\Search\InAppSearchContentController@create')
@@ -497,17 +559,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::post('special-pack/filter/delete', 'CMS\SpecialCallRateFilterController@deleteFilter')
         ->name('special-pack.filter.delete');
-//
+    //
     Route::post('special-pack/filter/minute/save', 'CMS\SpecialCallRateFilterController@saveMinuteFilter')
         ->name('special-pack.filter.minute.save');
     Route::get('special-pack/filter/minute', 'CMS\SpecialCallRateFilterController@getMinuteFilter')
         ->name('special-pack.filter.minute.list');
-//
+    //
     Route::post('special-pack/filter/validity/save', 'CMS\SpecialCallRateFilterController@saveValidityFilter')
         ->name('special-pack.filter.validity.save');
     Route::get('special-pack/filter/validity', 'CMS\SpecialCallRateFilterController@getValidityFilter')
         ->name('special-pack.filter.validity.list');
-//
+    //
     Route::post('special-pack/filter/sort/save', 'CMS\SpecialCallRateFilterController@saveSortFilter')
         ->name('special.filter.sort.save');
 
@@ -555,10 +617,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     */
     Route::resource('bandhosimimage', 'CMS\BandhoSimImageController');
     Route::get('bandhosim/index', 'CMS\BandhoSimImageController@index')->name('bandhosim.index');
-    Route::post('mybl/settings/bandhosimimage/Store',
-        'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
-    Route::post('mybl/settings/bandhosimimage/update/{id}',
-        'CMS\BandhoSimImageController@update')->name('mybl.settings.bandho.sim.image.update');
+    Route::post(
+        'mybl/settings/bandhosimimage/Store',
+        'CMS\BandhoSimImageController@store'
+    )->name('mybl.settings.bandho.sim.image.store');
+    Route::post(
+        'mybl/settings/bandhosimimage/update/{id}',
+        'CMS\BandhoSimImageController@update'
+    )->name('mybl.settings.bandho.sim.image.update');
 
     /*
      *  API Debug For Developer
@@ -570,8 +636,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
         ->name('mybl.api.debug.balance-details');
 
-    Route::get('developer/api/debug/product/log/{number}',
-        'CMS\ApiDebugController@getProductLogs')->name('product.api.log');
+    Route::get(
+        'developer/api/debug/product/log/{number}',
+        'CMS\ApiDebugController@getProductLogs'
+    )->name('product.api.log');
 
     Route::get('developer/api/debug/audit_logs/{number}', 'CMS\ApiDebugController@getBrowseHistory');
     Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
@@ -616,8 +684,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
 
-//    Banner Analytic
-//    Route::resource('banner-analytic', 'CMS\BannerAnalyticController');
+    //    Banner Analytic
+    //    Route::resource('banner-analytic', 'CMS\BannerAnalyticController');
     Route::get('banner-analytic', 'CMS\BannerAnalyticController@index')->name('banner-analytic.index');
     Route::Get('banner-analytic/data', 'CMS\BannerAnalyticController@data')->name('banner-analytic.data');
     Route::Get('banner-analytic/report/details/{id}', 'CMS\BannerAnalyticController@detailreport')->name('banner-analytic.report.details');
@@ -635,7 +703,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('mybl-refer-and-earn/referee-details/{id}', 'CMS\MyBlReferAndEarnController@refereeDetails');
 
-
+    /*
+    * Event Base bonus
+    */
+    Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
+    Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
+    Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
+    Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');
+    Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
+    Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
+    Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
     /*
      *  Feed Routes
      */
@@ -643,8 +720,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
         // Category resource
         Route::resource('categories', 'FeedCategoryController')->except('show');
-        Route::get('categories/update-position',
-            'FeedCategoryController@updatePosition')->name('categories.update_position');
+        Route::get(
+            'categories/update-position',
+            'FeedCategoryController@updatePosition'
+        )->name('categories.update_position');
     });
     Route::get('feed-list', 'CMS\FeedController@getFeedForAjax')->name('feed.ajax.request');
 
@@ -656,6 +735,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    /*
+     * Dynamic Deeplink
+     */
+    Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
     //App MENU  ====================================
     Route::get('mybl-menu/create', 'CMS\MyblAppMenuController@create');
     Route::get('mybl-menu/{id}/child-menu/create', 'CMS\MyblAppMenuController@create');
@@ -669,6 +755,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
+    Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
 
     //App Manage  ====================================
@@ -690,11 +778,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
     Route::get('mybl-home-components/edit/{id}', 'CMS\MyblHomeComponentController@edit')
         ->name('mybl.home.components.edit');
-    Route::put('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
+    Route::post('mybl-home-components/store', 'CMS\MyblHomeComponentController@store')
+        ->name('mybl.home.components.store');
+    Route::post('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
         ->name('mybl.home.components.update');
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
+    Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
+        ->name('mybl.home.components.destroy');
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
@@ -707,6 +799,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('purchase-msisdn.list');
 
     Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
+
+    // Mybl Campaign
+    Route::resource('mybl-campaign', 'CMS\MyBlCampaignController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign/destroy/{id}', 'CMS\MyBlCampaignController@destroy');
+
+    Route::get('mybl-campaign-analytic/{campaign_id}', 'CMS\MyBlCampaignController@analyticReport')
+        ->name('mybl-campaign-analytic.report');
+
+    Route::get('mybl-campaign-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlCampaignController@purchaseMsisdnList')
+        ->name('purchase-msisdn.list');
+
+    Route::get('mybl-campaign-purchase-msisdn/{id}', 'CMS\MyBlCampaignController@purchaseDetails');
 
 //    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
 //        ->name('refer-and-earn.analytics');

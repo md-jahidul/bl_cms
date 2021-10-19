@@ -55,6 +55,8 @@ class DynamicDeeplinkService
                 $data['reference_name'] = $data->referenceable->name_en;
             } elseif (isset($data->referenceable->title)) {
                 $data['reference_name'] = $data->referenceable->title;
+            } elseif (isset($data->referenceable->title_en)) {
+                $data['reference_name'] = $data->referenceable->title_en;
             }
             unset($data->referenceable);
             return $data;
@@ -75,7 +77,9 @@ class DynamicDeeplinkService
     {
         $category = $request->category;
         $subCategory = $request->sub_category;
-        if ($category && $subCategory) {
+        if ($sectionType == "others") {
+            $endPointURL = $category;
+        } elseif ($category && $subCategory) {
             $endPointURL = "$sectionType/$category/$subCategory";
         } else {
             $endPointURL = "$sectionType/$category";

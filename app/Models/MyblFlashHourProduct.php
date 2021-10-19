@@ -16,4 +16,9 @@ class MyblFlashHourProduct extends Model
     {
         return $this->morphOne(NotificationSchedule::class, 'reference')->where('status', 'active');
     }
+
+    public function flashHour()
+    {
+        return $this->belongsTo(MyblFlashHour::class);
+    }
 }

@@ -413,8 +413,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
 
     Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
-    Route::post('popular-search-update',
-        'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')
+        ->name('popular.search.update');
 
 
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');

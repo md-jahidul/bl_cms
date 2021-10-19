@@ -11,4 +11,6 @@ class SearchPopularKeywords extends Model
      * @var string
      */
     protected $table = 'search_popular_keywords';
+
+    protected $guarded = ['id'];
 }
