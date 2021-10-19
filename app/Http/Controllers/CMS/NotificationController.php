@@ -57,7 +57,10 @@ class NotificationController extends Controller
     public function index()
     {
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
-        $notifications = $this->notificationService->findAll('', '', $orderBy);
+        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy);
+        $notifications = $notifications->sortByDesc(function ($notification){
+            return $notification->schedule->id;
+        })->values();
         $category = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.index')
             ->with('category', $category)

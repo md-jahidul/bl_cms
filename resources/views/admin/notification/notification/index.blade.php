@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                    <table class="table table-striped table-bordered dataTable" id="Example1">
                         <thead>
                         <tr>
                             <th width="5%">ID</th>
@@ -227,7 +227,7 @@
                 searching: true,
                 "bDestroy": true,
                 "pageLength": 10,
-                "order": [[ 0, "desc" ]]
+                "order": []
             });
         });
 
