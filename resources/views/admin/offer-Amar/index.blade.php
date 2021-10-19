@@ -120,12 +120,13 @@
 
         $(document).ready(function () {
             $('#Example1').DataTable({
-                dom: 'Bfrtip',
+                //dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
                 searching: true,
                 "pageLength": 10,
                 "bDestroy": true,
+                "order": [[ 0, "desc" ]]
             });
         });
 

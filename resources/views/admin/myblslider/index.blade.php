@@ -126,12 +126,12 @@
 
         $(document).ready(function () {
             $('#Example1').DataTable({
-                dom: 'Bfrtip',
+                //dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
                 searching: true,
                 "bDestroy": true,
-                "pageLength": 10
+                "pageLength": 10,
             });
         });
 

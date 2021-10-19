@@ -42,7 +42,8 @@ class StoreSubCategoryController extends Controller
      */
     public function index()
     {
-        $storeSubCategories = $this->storeSubCategoryService->findAll();
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $storeSubCategories = $this->storeSubCategoryService->findAll('', '', $orderBy);
         return view('admin.store.sub-category.index')->with('storeSubCategories', $storeSubCategories);
     }
 

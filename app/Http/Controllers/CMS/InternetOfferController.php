@@ -37,7 +37,9 @@ class InternetOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-internet.index')->with('internet_offers', $this->internetOfferService->findAll());
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $internet_offers = $this->internetOfferService->findAll('','', $orderBy);
+        return view('admin.offer-internet.index')->with('internet_offers', $internet_offers);
     }
 
     /**

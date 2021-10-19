@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
@@ -59,8 +60,9 @@ class StoreController extends Controller
      */
     public function index()
     {
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
         $stores = $this->storeService->getMyBlStorList();
-        $category =  $this->storeCategoryService->findAll();
+        $category = $this->storeCategoryService->findAll('','', $orderBy);
         return view('admin.store.store.index')
             ->with('category', $category)
             ->with('stores', $stores);
@@ -75,8 +77,8 @@ class StoreController extends Controller
     {
         $stores = $this->storeService->findAll();
         $apps = $this->storeAppService->findAll();
-        $categories =  $this->storeCategoryService->findAll();
-        $subCategories =  $this->storeSubCategoryService->findAll();
+        $categories = $this->storeCategoryService->findAll();
+        $subCategories = $this->storeSubCategoryService->findAll();
 
         return view('admin.store.store.create')
             ->with('stores', $stores)
@@ -101,7 +103,7 @@ class StoreController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -116,7 +118,7 @@ class StoreController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -124,7 +126,7 @@ class StoreController extends Controller
         $store = $this->storeService->findOne($id);
         $apps = $this->storeAppService->findAll();
         $categories = $this->storeCategoryService->findAll();
-        $subCategories =  $this->storeSubCategoryService->findAll();
+        $subCategories = $this->storeSubCategoryService->findAll();
         return view('admin.store.store.create')
             ->with('store', $store)
             ->with('apps', $apps)
@@ -136,7 +138,7 @@ class StoreController extends Controller
      * Update the specified resource in storage.
      *
      * @param NotificationRequest $request
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
