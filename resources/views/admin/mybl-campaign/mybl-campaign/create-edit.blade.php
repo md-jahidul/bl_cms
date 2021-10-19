@@ -99,6 +99,7 @@
                                 <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
                                     @if(isset($campaign) && !$campaign->flashHourProducts->isEmpty())
                                         @foreach($campaign->flashHourProducts as $product)
+                                            <input type="hidden" name="old_product_id[]" value="{{ $product->id }}">
                                             @include('admin.mybl-campaign.mybl-campaign.partials.product-element', ['product' => $product])
                                         @endforeach
                                     @else
