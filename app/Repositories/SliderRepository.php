@@ -19,7 +19,7 @@ class SliderRepository extends BaseRepository
 
     public function getAppSlider()
     {
-        return $this->modelName::with('sliderImages')->where('platform', 'App')->get();
+        return $this->modelName::with('sliderImages')->where('platform', 'App')->orderBy('id', 'desc')->get();
     }
 
     public function getSliderImage()

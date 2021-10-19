@@ -154,7 +154,8 @@ class PushNotificationProductPurchaseService
         } else {
             $search = ['is_delete' => 0];
         }
-        $data = $this->productPurchaseRepository->findBy($search);
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $data = $this->productPurchaseRepository->findBy($search,'', $orderBy);
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('total_view', function ($data) {

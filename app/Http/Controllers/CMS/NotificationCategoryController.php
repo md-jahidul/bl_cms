@@ -37,7 +37,8 @@ class NotificationCategoryController extends Controller
      */
     public function index()
     {
-        $notificationCategories = $this->notificationCategoryService->findAll();
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $notificationCategories = $this->notificationCategoryService->findAll('','',$orderBy);
         return view('admin.notification.notification-category.index')->with('notificationCategories', $notificationCategories);
     }
 
