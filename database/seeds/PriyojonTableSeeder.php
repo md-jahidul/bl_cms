@@ -41,7 +41,6 @@ class PriyojonTableSeeder extends Seeder
                 'parent_id' => 1,
                 'title_en' => $value,
                 'title_bn' => $subMenuBn[$key],
-                'alias' => $lifeStyleAlias[$key]
             ]);
         }
 
@@ -54,7 +53,6 @@ class PriyojonTableSeeder extends Seeder
                 'parent_id' => 2,
                 'title_en' => $value,
                 'title_bn' => $subMenuBn[$key],
-                'alias' => $rewardAlias[$key]
             ]);
         }
     }

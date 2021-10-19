@@ -5,6 +5,8 @@
 /storage/*.key
 /vendor
 /nbproject
+composer.lock
+composer.json
 .env
 .phpunit.result.cache
 Homestead.json

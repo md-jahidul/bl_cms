@@ -239,6 +239,7 @@ class BusinessPackageService {
 
             return $response;
         } catch (\Exception $e) {
+		dd($e->getMessage());
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()

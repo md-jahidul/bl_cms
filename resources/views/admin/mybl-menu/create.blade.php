@@ -49,7 +49,6 @@
                                                 <input type="file" name="icon" class="custom-file-input dropify"
                                                        required data-validation-required-message="Icon field is required" data-height="80">
                                             </div>
-                                            {{-- <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
                                             <div class="help-block"></div>
                                             @if ($errors->has('icon'))
                                                 <div class="help-block">  {{ $errors->first('icon') }}</div>
@@ -67,8 +66,19 @@
                                             </select>
                                             <div class="help-block"></div>
                                         </div>
-
                                         <div id="append_div" class="col-md-10"></div>
+
+                                        <div class="form-group col-md-10 mb-2">
+                                            <label for="redirect_url">Deeplink Action</label>
+                                            <select id="deeplink_action" name="deep_link_slug"
+                                                    class="browser-default custom-select">
+                                                <option value="">Select Action</option>
+                                                @foreach ($deeplinkActions as $key => $value)
+                                                    <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="help-block"></div>
+                                        </div>
                                     @endif
 
                                     <div class="col-md-10">
@@ -129,6 +139,7 @@
                 }
             });
             $("#navigate_action").select2();
+            $("#deeplink_action").select2();
         })
 
         $(function () {
