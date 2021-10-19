@@ -65,7 +65,7 @@
         </div>
 
     </section>
-   
+
     <!-- /.card -->
 
 
@@ -90,8 +90,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-        
-       
+
+
 
         $(function () {
             $('.delete').click(function () {
@@ -130,12 +130,13 @@
 
         $(document).ready(function () {
             $('#Example1').DataTable({
-                dom: 'Bfrtip',
+                //dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
                 searching: true,
                 "pageLength": 10,
                 "bDestroy": true,
+                "order": [[ 0, "desc" ]]
             });
         });
 

@@ -65,8 +65,9 @@ class StoreAppController extends Controller
      */
     public function index()
     {
-        $appStores = $this->storeAppService->findAll();
-        $category =  $this->storeCategoryService->findAll();
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $appStores = $this->storeAppService->findAll('', '', $orderBy);
+        $category =  $this->storeCategoryService->findAll('', '', $orderBy);
         return view('admin.store.app.index')
             ->with('category', $category)
             ->with('appStores', $appStores);

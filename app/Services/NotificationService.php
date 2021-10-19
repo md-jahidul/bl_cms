@@ -193,6 +193,8 @@ class NotificationService
                 $items = $builder->skip($start)->take($length)->get();
             }
         }
+
+        $items = $items->reverse();
         $response = [
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
