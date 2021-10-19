@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Services\BaseMsisdnService;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
 use Carbon\Carbon;
@@ -32,17 +33,22 @@ class MyblProductEntryController extends Controller
      * @var ProductTagService
      */
     private $productTagService;
+    private $baseMsisdnService;
 
     /**
      * MyblProductEntryController constructor.
      * @param ProductCoreService $service
      * @param ProductTagService $productTagService
      */
-    public function __construct(ProductCoreService $service, ProductTagService $productTagService)
-    {
+    public function __construct(
+        ProductCoreService $service,
+        ProductTagService $productTagService,
+        BaseMsisdnService $baseMsisdnService
+    ) {
         $this->middleware('auth');
         $this->service = $service;
         $this->productTagService = $productTagService;
+        $this->baseMsisdnService = $baseMsisdnService;
     }
 
     /**
@@ -85,11 +91,13 @@ class MyblProductEntryController extends Controller
             ->pluck('title', 'id');
 
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
-
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
 
-        return view('admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop'));
+        return view(
+            'admin.my-bl-products.product-details',
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups')
+        );
     }
 
     /**
@@ -128,8 +136,17 @@ class MyblProductEntryController extends Controller
 
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')));
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
 
-        return view('admin.my-bl-products.create-product', compact('tags', 'internet_categories', 'disablePinToTop'));
+        return view(
+            'admin.my-bl-products.create-product',
+            compact(
+                'tags',
+                'internet_categories',
+                'disablePinToTop',
+                'baseMsisdnGroups'
+            )
+        );
     }
 
     public function store(UpdateMyblProductRequest $request)

@@ -16,7 +16,7 @@
 
 @section('action')
     <a href="{{ route('mybl.product.index') }}" class="btn btn-info btn-sm btn-glow px-2">
-        Back To Product List GGG
+        Back To Product List
     </a>
 @endsection
 
@@ -354,6 +354,27 @@
                                     </fieldset>
                                 </div>
 
+                                <div class="col-md-4 skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_free_product" value="1" name="is_free_product">
+                                        <label for="is_free_product">Is Free Product</label>
+                                    </fieldset>
+                                </div>
+
+                                <div class="form-group col-md-8 mb-2 d-none" id="cta_action">
+                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
+                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
+                                            class="browser-default custom-select">
+                                        <option value="">Select Action</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
@@ -389,32 +410,35 @@
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
-
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-
-
-
     <script>
         $(function () {
+            // alert(true)
 
             $("#commentForm").validate();
-
             $('.data-section').select2({
                 placeholder: 'Please Select Data Section',
                 maximumSelectionLength: 5,
                 allowClear: true
             });
-
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
                 maximumSelectionLength: 3
             });
 
+            // Free product Checkbox Event For Show Base Msisdn Group
+            let isFreeProduct = $('#is_free_product');
+            let baseGroup = $('#base_msisdn_groups_id');
+            isFreeProduct.click(function () {
+                if (isFreeProduct.prop("checked")) {
+                    baseGroup.parent().removeClass('d-none')
+                } else {
+                    baseGroup.parent().addClass('d-none')
+                }
+            })
         });
-
 
         // Translated
         var date;
@@ -550,6 +574,5 @@
                 allowClear: true
             });
         })
-
     </script>
 @endpush

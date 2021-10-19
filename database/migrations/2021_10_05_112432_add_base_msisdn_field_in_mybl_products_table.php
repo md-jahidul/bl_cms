@@ -14,7 +14,8 @@ class AddBaseMsisdnFieldInMyblProductsTable extends Migration
     public function up()
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
-            $table->tinyInteger('base_msisdn')->nullable('pin_to_top');
+            $table->tinyInteger('is_free_product')->default(0);
+            $table->integer('base_msisdn_group_id')->nullable();
         });
     }
 
@@ -26,7 +27,8 @@ class AddBaseMsisdnFieldInMyblProductsTable extends Migration
     public function down()
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
-            $table->dropColumn('base_msisdn');
+            $table->dropColumn('is_free_product');
+            $table->dropColumn('base_msisdn_group_id');
         });
     }
 }
