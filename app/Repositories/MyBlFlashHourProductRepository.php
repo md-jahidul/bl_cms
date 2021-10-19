@@ -17,4 +17,9 @@ use Carbon\Carbon;
 class MyBlFlashHourProductRepository extends BaseRepository
 {
     public $modelName = MyblFlashHourProduct::class;
+
+    public function deleteProduct($productIds)
+    {
+        return $this->model->whereIn('id', $productIds)->delete();
+    }
 }
