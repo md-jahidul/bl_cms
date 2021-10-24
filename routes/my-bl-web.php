@@ -713,7 +713,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');
     Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
-    Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
+    Route::get('event-base-bonus/analytics/{campaign}/', 'CMS\EventBaseTaskAnalyticController@viewCampaignChallenges');
+    Route::get('event-base-bonus/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticController@viewCampaignChallengeTasks');
+    Route::get('event-base-bonus/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticController@viewCampaignChallengeTaskMsisdnList');
     Route::resource('event-base-bonus/challenges', 'CMS\EventBaseChallengeController')->except(['show']);
     /*
      *  Feed Routes
