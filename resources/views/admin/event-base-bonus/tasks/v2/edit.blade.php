@@ -15,7 +15,7 @@
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
                 <div class="card-body card-dashboard">
-                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/v2/tasks/'.$task['id'])}}" enctype="multipart/form-data" method="POST">
+                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/tasks/'.$task['id'])}}" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group col-12 mb-2 file-repeater">
@@ -189,8 +189,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/dropify/dropify.min.css') }}">
-<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/bootstrap-multiselect/bootstrap-multiselect.min.css') }}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
@@ -199,32 +200,27 @@
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 {{-- <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
-<script type="text/javascript" src="{{ asset('app-assets/vendors/js/bootstrap-multiselect/bootstrap-multiselect.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('app-assets/vendors/js/dropify/dropfiy.min.js') }}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
 <script>
     $(document).ready(function() {
-
         var date = new Date();
         date.setDate(date.getDate());
         $('#start_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             showClose: true,
         });
-
         $('#end_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             useCurrent: false, //Important! See issue #1075
             showClose: true,
-
         });
-
         $('.product_code').selectize({
             create: true,
         });
-
         $('.dropify_image').dropify({
             messages: {
                 'default': 'Browse for an Image/Json File to upload',

@@ -109,7 +109,7 @@
                     "targets": 4,
                     "data": null,
                     render: function(data, type, row) {
-                        var url = "event-base-bonus/analytics/" + row.id;
+                        var url = "event-base-bonus/v2/analytics/" + row.id;
                         var domElement = row.total_users ? `<a href="{{ url("") }}/${url}" target="_blank">` + row.total_users + `</a>` : row.total_users;
                         return domElement;
                     }
@@ -118,7 +118,7 @@
                     "targets": 5,
                     "data": null,
                     render: function(data, type, row) {
-                        var url = "event-base-bonus/analytics/" + row.id;
+                        var url = "event-base-bonus/v2/analytics/" + row.id;
                         var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View Details</span></button></a>`;
                         return domElement;
                     },

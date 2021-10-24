@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use Illuminate\Support\Facades\Session;
 
-class EventBaseTaskController extends Controller
+class EventBaseTaskV2Controller extends Controller
 {
     private $taskService;
     private $productCoreService;
@@ -24,7 +24,7 @@ class EventBaseTaskController extends Controller
     {
         $tasks = $this->taskService->findAll();
 
-        return view('admin.event-base-bonus.tasks.index', compact('tasks'));
+        return view('admin.event-base-bonus.tasks.v2.index', compact('tasks'));
     }
 
     public function create()
@@ -32,7 +32,7 @@ class EventBaseTaskController extends Controller
         $products = $this->productCoreService->findAll();
         $events   = $this->taskService->eventAll();
 
-        return view('admin.event-base-bonus.tasks.create', compact('products', 'events'));
+        return view('admin.event-base-bonus.tasks.v2.create', compact('products', 'events'));
     }
 
     public function store(StoreTaskRequest $request)
@@ -49,7 +49,7 @@ class EventBaseTaskController extends Controller
         $products = $this->productCoreService->findAll();
         $events   = $this->taskService->eventAll();
 
-        return view('admin.event-base-bonus.tasks.edit', compact('task', 'products', 'events'));
+        return view('admin.event-base-bonus.tasks.v2.edit', compact('task', 'products', 'events'));
     }
 
     public function update(StoreTaskRequest $request, $id)
@@ -68,5 +68,12 @@ class EventBaseTaskController extends Controller
         Session::flash('message', 'Task delete successful');
 
         return redirect('/event-base-bonus/tasks');
+    }
+
+    public function delete($id)
+    {
+        $this->taskService->delete($id);
+
+        return response()->json('delete successful');
     }
 }

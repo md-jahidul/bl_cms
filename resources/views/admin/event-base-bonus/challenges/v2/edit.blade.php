@@ -6,7 +6,7 @@
 <li class="breadcrumb-item active"> Challenge Edit</li>
 @endsection
 @section('action')
-<a href="{{ url('event-base-bonus/challenges') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+<a href="{{ url('event-base-bonus/v2/challenges') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
 <section>
@@ -14,7 +14,7 @@
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
                 <div class="card-body card-dashboard">
-                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/challenges/'.$challenge['id'])}}" enctype="multipart/form-data" METHOD="POST">
+                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/v2/challenges/'.$challenge['id'])}}" enctype="multipart/form-data" METHOD="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group col-12 mb-2 file-repeater">

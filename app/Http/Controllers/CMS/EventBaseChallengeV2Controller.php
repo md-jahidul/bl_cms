@@ -5,20 +5,20 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventChallengeRequest;
-use App\Services\EventBaseBonusCampaignService;
 use App\Services\EventBaseBonusChallengeService;
+use App\Services\EventBaseBonusV2CampaignService;
 use App\Services\ProductCoreService;
 use App\Services\TaskService;
 use Illuminate\Support\Facades\Session;
 
-class EventBaseChallengeController extends Controller
+class EventBaseChallengeV2Controller extends Controller
 {
     private $eventBaseBonusChallengeService;
     private $campaignService;
     private $taskService;
     private $productCoreService;
 
-    public function __construct(EventBaseBonusChallengeService $eventBaseBonusChallengeService, TaskService $taskService, ProductCoreService $productCoreService, EventBaseBonusCampaignService $campaignService)
+    public function __construct(EventBaseBonusChallengeService $eventBaseBonusChallengeService, TaskService $taskService, ProductCoreService $productCoreService, EventBaseBonusV2CampaignService $campaignService)
     {
         $this->middleware('auth');
         $this->eventBaseBonusChallengeService = $eventBaseBonusChallengeService;
@@ -31,7 +31,7 @@ class EventBaseChallengeController extends Controller
     {
         $challenges = $this->eventBaseBonusChallengeService->findAll();
 
-        return view('admin.event-base-bonus.challenges.index', compact('challenges'));
+        return view('admin.event-base-bonus.challenges.v2.index', compact('challenges'));
     }
 
     public function create()
@@ -39,7 +39,7 @@ class EventBaseChallengeController extends Controller
         $tasks = $this->taskService->findAll();
         $products = $this->productCoreService->findAll();
 
-        return view('admin.event-base-bonus.challenges.create', compact('products', 'tasks'));
+        return view('admin.event-base-bonus.challenges.v2.create', compact('products', 'tasks'));
     }
 
     public function edit($id)
@@ -48,7 +48,7 @@ class EventBaseChallengeController extends Controller
         $products = $this->productCoreService->findAll();
         $challenge = $this->eventBaseBonusChallengeService->findOne($id);
 
-        return view('admin.event-base-bonus.challenges.edit', compact('products', 'tasks', 'challenge'));
+        return view('admin.event-base-bonus.challenges.v2.edit', compact('products', 'tasks', 'challenge'));
     }
 
     public function store(StoreEventChallengeRequest $request)
@@ -56,7 +56,7 @@ class EventBaseChallengeController extends Controller
         $response = $this->eventBaseBonusChallengeService->store($request->except('_token'));
 
         Session::flash('message', 'Campaign Challenge store successful');
-        return redirect('/event-base-bonus/challenges');
+        return redirect('/event-base-bonus/v2/challenges');
     }
 
     public function update(StoreEventChallengeRequest $request, $id)
@@ -64,7 +64,7 @@ class EventBaseChallengeController extends Controller
         $response = $this->eventBaseBonusChallengeService->update($request->except('_token', '_method'), $id);
 
         Session::flash('message', 'Campaign Challenge store successful');
-        return redirect('/event-base-bonus/challenges');
+        return redirect('/event-base-bonus/v2/challenges');
     }
 
     public function delete($id)
@@ -73,6 +73,6 @@ class EventBaseChallengeController extends Controller
 
         Session::flash('message', 'Task delete successful');
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/v2/tasks');
     }
 }

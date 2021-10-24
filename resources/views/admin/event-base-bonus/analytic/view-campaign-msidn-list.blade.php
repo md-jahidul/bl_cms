@@ -2,7 +2,7 @@
 @section('title', 'Campaign Challenge Tasks Msisdn Analytics Detail')
 @section('card_name', 'Campaign Challenge Tasks Msisdn Analytics Detail')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/analytics') }}">Analytics</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/v2/analytics') }}">Analytics</a></li>
 <li class="breadcrumb-item active">Campaign Challenge Task Msisdn Analytics</li>
 @endsection
 @section('content')

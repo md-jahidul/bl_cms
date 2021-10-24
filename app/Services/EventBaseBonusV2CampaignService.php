@@ -4,7 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Exception\ClientException;
 
-class EventBaseBonusCampaignService
+class EventBaseBonusV2CampaignService
 {
     public function findAll(): array
     {

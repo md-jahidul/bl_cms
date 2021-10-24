@@ -2,7 +2,7 @@
 @section('title', 'Campaign Challenge Analytics Detail')
 @section('card_name', 'Campaign Challenge Analytics Detail')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/analytics') }}">Analytics</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/v2/analytics') }}">Analytics</a></li>
 <li class="breadcrumb-item active">Campaign Challenge</li>
 @endsection
 @section('content')
@@ -58,7 +58,7 @@
                                         {{$item['total_users']}}
                                         @endif
                                     </td>
-                                    <td><a href="{{ url('event-base-bonus/analytics') }}/{{$item['user_campaign']['id']}}/{{$item['id']}}" target="_blank"><button class="btn btn-success btn-sm">View Tasks</span></button></a></td>
+                                    <td><a href="{{ url('event-base-bonus/v2/analytics') }}/{{$item['user_campaign']['id']}}/{{$item['id']}}" target="_blank"><button class="btn btn-success btn-sm">View Tasks</span></button></a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

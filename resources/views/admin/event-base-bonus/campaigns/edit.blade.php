@@ -28,10 +28,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="dashboard_card_title" class="required">Challenges</label>
-                                    <select class="select22 form-control" name="task_ids[]" multiple="multiple" required data-validation-required-message="Please select challenge">
-                                        @foreach($challenges as $challenge)
-                                        <option value="{{ $challenge['id'] }}" {{in_array($challenge['id'], $challengeIds) ? 'selected':''}}>{{ $challenge['title'] }}</option>
+                                    <label for="dashboard_card_title" class="required">Tasks</label>
+                                    <select class="select22 form-control" name="task_ids[]" multiple="multiple" required data-validation-required-message="Please select task">
+                                        @foreach($tasks as $task)
+                                        <option value="{{ $task['id'] }}" {{in_array($task['id'], $taskIds) ? 'selected':''}}>{{ $task['title'] }}</option>
                                         @endforeach
 
                                     </select>
@@ -53,17 +53,19 @@
                                     <div class="help-block"></div>
                                 </div>
 
+
+
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="dashboard_card_title" class="required">Start Date</label>
+                                    <label class="required">Start Date</label>
                                     <input type='text' class="form-control" name="start_date" id="start_date" value="{{$campaign['start_date']}}" />
-                                    <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="dashboard_card_title" class="required">End Date</label>
+                                    <label class="required">End Date</label>
                                     <input type='text' class="form-control" name="end_date" id="end_date" value="{{$campaign['end_date']}}" />
-                                    <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
 
@@ -147,46 +149,39 @@
 @push('page-css')
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
-<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/dropify/dropify.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 
 @push('page-js')
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-<script src="{{ asset('js/custom-js/start-end.js')}}"></script>
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
-<script type="text/javascript" src="{{ asset('app-assets/vendors/js/dropify/dropfiy.min.js') }}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+
 <script>
     $(document).ready(function() {
-
         $(".select22").select2();
         $(".select22").on("select2:select", function(evt) {
             var element = evt.params.data.element;
             var $element = $(element);
-
             $element.detach();
             $(this).append($element);
             $(this).trigger("change");
         });
-
         var date = new Date();
         date.setDate(date.getDate());
         $('#start_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             showClose: true,
         });
-
         $('#end_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             useCurrent: false, //Important! See issue #1075
             showClose: true,
-
         });
-
         $('.product_code').selectize({
             create: true,
         });
-
         $('.dropify_image').dropify({
             messages: {
                 'default': 'Browse for an Image to upload',

@@ -703,20 +703,29 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('refer-and-earn.analytics');
 
     Route::get('mybl-refer-and-earn/referee-details/{id}', 'CMS\MyBlReferAndEarnController@refereeDetails');
-
     /*
-    * Event Base bonus
+    * Event Base bonus 
     */
-    Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
     Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
     Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
     Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');
     Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
-    Route::get('event-base-bonus/analytics/{campaign}/', 'CMS\EventBaseTaskAnalyticController@viewCampaignChallenges');
-    Route::get('event-base-bonus/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticController@viewCampaignChallengeTasks');
-    Route::get('event-base-bonus/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticController@viewCampaignChallengeTaskMsisdnList');
-    Route::resource('event-base-bonus/challenges', 'CMS\EventBaseChallengeController')->except(['show']);
+    Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
+
+    /*
+    * Event Base bonus V2
+    */
+    Route::get('event-base-bonus/v2/tasks-del/{id}', 'CMS\EventBaseTaskV2Controller@delete');
+    Route::resource('event-base-bonus/v2/tasks', 'CMS\EventBaseTaskV2Controller')->except(['show']);
+    Route::resource('event-base-bonus/v2/campaigns', 'CMS\EventBaseCampaignV2Controller')->except(['show']);
+    Route::get('event-base-bonus/v2/analytics', 'CMS\EventBaseTaskAnalyticV2Controller@index');
+    Route::post('event-base-bonus/v2/analytics/find', 'CMS\EventBaseTaskAnalyticV2Controller@analytics');
+    Route::post('event-base-bonus/v2/analytics/search', 'CMS\EventBaseTaskAnalyticV2Controller@analyticsUserDetails');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallenges');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
+    Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
     /*
      *  Feed Routes
      */

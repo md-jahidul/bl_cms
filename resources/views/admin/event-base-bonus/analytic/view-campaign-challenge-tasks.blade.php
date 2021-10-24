@@ -2,7 +2,7 @@
 @section('title', 'Campaign Challenge Tasks Analytics Detail')
 @section('card_name', 'Campaign Challenge Tasks Analytics Detail')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/analytics') }}">Analytics</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/v2/analytics') }}">Analytics</a></li>
 <li class="breadcrumb-item active">Campaign Challenge Task Analytics</li>
 @endsection
 @section('content')
@@ -31,26 +31,26 @@
                                     <td>{{$item['title']}}</td>
                                     <td>
                                         @if($item['total_inprogress'])
-                                        <a href="{{ url('event-base-bonus/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}/in_progress">{{$item['total_inprogress']}}</a>
+                                        <a href="{{ url('event-base-bonus/v2/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}/in_progress">{{$item['total_inprogress']}}</a>
                                         @else
                                         {{$item['total_inprogress']}}
                                         @endif
                                     </td>
                                     <td>
                                         @if($item['total_completed'])
-                                        <a href="{{ url('event-base-bonus/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}/completed">{{$item['total_completed']}}</a>
+                                        <a href="{{ url('event-base-bonus/v2/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}/completed">{{$item['total_completed']}}</a>
                                         @else
                                         {{$item['total_completed']}}
                                         @endif
                                     </td>
                                     <td>
                                         @if($item['total_claimed'])
-                                        <a href="{{ url('event-base-bonus/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}/claimed">{{$item['total_claimed']}}</a>
+                                        <a href="{{ url('event-base-bonus/v2/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}/claimed">{{$item['total_claimed']}}</a>
                                         @else
                                         {{$item['total_claimed']}}
                                         @endif
                                     </td>
-                                    <td><a href="{{ url('event-base-bonus/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}" target="_blank"><button class="btn btn-success btn-sm">View Msisdn List</span></button></a></td>
+                                    <td><a href="{{ url('event-base-bonus/v2/analytics') }}/{{$item['users']['event_based_campaign_id']}}/{{$item['users']['campaign_challenge_id']}}/{{$item['users']['campaign_task_id']}}" target="_blank"><button class="btn btn-success btn-sm">View Msisdn List</span></button></a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

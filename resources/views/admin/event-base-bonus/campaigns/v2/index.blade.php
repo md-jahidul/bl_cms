@@ -5,7 +5,7 @@
 <li class="breadcrumb-item active">Campaign List</li>
 @endsection
 @section('action')
-<a href="{{ url('event-base-bonus/campaigns/create') }}" class="btn btn-outline-primary  round btn-glow px-2"><i class="la la-user-plus"></i>
+<a href="{{ url('event-base-bonus/v2/campaigns/create') }}" class="btn btn-outline-primary  round btn-glow px-2"><i class="la la-user-plus"></i>
     Add Campaign
 </a>
 @endsection
