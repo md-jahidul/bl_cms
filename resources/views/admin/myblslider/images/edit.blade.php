@@ -41,33 +41,34 @@
 
                             <div class="form-group col-md-6">
                                 <label for="title">Title: <small
-                                            class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <input
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Title is required"
-                                        data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                        value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
-                                        type="text"
-                                        class="form-control @error('title') is-invalid @enderror"
-                                        placeholder="Title" name="title">
+
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Title is required"
+                                    data-validation-regex-message="Title must start with alphabets"
+                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                    value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
+                                    type="text"
+                                    class="form-control @error('title') is-invalid @enderror"
+                                    placeholder="Title" name="title">
                                 <small
-                                        class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
                                 <label for="alt_text" class="required">Alt Text: </label>
                                 <input  required
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-regex-message="Alt Text must start with alphabets"
-                                        data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
-                                        value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
-                                        class="form-control @error('alt_text') is-invalid @enderror"
-                                        placeholder="Alt text" name="alt_text">
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-regex-message="Alt Text must start with alphabets"
+                                    data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
+                                    value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
+                                    class="form-control @error('alt_text') is-invalid @enderror"
+                                    placeholder="Alt text" name="alt_text">
                                 <small
-                                        class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
@@ -117,8 +118,6 @@
 
                             @php
                                 $actionList = Helper::navigationActionList();
-
-                                /*dd($actionList)*/
                             @endphp
 
                             <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
@@ -155,7 +154,7 @@
                                         Shortcut icon should be in
                                         16:9 aspect ratio</small><br>
                                     <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
                                 </div>
                             </div>
@@ -176,14 +175,14 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control select2" required>
-                                                        <option value="">Select a Product</option>
-                                                        @foreach ($products as $value)
-                                                            <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
-                                                                {{ $value['text'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select name="other_attributes" class="form-control select2" required>
+                                                    <option value="">Select a Product</option>
+                                                    @foreach ($products as $value)
+                                                        <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
+                                                            {{ $value['text'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             @endif
                                             <div class="help-block"></div>
                                         </div>
