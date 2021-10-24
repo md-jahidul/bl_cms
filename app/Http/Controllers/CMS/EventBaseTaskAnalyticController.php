@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Enums\EventBasedAnalyticTypes;
 use App\Services\TaskAnalyticService;
 use App\Http\Requests\TaskAnalyticRequest;
 use App\Http\Requests\TaskAnalyticUserDetailRequest;
@@ -44,5 +45,53 @@ class EventBaseTaskAnalyticController extends Controller
         ];
 
         return $this->taskAnalyticService->filterAnalytic($params);
+    }
+
+    public function viewCampaignChallenges($campaign)
+    {
+        $params = [
+            'analytics_type' => EventBasedAnalyticTypes::CHALLENGE,
+            'campaign_id' => $campaign
+        ];
+
+        $challengeAnalytics = $this->taskAnalyticService->getAnalytics($params);
+
+        return view('admin.event-base-bonus.analytic.view-campaign-challenges', compact('challengeAnalytics'));
+    }
+
+    public function viewCampaignChallengeTasks($campaign, $challenge)
+    {
+        $params = [
+            'analytics_type' => EventBasedAnalyticTypes::TASK,
+            'campaign_id' => $campaign,
+            'campaign_challenge_id' => $challenge,
+        ];
+
+        $challengeTasksAnalytics = $this->taskAnalyticService->getAnalytics($params);
+
+        return view('admin.event-base-bonus.analytic.view-campaign-challenge-tasks', compact('challengeTasksAnalytics'));
+    }
+
+    public function viewCampaignChallengeTaskMsisdnList($campaign, $challenge, $task, $msisdn = null)
+    {
+        $params = [
+            'analytics_type' => EventBasedAnalyticTypes::MSISDN,
+            'campaign_id' => $campaign,
+            'campaign_challenge_id' => $challenge,
+            'campaign_task_id' => $task
+        ];
+
+        if (isset($msisdn)) {
+            $params['msisdn'] = 1;
+            $params['status'] = $msisdn;
+        }
+
+        $challengeTaskMsisdnList = $this->taskAnalyticService->getAnalytics($params);
+
+        if (isset($msisdn) && $params['status']) {
+            return view('admin.event-base-bonus.analytic.view-campaign-msidn-list', compact('challengeTaskMsisdnList'));
+        }
+
+        return view('admin.event-base-bonus.analytic.view-campaign-challenge-tasks-msisdn', compact('challengeTaskMsisdnList'));
     }
 }

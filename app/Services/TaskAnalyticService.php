@@ -13,7 +13,7 @@ class TaskAnalyticService
 
     public function getAnalytics($data): array
     {
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task-user/analytics";
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign/analytics";
         $response  = $this->client->CallAPI('POST', $url, $data);
 
         return $response['data'];
