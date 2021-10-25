@@ -58,7 +58,7 @@
                                         {{$item['total_users']}}
                                         @endif
                                     </td>
-                                    <td><a href="{{ url('event-base-bonus/v2/analytics') }}/{{$item['user_campaign']['id']}}/{{$item['id']}}" target="_blank"><button class="btn btn-success btn-sm">View Tasks</span></button></a></td>
+                                    <td><a href="{{ url('event-base-bonus/v2/analytics') }}/{{end($item['campaign'])['id']}}/{{$item['id']}}" target="_blank"><button class="btn btn-success btn-sm">View Tasks</span></button></a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
