@@ -128,27 +128,27 @@ class ProductCoreService
         return $offerId;
     }
 
-    /**
-     * @param $id
-     * @return string|null
-     */
-    public function getSimtype($id)
-    {
-        switch ($id) {
-            case "1":
-                $type = "prepaid";
-                break;
-            case '2':
-                $type = "postpaid";
-                break;
-            case '3':
-                $type = "propaid";
-                break;
-            default:
-                $type = null;
-        }
-        return $type;
-    }
+//    /**
+//     * @param $id
+//     * @return string|null
+//     */
+//    public function getSimtype($id)
+//    {
+//        switch ($id) {
+//            case "1":
+//                $type = "prepaid";
+//                break;
+//            case '2':
+//                $type = "postpaid";
+//                break;
+//            case '3':
+//                $type = "propaid";
+//                break;
+//            default:
+//                $type = null;
+//        }
+//        return $type;
+//    }
 
     /**
      * @param $data
@@ -341,14 +341,23 @@ class ProductCoreService
                                 case "show_from":
                                 case "hide_from":
                                     if (!empty($cells[$index]->getValue())) {
-                                        $time = Carbon::createFromFormat('d-m-Y h:i A',
-                                            $cells[$index]->getValue())->format('Y-m-d H:i:s');
+                                        $time = Carbon::createFromFormat(
+                                            'd-m-Y h:i A',
+                                            $cells[$index]->getValue()
+                                        )->format('Y-m-d H:i:s');
                                     } else {
                                         $time = null;
                                     }
                                     $mybl_data[$field] = $time;
                                     break;
-
+                                case "is_free_product":
+                                    $isFreeProduct = strtolower($cells[$index]->getValue());
+                                    if (!empty($isFreeProduct) && $isFreeProduct == "yes") {
+                                        $mybl_data[$field] = 1;
+                                    } elseif (!empty($isFreeProduct) && $isFreeProduct == "no") {
+                                        $mybl_data[$field] = 0;
+                                    }
+                                    break;
                                 default:
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
@@ -513,257 +522,257 @@ class ProductCoreService
         return $response;
     }
 
-    /**
-     * @param $contentType
-     * @return int|null
-     */
-    protected function offerType($contentType)
-    {
-        switch (strtolower($contentType)) {
-            case "internet":
-                $offerId = 1;
-                break;
-            case "voice":
-                $offerId = 2;
-                break;
-            case "bundle":
-                $offerId = 3;
-                break;
-            case "startup":
-                $offerId = 4;
-                break;
-            default:
-                $offerId = null;
-        }
-        return $offerId;
-    }
-
-    /**
-     * @param $excel_path
-     * @return bool|int
-     */
-    public function mapAssetliteProduct($excel_path)
-    {
-        $config = config('productMapping.assetlite.columns');
-
-        try {
-            $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
-            $file_path = $excel_path;
-            $reader->open($file_path);
-
-            foreach ($reader->getSheetIterator() as $sheet) {
-                $row_number = 1;
-                foreach ($sheet->getRowIterator() as $row) {
-                    $core_data = [];
-                    $assetLiteProduct = [];
-                    if ($row_number != 1) {
-                        $cells = $row->getCells();
-                        foreach ($config as $field => $index) {
-                            switch ($field) {
-//                                case "family_name":
-                                case "content_type":
-                                    $contentType = ($cells [$index]->getValue() != '') ?
-                                        strtolower($cells [$index]->getValue()) : null;
-                                    $core_data [$field] = $contentType;
-                                    break;
-
-                                case "assetlite_offer_type":
-                                    $contentType = ($cells [$index]->getValue() != '') ?
-                                        strtolower($cells [$index]->getValue()) : null;
-                                    $offerId = $this->offerType($contentType);
-                                    $assetLiteProduct['offer_category_id'] = $offerId;
-                                    if ($offerId == 4) {
-                                        $assetLiteProduct['offer_info'] = ['package_offer_type_id' => 6];
-                                    }
-                                    break;
-                                case "sim_type":
-                                    $type = strtolower($cells [$index]->getValue());
-                                    if ($type == 'prepaid') {
-                                        $sim_type = 1;
-                                    } elseif ($type == 'postpaid') {
-                                        $sim_type = 2;
-                                    } elseif ($type == 'propaid') {
-                                        $sim_type = 3;
-                                    } else {
-                                        $sim_type = null;
-                                    }
-                                    $core_data [$field] = $sim_type;
-                                    $assetLiteProduct ['sim_category_id'] = $sim_type;
-                                    break;
-                                case "commercial_name_en":
-                                    $core_data [$field] = $cells [$index]->getValue();
-                                    $assetLiteProduct['name_en'] = $cells [$index]->getValue();
-                                    break;
-                                case "commercial_name_bn":
-                                    $core_data [$field] = $cells [$index]->getValue();
-                                    $assetLiteProduct['name_bn'] = $cells [$index]->getValue();
-                                    break;
-
-                                case "is_auto_renewable":
+//    /**
+//     * @param $contentType
+//     * @return int|null
+//     */
+//    protected function offerType($contentType)
+//    {
+//        switch (strtolower($contentType)) {
+//            case "internet":
+//                $offerId = 1;
+//                break;
+//            case "voice":
+//                $offerId = 2;
+//                break;
+//            case "bundle":
+//                $offerId = 3;
+//                break;
+//            case "startup":
+//                $offerId = 4;
+//                break;
+//            default:
+//                $offerId = null;
+//        }
+//        return $offerId;
+//    }
+//
+//    /**
+//     * @param $excel_path
+//     * @return bool|int
+//     */
+//    public function mapAssetliteProduct($excel_path)
+//    {
+//        $config = config('productMapping.assetlite.columns');
+//
+//        try {
+//            $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
+//            $file_path = $excel_path;
+//            $reader->open($file_path);
+//
+//            foreach ($reader->getSheetIterator() as $sheet) {
+//                $row_number = 1;
+//                foreach ($sheet->getRowIterator() as $row) {
+//                    $core_data = [];
+//                    $assetLiteProduct = [];
+//                    if ($row_number != 1) {
+//                        $cells = $row->getCells();
+//                        foreach ($config as $field => $index) {
+//                            switch ($field) {
+////                                case "family_name":
+//                                case "content_type":
+//                                    $contentType = ($cells [$index]->getValue() != '') ?
+//                                        strtolower($cells [$index]->getValue()) : null;
+//                                    $core_data [$field] = $contentType;
+//                                    break;
+//
+//                                case "assetlite_offer_type":
+//                                    $contentType = ($cells [$index]->getValue() != '') ?
+//                                        strtolower($cells [$index]->getValue()) : null;
+//                                    $offerId = $this->offerType($contentType);
+//                                    $assetLiteProduct['offer_category_id'] = $offerId;
+//                                    if ($offerId == 4) {
+//                                        $assetLiteProduct['offer_info'] = ['package_offer_type_id' => 6];
+//                                    }
+//                                    break;
+//                                case "sim_type":
+//                                    $type = strtolower($cells [$index]->getValue());
+//                                    if ($type == 'prepaid') {
+//                                        $sim_type = 1;
+//                                    } elseif ($type == 'postpaid') {
+//                                        $sim_type = 2;
+//                                    } elseif ($type == 'propaid') {
+//                                        $sim_type = 3;
+//                                    } else {
+//                                        $sim_type = null;
+//                                    }
+//                                    $core_data [$field] = $sim_type;
+//                                    $assetLiteProduct ['sim_category_id'] = $sim_type;
+//                                    break;
+//                                case "commercial_name_en":
 //                                    $core_data [$field] = $cells [$index]->getValue();
-                                    $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
-                                    break;
-                                case "recharge_product_code":
-                                    $type = $cells [$index]->getValue();
-                                    $assetLiteProduct['purchase_option'] = ($type != "") ? 'recharge' : '';
-                                    $core_data[$field] = $type;
-                                    break;
-
-                                case "short_text":
-                                    if (!empty($cells[$index]->getValue())) {
-                                        $assetLiteProduct['offer_info'] = [
-                                            'short_text' => $cells[$index]->getValue()
-                                        ];
-                                    }
-                                    break;
-
-                                case "rate_cutter_offer":
-                                    $type = $cells [$index]->getValue();
-                                    $core_data['call_rate'] = ($type == "") ? null : $type;
-                                    $assetLiteProduct['rate_cutter_offer'] = ($type == "") ? null : 1;
-                                    break;
-                                case "rate_cutter_unit":
-                                    $type = $cells [$index]->getValue();
-                                    $assetLiteProduct['rate_cutter_unit'] = ($type == "") ? null : $type;
-                                    break;
-
-                                case "internet_volume_mb":
-                                    $data_volume = $cells [$index]->getValue();
-                                    if ($data_volume == '') {
-                                        $data_volume = 0;
-                                    }
-                                    $data_unit = $cells [$index + 1]->getValue();
-                                    if ($data_unit == 'GB') {
-                                        $volume = $data_volume * 1024;
-                                        $core_data [$field] = $volume;
-                                    } else {
-                                        $core_data [$field] = $data_volume;
-                                    }
-                                    break;
-                                case "data_volume":
-                                    $data_volume = $cells [$index]->getValue();
-
-                                    if ($data_volume == '') {
-                                        $data_volume = 0;
-                                    }
-                                    $core_data [$field] = $data_volume;
-                                    break;
-                                case "vat":
-                                case "sms_volume":
-                                case "minute_volume":
-                                    $volume = $cells [$index]->getValue();
-                                    if ($volume == '') {
-                                        $volume = 0;
-                                    }
-                                    $core_data [$field] = $volume;
-                                    break;
-                                case "internet_volume_unit":
-                                    $data_volume_unit = $cells [$index]->getValue();
-                                    $core_data [$field] = $data_volume_unit;
-                                    break;
-
-                                case "validity":
-                                    $validity = $cells [$index]->getValue();
-                                    if (!is_string($validity)) {
-                                        $core_data [$field] = $validity;
-                                    }
-                                    break;
-
-                                case "validity_in_days":
-                                    $validity = $cells [$config['validity']]->getValue();
-
-                                    if ($validity == "Bill period") {
-                                        $assetLiteProduct['validity_postpaid'] = $validity;
-//                                        dd($assetLiteProduct);
-                                    } else {
-                                        $unit = $cells [$config['validity_unit']]->getValue();
-                                        if (strtolower($unit) == 'hours') {
-                                            $validity = round($validity / 24);
-                                        }
-                                        $core_data [$field] = ($validity == "") ? null : $validity;
-                                    }
-                                    break;
-
-                                case "is_amar_offer":
-                                    $type = strtolower($cells [$index]->getValue());
-                                    if ($type == 'yes') {
-                                        $flag = 1;
-                                    } elseif ($type == 'no') {
-                                        $flag = 0;
-                                    } else {
-                                        break;
-                                    }
-                                    $assetLiteProduct[$field] = $flag;
-                                    break;
-                                case "is_gift_offer":
-                                    $giftOffer = strtolower($cells [$index]->getValue());
-//                                    $core_data [$field] = $giftOffer;
-                                    $assetLiteProduct[$field] = $giftOffer;
-                                    break;
-                                case "is_social_pack":
-                                    $assetLiteProduct [$field] = ($cells [$index]->getValue() != '') ?
-                                        $cells [$index]->getValue() : null;
-                                    break;
-                                default:
-                                    $core_data [$field] = ($cells [$index]->getValue() != '') ?
-                                        $cells [$index]->getValue() : null;
-                            }
-                        }
-
-                        try {
-                            $product_code = $core_data['product_code'];
-                            $core_product = ProductCore::where('product_code', $product_code)->first();
-
-                            if ($core_product) {
-                                if ($core_product->platform == 'app') {
-                                    $core_data ['platform'] = 'all';
-                                }
-                            } else {
-                                $core_data['platform'] = 'web';
-                            }
-
-//                            dd($core_data);
-
-                            AlCoreProduct::updateOrCreate([
-                                'product_code' => $product_code
-                            ], $core_data);
-
-
-                            if ($assetLiteProduct['offer_category_id']) {
-                                //make url_slug
-                                $assetLiteProduct['url_slug'] = "";
-                                if (!empty($assetLiteProduct['name_en'])) {
-                                    $urlSlug = str_replace(" ", "-", $assetLiteProduct['name_en']);
-                                    $assetLiteProduct['url_slug'] = $urlSlug;
-                                }
-
-                                $product = Product::updateOrCreate([
-                                    'product_code' => $product_code
-                                ], $assetLiteProduct);
-
-                                $this->_saveSearchData($product);
-
-
-                                ProductDetail::updateOrCreate([
-                                    'product_id' => $product->id
-                                ]);
-                            }
-                        } catch (Exception $e) {
-                            dd($e->getMessage());
-                            continue;
-                        }
-                    }
-                    $row_number++;
-                }
-            }
-            $reader->close();
-            return true;
-        } catch (Exception $e) {
-            dd($e->getMessage());
-            Log::error('Product Entry Error' . $e->getMessage());
-            return 0;
-        }
-    }
+//                                    $assetLiteProduct['name_en'] = $cells [$index]->getValue();
+//                                    break;
+//                                case "commercial_name_bn":
+//                                    $core_data [$field] = $cells [$index]->getValue();
+//                                    $assetLiteProduct['name_bn'] = $cells [$index]->getValue();
+//                                    break;
+//
+//                                case "is_auto_renewable":
+////                                    $core_data [$field] = $cells [$index]->getValue();
+//                                    $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
+//                                    break;
+//                                case "recharge_product_code":
+//                                    $type = $cells [$index]->getValue();
+//                                    $assetLiteProduct['purchase_option'] = ($type != "") ? 'recharge' : '';
+//                                    $core_data[$field] = $type;
+//                                    break;
+//
+//                                case "short_text":
+//                                    if (!empty($cells[$index]->getValue())) {
+//                                        $assetLiteProduct['offer_info'] = [
+//                                            'short_text' => $cells[$index]->getValue()
+//                                        ];
+//                                    }
+//                                    break;
+//
+//                                case "rate_cutter_offer":
+//                                    $type = $cells [$index]->getValue();
+//                                    $core_data['call_rate'] = ($type == "") ? null : $type;
+//                                    $assetLiteProduct['rate_cutter_offer'] = ($type == "") ? null : 1;
+//                                    break;
+//                                case "rate_cutter_unit":
+//                                    $type = $cells [$index]->getValue();
+//                                    $assetLiteProduct['rate_cutter_unit'] = ($type == "") ? null : $type;
+//                                    break;
+//
+//                                case "internet_volume_mb":
+//                                    $data_volume = $cells [$index]->getValue();
+//                                    if ($data_volume == '') {
+//                                        $data_volume = 0;
+//                                    }
+//                                    $data_unit = $cells [$index + 1]->getValue();
+//                                    if ($data_unit == 'GB') {
+//                                        $volume = $data_volume * 1024;
+//                                        $core_data [$field] = $volume;
+//                                    } else {
+//                                        $core_data [$field] = $data_volume;
+//                                    }
+//                                    break;
+//                                case "data_volume":
+//                                    $data_volume = $cells [$index]->getValue();
+//
+//                                    if ($data_volume == '') {
+//                                        $data_volume = 0;
+//                                    }
+//                                    $core_data [$field] = $data_volume;
+//                                    break;
+//                                case "vat":
+//                                case "sms_volume":
+//                                case "minute_volume":
+//                                    $volume = $cells [$index]->getValue();
+//                                    if ($volume == '') {
+//                                        $volume = 0;
+//                                    }
+//                                    $core_data [$field] = $volume;
+//                                    break;
+//                                case "internet_volume_unit":
+//                                    $data_volume_unit = $cells [$index]->getValue();
+//                                    $core_data [$field] = $data_volume_unit;
+//                                    break;
+//
+//                                case "validity":
+//                                    $validity = $cells [$index]->getValue();
+//                                    if (!is_string($validity)) {
+//                                        $core_data [$field] = $validity;
+//                                    }
+//                                    break;
+//
+//                                case "validity_in_days":
+//                                    $validity = $cells [$config['validity']]->getValue();
+//
+//                                    if ($validity == "Bill period") {
+//                                        $assetLiteProduct['validity_postpaid'] = $validity;
+////                                        dd($assetLiteProduct);
+//                                    } else {
+//                                        $unit = $cells [$config['validity_unit']]->getValue();
+//                                        if (strtolower($unit) == 'hours') {
+//                                            $validity = round($validity / 24);
+//                                        }
+//                                        $core_data [$field] = ($validity == "") ? null : $validity;
+//                                    }
+//                                    break;
+//
+//                                case "is_amar_offer":
+//                                    $type = strtolower($cells [$index]->getValue());
+//                                    if ($type == 'yes') {
+//                                        $flag = 1;
+//                                    } elseif ($type == 'no') {
+//                                        $flag = 0;
+//                                    } else {
+//                                        break;
+//                                    }
+//                                    $assetLiteProduct[$field] = $flag;
+//                                    break;
+//                                case "is_gift_offer":
+//                                    $giftOffer = strtolower($cells [$index]->getValue());
+////                                    $core_data [$field] = $giftOffer;
+//                                    $assetLiteProduct[$field] = $giftOffer;
+//                                    break;
+//                                case "is_social_pack":
+//                                    $assetLiteProduct [$field] = ($cells [$index]->getValue() != '') ?
+//                                        $cells [$index]->getValue() : null;
+//                                    break;
+//                                default:
+//                                    $core_data [$field] = ($cells [$index]->getValue() != '') ?
+//                                        $cells [$index]->getValue() : null;
+//                            }
+//                        }
+//
+//                        try {
+//                            $product_code = $core_data['product_code'];
+//                            $core_product = ProductCore::where('product_code', $product_code)->first();
+//
+//                            if ($core_product) {
+//                                if ($core_product->platform == 'app') {
+//                                    $core_data ['platform'] = 'all';
+//                                }
+//                            } else {
+//                                $core_data['platform'] = 'web';
+//                            }
+//
+////                            dd($core_data);
+//
+//                            AlCoreProduct::updateOrCreate([
+//                                'product_code' => $product_code
+//                            ], $core_data);
+//
+//
+//                            if ($assetLiteProduct['offer_category_id']) {
+//                                //make url_slug
+//                                $assetLiteProduct['url_slug'] = "";
+//                                if (!empty($assetLiteProduct['name_en'])) {
+//                                    $urlSlug = str_replace(" ", "-", $assetLiteProduct['name_en']);
+//                                    $assetLiteProduct['url_slug'] = $urlSlug;
+//                                }
+//
+//                                $product = Product::updateOrCreate([
+//                                    'product_code' => $product_code
+//                                ], $assetLiteProduct);
+//
+//                                $this->_saveSearchData($product);
+//
+//
+//                                ProductDetail::updateOrCreate([
+//                                    'product_id' => $product->id
+//                                ]);
+//                            }
+//                        } catch (Exception $e) {
+//                            dd($e->getMessage());
+//                            continue;
+//                        }
+//                    }
+//                    $row_number++;
+//                }
+//            }
+//            $reader->close();
+//            return true;
+//        } catch (Exception $e) {
+//            dd($e->getMessage());
+//            Log::error('Product Entry Error' . $e->getMessage());
+//            return 0;
+//        }
+//    }
 
     //save Search Data
     private function _saveSearchData($product)
@@ -887,6 +896,8 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
+//        $data['is_free_product'] = isset($request->is_free_product);
+        $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
         try {
             DB::beginTransaction();
@@ -1015,6 +1026,8 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
+//        $data['is_free_product'] = isset($request->is_free_product);
+        $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
         if ($request->content_type == "data") {
             if (isset($request->offer_section_slug)) {
@@ -1168,7 +1181,8 @@ class ProductCoreService
                 $insert_data[30] = ($product->is_visible) ? 'Yes' : 'No';
                 $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
                 $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
-                $insert_data[33] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[33] = ($product->is_free_product) ? 'Yes' : 'No';
+                $insert_data[34] = ($product->status) ? 'Yes' : 'No';
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
