@@ -5,7 +5,7 @@
 <li class="breadcrumb-item active">Event Based Campaign Analytics</li>
 @endsection
 @section('content')
-<div class="row" style="margin-bottom: -20px;">
+<!-- <div class="row" style="margin-bottom: -20px;">
     <div class="col-md-12" style="margin-top: 10px;">
         <table border="0" cellspacing="5" cellpadding="5" style="float: right">
             <tr>
@@ -19,7 +19,7 @@
             </tr>
         </table>
     </div>
-</div>
+</div> -->
 <section id="analytics-table" class="mt-2">
     <div class="">
         <div class="col-12">
@@ -119,7 +119,7 @@
                     "data": null,
                     render: function(data, type, row) {
                         var url = "event-base-bonus/v2/analytics/" + row.id;
-                        var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View Details</span></button></a>`;
+                        var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View Challenges</span></button></a>`;
                         return domElement;
                     },
                 }
