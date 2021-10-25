@@ -25,6 +25,7 @@
                 <option value="volume request">VOLUME REQUEST</option>
                 <option value="volume transfer">VOLUME TRANSFER</option>
                 <option value="bonus">BONUS</option>
+                <option value="free_products">FREE PRODUCTS</option>
             </select>
         </div>
         <div class="col-md-2">
