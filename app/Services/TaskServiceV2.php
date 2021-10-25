@@ -66,7 +66,7 @@ class TaskServiceV2
     public function delete($id): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-task/" . $id;
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
 
         return $client->CallAPI("DELETE", $url, []);
     }

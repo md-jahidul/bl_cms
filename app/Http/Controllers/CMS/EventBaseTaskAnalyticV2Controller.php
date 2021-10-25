@@ -5,14 +5,10 @@ namespace App\Http\Controllers\CMS;
 use App\Enums\EventBasedAnalyticTypes;
 use App\Services\TaskAnalyticService;
 use App\Http\Requests\TaskAnalyticRequest;
-use App\Http\Requests\TaskAnalyticUserDetailRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class EventBaseTaskAnalyticV2Controller extends Controller
 {
-    private $taskService;
-    private $productCoreService;
 
     public function __construct(TaskAnalyticService $taskAnalyticService)
     {

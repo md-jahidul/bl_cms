@@ -8,7 +8,7 @@ use App\Http\Requests\StoreEventChallengeRequest;
 use App\Services\EventBaseBonusChallengeService;
 use App\Services\EventBaseBonusV2CampaignService;
 use App\Services\ProductCoreService;
-use App\Services\TaskService;
+use App\Services\TaskServiceV2;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseChallengeV2Controller extends Controller
@@ -18,7 +18,7 @@ class EventBaseChallengeV2Controller extends Controller
     private $taskService;
     private $productCoreService;
 
-    public function __construct(EventBaseBonusChallengeService $eventBaseBonusChallengeService, TaskService $taskService, ProductCoreService $productCoreService, EventBaseBonusV2CampaignService $campaignService)
+    public function __construct(EventBaseBonusChallengeService $eventBaseBonusChallengeService, TaskServiceV2 $taskService, ProductCoreService $productCoreService, EventBaseBonusV2CampaignService $campaignService)
     {
         $this->middleware('auth');
         $this->eventBaseBonusChallengeService = $eventBaseBonusChallengeService;
