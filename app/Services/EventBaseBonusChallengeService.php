@@ -10,7 +10,7 @@ class EventBaseBonusChallengeService
     public function findAll(): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge";
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge";
         $response = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
@@ -19,7 +19,7 @@ class EventBaseBonusChallengeService
     public function findOne($id): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge/" . $id;
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge/" . $id;
         $response  = $client->CallAPI('GET', $url, []);
 
         $challenge = $response['data'];
@@ -72,7 +72,7 @@ class EventBaseBonusChallengeService
         $data['created_by']                   = auth()->user()->email;
 
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge";
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge";
 
         return $client->CallAPI("POST", $url, $data);
     }
@@ -111,7 +111,7 @@ class EventBaseBonusChallengeService
         $data['base_msisdn_id']               = 1;
 
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-challenge/" . $id;
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge/" . $id;
 
         return $client->CallAPI("PUT", $url, $data);
     }

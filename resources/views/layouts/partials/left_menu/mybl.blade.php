@@ -190,13 +190,10 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('event-base-bonus/tasks')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>
+                    <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Tasks</a>
                 </li>
                 <li class="{{ is_active_url('event-base-bonus/campaigns')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
-                </li>
-                <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
+                    <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Campaign</a>
                 </li>
             </ul>
         </li>
@@ -221,13 +218,13 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('event-base-bonus/tasks')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/v2/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>
+                    <a class="menu-item" href="{{ url('event-base-bonus/v2/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Tasks</a>
                 </li>
                 <li class="{{ is_active_url('event-base-bonus/campaigns')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/v2/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
+                    <a class="menu-item" href="{{ url('event-base-bonus/v2/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Campaign</a>
                 </li>
                 <li class="{{ is_active_url('event-base-bonus/challenges')}}">
-                    <a class="menu-item" href="{{ url('event-base-bonus/v2/challenges') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Challenge</a>
+                    <a class="menu-item" href="{{ url('event-base-bonus/v2/challenges') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-history"></i> Challenge</a>
                 </li>
                 <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
                     <a class="menu-item" href="{{ url('event-base-bonus/v2/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Services\TaskService;
+use App\Services\TaskServiceV2;
 use App\Services\ProductCoreService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
@@ -13,7 +13,7 @@ class EventBaseTaskV2Controller extends Controller
     private $taskService;
     private $productCoreService;
 
-    public function __construct(TaskService $taskService, ProductCoreService $productCoreService)
+    public function __construct(TaskServiceV2 $taskService, ProductCoreService $productCoreService)
     {
         $this->middleware('auth');
         $this->taskService        = $taskService;
@@ -40,7 +40,7 @@ class EventBaseTaskV2Controller extends Controller
         $response = $this->taskService->store($request->except('_token'));
         Session::flash('message', 'Task store successful');
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/v2/tasks');
     }
 
     public function edit($id)
@@ -58,7 +58,7 @@ class EventBaseTaskV2Controller extends Controller
 
         Session::flash('message', 'Task Update successful');
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/v2/tasks');
     }
 
     public function destroy($id)
@@ -67,7 +67,7 @@ class EventBaseTaskV2Controller extends Controller
 
         Session::flash('message', 'Task delete successful');
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/v2/tasks');
     }
 
     public function delete($id)

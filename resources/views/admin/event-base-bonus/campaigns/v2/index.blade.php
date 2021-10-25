@@ -41,7 +41,7 @@
                                     <td>{{ $campaign['reward_product_code_postpaid'] }}</td>
                                     <td>{{ $campaign['status'] ? 'active':'inactive'}}</td>
                                     <td>
-                                        <a href="{{ url('event-base-bonus/campaigns/'.$campaign['id']).'/edit' }}" class="mr-3">
+                                        <a href="{{ url('event-base-bonus/v2/campaigns/'.$campaign['id']).'/edit' }}" class="mr-3">
                                             <i class="la la-pencil text-primary"></i>
                                         </a>
                                     </td>

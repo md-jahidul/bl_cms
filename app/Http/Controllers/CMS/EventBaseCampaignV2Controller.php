@@ -48,7 +48,7 @@ class EventBaseCampaignV2Controller extends Controller
         $response = $this->campaignService->store($request->except('_token'));
 
         Session::flash('message', 'Campaign store successful');
-        return redirect('/event-base-bonus/campaigns');
+        return redirect('/event-base-bonus/v2/campaigns');
     }
 
 
@@ -67,7 +67,7 @@ class EventBaseCampaignV2Controller extends Controller
         $response = $this->campaignService->update($request->except('_token', '_method'), $id);
         Session::flash('message', 'Updated successful');
 
-        return redirect('/event-base-bonus/campaigns');
+        return redirect('/event-base-bonus/v2/campaigns');
     }
 
     public function destroy($id)
@@ -75,6 +75,6 @@ class EventBaseCampaignV2Controller extends Controller
         $response = $this->campaignService->delete($id);
         //Session::flash('message', $response->getContent());
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/v2/campaigns');
     }
 }

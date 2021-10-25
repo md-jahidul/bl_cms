@@ -47,13 +47,13 @@
                                     <td>{{ $task['tracking_type'] == 1 ? 'Automatic' : 'Manual' }}</td>
                                     <td>{{ $task['status'] ? 'active':'inactive'}}</td>
                                     <td>
-                                        <a href="{{ url('event-base-bonus/tasks/'.$task['id']).'/edit' }}" class="mr-3">
+                                        <a href="{{ url('event-base-bonus/v2/tasks/'.$task['id']).'/edit' }}" class="mr-3">
                                             <i class="la la-pencil text-primary"></i>
                                         </a>
                                         <a href="javascript:void(0);" onclick="event.preventDefault(); document.getElementById('logoutform-{{$task['id']}}').submit();">
                                             <i class="la la-trash text-danger"></i>
                                         </a>
-                                        <form id="logoutform-{{$task['id']}}" action="{{ url('event-base-bonus/tasks/'.$task['id']) }}" method="POST" style="display: none;">
+                                        <form id="logoutform-{{$task['id']}}" action="{{ url('event-base-bonus/v2/tasks/'.$task['id']) }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                             @method('DELETE')
                                         </form>
