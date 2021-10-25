@@ -891,8 +891,8 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
-        $data['is_free_product'] = isset($request->is_free_product);
-        $data['base_msisdn_group_id'] = isset($request->is_free_product) ? $request->base_msisdn_group_id : null;
+//        $data['is_free_product'] = isset($request->is_free_product);
+        $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
         try {
             DB::beginTransaction();
@@ -1021,7 +1021,7 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
-        $data['is_free_product'] = isset($request->is_free_product);
+//        $data['is_free_product'] = isset($request->is_free_product);
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
         if ($request->content_type == "data") {

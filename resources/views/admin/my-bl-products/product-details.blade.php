@@ -429,24 +429,24 @@
                                     </fieldset>
                                 </div>
 
-                                <div class="col-md-4 skin mt-2">
-                                    <fieldset>
-                                        <input type="checkbox" id="is_free_product" value="1" name="is_free_product"
-                                               @if($details->is_free_product) checked @endif>
-                                        <label for="is_free_product">Is Free Product</label>
-                                    </fieldset>
-                                </div>
+{{--                                <div class="col-md-4 skin mt-2">--}}
+{{--                                    <fieldset>--}}
+{{--                                        <input type="checkbox" id="is_free_product" value="1" name="is_free_product"--}}
+{{--                                               @if($details->is_free_product) checked @endif>--}}
+{{--                                        <label for="is_free_product">Is Free Product</label>--}}
+{{--                                    </fieldset>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-8 mb-2 {{ !empty($details->base_msisdn_group_id) ? "" : "d-none" }}" id="cta_action">
+                                <div class="form-group col-md-8 mb-2" id="cta_action">
                                     <label for="base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
                                             class="browser-default custom-select">
-                                        <option value="">--Select Base Msisdn Group--</option>
+                                        <option value="">No Base Msisdn Group Selected</option>
                                         @foreach ($baseMsisdnGroups as $key => $value)
                                             <option value="{{ $value->id }}" {{ $value->id == $details->base_msisdn_group_id ? 'selected' : '' }}>{{ $value->title }}</option>
                                         @endforeach
                                     </select>
-                                    <span class="text-danger"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
+                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
                                     <div class="help-block"></div>
                                 </div>
 

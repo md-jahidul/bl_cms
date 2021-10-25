@@ -14,7 +14,6 @@ class AddBaseMsisdnFieldInMyblProductsTable extends Migration
     public function up()
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
-            $table->tinyInteger('is_free_product')->default(0);
             $table->integer('base_msisdn_group_id')->nullable();
         });
     }
