@@ -467,6 +467,8 @@ class ProductCoreService
                         $q->whereNotNull('recharge_product_code');
                     } elseif ($request->content_type == 'scr') {
                         $q->whereNotNull('call_rate');
+                    } elseif ($request->content_type == 'free_products') {
+                        $q->where('mrp_price', null);
                     } else {
                         $q->where('content_type', $request->content_type);
                     }
