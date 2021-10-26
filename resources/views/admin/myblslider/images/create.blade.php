@@ -156,10 +156,10 @@
                                                 </div>
                                             </div>
                                             <div class="help-block">
-                                                <small class="text-info"> Image aspect ratio should be in
-                                                    16:9 </small><br>
+                                                <small class="text-info">Banner image must be in
+                                                    16:9 aspect ratio and image size must be equal or less than 100KB </small><br>
                                             </div>
-                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-danger"> @error('image_url') {{ $message }} @enderror </small>
                                             <small id="massage"></small>
                                         </div>
                                     </div>

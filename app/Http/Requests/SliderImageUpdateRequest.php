@@ -27,7 +27,7 @@ class SliderImageUpdateRequest extends FormRequest
             'slider_id' => '',
             'title' => 'required|max:200|unique:slider_images,title,' . $this->id,
             'description' => '',
-            'image_url' => 'image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
+            'image_url' => 'image|mimes:jpeg,jpg,png|dimensions:ratio=16/9|max:100',
             'alt_text' => 'max:200|unique:slider_images,alt_text,' . $this->id,
             'url_btn_label' => 'max:200',
             'url' => 'max:200',
@@ -42,8 +42,9 @@ class SliderImageUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'dimensions' => 'Slider Image is Mast be in 16:9 dimension',
+            'dimensions' => 'Slider Image is Must be in 16:9 dimension',
             'required' => 'Slider Image is required',
+            'image_url.max' => 'Slider Image size must be equal or less than 100 Kilobytes',
             'required' => 'title is required',
         ];
     }

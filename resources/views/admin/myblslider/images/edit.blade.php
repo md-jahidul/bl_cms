@@ -152,10 +152,10 @@
                                         </div>
                                     </div>
                                     <small class="text-info" id="ratio_info">
-                                        Shortcut icon should be in
-                                        16:9 aspect ratio</small><br>
+                                        Banner image must be in
+                                        16:9 aspect ratio and image size must be equal or less than 100KB</small><br>
                                     <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            class="text-danger"> @error('image_url') {{ $message }} @enderror </small>
                                     <small id="message"></small>
                                 </div>
                             </div>
