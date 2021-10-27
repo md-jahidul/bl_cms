@@ -188,6 +188,10 @@ class NotificationService
         $start = $request->get('start');
         $length =$request->get('length');
 
+        $completedNotificationIds = NotificationSchedule::where('status', 'completed')->orderBy('start', 'DESC')->pluck('notification_draft_id')->all();
+        $completedNotifications = $this->notificationDraftRepository->findInIds($completedNotificationIds);
+        $notCompletedNotifications = $this->notificationDraftRepository->findNotIn($completedNotificationIds);
+
         $builder = new NotificationDraft();
         $builder->orderBy('id', 'desc');
 
@@ -196,16 +200,22 @@ class NotificationService
 
             if(!empty($input['value'])){
                 $titel=$input['value'];
-                $all_items_count = $builder->where('notification_drafts.title','LIKE', "%{$titel}%")->count();
-                $items = $builder->where('notification_drafts.title','LIKE', "%{$titel}%")->skip($start)->take($length)->get();
+                $completedNotifications = $completedNotifications->where('title','LIKE', "%{$titel}%")->get();
+                $notCompletedNotifications = $notCompletedNotifications->where('title','LIKE', "%{$titel}%")->get();
+                $mergedNotifications = $completedNotifications->merge($notCompletedNotifications);
+                $all_items_count = $mergedNotifications->count();
+                $items = $mergedNotifications->slice((int)$start)->take((int)$length);
             }else{
-
-                $all_items_count = $builder->count();
-                $items = $builder->skip($start)->take($length)->get();
+                $completedNotifications = $completedNotifications->get();
+                $notCompletedNotifications = $notCompletedNotifications->get();
+                $mergedNotifications = $completedNotifications->merge($notCompletedNotifications);
+                $all_items_count = $mergedNotifications->count();
+                $items = $mergedNotifications->slice((int)$start)->take((int)$length);
             }
         }
 
         $items = $items->reverse();
+
         $response = [
             'draw' => $draw,
             'recordsTotal' => $all_items_count,

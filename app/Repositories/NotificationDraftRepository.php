@@ -18,4 +18,13 @@ class NotificationDraftRepository extends BaseRepository
         return NotificationDraft::findAll();
     }
 
+    public function findInIds($ids)
+    {
+        return $this->model->whereIn('id', $ids);
+    }
+    public function findNotIn($ids)
+    {
+        return $this->model->whereNotIn('id', $ids);
+    }
+
 }
