@@ -75,10 +75,15 @@
                 <i class="ft-list"></i>Products</a>
         </li>
 
-        <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
-            <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
-                <i class="ft-x-square"></i>Inactive Products</a>
-        </li>
+                <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
+                    <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
+                        <i class="la la-fire"></i>Free Products Analytic</a>
+                </li>
+
+                <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
+                    <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
+                        <i class="ft-x-square"></i>Inactive Products</a>
+                </li>
 
         <li class="{{is_active_url('mybl-internet-offer-category')}}">
             <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} " data-i18n="nav.templates.vert.classic_menu">

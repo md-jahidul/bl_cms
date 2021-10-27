@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Services\BaseMsisdnService;
+use App\Services\FreeProductPurchaseReportService;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
 use Carbon\Carbon;
@@ -34,6 +35,10 @@ class MyblProductEntryController extends Controller
      */
     private $productTagService;
     private $baseMsisdnService;
+    /**
+     * @var FreeProductPurchaseReportService
+     */
+    private $freeProductPurchaseReportService;
 
     /**
      * MyblProductEntryController constructor.
@@ -43,12 +48,14 @@ class MyblProductEntryController extends Controller
     public function __construct(
         ProductCoreService $service,
         ProductTagService $productTagService,
-        BaseMsisdnService $baseMsisdnService
+        BaseMsisdnService $baseMsisdnService,
+        FreeProductPurchaseReportService $freeProductPurchaseReportService
     ) {
         $this->middleware('auth');
         $this->service = $service;
         $this->productTagService = $productTagService;
         $this->baseMsisdnService = $baseMsisdnService;
+        $this->freeProductPurchaseReportService = $freeProductPurchaseReportService;
     }
 
     /**
@@ -231,5 +238,20 @@ class MyblProductEntryController extends Controller
     public function imageRemove($id)
     {
         return $this->service->imgRemove($id);
+    }
+
+    public function freeProductPurchaseReport(Request $request)
+    {
+        $purchasedProducts = $this->freeProductPurchaseReportService->analyticsData($request->all());
+        return view('admin.free-product-analytic.purchase-product', compact('purchasedProducts'));
+    }
+
+    public function purchaseDetails(Request $request, $purchaseProductId)
+    {
+        if ($request->ajax()) {
+            return $this->freeProductPurchaseReportService->msisdnPurchaseDetails($request, $purchaseProductId);
+        }
+        $purchaseProduct = $this->freeProductPurchaseReportService->findOne($purchaseProductId);
+        return view('admin.free-product-analytic.purchase-msisdn', compact('purchaseProduct'));
     }
 }
