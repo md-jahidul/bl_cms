@@ -715,6 +715,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
     Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
 
+    //    Free Product Purchase Report
+    Route::get('free-product-purchase-report', 'CMS\MyblProductEntryController@freeProductPurchaseReport')
+        ->name('free-product.purchase.report');
+
+    Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
+        ->name('free-product-purchase-msisdn.list');
 });
 
 // 4G Map View Route
