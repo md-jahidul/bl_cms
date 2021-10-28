@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\NotificationSchedule;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
+use App\Repositories\NotificationScheduleRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\Notification;
@@ -29,17 +30,27 @@ class NotificationService
      * @var $NotificationDraftRepository
      */
     protected $notificationDraftRepository;
+    /**
+     * @var NotificationScheduleRepository
+     */
+    private $notificationScheduleRepository;
 
     /**
      * NotificationRepository constructor.
      * @param NotificationDraftRepository $notificationDraftRepository
+     * @param NotificationRepository $notificationRepository
+     * @param NotificationScheduleRepository $notificationScheduleRepository
      */
-    public function __construct(NotificationDraftRepository $notificationDraftRepository, NotificationRepository $notificationRepository)
-    {
+    public function __construct(
+        NotificationDraftRepository $notificationDraftRepository,
+        NotificationRepository $notificationRepository,
+        NotificationScheduleRepository $notificationScheduleRepository
+    ) {
         $this->notificationDraftRepository = $notificationDraftRepository;
         $this->setActionRepository($notificationDraftRepository);
 
         $this->notificationRepository = $notificationRepository;
+        $this->notificationScheduleRepository = $notificationScheduleRepository;
     }
 
     /**
@@ -54,17 +65,17 @@ class NotificationService
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
         unset($data['display_period']);
 
-       /* if ($request->hasFile('image')) {
-            $file = $request->image;
-            $path = $file->storeAs(
-                'notification/images',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-            $data['image'] = $path;
-        } else {
-            $data['image'] = null;
-        }*/
+        /* if ($request->hasFile('image')) {
+             $file = $request->image;
+             $path = $file->storeAs(
+                 'notification/images',
+                 strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                 'public'
+             );
+             $data['image'] = $path;
+         } else {
+             $data['image'] = null;
+         }*/
 
         if (isset($data['image'])) {
             $data['image'] = 'storage/' . $data['image']->store('notification');
@@ -86,17 +97,17 @@ class NotificationService
         $data = $request->all();
         $notification = $this->findOne($id);
 
-       /* if ($request->hasFile('image')) {
-            $file = $request->image;
-            $path = $file->storeAs(
-                'notification/images',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-            $data['image'] = $path;
-        } else {
-            unset($data['image']);
-        }*/
+        /* if ($request->hasFile('image')) {
+             $file = $request->image;
+             $path = $file->storeAs(
+                 'notification/images',
+                 strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                 'public'
+             );
+             $data['image'] = $path;
+         } else {
+             unset($data['image']);
+         }*/
 
         if (isset($data['image'])) {
             $data['image'] = 'storage/' . $data['image']->store('notification');
@@ -176,7 +187,7 @@ class NotificationService
         return $this->notificationRepository->getNotificationReport();
     }
 
-     /**
+    /**
      * Notification Report
      *
      * @return mixed
@@ -186,35 +197,40 @@ class NotificationService
     {
         $draw = $request->get('draw');
         $start = $request->get('start');
-        $length =$request->get('length');
+        $length = $request->get('length');
 
-        $completedNotificationIds = NotificationSchedule::where('status', 'completed')->orderBy('start', 'DESC')->pluck('notification_draft_id')->all();
-        $completedNotifications = $this->notificationDraftRepository->findInIds($completedNotificationIds);
-        $notCompletedNotifications = $this->notificationDraftRepository->findNotIn($completedNotificationIds);
+        $completedNotificationIds = $this->notificationScheduleRepository->getCompletedNotificationDraftIds();
+
+        $notifications = $this->notificationDraftRepository->findAll();
+        $completedNotifications = $notifications->whereIn('id', $completedNotificationIds)
+            ->sortBy(function ($completedNotification) use ($completedNotificationIds) {
+                return array_search($completedNotification->id, $completedNotificationIds);
+            });
+        $notCompletedNotifications = $notifications->whereNotIn('id', $completedNotificationIds);
 
         $builder = new NotificationDraft();
         $builder->orderBy('id', 'desc');
 
-        if($request->has('search') && !empty($request->get('search'))){
-            $input=$request->get('search');
+        if ($request->has('search') && !empty($request->get('search'))) {
+            $input = $request->get('search');
 
-            if(!empty($input['value'])){
-                $titel=$input['value'];
-                $completedNotifications = $completedNotifications->where('title','LIKE', "%{$titel}%")->get();
-                $notCompletedNotifications = $notCompletedNotifications->where('title','LIKE', "%{$titel}%")->get();
+            if (!empty($input['value'])) {
+                $titel = $input['value'];
+                $completedNotifications = $completedNotifications->filter(function ($item) use ($titel) {
+                    return false !== stristr($item->title, $titel);
+                });
+                $notCompletedNotifications = $notCompletedNotifications->filter(function ($item) use ($titel) {
+                    return false !== stristr($item->title, $titel);
+                });
                 $mergedNotifications = $completedNotifications->merge($notCompletedNotifications);
                 $all_items_count = $mergedNotifications->count();
                 $items = $mergedNotifications->slice((int)$start)->take((int)$length);
-            }else{
-                $completedNotifications = $completedNotifications->get();
-                $notCompletedNotifications = $notCompletedNotifications->get();
+            } else {
                 $mergedNotifications = $completedNotifications->merge($notCompletedNotifications);
                 $all_items_count = $mergedNotifications->count();
                 $items = $mergedNotifications->slice((int)$start)->take((int)$length);
             }
         }
-
-        $items = $items->reverse();
 
         $response = [
             'draw' => $draw,
@@ -223,9 +239,9 @@ class NotificationService
             'data' => []
         ];
         $items->each(function ($item) use (&$response) {
-            $starts_at=(!empty($item->starts_at))?date('d-M-Y h:i a', strtotime($item->starts_at)):'';
-            $countSend=$item->getNotification->count().' > '.$item->getNotificationSuccessfullySend->count();
-            $device_type=(!empty($item->device_type))?$item->device_type:'All';
+            $starts_at = (!empty($item->starts_at)) ? date('d-M-Y h:i a', strtotime($item->starts_at)) : '';
+            $countSend = $item->getNotification->count() . ' > ' . $item->getNotificationSuccessfullySend->count();
+            $device_type = (!empty($item->device_type)) ? $item->device_type : 'All';
             $response['data'][] = [
                 'titel' => $item->title,
                 'body' => $item->body,
@@ -278,18 +294,18 @@ class NotificationService
             'details',
             function ($q) use ($request) {
 
-                if($request->has('productCode') && !empty($request->input('productCode'))){
-                    $productCode=trim($request->input('productCode'));
-                      $q->where('product_code','like',"$productCode%");
-                  }
-                  $q->whereIn('content_type', ['data','voice','sms','mix']);
+                if ($request->has('productCode') && !empty($request->input('productCode'))) {
+                    $productCode = trim($request->input('productCode'));
+                    $q->where('product_code', 'like', "$productCode%");
+                }
+                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
             }
         )->get();
         $data = [];
         foreach ($products as $product) {
             $data [] = [
-                'id'    => $product->details->product_code,
-                'text' =>  $product->details->product_code .' (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+                'id' => $product->details->product_code,
+                'text' => $product->details->product_code . ' (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
             ];
         }
 

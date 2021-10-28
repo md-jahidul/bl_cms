@@ -20,7 +20,8 @@ class NotificationDraftRepository extends BaseRepository
 
     public function findInIds($ids)
     {
-        return $this->model->whereIn('id', $ids);
+        $idsOrdered = implode(',', $ids);
+        return $this->model->whereIn('id', $ids)->orderByRaw("FIELD(id, $idsOrdered)");
     }
     public function findNotIn($ids)
     {
