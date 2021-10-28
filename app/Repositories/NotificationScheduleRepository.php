@@ -21,7 +21,7 @@ class NotificationScheduleRepository extends BaseRepository
     public function getCompletedNotificationDraftIds()
     {
         return $this->model->select('start', 'notification_draft_id')->where('status', 'completed')
-                ->orderBy('start', 'DESC')->pluck('notification_draft_id')->all();
+            ->orderBy('start', 'DESC')->pluck('notification_draft_id')->all();
     }
 
 }
