@@ -15,7 +15,8 @@ class CreateCsSelfcareRefereesTable extends Migration
     {
         Schema::create('cs_selfcare_referees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('msisdn')->index();
+            $table->string('referrer_msisdn')->nullable()->index();
+            $table->string('referee_msisdn')->index();
             $table->string('referral_code', 10);
             $table->boolean('is_redeemed')->default(0)->index();
             $table->dateTime('redeemed_at')->nullable();
