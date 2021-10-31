@@ -230,6 +230,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'CMS\PushNotificationController@sendNotificationToAll'
     )->name('notification.send-all');
 
+    Route::get(
+        'guest-user-tracking',
+        'CMS\NotificationController@getGuestUserList'
+    );
+
     // Store category
     Route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');

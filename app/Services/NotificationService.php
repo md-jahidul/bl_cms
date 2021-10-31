@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
 use App\Models\NotificationSchedule;
+use App\Repositories\CustomerRepository;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\NotificationScheduleRepository;
@@ -34,23 +36,30 @@ class NotificationService
      * @var NotificationScheduleRepository
      */
     private $notificationScheduleRepository;
+    /**
+     * @var CustomerRepository
+     */
+    private $customerRepository;
 
     /**
      * NotificationRepository constructor.
      * @param NotificationDraftRepository $notificationDraftRepository
      * @param NotificationRepository $notificationRepository
      * @param NotificationScheduleRepository $notificationScheduleRepository
+     * @param CustomerRepository $customerRepository
      */
     public function __construct(
         NotificationDraftRepository $notificationDraftRepository,
         NotificationRepository $notificationRepository,
-        NotificationScheduleRepository $notificationScheduleRepository
+        NotificationScheduleRepository $notificationScheduleRepository,
+        CustomerRepository $customerRepository
     ) {
         $this->notificationDraftRepository = $notificationDraftRepository;
         $this->setActionRepository($notificationDraftRepository);
 
         $this->notificationRepository = $notificationRepository;
         $this->notificationScheduleRepository = $notificationScheduleRepository;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -310,5 +319,10 @@ class NotificationService
         }
 
         return $data;
+    }
+
+    public function getLoggedOutCustomers()
+    {
+        return $this->customerRepository->getLoggedOutCustomerList();
     }
 }

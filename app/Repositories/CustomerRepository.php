@@ -43,4 +43,10 @@ class CustomerRepository extends BaseRepository
         }
         return $sql->pluck('phone')->toArray();
     }
+
+    public function getLoggedOutCustomerList()
+    {
+        //return $this->model->where('last_login_at', '<>', null)->where('last_logout_at', '<>', null)->get();
+        return $this->model->where('last_login_at', '<', 'last_logout_at')->get();
+    }
 }
