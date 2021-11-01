@@ -217,6 +217,19 @@
         </ul>
     </li>
 
+    <!-- Loyalty Partner Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Loyalty Partner</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('loyalty-partner-image')}}">
+                <a class="menu-item" href="{{ route('loyalty-partner-image.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Partner Image
+                </a>
+            </li>
+        </ul>
+    </li>
+
     @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>

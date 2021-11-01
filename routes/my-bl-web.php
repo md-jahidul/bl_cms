@@ -715,6 +715,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
     Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
 
+    //Loyality Image Upload
+    Route::resource('loyalty-partner-image', 'CMS\LoyaltyPartnerImageController')->except(['show']);
+    Route::get('loyalty-partner-images/filter', 'CMS\LoyaltyPartnerImageController@filter');
+    Route::get('loyalty-partner-images/report', 'CMS\LoyaltyPartnerImageController@report');
 });
 
 // 4G Map View Route
