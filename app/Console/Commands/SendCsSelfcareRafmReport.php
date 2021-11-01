@@ -42,7 +42,7 @@ class SendCsSelfcareRafmReport extends Command
      */
     public function handle()
     {
-        $csSelfcareData = CsSelfcareReferee::get();
+        $csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at', Carbon::today())->get();
         $fileName = 'Reffer_n_Promote_RAFM_Report_' . date_format(Carbon::now(), 'YmdHis');
 
         $writer = WriterEntityFactory::createCSVWriter();

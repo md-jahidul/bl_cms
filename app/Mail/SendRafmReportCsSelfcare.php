@@ -35,8 +35,8 @@ class SendRafmReportCsSelfcare extends Mailable
     {
         $filePath = public_path('storage/cs/' . $this->fileName . '.csv.gz');
         return $this->view('welcome')->subject('CS Selfcare RAFM Report')->attach($filePath, [
-            'as' => 'RAFM REPORT',
+            'as' => $this->fileName . '.csv.gz',
             'mime' => 'application/gzip'
-        ]);;
+        ]);
     }
 }
