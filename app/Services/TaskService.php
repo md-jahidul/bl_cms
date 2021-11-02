@@ -76,7 +76,7 @@ class TaskService extends ApiService
             $data['created_by']                   = auth()->user()->email;
 
             $url      = $this->getHost("/api/v1/campaign-task");
-            $response = $this->CallAPI('POST', $url, []);
+            $response = $this->CallAPI('POST', $url, $data);
 
             return $response['data'];
         } catch (\Exception $exception) {
@@ -103,7 +103,7 @@ class TaskService extends ApiService
             $data['created_by']                   = auth()->user()->email;
 
             $url      = $this->getHost("/api/v1/campaign-task/" . $id);
-            $response = $this->CallAPI('PUT', $url, []);
+            $response = $this->CallAPI('PUT', $url, $data);
 
             return $response['data'];
         } catch (\Exception $exception) {

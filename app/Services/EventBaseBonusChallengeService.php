@@ -92,14 +92,14 @@ class EventBaseBonusChallengeService extends ApiService
             unset($data['day_tasks']);
 
             if (!empty($data['icon_image'])) {
-                $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
+                $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             }
             $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
             $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
             $data['created_by']                   = auth()->user()->email;
 
             $url      = $this->getHost("/api/v1/campaign-challenge");
-            $response = $this->CallAPI('POST', $url, []);
+            $response = $this->CallAPI('POST', $url, $data);
 
             return $response['data'];
         } catch (\Exception $exception) {
@@ -136,7 +136,7 @@ class EventBaseBonusChallengeService extends ApiService
             unset($data['day_tasks']);
 
             if (!empty($data['icon_image'])) {
-                $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
+                $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             } else {
                 $data['icon_image'] = $data['icon_image_old'];
             }
@@ -147,7 +147,7 @@ class EventBaseBonusChallengeService extends ApiService
             $data['base_msisdn_id']               = 1;
 
             $url      = $this->getHost("/api/v1/campaign-challenge/" . $id);
-            $response = $this->CallAPI('PUT', $url, []);
+            $response = $this->CallAPI('PUT', $url, $data);
 
             return $response['data'];
         } catch (\Exception $exception) {
@@ -162,6 +162,9 @@ class EventBaseBonusChallengeService extends ApiService
 
     public function delete($id): string
     {
-        dd($id);
+        $client   = new ApiService();
+        $url      = $this->getHost("/api/v1/campaign-challenge/" . $id);
+
+        return $client->CallAPI("DELETE", $url, []);
     }
 }
