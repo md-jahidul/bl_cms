@@ -161,7 +161,7 @@
                                 <div id="image-input" class="form-group col-md-6 mb-2">
                                     <div class="form-group">
                                         <label for="image_url">Upload Icon </label>
-                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-default-file="{{ asset($task['icon_image']) }}" data-allowed-file-extensions="png jpg gif json" />
+                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-default-file="{{ asset($task['icon_image']) }}" data-allowed-file-extensions="png jpg jpeg gif json" />
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                         <small id="massage"></small>

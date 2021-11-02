@@ -29,7 +29,7 @@
 
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Challenges</label>
-                                    <select class="select22 form-control" name="task_ids[]" multiple="multiple" required data-validation-required-message="Please select challenge">
+                                    <select class="select22 form-control" name="challenge_ids[]" multiple="multiple" required data-validation-required-message="Please select challenge">
                                         @foreach($challenges as $challenge)
                                         <option value="{{ $challenge['id'] }}" {{in_array($challenge['id'], $challengeIds) ? 'selected':''}}>{{ $challenge['title'] }}</option>
                                         @endforeach
@@ -120,7 +120,7 @@
                                 <div id="image-input" class="form-group col-md-6 mb-2">
                                     <div class="form-group">
                                         <label for="image_url">Upload Icon</label>
-                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-default-file="{{ asset($campaign['icon_image']) }}" data-allowed-file-extensions="png jpg gif" />
+                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-default-file="{{ asset($campaign['icon_image']) }}" data-allowed-file-extensions="png jpg jpeg gif json" />
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                         <small id="massage"></small>
@@ -190,13 +190,13 @@
 
         $('.dropify_image').dropify({
             messages: {
-                'default': 'Browse for an Image to upload',
+                'default': 'Browse for an Image/Json to upload',
                 'replace': 'Click to replace',
                 'remove': 'Remove',
-                'error': 'Choose correct Image file'
+                'error': 'Choose correct Image/Json file'
             },
             error: {
-                'imageFormat': 'The image must be valid format'
+                'imageFormat': 'File must be valid format'
             }
         });
     });

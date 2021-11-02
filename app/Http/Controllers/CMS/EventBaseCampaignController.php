@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Requests\StoreEventCampaignRequest;
-use App\Http\Requests\StoreTaskRequest;
 use App\Services\EventBaseBonusCampaignService;
 use App\Services\ProductCoreService;
 use App\Services\TaskService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\EventBaseBonusChallengeService;
 use Illuminate\Support\Facades\Session;
@@ -101,8 +99,8 @@ class EventBaseCampaignController extends Controller
     public function destroy($id)
     {
         $response = $this->campaignService->delete($id);
-        //Session::flash('message', $response->getContent());
+        Session::flash('message', 'Campaign Deleted');
 
-        return redirect('/event-base-bonus/tasks');
+        return redirect('/event-base-bonus/campaigns');
     }
 }
