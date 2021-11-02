@@ -429,14 +429,6 @@
                                     </fieldset>
                                 </div>
 
-{{--                                <div class="col-md-4 skin mt-2">--}}
-{{--                                    <fieldset>--}}
-{{--                                        <input type="checkbox" id="is_free_product" value="1" name="is_free_product"--}}
-{{--                                               @if($details->is_free_product) checked @endif>--}}
-{{--                                        <label for="is_free_product">Is Free Product</label>--}}
-{{--                                    </fieldset>--}}
-{{--                                </div>--}}
-
                                 <div class="form-group col-md-8 mb-2" id="cta_action">
                                     <label for="base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
@@ -510,17 +502,6 @@
                 placeholder: 'Please Select Tags',
                 maximumSelectionLength: 3
             });
-
-            // Free product Checkbox Event For Show Base Msisdn Group
-            let isFreeProduct = $('#is_free_product');
-            let baseGroup = $('#base_msisdn_groups_id');
-            isFreeProduct.click(function () {
-                if (isFreeProduct.prop("checked")) {
-                    baseGroup.parent().removeClass('d-none')
-                } else {
-                    baseGroup.parent().addClass('d-none')
-                }
-            })
         });
 
 
