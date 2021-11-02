@@ -27,7 +27,7 @@ class EventBaseBonusV2CampaignService
     public function store($data): array
     {
         if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_campaign');
+            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
         }
         $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
         $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
@@ -43,7 +43,7 @@ class EventBaseBonusV2CampaignService
     public function update($data, $id): array
     {
         if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_task');
+            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
         } else {
             $data['icon_image'] = $data['icon_image_old'];
         }

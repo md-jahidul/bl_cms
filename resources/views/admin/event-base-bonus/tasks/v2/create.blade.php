@@ -160,7 +160,7 @@
                                 <div id="image-input" class="form-group col-md-6 mb-2">
                                     <div class="form-group">
                                         <label for="image_url">Upload Icon </label>
-                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-default-file="{{ isset($campaign->icon) ? url('/' .$campaign->icon) : ''}}" data-allowed-file-extensions="png jpg gif json" required />
+                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-default-file="{{ isset($campaign->icon) ? url('/' .$campaign->icon) : ''}}" data-allowed-file-extensions="png jpg jpeg gif json" required />
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                         <small id="massage"></small>

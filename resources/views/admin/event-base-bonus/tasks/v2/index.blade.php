@@ -47,7 +47,7 @@
                                     <td>{{ $task['tracking_type'] == 1 ? 'Automatic' : 'Manual' }}</td>
                                     <td>{{ $task['status'] ? 'active':'inactive'}}</td>
                                     <td>
-                                        <a href="{{ url('event-base-bonus/tasks/'.$task['id']).'/edit' }}" class="mr-3">
+                                        <a href="{{ url('event-base-bonus/v2/tasks/'.$task['id']).'/edit' }}" class="mr-3">
                                             <i class="la la-pencil text-primary"></i>
                                         </a>
                                         <button data-id="{{$task['id']}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="border-0 btn btn-outline-danger delete"><i class="la la-trash"></i></button>
@@ -85,7 +85,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "{{ url('event-base-bonus/tasks-del') }}/" + id,
+                    url: "{{ url('event-base-bonus/v2/tasks-del') }}/" + id,
                     methods: "get",
                     success: function(res) {
                         Swal.fire(

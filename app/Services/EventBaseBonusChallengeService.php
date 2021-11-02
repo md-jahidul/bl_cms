@@ -65,7 +65,7 @@ class EventBaseBonusChallengeService
         unset($data['day_tasks']);
 
         if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
+            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
         }
         $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
         $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
@@ -100,7 +100,7 @@ class EventBaseBonusChallengeService
         unset($data['day_tasks']);
 
         if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_challenge');
+            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
         } else {
             $data['icon_image'] = $data['icon_image_old'];
         }
