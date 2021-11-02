@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\SliderImageRepository;
+use Illuminate\Support\Facades\Redis;
 
 class MyblSliderImageService
 {
@@ -85,7 +86,15 @@ class MyblSliderImageService
                         BaseImageCta::create($segmentCTA);
                     }
                 }
+
+                /**
+                 * Removing redis cache for segment banner to impact the change
+                 */
+                if ($sliderImg->user_type === 'segment_wise_banner') {
+                    $this->delSliderRedisCache();
+                }
             });
+
             return new Response("Image has been successfully added");
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
@@ -166,6 +175,12 @@ class MyblSliderImageService
                     BaseImageCta::where('banner_id', $id)->delete();
                 }
             });
+            /**
+             * Removing redis cache for segment banner to impact the change
+             */
+            if ($sliderImage->user_type === 'segment_wise_banner') {
+                $this->delSliderRedisCache();
+            }
             return response("Image has has been successfully updated");
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
@@ -183,6 +198,17 @@ class MyblSliderImageService
     {
         $sliderImage = $this->findOne($id);
         $sliderImage->delete();
+        /**
+         * Removing redis cache for segment banner to impact the change
+         */
+        if ($sliderImage->user_type === 'segment_wise_banner') {
+            $this->delSliderRedisCache();
+        }
         return Response('Image has been successfully deleted');
+    }
+
+    public function delSliderRedisCache($redisKey = 'mybl_segmented_banners')
+    {
+        Redis::del($redisKey);
     }
 }

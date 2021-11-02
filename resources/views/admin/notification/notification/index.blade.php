@@ -26,7 +26,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-10">
-
+                            <li><small style="color: red">N.B. : Sorted according to recently base upload</small></li>
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                 searching: true,
                 "bDestroy": true,
                 "pageLength": 10,
-                "order": []
+                "order": [],
             });
         });
 
