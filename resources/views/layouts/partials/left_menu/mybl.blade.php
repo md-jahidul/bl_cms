@@ -184,6 +184,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Purchase Report</a>
                 </li>
+                <li class="{{ is_active_url('guest.user.track')}}">
+                    <a class="menu-item" href="{{ route('guest.user.track') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i>Guest User Tracking</a>
+                </li>
 
             </ul>
         </li>

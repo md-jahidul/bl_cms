@@ -217,4 +217,10 @@ class NotificationController extends Controller
     public function getProductList(Request $request){
         return $this->notificationService->getActiveProducts($request);
     }
+
+    public function getGuestUserList()
+    {
+        $guestUsers = $this->notificationService->getLoggedOutCustomers();
+        return view('admin.notification.guest-user-tracking.list')->with('guestUsers', $guestUsers);
+    }
 }

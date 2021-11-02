@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\CustomerRepository;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
 use App\Traits\CrudTrait;
@@ -27,17 +28,24 @@ class NotificationService
      * @var $NotificationDraftRepository
      */
     protected $notificationDraftRepository;
+    /**
+     * @var CustomerRepository
+     */
+    private $customerRepository;
 
     /**
      * NotificationRepository constructor.
      * @param NotificationDraftRepository $notificationDraftRepository
+     * @param NotificationRepository $notificationRepository
+     * @param CustomerRepository $customerRepository
      */
-    public function __construct(NotificationDraftRepository $notificationDraftRepository, NotificationRepository $notificationRepository)
+    public function __construct(NotificationDraftRepository $notificationDraftRepository, NotificationRepository $notificationRepository, CustomerRepository $customerRepository)
     {
         $this->notificationDraftRepository = $notificationDraftRepository;
         $this->setActionRepository($notificationDraftRepository);
 
         $this->notificationRepository = $notificationRepository;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -242,5 +250,10 @@ class NotificationService
     public function removeMuteUserFromList($user_phone_num, array $mute_user_phone)
     {
         return $this->notificationRepository->removeMuteUserFromList($user_phone_num, $mute_user_phone);
+    }
+
+    public function getLoggedOutCustomers()
+    {
+        return $this->customerRepository->getLoggedOutCustomerList();
     }
 }
