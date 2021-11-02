@@ -34,13 +34,19 @@ class CustomerRepository extends BaseRepository
     {
         $notificationInfo = NotificationDraft::find($notification_id);
         $sql = $this->model::whereIn('phone', $user_phone);
-        if (!empty($notificationInfo->customer_type) && $notificationInfo->customer_type!=='all') {
+        if (!empty($notificationInfo->customer_type) && $notificationInfo->customer_type !== 'all') {
             $sql->where('number_type', $notificationInfo->customer_type);
         }
 
-        if (!empty($notificationInfo->device_type) && $notificationInfo->device_type!=='all') {
+        if (!empty($notificationInfo->device_type) && $notificationInfo->device_type !== 'all') {
             $sql->where('device_type', $notificationInfo->device_type);
         }
         return $sql->pluck('phone')->toArray();
+    }
+
+    public function getCustomerInfo($msisdn)
+    {
+        $msisdn = '88' . $msisdn;
+        return $this->model->where('msisdn', $msisdn)->first();
     }
 }

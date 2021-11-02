@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\SendRafmReportCsSelfcare;
 use App\Models\CsSelfcareReferee;
+use App\Repositories\CustomerRepository;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -38,9 +39,12 @@ class SendCsSelfcareRafmReport extends Command
     /**
      * Execute the console command.
      *
+     * @param CustomerRepository $customerRepository
      * @return mixed
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
      */
-    public function handle()
+    public function handle(CustomerRepository $customerRepository)
     {
         $csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at', Carbon::today())->get();
         $fileName = 'Reffer_n_Promote_RAFM_Report_' . date_format(Carbon::now(), 'YmdHis');
@@ -65,15 +69,18 @@ class SendCsSelfcareRafmReport extends Command
         foreach ($csSelfcareData as $csSelfcareDatum) {
             $data[0] = Carbon::parse($csSelfcareDatum->created_at)->toDateTimeString();
             $data[1] = Carbon::parse($csSelfcareDatum->created_at)->toDateString();
-            $data[2] = $csSelfcareDatum->referrer_msisdn;
+            $data[2] = data_get($csSelfcareDatum, 'referrer_msisdn','');;
             $data[3] = $csSelfcareDatum->referee_msisdn;
             $data[4] = $csSelfcareDatum->referee_msisdn;
             $data[5] = 'referee';
             $data[6] = $csSelfcareDatum->is_redeemed ? 'Success' : 'Failed';
-            $data[7] = '';
-            $data[8] = '';
+            $data[7] = $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn) ? $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn)->created_at : '';
+            $data[8] = $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
+            $data[9] = $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
+
             $row = WriterEntityFactory::createRowFromArray($data);
             $writer->addRow($row);
+            $data = [];
         }
 
         $writer->close();
@@ -112,4 +119,10 @@ class SendCsSelfcareRafmReport extends Command
             return $destination;
         }
     }
+
+    public function getCustomerInfo($customerRepository, $msisdn)
+    {
+        return $customerRepository->getCustomerInfo($msisdn);
+    }
+
 }
