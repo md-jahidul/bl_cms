@@ -349,14 +349,6 @@ class ProductCoreService
                                     }
                                     $mybl_data[$field] = $time;
                                     break;
-                                case "is_free_product":
-                                    $isFreeProduct = strtolower($cells[$index]->getValue());
-                                    if (!empty($isFreeProduct) && $isFreeProduct == "yes") {
-                                        $mybl_data[$field] = 1;
-                                    } elseif (!empty($isFreeProduct) && $isFreeProduct == "no") {
-                                        $mybl_data[$field] = 0;
-                                    }
-                                    break;
                                 default:
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
@@ -893,7 +885,6 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
-//        $data['is_free_product'] = isset($request->is_free_product);
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
         try {
@@ -1023,7 +1014,6 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
-//        $data['is_free_product'] = isset($request->is_free_product);
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
         if ($request->content_type == "data") {
@@ -1178,8 +1168,7 @@ class ProductCoreService
                 $insert_data[30] = ($product->is_visible) ? 'Yes' : 'No';
                 $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
                 $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
-                $insert_data[33] = ($product->is_free_product) ? 'Yes' : 'No';
-                $insert_data[34] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[33] = ($product->status) ? 'Yes' : 'No';
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
