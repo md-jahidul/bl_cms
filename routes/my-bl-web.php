@@ -715,6 +715,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
     Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
 
+    //Mybl Welcome Banner
+    Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
+
 });
 
 // 4G Map View Route
