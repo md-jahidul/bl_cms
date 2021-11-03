@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Http\Requests\StoreEventCampaignRequest;
-use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\StoreEventBasedCampaignRequest;
 use App\Services\EventBaseBonusV2CampaignService;
 use App\Services\ProductCoreService;
 use App\Services\TaskService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\EventBaseBonusChallengeService;
 use Illuminate\Support\Facades\Session;
@@ -43,7 +41,7 @@ class EventBaseCampaignV2Controller extends Controller
         return view('admin.event-base-bonus.campaigns.v2.create', compact('products', 'challenges'));
     }
 
-    public function store(StoreEventCampaignRequest $request)
+    public function store(StoreEventBasedCampaignRequest $request)
     {
         $response = $this->campaignService->store($request->except('_token'));
 
@@ -62,7 +60,7 @@ class EventBaseCampaignV2Controller extends Controller
         return view('admin.event-base-bonus.campaigns.v2.edit', compact('campaign', 'products', 'challenges', 'challengeIds'));
     }
 
-    public function update(StoreEventCampaignRequest $request, $id)
+    public function update(StoreEventBasedCampaignRequest $request, $id)
     {
         $response = $this->campaignService->update($request->except('_token', '_method'), $id);
         Session::flash('message', 'Updated successful');

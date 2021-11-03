@@ -136,7 +136,7 @@
 
                                     <div class="form-group col-md-6 mb-2" id="cta_action">
                                         <label for="redirect_url">Select Base Msisdn Group (If Any)</label>
-                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id" class="browser-default custom-select" required>
+                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id" class="browser-default custom-select">
                                             <option value="">Select Base Msisdn Group</option>
                                             @foreach ($baseMsisdnGroups as $key => $value)
                                                 <option value="{{ $value->id }}" {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
