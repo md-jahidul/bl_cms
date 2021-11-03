@@ -5,9 +5,12 @@ namespace App\Http\Controllers\CMS;
 use App\Models\AgentList;
 use App\Models\AgentDeeplinkDetail;
 use App\Models\MyBlInternetOffersCategory;
+use App\Repositories\MyblManageItemRepository;
 use App\Services\DynamicDeeplinkService;
 use App\Services\FeedCategoryService;
+use App\Services\MyblAppMenuService;
 use App\Services\MyBlInternetOffersCategoryService;
+use App\Services\MyblManageService;
 use App\Services\StoreCategoryService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -30,6 +33,7 @@ class DynamicDeeplinkController extends Controller
     protected const STORE = 'store';
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
+    protected const OTHER = 'others';
     /**
      * @var MyBlInternetOffersCategoryService
      */
@@ -42,6 +46,14 @@ class DynamicDeeplinkController extends Controller
      * @var FeedCategoryService
      */
     private $feedCategoryService;
+    /**
+     * @var MyblAppMenuService
+     */
+    private $appMenuService;
+    /**
+     * @var MyblManageItemRepository
+     */
+    private $manageItemRepository;
 
     /**
      * DynamicDeeplinkService constructor.
@@ -51,12 +63,16 @@ class DynamicDeeplinkController extends Controller
         DynamicDeeplinkService $dynamicDeeplinkService,
         MyBlInternetOffersCategoryService $internetOffersCategoryService,
         FeedCategoryService $feedCategoryService,
-        StoreCategoryService $storeCategoryService
+        StoreCategoryService $storeCategoryService,
+        MyblAppMenuService $appMenuService,
+        MyblManageItemRepository $manageItemRepository
     ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->internetOffersCategoryService = $internetOffersCategoryService;
         $this->feedCategoryService = $feedCategoryService;
         $this->storeCategoryService = $storeCategoryService;
+        $this->appMenuService = $appMenuService;
+        $this->manageItemRepository = $manageItemRepository;
         $this->middleware('auth');
     }
 
@@ -95,5 +111,25 @@ class DynamicDeeplinkController extends Controller
     {
         $internetCat = $this->internetOffersCategoryService->findOne($request->id);
         return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $internetCat, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|mixed
+     */
+    public function menuDeepLinkCreate(Request $request)
+    {
+        $menu = $this->appMenuService->findOne($request->id);
+        return $this->dynamicDeeplinkService->generateDeeplink(self::OTHER, $menu, $request);
+    }
+
+    /**
+     * @param Request $request
+     * @return array|mixed
+     */
+    public function manageDeepLinkCreate(Request $request)
+    {
+        $manage = $this->manageItemRepository->findOne($request->id);
+        return $this->dynamicDeeplinkService->generateDeeplink(self::OTHER, $manage, $request);
     }
 }

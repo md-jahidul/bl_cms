@@ -60,7 +60,8 @@ class MyblAppMenuController extends Controller
     {
         $parentMenu = $this->menuService->findOne($parent_id);
         $ctaActions = Helper::navigationActionList();
-        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu', 'ctaActions'));
+        $deeplinkActions = Helper::deepLinkList();
+        return view('admin.mybl-menu.create', compact('parent_id', 'parentMenu', 'ctaActions', 'deeplinkActions'));
     }
 
     /**
@@ -96,7 +97,8 @@ class MyblAppMenuController extends Controller
     {
         $menu = $this->menuService->findOrFail($id);
         $ctaActions = Helper::navigationActionList();
-        return view('admin.mybl-menu.edit', compact('menu', 'ctaActions'));
+        $deeplinkActions = Helper::deepLinkList();
+        return view('admin.mybl-menu.edit', compact('menu', 'ctaActions', 'deeplinkActions'));
     }
 
     /**
