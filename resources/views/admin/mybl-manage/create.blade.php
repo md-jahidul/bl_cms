@@ -102,10 +102,6 @@
                                             @endif
                                         </div>
 
-                                        @php
-                                            $actionList = Helper::navigationActionList();
-                                        @endphp
-
                                         @if($parentMenu->type != "game")
                                             <div class="form-group col-md-12 mb-2" id="cta_action">
                                                 <label for="redirect_url">CTA Action</label>
@@ -125,6 +121,22 @@
                                         @endif
 
                                         @if($parentMenu->type == "service")
+                                            @php
+                                                $deeplinkActions = Helper::deepLinkList();
+                                            @endphp
+
+                                            <div class="form-group col-md-12 mb-2">
+                                                <label for="redirect_url">Deeplink Action</label>
+                                                <select id="deeplink_action" name="deep_link_slug"
+                                                        class="browser-default custom-select">
+                                                    <option value="">Select Action</option>
+                                                    @foreach ($deeplinkActions as $key => $value)
+                                                        <option value="{{ $key }}">{{ $value }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="help-block"></div>
+                                            </div>
+
                                             <div class="col-md-6 skin skin-square">
                                                 <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                                     <input type="checkbox" name="show_for_guest" value="1" id="show_for_guest">
@@ -283,6 +295,7 @@
                 }
             });
             $("#navigate_action").select2();
+            $("#deeplink_action").select2();
         })
     </script>
 @endpush
