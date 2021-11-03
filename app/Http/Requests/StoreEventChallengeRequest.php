@@ -24,12 +24,12 @@ class StoreEventChallengeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'                        => 'required|max:150',
-            'title_bn'                     => 'required|max:150',
-            'description'                  => 'required|max:250',
-            'description_bn'               => 'required|max:250',
-            'btn_text'                     => 'required|max:250',
-            'btn_text_bn'                  => 'required|max:250',
+            'title'                        => 'required|max:255',
+            'title_bn'                     => 'required|max:255',
+            'description'                  => 'required|max:255',
+            'description_bn'               => 'required|max:255',
+            'btn_text'                     => 'required|max:255',
+            'btn_text_bn'                  => 'required|max:255',
             'start_date'                   => 'required|max:50',
             'end_date'                     => 'required|max:50',
             'reward_product_code_prepaid'  => 'required|max:50',

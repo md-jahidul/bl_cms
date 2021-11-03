@@ -21,16 +21,6 @@
                                 <h5 class="menu-title"><strong> Challenge Create Form</strong></h5>
                                 <hr>
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2" id="cta_action">
-                                        <label for="redirect_url" class="required">Select Base Msisdn Title</label>
-                                        <select id="base_msisdn_groups_id" name="msisdn_base_group_id" class="browser-default custom-select" required>
-                                            <option value="">Select Action</option>
-                                            @foreach ($baseMsisdnGroups as $key => $value)
-                                                <option value="{{ $value->id }}" {{ isset($challenge) && $challenge['msisdn_base_group_id'] == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Title En</label>
                                         <input required maxlength="100" data-validation-required-message="Title is required" data-validation-maxlength-message="Title can not be more then 200 Characters" value="{{ $challenge['title'] }}" type="text" class="form-control" placeholder="Enter title in English" name="title">
@@ -142,6 +132,17 @@
                                                 <div class="help-block"> {{ $errors->first('status') }}</div>
                                             @endif
                                         </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6 mb-2" id="cta_action">
+                                        <label for="redirect_url">Select Base Msisdn Group (If Any)</label>
+                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id" class="browser-default custom-select" required>
+                                            <option value="">Select Base Msisdn Group</option>
+                                            @foreach ($baseMsisdnGroups as $key => $value)
+                                                <option value="{{ $value->id }}" {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
                                     </div>
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
