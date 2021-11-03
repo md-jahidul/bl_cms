@@ -15,7 +15,7 @@
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
                 <div class="card-body card-dashboard">
-                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/v2/tasks/'.$task['id'])}}" enctype="multipart/form-data" method="POST">
+                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/tasks/'.$task['id'])}}" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group col-12 mb-2 file-repeater">
