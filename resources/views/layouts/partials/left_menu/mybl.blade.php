@@ -67,14 +67,14 @@
 
     @if( auth()->user()->can_view('ShortCut') )
         <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i
-                        class="la la-fighter-jet"></i>
+                    class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Shortcuts</span></a>
         </li>
     @endif
 
     @if( auth()->user()->can_view('MyblProductEntry') )
         <li class="{{ is_active_url('mybl/core-product') }} nav-item"><a href="{{route('mybl.product.index')}}"><i
-                        class="la la-list"></i>
+                    class="la la-list"></i>
                 <span class="menu-title">Products</span></a>
 
             <ul class="menu-content">
@@ -224,6 +224,26 @@
                     </li>
                 </ul>
             </li>
+
+            <!-- Campaign V2 Menu -->
+            <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus P2</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_match('event-base-bonus/v2/tasks')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/v2/tasks') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Tasks</a>
+                    </li>
+                    <li class="{{ is_active_match('event-base-bonus/v2/campaigns')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/v2/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Campaign</a>
+                    </li>
+                    <li class="{{ is_active_match('event-base-bonus/v2/challenges')}}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/v2/challenges') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-history"></i> Challenge</a>
+                    </li>
+                    <li class="{{ is_active_match('event-base-bonus/v2/analytics') }}">
+                        <a class="menu-item" href="{{ url('event-base-bonus/v2/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
+                    </li>
+                </ul>
+            </li>
+
 
             <li class="{{is_active_url('flash-hour-campaign')}}">
                 <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} "
@@ -510,7 +530,7 @@
 
     @if( auth()->user()->can_view('PrivacyPolicy') )
         <li class="{{ is_active_url('/privacy-policy') }} nav-item"><a href="{{route('privacy-policy.show')}}"><i
-                        class="la la-paragraph"></i>
+                    class="la la-paragraph"></i>
                 <span class="menu-title">Privacy and Policy</span></a>
         </li>
     @endif
@@ -574,14 +594,14 @@
 
     @if( auth()->user()->can_view('HelpCenter') )
         <li class="{{ is_active_url('/helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a
-                    href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
+                href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
         </li>
     @endif
 
     @if( auth()->user()->can_view('Setting') )
         <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i
-                        class="la la-cogs"></i>
+                    class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
         </li>
     @endif

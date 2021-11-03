@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEventCampaignRequest extends FormRequest
+class StoreEventChallengeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,19 @@ class StoreEventCampaignRequest extends FormRequest
     {
         return [
             'title'                        => 'required|max:150',
+            'title_bn'                     => 'required|max:150',
             'description'                  => 'required|max:250',
             'description_bn'               => 'required|max:250',
+            'btn_text'                     => 'required|max:250',
+            'btn_text_bn'                  => 'required|max:250',
             'start_date'                   => 'required|max:50',
             'end_date'                     => 'required|max:50',
             'reward_product_code_prepaid'  => 'required|max:50',
             'reward_product_code_postpaid' => 'required|max:50',
-            'challenge_ids'                     => 'required',
+            'reward_text'                  => 'required|max:50',
             'status'                       => 'required|boolean',
+            'day'                          => 'required|integer',
+            'task_pick_type'               => 'required|boolean'
         ];
     }
 }

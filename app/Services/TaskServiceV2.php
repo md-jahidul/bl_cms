@@ -2,15 +2,22 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Exception\ClientException;
-
-class EventBaseBonusCampaignService
+class TaskServiceV2
 {
     public function findAll(): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns";
-        $response = $client->CallAPI('GET', $url, []);
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-task";
+        $response  = $client->CallAPI('GET', $url, []);
+
+        return $response['data'];
+    }
+
+    public function eventAll()
+    {
+        $client   = new ApiService();
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/event-list";
+        $response  = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
     }
@@ -18,7 +25,7 @@ class EventBaseBonusCampaignService
     public function findOne($id): array
     {
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns/" . $id;
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-task/" . $id;
         $response  = $client->CallAPI('GET', $url, []);
 
         return $response['data'];
@@ -27,23 +34,21 @@ class EventBaseBonusCampaignService
     public function store($data): array
     {
         if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_campaign');
+            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event_bonus_task', $data['icon_image']->getClientOriginalName());
         }
         $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
         $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
         $data['created_by']                   = auth()->user()->email;
-        $data['base_msisdn_id']               = 1;
 
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns";
-
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-task";
         return $client->CallAPI("POST", $url, $data);
     }
 
     public function update($data, $id): array
     {
         if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->store('event_bonus_task');
+            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event_bonus_task', $data['icon_image']->getClientOriginalName());
         } else {
             $data['icon_image'] = $data['icon_image_old'];
         }
@@ -51,16 +56,18 @@ class EventBaseBonusCampaignService
         $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
         $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
         $data['created_by']                   = auth()->user()->email;
-        $data['base_msisdn_id']               = 1;
 
         $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaigns/" . $id;
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-task/" . $id;
 
         return $client->CallAPI("PUT", $url, $data);
     }
 
-    public function delete($id): string
+    public function delete($id): array
     {
-        dd($id);
+        $client   = new ApiService();
+        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task/" . $id;
+
+        return $client->CallAPI("DELETE", $url, []);
     }
 }

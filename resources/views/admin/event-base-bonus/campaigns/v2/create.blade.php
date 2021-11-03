@@ -6,7 +6,7 @@
 <li class="breadcrumb-item active"> Campaign Create</li>
 @endsection
 @section('action')
-<a href="{{ url('event-base-bonus/campaigns') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+<a href="{{ url('event-base-bonus/v2/campaigns') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
 
@@ -15,7 +15,7 @@
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
                 <div class="card-body card-dashboard">
-                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/campaigns')}}" enctype="multipart/form-data" method="POST">
+                    <form id="feed-form" novalidate class="form row" action="{{url('event-base-bonus/v2/campaigns')}}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="form-group col-12 mb-2 file-repeater">
                             <div class="row mb-1">
@@ -27,10 +27,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="dashboard_card_title" class="required">Tasks</label>
-                                    <select class="select22 form-control" name="task_ids[]" multiple="multiple" required data-validation-required-message="Please select task">
-                                        @foreach($tasks as $task)
-                                        <option value="{{ $task['id'] }}">{{ $task['title'] }}</option>
+                                    <label for="dashboard_card_title" class="required">Challenges</label>
+                                    <select class="select22 form-control" name="challenge_ids[]" multiple="multiple" required data-validation-required-message="Please select challenge">
+                                        @foreach($challenges as $challenge)
+                                        <option value="{{ $challenge['id'] }}">{{ $challenge['title'] }}</option>
                                         @endforeach
 
                                     </select>
@@ -119,7 +119,7 @@
                                 <div id="image-input" class="form-group col-md-6 mb-2">
                                     <div class="form-group">
                                         <label for="image_url">Upload Icon</label>
-                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-allowed-file-extensions="png jpg gif" required />
+                                        <input type="file" id="image_url" name="icon_image" class="dropify_image" data-height="80" data-allowed-file-extensions="png jpg jpeg gif json" required />
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                         <small id="massage"></small>
@@ -146,7 +146,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+<link rel="stylesheet" href="{{ asset('app-assets/vendors/css/dropify/dropify.min.css') }}">
 
 @endpush
 
@@ -155,40 +155,47 @@
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script type="text/javascript" src="{{ asset('app-assets/vendors/js/dropify/dropfiy.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+
         $(".select22").select2();
         $(".select22").on("select2:select", function(evt) {
             var element = evt.params.data.element;
             var $element = $(element);
+
             $element.detach();
             $(this).append($element);
             $(this).trigger("change");
         });
+
         var date = new Date();
         date.setDate(date.getDate());
         $('#start_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             showClose: true,
         });
+
         $('#end_date').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             useCurrent: false, //Important! See issue #1075
             showClose: true,
+
         });
+
         $('.product_code').selectize({
             create: true,
         });
+
         $('.dropify_image').dropify({
             messages: {
-                'default': 'Browse for an Image to upload',
+                'default': 'Browse for an Image/Json to upload',
                 'replace': 'Click to replace',
                 'remove': 'Remove',
-                'error': 'Choose correct Image file'
+                'error': 'Choose correct Image/Json file'
             },
             error: {
-                'imageFormat': 'The image must be valid format'
+                'imageFormat': 'File must be valid format'
             }
         });
     });
