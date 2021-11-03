@@ -715,6 +715,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
     Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
 
+    /*
+    * Event Base bonus
+    */
+    Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
+    Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
+    Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
+    Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');
+    Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
+    Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
+    Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
+
 });
 
 // 4G Map View Route
