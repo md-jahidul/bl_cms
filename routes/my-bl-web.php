@@ -844,6 +844,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('loyalty-partner-image', 'CMS\LoyaltyPartnerImageController')->except(['show']);
     Route::get('loyalty-partner-images/filter', 'CMS\LoyaltyPartnerImageController@filter');
     Route::get('loyalty-partner-images/report', 'CMS\LoyaltyPartnerImageController@report');
+
+    //Mybl Welcome Banner
+    Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
 });
 
 // 4G Map View Route
