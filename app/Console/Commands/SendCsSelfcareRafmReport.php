@@ -9,6 +9,7 @@ use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class SendCsSelfcareRafmReport extends Command
 {
@@ -86,8 +87,10 @@ class SendCsSelfcareRafmReport extends Command
         $writer->close();
 
         $gzipPath = $this->gzCompressFile($fileName);
-
-        if ($gzipPath) {
+        $fileExistance = Storage::disk('cs-selfcare')->exists($fileName . '.csv.gz');
+        if ($gzipPath && $fileExistance) {
+            $file = Storage::disk('cs-selfcare')->get($fileName . '.csv.gz');
+            $sendFile = Storage::disk('sftp')->put('',$file);
             Mail::to(config('constants.cs_selfcare.rafm_report_mail'))->send(new SendRafmReportCsSelfcare($fileName));
         }
         dd('completed');
