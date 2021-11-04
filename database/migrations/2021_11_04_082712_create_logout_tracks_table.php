@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLogoutTimeToCustomersTable extends Migration
+class CreateLogoutTracksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddLogoutTimeToCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->timestamp('last_logout_at')->after('last_login_at')->nullable()->index();
+        Schema::create('logout_tracks', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('customer_id')->index();
+            $table->timestamp('last_logout_at')->nullable()->index();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddLogoutTimeToCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('last_logout_at');
-        });
+        Schema::dropIfExists('logout_tracks');
     }
 }
