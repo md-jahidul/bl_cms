@@ -17,6 +17,7 @@ class CreateLogoutTracksTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->index();
             $table->timestamp('last_logout_at')->nullable()->index();
+            $table->boolean('is_notified')->default(0)->index();
             $table->timestamps();
         });
     }
