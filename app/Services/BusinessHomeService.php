@@ -83,7 +83,9 @@ class BusinessHomeService {
         $update['name'] = $request->name_en;
         $update['name_bn'] = $request->name_bn;
         $update['alt_text'] = $request->alt_text;
+        $update['alt_text_bn'] = $request->alt_text_bn;
         $update['banner_name'] = $request->banner_name;
+        $update['banner_name_bn'] = $request->banner_name_bn;
         $update['url_slug'] = $request->url_slug;
         $update['url_slug_bn'] = $request->url_slug_bn;
         $update['schema_markup'] = $request->schema_markup;
@@ -229,7 +231,9 @@ class BusinessHomeService {
         try {
 
             $request->validate([
-                'home_sort' => 'required'
+                'home_sort' => 'required',
+                'image_name_en' => 'unique:business_home_banner,image_name_en,' . $request->banner_id,
+                'image_name_bn' => 'unique:business_home_banner,image_name_bn,' . $request->banner_id,
             ]);
 
             //file upload in storege
@@ -254,7 +258,7 @@ class BusinessHomeService {
             }
 
             //save data in database
-            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request['alt_text'], $request['home_sort']);
+            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request);
 
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
             $photoMob = $filePathMob == "" ? $request['old_photo_mobile'] : $filePathMob;
@@ -354,12 +358,6 @@ class BusinessHomeService {
      */
     public function saveNews($request) {
         try {
-
-            $request->validate([
-                'title' => 'required',
-                'title_bn' => 'required',
-                'body_bn' => 'required'
-            ]);
 
             //file upload in storege
             $filePath = "";
@@ -465,11 +463,6 @@ class BusinessHomeService {
      */
     public function saveFeature($request) {
         try {
-
-            $request->validate([
-                'title' => 'required',
-                'title_bn' => 'required'
-            ]);
 
             //file upload in storege
             $filePath = "";

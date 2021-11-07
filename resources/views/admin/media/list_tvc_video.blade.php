@@ -58,6 +58,7 @@
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
+                            <input type="hidden" value="{{ isset($bannerImage->id) ? $bannerImage->id : '' }}"  name="tvc_banner_id">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Desktop)</label>
@@ -89,13 +90,21 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($bannerImage->alt_text_en) ? $bannerImage->alt_text_en : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_en') ? ' error' : '' }}">
+                                    <label for="banner_name_en">Banner Name EN</label>
+                                    <input type="text" name="banner_name_en" id="banner_name_en" class="form-control"
+                                           placeholder="Enter banner name en" value="{{ isset($bannerImage->banner_name_en) ? $bannerImage->banner_name_en : '' }}">
+                                    @if ($errors->has('banner_name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label for="banner_name_bn">Banner Name BN</label>
+                                    <input type="text" name="banner_name_bn" id="banner_name_bn" class="form-control"
+                                           placeholder="Enter banner name bn" value="{{ isset($bannerImage->banner_name_bn) ? $bannerImage->banner_name_bn : '' }}">
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -124,6 +133,18 @@
                                     <textarea name="schema_markup" class="form-control" rows="4">{{ isset($bannerImage->schema_markup) ? $bannerImage->schema_markup : '' }}</textarea>
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text EN</label>
+                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text en" value="{{ isset($bannerImage->alt_text_en) ? $bannerImage->alt_text_en : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($bannerImage->alt_text_bn) ? $bannerImage->alt_text_bn : '' }}">
+                                </div>
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -131,7 +152,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
                     </div>

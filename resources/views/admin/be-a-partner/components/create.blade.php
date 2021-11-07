@@ -2,7 +2,7 @@
 @section('title', 'Component Create')
 @section('card_name', 'Component Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('dynamic-pages') }}"> Page List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('be-a-partner') }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
@@ -16,7 +16,6 @@
                     <form role="form" id="product_form" action="{{ url('be-a-partner/component-store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="content-body">
                                 <div class="row">
-
                                     <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
                                         <select name="component_type" class="form-control required" id="component_type"

@@ -89,21 +89,43 @@
 
                             <div class="form-group">
 
-                                <label>Product Photo Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                                <label>Product Photo Name EN<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name EN">
 
                                 <small class="text-info">
                                     <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
                                 </small>
 
+                                @if($errors->has('banner_name'))
+                                    <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                @endif
                                 <br>
-
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
 
                             </div>
 
+                        </div>
 
+                        <div class="col-md-4 form-group">
+                            <label>Product Photo Name BN<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control banner_name" required name="banner_name_bn" placeholder="Photo Name BN">
+
+                            <small class="text-info">
+                                <strong>i.e:</strong> মোবাইল-রিপোর্টিং-সার্ভিস (no spaces)<br>
+                            </small>
+
+                            @if($errors->has('banner_name_bn'))
+                                <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="col-md-4 form-group">
+                            <label>Alt Text EN</label>
+                            <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text EN">
+                        </div>
+
+                        <div class="col-md-4 form-group">
+                            <label>Alt Text BN</label>
+                            <input type="text" class="form-control"  name="alt_text_bn" placeholder="Alt Text BN">
                         </div>
 
                     </div>
@@ -192,14 +214,34 @@
                                 <label>Banner Name<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control banner_name" required name="details_banner_name" placeholder="Banner Name">
 
+                                 @if($errors->has('details_banner_name'))
+                                     <div class="help-block text-danger">{{ $errors->first('details_banner_name') }}</div>
+                                 @endif
+
                                 <small class="text-info">
                                     <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
                                 </small>
 
+                                 <br>
+                                 <label>Banner Name EN<span class="text-danger">*</span></label>
+                                 <input type="text" class="form-control banner_name" required name="details_banner_name_bn" placeholder="Banner Name BN ">
+
+                                 @if($errors->has('details_banner_name_bn'))
+                                     <div class="help-block text-danger">{{ $errors->first('details_banner_name_bn') }}</div>
+                                 @endif
+
+                                 <small class="text-info">
+                                     <strong>i.e:</strong> মোবাইল-রিপোর্টিং-সার্ভিস (no spaces)<br>
+                                 </small>
+
                                 <br>
 
                                 <label>Banner Alt Text</label>
-                                <input type="text" class="form-control"  name="banner_alt_text" placeholder="Alt Text">
+                                <input type="text" class="form-control"  name="details_alt_text" placeholder="Alt Text EN">
+
+                                 <br>
+                                 <label>Banner Alt Text EN</label>
+                                 <input type="text" class="form-control"  name="details_alt_text_bn" placeholder="Alt Text BN">
 
                             </div>
 

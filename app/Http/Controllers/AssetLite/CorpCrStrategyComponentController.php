@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\CorpCrStrategyComRequest;
 use App\Models\CorporateCrStrategySection;
 use App\Services\CorpCrStrategyComponentService;
 use App\Services\CorporateCrStrategySectionService;
@@ -71,9 +72,10 @@ class CorpCrStrategyComponentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param $sectionId
      * @return Application|RedirectResponse|Redirector|void
      */
-    public function store(Request $request, $sectionId)
+    public function store(CorpCrStrategyComRequest $request, $sectionId)
     {
         $response = $this->corpCrStrategyComponentService->storeComponent($request->all(), $this->pageType, $sectionId);
         Session::flash('success', $response->getContent());
@@ -100,9 +102,9 @@ class CorpCrStrategyComponentController extends Controller
      * @param int $id
      * @return Application|RedirectResponse|Response|Redirector
      */
-    public function update(Request $request, $sectionId, $id)
+    public function update(CorpCrStrategyComRequest $request, $sectionId, $id)
     {
-        $response = $this->corpCrStrategyComponentService->updateComponent($request->all(), $sectionId, $id);
+        $response = $this->corpCrStrategyComponentService->updateComponent($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('cr-strategy-component.index', $sectionId));
     }

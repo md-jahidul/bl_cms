@@ -63,6 +63,13 @@ class FourGDevicesController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+           'logo_img_name_en' => 'unique:four_g_devices,logo_img_name_en',
+           'logo_img_name_bn' => 'unique:four_g_devices,logo_img_name_bn',
+           'thumbnail_img_name_en' => 'unique:four_g_devices,thumbnail_img_name_en',
+           'thumbnail_img_name_bn' => 'unique:four_g_devices,thumbnail_img_name_bn',
+        ]);
+
         $response = $this->fourGDevicesService->storeDevices($request->all());
         if ($response['success'] == 1) {
             Session::flash('success', $response['message']);
@@ -74,6 +81,13 @@ class FourGDevicesController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'logo_img_name_en' => 'unique:four_g_devices,logo_img_name_en,' . $id,
+            'logo_img_name_bn' => 'unique:four_g_devices,logo_img_name_bn,' . $id,
+            'thumbnail_img_name_en' => 'unique:four_g_devices,thumbnail_img_name_en,' . $id,
+            'thumbnail_img_name_bn' => 'unique:four_g_devices,thumbnail_img_name_bn,' . $id,
+        ]);
+        
         $response = $this->fourGDevicesService->updateDevices($request->all(), $id);
         if ($response['success'] == 1) {
             Session::flash('success', $response['message']);

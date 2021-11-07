@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class PriyojonController extends Controller
@@ -119,6 +120,11 @@ class PriyojonController extends Controller
 
     public function landingPageBanner(Request $request, $id)
     {
+        $request->validate([
+            'banner_name' => 'unique:priyojons,banner_name,' . $id,
+            'banner_name_bn' => 'unique:priyojons,banner_name_bn,' . $id,
+        ]);
+
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->bannerUpload($request->all(), $id);
         Session::flash('message', $response->getContent());

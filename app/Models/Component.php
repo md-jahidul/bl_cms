@@ -23,6 +23,9 @@ class Component extends Model
         'editor_bn',
         'image',
         'alt_text',
+        'alt_text_bn',
+        'image_name_en',
+        'image_name_bn',
         'video',
         'alt_links',
         'offer_type',
@@ -39,5 +42,11 @@ class Component extends Model
         'multiple_attributes' => 'array',
         'other_attributes' => 'array',
     ];
+
+
+    public function componentMultiData()
+    {
+        return $this->hasMany(ComponentMultiData::class, 'component_id', 'id');
+    }
 
 }

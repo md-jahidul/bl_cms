@@ -78,15 +78,18 @@ class EcareerItemController extends Controller
         $image_upload_size = ConfigController::adminImageUploadSize();
         $image_upload_type = ConfigController::adminImageUploadType();
 
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-//		    'title_en' => 'required',
-            'image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect("ecarrer-items/$parent_id/list");
-        }
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size, // 2M
+		    'image_name' => 'unique:ecareer_portal_items,image_name', // 2M
+		    'image_name_bn' => 'unique:ecareer_portal_items,image_name_bn' // 2M
+
+		]);
+
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect("ecarrer-items/$parent_id/create")->withInput();
+		}
 
         $this->ecarrerItemService->storeEcarrerItem($request->all(), $parent_id);
 
@@ -138,12 +141,14 @@ class EcareerItemController extends Controller
         # Check Image upload validation
         $validator = Validator::make($request->all(), [
 //		    'title_en' => 'required',
-            'image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect("ecarrer-items/$parent_id/list");
-        }
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size, // 2M
+            'image_name' => 'unique:ecareer_portal_items,image_name,' . $id, // 2M
+		    'image_name_bn' => 'unique:ecareer_portal_items,image_name_bn,' . $id // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect("ecarrer-items/$parent_id/$id/edit");
+		}
 
         $this->ecarrerItemService->updateEcarrerItem($request->all(), $id);
 
@@ -165,15 +170,14 @@ class EcareerItemController extends Controller
         Session::flash('message', $response->getContent());
         return redirect("ecarrer-items/$parent_id/list");
 
-    }
+	}
 
 
-    //delete item photo only
-    public function deletePhoto($id)
-    {
-        $response = $this->ecarrerItemService->deleteItemPhoto($id);
-        return $response;
-    }
+        //delete item photo only
+        public function deletePhoto($id){
+		$response = $this->ecarrerItemService->deleteItemPhoto($id);
+                return $response;
+	}
 
     /**
      * [ecarrerItemSortable description]

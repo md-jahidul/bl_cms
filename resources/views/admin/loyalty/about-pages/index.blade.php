@@ -198,18 +198,103 @@
                                     @endif
                                 </div>
 
+                                <!-- Left Image Name EN -->
+                                <div class="form-group col-md-6 {{ $errors->has('left_img_name_en') ? ' error' : '' }}">
+                                    <label>Image Name EN</label>
+                                    <input type="text" name="left_img_name_en" class="form-control" placeholder="Enter Image Name EN"
+                                           value="{{ old('left_img_name_en') ? old('left_img_name_en') : $details->left_img_name_en }}">
+                                    @if ($errors->has('left_img_name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('left_img_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Right Image Name EN -->
+                                <div class="form-group col-md-6 {{ $errors->has('right_img_name_en') ? ' error' : '' }}">
+                                    <label>Image Name EN</label>
+                                    <input type="text" name="right_img_name_en" class="form-control" placeholder="Enter Image Name EN"
+                                           value="{{ old('right_img_name_en') ? old('right_img_name_en') : $details->right_img_name_en }}">
+                                    @if ($errors->has('right_img_name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('right_img_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Left Image Name BN -->
+                                <div class="form-group col-md-6 {{ $errors->has('left_img_name_bn') ? ' error' : '' }}">
+                                    <label>Image Name BN</label>
+                                    <input type="text" name="left_img_name_bn" class="form-control" placeholder="Enter Image Name BN"
+                                           value="{{ old('left_img_name_bn') ? old('left_img_name_bn') : $details->left_img_name_bn }}">
+                                    @if ($errors->has('left_img_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('left_img_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Right Image Name BN -->
+                                <div class="form-group col-md-6 {{ $errors->has('right_img_name_bn') ? ' error' : '' }}">
+                                    <label>Image Name BN</label>
+                                    <input type="text" name="right_img_name_bn" class="form-control" placeholder="Enter Image Name BN"
+                                           value="{{ old('right_img_name_bn') ? old('right_img_name_bn') : $details->right_img_name_bn }}">
+                                    @if ($errors->has('right_img_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('right_img_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Left Image Alt Text EN -->
+                                <div class="form-group col-md-6 {{ $errors->has('left_img_alt_text_en') ? ' error' : '' }}">
+                                    <label>Alt Text EN</label>
+                                    <input type="text" name="left_img_alt_text_en" class="form-control" placeholder="Enter Alt Text EN"
+                                           value="{{ old('left_img_alt_text_en') ? old('left_img_alt_text_en') : $details->left_img_alt_text_en }}">
+                                    @if ($errors->has('left_img_alt_text_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('left_img_alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Right Image Alt Text EN -->
+                                <div class="form-group col-md-6 {{ $errors->has('right_img_alt_text_en') ? ' error' : '' }}">
+                                    <label>Alt Text EN</label>
+                                    <input type="text" name="right_img_alt_text_en" class="form-control" placeholder="Enter Alt Text EN"
+                                           value="{{ old('right_img_alt_text_en') ? old('right_img_alt_text_en') : $details->right_img_alt_text_en }}">
+                                    @if ($errors->has('right_img_alt_text_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('right_img_alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Left Image Alt Text BN -->
+                                <div class="form-group col-md-6 {{ $errors->has('left_img_alt_text_bn') ? ' error' : '' }}">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" name="left_img_alt_text_bn" class="form-control" placeholder="Enter Alt Text BN"
+                                           value="{{ old('left_img_alt_text_bn') ? old('left_img_alt_text_bn') : $details->left_img_alt_text_bn }}">
+                                    @if ($errors->has('left_img_alt_text_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('left_img_alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Right Image Alt Text BN -->
+                                <div class="form-group col-md-6 {{ $errors->has('right_img_alt_text_bn') ? ' error' : '' }}">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" name="right_img_alt_text_bn" class="form-control" placeholder="Enter Alt Text BN"
+                                           value="{{ old('right_img_alt_text_bn') ? old('right_img_alt_text_bn') : $details->right_img_alt_text_bn }}">
+                                    @if ($errors->has('right_img_alt_text_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('right_img_alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <!-- Page ID -->
+                                <input type="hidden" value="{{ $details->id }}" name="about_page_id">
                                 <div class="form-group col-md-6">
                                     @if($details->left_side_img)
                                         <input type="checkbox" name="remove_img_left" id="remove_img_left" value="1">
                                         <label for="remove_img_left">Remove Left Side Image</label>
                                     @endif
                                 </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
                                     @if($details->right_side_ing)
                                         <input type="checkbox" name="remove_img_right" id="remove_img_right" value="1">
                                         <label for="remove_img_right">Remove Right Side Image</label>
                                     @endif
                                 </div>
+
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">

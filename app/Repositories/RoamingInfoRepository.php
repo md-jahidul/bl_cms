@@ -51,9 +51,11 @@ class RoamingInfoRepository extends BaseRepository {
             $info->short_text_en = $request->short_text_en;
             $info->short_text_bn = $request->short_text_bn;
             $info->banner_name = $request->banner_name;
+            $info->banner_name_bn = $request->banner_name_bn;
             $info->banner_web = $webPath;
             $info->banner_mobile = $mobilePath;
             $info->alt_text = $request->alt_text;
+            $info->alt_text_bn = $request->alt_text_bn;
             $info->url_slug = $request->url_slug;
             $info->url_slug_bn = $request->url_slug_bn;
             $info->page_header = $request->html_header;

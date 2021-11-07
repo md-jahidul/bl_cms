@@ -53,13 +53,35 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
-                                    <label for="banner_name" class="">Banner Name</label>
-                                    <input type="text" name="banner_name"  class="form-control" placeholder="Enter banner title"
+                                    <label for="banner_name" class="">Banner Name EN</label>
+                                    <input type="text" name="banner_name"  class="form-control" placeholder="Enter banner title en"
                                            value="{{ old("banner_name") ? old("banner_name") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_name'))
                                         <div class="help-block">  {{ $errors->first('banner_name') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label for="banner_name_bn" class="">Banner Name BN</label>
+                                    <input type="text" name="banner_name_bn"  class="form-control" placeholder="Enter banner title bn"
+                                           value="{{ old("banner_name_bn") ? old("banner_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text" class="">Alt Text EN</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
+                                           value="{{ old("alt_text") ? old("alt_text") : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn" class="">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Enter alt text bn"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : '' }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
@@ -86,16 +108,6 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_mobile_view'))
                                         <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Alt Text</label>
-                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("alt_text") ? old("alt_text") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
 

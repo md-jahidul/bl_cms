@@ -82,7 +82,7 @@
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
-
+                                <input type="hidden" name="banner_related_id" value="{{ isset($bannerRelatedProduct->id) ? $bannerRelatedProduct->id : null }}">
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
@@ -114,24 +114,40 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter offer name in English"
+                                    <label for="alt_text">Alt Text EN</label>
+                                    <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter enter alt text bn"
                                                value="{{ isset($bannerRelatedProduct->alt_text) ? $bannerRelatedProduct->alt_text : null }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control" placeholder="Enter alt text bn"
+                                           value="{{ isset($bannerRelatedProduct->alt_text) ? $bannerRelatedProduct->alt_text : null }}">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Photo Name EN</label>
+                                    <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">
+                                    <input type="text" class="form-control slug-covert" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
+                                           placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Don't give spach & slash
+                                    </small>
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Banner Photo Name</label>
-                                    <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">
-                                    <input type="text" class="form-control" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Photo Name BN</label>
+                                    <input type="text" class="form-control slug-covert" name="banner_name_bn" value="{{ isset($bannerRelatedProduct->banner_name_bn) ? $bannerRelatedProduct->banner_name_bn : null }}"
                                            placeholder="Photo Name">
                                     <small class="text-info">
-                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
-                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                        <strong>Note: </strong> Don't give spach & slash
                                     </small>
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 @if($productType !== \App\Enums\OfferType::OTHERS)
