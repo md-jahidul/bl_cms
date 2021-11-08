@@ -47,8 +47,7 @@ class SendCsSelfcareRafmReport extends Command
      */
     public function handle(CustomerRepository $customerRepository)
     {
-        $csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at', Carbon::today())->get();
-        //$csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at', Carbon::yesterday()->setTimezone('Asia/Dhaka'))->get();
+        $csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at', Carbon::yesterday()->setTimezone('Asia/Dhaka'))->get();
         $fileName = 'Reffer_n_Promote_RAFM_Report_' . date_format(Carbon::now(), 'YmdHis');
 
         $writer = WriterEntityFactory::createCSVWriter();
@@ -88,13 +87,11 @@ class SendCsSelfcareRafmReport extends Command
         $writer->close();
 
         $gzipPath = $this->gzCompressFile($fileName);
-        $fileExistance = Storage::disk('cs-selfcare')->exists($fileName . '.csv.gz');
-        /*if ($gzipPath && $fileExistance) {
-            $file = Storage::disk('cs-selfcare')->get($fileName . '.csv.gz');
-            $sendFile = Storage::disk('sftp')->put('',$file);
-            Mail::to(config('constants.cs_selfcare.rafm_report_mail'))->send(new SendRafmReportCsSelfcare($fileName));
-        }*/
-        dd('completed');
+        $file = Storage::disk('cs-selfcare');
+        if ($gzipPath && $file->exists($fileName . '.csv.gz')) {
+            $localFile = $file->get($fileName . '.csv.gz');
+            $sendFile = Storage::disk('sftp')->put('', $localFile);
+        }
     }
 
     public function gzCompressFile($fileName, $level = 9)
