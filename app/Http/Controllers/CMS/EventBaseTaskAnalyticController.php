@@ -24,7 +24,7 @@ class EventBaseTaskAnalyticController extends Controller
         return view('admin.event-base-bonus.analytic.analytic');
     }
 
-    public function analytics(TaskAnalyticRequest $request)
+    public function analytics(Request $request)
     {
         return $this->taskAnalyticService->getAnalytics($request->all());
     }
