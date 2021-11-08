@@ -173,6 +173,10 @@
                     $.ajax({
                         url: "{{ url('loyalty-partner-image') }}/" + id,
                         method: "delete",
+                        data:{
+                            'id': id,
+                            '_token': '{{ csrf_token() }}',
+                        },
                         success: function (res) {
                             Swal.fire(
                                 'Deleted!',
