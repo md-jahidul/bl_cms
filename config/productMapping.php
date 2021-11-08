@@ -37,8 +37,7 @@ return [
             'is_visible'            => 30,
             'show_from'             => 31,
             'hide_from'             => 32,
-            'is_free_product'       => 33,
-            'status'                => 34,
+            'status'                => 33,
         ],
         'product_schedule_statuses' => [
             0 => 'None',

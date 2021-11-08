@@ -24,8 +24,7 @@ class TaskAnalyticRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_date'                   => 'required|date',
-            'to_date'                   => 'required|date',
+            'analytics_type' => 'required'
         ];
     }
 }

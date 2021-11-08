@@ -24,7 +24,6 @@ class StoreEventCampaignRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon_image'                   => 'image|mimes:jpeg,jpg,png',
             'title'                        => 'required|max:150',
             'description'                  => 'required|max:250',
             'description_bn'               => 'required|max:250',

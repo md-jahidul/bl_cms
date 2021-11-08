@@ -420,17 +420,6 @@
                 placeholder: 'Please Select Tags',
                 maximumSelectionLength: 3
             });
-
-            // Free product Checkbox Event For Show Base Msisdn Group
-            // let isFreeProduct = $('#is_free_product');
-            // let baseGroup = $('#base_msisdn_groups_id');
-            // isFreeProduct.click(function () {
-            //     if (isFreeProduct.prop("checked")) {
-            //         baseGroup.parent().removeClass('d-none')
-            //     } else {
-            //         baseGroup.parent().addClass('d-none')
-            //     }
-            // })
         });
 
         // Translated
