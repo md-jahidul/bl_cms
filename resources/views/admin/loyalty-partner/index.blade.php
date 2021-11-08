@@ -148,7 +148,9 @@
 
         function copy(host, value) {
             url = host + '/' + value;
-            navigator.clipboard.writeText(url);
+            // Create new element for copy
+            // doesn't work without secure connection or localhost
+            //navigator.clipboard.writeText(url);
             Swal.fire(
                 'Copied',
                 'Link :  ' + url,
