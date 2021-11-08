@@ -115,7 +115,7 @@ class Helper
             "REFER_AND_EARN"          => "Refer And Earn ",
             "LANGUAGE"                => "Language",
             "ORANGE_CLUB"             => "Orange Club",
-            "STOP_ALL_VAS" =>  "Stop All VAS",
+            "STOP_ALL_VAS"            => "Stop All VAS",
         ];
     }
 

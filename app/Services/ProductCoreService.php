@@ -401,7 +401,8 @@ class ProductCoreService
                                     }
                                 }
 
-                                $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
+                                $productTagIds = ProductTag::whereIn('title', $tags)->pluck('id')->toArray();
+                                $this->syncProductTags($product_code, Arr::flatten($productTagIds));
                             }
 
                         } catch (Exception $e) {
