@@ -218,9 +218,79 @@ class NotificationController extends Controller
         return $this->notificationService->getActiveProducts($request);
     }
 
-    public function getGuestUserList()
+    public function getGuestUserList(Request $request)
     {
+        if ($request->has('draw')){
+            return $this->getLoggedOutCustomerList($request);
+        }
+
         $guestUsers = $this->notificationService->getLoggedOutCustomers();
-        return view('admin.notification.guest-user-tracking.list')->with('guestUsers', $guestUsers);
+
+        if ($request->isMethod('get')) {
+            return view('admin.notification.guest-user-tracking.list')->with('guestUsers', $guestUsers);
+        }
     }
+
+    public function getLoggedOutCustomerList($request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => 100,
+            'recordsFiltered' => 50,
+            'data' => []
+        ];
+
+        $response['data'][] = [
+            'id' => 127,
+            'name' => 'TEST',
+            'msisdn' => '8801903303978',
+            'device_type' => 'IOS',
+            'number_type' => 'PREPAID'
+        ];
+
+        return $response;
+
+
+        $builder = new NotificationDraft();
+        $builder->orderBy('id', 'desc');
+
+        if ($request->has('search') && !empty($request->get('search'))) {
+            $input = $request->get('search');
+
+            if (!empty($input['value'])) {
+                $titel = $input['value'];
+                $all_items_count = $builder->where('notification_drafts.title', 'LIKE', "%{$titel}%")->count();
+                $items = $builder->where('notification_drafts.title', 'LIKE',
+                    "%{$titel}%")->skip($start)->take($length)->get();
+            } else {
+
+                $all_items_count = $builder->count();
+                $items = $builder->skip($start)->take($length)->get();
+            }
+        }
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+        $items->each(function ($item) use (&$response) {
+            $starts_at = (!empty($item->starts_at)) ? date('d-M-Y h:i a', strtotime($item->starts_at)) : '';
+            $countSend = $item->getNotification->count() . ' > ' . $item->getNotificationSuccessfullySend->count();
+            $device_type = (!empty($item->device_type)) ? $item->device_type : 'All';
+            $response['data'][] = [
+                'titel' => $item->title,
+                'body' => $item->body,
+                'device_type' => ucwords($device_type),
+                'starts_at' => $starts_at,
+                'sends' => $countSend,
+            ];
+        });
+        return $response;
+    }
+
 }
