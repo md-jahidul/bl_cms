@@ -148,7 +148,9 @@
 
         function copy(host, value) {
             url = host + '/' + value;
-            navigator.clipboard.writeText(url);
+            // Create new element for copy
+            // doesn't work without secure connection or localhost
+            //navigator.clipboard.writeText(url);
             Swal.fire(
                 'Copied',
                 'Link :  ' + url,
@@ -171,6 +173,10 @@
                     $.ajax({
                         url: "{{ url('loyalty-partner-image') }}/" + id,
                         method: "delete",
+                        data:{
+                            'id': id,
+                            '_token': '{{ csrf_token() }}',
+                        },
                         success: function (res) {
                             Swal.fire(
                                 'Deleted!',
