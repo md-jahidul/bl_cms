@@ -68,7 +68,7 @@
                     </div>
                     <div class="d-none" id="grid_card">
                         <div id="grid" class="col-md-2 col-sm-3 col-xs-4" data-image-type="banner">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card">
                                 <div>
                                     <img class="card-img-top img-fluid" src=""
                                          alt="Card image cap">
