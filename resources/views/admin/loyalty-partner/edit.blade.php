@@ -92,8 +92,8 @@
                                         <div class="form-group">
                                             <label for="logo_img" class="required">Upload Logo</label>
                                             <input type="file" id="logo_url" name="logo_img" class="dropify_image"
-                                                   data-min-width="200" data-max-height="199"
-                                                   data-min-width="201" data-max-height="201"
+                                                   data-min-width="199" data-min-height="199"
+                                                   data-max-width="201" data-max-height="201"
                                                    data-default-file="{{  asset($loyaltyPartnerImage->logo_img) }}"
                                                    data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block text-warning">
