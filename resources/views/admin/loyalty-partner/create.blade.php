@@ -96,7 +96,7 @@ echo $data;
                                             <label for="image_url" class="required">Upload Logo</label>
                                             <input type="file" id="image_url" name="logo_img" class="dropify_image"
                                                    data-min-width="199" data-min-height="199"
-                                                   data-min-width="201" data-min-height="201"
+                                                   data-max-width="201" data-max-height="201"
                                                    data-default-file="{{ isset($loyaltyPartnerImage->logo_img) ? url('/' .$loyaltyPartnerImage->logo_img) : ''}}"
                                                    data-allowed-file-extensions="png jpg gif" required/>
                                             <div class="help-block text-warning">

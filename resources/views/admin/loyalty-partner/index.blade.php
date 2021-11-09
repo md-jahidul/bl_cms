@@ -217,16 +217,22 @@
                 type: "GET",
                 success: function (result) {
                     if (result.data.length) {
-                        var pagination = "<nav class='col-12 m-2'>" +
+                        var pagination_p1 = "<nav class='col-12 m-2'>" +
                             "<ul class='pagination'>" +
                             "<li class='page-item " + (result.prev_page_url ?? 'disabled') + "'>" +
                             "<a id='page-prev-link' class='page-link' href='javascript:;' tabindex='-1'>Previous</a>" +
-                            "</li>" +
-                            "<li class='page-item " + (result.next_page_url ?? 'disabled') + "'>" +
+                            "</li>";
+                        var pagination_index = "";
+                        for(var i = 0;i < result.last_page; i++){
+                            pagination_index += "<li class='page-item "+(result.current_page == (i+1) ? 'disabled' : '')+"' ><a id='page-index-link' class='page-link' href='javascript:;' data-id='"+(i+1)+"'>"+(i+1)+"</a></li>";
+                        }
+                        var pagination_p2 = "<li class='page-item " + (result.next_page_url ?? 'disabled') + "'>" +
                             " <a id='page-next-link' class='page-link' href='javascript:;'>Next</a>" +
                             "</li>" +
                             "</ul>" +
-                            "</nav><span class='ml-3'>Showing "+result.total+" of " + result.to +"</span>";
+                            "</nav><span class='ml-3'>Showing "+result.to+" of " + result.total +"</span>";
+                        var pagination = pagination_p1 + pagination_index + pagination_p2;
+
                         $.each(result.data, function (key, value) {
                             var imageType = $('select[name="image_type"]').val();
                             var imageHtml = $("#grid_card").html();
@@ -249,6 +255,11 @@
                         $('#grid-table').append(pagination);
                         $("#grid-table #page-prev-link").attr('onclick', "init('" + result.prev_page_url + "');return false;");
                         $("#grid-table #page-next-link").attr('onclick', "init('" + result.next_page_url + "');return false;");
+
+                        $("#grid-table #page-index-link").click(function(){
+                            id = $(this).attr('data-id');
+                            init(result.path+"?page="+id);
+                        });
                     } else {
                         $('#grid-table').html('<h4 class="mx-auto mt-3  text-center font-weight-bold">No Images Found</h4>');
                     }

@@ -13,12 +13,12 @@ class LoyaltyPartnerImageRepository extends BaseRepository
         if (count($data) == count(array_filter($data, 'is_null')) || isset($data['page'])) {
             return $this->model->with(['partnerCategory'=>function($query){
                 $query->select('id','name_en');
-            }])->paginate(20);
+            }])->orderBy('id','desc')->paginate(18);
         } else {
             return $this->model->orWhere('title', $data['title'])->orWhere('status', $data['status'] ?? 0)->orWhere('partner_category_id', intval($data['category']))
                   ->orWhereBetween('upload_date', [$data['from_date'], $data['to_date']])->with(['partnerCategory'=>function($query){
                     $query->select('id','name_en');
-                }])->paginate(20);
+                }])->orderBy('id','desc')->paginate(18);
         }
     }
 }

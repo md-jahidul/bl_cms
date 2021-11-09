@@ -41,7 +41,10 @@ class LoyaltyPartnerImageController extends Controller
     public function index()
     {
         $loyaltyPartnerCategories = $this->partnerService->partnerCategories()->toArray();
-        $loyaltyPartnerImages = $this->loyaltyPartnerImageService->findAll();
+        $loyaltyPartnerImages = $this->loyaltyPartnerImageService->findAll(null,null, [
+            'column' => 'id',
+            'direction' => 'desc'
+        ]);
         $host = $this->storageHost;
 
         return view('admin.loyalty-partner.index', compact('loyaltyPartnerImages', 'loyaltyPartnerCategories', 'host'));
