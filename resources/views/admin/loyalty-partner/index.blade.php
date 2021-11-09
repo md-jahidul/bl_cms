@@ -19,10 +19,10 @@
         <div class="col-md-12 my-2">
             <div class="row">
                 @csrf
-                <div class="col-md-3 offset-10 mb-2">
-                    <button id="filter" class="btn btn-md btn-primary"><i class="la la-filter"></i> Filter</button>
-                    <button id="rest" onclick="reset()" class="btn btn-md btn-success"><i class="la la-refresh"></i> Reset</button>
-                    <a href="#" id="export" class="btn btn-md btn-info text-white"><i class="la la-download"></i> CSV</a>
+                <div class="col-md-12 mb-2 d-flex justify-content-end">
+                    <button id="filter" class="ml-1 btn btn-md btn-primary"><i class="la la-filter"></i> Filter</button>
+                    <button id="rest" onclick="reset()" class="ml-1 btn btn-md btn-success"><i class="la la-refresh"></i> Reset</button>
+                    <a href="#" id="export" class="ml-1 btn btn-md btn-info text-white"><i class="la la-download"></i> CSV</a>
                 </div>
                 <div class="col-md-2">
                     <input class="form-control filter h-100" name="title" placeholder="Title" id="title"/>
@@ -218,7 +218,7 @@
                 success: function (result) {
                     if (result.data.length) {
                         var pagination_p1 = "<nav class='col-12 m-2'>" +
-                            "<ul class='pagination'>" +
+                            "<ul class='pagination' style='overflow-x: auto'>" +
                             "<li class='page-item " + (result.prev_page_url ?? 'disabled') + "'>" +
                             "<a id='page-prev-link' class='page-link' href='javascript:;' tabindex='-1'>Previous</a>" +
                             "</li>";
