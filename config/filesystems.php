@@ -77,7 +77,7 @@ return [
             'url' => env('AWS_URL'),
         ],
         'sftp' => [
-            'driver' => 'ftp',
+            'driver' => 'sftp',
             'host' => env('FTP_HOST'),
             'username' => env('FTP_USERNAME'),
             'password' => env('FTP_PASSWORD'),
@@ -87,7 +87,7 @@ return [
             //'password' => 'encryption-password',
 
             // Optional SFTP Settings...
-            // 'port' => 22,
+             'port' => 22,
             // 'root' => '',
             // 'timeout' => 30,
         ]

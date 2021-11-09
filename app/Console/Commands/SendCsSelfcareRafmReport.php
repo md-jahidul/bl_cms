@@ -5,10 +5,11 @@ namespace App\Console\Commands;
 use App\Mail\SendRafmReportCsSelfcare;
 use App\Models\CsSelfcareReferee;
 use App\Repositories\CustomerRepository;
+use App\Services\ProductService;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class SendCsSelfcareRafmReport extends Command
@@ -45,9 +46,10 @@ class SendCsSelfcareRafmReport extends Command
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
      */
-    public function handle(CustomerRepository $customerRepository)
+    public function handle(CustomerRepository $customerRepository, ProductService $productService)
     {
-        $csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at', Carbon::yesterday()->setTimezone('Asia/Dhaka'))->get();
+        $csSelfcareData = CsSelfcareReferee::where('is_redeemed', 1)->whereDate('created_at',
+            Carbon::yesterday()->setTimezone('Asia/Dhaka'))->get();
         $fileName = 'Reffer_n_Promote_RAFM_Report_' . date_format(Carbon::now(), 'YmdHis');
 
         $writer = WriterEntityFactory::createCSVWriter();
@@ -60,7 +62,7 @@ class SendCsSelfcareRafmReport extends Command
             'Bonus Type',
             'Transaction Status',
             'Referee Signup',
-            'Volume Disbursement',
+            'Volume Disbursement (MB)',
             'IDENTIFIER'
         ]);
         $writer->openToFile(storage_path('app/public/cs/') . $fileName . '.csv');
@@ -68,16 +70,22 @@ class SendCsSelfcareRafmReport extends Command
 
         $data = [];
         foreach ($csSelfcareData as $csSelfcareDatum) {
-            $data[0] = Carbon::parse($csSelfcareDatum->created_at)->toDateTimeString();
-            $data[1] = Carbon::parse($csSelfcareDatum->created_at)->toDateString();
-            $data[2] = data_get($csSelfcareDatum, 'referrer','');;
+            $data[0] = Carbon::parse($csSelfcareDatum->created_at)->setTimezone('Asia/Dhaka')->toDateTimeString();
+            $data[1] = Carbon::parse($csSelfcareDatum->created_at)->setTimezone('Asia/Dhaka')->toDateString();
+            $data[2] = data_get($csSelfcareDatum, 'referrer', '');;
             $data[3] = $csSelfcareDatum->referee_msisdn;
             $data[4] = $csSelfcareDatum->referee_msisdn;
             $data[5] = 'referee';
             $data[6] = $csSelfcareDatum->is_redeemed ? 'Success' : 'Failed';
-            $data[7] = $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn) ? $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn)->created_at : '';
-            $data[8] = $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
-            $data[9] = $this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository, $csSelfcareDatum->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
+            $data[7] = $this->getCustomerInfo($customerRepository,
+                $csSelfcareDatum->referee_msisdn) ? Carbon::parse($this->getCustomerInfo($customerRepository,
+                $csSelfcareDatum->referee_msisdn)->created_at)->setTimezone('Asia/Dhaka')->toDateTimeString() : '';
+            $data[8] = $this->getCustomerInfo($customerRepository,
+                $csSelfcareDatum->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository,
+                $csSelfcareDatum->referee_msisdn)->number_type) == 'prepaid' ? $productService->getInternetVolumeByProductCode(config('constants.cs_selfcare.cs_referral_product_code_prepaid')) : $productService->getInternetVolumeByProductCode(config('constants.cs_selfcare.cs_referral_product_code_postpaid')) : '';
+            $data[9] = $this->getCustomerInfo($customerRepository,
+                $csSelfcareDatum->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository,
+                $csSelfcareDatum->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
 
             $row = WriterEntityFactory::createRowFromArray($data);
             $writer->addRow($row);
@@ -87,10 +95,15 @@ class SendCsSelfcareRafmReport extends Command
         $writer->close();
 
         $gzipPath = $this->gzCompressFile($fileName);
-        $file = Storage::disk('cs-selfcare');
-        if ($gzipPath && $file->exists($fileName . '.csv.gz')) {
-            $localFile = $file->get($fileName . '.csv.gz');
-            $sendFile = Storage::disk('sftp')->put('', $localFile);
+
+        try {
+            $file = Storage::disk('cs-selfcare');
+            if ($gzipPath && $file->exists($fileName . '.csv.gz')) {
+                $localFile = $file->get($fileName . '.csv.gz');
+                $sendFile = Storage::disk('sftp')->put($fileName . '.csv.gz', $localFile);
+            }
+        } catch (\Exception $exception) {
+            Log::error('CS_SELFCARE_RAFM_ERROR: ' . $exception->getMessage());
         }
     }
 
