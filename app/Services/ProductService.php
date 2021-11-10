@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\OfferType;
 use App\Models\Product;
+use App\Models\ProductCore;
 use App\Models\ProductDetail;
 use App\Repositories\DynamicRouteRepository;
 use App\Repositories\ProductCoreRepository;
@@ -383,6 +384,22 @@ class ProductService
             $this->getOfferInfo($coreProduct);
         }
         return "Insert Success";
+    }
+
+    public function getInternetVolumeByProductCode($productCode)
+    {
+        $product = ProductCore::whereHas(
+            'blProduct',
+            function ($q) use ($productCode) {
+                $q->where('status', 1);
+            }
+        )->with('blProduct')->where('product_code', $productCode)->first();
+
+        if (!$product) {
+            return false;
+        }
+
+        return $product->internet_volume_mb;
     }
 
 }
