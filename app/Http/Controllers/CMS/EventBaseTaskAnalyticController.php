@@ -14,7 +14,7 @@ class EventBaseTaskAnalyticController extends Controller
     public function __construct(TaskAnalyticService $taskAnalyticService)
     {
         $this->middleware('auth');
-        $this->taskAnalyticService        = $taskAnalyticService;
+        $this->taskAnalyticService = $taskAnalyticService;
     }
 
     public function index()
@@ -22,10 +22,10 @@ class EventBaseTaskAnalyticController extends Controller
         return view('admin.event-base-bonus.analytic.analytic');
     }
 
-    public function analytics(Request $request)
+    public function analytics(Request $analyticRequest)
     {
         // event base analytics report generate
-        return $this->taskAnalyticService->getAnalytics($request->all());
+        return $this->taskAnalyticService->getAnalytics($analyticRequest->all());
     }
 
     public function viewDetails($campaign, $task)
