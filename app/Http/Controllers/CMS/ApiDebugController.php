@@ -154,15 +154,10 @@ class ApiDebugController extends Controller
     public function getLastLogin($number)
     {
         $user = Customer::where('msisdn', '88' . $number)->first();
-
-        if ($user) {
-            if(!empty($user->last_login_at)){
+        if ($user && $user->last_login_at) {
             return Carbon::parse($user->last_login_at)->format('Y-m-d g:i A');
-            }else{
-                return '0000-00-00 00:00';
-            }
-        }else{
-            return '0000-00-00 00:00';
+        } else {
+            return 'No Data Available';
         }
         // return $this->bonusLogsService->getLogs($request, $number);
     }
