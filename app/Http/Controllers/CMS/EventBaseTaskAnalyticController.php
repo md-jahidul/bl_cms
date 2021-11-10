@@ -24,6 +24,7 @@ class EventBaseTaskAnalyticController extends Controller
 
     public function analytics(TaskAnalyticRequest $request)
     {
+        // event base analytics report generate
         return $this->taskAnalyticService->getAnalytics($request->all());
     }
 
