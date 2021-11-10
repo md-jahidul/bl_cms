@@ -265,8 +265,8 @@ class NotificationService
         return $this->notificationRepository->removeMuteUserFromList($user_phone_num, $mute_user_phone);
     }
 
-    public function getLoggedOutCustomers()
+    public function getLoggedOutCustomers($request, $start = 0, $length = 0)
     {
-        return $this->logoutTrackRepository->getLoggedOutCustomerList();
+        return $this->logoutTrackRepository->getLoggedOutCustomerList($request, $start, $length);
     }
 }

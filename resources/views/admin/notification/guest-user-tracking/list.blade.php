@@ -28,7 +28,7 @@
 
                             <div class="col-md-4" style="margin-top: 5px">
                                 <input type='text'
-                                       class="form-control datetime"
+                                       class="form-control datetime filter"
                                        style="height: 40px"
                                        value=""
                                        name="logout_time"
@@ -55,7 +55,7 @@
                     <table class="table table-striped table-bordered dataTable" id="guest_user_datatable">
                         <thead>
                         <tr>
-                            <th width="5%"></th>
+                            <th width="5%"><input type="checkbox" id="checkAll"> Select all</th>
                             <th width="5%">ID</th>
                             <th width="25%">Name</th>
                             <th width="15%">Msisdn</th>
@@ -124,6 +124,10 @@
             type="text/javascript"></script>
     <script>
 
+        $("#checkAll").click(function(){
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+
         var date;
         // Date & Time
         date = new Date();
@@ -133,7 +137,6 @@
             timePickerIncrement: 5,
             startDate: '{{ date('Y-m-d H:i:s')}}',
             endDate: '{{ date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}',
-            minDate: date,
             locale: {
                 format: 'YYYY/MM/DD h:mm A'
             }
@@ -164,7 +167,7 @@
                         return $("#logout_time").val();
                     },
                     device_type: function () {
-                        return $("#sim_type").val();
+                        return $("#device_type").val();
                     },
                     number_type: function () {
                         return $("#number_type").val();
@@ -223,6 +226,10 @@
                     }
                 }
             ],
+        });
+
+        $(document).on('change', '.filter', function (e) {
+            $('#guest_user_datatable').DataTable().ajax.reload();
         });
     </script>
 @endpush

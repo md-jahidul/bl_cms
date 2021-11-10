@@ -224,7 +224,7 @@ class NotificationController extends Controller
             return $this->getLoggedOutCustomerList($request);
         }
 
-        $guestUsers = $this->notificationService->getLoggedOutCustomers();
+        $guestUsers = $this->notificationService->getLoggedOutCustomers($request);
 
         if ($request->isMethod('get')) {
             return view('admin.notification.guest-user-tracking.list')->with('guestUsers', $guestUsers);
@@ -233,16 +233,30 @@ class NotificationController extends Controller
 
     public function getLoggedOutCustomerList($request)
     {
+
+
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
+        $items = $this->notificationService->getLoggedOutCustomers($request, $start, $length);
+
         $response = [
             'draw' => $draw,
-            'recordsTotal' => 100,
-            'recordsFiltered' => 50,
             'data' => []
         ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'msisdn' => $item->msisdn,
+                'device_type' => $item->device_type,
+                'number_type' => $item->number_type
+            ];
+        });
+
+        return $response;
 
         $response['data'][] = [
             'id' => 127,
