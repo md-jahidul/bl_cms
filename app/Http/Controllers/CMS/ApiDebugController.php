@@ -64,7 +64,7 @@ class ApiDebugController extends Controller
         OtpRequestLogsService $otpRequestLogsService,
         ContactRestoreLogService $contactRestoreLogService
     ) {
-     
+
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
         $this->customerSummaryUsageService = $customerSummaryUsageService;
@@ -154,8 +154,10 @@ class ApiDebugController extends Controller
     public function getLastLogin($number)
     {
         $user = Customer::where('msisdn', '88' . $number)->first();
-        if ($user) {
+        if ($user && $user->last_login_at) {
             return Carbon::parse($user->last_login_at)->format('Y-m-d g:i A');
+        } else {
+            return 'No Data Available';
         }
         // return $this->bonusLogsService->getLogs($request, $number);
     }
