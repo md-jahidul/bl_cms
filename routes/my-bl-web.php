@@ -728,6 +728,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
     Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
 
+
+    /*
+     * Remove MSISDN
+     */
+    Route::get('remove-msisdn/', 'CMS\RemoveMsisdnController@index')->name('remove-msisdn');
 });
 
 // 4G Map View Route

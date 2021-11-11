@@ -476,6 +476,13 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('RemoveMsisdn') )
+        <li class="{{ is_active_url('remove-msisdn') . is_active_url('remove-msisdn')}}">
+            <a class="menu-item" href="{{ route('remove-msisdn') }}" data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-code-fork"></i>Remove MSISDN</a>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('LearnPriyojon') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title">Priyojon</span></a>
