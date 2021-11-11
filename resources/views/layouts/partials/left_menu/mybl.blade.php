@@ -678,6 +678,19 @@
             </li>
         </ul>
     </li>
+
+    <!-- Others Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Others</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('usim-eligibility')}}">
+                <a class="menu-item" href="{{ route('usim-eligibility.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-simplybuilt"></i>USIM Eligibility
+                </a>
+            </li>
+        </ul>
+    </li>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
