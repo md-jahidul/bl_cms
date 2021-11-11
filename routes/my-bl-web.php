@@ -728,6 +728,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
     Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
 
+    /*
+    * Usim Eligibility
+    */
+    Route::get('usim-eligibility', 'CMS\MyblUsimEligibilityController@index')
+        ->name('usim-eligibility.index');
+    Route::post('usim-eligibility-update/{id}', 'CMS\MyblUsimEligibilityController@update')
+        ->name('usim-eligibility.update');
+
 });
 
 // 4G Map View Route
