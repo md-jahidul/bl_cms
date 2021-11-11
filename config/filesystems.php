@@ -54,6 +54,12 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
+        'cs-selfcare' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/cs'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
 
         'internal' => [
             'driver' => 'local',
@@ -70,6 +76,21 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('FTP_HOST'),
+            'username' => env('FTP_USERNAME'),
+            'password' => env('FTP_PASSWORD'),
+
+            // Settings for SSH key based authentication...
+            //'privateKey' => '/path/to/privateKey',
+            //'password' => 'encryption-password',
+
+            // Optional SFTP Settings...
+             'port' => 22,
+            // 'root' => '',
+            // 'timeout' => 30,
+        ]
 
     ],
     'paths' => [

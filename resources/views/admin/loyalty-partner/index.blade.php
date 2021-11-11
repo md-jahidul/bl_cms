@@ -19,10 +19,10 @@
         <div class="col-md-12 my-2">
             <div class="row">
                 @csrf
-                <div class="col-md-3 offset-10 mb-2">
-                    <button id="filter" class="btn btn-md btn-primary"><i class="la la-filter"></i> Filter</button>
-                    <button id="rest" onclick="reset()" class="btn btn-md btn-success"><i class="la la-refresh"></i> Reset</button>
-                    <a href="#" id="export" class="btn btn-md btn-info text-white"><i class="la la-download"></i> CSV</a>
+                <div class="col-md-12 mb-2 d-flex justify-content-end">
+                    <button id="filter" class="ml-1 btn btn-md btn-primary"><i class="la la-filter"></i> Filter</button>
+                    <button id="rest" onclick="reset()" class="ml-1 btn btn-md btn-success"><i class="la la-refresh"></i> Reset</button>
+                    <a href="#" id="export" class="ml-1 btn btn-md btn-info text-white"><i class="la la-download"></i> CSV</a>
                 </div>
                 <div class="col-md-2">
                     <input class="form-control filter h-100" name="title" placeholder="Title" id="title"/>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="d-none" id="grid_card">
                         <div id="grid" class="col-md-2 col-sm-3 col-xs-4" data-image-type="banner">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card">
                                 <div>
                                     <img class="card-img-top img-fluid" src=""
                                          alt="Card image cap">
@@ -148,7 +148,9 @@
 
         function copy(host, value) {
             url = host + '/' + value;
-            navigator.clipboard.writeText(url);
+            // Create new element for copy
+            // doesn't work without secure connection or localhost
+            //navigator.clipboard.writeText(url);
             Swal.fire(
                 'Copied',
                 'Link :  ' + url,
@@ -171,6 +173,10 @@
                     $.ajax({
                         url: "{{ url('loyalty-partner-image') }}/" + id,
                         method: "delete",
+                        data:{
+                            'id': id,
+                            '_token': '{{ csrf_token() }}',
+                        },
                         success: function (res) {
                             Swal.fire(
                                 'Deleted!',
@@ -211,16 +217,22 @@
                 type: "GET",
                 success: function (result) {
                     if (result.data.length) {
-                        var pagination = "<nav class='col-12 m-2'>" +
-                            "<ul class='pagination'>" +
+                        var pagination_p1 = "<nav class='col-12 m-2'>" +
+                            "<ul class='pagination' style='overflow-x: auto'>" +
                             "<li class='page-item " + (result.prev_page_url ?? 'disabled') + "'>" +
                             "<a id='page-prev-link' class='page-link' href='javascript:;' tabindex='-1'>Previous</a>" +
-                            "</li>" +
-                            "<li class='page-item " + (result.next_page_url ?? 'disabled') + "'>" +
+                            "</li>";
+                        var pagination_index = "";
+                        for(var i = 0;i < result.last_page; i++){
+                            pagination_index += "<li class='page-item "+(result.current_page == (i+1) ? 'disabled' : '')+"' ><a id='page-index-link' class='page-link' href='javascript:;' data-id='"+(i+1)+"'>"+(i+1)+"</a></li>";
+                        }
+                        var pagination_p2 = "<li class='page-item " + (result.next_page_url ?? 'disabled') + "'>" +
                             " <a id='page-next-link' class='page-link' href='javascript:;'>Next</a>" +
                             "</li>" +
                             "</ul>" +
-                            "</nav><span class='ml-3'>Showing "+result.total+" of " + result.to +"</span>";
+                            "</nav><span class='ml-3'>Showing "+result.to+" of " + result.total +"</span>";
+                        var pagination = pagination_p1 + pagination_index + pagination_p2;
+
                         $.each(result.data, function (key, value) {
                             var imageType = $('select[name="image_type"]').val();
                             var imageHtml = $("#grid_card").html();
@@ -243,6 +255,11 @@
                         $('#grid-table').append(pagination);
                         $("#grid-table #page-prev-link").attr('onclick', "init('" + result.prev_page_url + "');return false;");
                         $("#grid-table #page-next-link").attr('onclick', "init('" + result.next_page_url + "');return false;");
+
+                        $("#grid-table #page-index-link").click(function(){
+                            id = $(this).attr('data-id');
+                            init(result.path+"?page="+id);
+                        });
                     } else {
                         $('#grid-table').html('<h4 class="mx-auto mt-3  text-center font-weight-bold">No Images Found</h4>');
                     }

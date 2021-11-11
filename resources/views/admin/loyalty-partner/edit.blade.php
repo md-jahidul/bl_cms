@@ -74,7 +74,7 @@
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image_url">Upload Banner Image </label>
+                                            <label for="banner_img" class="required">Upload Banner Image </label>
                                             <input type="file" id="image_url" name="banner_img" class="dropify_image"
                                                    data-min-width="799" data-min-height="449"
                                                    data-max-width="801" data-min-height="451"
@@ -83,29 +83,29 @@
                                             <div class="help-block text-warning">
                                                 The Dimensions should be <strong>800x450</strong>
                                             </div>
-                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-danger"> @error('banner_img') {{ $message }} @enderror </small>
                                             <small id="message"></small>
                                         </div>
                                     </div>
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image_url">Upload Logo</label>
-                                            <input type="file" id="image_url" name="logo_img" class="dropify_image"
+                                            <label for="logo_img" class="required">Upload Logo</label>
+                                            <input type="file" id="logo_url" name="logo_img" class="dropify_image"
                                                    data-min-width="199" data-min-height="199"
-                                                   data-min-width="201" data-min-height="201"
+                                                   data-max-width="201" data-max-height="201"
                                                    data-default-file="{{  asset($loyaltyPartnerImage->logo_img) }}"
                                                    data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block text-warning">
                                                 The Dimensions should be <strong>200x200</strong>
                                             </div>
-                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-danger"> @error('logo_img') {{ $message }} @enderror </small>
                                             <small id="message"></small>
                                         </div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="status_input">Status: </label>
+                                        <label for="status_input" class="required">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <input required type="radio" name="status" value="1"
                                                    data-validation-required-message="Please select status"

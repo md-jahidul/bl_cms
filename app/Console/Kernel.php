@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('notification:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('redis-reset:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('flash-hour-reminder:schedule')->withoutOverlapping()->everyMinute();
+        $schedule->command('send:cs-sefcare-rafm-report')->withoutOverlapping()->dailyAt('02:00')->timezone('Asia/Dhaka');
     }
 
     /**
