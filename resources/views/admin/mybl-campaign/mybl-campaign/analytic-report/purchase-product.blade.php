@@ -1,7 +1,6 @@
-@php $campaignType =  ucwords(str_replace('_', ' ', $campaign->reference_type)) @endphp
 @extends('layouts.admin')
-@section('title', $campaignType . " Purchase Report")
-@section('card_name', $campaignType . " Purchase Report")
+@section('title', 'Mybl Campaign Purchase Report')
+@section('card_name', 'Mybl Campaign Purchase Report')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">
@@ -55,7 +54,7 @@
                                     <td>{{ $data->total_success ?? 0 }}</td>
                                     <td>{{ $data->total_failed ?? 0 }}</td>
                                     <td>
-                                       <a href="{{ route('purchase-msisdn.list', [$campaign->id, $data->id]) }}"
+                                       <a href="{{ route('purchase-msisdn.list', [$campaignId, $data->id]) }}"
                                           class="btn btn-sm btn-info product-details">
                                            Details
                                        </a>
