@@ -4,17 +4,19 @@ namespace App\Services;
 
 class RemoveMsisdnService
 {
-    public function removeMsisdn($msisdn)
+    /**
+     * @param $data
+     * @return bool|string
+     */
+    public function removeMsisdn($data)
     {
-        // Remove the msisdn from the database
-        // ...
+        return $this->loadModel($data['feature_list'], $data['msisdn']);
     }
-
 
     /**
      * @return array
      */
-    public function getTestMsisdnList() : array
+    public function getTestMsisdnList(): array
     {
         return config('constants.test_msisdn_removal.msisdns');
     }
@@ -22,18 +24,53 @@ class RemoveMsisdnService
     /**
      * @return array
      */
-    public function getFeatureList() : array
+    public function getFeatureList(): array
     {
-        return config('constants.test_msisdn_removal.features');
+        $features = config('constants.test_msisdn_removal.features');
+        $featureList = [];
+
+        foreach ($features as $feature) {
+            $featureList[] = $feature['title'] ?? $feature[0]['title'];
+        }
+
+        return $featureList;
     }
 
     /**
-     * @param array $model
+     * @param array $features
+     * @param $msisdn
+     * @return bool|string
      */
-    private function loadModel(array $model=[])
+    private function loadModel($features = [], $msisdn)
     {
-        //load model
-        dd($model);
+        try {
+            $feature_list = config('constants.test_msisdn_removal.features');
+
+            if (!empty($feature_list)) {
+                $keys = array_keys($feature_list);
+                // Remove the msisdn from the database
+                foreach ($features as $item) {
+                    if (count(array_column($feature_list[$keys[$item]], 'key'))) {
+                        foreach ($feature_list[$keys[$item]] as $k => $feature) {
+                            $model_dir = "\App\Models\\" . ucfirst($feature['model']);
+                            $model_dir::where($feature['key'], $msisdn)->delete();
+                        }
+                    } else {
+                        $model_dir = "\App\Models\\" . ucfirst($feature_list[$keys[$item]]['model']);
+                        $model_dir::where($feature_list[$keys[$item]]['key'], $msisdn)->delete();
+                    }
+                }
+            }
+
+            return [
+                'success' => true,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 }
 

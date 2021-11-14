@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Services\RemoveMsisdnService;
+use Illuminate\Http\Request;
 
 class RemoveMsisdnController extends Controller
 {
@@ -24,10 +25,16 @@ class RemoveMsisdnController extends Controller
     /**
      * @return mixed
      */
-    public function index(){
+    public function index()
+    {
         $testMsisdnList = $this->removeMsisdnService->getTestMsisdnList();
         $featureList = json_encode($this->removeMsisdnService->getFeatureList(), JSON_UNESCAPED_SLASHES);
 
         return view('admin.remove-msisdn.index', compact('testMsisdnList', 'featureList'));
+    }
+
+    public function removeMsisdn(Request $request)
+    {
+        return $this->removeMsisdnService->removeMsisdn($request->all());
     }
 }

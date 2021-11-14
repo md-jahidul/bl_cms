@@ -732,7 +732,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
      * Remove MSISDN
      */
-    Route::get('remove-msisdn/', 'CMS\RemoveMsisdnController@index')->name('remove-msisdn');
+    Route::get('remove-msisdn', 'CMS\RemoveMsisdnController@index')->name('remove-msisdn.index');
+    Route::post('remove-msisdn/remove', 'CMS\RemoveMsisdnController@removeMsisdn')->name('remove-msisdn.remove');
 });
 
 // 4G Map View Route

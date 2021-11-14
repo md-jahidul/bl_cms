@@ -11,8 +11,23 @@ return [
         'msisdns' => ['01409900110', '01409900160'],
 
         'features' => [
-            'customer' => "Customers",
-            'refer_end_earn' => "Refer And Earn",
+            'customer' => [
+                'title' => 'Customers',
+                'model' => 'customer',
+                'key' => 'msisdn',
+            ],
+            'referAndEarn' => [
+                [
+                    'title' => 'Refer And Earn',
+                    'model' => 'referee',
+                    'key' => 'referee_msisdn',
+                ],
+                [
+                    'title' => 'Refer And Earn',
+                    'model' => 'referrer',
+                    'key' => 'msisdn',
+                ]
+            ]
         ]
     ]
 ];
