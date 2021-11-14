@@ -33,8 +33,6 @@
                         </thead>
                         <tbody id="sortable">
                         @foreach ($categories as $index => $category)
-
-{{--                            {{ dd($category->dynamicLinks->link) }}--}}
                             <tr data-index="{{ $category->id }}" data-position="{{ $category->ordering }}">
                                 <td><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$category->id}}</td>
@@ -49,10 +47,11 @@
                                                 data-value="{{ $category->dynamicLinks->link }}"
                                                 title="Copy to Clipboard">Copy</button>
                                     @else
-                                        <button class="btn-sm btn-icon btn-outline-success cursor-pointer create_deep_link remove-{{ $category->id }}"
-                                                title="Click for deep link" data-value="{{ $category->slug }}"
-                                                data-id="{{ $category->id }}">
-                                            <i  class="la icon-link remove-{{ $category->id }}" data-id="{{ $category->id }}"></i>
+                                        <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
+                                                data-value="{{ $category->slug }}"
+                                                data-id="{{ $category->id }}"
+                                                title="Click for deep link">
+                                            <i class="la icon-link"></i>
                                         </button>
                                     @endif
                                 </td>

@@ -39,10 +39,11 @@
                                                 data-value="{{ $storeCategory->dynamicLinks->link }}"
                                                 title="Copy to Clipboard">Copy</button>
                                     @else
-                                        <button class="btn-sm btn-icon btn-outline-success cursor-pointer create_deep_link remove-{{ $storeCategory->id }}"
-                                                title="Click for deep link" data-value="{{ $storeCategory->slug }}"
+                                        <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
+                                                title="Click for deep link"
+                                                data-value="{{ $storeCategory->slug }}"
                                                 data-id="{{ $storeCategory->id }}">
-                                            <i  class="la icon-link remove-{{ $storeCategory->id }}" data-id="{{ $storeCategory->id }}"></i>
+                                            <i  class="la icon-link"></i>
                                         </button>
                                     @endif
                                 </td>
