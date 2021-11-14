@@ -66,36 +66,64 @@
 {{--                                        @enderror--}}
 {{--                                    </div>--}}
 
-
-
-                                    <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">
-                                        <h5><strong class="text-success ml-1">Create For New Msisdn List</strong></h5>
-                                        <div class="form-actions mt-0"></div>
-
-                                        <label><b>Msisdn for Banner segment</b></label>
-                                        <div class="form-group">
-                                            <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">
-                                            <label for="input-radio-19" class="mr-3">Comma-separated Number</label>
-                                            <div class="help-block"></div>
-                                        </div>
-                                        <div class="form-group" id="customMsisdnExcel">
-                                            <input type="file" class="dropify" name="msisdn_file" data-height="100"
-                                                   data-allowed-file-extensions="xlsx csv"/>
-                                            <div class="help-block"></div>
-                                        </div>
-{{--                                        <div class="help-block"></div>--}}
-                                        @if ($errors->has('msisdn_file'))
-                                            <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>
-                                        @endif
-                                        <div class="form-group hidden" id="customMsisdn">
-                                            <textarea class="form-control" name="custom_msisdn" cols="3" rows="5"
-                                                      placeholder="01900000000,01400000000"></textarea>
-                                        </div>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('custom_msisdn'))
-                                            <div class="help-block">  {{ $errors->first('custom_msisdn') }}</div>
-                                        @endif
+                                    <div class="form-group col-md-12" id="BannerSegmentWiseDiv">
+                                        <label><b>Upload Base Msisdn File</b></label>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Base Msisdn Files</th>
+                                                <th class="text-center" style="width: 2%">
+                                                    <i data-repeater-create
+                                                       class="la la-plus text-info cursor-pointer"
+                                                       id="repeater-button" title="Add More">
+                                                    </i>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody data-repeater-list="base_msisdn_files" id="cta_table">
+                                            <tr data-repeater-item>
+                                                <td>
+                                                    <input name="file_name" type="file" class="form-control-file" id="exampleInputFile">
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <i data-repeater-delete
+                                                       class="la la-trash-o text-danger cursor-pointer"></i>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
+
+
+
+{{--                                    <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">--}}
+{{--                                        <h5><strong class="text-success ml-1">Create For New Msisdn List</strong></h5>--}}
+{{--                                        <div class="form-actions mt-0"></div>--}}
+
+{{--                                        <label><b>Msisdn for Banner segment</b></label>--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">--}}
+{{--                                            <label for="input-radio-19" class="mr-3">Comma-separated Number</label>--}}
+{{--                                            <div class="help-block"></div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-group" id="customMsisdnExcel">--}}
+{{--                                            <input type="file" class="dropify" name="msisdn_file" data-height="100"--}}
+{{--                                                   data-allowed-file-extensions="xlsx csv"/>--}}
+{{--                                            <div class="help-block"></div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('msisdn_file'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                        <div class="form-group hidden" id="customMsisdn">--}}
+{{--                                            <textarea class="form-control" name="custom_msisdn" cols="3" rows="5"--}}
+{{--                                                      placeholder="01900000000,01400000000"></textarea>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('custom_msisdn'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('custom_msisdn') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
                                 </div>
 
                                 @if($page == "edit")
