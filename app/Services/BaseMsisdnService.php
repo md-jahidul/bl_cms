@@ -9,6 +9,8 @@
 
 namespace App\Services;
 
+use App\Exceptions\BLServiceException;
+use App\Exceptions\MsisdnUploadFailedException;
 use App\Helpers\BaseMsisdnHelper;
 use App\Repositories\BannerRepository;
 use App\Repositories\BaseMsisdnGroupRepository;
@@ -25,6 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Expr\Throw_;
 
 class BaseMsisdnService
 {
@@ -99,7 +102,12 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function uploadPrepare($request, $baseGroup)
+    /**
+     * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Common\Exception\IOException
+     */
+    protected function uploadPrepare($request, $baseGroup, $action = 'insert')
     {
         $insertData = array();
         if ($request->hasFile('msisdn_file')) {
@@ -115,32 +123,40 @@ class BaseMsisdnService
             $file_path = $excel_path;
             $reader->open($file_path);
             foreach ($reader->getSheetIterator() as $sheet) {
-                $row_number = 1;
-                foreach ($sheet->getRowIterator() as $row) {
+                foreach ($sheet->getRowIterator() as $key => $row) {
                     $cells = $row->getCells();
-                    $msisdn = $cells[0]->getValue();
-                    $insertData[] = ['group_id' => $baseGroup->id, 'msisdn' => $msisdn];
+                    $msisdn = trim($cells[0]->getValue());
+
+                    if (strlen($msisdn) < 10) {
+                        return [
+                            'status' => false,
+                            'message' => 'Upload Failed! Wrong msisdn at row: ' . $key
+                        ];
+                    }
+                    $insertData[] = "0" . substr($msisdn, -10) ;
                 }
             }
-
         } else {
             if ($request->has('segment_type') && $request->input('segment_type') == 'yes' && !empty($request->input('custom_msisdn'))) {
                 $individuals = explode(',', $request->input('custom_msisdn'));
                 foreach ($individuals as $individual) {
-                    $insertData[] = [
-                        'group_id' => $baseGroup->id,
-                        'msisdn' => $individual,
-                        'created_at' => Carbon::now()
-                    ];
+                    $insertData[] = trim($individual);
                 }
             } else {
                 return Response('Individual number field is empty');
             }
         }
 
+        if ($action == "update") {
+            BaseMsisdn::where('group_id', $baseGroup->id)->delete();
+        }
+
         foreach (array_chunk($insertData, 1000) as $key => $smallerArray) {
             foreach ($smallerArray as $index => $value) {
-                $temp[$index] = str_replace(' ', '', $value);
+                $temp[$index] = [
+                    'group_id' => $baseGroup->id,
+                    'msisdn' => $value
+                ];
             }
             BaseMsisdn::insert($temp);
         }
@@ -152,6 +168,11 @@ class BaseMsisdnService
             Redis::del($redisKey);
             BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroup->id, $keyExpireTtl);
         }
+
+        return [
+            'status' => true,
+            'message' => 'Upload successfully completed !'
+        ];
     }
 
     /**
@@ -163,8 +184,11 @@ class BaseMsisdnService
         try {
             return DB::transaction(function () use ($request) {
                 $baseGroup = $this->baseMsisdnGroupRepository->save($request->all());
-                $this->uploadPrepare($request, $baseGroup);
-                return Response('Upload successfully completed !');
+                $response = $this->uploadPrepare($request, $baseGroup);
+                if (!$response['status']) {
+                    DB::rollBack();
+                }
+                return $response;
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());
@@ -181,13 +205,15 @@ class BaseMsisdnService
     {
         try {
             return DB::transaction(function () use ($request, $id) {
-                $baseGroup = $this->findOne($id);
-                $baseGroup->update($request->all());
                 if (isset($request->msisdn_file) || !empty($request->custom_msisdn)) {
-                    BaseMsisdn::where('group_id', $baseGroup->id)->delete();
-                    $this->uploadPrepare($request, $baseGroup);
+                    $baseGroup = $this->findOne($id);
+                    $baseGroup->update($request->all());
+                    return $this->uploadPrepare($request, $baseGroup, 'update');
                 }
-                return Response('Upload successfully completed !');
+                return [
+                    'status' => false,
+                    'message' => 'Please input a excel file'
+                ];
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());

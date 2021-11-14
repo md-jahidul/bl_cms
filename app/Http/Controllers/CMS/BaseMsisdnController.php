@@ -82,8 +82,13 @@ class BaseMsisdnController extends Controller
     public function store(BaseMsisdnRequest $request)
     {
         $response = $this->baseMsisdnService->storeBaseMsisdnGroup($request);
-        Session()->flash('message', $response->content());
-        return redirect(route('myblslider.baseMsisdnList.index'));
+//        dd($response);
+        if ($response['status']) {
+            Session()->flash('success', $response['message']);
+            return redirect(route('myblslider.baseMsisdnList.index'));
+        }
+        Session()->flash('error', $response['message']);
+        return back();
     }
 
     /**
@@ -120,8 +125,16 @@ class BaseMsisdnController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->baseMsisdnService->updateBaseMsisdnGroup($request, $id);
-        Session()->flash('message', $response->content());
-        return redirect(route('myblslider.baseMsisdnList.index'));
+//        Session()->flash('message', $response->content());
+//        return redirect(route('myblslider.baseMsisdnList.index'));
+
+
+        if ($response['status']) {
+            Session()->flash('success', $response['message']);
+            return redirect(route('myblslider.baseMsisdnList.index'));
+        }
+        Session()->flash('error', $response['message']);
+        return back();
     }
 
     /**
