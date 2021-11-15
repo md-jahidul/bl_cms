@@ -42,7 +42,6 @@
 @stop
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
@@ -50,7 +49,6 @@
 
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js"
@@ -59,22 +57,9 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            var date = new Date();
-            date.setDate(date.getDate());
-            $('#from_date').datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                showClose: true,
-                defaultDate: date
-            });
-            $('#to_date').datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                showClose: true,
-                defaultDate: date
-            });
-
             var features = Object.values(JSON.parse('{!! $featureList !!}'));
 
-            var remove_msisdn_table = $('#remove_msisdn_table').DataTable({
+            $('#remove_msisdn_table').DataTable({
                 processing: true,
                 serverSide: false,
                 pageLength: 10,
@@ -102,7 +87,6 @@
                     $('td', row).eq(0).html(`<input type="checkbox" class="float-left form-check-input" id="featureCheck" data-id="${index}">` + (index + 1));
                 }
             }).columns.adjust();
-            ;
             $("#submit_msisdn_list").click(function (e) {
                 e.preventDefault();
                 var msisdn = $("#msisdn_selection").val();
@@ -133,6 +117,9 @@
                                 '',
                                 'success',
                             );
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
                         }else {
                             Swal.fire(
                                 'Error Occured',
@@ -141,9 +128,6 @@
                             );
                         }
 
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 2000);
                     }
                 });
             }
