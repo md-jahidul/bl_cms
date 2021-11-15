@@ -9,27 +9,31 @@
 
 namespace App\Services;
 
+use App\Exceptions\BLServiceException;
+use App\Exceptions\MsisdnUploadFailedException;
+use App\Helpers\BaseMsisdnHelper;
 use App\Repositories\BannerRepository;
 use App\Repositories\BaseMsisdnGroupRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
-use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\BaseMsisdnGroup;
 use App\Models\BaseMsisdn;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Expr\Throw_;
 
 class BaseMsisdnService
 {
     use CrudTrait;
 
+    protected const FLASH_HOUR_REDIS_KEY = "base_msisdn_";
 
     /**
      * @var $baseMsisdnGroupRepository
@@ -98,8 +102,14 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function uploadPrepare($request, $baseGroup)
+    /**
+     * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Common\Exception\IOException
+     */
+    protected function uploadPrepare($request, $baseGroup, $action = 'insert')
     {
+        $insertData = array();
         if ($request->hasFile('msisdn_file')) {
             $file = $request->file('msisdn_file');
             $path = $file->storeAs(
@@ -112,36 +122,57 @@ class BaseMsisdnService
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
             $reader->open($file_path);
-            $insertData = array();
             foreach ($reader->getSheetIterator() as $sheet) {
-                $row_number = 1;
-                foreach ($sheet->getRowIterator() as $row) {
+                foreach ($sheet->getRowIterator() as $key => $row) {
                     $cells = $row->getCells();
-                    $msisdn = $cells[0]->getValue();
-                    $insertData[] = ['group_id' => $baseGroup->id, 'msisdn' => $msisdn];
+                    $msisdn = trim($cells[0]->getValue());
+
+                    if (strlen($msisdn) < 10) {
+                        return [
+                            'status' => false,
+                            'message' => 'Upload Failed! Wrong msisdn at row: ' . $key
+                        ];
+                    }
+                    $insertData[] = "0" . substr($msisdn, -10) ;
                 }
             }
-
         } else {
             if ($request->has('segment_type') && $request->input('segment_type') == 'yes' && !empty($request->input('custom_msisdn'))) {
                 $individuals = explode(',', $request->input('custom_msisdn'));
                 foreach ($individuals as $individual) {
-                    $insertData[] = [
-                        'group_id' => $baseGroup->id,
-                        'msisdn' => $individual,
-                        'created_at' => Carbon::now()
-                    ];
+                    $insertData[] = trim($individual);
                 }
             } else {
                 return Response('Individual number field is empty');
             }
         }
+
+        if ($action == "update") {
+            BaseMsisdn::where('group_id', $baseGroup->id)->delete();
+        }
+
         foreach (array_chunk($insertData, 1000) as $key => $smallerArray) {
             foreach ($smallerArray as $index => $value) {
-                $temp[$index] = str_replace(' ', '', $value);
+                $temp[$index] = [
+                    'group_id' => $baseGroup->id,
+                    'msisdn' => $value
+                ];
             }
             BaseMsisdn::insert($temp);
         }
+
+        // Redis delete and add
+        $redisKey = self::FLASH_HOUR_REDIS_KEY . $baseGroup->id;
+        $keyExpireTtl = Redis::ttl($redisKey);
+        if ($keyExpireTtl > 1) {
+            Redis::del($redisKey);
+            BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroup->id, $keyExpireTtl);
+        }
+
+        return [
+            'status' => true,
+            'message' => 'Upload successfully completed !'
+        ];
     }
 
     /**
@@ -153,8 +184,11 @@ class BaseMsisdnService
         try {
             return DB::transaction(function () use ($request) {
                 $baseGroup = $this->baseMsisdnGroupRepository->save($request->all());
-                $this->uploadPrepare($request, $baseGroup);
-                return Response('Upload successfully completed !');
+                $response = $this->uploadPrepare($request, $baseGroup);
+                if (!$response['status']) {
+                    DB::rollBack();
+                }
+                return $response;
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());
@@ -165,19 +199,21 @@ class BaseMsisdnService
     /**
      * @param $request
      * @param $id
-     * @return false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
+     * @return false|Application|ResponseFactory|Response|mixed
      */
     public function updateBaseMsisdnGroup($request, $id)
     {
         try {
             return DB::transaction(function () use ($request, $id) {
-                $baseGroup = $this->findOne($id);
-                $baseGroup->update($request->all());
                 if (isset($request->msisdn_file) || !empty($request->custom_msisdn)) {
-                    BaseMsisdn::where('group_id', $baseGroup->id)->delete();
-                    $this->uploadPrepare($request, $baseGroup);
+                    $baseGroup = $this->findOne($id);
+                    $baseGroup->update($request->all());
+                    return $this->uploadPrepare($request, $baseGroup, 'update');
                 }
-                return Response('Upload successfully completed !');
+                return [
+                    'status' => false,
+                    'message' => 'Please input a excel file'
+                ];
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());

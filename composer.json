@@ -24,7 +24,8 @@
         "orangehill/iseed": "^2.6",
         "predis/predis": "^1.1",
         "symfony/finder": "^4.3",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+      "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

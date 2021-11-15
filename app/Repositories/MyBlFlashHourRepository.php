@@ -21,10 +21,7 @@ class MyBlFlashHourRepository extends BaseRepository
 
     public function inactiveOldCampaign()
     {
-        $campaigns = $this->model->all();
-        foreach ($campaigns as $campaign) {
-            $campaign->update(['status' => 0]);
-        }
+        $this->model->whereIn('status', [1])->update(['status' => 0]);
     }
 
     public function msisdnInfo($request, $id)

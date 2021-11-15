@@ -22,9 +22,9 @@
         window.location.href = redirectUrl;
     }
 
-    $('.delete_btn').click(function () {
+    $('.delete_btn').click(function (e) {
+        e.preventDefault()
         var url = $(this).attr('remove');
-        // console.log(url);
         Swal.fire(confirmPopupParams).then((result) => {
             if (result.value) {
                 $.ajax({

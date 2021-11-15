@@ -21,6 +21,7 @@ class FlashHourReminderScheduler extends Command
     protected const PROCESSED = 0;
     protected const IN_PROGRESS = 1;
     protected const FLASH_HOUR_SLUG = "flash_hour_reminder";
+    protected const MYBL_CAMPAIGN_SLUG = "mybl_campaign_reminder";
 
     /**
      * The name and signature of the console command.
@@ -35,43 +36,58 @@ class FlashHourReminderScheduler extends Command
      * @var string
      */
     protected $description = 'Create a flash hour reminder scheduled XLSX file';
+    /**
+     * @var MyBlFlashHourProductRepository
+     */
+    private $flashHourProductRepository;
+    /**
+     * @var MyBlFlashHourReminderRepository
+     */
+    private $reminderRepository;
+    /**
+     * @var NotificationCategoryRepository
+     */
+    private $notificationCategoryRepository;
+    /**
+     * @var NotificationScheduleRepository
+     */
+    private $notificationScheduleRepository;
+    /**
+     * @var NotificationDraftRepository
+     */
+    private $notificationDraftRepository;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @param MyBlFlashHourProductRepository $flashHourProductRepository
-     * @param MyBlFlashHourReminderRepository $reminderRepository
-     * @param NotificationCategoryRepository $notificationCategoryRepository
-     * @param NotificationScheduleRepository $notificationScheduleRepository
-     * @param NotificationDraftRepository $notificationDraftRepository
-     * @return array|void
-     */
-    public function handle(
+    public function __construct(
         MyBlFlashHourProductRepository $flashHourProductRepository,
         MyBlFlashHourReminderRepository $reminderRepository,
         NotificationCategoryRepository $notificationCategoryRepository,
         NotificationScheduleRepository $notificationScheduleRepository,
         NotificationDraftRepository $notificationDraftRepository
     ) {
+        $this->flashHourProductRepository = $flashHourProductRepository;
+        $this->reminderRepository = $reminderRepository;
+        $this->notificationCategoryRepository = $notificationCategoryRepository;
+        $this->notificationScheduleRepository = $notificationScheduleRepository;
+        $this->notificationDraftRepository = $notificationDraftRepository;
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return array|void
+     */
+    public function handle()
+    {
         try {
             $basePath = env('UPLOAD_BASE_PATH');
 
-            $reminderList = $reminderRepository->findByProperties(['status' => self::IN_PROGRESS]);
-            $notificationCat = $notificationCategoryRepository->findOneByProperties(['slug' => self::FLASH_HOUR_SLUG]);
-
-            $notificationDraft = $notificationDraftRepository->findOneByProperties(
-                ['category_id' => $notificationCat->id]
-            );
+            $reminderList = $this->reminderRepository->findByProperties(['status' => self::IN_PROGRESS]);
 
             $productCodeWiseMsisdnList = [];
             foreach ($reminderList as $item) {
@@ -82,11 +98,25 @@ class FlashHourReminderScheduler extends Command
             $productCodeWiseReminders = $reminderList->groupBy('flash_hour_product_id');
             foreach ($productCodeWiseReminders as $product) {
                 $product = $product[0];
-                $flashHourProduct = $flashHourProductRepository->findOne($product->flash_hour_product_id);
+                $flashHourProduct = $this->flashHourProductRepository->findOne($product->flash_hour_product_id);
 
+                if ($flashHourProduct->flashHour->reference_type == "flash_hour") {
+                    $notificationCat = $this->notificationCategoryRepository->findOneByProperties(
+                        ['slug' => self::FLASH_HOUR_SLUG]
+                    );
+                } else {
+                    $notificationCat = $this->notificationCategoryRepository->findOneByProperties(
+                        ['slug' => self::MYBL_CAMPAIGN_SLUG]
+                    );
+                }
+                $notificationDraft = $this->notificationDraftRepository->findOneByProperties(
+                    ['category_id' => $notificationCat->id]
+                );
                 $productCode = $flashHourProduct->product_code;
 
-                $databaseFilePath = "notification-scheduler-files/flash-hour-reminder-$productCode" . '.xlsx';
+                $referenceWiseName = str_replace('_', '-', $flashHourProduct->flashHour->reference_type);
+
+                $databaseFilePath = "notification-scheduler-files/$referenceWiseName-reminder-$productCode" . '.xlsx';
                 $fullPath = "$basePath/$databaseFilePath";
                 $schedule = $flashHourProduct->notificationSchedule;
 

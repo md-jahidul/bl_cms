@@ -669,6 +669,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
+    Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
 
     //App Manage  ====================================
@@ -690,7 +692,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
     Route::get('mybl-home-components/edit/{id}', 'CMS\MyblHomeComponentController@edit')
         ->name('mybl.home.components.edit');
-    Route::put('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
+    Route::post('mybl-home-components/store', 'CMS\MyblHomeComponentController@store')
+        ->name('mybl.home.components.store');
+    Route::post('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
         ->name('mybl.home.components.update');
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
@@ -708,6 +712,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
 
+    // Mybl Campaign
+    Route::resource('mybl-campaign', 'CMS\MyBlCampaignController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign/destroy/{id}', 'CMS\MyBlCampaignController@destroy');
+
+    Route::get('mybl-campaign-analytic/{campaign_id}', 'CMS\MyBlCampaignController@analyticReport')
+        ->name('mybl-campaign-analytic.report');
+
+    Route::get('mybl-campaign-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlCampaignController@purchaseMsisdnList')
+        ->name('purchase-msisdn.list');
+
+    Route::get('mybl-campaign-purchase-msisdn/{id}', 'CMS\MyBlCampaignController@purchaseDetails');
+
 //    Route::get('flash-hour-campaign/analytics', 'CMS\MyBlFlashHourController@getReferAndEarnAnalytics')
 //        ->name('refer-and-earn.analytics');
 
@@ -715,6 +731,19 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
     Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
 
+    /*
+    * Event Base bonus
+    */
+    Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
+    Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
+    Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
+    Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');
+    Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
+    Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
+    Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
+
+    Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
+        ->name('mybl.home.components.destroy');
 });
 
 // 4G Map View Route
