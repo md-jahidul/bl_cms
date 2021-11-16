@@ -83,11 +83,6 @@
                         <i class="ft-list"></i>Products</a>
                 </li>
 
-                <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
-                    <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
-                        <i class="la la-fire"></i>Free Products Analytic</a>
-                </li>
-
                 <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
                     <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
                         <i class="ft-x-square"></i>Inactive Products</a>
@@ -451,6 +446,11 @@
                         <i class="ft-phone-call"></i> Special call rate Filter
                     </a>
                 </li>
+                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-globe"></i> Recharge Offer</a>
+                </li>
             </ul>
         </li>
     @endif
@@ -550,6 +550,13 @@
         <li class="{{ is_active_url('app-launch')}}">
             <a class="menu-item" href="{{ route('app-launch.index') }}">
                 <i class="ft-alert-triangle"></i>App Launch Popup</a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('RemoveMsisdn') )
+        <li class="{{ is_active_url('remove-msisdn')}}">
+            <a class="menu-item" href="{{ route('remove-msisdn.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-code-fork"></i>Remove MSISDN</a>
         </li>
     @endif
 

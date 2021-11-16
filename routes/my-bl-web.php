@@ -236,7 +236,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
 
 
-
     // Support Messages
     Route::get('support-message', 'CMS\SupportMessageRatingController@index')->name('support-message');
     Route::post('support-message', 'CMS\SupportMessageRatingController@index')->name('support.message.list');
@@ -866,6 +865,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('usim-eligibility-update/{id}', 'CMS\MyblUsimEligibilityController@update')
         ->name('usim-eligibility.update');
 
+
+    /*
+     * Remove MSISDN
+     */
+    Route::get('remove-msisdn', 'CMS\RemoveMsisdnController@index')->name('remove-msisdn.index');
+    Route::post('remove-msisdn/remove', 'CMS\RemoveMsisdnController@removeMsisdn')->name('remove-msisdn.remove');
 });
 
 // 4G Map View Route

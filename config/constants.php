@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'terms_conditions_feature_names' => [
-        'general' => 'General',
-        'balance_transfer' => 'Balance Transfer'
-    ],
     'referee_status' => [
         'invited' => 'invited',
         'redeemed' => 'redeemed',
@@ -29,4 +25,28 @@ return [
         'cs_referral_product_code_postpaid' => env('CS_REFERRAL_PRODUCT_CODE_POSTPAID'),
         'rafm_report_mail' => env('CS_SELFCARE_RAFM_REPORT_MAIL')
     ],
+
+    'test_msisdn_removal' => [
+        'msisdns' => ['01409900110', '01409900160'],
+
+        'features' => [
+            'customer' => [
+                'title' => 'Customers',
+                'model' => 'customer',
+                'key' => 'msisdn',
+            ],
+            'referAndEarn' => [
+                [
+                    'title' => 'Refer And Earn',
+                    'model' => 'referee',
+                    'key' => 'referee_msisdn',
+                ],
+                [
+                    'title' => 'Refer And Earn',
+                    'model' => 'referrer',
+                    'key' => 'msisdn',
+                ]
+            ]
+        ]
+    ]
 ];
