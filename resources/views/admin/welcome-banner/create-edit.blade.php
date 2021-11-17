@@ -50,7 +50,6 @@
                                         <label for="name" class="required">Banner Title En:</label>
                                         <input required
                                                maxlength="200"
-                                               data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                                data-validation-required-message="Banner Title is required"
                                                data-validation-regex-message="Banner Title must start with alphabets"
                                                data-validation-maxlength-message="Banner Name can not be more then 200 Characters"
@@ -74,7 +73,6 @@
                                         <label for="name" class="required">Banner Title Bn:</label>
                                         <input required
                                                maxlength="200"
-                                               data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                                data-validation-required-message="Banner Title is required"
                                                data-validation-regex-message="Banner Title must start with alphabets"
                                                data-validation-maxlength-message="Banner Name can not be more then 200 Characters"
