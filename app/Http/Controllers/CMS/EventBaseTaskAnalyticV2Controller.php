@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Enums\EventBasedAnalyticTypes;
-use App\Services\TaskAnalyticService;
 use App\Http\Requests\TaskAnalyticRequest;
 use App\Http\Controllers\Controller;
+use App\Services\TaskAnalyticServiceV2;
 
 class EventBaseTaskAnalyticV2Controller extends Controller
 {
 
-    public function __construct(TaskAnalyticService $taskAnalyticService)
+    public function __construct(TaskAnalyticServiceV2 $taskAnalyticService)
     {
         $this->middleware('auth');
         $this->taskAnalyticService        = $taskAnalyticService;

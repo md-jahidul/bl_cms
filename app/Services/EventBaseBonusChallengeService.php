@@ -116,8 +116,10 @@ class EventBaseBonusChallengeService
         return $client->CallAPI("PUT", $url, $data);
     }
 
-    public function delete($id): string
+    public function delete($id): array
     {
-        dd($id);
+        $client   = new ApiService();
+        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge/" . $id;
+        return $client->CallAPI("DELETE", $url, []);
     }
 }
