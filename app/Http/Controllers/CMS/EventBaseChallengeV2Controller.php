@@ -71,12 +71,12 @@ class EventBaseChallengeV2Controller extends Controller
         return redirect('/event-base-bonus/v2/challenges');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        $response = $this->taskService->delete($id);
+        $response = $this->eventBaseBonusChallengeService->delete($id);
 
-        Session::flash('message', 'Task delete successful');
+        Session::flash('message', 'Campaign delete is successful');
 
-        return redirect('/event-base-bonus/v2/tasks');
+        return redirect('/event-base-bonus/v2/challenges');
     }
 }
