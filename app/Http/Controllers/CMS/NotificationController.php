@@ -39,8 +39,7 @@ class NotificationController extends Controller
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
         UserService $userService
-    )
-    {
+    ) {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
@@ -78,7 +77,7 @@ class NotificationController extends Controller
     /**
      * @param NotificationRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-    * @author ahasan habib <habib.cst@gmail.com>
+     * @author ahasan habib <habib.cst@gmail.com>
      */
     public function store(NotificationRequest $request)
     {
@@ -185,10 +184,11 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTargetWiseNotificationReport(Request $request){
+    public function getTargetWiseNotificationReport(Request $request)
+    {
 
 
-        if ($request->has('draw')){
+        if ($request->has('draw')) {
             return $this->notificationService->getNotificationListReport($request);
         }
 
@@ -198,112 +198,85 @@ class NotificationController extends Controller
     }
 
 
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTargetWiseNotificationReportDetails(Request $request,$title)
+    public function getTargetWiseNotificationReportDetails(Request $request, $title)
     {
 
         $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
-    //    dd($notifications);
+        //    dd($notifications);
 
         return view('admin.notification.target-wise-notification.details')
             ->with('notifications', $notifications);
     }
 
-    public function getProductList(Request $request){
+    public function getProductList(Request $request)
+    {
         return $this->notificationService->getActiveProducts($request);
     }
 
     public function getGuestUserList(Request $request)
     {
-        if ($request->has('draw')){
+        if ($request->has('draw')) {
             return $this->getLoggedOutCustomerList($request);
         }
 
-        $guestUsers = $this->notificationService->getLoggedOutCustomers($request);
-
         if ($request->isMethod('get')) {
-            return view('admin.notification.guest-user-tracking.list')->with('guestUsers', $guestUsers);
+            return view('admin.notification.guest-user-tracking.list');
         }
     }
 
     public function getLoggedOutCustomerList($request)
     {
-
-
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $items = $this->notificationService->getLoggedOutCustomers($request, $start, $length);
+        $guestCustomerActivityBuilder = $this->notificationService->getLoggedOutCustomers();
+
+        if ($request->date_range != null) {
+            $date = explode('--', $request->date_range);
+            $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
+            $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
+            $guestCustomerActivityBuilder->whereBetween('updated_at', [$from, $to]);
+        }
+
+        if ($request->device_type) {
+            $guestCustomerActivityBuilder->where('device_type', $request->device_type);
+        }
+
+        if ($request->number_type) {
+            $guestCustomerActivityBuilder->where('number_type', $request->number_type);
+        }
 
         $response = [
             'draw' => $draw,
             'data' => []
         ];
 
+        if ($request->has('search') && !empty($request->get('search'))) {
+            $input = $request->get('search');
+
+            if (!empty($input['value'])) {
+                $searchString = $input['value'];
+                $items = $guestCustomerActivityBuilder->where('msisdn', 'LIKE',
+                    "%{$searchString}%")->skip($start)->take($length)->get();
+            } else {
+                $items = $guestCustomerActivityBuilder->skip($start)->take($length)->get();
+            }
+        }
+
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
-                'id' => $item->id,
-                'name' => $item->name,
                 'msisdn' => $item->msisdn,
                 'device_type' => $item->device_type,
                 'number_type' => $item->number_type
             ];
         });
 
-        return $response;
-
-        $response['data'][] = [
-            'id' => 127,
-            'name' => 'TEST',
-            'msisdn' => '8801903303978',
-            'device_type' => 'IOS',
-            'number_type' => 'PREPAID'
-        ];
-
-        return $response;
-
-
-        $builder = new NotificationDraft();
-        $builder->orderBy('id', 'desc');
-
-        if ($request->has('search') && !empty($request->get('search'))) {
-            $input = $request->get('search');
-
-            if (!empty($input['value'])) {
-                $titel = $input['value'];
-                $all_items_count = $builder->where('notification_drafts.title', 'LIKE', "%{$titel}%")->count();
-                $items = $builder->where('notification_drafts.title', 'LIKE',
-                    "%{$titel}%")->skip($start)->take($length)->get();
-            } else {
-
-                $all_items_count = $builder->count();
-                $items = $builder->skip($start)->take($length)->get();
-            }
-        }
-        $response = [
-            'draw' => $draw,
-            'recordsTotal' => $all_items_count,
-            'recordsFiltered' => $all_items_count,
-            'data' => []
-        ];
-        $items->each(function ($item) use (&$response) {
-            $starts_at = (!empty($item->starts_at)) ? date('d-M-Y h:i a', strtotime($item->starts_at)) : '';
-            $countSend = $item->getNotification->count() . ' > ' . $item->getNotificationSuccessfullySend->count();
-            $device_type = (!empty($item->device_type)) ? $item->device_type : 'All';
-            $response['data'][] = [
-                'titel' => $item->title,
-                'body' => $item->body,
-                'device_type' => ucwords($device_type),
-                'starts_at' => $starts_at,
-                'sends' => $countSend,
-            ];
-        });
         return $response;
     }
 

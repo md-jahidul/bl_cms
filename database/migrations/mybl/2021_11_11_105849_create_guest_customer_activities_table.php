@@ -18,9 +18,11 @@ class CreateGuestCustomerActivitiesTable extends Migration
             $table->string('device_id')->index();
             $table->string('fcm_token')->index();
             $table->string('msisdn')->nullable();
-            $table->string('type')->index();
+            $table->string('last_activity')->index();
             $table->dateTime('last_login_at')->nullable();
             $table->dateTime('last_logout_at')->nullable();
+            $table->string('device_type')->index();
+            $table->string('number_type')->nullable()->index();
             $table->boolean('login_status')->default(0);
             $table->boolean('is_notified')->default(0)->index();
             $table->timestamps();

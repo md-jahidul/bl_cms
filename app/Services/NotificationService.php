@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\CustomerRepository;
+use App\Repositories\GuestCustomerActivityRepository;
 use App\Repositories\LogoutTrackRepository;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
@@ -37,6 +38,10 @@ class NotificationService
      * @var LogoutTrackRepository
      */
     private $logoutTrackRepository;
+    /**
+     * @var GuestCustomerActivityRepository
+     */
+    private $customerActivityRepository;
 
     /**
      * NotificationRepository constructor.
@@ -44,12 +49,14 @@ class NotificationService
      * @param NotificationRepository $notificationRepository
      * @param CustomerRepository $customerRepository
      * @param LogoutTrackRepository $logoutTrackRepository
+     * @param GuestCustomerActivityRepository $customerActivityRepository
      */
     public function __construct(
         NotificationDraftRepository $notificationDraftRepository,
         NotificationRepository $notificationRepository,
         CustomerRepository $customerRepository,
-        LogoutTrackRepository $logoutTrackRepository
+        LogoutTrackRepository $logoutTrackRepository,
+        GuestCustomerActivityRepository $customerActivityRepository
     ) {
         $this->notificationDraftRepository = $notificationDraftRepository;
         $this->setActionRepository($notificationDraftRepository);
@@ -57,6 +64,7 @@ class NotificationService
         $this->notificationRepository = $notificationRepository;
         $this->customerRepository = $customerRepository;
         $this->logoutTrackRepository = $logoutTrackRepository;
+        $this->customerActivityRepository = $customerActivityRepository;
     }
 
     /**
@@ -265,8 +273,9 @@ class NotificationService
         return $this->notificationRepository->removeMuteUserFromList($user_phone_num, $mute_user_phone);
     }
 
-    public function getLoggedOutCustomers($request, $start = 0, $length = 0)
+    public function getLoggedOutCustomers()
     {
-        return $this->logoutTrackRepository->getLoggedOutCustomerList($request, $start, $length);
+        $guestCustomerActivityBuilder =  $this->customerActivityRepository->getLoggedOutCustomers();
+        return $guestCustomerActivityBuilder;
     }
 }

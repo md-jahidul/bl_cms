@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Guest User Tracking')
-@section('card_name', 'Guest(Logged out) User Tracking')
+@section('card_name', 'Guest User Tracking')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Guest User List</li>
 @endsection
@@ -26,23 +26,28 @@
                     <div class="col-md-12 mb-1">
                         <div class="row">
 
-                            <div class="col-md-4" style="margin-top: 5px">
-                                <input type='text'
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <input type="text" name="date_range" class="form-control filter datetime"
+                                       autocomplete="off" id="date_picker" placeholder="Filter By Date">
+<!--                                <input type="text" placeholder="From" class="datepicker form-control" id="from" name="from" autocomplete="off">
+                                <input type="text" placeholder="To" class="datepicker form-control" id="to" name="to" autocomplete="off" style="margin-top: 5px">-->
+
+<!--                                <input type='text'
                                        class="form-control datetime filter"
                                        style="height: 40px"
                                        value=""
                                        name="logout_time"
-                                       id="logout_time"/>
+                                       id="logout_time"/>-->
                             </div>
 
-                            <div class="col-md-4" style="margin-top: 5px">
+                            <div class="col-md-3" style="margin-top: 5px">
                                 <select name="device_type" class="form-control filter" id="device_type">
                                     <option value=""> Device Type</option>
                                     <option value="android">ANDROID</option>
                                     <option value="ios">IOS</option>
                                 </select>
                             </div>
-                            <div class="col-md-4" style="margin-top: 5px">
+                            <div class="col-md-3" style="margin-top: 5px">
                                 <select name="number_type" class="form-control filter" id="number_type">
                                     <option value=""> Number Type</option>
                                     <option value="prepaid">PREPAID</option>
@@ -56,38 +61,13 @@
                         <thead>
                         <tr>
                             <th width="5%"><input type="checkbox" id="checkAll"> Select all</th>
-                            <th width="5%">ID</th>
-                            <th width="25%">Name</th>
-                            <th width="15%">Msisdn</th>
-                            <th width="15%">Device Type</th>
-                            <th width="15%">Number Type</th>
+                            <th width="30%">Msisdn</th>
+                            <th width="30%">Device Type</th>
+                            <th width="30%">Number Type</th>
                             <th width="5%" class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{--@foreach ($guestUsers as $user)
-                            <tr>
-                                <td width="5%"><input type="checkbox"></td>
-                                <td width="5%"> {{ $user->id }} </td>
-                                <td width="25%"> {{ data_get($user, 'name', '') }} </td>
-                                <td width="15%"> {{ data_get($user, 'msisdn', '') }}</td>
-                                <td width="15%"> {{ data_get($user, 'device_type', '') }}</td>
-                                <td width="15%"> {{ data_get($user, 'number_type', '') }}</td>
-                                <td width="15%"> {{ data_get($user, 'platform', '') }}</td>
-                                <td width="5%">
-                                    <div class="row">
-                                        <div class="col-md-2 m-1">
-                                            <a role="button"
-                                               data-id=""
-                                               href="#"
-                                               data-placement="right"
-                                               class="showButton btn btn-outline-info btn-sm"
-                                               onclick=""><i class="la la-paper-plane"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach--}}
                         </tbody>
                     </table>
 
@@ -128,19 +108,38 @@
             $('input:checkbox').not(this).prop('checked', this.checked);
         });
 
-        var date;
+        $('input[name="date_range"]').daterangepicker({
+            autoUpdateInput: false,
+            showDropdowns: true,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'YYYY/MM/DD'
+            },
+        });
+
+        $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY/MM/DD') + '--' + picker.endDate.format('YYYY/MM/DD'));
+        });
+
+        $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+        //$('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+
+        /*var date;
         // Date & Time
         date = new Date();
         date.setDate(date.getDate());
         $('.datetime').daterangepicker({
             timePicker: true,
             timePickerIncrement: 5,
-            startDate: '{{ date('Y-m-d H:i:s')}}',
-            endDate: '{{ date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}',
+            startDate: '{{--{{ date('Y-m-d H:i:s')}}--}}',
+            endDate: '{{--{{ date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}--}}',
             locale: {
                 format: 'YYYY/MM/DD h:mm A'
             }
-        });
+        });*/
 
         /*$(document).ready(function () {
             $('#guest_user_datatable').DataTable({
@@ -163,6 +162,9 @@
                 url: '{{ route('guest.user.track') }}',
                 type: 'GET',
                 data: {
+                    date_range: function () {
+                        return $('input[name="date_range"]').val();
+                    },
                     time_range: function () {
                         return $("#logout_time").val();
                     },
@@ -178,22 +180,9 @@
                 {
                     name: '',
                     width: '30px',
+                    orderable: false,
                     render: function () {
                         return `<input id="selected_notification" type="checkbox">`;
-                    }
-                },
-                {
-                    name: 'id',
-                    width: '30px',
-                    render: function (data, type, row) {
-                        return row.id;
-                    }
-                },
-
-                {
-                    name: 'name',
-                    render: function (data, type, row) {
-                        return row.name;
                     }
                 },
                 {
@@ -228,7 +217,16 @@
             ],
         });
 
-        $(document).on('change', '.filter', function (e) {
+        $(".filter").on('change', function (e) {
+            $('#guest_user_datatable').DataTable().ajax.reload();
+        });
+
+        $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
+            $('#guest_user_datatable').DataTable().ajax.reload();
+        });
+
+        $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
             $('#guest_user_datatable').DataTable().ajax.reload();
         });
     </script>
