@@ -10,7 +10,7 @@
                    class="dropify_image"
                    data-height="77"
                    data-default-file="{{ isset($product) ? asset($product->thumbnail_img) : ''}}"
-                   data-allowed-file-extensions="png jpg gif"/>
+                   data-allowed-file-extensions="png jpg jpeg gif"/>
             <div class="help-block"></div>
             <small
                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>

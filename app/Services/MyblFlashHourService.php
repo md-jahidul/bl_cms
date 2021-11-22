@@ -12,6 +12,7 @@ use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 
 class MyblFlashHourService
