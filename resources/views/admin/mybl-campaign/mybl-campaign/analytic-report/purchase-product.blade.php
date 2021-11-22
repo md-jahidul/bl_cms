@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        <a href="{{ route('flash-hour-campaign.index') }}">Campaign List</a>
+        <a href="{{ route('mybl-campaign.index') }}">Campaign List</a>
     </li>
     <li class="breadcrumb-item active">Purchase List</li>
 @endsection
