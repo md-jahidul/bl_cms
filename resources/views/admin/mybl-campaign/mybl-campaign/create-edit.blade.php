@@ -1,14 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour')
-@section('card_name',"Flash Hour" )
+@section('title', 'Mybl Campaign')
+@section('card_name',"Mybl Campaign" )
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        <a href="{{ route('flash-hour-campaign.index') }}">Campaign List</a>
+        <a href="{{ route('mybl-campaign.index') }}">Campaign List</a>
     </li>
     <li class="breadcrumb-item active">Create Campaign</li>
 @endsection
 @section('action')
-    <a href="{{ route('flash-hour-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+    <a href="{{ route('mybl-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
         Cancel
     </a>
 @endsection
@@ -22,7 +22,7 @@
                     <hr>
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
-                              action="{{ (isset($campaign)) ? route('flash-hour-campaign.update', $campaign->id) : route('flash-hour-campaign.store')}}"
+                              action="{{ (isset($campaign)) ? route('mybl-campaign.update', $campaign->id) : route('mybl-campaign.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @if(isset($campaign))
@@ -100,10 +100,10 @@
                                     @if(isset($campaign) && !$campaign->flashHourProducts->isEmpty())
                                         @foreach($campaign->flashHourProducts as $product)
                                             <input type="hidden" name="old_product_id[]" value="{{ $product->id }}">
-                                            @include('admin.mybl-campaign.flash-hour.partials.product-element', ['product' => $product])
+                                            @include('admin.mybl-campaign.mybl-campaign.partials.product-element', ['product' => $product])
                                         @endforeach
                                     @else
-                                        @include('admin.mybl-campaign.flash-hour.partials.product-element')
+                                        @include('admin.mybl-campaign.mybl-campaign.partials.product-element')
                                     @endif
                                 </div>
                                 <!-- Product Selection End -->
@@ -161,9 +161,20 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
-
     <script>
         $(document).ready(function () {
+            $('.dropify_image').dropify({
+                messages: {
+                    'default': 'Browse for an Image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Image file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
+                }
+            });
+
             $(".product-list").select2()
             $('.report-repeater').repeater();
 
@@ -182,6 +193,20 @@
             }
 
             $('#repeater-button').click(function (){
+                $('.dropify_image').dropify({
+                    messages: {
+                        'default': 'Browse for an Image to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct Image file'
+                    },
+                    error: {
+                        'imageFormat': 'The image must be valid format'
+                    }
+                });
+
+                $('.dropify_image').prop('data-default-file', "")
+
                 $(".product-list").select2()
                 var date = new Date();
                 date.setDate(date.getDate());
