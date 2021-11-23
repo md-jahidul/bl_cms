@@ -55,7 +55,7 @@
 
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Start Date</label>
-                                    <input type='text' class="form-control" name="start_date" id="start_date" value="{{$campaign['start_date']}}" />
+                                    <input type='text' class="form-control" name="start_date" id="start_date" value="{{$campaign['start_date']}}"/>
                                     <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
@@ -198,6 +198,9 @@
                 'imageFormat': 'File must be valid format'
             }
         });
+
+        // set previous start date value for existing campaign
+        $('#start_date').val("{{$campaign['start_date']}}");
     });
 </script>
 

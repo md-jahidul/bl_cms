@@ -68,11 +68,8 @@ class EventBaseCampaignV2Controller extends Controller
         return redirect('/event-base-bonus/v2/campaigns');
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        $response = $this->campaignService->delete($id);
-        //Session::flash('message', $response->getContent());
-
-        return redirect('/event-base-bonus/v2/campaigns');
+        return $this->campaignService->delete($id);
     }
 }

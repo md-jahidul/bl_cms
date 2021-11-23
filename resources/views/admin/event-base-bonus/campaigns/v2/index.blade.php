@@ -44,6 +44,7 @@
                                         <a href="{{ url('event-base-bonus/v2/campaigns/'.$campaign['id']).'/edit' }}" class="mr-3">
                                             <i class="la la-pencil text-primary"></i>
                                         </a>
+                                        <button data-id="{{$campaign['id']}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="border-0 btn btn-outline-danger delete"><i class="la la-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -59,6 +60,42 @@
 
 @push('page-js')
 <script>
-    $('.task-tabel').DataTable();
+    $('.task-tabel').DataTable({
+        "ordering": false
+    });
+
+    $('.delete').click(function() {
+        var id = $(this).attr('data-id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            html: jQuery('.delete_btn').html(),
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "{{ url('event-base-bonus/v2/campaign-del') }}/" + id,
+                    type: "GET",
+                    success: function (res) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Campaign has been deleted.',
+                            'success',
+                        );
+                        setTimeout(redirect, 2000)
+
+                        function redirect() {
+                            window.location.href = "{{ url('event-base-bonus/v2/campaigns') }}"
+                        }
+                    }
+                })
+            }
+        })
+    })
 </script>
 @endpush
