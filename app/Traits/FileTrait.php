@@ -21,30 +21,20 @@ trait FileTrait {
      * @param directoryPath - Directory path relative to base upload path
      * @return file path
      */
-    protected function upload($file, $directoryPath, $fileName = "") {
-        $path = $file->store(
-                $directoryPath, $this->disk
-        );
-
-//        $path = $file->storeAs(
-//            $directoryPath,
-//            $fileName,
-//            $this->disk
-//        );
-//        return $path;
-
-//        $path = $file->storeAs(
-//                $directoryPath, $fileName, $this->disk
-//        );
-
-//        if ($fileName != "") {
-//            $renamedPath = $this->rename($path, $fileName, $directoryPath);
-////
-////            if ($renamedPath == false) {
-////                $this->deleteFile($path);
-////            }
-//            return $renamedPath;
-//        }
+    protected function upload($file, $directoryPath, $fileName = "")
+    {
+        if ($fileName != "") {
+            $path = $file->storeAs(
+                $directoryPath,
+                $fileName,
+                $this->disk
+            );
+        } else {
+            $path = $file->store(
+                $directoryPath,
+                $this->disk
+            );
+        }
 
         return $path;
     }

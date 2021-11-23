@@ -15,13 +15,12 @@ class AddBaseMsisdnFileIdInBaseMsisdnsTable extends Migration
     {
         Schema::table('base_msisdns', function (Blueprint $table) {
             $table->unsignedBigInteger('base_msisdn_file_id')
-                ->nullable()
                 ->after('group_id');
-            $table->foreign('base_msisdn_file_id')
-                ->references('id')
-                ->on('base_msisdns')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+//            $table->foreign('base_msisdn_file_id')
+//                ->references('id')
+//                ->on('base_msisdns')
+//                ->onUpdate('cascade')
+//                ->onDelete('cascade');
         });
     }
 
@@ -33,7 +32,7 @@ class AddBaseMsisdnFileIdInBaseMsisdnsTable extends Migration
     public function down()
     {
         Schema::table('base_msisdns', function (Blueprint $table) {
-            //
+            $table->dropColumn('base_msisdn_file_id')->index();
         });
     }
 }

@@ -9,15 +9,15 @@
 
 namespace App\Services;
 
-use App\Exceptions\BLServiceException;
-use App\Exceptions\MsisdnUploadFailedException;
 use App\Helpers\BaseMsisdnHelper;
-use App\Repositories\BannerRepository;
+use App\Jobs\BaseMsisdnFileUpload;
+use App\Models\BaseMsisdnFile;
+use App\Repositories\BaseMsisdnFileRepository;
 use App\Repositories\BaseMsisdnGroupRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
-use Carbon\Carbon;
 use App\Models\BaseMsisdn;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Illuminate\Contracts\Foundation\Application;
@@ -26,12 +26,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Storage;
-use PhpParser\Node\Expr\Throw_;
 
 class BaseMsisdnService
 {
     use CrudTrait;
+    use FileTrait;
 
     protected const FLASH_HOUR_REDIS_KEY = "base_msisdn_";
 
@@ -39,14 +38,21 @@ class BaseMsisdnService
      * @var $baseMsisdnGroupRepository
      */
     protected $baseMsisdnGroupRepository;
+    /**
+     * @var BaseMsisdnFileRepository
+     */
+    private $baseMsisdnFileRepository;
 
     /**
      * BaseMsisdnGroupRepository constructor.
      * @param BaseMsisdnGroupRepository $baseMsisdnGroupRepository
      */
-    public function __construct(BaseMsisdnGroupRepository $baseMsisdnGroupRepository)
-    {
+    public function __construct(
+        BaseMsisdnGroupRepository $baseMsisdnGroupRepository,
+        BaseMsisdnFileRepository $baseMsisdnFileRepository
+    ) {
         $this->baseMsisdnGroupRepository = $baseMsisdnGroupRepository;
+        $this->baseMsisdnFileRepository = $baseMsisdnFileRepository;
         $this->setActionRepository($baseMsisdnGroupRepository);
     }
 
@@ -59,8 +65,8 @@ class BaseMsisdnService
     {
         $baseMsisdnGroup = $this->findOne($id);
         $baseMsisdns = BaseMsisdn::where('group_id', $id)->get();
-            $writer = WriterEntityFactory::createXLSXWriter();
-            $writer->openToBrowser("$baseMsisdnGroup->title-" . date('Y-m-d') . '.xlsx');
+        $writer = WriterEntityFactory::createXLSXWriter();
+        $writer->openToBrowser("$baseMsisdnGroup->title-" . date('Y-m-d') . '.xlsx');
         foreach ($baseMsisdns as $msisdn) {
             $cells = [
                 WriterEntityFactory::createCell($msisdn->msisdn),
@@ -102,6 +108,38 @@ class BaseMsisdnService
         return $response;
     }
 
+    protected function filePrepare($reader, $baseFileData)
+    {
+        $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
+        $insertData = array();
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
+                $cells = $row->getCells();
+                $msisdn = trim($cells[0]->getValue());
+
+                if (strlen($msisdn) < 10) {
+                    return [
+                        'status' => false,
+                        'message' => 'Upload Failed! Wrong msisdn at row: ' . $key
+                    ];
+                }
+                $insertData[] = "0" . substr($msisdn, -10);
+            }
+        }
+
+        foreach (array_chunk($insertData, 800) as $smallerArray) {
+            foreach ($smallerArray as $index => $value) {
+                $temp[$index] = [
+                    'group_id' => $baseFileData['base_msisdn_group_id'],
+                    'base_msisdn_file_id' => $baseFileInfo->id,
+                    'msisdn' => $value
+                ];
+            }
+            BaseMsisdn::insert($temp);
+        }
+//            BaseMsisdnFileUpload::dispatch($reader, $baseFileInfo, $baseFileData);
+    }
+
     /**
      * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
      * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
@@ -109,69 +147,63 @@ class BaseMsisdnService
      */
     protected function uploadPrepare($request, $baseGroup, $action = 'insert')
     {
-        $insertData = array();
-        if ($request->hasFile('msisdn_file')) {
-            $file = $request->file('msisdn_file');
-            $path = $file->storeAs(
-                'base_msisdn/' . strtotime(now()),
-                "products" . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
+        if (isset($request->base_msisdn_files)) {
+            $currentFileId = [];
+            foreach ($request->base_msisdn_files as $file) {
+                if ($action == "update" && isset($file['file_id'])) {
+                    $findFile = $this->baseMsisdnFileRepository->findOne($file['file_id']);
+                    $fileData['title'] = $file['file_title'];
+                    $findFile->update($fileData);
+                }
+                $currentFileId[] = $file['file_id'] ?? '';
+                if (!empty($file['file_name'])) {
+                    $fileName = $file['file_name']->getClientOriginalName();
+                    $fileName = pathinfo($fileName, PATHINFO_FILENAME);
+                    $fileExt = $file['file_name']->getClientOriginalExtension();
+                    $fileName = $fileName . "-" . uniqid(2) . "." . $fileExt;
+                    $path = $this->upload($file['file_name'], 'base-msisdn-files', $fileName);
 
-            $excel_path = Storage::disk('public')->path($path);
-            $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
-            $file_path = $excel_path;
-            $reader->open($file_path);
-            foreach ($reader->getSheetIterator() as $sheet) {
-                foreach ($sheet->getRowIterator() as $key => $row) {
-                    $cells = $row->getCells();
-                    $msisdn = trim($cells[0]->getValue());
+                    $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
+                    $file_path = $this->getPath($path);
+                    $reader->open($file_path);
 
-                    if (strlen($msisdn) < 10) {
-                        return [
-                            'status' => false,
-                            'message' => 'Upload Failed! Wrong msisdn at row: ' . $key
-                        ];
-                    }
-                    $insertData[] = "0" . substr($msisdn, -10) ;
+                    $baseFileData = [
+                        'file_name' => $path,
+                        'title' => $file['file_title'],
+                        'base_msisdn_group_id' => $baseGroup->id,
+                        'status' => 0,
+                    ];
+                    $this->filePrepare($reader, $baseFileData);
                 }
             }
-        } else {
-            if ($request->has('segment_type') && $request->input('segment_type') == 'yes' && !empty($request->input('custom_msisdn'))) {
-                $individuals = explode(',', $request->input('custom_msisdn'));
-                foreach ($individuals as $individual) {
-                    $insertData[] = trim($individual);
-                }
-            } else {
-                return Response('Individual number field is empty');
+            $fileIds = isset($request['old_ids']) ? array_diff($request['old_ids'], $currentFileId) : [];
+            if (!empty($fileIds)) {
+                collect($fileIds)->each(function (int $id) {
+                    $fileInfo = $this->baseMsisdnFileRepository->findOne($id);
+                    $this->deleteFile($fileInfo->file_name);
+                });
+
+                $this->baseMsisdnFileRepository->deleteFile($fileIds);
+                BaseMsisdn::whereIn('base_msisdn_file_id', $fileIds)->delete();
             }
-        }
 
-        if ($action == "update") {
-            BaseMsisdn::where('group_id', $baseGroup->id)->delete();
-        }
-
-        foreach (array_chunk($insertData, 1000) as $key => $smallerArray) {
-            foreach ($smallerArray as $index => $value) {
-                $temp[$index] = [
-                    'group_id' => $baseGroup->id,
-                    'msisdn' => $value
-                ];
+            // Redis delete and add
+            $redisKey = self::FLASH_HOUR_REDIS_KEY . $baseGroup->id;
+            $keyExpireTtl = Redis::ttl($redisKey);
+            if ($keyExpireTtl > 1) {
+                Redis::del($redisKey);
+                BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroup->id, $keyExpireTtl);
             }
-            BaseMsisdn::insert($temp);
-        }
 
-        // Redis delete and add
-        $redisKey = self::FLASH_HOUR_REDIS_KEY . $baseGroup->id;
-        $keyExpireTtl = Redis::ttl($redisKey);
-        if ($keyExpireTtl > 1) {
-            Redis::del($redisKey);
-            BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroup->id, $keyExpireTtl);
+            return [
+                'status' => true,
+                'message' => 'Upload successfully completed !'
+            ];
         }
 
         return [
-            'status' => true,
-            'message' => 'Upload successfully completed !'
+            'status' => false,
+            'message' => 'Please input a excel file'
         ];
     }
 
@@ -205,15 +237,9 @@ class BaseMsisdnService
     {
         try {
             return DB::transaction(function () use ($request, $id) {
-                if (isset($request->msisdn_file) || !empty($request->custom_msisdn)) {
-                    $baseGroup = $this->findOne($id);
-                    $baseGroup->update($request->all());
-                    return $this->uploadPrepare($request, $baseGroup, 'update');
-                }
-                return [
-                    'status' => false,
-                    'message' => 'Please input a excel file'
-                ];
+                $baseGroup = $this->findOne($id);
+                $baseGroup->update($request->all());
+                return $this->uploadPrepare($request, $baseGroup, 'update');
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());
