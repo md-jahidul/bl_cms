@@ -16,6 +16,8 @@ use App\Repositories\BaseMsisdnFileRepository;
 use App\Repositories\BaseMsisdnGroupRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Box\Spout\Common\Exception\IOException;
+use Box\Spout\Common\Exception\UnsupportedTypeException;
 use Box\Spout\Common\Type;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use App\Models\BaseMsisdn;
@@ -58,7 +60,7 @@ class BaseMsisdnService
 
     /**
      * @param $id
-     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws IOException
      * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
      */
     public function excelGenerator($id)
@@ -108,25 +110,9 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function filePrepare($reader, $baseFileData)
+    protected function filePrepare($insertData, $baseFileData)
     {
         $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-        $insertData = array();
-        foreach ($reader->getSheetIterator() as $sheet) {
-            foreach ($sheet->getRowIterator() as $key => $row) {
-                $cells = $row->getCells();
-                $msisdn = trim($cells[0]->getValue());
-
-                if (strlen($msisdn) < 10) {
-                    return [
-                        'status' => false,
-                        'message' => 'Upload Failed! Wrong msisdn at row: ' . $key
-                    ];
-                }
-                $insertData[] = "0" . substr($msisdn, -10);
-            }
-        }
-
         foreach (array_chunk($insertData, 800) as $smallerArray) {
             foreach ($smallerArray as $index => $value) {
                 $temp[$index] = [
@@ -137,18 +123,18 @@ class BaseMsisdnService
             }
             BaseMsisdn::insert($temp);
         }
-//            BaseMsisdnFileUpload::dispatch($reader, $baseFileInfo, $baseFileData);
     }
 
     /**
      * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
-     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
-     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws UnsupportedTypeException
+     * @throws IOException
      */
     protected function uploadPrepare($request, $baseGroup, $action = 'insert')
     {
         if (isset($request->base_msisdn_files)) {
             $currentFileId = [];
+            $insertData = array();
             foreach ($request->base_msisdn_files as $file) {
                 if ($action == "update" && isset($file['file_id'])) {
                     $findFile = $this->baseMsisdnFileRepository->findOne($file['file_id']);
@@ -157,8 +143,8 @@ class BaseMsisdnService
                 }
                 $currentFileId[] = $file['file_id'] ?? '';
                 if (!empty($file['file_name'])) {
-                    $fileName = $file['file_name']->getClientOriginalName();
-                    $fileName = pathinfo($fileName, PATHINFO_FILENAME);
+                    $fileOrgName = $file['file_name']->getClientOriginalName();
+                    $fileName = pathinfo($fileOrgName, PATHINFO_FILENAME);
                     $fileExt = $file['file_name']->getClientOriginalExtension();
                     $fileName = $fileName . "-" . uniqid(2) . "." . $fileExt;
                     $path = $this->upload($file['file_name'], 'base-msisdn-files', $fileName);
@@ -173,9 +159,36 @@ class BaseMsisdnService
                         'base_msisdn_group_id' => $baseGroup->id,
                         'status' => 0,
                     ];
-                    $this->filePrepare($reader, $baseFileData);
+
+                    foreach ($reader->getSheetIterator() as $sheet) {
+                        foreach ($sheet->getRowIterator() as $key => $row) {
+                            $cells = $row->getCells();
+                            $msisdn = trim($cells[0]->getValue());
+                            if (strlen($msisdn) < 10) {
+                                return [
+                                    'status' => false,
+                                    'message' => "<b>FIle Name:</b>  $fileOrgName <br> Upload Failed! Wrong msisdn at row: " . $key
+                                ];
+                            }
+                            $insertData[] = "0" . substr($msisdn, -10);
+                        }
+                    }
                 }
             }
+
+            $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
+            $msisdnLimit = 100000 * 10 * $million;
+
+            if (count($insertData) > $msisdnLimit) {
+                $inputMsisdn = count($insertData) / 1000000;
+                return [
+                    'status' => false,
+                    'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
+                ];
+            }
+
+            $this->filePrepare($insertData, $baseFileData);
+
             $fileIds = isset($request['old_ids']) ? array_diff($request['old_ids'], $currentFileId) : [];
             if (!empty($fileIds)) {
                 collect($fileIds)->each(function (int $id) {
@@ -217,12 +230,14 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request) {
                 $baseGroup = $this->baseMsisdnGroupRepository->save($request->all());
                 $response = $this->uploadPrepare($request, $baseGroup);
+//                dd($response);
                 if (!$response['status']) {
                     DB::rollBack();
                 }
                 return $response;
             });
         } catch (\Exception $e) {
+            dd($e->getMessage());
             Log::error('Base Msisdn Save: ' . $e->getMessage());
             return $e->getMessage();
         }
