@@ -175,6 +175,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
     Route::get('notificationCategory/destroy/{id}', 'CMS\NotificationCategoryController@destroy');
 
+    // Notification categorys V2
+    Route::resource('notificationCategory-v2', 'CMS\NotificationV2\NotificationCategoryV2Controller');
+
     // Notification
     Route::resource('notification', 'CMS\NotificationController');
 
@@ -182,6 +185,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
+
+    // Notification V2
+    Route::resource('notification-v2', 'CMS\NotificationV2\NotificationV2Controller');
+
+    Route::get('notification-v2/productlist/dropdown', 'CMS\NotificationV2\NotificationV2Controller@getProductList')->name('notification-v2.productlist.dropdown');
+    Route::get('notification-v2/destroy/{id}', 'CMS\NotificationV2\NotificationV2Controller@destroy');
+    Route::get('notification-v2/all/{id}', 'CMS\NotificationV2\NotificationV2Controller@showAll')->name('notification-v2.show-all');
+    Route::get('notification-report-v2', 'CMS\NotificationV2\NotificationV2Controller@getNotificationReport')->name('notification-v2.report');
+
+    Route::get('target-wise-notification-report-v2',
+    'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReport')->name('target-wise-notification-report-v2.report');
+
+    Route::get('target-wise-notification-report-details-v2/{titel}',
+    'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report-v2.report-details');
 
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
