@@ -177,6 +177,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Notification categorys V2
     Route::resource('notificationCategory-v2', 'CMS\NotificationV2\NotificationCategoryV2Controller');
+    Route::get('notificationCategory-v2/destroy/{id}', 'CMS\NotificationV2\NotificationCategoryV2Controller@destroy');
 
     // Notification
     Route::resource('notification', 'CMS\NotificationController');

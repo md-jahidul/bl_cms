@@ -35,23 +35,44 @@ class NotificationCategoryV2Service
             'slug' => $data['slug']
         ];
 
-        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/store',['json' => $body]);
+        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/store', ['json' => $body]);
 
         return new Response("Notification Category has been successfully created");
     }
 
-    public function updateNotificationCategory($data, $id)
+    public function findOneById($id)
     {
-        $notificationCategory = $this->findOne($id);
+        $body = [
+            'id' => $id,
+        ];
+        $res = $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/show', ['json' => $body]);
+        $strBody = $res->getBody();
+        return json_decode($strBody, true);
+    }
+
+    public function updateNotificationCategory($data)
+    {
         $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
-        $notificationCategory->update($data);
+        
+        $body = [
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+            'id'   => $data['id']
+        ];
+
+        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/update', ['json' => $body]);
+
         return Response('Notification Category has been successfully updated');
     }
 
     public function deleteNotificationCategory($id)
     {
-        $notificationCategory = $this->findOne($id);
-        $notificationCategory->delete();
+        $body = [
+            'id' => $id,
+        ];
+
+        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/delete', ['json' => $body]);
+
         return Response('Notification Category has been successfully deleted');
     }
 }

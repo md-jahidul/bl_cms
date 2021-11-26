@@ -62,8 +62,6 @@ class NotificationCategoryV2Controller extends Controller
      */
     public function store(Request $request)
     {
-        // dd("here", $request->all());
-        // session()->flash('message', $this->notificationCategoryV2Service->storeNotificationCategory($request->all()));
         $this->notificationCategoryV2Service->storeNotificationCategory($request->all());
         return redirect(route('notificationCategory-v2.index'));
     }
@@ -87,12 +85,10 @@ class NotificationCategoryV2Controller extends Controller
      */
     public function edit($id)
     {
-        $notificationCategories = $this->notificationCategoryService->findAll();
-        $notificationCategory = $this->notificationCategoryService->findOne($id);
-
+    
+        $notificationCategory = $this->notificationCategoryV2Service->findOneById($id);
         return view('admin.notification_v2.notification-category.create')
-                    ->with('notificationCategory', $notificationCategory)
-                    ->with('notificationCategories', $notificationCategories);
+                    ->with('notificationCategory', $notificationCategory['data']);
     }
 
     /**
@@ -102,9 +98,9 @@ class NotificationCategoryV2Controller extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(NotificationCategoryRequest $request, $id)
+    public function update(Request $request)
     {
-        session()->flash('success', $this->notificationCategoryService->updateNotificationCategory($request->all(), $id)->getContent());
+        $this->notificationCategoryV2Service->updateNotificationCategory($request->all());
         return redirect(route('notificationCategory-v2.index'));
     }
 
@@ -116,7 +112,8 @@ class NotificationCategoryV2Controller extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error', $this->notificationCategoryService->deleteNotificationCategory($id)->getContent());
+        $notificationCategory = $this->notificationCategoryV2Service->deleteNotificationCategory($id);
+        
         return url('notificationCategory-v2');
     }
 }

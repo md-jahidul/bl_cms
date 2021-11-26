@@ -90,7 +90,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('notificationCategory/destroy') }}/"+id,
+                            url: "{{ url('notificationCategory-v2/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -100,7 +100,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('notificationCategory') }}"
+                                    window.location.href = "{{ url('notificationCategory-v2') }}"
                                 }
                             }
                         })

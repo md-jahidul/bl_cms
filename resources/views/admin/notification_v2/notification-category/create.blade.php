@@ -21,7 +21,7 @@
     <div class="card mb-0 px-1" style="box-shadow:none;">
         <div class="card-content">
             <div class="card-body">
-                <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory-v2.update',$notificationCategory->id)}}
+                <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory-v2.update',$notificationCategory['_id'])}}
                 @else {{route('notificationCategory-v2.store')}} @endif" novalidate >
                     @csrf
                     @if(isset($notificationCategory))
@@ -37,9 +37,9 @@
                                 <input type="text"
                                        required
 
-                                       value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">
+                                       value="@if(isset($notificationCategory)) {{$notificationCategory['name']}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">
                                 @if(isset($notificationCategory))
-                                    <input type="hidden" name="id" value="{{$notificationCategory->id}}">
+                                    <input type="hidden" name="id" value="{{$notificationCategory['_id']}}">
                                 @endif
                                 <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
 
