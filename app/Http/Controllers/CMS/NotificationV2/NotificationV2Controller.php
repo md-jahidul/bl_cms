@@ -6,9 +6,12 @@ use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
+use App\Services\NotifiationV2\NotificationV2Service;
 use App\Http\Requests\NotificationRequest;
+use App\Services\NotifiationV2\NotificationCategoryV2Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class NotificationV2Controller extends Controller
 {
@@ -28,6 +31,11 @@ class NotificationV2Controller extends Controller
      */
     protected $userService;
 
+    /**
+     * @var NotificationV2Service
+     */
+    protected $notificationV2Service, $notificationCategoryV2Service;
+
 
     /**
      * NotificationController constructor.
@@ -38,12 +46,16 @@ class NotificationV2Controller extends Controller
     public function __construct(
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
-        UserService $userService
+        UserService $userService,
+        NotificationV2Service $notificationV2Service,
+        NotificationCategoryV2Service $notificationCategoryV2Service
     )
     {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
+        $this->notificationV2Service = $notificationV2Service;
+        $this->notificationCategoryV2Service = $notificationCategoryV2Service;
         $this->middleware('auth');
     }
 
@@ -57,10 +69,12 @@ class NotificationV2Controller extends Controller
     public function index()
     {
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
-        $notifications = $this->notificationService->findAll('', '', $orderBy);
-        $category = $this->notificationCategoryService->findAll();
+        $notifications = $this->notificationV2Service->findAll('', '', $orderBy);
+        $notifications = $notifications['data'];
+        $category = $this->notificationCategoryV2Service->findAll();
+    
         return view('admin.notification_v2.notification.index')
-            ->with('category', $category)
+            ->with('category', $category['data'])
             ->with('notifications', $notifications);
     }
 
@@ -70,8 +84,9 @@ class NotificationV2Controller extends Controller
      */
     public function create()
     {
-        $categories = $this->notificationCategoryService->findAll();
-        return view('admin.notification_v2.notification.create')->with('categories', $categories);
+        $categories = $this->notificationCategoryV2Service->findAll();
+        // dd($categories['data']);
+        return view('admin.notification_v2.notification.create')->with('categories', $categories['data']);
     }
 
 
@@ -80,11 +95,12 @@ class NotificationV2Controller extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     * @author ahasan habib <habib.cst@gmail.com>
      */
-    public function store(NotificationRequest $request)
+    public function store(Request $request)
     {
 
-        $content = $this->notificationService->storeNotification($request)->getContent();
-        session()->flash('message', $content);
+        $content = $this->notificationV2Service->storeNotificationDraft($request->all());
+        session()->flash('success', $content);
+
         return redirect(route('notification-v2.index'));
     }
 
@@ -96,15 +112,30 @@ class NotificationV2Controller extends Controller
      */
     public function show($id)
     {
-        $notification = $this->notificationService->findOne($id, ['NotificationCategory', 'schedule']);
-        $schedule = $notification ? $notification->schedule : null;
-        $scheduleStatus = $schedule ? $schedule->status : 'none';
-        $users = $this->userService->getUserListForNotification();
+        // $notification = $this->notificationService->findOne($id, ['NotificationCategory', 'schedule']);
+        // $schedule = $notification ? $notification->schedule : null;
+        // $scheduleStatus = $schedule ? $schedule->status : 'none';
+        // $users = $this->userService->getUserListForNotification();
+
+        // return view(
+        //     'admin.notification_v2.notification.show',
+        //     compact('notification', 'users', 'schedule', 'scheduleStatus')
+        // );
+
+        $notificationDraft = $this->notificationV2Service->findOneById($id);
+        $notification = $notificationDraft['data'];
+    
+        $notificationCategory = [
+            'id' => $notification['notification_category']['_id']['$oid'],
+            'name' => $notification['notification_category']['name'],
+            'slug' =>  $notification['notification_category']['slug']
+        ];
 
         return view(
             'admin.notification_v2.notification.show',
-            compact('notification', 'users', 'schedule', 'scheduleStatus')
+            compact('notification', 'notificationCategory')
         );
+       
     }
 
 
@@ -133,10 +164,14 @@ class NotificationV2Controller extends Controller
      */
     public function edit($id)
     {
-        $categories = $this->notificationCategoryService->findAll();
+        $categories = $this->notificationCategoryV2Service->findAll();
+        $notificationDraft = $this->notificationV2Service->findOneById($id);
+
+        // dd($categories['data'], $notificationDraft['data']);
+
         return view('admin.notification_v2.notification.edit')
-            ->with('categories', $categories)
-            ->with('notification', $this->notificationService->findOne($id));
+            ->with('categories', $categories['data'])
+            ->with('notification', $notificationDraft['data']);
     }
 
     /**
@@ -145,10 +180,11 @@ class NotificationV2Controller extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @author ahasan habib <habib.cst@gmail.com>
      */
-    public function update(NotificationRequest $request, $id)
+    public function update(Request $request)
     {
-        $content = $this->notificationService->updateNotification($request, $id)->getContent();
+        $content = $this->notificationV2Service->updateNotification($request->all());
         session()->flash('success', $content);
+        
         return redirect(route('notification-v2.index'));
     }
 
@@ -186,10 +222,29 @@ class NotificationV2Controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getTargetWiseNotificationReport(Request $request){
-
-
         if ($request->has('draw')){
-            return $this->notificationService->getNotificationListReport($request);
+
+            $res = [
+                'draw' => "test",
+                'recordsTotal' => "test",
+                'recordsFiltered' => "test",
+                'data' => []
+            ];
+            $allNotification = $this->notificationV2Service->getTargetWiseNotificationReport();
+            
+            foreach ($allNotification['data'] as $key => $value) {
+                $res['data'][]=
+                [
+                    'body'=> $value['body'],
+                    'all'=> $value['all'],
+                    'create_at' => $value['create_at'],
+                    'title' => $value['title'],
+                    'id'    => $value['_id']['$oid']
+                ];
+            }
+
+            Log::alert("here ", $res);
+            return $res;
         }
 
         if ($request->isMethod('get')) {
@@ -204,14 +259,17 @@ class NotificationV2Controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTargetWiseNotificationReportDetails(Request $request,$title)
+    public function getTargetWiseNotificationReportDetails($notificationId)
     {
 
-        $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
-    //    dd($notifications);
+        $data = $this->notificationV2Service->getNotificationTargetwiseReport($notificationId);
+        $usersNotification = $data['data'];
+        $notification = $usersNotification[0]['notification_info'];
 
+        
         return view('admin.notification_v2.target-wise-notification.details')
-            ->with('notifications', $notifications);
+            ->with('usersNotification', $usersNotification)
+            ->with('notification', $notification);
     }
 
     public function getProductList(Request $request){

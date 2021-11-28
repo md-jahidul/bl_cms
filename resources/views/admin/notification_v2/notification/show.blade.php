@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Notification')
-@section('card_name', 'Notification')
+@section('title', 'Notification V2')
+@section('card_name', 'Notification V2')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Send</li>
+    <li class="breadcrumb-item active">Notification V2 Send</li>
 @endsection
 @section('action')
-    <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Notification List
+    <a href="{{route('notification-v2.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Notification V2 List
     </a>
 @endsection
 @section('content')
@@ -25,22 +25,22 @@
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}" readonly>
-                            <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
-                            <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
-                            <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
-                            <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
-                            <input type="hidden"  name="image_url" id="image_url" value="{{$notification->image}}">
+                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification['title']}}" readonly>
+                            <input type="hidden"  name="id" id="id" value="{{$notification['id']}}">
+                            <input type="hidden"  name="category_id" id="category_id" value="{{$notificationCategory['id']}}">
+                            <input type="hidden"  name="category_slug" id="category_slug" value="{{$notificationCategory['slug']}}">
+                            <input type="hidden"  name="category_name" id="category_name" value="{{$notificationCategory['name']}}">
+                            <input type="hidden"  name="image_url" id="image_url" value="{{$notification['image']}}">
 
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                            <textarea class="form-control col-md-12" name="message" id="message"> {{$notification['body']}}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="message">Image</label> <br/>
-                            <img class="" src="{{ asset($notification->image) }}" alt="Image"
+                            <img class="" src="{{ asset($notification['image']) }}" alt="Image"
                                  height="200" width="400"/>
                         </div>
 

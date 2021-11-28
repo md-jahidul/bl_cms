@@ -198,7 +198,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('target-wise-notification-report-v2',
     'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReport')->name('target-wise-notification-report-v2.report');
 
-    Route::get('target-wise-notification-report-details-v2/{titel}',
+    Route::get('target-wise-notification-report-details-v2/{notificationId}',
     'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report-v2.report-details');
 
     // Push Notification

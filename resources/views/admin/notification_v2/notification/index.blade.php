@@ -6,7 +6,8 @@
 @endsection
 
 @section('action')
-    @if($category->count()==0)
+    {{-- will be update --}}
+    @if(count($category) == 0)
         <a href="{{route('notificationCategory-v2.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
             There is no category
         </a>
@@ -47,21 +48,24 @@
                         <tbody>
                         @foreach ($notifications as $notification)
                             @php
-                                $schedule = $notification->schedule;
+                                $schedule = [
+                                    'start' => '',
+                                    'end'   => '',
+                                    'status' => 'None'                                ];
                             @endphp
                             <tr>
-                                <td width="5%">{{$notification->id}}</td>
-                                <td width="12%">{{$notification->title}}</td>
-                                <td width="30%">{{$notification->body}}</td>
-                                <td width="10%">{{$notification->NotificationCategory->name}}</td>
-                                <td>{{ $schedule ? ucwords($schedule->status) : 'None' }}</td>
-                                <td>{{ $schedule->start ?? ''}}</td>
-                                <td>{{ $schedule->end ?? ''}}</td>
+                                <td width="5%">{{$notification['_id']}}</td>
+                                <td width="12%">{{$notification['title']}}</td>
+                                <td width="30%">{{$notification['body']}}</td>
+                                <td width="10%">{{$notification['notification_category']['name']}}</td>
+                                <td>{{ $schedule ? ucwords($schedule['status']) : 'None' }}</td>
+                                <td>{{ $notification['starts_at'] ?? ''}}</td>
+                                <td>{{ $notification['expires_at'] ?? ''}}</td>
                                 <td width="20%">
                                     <div class="row" style="padding-right: 5px;">
 
                                         <div class="col-md-2 m-1">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification-v2.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success btn-sm" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification-v2.edit', $notification['_id'])}}" class="btn-pancil btn btn-outline-success btn-sm" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
@@ -72,7 +76,7 @@
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
-                                                href="{{route('notification-v2.show',$notification->id)}}"
+                                                href="{{route('notification-v2.show', $notification['_id'])}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
                                                 onclick=""><i class="la la-paper-plane"></i></a>
@@ -81,7 +85,7 @@
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
-                                                href="{{route('notification-v2.show-all',$notification->id)}}"
+                                                href="{{route('notification-v2.show-all', $notification['_id'])}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
                                                 onclick=""><i class="la la-adn"></i></a>

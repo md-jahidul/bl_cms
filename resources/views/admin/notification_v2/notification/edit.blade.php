@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">
     <div class="card-content">
         <div class="card-body">
-            <form novalidate class="form" method="post" action="{{route('notification-v2.update',$notification->id)}}"  enctype="multipart/form-data">
+            <form novalidate class="form" method="post" action="{{route('notification-v2.update',$notification['_id'])}}"  enctype="multipart/form-data">
                 @csrf
                 @method('put')
 
@@ -19,7 +19,7 @@
                     </h4>
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="hidden" name="id" value="{{$notification->id}}">
+                            <input type="hidden" name="id" value="{{$notification['_id']}}">
                             <div class="form-group">
                                 <label for="title" class="required">Title :</label>
                                 <input name="title"
@@ -28,7 +28,7 @@
                                        data-validation-required-message="Title is required"
                                        data-validation-maxlength-message = "Title can not be more then 100 Characters"
 
-                                style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification['title']}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                 <div class="help-block">
                                     <small class="text-info"> Title can not be more then 100 Characters</small><br>
                                 </div>
@@ -45,7 +45,7 @@
                                     <select name="category_id" id="category_id" required class="form-control @error('category_id') is-invalid @enderror">
                                     <option value="">Select Category</option>
                                     @foreach ($categories as $category)
-                                        <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}  @elseif($category->id == $notification->category_id) selected  @endif value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
+                                        <option @if(old("category_id")) {{ (old("category_id") == $category['_id'] ? "selected":"") }}  @elseif($category['_id'] == $notification['notification_category']['_id']['$oid']) selected  @endif value="{{$category['_id']}}" {{ (old("category_id") == $category['_id'] ? "selected":"") }}>{{$category['name']}}</option>
                                     @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -135,9 +135,9 @@
                                 <div class="controls">
                                     <select name="device_type" id="device_type" class="form-control" required>
                                     {{-- <option value="">Select Devices</option> --}}
-                                    <option value="all" @if($notification->device_type=='all') selected @endif>All</option>
-                                    <option value="ios" @if($notification->device_type=='ios') selected @endif>IOS</option>
-                                    <option value="android" @if($notification->device_type=='android') selected @endif>Android</option>
+                                    <option value="all" @if($notification['device_type'] == 'all') selected @endif>All</option>
+                                    <option value="ios" @if($notification['device_type'] == 'ios') selected @endif>IOS</option>
+                                    <option value="android" @if($notification['device_type'] == 'android') selected @endif>Android</option>
                                     </select>
                                     <div class="help-block" ></div>
                                     <small class="text-danger"> @error('device_type') {{ $message }} @enderror </small>
@@ -152,9 +152,9 @@
                                 <div class="controls">
                                     <select name="customer_type" id="customer_type" required class="form-control">
                                     <option value="">Select Customer Type</option>
-                                    <option value="all" @if($notification->customer_type=='all') selected @endif>All</option>
-                                    <option value="prepaid" @if($notification->customer_type=='prepaid') selected @endif>Prepaid</option>
-                                    <option value="postpaid" @if($notification->customer_type=='postpaid') selected @endif>Postpaid</option>
+                                    <option value="all" @if($notification['customer_type'] == 'all') selected @endif>All</option>
+                                    <option value="prepaid" @if($notification['customer_type'] == 'prepaid') selected @endif>Prepaid</option>
+                                    <option value="postpaid" @if($notification['customer_type'] == 'postpaid') selected @endif>Postpaid</option>
                                     </select>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('customer_type') {{ $message }} @enderror </small>
@@ -177,7 +177,7 @@
                                     <option value="">Select Action</option>
                                     @foreach ($actionList as $key => $value)
                                         <option
-                                            @if(isset($notification->navigate_action) && $notification->navigate_action == $key)
+                                            @if(isset($notification['navigate_action']) && $notification['navigate_action'] == $key)
                                             selected
                                             @endif
                                             value="{{ $key }}">
@@ -212,7 +212,7 @@
                                          id="image"
                                          name="image"
                                          class="dropify"
-                                         data-default-file="{{ asset($notification->image) }}"
+                                         data-default-file="{{ asset($notification['image']) }}"
                                         />
                                 @else
                                     <input type="file"
@@ -235,7 +235,7 @@
                                 <textarea
                                 required
                                 data-validation-required-message="body is required"
-                                class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notification->body}}@endif</textarea>
+                                class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notification['body']}}@endif</textarea>
                                 <div class="help-block"></div>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
@@ -282,7 +282,7 @@
             // Date & Time
             date = new Date();
             date.setDate(date.getDate());
-            new_start_date = new Date('{{$notification->start_date}}');
+            new_start_date = new Date('{{$notification['starts_at']}}');
 
             $('.datetime').daterangepicker({
                 timePicker: true,
@@ -359,7 +359,7 @@
             var product_html;
             var parse_data;
             let dial_html, other_attributes = '';
-            var js_data ="<?php echo $notification->navigate_action; ?>"; //<?php echo isset($search_content) ? json_encode($search_content->other_contents) : null; ?>;
+            var js_data ="<?php echo $notification['navigate_action']; ?>"; //<?php echo isset($search_content) ? json_encode($search_content->other_contents) : null; ?>;
 
             if (js_data) {
                 other_attributes =js_data; //JSON.parse(js_data);

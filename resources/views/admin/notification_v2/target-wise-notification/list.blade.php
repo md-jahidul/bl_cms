@@ -16,8 +16,7 @@
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
                         <th width="25%">Body</th>
-                        <th width="10%">Platform</th>
-                        <th>Start / Send</th>
+                        <th width="10%">All</th>
                         <th>Sends <br> <Small>Total > Send</Small></th>
                         <th width="10%">Action</th>
                     </tr>
@@ -55,7 +54,7 @@
                 autoWidth: false,
                 pageLength: 10,
                 ajax: {
-                    url: '{{ route('target-wise-notification-report.report') }}',
+                    url: '{{ route('target-wise-notification-report-v2.report') }}',
                     type: 'GET',
                 },
                 columns: [
@@ -70,7 +69,7 @@
                     {
                         name: 'titel',
                         render: function (data, type, row) {
-                            return row.titel;
+                            return row.title;
                         }
                     },
                     {
@@ -80,26 +79,21 @@
                         }
                     },
                     {
-                        name: 'device_type',
+                        name: 'all',
                         render: function (data, type, row) {
-                            return `<i class="la la-android" style="color: blue !important"></i> &nbsp;`+ row.device_type;
+                            return `<i class="la la-android" style="color: blue !important"></i> &nbsp;`+ row.all;
                         }
                     },
                     {
-                        name: 'starts_at',
+                        name: 'create_at',
                         render: function (data, type, row) {
-                            return row.starts_at;
-                        }
-                    },{
-                        name: 'sends',
-                        render: function (data, type, row) {
-                            return row.sends;
+                            return row.create_at;
                         }
                     },
                     {
                         name: 'action',
                         render: function (data, type, row) {
-                            let viewUrl="{{url('target-wise-notification-report-details-v2')}}/"+row.titel;
+                            let viewUrl="{{url('target-wise-notification-report-details-v2')}}/"+row.id;
                            return  `<a  role="button" data-id="" href="`+viewUrl+`" data-placement="right" class="showButton btn btn-outline-info btn-sm"
                                                 onclick="" ><i class="la la-magic" ></i></a>`;
                         }

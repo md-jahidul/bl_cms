@@ -1,3 +1,4 @@
+@endphp
 @extends('layouts.admin')
 @section('title', 'Notification V2')
 @section('card_name', 'Notification V2')
@@ -16,7 +17,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-10">
-                        <b>Notification Titel : @if(isset($notifications[0])) {{$notifications[0]['title']}} @endif</b>
+                        <b>Notification Titel : @if(isset($notification['title'])) {{$notification['title']}} @endif</b>
                         </div>
                     </div>
                 </div>
@@ -25,25 +26,25 @@
                         <thead>
                         <tr>
                             <th width="5%">ID</th>
-                            <th width="10%">User</th>
+                            <th width="10%">Msisdn</th>
                             <th width="12%">Title</th>
                             <th width="30%">Message</th>
                             <th width="10%">Date</th>
-                            <th width="10%">Status</th>
+                            <th width="10%">FCM Status</th>
                             {{--<th width="15%">Action</th>--}}
                         </tr>
                         </thead>
                         <tbody>
                             @php($i = 0)
-                        @foreach ($notifications as $notification)
+                        @foreach ($usersNotification as $data)
                         @php($i++)
                             <tr>
                                 <td width="5%">{{ $i }}</td>
-                                <td width="10%">{{$notification['mobile']}}</td>
-                                <td width="12%">{{$notification['title']}}</td>
-                                <td width="30%">{{$notification['body']}}</td>
-                                <td width="10%">{{!empty($notification['created_at'])?date('d-M-Y h:i a', strtotime($notification['created_at'])):''}}</td>
-                                <td width="10%">{{$notification['status']}}</td>
+                                <td width="10%">{{ $data['msisdn'] }}</td>
+                                <td width="12%">{{ $notification['title'] }}</td>
+                                <td width="30%">{{ $notification['body'] }}</td>
+                                <td width="10%">created_at</td>
+                                <td width="10%">{{ $data['fcm_status'] }}</td>
                             </tr>
                         @endforeach
                         </tbody>
