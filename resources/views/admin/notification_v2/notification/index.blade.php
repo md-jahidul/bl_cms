@@ -82,14 +82,14 @@
                                                 onclick=""><i class="la la-paper-plane"></i></a>
                                         </div>
 
-                                        <div class="col-md-2 m-1">
+                                        {{-- <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
                                                 href="{{route('notification-v2.show-all', $notification['_id'])}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
                                                 onclick=""><i class="la la-adn"></i></a>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </td>

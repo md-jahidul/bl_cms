@@ -9,9 +9,12 @@ use App\Services\NotificationService;
 use App\Services\NotifiationV2\NotificationV2Service;
 use App\Http\Requests\NotificationRequest;
 use App\Services\NotifiationV2\NotificationCategoryV2Service;
+use Box\Spout\Common\Type;
+use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class NotificationV2Controller extends Controller
 {
@@ -124,16 +127,20 @@ class NotificationV2Controller extends Controller
 
         $notificationDraft = $this->notificationV2Service->findOneById($id);
         $notification = $notificationDraft['data'];
-    
+        $scheduleStatus =  'active';
+        $schedule = [
+            'starts_at' => Carbon::now(),
+            'expires_at' => Carbon::now()
+        ];
         $notificationCategory = [
             'id' => $notification['notification_category']['_id']['$oid'],
             'name' => $notification['notification_category']['name'],
             'slug' =>  $notification['notification_category']['slug']
         ];
-
+       
         return view(
             'admin.notification_v2.notification.show',
-            compact('notification', 'notificationCategory')
+            compact('notification', 'notificationCategory', 'scheduleStatus', 'schedule')
         );
        
     }
@@ -274,5 +281,18 @@ class NotificationV2Controller extends Controller
 
     public function getProductList(Request $request){
         return $this->notificationService->getActiveProducts($request);
+    }
+
+    public function targetWiseNotificationSend(Request $request)
+    {
+        $path = $request->file('customer_file')->getRealPath();
+        $temp = Storage::disk('excel_uploads')->put($path, $request->customer_file);
+        $file_name = 'public/uploads/'.$temp;
+        $time = (explode("-",$request->schedule_time));
+        $time[1] = date("Y-m-d H:i:s", strtotime("+2 minutes",strtotime($time[1])));
+        
+        $this->notificationV2Service->createNotificationSchedule($request->all(), $file_name, $time);
+
+        return true;
     }
 }

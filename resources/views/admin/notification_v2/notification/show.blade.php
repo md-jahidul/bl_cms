@@ -21,12 +21,12 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <form class="form" method="POST" id="sendNotificationForm" enctype="multipart/form-data">
+                    <form class="form"  method="POST" id="sendNotificationForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification['title']}}" readonly>
-                            <input type="hidden"  name="id" id="id" value="{{$notification['id']}}">
+                            <input type="hidden"  name="notification_id" id="notification_id" value="{{$notification['_id']}}">
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notificationCategory['id']}}">
                             <input type="hidden"  name="category_slug" id="category_slug" value="{{$notificationCategory['slug']}}">
                             <input type="hidden"  name="category_name" id="category_name" value="{{$notificationCategory['name']}}">
@@ -56,7 +56,6 @@
                             <input type="checkbox" name="is_scheduled" id="is_scheduled"
                                 {{ $scheduleStatus == 'active' ? 'checked' : '' }}>
                             <label>Notification Schedule</label>
-                            {{ $scheduleStatus == 'active' ? \Carbon\Carbon::parse($schedule->start)->format('Y/m/d h:i A') . ' - ' . \Carbon\Carbon::parse($schedule->end)->format('Y/m/d h:i A') : '' }}
                             <div class='input-group'>
                                 <input type='text' {{ $scheduleStatus == 'active' ? '' : 'disabled' }}
                                        class="form-control datetime"
@@ -127,8 +126,8 @@
         $('.datetime').daterangepicker({
             timePicker: true,
             timePickerIncrement: 5,
-            startDate: '{{$scheduleStatus == 'active' ? $schedule->start : date('Y-m-d H:i:s')}}',
-            endDate: '{{$scheduleStatus == 'active' ? $schedule->end : date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}',
+            startDate: '{{date('Y-m-d H:i:s')}}',
+            endDate: '{{date('Y-m-d H:i:s')}}',
             minDate: date,
             locale: {
                 format: 'YYYY/MM/DD h:mm A'
@@ -184,16 +183,9 @@
                         swal.showLoading();
                     }
                 });
-                let URL="{{ route('notification.send') }}";
+                let  URL="{{ route('target_wise_notification-v2.send')}}";
                 let formData = new FormData($(this)[0]);
                 let clickBtn = $(".e-clicked").val();
-                if(clickBtn === "Submit Device" )
-                {
-                 URL="{{ route('target_wise_notification.send')}}";
-                }
-                if ($('#is_scheduled').is(':checked')) {
-                    URL = "{{route('notification-schedule.send')}}";
-                }
                 $.ajax({
                     url: URL,
                     type: 'POST',
@@ -202,8 +194,6 @@
                     processData: false,
                     data: formData,
                     success: function (result) {
-
-                        if (result.success) {
                             swal.fire({
                                 title: result.message,
                                 type: 'success',
@@ -211,15 +201,7 @@
                                 showConfirmButton: false
                             });
 
-                            {{--window.location.href = '{{route("notification.index")}}';--}}
-
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                type: 'error',
-                            });
-                        }
+                            {{--window.location.href = '{{route("notification-v2.index")}}';--}}
 
                     },
                     error: function (data) {

@@ -192,8 +192,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('notification-v2/productlist/dropdown', 'CMS\NotificationV2\NotificationV2Controller@getProductList')->name('notification-v2.productlist.dropdown');
     Route::get('notification-v2/destroy/{id}', 'CMS\NotificationV2\NotificationV2Controller@destroy');
+    Route::post('notification-v2/notificationData', 'CMS\NotificationV2\NotificationV2Controller@notificationData')->name('notification-v2.notificationData');
     Route::get('notification-v2/all/{id}', 'CMS\NotificationV2\NotificationV2Controller@showAll')->name('notification-v2.show-all');
     Route::get('notification-report-v2', 'CMS\NotificationV2\NotificationV2Controller@getNotificationReport')->name('notification-v2.report');
+    Route::post('target-wise-push-notification-v2',
+    'CMS\NotificationV2\NotificationV2Controller@targetWiseNotificationSend')->name('target_wise_notification-v2.send');
 
     Route::get('target-wise-notification-report-v2',
     'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReport')->name('target-wise-notification-report-v2.report');

@@ -89,4 +89,22 @@ class NotificationV2Service
         $strBody = $res->getBody();
         return json_decode($strBody, true);
     }
+
+    public function createNotificationSchedule($request, $file_name, $time)
+    {
+        $data = [
+            "notification_draft_id"         => $request['notification_id'],
+            "notification_category_id"      => $request['category_id'],
+            "title"                         => $request['title'],
+            "message"                       => $request['message'],
+            "file_name"                     => $file_name,
+            "start"                         => $time[0],
+            "end"                           => $time[1],
+            "status"                        => 'active'
+        ];
+
+        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationSchedule/store', ['json' => $data]);
+
+        return ("Notification Draft has been successfully Updated");
+    }
 }
