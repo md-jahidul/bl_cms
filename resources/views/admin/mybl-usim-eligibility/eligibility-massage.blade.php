@@ -21,24 +21,24 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="dsce_en" class="required">4G USIM Prepaid En</label>
+                                    <label for="dsce_en" class="required">Prepaid USIM Holder Customer En</label>
                                     <textarea class="form-control" name="four_g_usim_prepaid[title_en]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->four_g_usim_prepaid->title_en : null }}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="dsce_bn" class="required">4G USIM Prepaid Bn</label>
+                                    <label for="dsce_bn" class="required">Prepaid USIM Holder Customer Bn</label>
                                     <textarea class="form-control" name="four_g_usim_prepaid[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->four_g_usim_prepaid->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="four_g_usim_prepaid[button_en]" value="Close">
                                 <input type="hidden" name="four_g_usim_prepaid[button_bn]" value="বন্ধ">
 
                                 <div class="form-group col-md-6">
-                                    <label for="dsce_en" class="required">4G USIM Postpaid En</label>
+                                    <label for="dsce_en" class="required">Postpaid USIM Holder Customer En</label>
                                     <textarea class="form-control" name="four_g_usim_postpaid[title_en]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->four_g_usim_postpaid->title_en : null }}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="dsce_bn" class="required">4G USIM Postpaid Bn</label>
+                                    <label for="dsce_bn" class="required">Postpaid USIM Holder Customer Bn</label>
                                     <textarea class="form-control" name="four_g_usim_postpaid[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->four_g_usim_postpaid->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="four_g_usim_postpaid[button_en]" value="Close">
@@ -96,7 +96,7 @@
 
                                 <div class="form-actions col-md-12">
                                     <button type="submit" class="btn btn-success round px-2 float-right">
-                                        <i class="la la-check-square-o"></i>Save
+                                        <i class="la la-check-square-o"></i> Save
                                     </button>
                                 </div>
                             </div>
