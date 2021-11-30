@@ -2,7 +2,7 @@
 @section('title', 'Notification V2 Report')
 @section('card_name', 'Notification V2 Report')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification V2 List</li>
+    <li class="breadcrumb-item active">Notification V2 Report</li>
 @endsection
 @section('content')
 <section>
@@ -17,7 +17,7 @@
                         <th width="12%">Title</th>
                         <th width="25%">Body</th>
                         <th width="10%">All</th>
-                        <th>Sends <br> <Small>Total > Send</Small></th>
+                        <th>Start / Send <br> <Small>Total > Send</Small></th>
                         <th width="10%">Action</th>
                     </tr>
                     </thead>

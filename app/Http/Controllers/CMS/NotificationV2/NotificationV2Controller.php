@@ -250,7 +250,6 @@ class NotificationV2Controller extends Controller
                 ];
             }
 
-            Log::alert("here ", $res);
             return $res;
         }
 
@@ -293,6 +292,8 @@ class NotificationV2Controller extends Controller
         
         $this->notificationV2Service->createNotificationSchedule($request->all(), $file_name, $time);
 
-        return true;
+        return [
+            "message" => "Notification Schedule Saved Successfully"
+        ];
     }
 }
