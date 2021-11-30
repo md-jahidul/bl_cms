@@ -17,7 +17,7 @@
                         <th width="12%">Title</th>
                         <th width="25%">Body</th>
                         <th width="10%">All</th>
-                        <th>Start / Send <br> <Small>Total > Send</Small></th>
+                        <th>Start Send</th>
                         <th width="10%">Action</th>
                     </tr>
                     </thead>
