@@ -52,8 +52,32 @@ class MyblUsimEligibilityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->usimEligibilityService->upateUsimEligibilityData($request->all(), $id);
+        $response = $this->usimEligibilityService->updateUsimEligibilityData($request->all(), $id);
         Session()->flash('message', $response->content());
         return redirect(route('usim-eligibility.index'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function showMassage()
+    {
+        $eligibilityMassage = $this->usimEligibilityService->getEligibilityMassage();
+//        dd($eligibilityMassage);
+//        $eligibilityMassage = null;
+        return view('admin.mybl-usim-eligibility.eligibility-massage', compact('eligibilityMassage'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @return Application|Redirector|RedirectResponse
+     */
+    public function saveMassage(Request $request)
+    {
+        $response = $this->usimEligibilityService->updateEligibilityMassage($request->all());
+        Session()->flash('success', $response->content());
+        return back();
     }
 }
