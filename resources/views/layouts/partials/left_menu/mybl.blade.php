@@ -267,6 +267,7 @@
     </li>
 
     <!-- Loyalty Partner Menu -->
+    @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Loyalty Partner</span></a>
         <ul class="menu-content">
@@ -278,6 +279,7 @@
             </li>
         </ul>
     </li>
+    @endif
 
     @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
