@@ -288,6 +288,7 @@ class NotificationV2Controller extends Controller
         $temp = Storage::disk('excel_uploads')->put($path, $request->customer_file);
         $file_name = 'public/uploads/'.$temp;
         $time = (explode("-",$request->schedule_time));
+        $time[0] = date("Y-m-d H:i:s", strtotime("+0 minutes",strtotime($time[0])));
         $time[1] = date("Y-m-d H:i:s", strtotime("+2 minutes",strtotime($time[1])));
         
         $this->notificationV2Service->createNotificationSchedule($request->all(), $file_name, $time);
