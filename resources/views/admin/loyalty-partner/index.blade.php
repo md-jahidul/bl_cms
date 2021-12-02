@@ -237,6 +237,7 @@
                             "</nav><span class='ml-3'>Showing "+result.to+" of " + result.total +"</span>";
                         var pagination = pagination_p1 + pagination_index + pagination_p2;
 
+                        $('#grid-table').html('');
                         $.each(result.data, function (key, value) {
                             var imageType = $('select[name="image_type"]').val();
                             var imageHtml = $("#grid_card").html();
