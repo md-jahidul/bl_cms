@@ -28,13 +28,14 @@
                             <th>Item Name</th>
                             <th>Type</th>
                             <th>CTA Action</th>
+                            @if($parentMenu->type == "service")
+                                <th>Deep Link</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
                             @foreach($manageItems as $data)
-                                {{--                                {{ dd($data->manageItems->count()) }}--}}
-                                {{--                                @php($childNumber = count($data->children))--}}
                                 <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
                                     <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td width="15%">
@@ -57,6 +58,31 @@
                                     </td>
                                     <td class="pt-1">{{ $data->type  }}</td>
                                     <td class="pt-1">{{ $data->component_identifier  }}</td>
+                                    @if($parentMenu->type == "service")
+                                        <td width="5%" class="deep-link-section-{{ $data->id }} text-center">
+                                        @if(isset($data->dynamicLinks))
+                                            <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                    data-toggle="tooltip" data-placement="button"
+                                                    data-value="{{ $data->dynamicLinks->link }}"
+                                                    title="Deeplink Copy to Clipboard">Copy</button>
+                                        @else
+                                            @if($data->deep_link_slug)
+                                                <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
+                                                        title="Click for deep link"
+                                                        data-value="{{ $data->deep_link_slug }}"
+                                                        data-id="{{ $data->id }}">
+                                                    <i  class="la icon-link"></i>
+                                                </button>
+                                            @else
+                                                <button class="btn-sm btn-outline-danger cursor-pointer"
+                                                        data-toggle="tooltip"
+                                                        title="Please select deeplink action in the edit form. then try to generate deeplink.">
+                                                    <i  class="la icon-info"></i>
+                                                </button>
+                                            @endif
+                                        @endif
+                                    </td>
+                                    @endif
                                     <td class="action" width="12%">
                                         <a href="{{ route('mybl-manage-items.edit', [$parentMenu->id, $data->id]) }}" role="button"
                                            class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
@@ -86,8 +112,10 @@
 @endpush
 
 @push('page-js')
+    <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
     <script>
         var auto_save_url = "{{ url("mybl-manage-items/$parentMenu->id/sort-auto-save") }}";
+        var deep_link_create_url = "{{ url('manage-deeplink/create?') }}category=";
     </script>
 @endpush
 

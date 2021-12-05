@@ -112,11 +112,34 @@ class MyblHomeComponentService
         return response("Successfully status changed");
     }
 
+    public function storeComponent($data)
+    {
+        $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+        $homeComponentCount = $this->findAll()->count();
+
+        $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
+        $data['display_order'] = $homeComponentCount + $homeSecondarySliderCount + 1;
+
+        $this->save($data);
+        Redis::del(self::REDIS_KEY);
+        return response("Component update successfully!");
+    }
+
     public function updateComponent($data)
     {
         $component = $this->findOne($data['id']);
         $component->update($data);
         Redis::del(self::REDIS_KEY);
         return response("Component update successfully!");
+    }
+
+    public function deleteComponent($id)
+    {
+        $component = $this->findOne($id);
+        $component->delete();
+        Redis::del(self::REDIS_KEY);
+        return [
+            'message' => 'Component delete successfully',
+        ];
     }
 }

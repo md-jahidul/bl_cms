@@ -1,5 +1,5 @@
 (function () {
-    $('.create_deep_link',).click(function (event) {
+    $('.create_deep_link',).click(function () {
         let storeSlug = $(this).attr('data-value');
         let id = $(this).attr('data-id');
         $.ajax({
@@ -7,12 +7,9 @@
             methods: "get",
             success: function (result) {
                 if (result.status_code === 200) {
-                    // Button Remove
-                    var catId = $(event.target).attr('data-id');
-                    $('.remove-' + catId).remove()
+                    let deepLinkSection = $('.deep-link-section-' + id);
+                    $(deepLinkSection).children("button").remove()
 
-                    let deepLinkSection = $('.deep-link-section-' + catId);
-                    deepLinkSection.empty();
                     let copyButton = '<button class="btn-sm btn-default copy-deeplink cursor-pointer" type="button"\n' +
                         'data-value="' + result.short_link + '" data-toggle="tooltip" data-placement="button"\n' +
                         'title="Copy to Clipboard">Copy</button>';
