@@ -97,6 +97,26 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+
+            $('#purchase-list').DataTable({
+                paging: true,
+                searching: true,
+                dom: 'Bfrtip',
+                buttons: [{
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [1, 2, 3]
+                    }
+                },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1, 2, 3]
+                        }
+                    }
+                ],
+            });
+
             $('#clearFilter').click(function (){
                 $('#from').val('')
             })
