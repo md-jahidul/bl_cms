@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('notification:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('flash-hour-reminder:schedule')->withoutOverlapping()->everyMinute();
+        
+        $interval = env('TABLE_SYNC_INTERVAL');
+        $schedule->command('mybl:sync_customer_device_token')->withoutOverlapping()->interval();
     }
 
     /**
