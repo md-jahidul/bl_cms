@@ -123,8 +123,8 @@ class NotificationScheduler extends Command
                         $notificationDraft
                     );
 
-                    NotificationSend::dispatch($notification, $notification_id, $userPhoneChunk,
-                        $notificationService)
+                    NotificationSend::dispatch($notification, $notification_id, array_values($userPhoneChunk),
+                        $notificationService, $activeSchedule)
                         ->onQueue('notification');
                 }
 
