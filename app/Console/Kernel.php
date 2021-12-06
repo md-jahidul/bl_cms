@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SyncCustomerDeviceTable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SyncCustomerDeviceTable::class
     ];
 
     /**
@@ -28,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('flash-hour-reminder:schedule')->withoutOverlapping()->everyMinute();
         
         $interval = env('TABLE_SYNC_INTERVAL');
-        $schedule->command('mybl:sync_customer_device_token')->withoutOverlapping()->interval();
+        $schedule->command('mybl:sync-customer-device-table')->withoutOverlapping()->everyFifteenMinutes();
     }
 
     /**
