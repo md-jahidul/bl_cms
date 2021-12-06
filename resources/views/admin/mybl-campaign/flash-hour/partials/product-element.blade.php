@@ -18,7 +18,9 @@
         <small class="text-danger"> @error('desc_bn') {{ $message }} @enderror </small>
         <div class="help-block"></div>
     </div>
-
+    @php
+        $productType = '<span class="text-success">(Prepaid) </span>'
+    @endphp
     <div class="form-group col-md-4 mb-2" id="cta_action">
         <label for="product_code" class="required">Product Code</label>
         <select id="product_code" name="product_code"
@@ -26,7 +28,8 @@
             <option value="">Select Product</option>
             @foreach ($products as $key => $value)
                 <option value="{{ $value->product_code }}"
-                    {{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}>{{ $value->commercial_name_en . " / " . $value->product_code }}</option>
+                    {{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
+                >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
             @endforeach
         </select>
         <div class="help-block"></div>

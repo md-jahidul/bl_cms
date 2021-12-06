@@ -138,6 +138,22 @@
                 pageLength: 10,
                 ordering: false,
                 lengthChange: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1, 2, 3]
+                        }
+                    }
+                ],
+
                 ajax: {
                     url: "",
                     data: {

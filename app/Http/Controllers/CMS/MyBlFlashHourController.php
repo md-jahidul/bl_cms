@@ -96,6 +96,7 @@ class MyBlFlashHourController extends Controller
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $products = $this->productCoreService->findAll();
         $campaign = $this->myblFlashHourService->findOne($id);
+//        dd($products);
         return view('admin.mybl-campaign.flash-hour.create-edit', compact('products', 'campaign', 'baseMsisdnGroups'));
     }
 
