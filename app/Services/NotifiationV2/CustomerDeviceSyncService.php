@@ -31,17 +31,13 @@ class CustomerDeviceSyncService
 
     public function getCustomersDevices()
     {
-        $customersMsisdns =  DB::table('customers_devices')
-                                ->select('msisdn')
-                                ->pluck('msisdn');
-
         $allCustomer = DB::table('customers_devices')->get();
-
+    
+        $customersMsisdns = $allCustomer->pluck('msisdn');
+        
         return [
             "customersMsisdns"  => $customersMsisdns,
             "allCustomers"      => $allCustomer
         ];
     }
-
-    
 }
