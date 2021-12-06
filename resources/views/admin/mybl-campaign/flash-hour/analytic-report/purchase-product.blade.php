@@ -55,7 +55,7 @@
                                     <td>{{ $data->total_success ?? 0 }}</td>
                                     <td>{{ $data->total_failed ?? 0 }}</td>
                                     <td>
-                                       <a href="{{ route('purchase-msisdn.list', [$campaign->id, $data->id]) }}"
+                                       <a href="{{ route('mybl-campaign.purchase-msisdn.list', [$campaign->id, $data->id]) }}"
                                           class="btn btn-sm btn-info product-details">
                                            Details
                                        </a>
@@ -101,17 +101,18 @@
             $('#purchase-list').DataTable({
                 paging: true,
                 searching: true,
+                lengthChange: true,
                 dom: 'Bfrtip',
                 buttons: [{
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3]
+                        columns: [0, 1, 2, 3]
                     }
                 },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [1, 2, 3]
+                            columns: [0, 1, 2, 3]
                         }
                     }
                 ],
