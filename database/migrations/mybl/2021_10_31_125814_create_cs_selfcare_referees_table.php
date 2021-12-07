@@ -15,12 +15,10 @@ class CreateCsSelfcareRefereesTable extends Migration
     {
         Schema::create('cs_selfcare_referees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('referrer')->nullable()->index();
-            $table->string('referee_msisdn')->index();
-            $table->string('referral_code', 10);
+            $table->unsignedSmallInteger('cs_selfcare_referrer_id');
+            $table->string('referee_msisdn')->nullable()->index();
             $table->boolean('is_redeemed')->default(0)->index();
             $table->dateTime('redeemed_at')->nullable();
-            $table->boolean('status')->default(1)->index();
             $table->dateTime('expired_at')->nullable();
             $table->timestamps();
         });
