@@ -13,4 +13,9 @@ class CsSelfcareReferee extends Model
     {
         return Carbon::parse($value)->setTimezone('Asia/Dhaka');
     }
+
+    public function referrer()
+    {
+        return $this->belongsTo(CsSelfcareReferrer::class,'cs_selfcare_referrer_id');
+    }
 }
