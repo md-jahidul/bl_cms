@@ -62,7 +62,8 @@ class NotificationCategoryV2Controller extends Controller
      */
     public function store(Request $request)
     {
-        $this->notificationCategoryV2Service->storeNotificationCategory($request->all());
+        session()->flash('success', $this->notificationCategoryV2Service->storeNotificationCategory($request->all())->getContent());
+
         return redirect(route('notificationCategory-v2.index'));
     }
 
@@ -100,7 +101,8 @@ class NotificationCategoryV2Controller extends Controller
      */
     public function update(Request $request)
     {
-        $this->notificationCategoryV2Service->updateNotificationCategory($request->all());
+        session()->flash('success',  $this->notificationCategoryV2Service->updateNotificationCategory($request->all())->getContent());
+    
         return redirect(route('notificationCategory-v2.index'));
     }
 
@@ -112,8 +114,8 @@ class NotificationCategoryV2Controller extends Controller
      */
     public function destroy($id)
     {
-        $notificationCategory = $this->notificationCategoryV2Service->deleteNotificationCategory($id);
-        
+        session()->flash('error', $this->notificationCategoryV2Service->deleteNotificationCategory($id)->getContent());
+
         return url('notificationCategory-v2');
     }
 }
