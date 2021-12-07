@@ -32,23 +32,28 @@
                             @endif
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-10 {{ $errors->has('type') ? ' error' : '' }}">
+                                    <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
                                         <label for="title" class="required">Choose User Type</label><hr class="mt-0">
                                         <div class="row">
-                                            <div class="col-md-4 col-sm-12">
+                                            <div class="col-md-2 col-sm-12">
+                                                <input type="radio" name="campaign_user_type" value="all" class="campaign_user_type" id="all"
+                                                    {{ (isset($campaign) && $campaign->campaign_user_type == "all") ? 'checked' : '' }}>
+                                                <label for="all">All</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
                                                 <input type="radio" name="campaign_user_type" value="prepaid" class="campaign_user_type" id="prepaid"
                                                     {{ (isset($campaign) && $campaign->campaign_user_type == "prepaid") ? 'checked' : '' }}>
                                                 <label for="prepaid">Prepaid</label>
                                             </div>
-                                            <div class="col-md-4 col-sm-12">
+                                            <div class="col-md-3 col-sm-12">
                                                 <input type="radio" name="campaign_user_type" value="postpaid" class="campaign_user_type" id="postpaid"
                                                     {{ isset($campaign) && $campaign->campaign_user_type == "postpaid" ? 'checked' : '' }}>
                                                 <label for="postpaid">Postpaid</label>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
-                                                <input type="radio" name="campaign_user_type" value="base_wise" class="campaign_user_type" id="base_wise"
-                                                    {{ isset($campaign) && $campaign->campaign_user_type == "base_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
-                                                <label for="base_wise">Msisdn Base Wise</label>
+                                                <input type="radio" name="campaign_user_type" value="segment_wise" class="campaign_user_type" id="segment_wise"
+                                                    {{ isset($campaign) && $campaign->campaign_user_type == "segment_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
+                                                <label for="segment_wise">Segment Wise (Base Msisdn)</label>
                                             </div>
                                         </div>
                                         <div class="help-block"></div>
@@ -69,7 +74,7 @@
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "base_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                    <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
                                         <label for="redirect_url" class="required">Base Msisdn</label>
                                         <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
                                                 class="browser-default custom-select">
@@ -230,7 +235,7 @@
            //  });
 
             $('.campaign_user_type').click(function () {
-                if ($(this).val() !== "base_wise"){
+                if ($(this).val() !== "segment_wise"){
                     $('#base_msisdn').addClass('d-none')
                 } else {
                     $('#base_msisdn').removeClass('d-none')
