@@ -67,7 +67,7 @@ class GenerateCsSelfcareCode extends Command
             }
         }
 
-        foreach (array_chunk($insertData, 10) as $data) {
+        foreach (array_chunk($insertData, 1000) as $data) {
             $temp = [];
             foreach ($data as $index => $value) {
                 $temp[] = $value;
