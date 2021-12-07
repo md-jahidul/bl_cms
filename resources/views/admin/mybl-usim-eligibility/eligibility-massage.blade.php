@@ -30,7 +30,7 @@
                                     <textarea class="form-control" name="four_g_usim_prepaid[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->four_g_usim_prepaid->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="four_g_usim_prepaid[button_en]" value="Close">
-                                <input type="hidden" name="four_g_usim_prepaid[button_bn]" value="বন্ধ">
+                                <input type="hidden" name="four_g_usim_prepaid[button_bn]" value="বন্ধ করুন">
 
                                 <div class="form-group col-md-6">
                                     <label for="dsce_en" class="required">Postpaid USIM Holder Customer En</label>
@@ -42,7 +42,7 @@
                                     <textarea class="form-control" name="four_g_usim_postpaid[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->four_g_usim_postpaid->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="four_g_usim_postpaid[button_en]" value="Close">
-                                <input type="hidden" name="four_g_usim_postpaid[button_bn]" value="বন্ধ">
+                                <input type="hidden" name="four_g_usim_postpaid[button_bn]" value="বন্ধ করুন">
 
                                 <div class="form-group col-md-6">
                                     <label for="dsce_en" class="required">Prepaid Non Eligible En</label>
@@ -54,7 +54,7 @@
                                     <textarea class="form-control" name="prepaid_non_eligible[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->prepaid_non_eligible->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="prepaid_non_eligible[button_en]" value="Close">
-                                <input type="hidden" name="prepaid_non_eligible[button_bn]" value="বন্ধ">
+                                <input type="hidden" name="prepaid_non_eligible[button_bn]" value="বন্ধ করুন">
 
 
                                 <div class="form-group col-md-6">
@@ -67,7 +67,7 @@
                                     <textarea class="form-control" name="postpaid_non_eligible[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->postpaid_non_eligible->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="postpaid_non_eligible[button_en]" value="Close">
-                                <input type="hidden" name="postpaid_non_eligible[button_bn]" value="বন্ধ">
+                                <input type="hidden" name="postpaid_non_eligible[button_bn]" value="বন্ধ করুন">
 
 
                                 <div class="form-group col-md-6">
@@ -80,7 +80,7 @@
                                     <textarea class="form-control" name="non_4g_prepaid[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->non_4g_prepaid->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="non_4g_prepaid[button_en]" value="Close">
-                                <input type="hidden" name="non_4g_prepaid[button_bn]" value="বন্ধ">
+                                <input type="hidden" name="non_4g_prepaid[button_bn]" value="বন্ধ করুন">
 
                                 <div class="form-group col-md-6">
                                     <label for="dsce_en" class="required">Non 4G Postpaid En</label>
@@ -92,7 +92,7 @@
                                     <textarea class="form-control" name="non_4g_postpaid[title_bn]" required>{{ ($eligibilityMassage) ? $eligibilityMassage->non_4g_prepaid->title_bn : null }}</textarea>
                                 </div>
                                 <input type="hidden" name="non_4g_postpaid[button_en]" value="Close">
-                                <input type="hidden" name="non_4g_postpaid[button_bn]" value="বন্ধ">
+                                <input type="hidden" name="non_4g_postpaid[button_bn]" value="বন্ধ করুন">
 
                                 <div class="form-actions col-md-12">
                                     <button type="submit" class="btn btn-success round px-2 float-right">

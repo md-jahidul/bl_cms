@@ -65,8 +65,6 @@ class MyblUsimEligibilityController extends Controller
     public function showMassage()
     {
         $eligibilityMassage = $this->usimEligibilityService->getEligibilityMassage();
-//        dd($eligibilityMassage);
-//        $eligibilityMassage = null;
         return view('admin.mybl-usim-eligibility.eligibility-massage', compact('eligibilityMassage'));
     }
 
