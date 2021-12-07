@@ -16,7 +16,7 @@ class GenerateCsSelfcareCode extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:cs-referral-code';
+    protected $signature = 'generate:cs-referral-code {fileName}';
 
     /**
      * The console command description.
@@ -42,7 +42,8 @@ class GenerateCsSelfcareCode extends Command
      */
     public function handle(CsSelfcareReferrerRepository $csSelfcareReferrerRepository)
     {
-        $path = public_path('customers.csv');
+        $fileName = $this->argument('fileName');
+        $path = public_path($fileName);
         $reader = ReaderFactory::createFromType(Type::CSV); // for XLSX files
         $reader->open($path);
 
