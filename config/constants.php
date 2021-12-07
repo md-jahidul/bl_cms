@@ -7,7 +7,7 @@ return [
         'claimed' => 'claimed',
     ],
     'cs_selfcare' => [
-        'expired_after' => 30,
+        'expired_after' => 24,
         'code_length' => 10,
         'referral_code_prefix' => 'CS',
         'log_type' => 'CS_REFERRAL',
