@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MyblFlashHour extends Model
 {
-    protected $fillable = ['title', 'base_msisdn_groups_id', 'reference_type', 'start_date', 'end_date', 'status'];
+    protected $fillable = [
+        'title',
+        'base_msisdn_groups_id',
+        'reference_type',
+        'campaign_user_type',
+        'start_date',
+        'end_date',
+        'status'
+    ];
 
     public function flashHourProducts(): HasMany
     {

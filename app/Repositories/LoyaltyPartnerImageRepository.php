@@ -15,10 +15,27 @@ class LoyaltyPartnerImageRepository extends BaseRepository
                 $query->select('id','name_en');
             }])->orderBy('id','desc')->paginate(18);
         } else {
-            return $this->model->orWhere('title', $data['title'])->orWhere('status', $data['status'] ?? 0)->orWhere('partner_category_id', intval($data['category']))
-                  ->orWhereBetween('upload_date', [$data['from_date'], $data['to_date']])->with(['partnerCategory'=>function($query){
-                    $query->select('id','name_en');
-                }])->orderBy('id','desc')->paginate(18);
+            $result = $this->model->with(['partnerCategory'=>function($query){
+                $query->select('id','name_en');
+            }]);
+
+            if(isset($data['title'])) {
+                $result->where('title', 'like', '%'.$data['title'].'%');
+            }
+
+            if(isset($data['category'])) {
+                $result->where('partner_category_id', intval($data['category']));
+            }
+
+            if(isset($data['status'])) {
+                $result->where('status', $data['status']);
+            }
+
+            if(isset($data['from_date']) && $data['to_date']) {
+                $result->whereBetween('upload_date', [$data['from_date'], $data['to_date']]);
+            }
+
+            return $result->orderBy('id','desc')->paginate(18);
         }
     }
 }

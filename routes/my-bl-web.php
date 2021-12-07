@@ -809,7 +809,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('flash-hour-analytic.report');
 
     Route::get('flash-hour-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlFlashHourController@purchaseMsisdnList')
-        ->name('purchase-msisdn.list');
+        ->name('mybl-campaign.purchase-msisdn.list');
 
     Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
 
@@ -864,6 +864,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('usim-eligibility.index');
     Route::post('usim-eligibility-update/{id}', 'CMS\MyblUsimEligibilityController@update')
         ->name('usim-eligibility.update');
+
+    Route::get('usim-eligibility-massage', 'CMS\MyblUsimEligibilityController@showMassage')
+        ->name('usim-eligibility.show.massage');
+    Route::post('usim-eligibility-massage-save', 'CMS\MyblUsimEligibilityController@saveMassage')
+        ->name('usim-eligibility.save.massage');
 
 
     /*

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'USIM Eligibility Page')
-@section('card_name', 'USIM Eligibility Page')
+@section('title', 'USIM Eligibility Landing Page')
+@section('card_name', 'USIM Eligibility Landing Page')
 
 @section('content')
     <section>

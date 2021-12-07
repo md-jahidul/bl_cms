@@ -32,6 +32,31 @@
                             @endif
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
+                                    <div class="form-group col-md-10 {{ $errors->has('type') ? ' error' : '' }}">
+                                        <label for="title" class="required">Choose User Type</label><hr class="mt-0">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="campaign_user_type" value="prepaid" class="campaign_user_type" id="prepaid"
+                                                    {{ (isset($campaign) && $campaign->campaign_user_type == "prepaid") ? 'checked' : '' }}>
+                                                <label for="prepaid">Prepaid</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="campaign_user_type" value="postpaid" class="campaign_user_type" id="postpaid"
+                                                    {{ isset($campaign) && $campaign->campaign_user_type == "postpaid" ? 'checked' : '' }}>
+                                                <label for="postpaid">Postpaid</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="campaign_user_type" value="base_wise" class="campaign_user_type" id="base_wise"
+                                                    {{ isset($campaign) && $campaign->campaign_user_type == "base_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
+                                                <label for="base_wise">Msisdn Base Wise</label>
+                                            </div>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('type'))
+                                            <div class="help-block">  {{ $errors->first('type') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="title" class="required">Campaign Name</label>
                                         <input required maxlength="250"
@@ -44,10 +69,10 @@
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group col-md-6 mb-2" id="cta_action">
+                                    <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "base_wise" ? 'd-none' : '' }}" id="base_msisdn">
                                         <label for="redirect_url" class="required">Base Msisdn</label>
                                         <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
-                                                class="browser-default custom-select" required>
+                                                class="browser-default custom-select">
                                             <option value="">Select Action</option>
                                             @foreach ($baseMsisdnGroups as $key => $value)
                                                 <option value="{{ $value->id }}"
@@ -204,6 +229,13 @@
            //      create: true,
            //  });
 
+            $('.campaign_user_type').click(function () {
+                if ($(this).val() !== "base_wise"){
+                    $('#base_msisdn').addClass('d-none')
+                } else {
+                    $('#base_msisdn').removeClass('d-none')
+                }
+            })
         });
     </script>
 

@@ -20,12 +20,11 @@
             <div class="row">
                 @csrf
                 <div class="col-md-12 mb-2 d-flex justify-content-end">
-                    <button id="filter" class="ml-1 btn btn-md btn-primary"><i class="la la-filter"></i> Filter</button>
                     <button id="rest" onclick="reset()" class="ml-1 btn btn-md btn-success"><i class="la la-refresh"></i> Reset</button>
                     <a href="#" id="export" class="ml-1 btn btn-md btn-info text-white"><i class="la la-download"></i> CSV</a>
                 </div>
                 <div class="col-md-2">
-                    <input class="form-control filter h-100" name="title" placeholder="Title" id="title"/>
+                    <input class="form-control filter h-100 filter" name="title" placeholder="Title" id="title"/>
                 </div>
                 <div class="col-md-2">
                     <select name="status" class="form-control filter" id="status">
@@ -50,11 +49,11 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <input required type='text' class="form-control h-100" name="from_date" id="from_date"
+                    <input required type='text' class="form-control h-100 filter" name="from_date" id="from_date"
                            placeholder="Please select from date"/>
                 </div>
                 <div class="col-md-2">
-                    <input required type='text' class="form-control h-100" name="to_date" id="to_date"
+                    <input required type='text' class="form-control h-100 filter" name="to_date" id="to_date"
                            placeholder="Please select to date"/>
                 </div>
 
@@ -79,17 +78,17 @@
                                     </p>
                                     <a href=""
                                        role="button" title="Edit"
-                                       class="text-left card-edit-btn btn-sm btn-outline-info"><i class="la la-pencil"
+                                       class="text-left card-edit-btn btn btn-sm btn-outline-info"><i class="la la-pencil"
                                                                                                   aria-hidden="true"></i></a>
                                     <button
-                                            class="text-left card-del-btn btn-sm btn-outline-danger cursor-pointer"
+                                            class="text-left card-del-btn btn btn-sm btn-outline-danger cursor-pointer"
                                             data-id=""
                                             title="Delete">
                                         <i class="la la-trash"></i>
                                     </button>
                                     <a title="Copy Url" href="javascript:;" id="copyUrl"
                                        onclick="copy();return false;"
-                                       class="text-left card-copy-btn btn-sm btn-outline-success"><i
+                                       class="text-left card-copy-btn btn btn-sm btn-outline-success"><i
                                                 class="la icon-link"></i></a>
                                     <span class="float-right badge badge-danger"></span>
                                 </div>
@@ -148,9 +147,14 @@
 
         function copy(host, value) {
             url = host + '/' + value;
-            // Create new element for copy
-            // doesn't work without secure connection or localhost
+
             //navigator.clipboard.writeText(url);
+
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(url).select();
+            document.execCommand("copy");
+            $temp.remove();
             Swal.fire(
                 'Copied',
                 'Link :  ' + url,
@@ -233,6 +237,7 @@
                             "</nav><span class='ml-3'>Showing "+result.to+" of " + result.total +"</span>";
                         var pagination = pagination_p1 + pagination_index + pagination_p2;
 
+                        $('#grid-table').html('');
                         $.each(result.data, function (key, value) {
                             var imageType = $('select[name="image_type"]').val();
                             var imageHtml = $("#grid_card").html();
@@ -270,26 +275,33 @@
             });
         }
 
+        function filter() {
+            let formData = getFields();
+            let url = "{{ url('loyalty-partner-images/filter')}}" + '?title=' + formData.title + '&status=' + formData.status + "&category=" + formData.category + "&from_date=" + formData.from_date + "&to_date=" + formData.to_date;
+
+            init(url, formData);
+        }
+
         $(document).ready(function () {
             var date = new Date();
             date.setDate(date.getDate());
             $('#from_date').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm:ss',
                 showClose: true
+            }).on('blur', function(ev){
+                filter();
             });
             $('#to_date').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm:ss',
-                showClose: true
+                showClose: true,
+            }).on('blur', function(ev){
+                filter();
             });
 
             init("{{ url('loyalty-partner-images/filter')}}");
 
-            $('#filter').click(function () {
-                let formData = getFields();
-                let url = "{{ url('loyalty-partner-images/filter')}}" + '?title=' + formData.title + '&status=' + formData.status + "&category=" + formData.category + "&from_date=" + formData.from_date + "&to_date=" + formData.to_date;
-
-                init(url, formData);
-            });
+            $('.filter').keyup(filter);
+            $('.filter').change(filter);
         });
     </script>
 @endpush

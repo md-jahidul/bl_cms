@@ -16,6 +16,7 @@ use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class MyblUsimEligibilityService
 {
@@ -26,6 +27,8 @@ class MyblUsimEligibilityService
      * @var MyblUsimEligibilityRepository
      */
     private $usimEligibilityRepository;
+
+    protected const REDIS_KEY = "usim_eligibility_massage";
 
     /**
      * AboutPageService constructor.
@@ -46,7 +49,7 @@ class MyblUsimEligibilityService
         return $this->usimEligibilityRepository->getData();
     }
 
-    public function upateUsimEligibilityData($data, $id)
+    public function updateUsimEligibilityData($data, $id)
     {
         $usimContentData = $this->findOne($id);
         if (request()->hasFile('image')) {
@@ -62,5 +65,26 @@ class MyblUsimEligibilityService
             $this->save($data);
         }
         return response('USIM eligibility content save successfully!!');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEligibilityMassage()
+    {
+        $redisData = Redis::get(self::REDIS_KEY);
+        return json_decode($redisData);
+    }
+
+    public function updateEligibilityMassage($data)
+    {
+//        dd($data);
+        unset($data['_token']);
+        if (isset($data)) {
+            Redis::del(self::REDIS_KEY);
+            $data = json_encode($data);
+            Redis::set(self::REDIS_KEY, $data);
+        }
+        return response('USIM eligibility check massage save successfully!!');
     }
 }

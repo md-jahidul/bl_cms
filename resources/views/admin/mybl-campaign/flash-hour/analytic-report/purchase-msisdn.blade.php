@@ -70,6 +70,7 @@
                             <th width="5%">SL</th>
                             <th width="10%">MSISDN</th>
                             <th width="10%">Purchase Status</th>
+                            <th width="10%">Purchase Failed Reason</th>
                             <th width="10%">Date And Time</th>
                         </tr>
                         </thead>
@@ -138,6 +139,22 @@
                 pageLength: 10,
                 ordering: false,
                 lengthChange: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        }
+                    }
+                ],
+
                 ajax: {
                     url: "",
                     data: {
@@ -175,6 +192,13 @@
                                 statusData = `<span class="badge badge-danger">`+row.action_type+`</span>`;
                             }
                             return statusData;
+                        }
+                    },
+                    {
+                        name: 'failed_reason',
+                        width: "6%",
+                        render: function (data, type, row) {
+                            return row.failed_reason;
                         }
                     },
                     {
