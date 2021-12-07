@@ -23,7 +23,7 @@ class GenerateCsSelfcareCode extends Command
      *
      * @var string
      */
-    protected $description = 'Generate CS selfcare code';
+    protected $description = 'Generate CS selfcare upsell code';
 
     /**
      * Create a new command instance.
@@ -42,8 +42,8 @@ class GenerateCsSelfcareCode extends Command
      */
     public function handle(CsSelfcareReferrerRepository $csSelfcareReferrerRepository)
     {
-        $path = public_path('customers.xlsx');
-        $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
+        $path = public_path('customers.csv');
+        $reader = ReaderFactory::createFromType(Type::CSV); // for XLSX files
         $reader->open($path);
 
         $insertData = [];
