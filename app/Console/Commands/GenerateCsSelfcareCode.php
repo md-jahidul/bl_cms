@@ -11,6 +11,7 @@ use Illuminate\Console\Command;
 
 class GenerateCsSelfcareCode extends Command
 {
+    const CODE_TYPE_RETAILER = 'retailer';
     /**
      * The name and signature of the console command.
      *
@@ -56,7 +57,8 @@ class GenerateCsSelfcareCode extends Command
 
                 $referrerData = [];
 
-                $referrerData['referrer'] = $agentMsisn;
+                $referrerData['referrer'] = "0" . substr($agentMsisn, -10);
+                $referrerData['code_type'] = self::CODE_TYPE_RETAILER;
                 $referrerData['referral_code'] = $this->generateReferralCode($agentMsisn);
                 $referrerData['start_date'] = Carbon::now()->toDateTimeString();
 
