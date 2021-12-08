@@ -16,9 +16,9 @@ class CreateCustomersDevices extends Migration
         Schema::create('customers_devices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('msisdn');
-            $table->text('device_token');
-            $table->string('device_type');
-            $table->string('customer_type');
+            $table->text('device_token')->nullable();
+            $table->string('device_type')->nullable();
+            $table->string('customer_type')->nullable();
             $table->timestamps();
         });
     }
