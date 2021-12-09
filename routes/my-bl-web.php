@@ -880,3 +880,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+
+Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {
+    if (isset($request->phone)) {
+        $customer = \App\Models\Customer::where('phone', $request->phone)->first();
+        if ($customer) {
+            $customer->delete();
+            return "Customer deleted successfully!";
+        }
+        return "Customer not found";
+    }
+});
