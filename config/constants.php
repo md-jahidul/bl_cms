@@ -7,7 +7,7 @@ return [
         'claimed' => 'claimed',
     ],
     'cs_selfcare' => [
-        'expired_after' => 24,
+        'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y', env('CS_REFERRAL_END_DATE'))),
         'code_length' => 10,
         'referral_code_prefix' => 'CS',
         'log_type' => 'CS_REFERRAL',
