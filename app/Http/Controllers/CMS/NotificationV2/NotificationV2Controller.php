@@ -231,22 +231,21 @@ class NotificationV2Controller extends Controller
     public function getTargetWiseNotificationReport(Request $request){
         if ($request->has('draw')){
 
+            $allNotification = $this->notificationV2Service->getTargetWiseNotificationReport();
             $res = [
-                'draw' => "test",
-                'recordsTotal' => "test",
-                'recordsFiltered' => "test",
+                'draw'                 => $request->get('draw'),
+                'recordsTotal'         => count($allNotification['data']),
+                'recordsFiltered'      => count($allNotification['data']),
                 'data' => []
             ];
-            $allNotification = $this->notificationV2Service->getTargetWiseNotificationReport();
-            
             foreach ($allNotification['data'] as $key => $value) {
                 $res['data'][]=
                 [
-                    'body'=> $value['body'],
-                    'all'=> $value['all'],
-                    'create_at' => $value['create_at'],
-                    'title' => $value['title'],
-                    'id'    => $value['_id']['$oid']
+                    'body'          => $value['body'],
+                    'all'           => $value['all'],
+                    'create_at'     => $value['create_at'],
+                    'title'         => $value['title'],
+                    'id'            => $value['_id']['$oid']
                 ];
             }
 
