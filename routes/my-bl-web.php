@@ -750,6 +750,19 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
         ->name('free-product-purchase-msisdn.list');
+    /*
+    * Usim Eligibility
+    */
+    Route::get('usim-eligibility', 'CMS\MyblUsimEligibilityController@index')
+        ->name('usim-eligibility.index');
+    Route::post('usim-eligibility-update/{id}', 'CMS\MyblUsimEligibilityController@update')
+        ->name('usim-eligibility.update');
+
+    Route::get('usim-eligibility-massage', 'CMS\MyblUsimEligibilityController@showMassage')
+        ->name('usim-eligibility.show.massage');
+    Route::post('usim-eligibility-massage-save', 'CMS\MyblUsimEligibilityController@saveMassage')
+        ->name('usim-eligibility.save.massage');
+
 });
 
 // 4G Map View Route
