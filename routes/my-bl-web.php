@@ -763,6 +763,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('usim-eligibility-massage-save', 'CMS\MyblUsimEligibilityController@saveMassage')
         ->name('usim-eligibility.save.massage');
 
+    //Mybl Welcome Banner
+    Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
+
 });
 
 // 4G Map View Route

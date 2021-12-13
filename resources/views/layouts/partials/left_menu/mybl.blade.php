@@ -320,6 +320,10 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>Banner Analytics</a>
                 </li>
+                <li class="{{ is_active_url('welcome-banner') . is_active_url('welcome-banner/create')}}">
+                    <a class="menu-item" href="{{ route('welcome-banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-image"></i>My-BL Welcome Banner</a>
+                </li>
             </ul>
         </li>
     @endif
