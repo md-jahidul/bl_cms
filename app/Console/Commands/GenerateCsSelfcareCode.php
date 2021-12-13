@@ -128,7 +128,7 @@ class GenerateCsSelfcareCode extends Command
                     $referrerData['updated_at'] = Carbon::now()->toDateTimeString();
 
                     if (config('constants.cs_selfcare.expired_after')) {
-                        $referrerData['end_date'] = Carbon::now()->addDays(config('constants.cs_selfcare.expired_after') - 1)->startOfDay()->toDateTimeString();
+                        $referrerData['end_date'] = Carbon::now()->addDays(config('constants.cs_selfcare.expired_after'))->startOfDay()->toDateTimeString();
                     }
                     $insertData[] = $referrerData;
                 }
