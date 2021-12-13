@@ -692,7 +692,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
     Route::get('mybl-home-components/edit/{id}', 'CMS\MyblHomeComponentController@edit')
         ->name('mybl.home.components.edit');
-    Route::put('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
+    Route::post('mybl-home-components/store', 'CMS\MyblHomeComponentController@store')
+        ->name('mybl.home.components.store');
+    Route::post('mybl-home-components/update', 'CMS\MyblHomeComponentController@update')
         ->name('mybl.home.components.update');
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
@@ -739,6 +741,27 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
     Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
+
+    Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
+        ->name('mybl.home.components.destroy');
+    //    Free Product Purchase Report
+    Route::get('free-product-purchase-report', 'CMS\MyblProductEntryController@freeProductPurchaseReport')
+        ->name('free-product.purchase.report');
+
+    Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
+        ->name('free-product-purchase-msisdn.list');
+    /*
+    * Usim Eligibility
+    */
+    Route::get('usim-eligibility', 'CMS\MyblUsimEligibilityController@index')
+        ->name('usim-eligibility.index');
+    Route::post('usim-eligibility-update/{id}', 'CMS\MyblUsimEligibilityController@update')
+        ->name('usim-eligibility.update');
+
+    Route::get('usim-eligibility-massage', 'CMS\MyblUsimEligibilityController@showMassage')
+        ->name('usim-eligibility.show.massage');
+    Route::post('usim-eligibility-massage-save', 'CMS\MyblUsimEligibilityController@saveMassage')
+        ->name('usim-eligibility.save.massage');
 
 });
 

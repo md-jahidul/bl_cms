@@ -59,6 +59,11 @@ class ProductCore extends Model
         return $this->hasOne(Product::class, 'product_code', 'product_code');
     }
 
+    public function blProduct()
+    {
+        return $this->hasOne(MyBlProduct::class, 'product_code', 'product_code');
+    }
+
     public function sim_category()
     {
         return $this->belongsTo(SimCategory::class, 'product_sim_package', 'id');

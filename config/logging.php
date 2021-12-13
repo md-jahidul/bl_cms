@@ -89,6 +89,11 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+        'retailerLog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/RetailerLog/retailer.log'),
+            'level' => 'debug'
+        ],
     ],
 
 ];

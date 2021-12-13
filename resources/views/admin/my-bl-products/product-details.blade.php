@@ -429,6 +429,19 @@
                                     </fieldset>
                                 </div>
 
+                                <div class="form-group col-md-8 mb-2" id="cta_action">
+                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
+                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
+                                            class="browser-default custom-select">
+                                        <option value="">No Base Msisdn Group Selected</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}" {{ $value->id == $details->base_msisdn_group_id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
+                                    <div class="help-block"></div>
+                                </div>
+
                                 {{--                                <div class="col-md-4">--}}
                                 {{--                                    <div class="form-group">--}}
                                 {{--                                        <button type="submit" class="btn btn-info btn-block">--}}
@@ -478,10 +491,7 @@
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-
-
         $(function () {
-
             $('.data-section').select2({
                 placeholder: 'Please Select Data Section',
                 maximumSelectionLength: 5,
@@ -492,7 +502,6 @@
                 placeholder: 'Please Select Tags',
                 maximumSelectionLength: 3
             });
-
         });
 
 

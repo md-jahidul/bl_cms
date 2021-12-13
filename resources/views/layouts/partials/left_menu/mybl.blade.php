@@ -86,6 +86,11 @@
                         <i class="ft-list"></i>Products</a>
                 </li>
 
+                <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
+                    <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
+                        <i class="la la-fire"></i>Free Products Analytic</a>
+                </li>
+
                 <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
                     <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
                         <i class="ft-x-square"></i>Inactive Products</a>
@@ -584,6 +589,30 @@
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-list"></i> Report
                 </a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Others Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Others</span></a>
+        <ul class="menu-content">
+            <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">USIM Eligibility</span></a>
+                <ul class="menu-content">
+                    <li class=" {{is_active_url('usim-eligibility')}}">
+                        <a class="menu-item" href="{{ route('usim-eligibility.index') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-simplybuilt"></i>Landing Page
+                        </a>
+                    </li>
+                    <li class=" {{is_active_url('usim-eligibility-massage')}}">
+                        <a class="menu-item" href="{{ route('usim-eligibility.show.massage') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-file-text"></i>Eligibility Massage
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>
