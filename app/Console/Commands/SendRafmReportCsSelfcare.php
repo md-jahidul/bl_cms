@@ -45,7 +45,7 @@ class SendRafmReportCsSelfcare extends Command
     public function handle(CustomerRepository $customerRepository, ProductService $productService)
     {
         $redeems = CsSelfcareReferee::with('referrer')->where('is_redeemed', 1)->whereDate('created_at',
-            Carbon::today()->setTimezone('Asia/Dhaka'))->get();
+            Carbon::yesterday()->setTimezone('Asia/Dhaka'))->get();
 
         $fileName = 'Reffer_n_Promote_RAFM_Report_' . date_format(Carbon::now(), 'YmdHis');
 
@@ -99,7 +99,6 @@ class SendRafmReportCsSelfcare extends Command
             $file = Storage::disk('cs-selfcare');
             if ($gzipPath && $file->exists($fileName . '.csv.gz')) {
                 $localFile = $file->get($fileName . '.csv.gz');
-                dd('completed');
                 $sendFile = Storage::disk('sftp')->put($fileName . '.csv.gz', $localFile);
             }
         } catch (\Exception $exception) {
