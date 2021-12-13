@@ -60,7 +60,8 @@ class SendRafmReportCsSelfcare extends Command
             'Transaction Status',
             'Referee Signup',
             'Volume Disbursement (MB)',
-            'IDENTIFIER'
+            'IDENTIFIER',
+            'Referral code',
         ]);
         $writer->openToFile(storage_path('app/public/cs/') . $fileName . '.csv');
         $writer->addRow($row);
@@ -85,6 +86,7 @@ class SendRafmReportCsSelfcare extends Command
                 $redeem->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository,
                 $redeem->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
 
+            $data[10] = data_get($redeem->referrer, 'referral_code', '');
             $row = WriterEntityFactory::createRowFromArray($data);
             $writer->addRow($row);
             $data = [];
@@ -92,13 +94,12 @@ class SendRafmReportCsSelfcare extends Command
 
         $writer->close();
 
-        dd('completed');
-
         $gzipPath = $this->gzCompressFile($fileName);
         try {
             $file = Storage::disk('cs-selfcare');
             if ($gzipPath && $file->exists($fileName . '.csv.gz')) {
                 $localFile = $file->get($fileName . '.csv.gz');
+                dd('completed');
                 $sendFile = Storage::disk('sftp')->put($fileName . '.csv.gz', $localFile);
             }
         } catch (\Exception $exception) {
