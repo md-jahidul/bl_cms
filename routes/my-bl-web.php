@@ -204,6 +204,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('target-wise-notification-report-details-v2/{notificationId}',
     'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report-v2.report-details');
 
+    // Customer Sync
+    Route::get('/fresh-sync', 'CMS\NotificationV2\NotificationV2Controller@freshSync')->name('fresh-sync');
+
+    Route::get('/test', 'CMS\NotificationV2\NotificationV2Controller@test')->name('test');
+
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')

@@ -40,4 +40,27 @@ class CustomerDeviceSyncService
             "allCustomers"      => $allCustomer
         ];
     }
+
+    public function freshSync()
+    {
+        $customers = DB::table('customers')
+                    ->select('phone', 'device_token', 'device_type', 'number_type')
+                    ->get();
+
+        $bulk = array();
+        foreach($customers as $customer)
+        {
+            $data = [
+                'msisdn'            => $customer->phone ? $customer->phone : "",
+                'device_token'      => $customer->device_token ? $customer->device_token : "",
+                'device_type'       => $customer->device_type ? $customer->device_type : "",
+                'customer_type'     => $customer->number_type ? $customer->number_type : ""
+            ];
+
+            $bulk [] = $data;
+        }
+
+        return DB::table('customers_devices')
+                ->insert($bulk);
+    }
 }

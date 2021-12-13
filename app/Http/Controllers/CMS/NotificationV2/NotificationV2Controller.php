@@ -8,6 +8,7 @@ use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Services\NotifiationV2\NotificationV2Service;
 use App\Http\Requests\NotificationRequest;
+use App\Services\NotifiationV2\CustomerDeviceSyncService;
 use App\Services\NotifiationV2\NotificationCategoryV2Service;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
@@ -39,7 +40,10 @@ class NotificationV2Controller extends Controller
      */
     protected $notificationV2Service, $notificationCategoryV2Service;
 
-
+    /**
+     * @var CustomerDeviceSyncService
+     */
+    protected $customerDeviceSyncService;
     /**
      * NotificationController constructor.
      * @param NotificationService $notificationService
@@ -47,18 +51,20 @@ class NotificationV2Controller extends Controller
      * @param UserService $userService
      */
     public function __construct(
-        NotificationService $notificationService,
-        NotificationCategoryService $notificationCategoryService,
-        UserService $userService,
-        NotificationV2Service $notificationV2Service,
-        NotificationCategoryV2Service $notificationCategoryV2Service
+        NotificationService             $notificationService,
+        NotificationCategoryService     $notificationCategoryService,
+        UserService                     $userService,
+        NotificationV2Service           $notificationV2Service,
+        NotificationCategoryV2Service   $notificationCategoryV2Service,
+        CustomerDeviceSyncService       $customerDeviceSyncService
     )
     {
-        $this->notificationService = $notificationService;
-        $this->notificationCategoryService = $notificationCategoryService;
-        $this->userService = $userService;
-        $this->notificationV2Service = $notificationV2Service;
-        $this->notificationCategoryV2Service = $notificationCategoryV2Service;
+        $this->notificationService              = $notificationService;
+        $this->notificationCategoryService      = $notificationCategoryService;
+        $this->userService                      = $userService;
+        $this->notificationV2Service            = $notificationV2Service;
+        $this->notificationCategoryV2Service    = $notificationCategoryV2Service;
+        $this->customerDeviceSyncService        = $customerDeviceSyncService;
         $this->middleware('auth');
     }
 
@@ -295,5 +301,21 @@ class NotificationV2Controller extends Controller
         return [
             "message" => "Notification Schedule Saved Successfully"
         ];
+    }
+
+    public function freshSync(){
+
+        $this->customerDeviceSyncService->freshSync();
+
+        return "Successfully sync table";
+    }
+
+    public function test()
+    {
+        $allCustomersAndMsisdns =  $this->customerDeviceSyncService->getCustomersDevices();
+
+        $this->customerDeviceSyncService->pushCustomersDevicesTable($allCustomersAndMsisdns);
+
+        return "Database Sync Successfully";
     }
 }
