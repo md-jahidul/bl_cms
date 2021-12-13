@@ -116,6 +116,8 @@ class Helper
             "LANGUAGE"                => "Language",
             "ORANGE_CLUB"             => "Orange Club",
             "STOP_ALL_VAS"            => "Stop All VAS",
+            "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
+            "MEDALIA_FEEDBACK"        => "Medalia Feedback"
         ];
     }
 
@@ -163,7 +165,8 @@ class Helper
             "ussd" => "USSD",
             "sms_packs" => "SMS Pack",
             "voice_packs" => "Voice Bundle",
-            "orange_club" => "Orange Club"
+            "orange_club" => "Orange Club",
+            "4g_usim_eligibility" => "4G USIM Eligibility"
         ];
     }
 
