@@ -857,6 +857,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
     Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
 
+    Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
+        ->name('mybl.home.components.destroy');
+    //    Free Product Purchase Report
+    Route::get('free-product-purchase-report', 'CMS\MyblProductEntryController@freeProductPurchaseReport')
+        ->name('free-product.purchase.report');
+
+    Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
+        ->name('free-product-purchase-msisdn.list');
     /*
     * Usim Eligibility
     */
@@ -876,6 +884,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
     Route::get('remove-msisdn', 'CMS\RemoveMsisdnController@index')->name('remove-msisdn.index');
     Route::post('remove-msisdn/remove', 'CMS\RemoveMsisdnController@removeMsisdn')->name('remove-msisdn.remove');
+    //Mybl Welcome Banner
+    Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
+
 });
 
 // 4G Map View Route

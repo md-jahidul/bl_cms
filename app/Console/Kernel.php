@@ -27,7 +27,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('notification:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('redis-reset:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('flash-hour-reminder:schedule')->withoutOverlapping()->everyMinute();
-        $schedule->command('send:cs-sefcare-rafm-report')->withoutOverlapping()->dailyAt('02:00')->timezone('Asia/Dhaka');
+        $schedule->command('send:rafm-report-cs-sefcare')->withoutOverlapping()
+            ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))
+            ->timezone('Asia/Dhaka');
     }
 
     /**
