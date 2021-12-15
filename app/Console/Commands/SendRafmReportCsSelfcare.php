@@ -45,7 +45,7 @@ class SendRafmReportCsSelfcare extends Command
     public function handle(CustomerRepository $customerRepository, ProductService $productService)
     {
         $redeems = CsSelfcareReferee::with('referrer')->where('is_redeemed', 1)->whereDate('created_at',
-            Carbon::today()->setTimezone('Asia/Dhaka'))->get();
+            Carbon::yesterday()->setTimezone('Asia/Dhaka'))->get();
 
         $fileName = 'Reffer_n_Promote_RAFM_Report_' . date_format(Carbon::now(), 'YmdHis');
 
@@ -60,7 +60,8 @@ class SendRafmReportCsSelfcare extends Command
             'Transaction Status',
             'Referee Signup',
             'Volume Disbursement (MB)',
-            'IDENTIFIER'
+            'IDENTIFIER',
+            'Referral code',
         ]);
         $writer->openToFile(storage_path('app/public/cs/') . $fileName . '.csv');
         $writer->addRow($row);
@@ -85,14 +86,13 @@ class SendRafmReportCsSelfcare extends Command
                 $redeem->referee_msisdn) ? strtolower($this->getCustomerInfo($customerRepository,
                 $redeem->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
 
+            $data[10] = data_get($redeem->referrer, 'referral_code', '');
             $row = WriterEntityFactory::createRowFromArray($data);
             $writer->addRow($row);
             $data = [];
         }
 
         $writer->close();
-
-        dd('completed');
 
         $gzipPath = $this->gzCompressFile($fileName);
         try {

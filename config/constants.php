@@ -17,13 +17,14 @@ return [
         'completed' => 'info'
     ],
     'cs_selfcare' => [
-        'expired_after' => 24,
+        'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y', env('CS_REFERRAL_END_DATE', '01/01/2022'))),
         'code_length' => 10,
         'referral_code_prefix' => 'CS',
         'log_type' => 'CS_REFERRAL',
         'cs_referral_product_code_prepaid' => env('CS_REFERRAL_PRODUCT_CODE_PREPAID'),
         'cs_referral_product_code_postpaid' => env('CS_REFERRAL_PRODUCT_CODE_POSTPAID'),
-        'rafm_report_mail' => env('CS_SELFCARE_RAFM_REPORT_MAIL')
+        'rafm_report_mail' => env('CS_SELFCARE_RAFM_REPORT_MAIL'),
+        'cs_report_send_at' => env('CS_REPORT_SEND_AT', '02:00')
     ],
 
     'test_msisdn_removal' => [
