@@ -25,6 +25,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Campaign Title</th>
+                            <th>User Type</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Report</th>
@@ -34,10 +35,11 @@
                         <tbody>
                         @foreach ($flashHourCampaigns as $data)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                <td>{{$data->start_date}}</td>
-                                <td>{{$data->end_date}}</td>
+                                <td>{{ str_replace('_', ' ', ucwords($data->campaign_user_type)) }}</td>
+                                <td>{{ $data->start_date }}</td>
+                                <td>{{ $data->end_date }}</td>
                                 <td>
                                     <a href="{{ route('flash-hour-analytic.report', $data->id) }}" role="button"
                                        class="btn btn-outline-secondary"> Analytic Report</a>
