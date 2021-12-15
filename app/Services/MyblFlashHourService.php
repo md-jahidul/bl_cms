@@ -83,9 +83,6 @@ class MyblFlashHourService
     {
         try {
             DB::beginTransaction();
-            if ($data['status']) {
-                $this->flashHourRepository->inactiveOldCampaign();
-            }
             $data['reference_type'] = $reference_type;
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
