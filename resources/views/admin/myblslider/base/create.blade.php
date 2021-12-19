@@ -226,7 +226,7 @@
                                     <td><input name="base_msisdn_files[`+countRow+`][file_title]" type="text" class="form-control"></td>
                                     <td>
                                         <input name="base_msisdn_files[`+countRow+`][file_name]" type="file" class="form-control-file"
-                                                accept=".xlsx, application/vnd.ms-excel">
+                                                accept=".xlsx,.csv, application/vnd.ms-excel">
                                     </td>
                                     <td class="text-center align-middle delete-item">
                                         <i class="la la-trash-o text-danger cursor-pointer"></i>
