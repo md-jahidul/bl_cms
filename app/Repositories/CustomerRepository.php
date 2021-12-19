@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use App\Models\NotificationDraft;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class CustomerRepository
@@ -48,5 +49,16 @@ class CustomerRepository extends BaseRepository
     {
         $msisdn = '88' . $msisdn;
         return $this->model->where('msisdn', $msisdn)->first();
+    }
+
+    /**
+     * @return array
+     */
+    public function getLoggedOutCustomerList(): array
+    {
+        return DB::select(
+            DB::raw("select id,name,
+                          email,msisdn,device_type,number_type,platform
+                          from customers where last_login_at < last_logout_at"));
     }
 }
