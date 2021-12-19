@@ -2,9 +2,8 @@
        id="msisdn_list">
     <thead>
     <tr>
-        <th width="5%"># SL</th>
-        <th width="55%">Title</th>
-{{--        <th width="20%">Last Updated At</th>--}}
+        <th ># SL</th>
+        <th>Msisdn</th>
     </tr>
     </thead>
     <tbody>
