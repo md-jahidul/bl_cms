@@ -121,7 +121,7 @@
                                                             <input name="file_title" type="text" class="form-control">
                                                         </td>
                                                         <td>
-                                                            <input name="file_name" type="file" class="form-control-file" accept=".xlsx, application/vnd.ms-excel">
+                                                            <input name="file_name" type="file" class="form-control-file" accept=".xlsx,.csv, application/vnd.ms-excel">
                                                         </td>
                                                         <td class="text-center align-middle">
                                                             <i data-repeater-delete class="la la-trash-o text-danger cursor-pointer"></i>

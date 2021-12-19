@@ -148,9 +148,8 @@ class BaseMsisdnService
                     $fileExt = $file['file_name']->getClientOriginalExtension();
                     $fileName = $fileName . "-" . uniqid(2) . "." . $fileExt;
                     $path = $this->upload($file['file_name'], 'base-msisdn-files', $fileName);
-
-                    $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
                     $file_path = $this->getPath($path);
+                    $reader = ReaderFactory::createFromFile($file_path); // for XLSX and CSV files
                     $reader->open($file_path);
 
                     $baseFileData = [
