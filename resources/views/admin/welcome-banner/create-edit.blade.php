@@ -124,6 +124,8 @@
                                             <label for="image_url">Upload Welcome Banner </label>
                                             <input type="file" id="image_url" name="banner_img" class="dropify_image"
                                                    data-width="360"
+                                                   data-min-width="359" data-min-height="459"
+                                                   data-max-width="361" data-min-height="461"
                                                    data-validation-required-message="Banner Image required"
                                                    data-default-file="{{ isset($welcome_banner) ? asset($welcome_banner->banner_img) : ''}}"
                                                    data-allowed-file-extensions="png jpg gif"/>
