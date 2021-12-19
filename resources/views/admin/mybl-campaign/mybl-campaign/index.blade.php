@@ -39,7 +39,7 @@
                                 <td>{{$data->start_date}}</td>
                                 <td>{{$data->end_date}}</td>
                                 <td>
-                                    <a href="{{ route('flash-hour-analytic.report', $data->id) }}" role="button"
+                                    <a href="{{ route('mybl-campaign-analytic.report', $data->id) }}" role="button"
                                        class="btn btn-outline-secondary"> Analytic Report</a>
                                 </td>
                                 <td>
