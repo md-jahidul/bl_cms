@@ -110,10 +110,10 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function filePrepare($insertData, $baseFileData)
+    protected function fileWiseMsisdnUpload($insertData, $baseFileData)
     {
         $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-        foreach (array_chunk($insertData, 800) as $smallerArray) {
+        foreach (array_chunk($insertData, 1000) as $smallerArray) {
             foreach ($smallerArray as $index => $value) {
                 $temp[$index] = [
                     'group_id' => $baseFileData['base_msisdn_group_id'],
@@ -160,21 +160,26 @@ class BaseMsisdnService
                     ];
 
                     foreach ($reader->getSheetIterator() as $sheet) {
-                        foreach ($sheet->getRowIterator() as $key => $row) {
+                        foreach ($sheet->getRowIterator() as $rowNum => $row) {
                             $cells = $row->getCells();
                             $msisdn = trim($cells[0]->getValue());
+
+                            // Check msisdn length less than 10
                             if (strlen($msisdn) < 10) {
                                 return [
                                     'status' => false,
-                                    'message' => "<b>FIle Name:</b>  $fileOrgName <br> Upload Failed! Wrong msisdn at row: " . $key
+                                    'message' => "<b>FIle Name:</b>  $fileOrgName <br> Upload Failed! Wrong msisdn at row: " . $rowNum
                                 ];
                             }
                             $insertData[] = "0" . substr($msisdn, -10);
                         }
                     }
+
+                    $this->fileWiseMsisdnUpload($insertData, $baseFileData);
                 }
             }
 
+            // Check maximum upload
             $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
             $msisdnLimit = 100000 * 10 * $million;
 
@@ -186,8 +191,7 @@ class BaseMsisdnService
                 ];
             }
 
-            $this->filePrepare($insertData, $baseFileData);
-
+            // File Delete Section
             $fileIds = isset($request['old_ids']) ? array_diff($request['old_ids'], $currentFileId) : [];
             if (!empty($fileIds)) {
                 collect($fileIds)->each(function (int $id) {
