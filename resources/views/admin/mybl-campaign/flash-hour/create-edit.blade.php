@@ -18,7 +18,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>Campaign {{ (isset($campaign)) ? "Edit" : "Create" }} Form  {!! (isset($campaign) && $campaign->checkCampaignExpire()) ? "<b class='text-danger'>(This Campaign is Expired. You can't anymore edit)</b>" : '' !!}</strong></h5>
+                    <h5 class="menu-title"><strong>Campaign {{ (isset($campaign)) ? "Edit" : "Create" }} Form  {!! (isset($campaign) && $campaign->checkCampaignExpire()) ? "<b class='text-danger'>(This campaign is expired. You can't change anymore)</b>" : '' !!}</strong></h5>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"

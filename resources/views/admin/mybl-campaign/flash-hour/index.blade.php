@@ -36,7 +36,8 @@
                         @foreach ($flashHourCampaigns as $data)
                             <tr class="{{ ($data->checkCampaignExpire()) ? "tr-bg" : "" }}">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}
+                                {!! $data->checkCampaignExpire() ? '<spam class="text-warning pl-1">( Campaign is expired )</strong></span>' : '' !!}</td>
                                 <td>{{ str_replace('_', ' ', ucwords($data->campaign_user_type)) }}</td>
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
@@ -93,6 +94,9 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+
+
+
             $('#Example1').DataTable({
                 buttons: [],
                 paging: true,
