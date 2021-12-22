@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">
         <a href="{{ route('flash-hour-campaign.index') }}">Campaign List</a>
     </li>
-    <li class="breadcrumb-item active">Create Campaign</li>
+    <li class="breadcrumb-item active">{{ (isset($campaign)) ? "Edit" : "Create" }} Campaign</li>
 @endsection
 @section('action')
     <a href="{{ route('flash-hour-campaign.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
@@ -18,7 +18,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>Campaign Create Form</strong></h5>
+                    <h5 class="menu-title"><strong>Campaign {{ (isset($campaign)) ? "Edit" : "Create" }} Form  {!! (isset($campaign) && $campaign->checkCampaignExpire()) ? "<b class='text-danger'>(This campaign is expired. You can't change anymore)</b>" : '' !!}</strong></h5>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form id="feed-form" novalidate class="form row"
@@ -157,9 +157,11 @@
 
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
-                                            <button id="save" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> Save
-                                            </button>
+                                            @if(isset($campaign) && !$campaign->checkCampaignExpire())
+                                                <button id="save" class="btn btn-primary"><i
+                                                        class="la la-check-square-o"></i>Save
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

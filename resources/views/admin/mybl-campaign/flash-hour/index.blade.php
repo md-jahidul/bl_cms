@@ -34,9 +34,10 @@
                         </thead>
                         <tbody>
                         @foreach ($flashHourCampaigns as $data)
-                            <tr>
+                            <tr class="{{ ($data->checkCampaignExpire()) ? "tr-bg" : "" }}">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}
+                                {!! $data->checkCampaignExpire() ? '<spam class="text-warning pl-1">( Campaign is expired )</strong></span>' : '' !!}</td>
                                 <td>{{ str_replace('_', ' ', ucwords($data->campaign_user_type)) }}</td>
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
@@ -44,11 +45,19 @@
                                     <a href="{{ route('flash-hour-analytic.report', $data->id) }}" role="button"
                                        class="btn btn-outline-secondary"> Analytic Report</a>
                                 </td>
-                                <td>
-                                    <a href="{{ route('flash-hour-campaign.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("flash-hour-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
-                                        <i class="la la-trash"></i>
+                                <td class="text-center">
+                                    <a href="{{ route('flash-hour-campaign.edit', [$data->id]) }}" role="button"
+                                       class="btn-sm btn-outline-info border-0">
+                                        <i class="la la-pencil" disabled="disabled" aria-hidden="true"></i>
                                     </a>
+
+                                    @if(!$data->checkCampaignExpire())
+                                        <a href="#" remove="{{ url("flash-hour-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                            <i class="la la-trash"></i>
+                                        </a>
+{{--                                    @else--}}
+{{--                                        <span class="text-danger">Campaign Expired</span>--}}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -70,6 +79,10 @@
         table.dataTable tbody td {
             max-height: 40px;
         }
+
+        .tr-bg{
+            background-color: rgba(225, 227, 219, 0.96) !important;
+        }
     </style>
 @endpush
 @push('page-js')
@@ -81,6 +94,9 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+
+
+
             $('#Example1').DataTable({
                 buttons: [],
                 paging: true,

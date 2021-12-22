@@ -115,23 +115,24 @@ class MyblFlashHourService
                 foreach ($data['product-group'] as $productData) {
                     $currentProductId[] = $productData['product_id'];
                     $product = $this->flashHourProductRepository->findOne($productData['product_id']);
-                    $productType = $this->productCoreRepository->getProductType($productData['product_code']);
-
-                    if (isset($productData['thumbnail_img'])) {
-                        $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
-                        if (!empty($product->thumbnail_img)) {
-                            unlink($product->thumbnail_img);
+                    if (!$product->checkCampaignProductExpire()) {
+                        $productType = $this->productCoreRepository->getProductType($productData['product_code']);
+                        if (isset($productData['thumbnail_img'])) {
+                            $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
+                            if (!empty($product->thumbnail_img)) {
+                                unlink($product->thumbnail_img);
+                            }
                         }
-                    }
-                    $productData['show_in_home'] = isset($productData['show_in_home']) ? 1 : 0;
-                    $productData['product_type'] = $productType;
-                    $productData['flash_hour_id'] = $id;
-                    $productData['status'] = $productData['status'] ?? 0;
-                    unset($productData['product_id']);
-                    if ($product) {
-                        $product->update($productData);
-                    } else {
-                        $this->flashHourProductRepository->save($productData);
+                        $productData['show_in_home'] = isset($productData['show_in_home']) ? 1 : 0;
+                        $productData['product_type'] = $productType;
+                        $productData['flash_hour_id'] = $id;
+                        $productData['status'] = $productData['status'] ?? 0;
+                        unset($productData['product_id']);
+                        if ($product) {
+                            $product->update($productData);
+                        } else {
+                            $this->flashHourProductRepository->save($productData);
+                        }
                     }
                 }
             }
