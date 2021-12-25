@@ -43,7 +43,7 @@
                                 <td width="10%">{{ $data['msisdn'] }}</td>
                                 <td width="12%">{{ $notification['title'] }}</td>
                                 <td width="30%">{{ $notification['body'] }}</td>
-                                <td width="10%">{{ $notification['create_at'] }}</td>
+                                <td width="10%">{{ $notification['update_at'] }}</td>
                                 <td width="10%">{{ $data['fcm_status'] }}</td>
                             </tr>
                         @endforeach

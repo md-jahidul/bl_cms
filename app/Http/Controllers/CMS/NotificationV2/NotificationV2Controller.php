@@ -235,32 +235,21 @@ class NotificationV2Controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getTargetWiseNotificationReport(Request $request){
-        if ($request->has('draw')){
 
-            $allNotification = $this->notificationV2Service->getTargetWiseNotificationReport();
-            $res = [
-                'draw'                 => $request->get('draw'),
-                'recordsTotal'         => count($allNotification['data']),
-                'recordsFiltered'      => count($allNotification['data']),
-                'data' => []
-            ];
-            foreach ($allNotification['data'] as $key => $value) {
-                $res['data'][]=
-                [
-                    'body'          => $value['body'],
-                    'all'           => $value['all'],
-                    'create_at'     => $value['create_at'],
-                    'title'         => $value['title'],
-                    'id'            => $value['_id']['$oid']
-                ];
+            $allNotifications = $this->notificationV2Service->getTargetWiseNotificationReport();
+
+            $notifications = array();
+
+            foreach ($allNotifications['data'] as $notification)
+            {
+                $id = (array)$notification["_id"];
+                $notification['id'] = $id['$oid'];
+                
+                $notifications [] = $notification;
             }
 
-            return $res;
-        }
-
-        if ($request->isMethod('get')) {
-            return view('admin.notification_v2.target-wise-notification.list');
-        }
+            return view('admin.notification_v2.target-wise-notification.list')
+                        ->with('allNotifications', $notifications);
     }
 
 
@@ -277,7 +266,6 @@ class NotificationV2Controller extends Controller
         $usersNotification = $data['data'];
         $notification = $usersNotification[0]['notification_info'];
 
-        
         return view('admin.notification_v2.target-wise-notification.details')
             ->with('usersNotification', $usersNotification)
             ->with('notification', $notification);
