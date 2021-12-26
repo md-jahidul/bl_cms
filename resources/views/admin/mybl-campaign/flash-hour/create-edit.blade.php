@@ -157,7 +157,8 @@
 
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
-                                            @if(isset($campaign) && !$campaign->checkCampaignExpire())
+                                            @if(isset($campaign) && $campaign->checkCampaignExpire())
+                                            @else
                                                 <button id="save" class="btn btn-primary"><i
                                                         class="la la-check-square-o"></i>Save
                                                 </button>
