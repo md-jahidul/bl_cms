@@ -26,7 +26,7 @@
     @endphp
     <div class="form-group col-md-4 mb-2" id="cta_action">
         <label for="product_code" class="required">Product Code</label>
-        <input type="hidden" name="product_code" value="{{ $product->product_code }}">
+        <input type="hidden" name="product_code" value="{{ isset($product) ? $product->product_code : null }}">
         <select id="product_code" name="product_code" {{ (isset($product) && $product->checkCampaignProductExpire()) ? 'disabled' : '' }}
                 class="browser-default custom-select product-list">
             <option value="">Select Product</option>
