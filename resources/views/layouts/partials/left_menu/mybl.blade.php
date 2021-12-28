@@ -571,9 +571,14 @@
             <a class="menu-item" href="{{ route('mybl.api.debug') }}">
                 <i class="la la-code-fork"></i>Debug Panel</a>
         </li>
+
+        <li class="{{ is_active_url(route('header-enrichment-logs')) }}">
+            <a class="menu-item" href="{{ route('header-enrichment-logs') }}">
+                <i class="la la-code-fork"></i>Header Enrichment Logs</a>
+        </li>
     @endif
 
-    <li class="{{ is_active_url('developer/api/debug') }}">
+    <li class="{{ is_active_url(route('support-message')) }}">
         <a class="menu-item" href="{{ route('support-message') }}">
             <i class="la la-code-fork"></i>Support Messages</a>
     </li>
