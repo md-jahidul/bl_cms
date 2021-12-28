@@ -567,9 +567,19 @@
     @endif
 
     @if (Auth::user()->hasRole('developer'))
-        <li class="{{ is_active_url('developer/api/debug') }}">
-            <a class="menu-item" href="{{ route('mybl.api.debug') }}">
-                <i class="la la-code-fork"></i>Debug Panel</a>
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Debug Panel</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('developer/api/debug') }}">
+                    <a class="menu-item" href="{{ route('mybl.api.debug') }}">
+                        <i class="la la-code-fork"></i> BL Msisdn Log</a>
+                </li>
+
+                <li class="{{ is_active_url(route('non-bl-request-logs')) }}">
+                    <a class="menu-item" href="{{ route('non-bl-request-logs') }}">
+                        <i class="la la-code-fork"></i> Non BL Msisdn Log</a>
+                </li>
+            </ul>
         </li>
     @endif
 

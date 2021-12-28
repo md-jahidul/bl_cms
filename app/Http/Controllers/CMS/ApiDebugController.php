@@ -16,6 +16,7 @@ use App\Services\BlApiHub\History\CustomerSubscriptionUsageService;
 use App\Services\BlApiHub\History\CustomerSummaryUsageService;
 use App\Services\BlApiHub\OtpRequestLogsService;
 use App\Services\ContactRestoreLogService;
+use App\Services\NonBlNumberLogService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -34,6 +35,10 @@ class ApiDebugController extends Controller
      * @var ContactRestoreLogService
      */
     protected $contactRestoreLogService;
+    /**
+     * @var NonBlNumberLogService
+     */
+    private $nonBlNumberLogService;
 
     /**
      * ApiDebugController constructor.
@@ -62,9 +67,10 @@ class ApiDebugController extends Controller
         CustomerRoamingUsageService $roamingUsageService,
         CustomerSubscriptionUsageService $subscriptionUsageService,
         OtpRequestLogsService $otpRequestLogsService,
-        ContactRestoreLogService $contactRestoreLogService
+        ContactRestoreLogService $contactRestoreLogService,
+        NonBlNumberLogService $nonBlNumberLogService
     ) {
-     
+
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
         $this->customerSummaryUsageService = $customerSummaryUsageService;
@@ -78,6 +84,7 @@ class ApiDebugController extends Controller
         $this->otpRequestLogsService = $otpRequestLogsService;
         $this->middleware(['auth', 'debugEntryCheck']);
         $this->contactRestoreLogService = $contactRestoreLogService;
+        $this->nonBlNumberLogService = $nonBlNumberLogService;
     }
 
     /**
@@ -279,5 +286,13 @@ class ApiDebugController extends Controller
 
         return $response;
 
+    }
+
+    public function getNonBlNumberLogs(Request $request)
+    {
+        if ($request->ajax()) {
+            return $this->nonBlNumberLogService->getLogs($request);
+        }
+        return view('admin.debug.guest-user-log.index');
     }
 }

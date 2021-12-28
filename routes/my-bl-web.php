@@ -586,6 +586,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/usage-details/{number}/{type}', 'CMS\ApiDebugController@getUsageDetails');
     Route::get('developer/api/debug/contact-restore-logs/{number}', 'CMS\ApiDebugController@getContactRestoreLogs');
 
+
+    Route::get('developer/api/debug/non-bl-request-logs', 'CMS\ApiDebugController@getNonBlNumberLogs')
+        ->name('non-bl-request-logs');
+
     // Agent Deeplink
     //    Route::resource('deeplink/agent', 'CMS\AgentListController');
 
