@@ -593,6 +593,42 @@
                 </div>
             </div>
         </div>
+
+        <!--Contact restore logs-->
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div>
+                    <h5 class="mb-1 mt-2 text-bold-600 pull-left">Header Msisdn Enrichment</h5>
+                    {{--                    <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>--}}
+                </div>
+            </div>
+{{--            <div class="col-md-12">--}}
+{{--                <hr/>--}}
+{{--            </div>--}}
+            <div class="col-md-12" id="usage-details-div">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <table id="productLog" class="table table-bordered table-striped">
+                                            <thead class="text-center alert-warning text-white">
+                                            <th>Msisdn</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @stop
 

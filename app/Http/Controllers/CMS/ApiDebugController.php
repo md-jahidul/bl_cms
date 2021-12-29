@@ -16,6 +16,7 @@ use App\Services\BlApiHub\History\CustomerSubscriptionUsageService;
 use App\Services\BlApiHub\History\CustomerSummaryUsageService;
 use App\Services\BlApiHub\OtpRequestLogsService;
 use App\Services\ContactRestoreLogService;
+use App\Services\HeaderEnrichmentLogsService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -62,7 +63,8 @@ class ApiDebugController extends Controller
         CustomerRoamingUsageService $roamingUsageService,
         CustomerSubscriptionUsageService $subscriptionUsageService,
         OtpRequestLogsService $otpRequestLogsService,
-        ContactRestoreLogService $contactRestoreLogService
+        ContactRestoreLogService $contactRestoreLogService,
+        HeaderEnrichmentLogsService $headerEnrichmentLogsService
     ) {
 
         $this->balanceService = $balanceService;
@@ -78,6 +80,7 @@ class ApiDebugController extends Controller
         $this->otpRequestLogsService = $otpRequestLogsService;
         $this->middleware(['auth', 'debugEntryCheck']);
         $this->contactRestoreLogService = $contactRestoreLogService;
+        $this->headerEnrichmentLogsService = $headerEnrichmentLogsService;
     }
 
     /**
@@ -302,8 +305,20 @@ class ApiDebugController extends Controller
                 'status' => $item->status,
             ];
         });
-
         return $response;
+    }
 
+
+    /**
+     * @param Request $request
+     * @param $number
+     * @return array
+     */
+    public function getHeaderEnrichmentLogs(Request $request)
+    {
+        if ($request->ajax()) {
+            return $this->headerEnrichmentLogsService->getLogs($request);
+        }
+        return view('admin.header-enrichment.index');
     }
 }
