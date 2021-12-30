@@ -48,9 +48,14 @@ class EventBaseChallengeV2Controller extends Controller
     public function edit($id)
     {
         $tasks = $this->taskService->findAll();
-        $products = $this->productCoreService->findAll();
+        $product_list = $this->productCoreService->findAll();
         $challenge = $this->eventBaseBonusChallengeService->findOne($id);
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+        $products = [];
+
+        foreach ($product_list as $key => $value) {
+            $products[] = $value['product_code'];
+        }
 
         return view('admin.event-base-bonus.challenges.v2.edit', compact('products', 'tasks', 'challenge', 'baseMsisdnGroups'));
     }

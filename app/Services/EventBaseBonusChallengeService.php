@@ -4,122 +4,168 @@ namespace App\Services;
 
 use GuzzleHttp\Exception\ClientException;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class EventBaseBonusChallengeService
 {
+    /**
+     * @var ApiService
+     */
+    private $apiService;
+    /**
+     * @var mixed
+     */
+    private $host;
+
+    /**
+     * @param ApiService $apiService
+     */
+    public function __construct(ApiService $apiService)
+    {
+        $this->apiService = $apiService;
+        $this->host = env('EVENT_BASE_API_HOST_V2');
+    }
+
     public function findAll(): array
     {
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge";
-        $response = $client->CallAPI('GET', $url, []);
+        try {
+            Session::forget('message');
+            $url = $this->host . "/api/v1/campaign-challenge";
+            $response = $this->apiService->CallAPI('GET', $url, []);
 
-        return $response['data'];
+            return $response['data'];
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus-v2')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
+        }
     }
 
     public function findOne($id): array
     {
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge/" . $id;
-        $response  = $client->CallAPI('GET', $url, []);
+        try {
+            $url = $this->host . "/api/v1/campaign-challenge/" . $id;
+            $response = $this->apiService->CallAPI('GET', $url, []);
 
-        $challenge = $response['data'];
+            $challenge = $response['data'];
 
-        $taskIds = [];
+            $taskIds = [];
 
-        if ($challenge['task_pick_type']) {
-            foreach ($challenge['event_based_challenge_tasks'] as $task) {
-                $taskIds[$task['day_no']][] = $task['campaign_task_id'];
+            if ($challenge['task_pick_type']) {
+                foreach ($challenge['event_based_challenge_tasks'] as $task) {
+                    $taskIds[$task['day_no']][] = $task['campaign_task_id'];
+                }
+            } else {
+                foreach ($challenge['event_based_challenge_tasks'] as $task) {
+                    $taskIds[0][] = $task['campaign_task_id'];
+                }
             }
-        } else {
-            foreach ($challenge['event_based_challenge_tasks'] as $task) {
-                $taskIds[0][] = $task['campaign_task_id'];
-            }
+
+            $challenge['taskIds'] = json_encode($taskIds);
+            $response['data'] = $challenge;
+
+            return $response['data'];
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus-v2')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
         }
-
-        $challenge['taskIds'] = json_encode($taskIds);
-        $response['data'] = $challenge;
-
-        return $response['data'];
     }
 
     public function store($data): array
     {
-        $challenge_data = $data;
+        try {
+            $challenge_data = $data;
 
-        $challenge_data['tasks'] = new \stdClass;
+            $challenge_data['tasks'] = new \stdClass;
 
-        if ($data['task_pick_type']) {
-            foreach ($data['day_tasks'] as $key => $task) {
-                $challenge_data['tasks']->{$key + 1} = $task;
+            if ($data['task_pick_type']) {
+                foreach ($data['day_tasks'] as $key => $task) {
+                    $challenge_data['tasks']->{$key + 1} = $task;
+                }
+            } else {
+                $challenge_data['tasks']->{0} = [];
+                foreach ($data['random_tasks'] as $key => $task) {
+                    array_push($challenge_data['tasks']->{0}, $task[0]);
+                }
             }
-        } else {
-            $challenge_data['tasks']->{0} = [];
-            foreach ($data['random_tasks'] as $key => $task) {
-                array_push($challenge_data['tasks']->{0}, $task[0]);
+
+            $data = $challenge_data;
+
+            unset($data['random_tasks']);
+            unset($data['day_tasks']);
+
+            if (!empty($data['icon_image'])) {
+                $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             }
+            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
+            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
+            $data['created_by']                   = auth()->user()->email;
+
+            $url = $this->host . "/api/v1/campaign-challenge";
+
+            return $this->apiService->CallAPI("POST", $url, $data);
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus-v2')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
         }
-
-        $data = $challenge_data;
-
-        unset($data['random_tasks']);
-        unset($data['day_tasks']);
-
-        if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
-        }
-        $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-        $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
-        $data['created_by']                   = auth()->user()->email;
-
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge";
-
-        return $client->CallAPI("POST", $url, $data);
     }
 
     public function update($data, $id): array
     {
-        $challenge_data = $data;
+        try {
+            $challenge_data = $data;
 
-        $challenge_data['tasks'] = new \stdClass;
+            $challenge_data['tasks'] = new \stdClass;
 
-        if ($data['task_pick_type']) {
-            foreach ($data['day_tasks'] as $key => $task) {
-                $challenge_data['tasks']->{$key + 1} = $task;
+            if ($data['task_pick_type']) {
+                foreach ($data['day_tasks'] as $key => $task) {
+                    $challenge_data['tasks']->{$key + 1} = $task;
+                }
+            } else {
+                $challenge_data['tasks']->{0} = [];
+                foreach ($data['random_tasks'] as $key => $task) {
+                    array_push($challenge_data['tasks']->{0}, $task[0]);
+                }
             }
-        } else {
-            $challenge_data['tasks']->{0} = [];
-            foreach ($data['random_tasks'] as $key => $task) {
-                array_push($challenge_data['tasks']->{0}, $task[0]);
+
+            $data = $challenge_data;
+
+            unset($data['random_tasks']);
+            unset($data['day_tasks']);
+
+            if (!empty($data['icon_image'])) {
+                $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
+            } else {
+                $data['icon_image'] = $data['icon_image_old'];
             }
+            unset($data['icon_image_old']);
+            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
+            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
+            $data['created_by']                   = auth()->user()->email;
+
+            $url = $this->host . "/api/v1/campaign-challenge/" . $id;
+
+            return $this->apiService->CallAPI("PUT", $url, $data);
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus-v2')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
         }
-
-        $data = $challenge_data;
-
-        unset($data['random_tasks']);
-        unset($data['day_tasks']);
-
-        if (!empty($data['icon_image'])) {
-            $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
-        } else {
-            $data['icon_image'] = $data['icon_image_old'];
-        }
-        unset($data['icon_image_old']);
-        $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-        $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
-        $data['created_by']                   = auth()->user()->email;
-        $data['base_msisdn_id']               = 1;
-
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge/" . $id;
-
-        return $client->CallAPI("PUT", $url, $data);
     }
 
     public function delete($id): array
     {
-        $client   = new ApiService();
-        $url      = env('EVENT_BASE_API_HOST_V2') . "/api/v1/campaign-challenge/" . $id;
-        return $client->CallAPI("DELETE", $url, []);
+        try {
+            $url = $this->host . "/api/v1/campaign-challenge/" . $id;
+
+            return $this->apiService->CallAPI("DELETE", $url, []);
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus-v2')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
+        }
     }
 }

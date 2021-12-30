@@ -195,6 +195,9 @@
                 <li class="{{ is_active_match('event-base-bonus/campaigns')}}">
                     <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Campaign</a>
                 </li>
+                <li class="{{ is_active_match('event-base-bonus/analytics')}}">
+                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Analytics</a>
+                </li>
             </ul>
         </li>
         <li class="{{is_active_url('flash-hour-campaign')}}">

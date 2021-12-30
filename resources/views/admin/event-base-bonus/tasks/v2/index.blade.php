@@ -18,7 +18,7 @@
                 <div class="card-header"></div>
                 <div class="card-content">
                     <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered task-tabel">
+                        <table class="table table-striped table-bordered task-tabel w-100 h-100">
                             <thead>
                                 <tr>
                                     <th>Title EN</th>

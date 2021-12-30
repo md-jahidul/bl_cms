@@ -132,10 +132,10 @@
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Tracking Type: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <input type="radio" name="tracking_type" value="1" id="input-radio-15" {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
-                                        <label for="input-radio-15" class="mr-3">Automatic</label>
-                                        <input type="radio" name="tracking_type" value="0" id="input-radio-16" {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
-                                        <label for="input-radio-16" class="mr-3">Manual</label>
+                                        <input type="radio" name="tracking_type" value="1" id="input-radio-155" {{ (isset($campaign->tracking_type) && $campaign->tracking_type == 1) ? 'checked' : '' }}>
+                                        <label for="input-radio-155" class="mr-3">Automatic</label>
+                                        <input type="radio" name="tracking_type" value="0" id="input-radio-166" {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}>
+                                        <label for="input-radio-166" class="mr-3">Manual</label>
                                         @if ($errors->has('tracking_type'))
                                         <div class="help-block"> {{ $errors->first('tracking_type') }}</div>
                                         @endif

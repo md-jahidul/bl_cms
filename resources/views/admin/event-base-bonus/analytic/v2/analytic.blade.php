@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Analytics')
-@section('card_name', 'Analytics')
+@section('title', 'Event Based Bonus Analytics')
+@section('card_name', 'Event Based Bonus Analytics')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Event Based Campaign Analytics</li>
 @endsection
@@ -68,13 +68,14 @@
                 destroy: true,
                 deferLoading: 0,
                 ajax: {
-                    url: "{{ url('event-base-bonus/analytics/find') }}",
+                    url: "{{ url('event-base-bonus/v2/analytics/find') }}",
                     method: "post",
                     dataSrc: '',
                     data: function(data) {
                         data._token = "{{ csrf_token() }}";
-                        data.from_date = $('#from_date').val();
-                        data.to_date = $('#to_date').val();
+                        data.analytics_type = "campaign";
+                        data.from_date = $("#from_date").val();
+                        data.to_date = $("#to_date").val();
                     }
                 },
                 columns: [{
@@ -82,27 +83,19 @@
                 },
                     {
                         title: 'Campaign Title',
-                        data: 'campaign_title'
+                        data: 'title'
                     },
                     {
-                        title: 'Task Title',
-                        data: 'task_title'
+                        title: 'Start Date',
+                        data: 'start_date'
                     },
                     {
-                        title: 'Event',
-                        data: 'event'
+                        title: 'End Date',
+                        data: 'end_date'
                     },
                     {
-                        title: 'Total In Progress',
-                        data: 'total_in_progress'
-                    },
-                    {
-                        title: 'Total Completed',
-                        data: 'total_completed'
-                    },
-                    {
-                        title: 'Total Claimed',
-                        data: 'total_claimed'
+                        title: 'Total Users',
+                        data: 'total_users'
                     },
                     {
                         title: 'Action'
@@ -114,10 +107,19 @@
                     "data": null,
                 },
                     {
-                        "targets": 7,
+                        "targets": 4,
                         "data": null,
                         render: function(data, type, row) {
-                            var url = "event-base-bonus/analytics/" + row.campaign_id + "/" + row.task_id;
+                            var url = "event-base-bonus/v2/analytics/" + row.id;
+                            var domElement = row.total_users ? `<a href="{{ url("") }}/${url}" target="_blank">` + row.total_users + `</a>` : row.total_users;
+                            return domElement;
+                        }
+                    },
+                    {
+                        "targets": 5,
+                        "data": null,
+                        render: function(data, type, row) {
+                            var url = "event-base-bonus/v2/analytics/" + row.id;
                             var domElement = `<a href="{{ url("") }}/${url}" target="_blank"><button class="btn btn-success btn-sm">View Details</span></button></a>`;
                             return domElement;
                         },
@@ -126,13 +128,13 @@
                 buttons: [{
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5]
+                        columns: [1, 2, 3, 4]
                     }
                 },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4]
                         }
                     }
                 ],

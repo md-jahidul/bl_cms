@@ -83,8 +83,12 @@
                                     <select class="product_code" name="reward_product_code_prepaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward prepaid">
                                         <option value="">Select product code </option>
                                         @foreach($products as $productCodes)
-                                        <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $task['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                            <option value="{{ $productCodes }}" {{$productCodes == $task['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                         @endforeach
+                                        @if(!in_array($task['reward_product_code_prepaid'], $products))
+                                            <option value="{{ $task['reward_product_code_prepaid'] }}"
+                                                    selected>{{ $task['reward_product_code_prepaid'] }}</option>
+                                        @endif
 
                                     </select>
                                     <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter </span>
@@ -101,8 +105,12 @@
                                     <select class="product_code" name="reward_product_code_postpaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward Postpaid">
                                         <option value="">Select product code </option>
                                         @foreach($products as $productCodes)
-                                        <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $task['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                            <option value="{{ $productCodes }}" {{$productCodes == $task['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                         @endforeach
+                                        @if(!in_array($task['reward_product_code_postpaid'], $products))
+                                            <option value="{{ $task['reward_product_code_postpaid'] }}"
+                                                    selected>{{ $task['reward_product_code_postpaid'] }}</option>
+                                        @endif
 
                                     </select>
                                     <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter </span>
@@ -148,10 +156,10 @@
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Status: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <input type="radio" name="status" value="1" id="input-radio-15" {{ $task['status'] == 1 ? 'checked' : '' }}>
-                                        <label for="input-radio-15" class="mr-3">Active</label>
-                                        <input type="radio" name="status" value="0" id="input-radio-16" {{ $task['status'] == 0 ? 'checked' : '' }}>
-                                        <label for="input-radio-16" class="mr-3">Inactive</label>
+                                        <input type="radio" name="status" value="1" id="input-radio-155" {{ $task['status'] == 1 ? 'checked' : '' }}>
+                                        <label for="input-radio-155" class="mr-3">Active</label>
+                                        <input type="radio" name="status" value="0" id="input-radio-166" {{ $task['status'] == 0 ? 'checked' : '' }}>
+                                        <label for="input-radio-166" class="mr-3">Inactive</label>
                                         @if ($errors->has('status'))
                                         <div class="help-block"> {{ $errors->first('status') }}</div>
                                         @endif

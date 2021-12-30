@@ -76,8 +76,12 @@
                                     <select class="product_code" name="reward_product_code_prepaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward prepaid">
                                         <option value="">Select product code</option>
                                         @foreach($products as $productCodes)
-                                        <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $campaign['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                            <option value="{{ $productCodes }}" {{$productCodes == $campaign['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                         @endforeach
+                                        @if(!in_array($campaign['reward_product_code_prepaid'], $products))
+                                            <option value="{{ $campaign['reward_product_code_prepaid'] }}"
+                                                    selected>{{ $campaign['reward_product_code_prepaid'] }}</option>
+                                        @endif
 
                                     </select>
                                     <span class="text-warning">If item exists in the list, select dropdown otherwise, type then enter</span>
@@ -94,8 +98,12 @@
                                     <select class="product_code" name="reward_product_code_postpaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward Postpaid">
                                         <option value="">Select product code</option>
                                         @foreach($products as $productCodes)
-                                        <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $campaign['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                            <option value="{{ $productCodes }}" {{$productCodes == $campaign['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                         @endforeach
+                                        @if(!in_array($campaign['reward_product_code_postpaid'], $products))
+                                            <option value="{{ $campaign['reward_product_code_postpaid'] }}"
+                                                    selected>{{ $campaign['reward_product_code_postpaid'] }}</option>
+                                        @endif
 
                                     </select>
                                     <span class="text-warning">If item exists in the list, select dropdown otherwise, type then enter</span>
