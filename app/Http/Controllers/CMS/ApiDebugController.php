@@ -17,6 +17,7 @@ use App\Services\BlApiHub\History\CustomerSummaryUsageService;
 use App\Services\BlApiHub\OtpRequestLogsService;
 use App\Services\ContactRestoreLogService;
 use App\Services\HeaderEnrichmentLogsService;
+use App\Services\NonBlNumberLogService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -35,6 +36,10 @@ class ApiDebugController extends Controller
      * @var ContactRestoreLogService
      */
     protected $contactRestoreLogService;
+    /**
+     * @var NonBlNumberLogService
+     */
+    private $nonBlNumberLogService;
 
     /**
      * ApiDebugController constructor.
@@ -64,7 +69,8 @@ class ApiDebugController extends Controller
         CustomerSubscriptionUsageService $subscriptionUsageService,
         OtpRequestLogsService $otpRequestLogsService,
         ContactRestoreLogService $contactRestoreLogService,
-        HeaderEnrichmentLogsService $headerEnrichmentLogsService
+        HeaderEnrichmentLogsService $headerEnrichmentLogsService,
+        NonBlNumberLogService $nonBlNumberLogService
     ) {
 
         $this->balanceService = $balanceService;
@@ -81,6 +87,7 @@ class ApiDebugController extends Controller
         $this->middleware(['auth', 'debugEntryCheck']);
         $this->contactRestoreLogService = $contactRestoreLogService;
         $this->headerEnrichmentLogsService = $headerEnrichmentLogsService;
+        $this->nonBlNumberLogService = $nonBlNumberLogService;
     }
 
     /**
@@ -256,7 +263,6 @@ class ApiDebugController extends Controller
 
     public function getProductLogs(Request $request, $number)
     {
-
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
@@ -320,5 +326,13 @@ class ApiDebugController extends Controller
             return $this->headerEnrichmentLogsService->getLogs($request);
         }
         return view('admin.header-enrichment.index');
+    }
+
+    public function getNonBlNumberLogs(Request $request)
+    {
+        if ($request->ajax()) {
+            return $this->nonBlNumberLogService->getLogs($request);
+        }
+        return view('admin.debug.guest-user-log.index');
     }
 }

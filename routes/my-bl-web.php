@@ -566,17 +566,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::post('special-pack/filter/delete', 'CMS\SpecialCallRateFilterController@deleteFilter')
         ->name('special-pack.filter.delete');
-    //
+//
     Route::post('special-pack/filter/minute/save', 'CMS\SpecialCallRateFilterController@saveMinuteFilter')
         ->name('special-pack.filter.minute.save');
     Route::get('special-pack/filter/minute', 'CMS\SpecialCallRateFilterController@getMinuteFilter')
         ->name('special-pack.filter.minute.list');
-    //
+//
     Route::post('special-pack/filter/validity/save', 'CMS\SpecialCallRateFilterController@saveValidityFilter')
         ->name('special-pack.filter.validity.save');
     Route::get('special-pack/filter/validity', 'CMS\SpecialCallRateFilterController@getValidityFilter')
         ->name('special-pack.filter.validity.list');
-    //
+//
     Route::post('special-pack/filter/sort/save', 'CMS\SpecialCallRateFilterController@saveSortFilter')
         ->name('special.filter.sort.save');
 
@@ -663,6 +663,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('developer/api/debug/header-enrichment-logs', 'CMS\ApiDebugController@getHeaderEnrichmentLogs')
             ->name('header-enrichment-logs');
+
+
+    Route::get('developer/api/debug/non-bl-request-logs', 'CMS\ApiDebugController@getNonBlNumberLogs')
+        ->name('non-bl-request-logs');
 
     // Agent Deeplink
     //    Route::resource('deeplink/agent', 'CMS\AgentListController');
