@@ -62,7 +62,7 @@ class SendRafmReportCsSelfcare extends Command
             'Volume Disbursement (MB)',
             'IDENTIFIER',
             'Referral code',
-            'Code Type',
+            'Campaign Type',
         ]);
         $writer->openToFile(storage_path('app/public/cs/') . $fileName . '.csv');
         $writer->addRow($row);
