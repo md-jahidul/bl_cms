@@ -63,10 +63,10 @@
             });
             $('#task_analytic_table').DataTable({
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 pageLength: 10,
                 destroy: true,
-                deferLoading: 0,
+                deferLoading: false,
                 sPagingType: 'simple',
                 ajax: {
                     url: "{{ url('event-base-bonus/v2/analytics/find') }}",
