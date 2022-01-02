@@ -67,6 +67,7 @@
                 pageLength: 10,
                 destroy: true,
                 deferLoading: 0,
+                sPagingType: 'simple',
                 ajax: {
                     url: "{{ url('event-base-bonus/v2/analytics/find') }}",
                     method: "post",
