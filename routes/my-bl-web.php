@@ -741,6 +741,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
     Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
+    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');
     /*
      *  Feed Routes
      */

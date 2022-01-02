@@ -30,8 +30,6 @@ class StoreEventChallengeRequest extends FormRequest
             'description_bn'               => 'required|max:255',
             'btn_text'                     => 'required|max:255',
             'btn_text_bn'                  => 'required|max:255',
-            'start_date'                   => 'required|max:50',
-            'end_date'                     => 'required|max:50',
             'reward_product_code_prepaid'  => 'required|max:50',
             'reward_product_code_postpaid' => 'required|max:50',
             'reward_text'                  => 'required|max:50',

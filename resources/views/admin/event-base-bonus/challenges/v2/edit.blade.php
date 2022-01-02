@@ -77,8 +77,12 @@
                                         <select class="product_code" name="reward_product_code_prepaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward prepaid">
                                             <option value="">Select product code </option>
                                             @foreach($products as $productCodes)
-                                                <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $challenge['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                <option value="{{ $productCodes }}" {{$productCodes == $challenge['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                             @endforeach
+                                            @if(!in_array($challenge['reward_product_code_prepaid'], $products))
+                                                <option value="{{ $challenge['reward_product_code_prepaid'] }}"
+                                                        selected>{{ $challenge['reward_product_code_prepaid'] }}</option>
+                                            @endif
 
                                         </select>
                                         <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter </span>
@@ -95,8 +99,12 @@
                                         <select class="product_code" name="reward_product_code_postpaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward Postpaid">
                                             <option value="">Select product code </option>
                                             @foreach($products as $productCodes)
-                                                <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $challenge['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                                <option value="{{ $productCodes }}" {{$productCodes == $challenge['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                             @endforeach
+                                            @if(!in_array($challenge['reward_product_code_postpaid'], $products))
+                                                <option value="{{ $challenge['reward_product_code_postpaid'] }}"
+                                                        selected>{{ $challenge['reward_product_code_postpaid'] }}</option>
+                                            @endif
 
                                         </select>
                                         <span class="text-warning">If item exists in the list, select dropdown. otherwise, type then enter </span>
@@ -107,27 +115,27 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">Start Date</label>
-                                        <input type='text' class="form-control" name="start_date" id="start_date" placeholder="Please select start date" value="{{ $challenge['start_date'] }}" />
-                                        <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
+{{--                                    <div class="form-group col-md-6 mb-2">--}}
+{{--                                        <label for="dashboard_card_title" class="required">Start Date</label>--}}
+{{--                                        <input type='text' class="form-control" name="start_date" id="start_date" placeholder="Please select start date" value="{{ $challenge['start_date'] }}" />--}}
+{{--                                        <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="dashboard_card_title" class="required">End Date</label>
-                                        <input type='text' class="form-control" name="end_date" id="end_date" placeholder="Please select end date" value="{{ $challenge['end_date'] }}" />
-                                        <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
+{{--                                    <div class="form-group col-md-6 mb-2">--}}
+{{--                                        <label for="dashboard_card_title" class="required">End Date</label>--}}
+{{--                                        <input type='text' class="form-control" name="end_date" id="end_date" placeholder="Please select end date" value="{{ $challenge['end_date'] }}" />--}}
+{{--                                        <small class="text-danger"> @error('end_date') {{ $message }} @enderror </small>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                    </div>--}}
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input" class="required">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                            <input required type="radio" name="status" value="1" id="input-radio-15" {{ (isset($challenge['status']) && $challenge['status'] == 1) ? 'checked' : '' }}>
-                                            <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16" {{ (isset($challenge['status']) && $challenge['status'] == 0) ? 'checked' : '' }}>
-                                            <label for="input-radio-16" class="mr-3">Inactive</label>
+                                            <input required type="radio" name="status" value="1" id="input-radio-155" {{ (isset($challenge['status']) && $challenge['status'] == 1) ? 'checked' : '' }}>
+                                            <label for="input-radio-155" class="mr-3">Active</label>
+                                            <input type="radio" name="status" value="0" id="input-radio-166" {{ (isset($challenge['status']) && $challenge['status'] == 0) ? 'checked' : '' }}>
+                                            <label for="input-radio-166" class="mr-3">Inactive</label>
                                             @if ($errors->has('status'))
                                                 <div class="help-block"> {{ $errors->first('status') }}</div>
                                             @endif
@@ -136,7 +144,7 @@
 
                                     <div class="form-group col-md-6 mb-2" id="cta_action">
                                         <label for="redirect_url">Select Base Msisdn Group (If Any)</label>
-                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id" class="browser-default custom-select">
+                                        <select id="msisdn_base_group_id" name="msisdn_base_group_id" class="browser-default custom-select">
                                             <option value="">Select Base Msisdn Group</option>
                                             @foreach ($baseMsisdnGroups as $key => $value)
                                                 <option value="{{ $value->id }}" {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>

@@ -2,28 +2,52 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+
 class TaskAnalyticService
 {
-    private $client;
+    /**
+     * @var $apiService
+     */
+    private $apiService;
+    /**
+     * @var $host
+     */
+    private $host;
 
-    public function __construct()
+    public function __construct(ApiService $apiService)
     {
-        $this->client = new ApiService();
+        $this->apiService = new ApiService();
+        $this->host = env('EVENT_BASE_API_HOST');
     }
 
     public function getAnalytics($data): array
     {
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task-user/analytics";
-        $response  = $this->client->CallAPI('POST', $url, $data);
+        try {
+            Session::forget('message');
+            $url = $this->host . "/api/v1/campaign-task-user/analytics";
+            $response = $this->apiService->CallAPI('POST', $url, $data);
 
-        return $response['data'];
+            return $response['data'];
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
+        }
     }
 
     public function filterAnalytic($data): array
     {
-        $url      = env('EVENT_BASE_API_HOST') . "/api/v1/campaign-task-user/all";
-        $response  = $this->client->CallAPI('POST', $url, $data);
+        try {
+            $url = $this->host . "/api/v1/campaign-task-user/all";
+            $response = $this->apiService->CallAPI('POST', $url, $data);
 
-        return $response['data'];
+            return $response['data'];
+        } catch (\Exception $exception) {
+            Log::channel('event-based-bonus')->error($exception->getMessage());
+            Session::flash("message", $exception->getMessage());
+            return [];
+        }
     }
 }
