@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: BS23
+ * Date: 27-Aug-19
+ * Time: 3:56 PM
+ */
+
+namespace App\Services;
+
+use App\Models\GuestUserAccessTracks;
+use App\Repositories\GuestUserTrackRepository;
+use App\Traits\CrudTrait;
+
+class GuestUserTrackService
+{
+    use CrudTrait;
+
+    /**
+     * @var $prizeService
+     */
+    protected $aboutPageRepository;
+
+    /**
+     * GuestUserTrackService constructor.
+     * @param GuestUserTrackRepository $guestUserTrackRepository
+     */
+    public function __construct(GuestUserTrackRepository $guestUserTrackRepository)
+    {
+        $this->aboutPageRepository = $guestUserTrackRepository;
+        $this->setActionRepository($guestUserTrackRepository);
+    }
+
+    public function getGuestUserData($request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $builder = new GuestUserAccessTracks();
+
+        if (isset($request->device_id)) {
+            $builder = $builder->where('device_id', 'LIKE', "%$request->device_id%");
+        }
+
+        if (isset($request->platform)) {
+            $builder = $builder->where('platform', 'LIKE', "%$request->platform%");
+        }
+
+        if (isset($request->page_name)) {
+            $builder = $builder->where('page_name', 'LIKE', "%$request->page_name%");
+        }
+
+        if (isset($request->date_range)) {
+            $date = explode('-', $request->date_range);
+            $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
+            $to = str_replace('/', '-', $date[1]) . " " . "23:59:00";
+            $builder = $builder->whereBetween('created_at', [$from, $to]);
+        }
+
+        $all_items_count = $builder->count();
+        $items = $builder->skip($start)->take($length)->get();
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => $items
+        ];
+
+        return $response;
+    }
+}

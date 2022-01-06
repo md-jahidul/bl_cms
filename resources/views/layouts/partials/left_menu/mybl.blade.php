@@ -578,6 +578,11 @@
             <i class="la la-code-fork"></i>Support Messages</a>
     </li>
 
+    <li class="{{ is_active_url(route('guest-user-track-list')) }}">
+        <a class="menu-item" href="{{ route('guest-user-track-list') }}">
+            <i class="la la-code-fork"></i>Guest User Tracking</a>
+    </li>
+
     <!-- Agent Deep link Menu -->
     <li class=" nav-item"><a href="#"><i class="la la-users"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Agent List</span></a>
