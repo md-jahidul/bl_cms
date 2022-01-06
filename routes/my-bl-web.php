@@ -902,6 +902,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
 
+    // Guest User Tracking Page Wise
+    Route::get('guest-user-track-list', 'CMS\GuestUserTrackController@index')
+        ->name('guest-user-track-list');
+
 });
 
 // 4G Map View Route
