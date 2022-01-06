@@ -53,11 +53,18 @@ class EventBaseCampaignV2Controller extends Controller
     public function edit($id)
     {
         $campaign = $this->campaignService->findOne($id);
-        $products = $this->productCoreService->findAll();
+        $product_list = $this->productCoreService->findAll();
         $challenges = $this->challengeService->findAll();
         $challengeIds = array_column($campaign['challenges'], 'id');
+        $challengesLeft = array_diff(collect($challenges)->pluck('id')->toArray(), $challengeIds);
 
-        return view('admin.event-base-bonus.campaigns.v2.edit', compact('campaign', 'products', 'challenges', 'challengeIds'));
+        $products = [];
+
+        foreach ($product_list as $key => $value) {
+            $products[] = $value['product_code'];
+        }
+
+        return view('admin.event-base-bonus.campaigns.v2.edit', compact('campaign', 'products', 'challenges', 'challengeIds', 'challengesLeft'));
     }
 
     public function update(StoreEventBasedCampaignRequest $request, $id)
@@ -68,11 +75,8 @@ class EventBaseCampaignV2Controller extends Controller
         return redirect('/event-base-bonus/v2/campaigns');
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        $response = $this->campaignService->delete($id);
-        //Session::flash('message', $response->getContent());
-
-        return redirect('/event-base-bonus/v2/campaigns');
+        return $this->campaignService->delete($id);
     }
 }

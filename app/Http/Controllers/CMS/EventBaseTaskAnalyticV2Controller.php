@@ -18,7 +18,7 @@ class EventBaseTaskAnalyticV2Controller extends Controller
 
     public function index()
     {
-        return view('admin.event-base-bonus.analytic.analytic');
+        return view('admin.event-base-bonus.analytic.v2.analytic');
     }
 
     public function analytics(TaskAnalyticRequest $request)
@@ -30,7 +30,7 @@ class EventBaseTaskAnalyticV2Controller extends Controller
     {
         $taskAnalyticUserDetails = $this->analyticsUserDetails($campaign, $task);
 
-        return view('admin.event-base-bonus.analytic.view-detail', compact('taskAnalyticUserDetails'));
+        return view('admin.event-base-bonus.analytic.v2.view-detail', compact('taskAnalyticUserDetails'));
     }
 
     private function analyticsUserDetails($campaign, $task)
@@ -52,7 +52,7 @@ class EventBaseTaskAnalyticV2Controller extends Controller
 
         $challengeAnalytics = $this->taskAnalyticService->getAnalytics($params);
 
-        return view('admin.event-base-bonus.analytic.view-campaign-challenges', compact('challengeAnalytics'));
+        return view('admin.event-base-bonus.analytic.v2.view-campaign-challenges', compact('challengeAnalytics'));
     }
 
     public function viewCampaignChallengeTasks($campaign, $challenge)
@@ -65,7 +65,7 @@ class EventBaseTaskAnalyticV2Controller extends Controller
 
         $challengeTasksAnalytics = $this->taskAnalyticService->getAnalytics($params);
 
-        return view('admin.event-base-bonus.analytic.view-campaign-challenge-tasks', compact('challengeTasksAnalytics'));
+        return view('admin.event-base-bonus.analytic.v2.view-campaign-challenge-tasks', compact('challengeTasksAnalytics'));
     }
 
     public function viewCampaignChallengeTaskMsisdnList($campaign, $challenge, $task, $msisdn = null)
@@ -85,9 +85,9 @@ class EventBaseTaskAnalyticV2Controller extends Controller
         $challengeTaskMsisdnList = $this->taskAnalyticService->getAnalytics($params);
 
         if (isset($msisdn) && $params['status']) {
-            return view('admin.event-base-bonus.analytic.view-campaign-msidn-list', compact('challengeTaskMsisdnList'));
+            return view('admin.event-base-bonus.analytic.v2.view-campaign-msidn-list', compact('challengeTaskMsisdnList'));
         }
 
-        return view('admin.event-base-bonus.analytic.view-campaign-challenge-tasks-msisdn', compact('challengeTaskMsisdnList'));
+        return view('admin.event-base-bonus.analytic.v2.view-campaign-challenge-tasks-msisdn', compact('challengeTaskMsisdnList'));
     }
 }

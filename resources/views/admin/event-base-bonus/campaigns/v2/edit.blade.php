@@ -30,10 +30,12 @@
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Challenges</label>
                                     <select class="select22 form-control" name="challenge_ids[]" multiple="multiple" required data-validation-required-message="Please select challenge">
-                                        @foreach($challenges as $challenge)
-                                        <option value="{{ $challenge['id'] }}" {{in_array($challenge['id'], $challengeIds) ? 'selected':''}}>{{ $challenge['title'] }}</option>
+                                        @foreach($challengeIds as $challengeId)
+                                            <option value="{{ $challengeId }}" selected>{{ $challenges[array_search($challengeId,array_column($challenges, 'id'))]['title'] }}</option>
                                         @endforeach
-
+                                            @foreach($challengesLeft as $index=>$challenge)
+                                                <option value="{{ $challenge }}">{{ $challenges[$index]['title'] }}</option>
+                                            @endforeach
                                     </select>
                                     <small class="text-danger"> @error('task_ids') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
@@ -55,7 +57,7 @@
 
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="dashboard_card_title" class="required">Start Date</label>
-                                    <input type='text' class="form-control" name="start_date" id="start_date" value="{{$campaign['start_date']}}" />
+                                    <input type='text' class="form-control" name="start_date" id="start_date" value="{{$campaign['start_date']}}"/>
                                     <small class="text-danger"> @error('start_date') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
@@ -74,8 +76,12 @@
                                     <select class="product_code" name="reward_product_code_prepaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward prepaid">
                                         <option value="">Select product code</option>
                                         @foreach($products as $productCodes)
-                                        <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $campaign['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                            <option value="{{ $productCodes }}" {{$productCodes == $campaign['reward_product_code_prepaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                         @endforeach
+                                        @if(!in_array($campaign['reward_product_code_prepaid'], $products))
+                                            <option value="{{ $campaign['reward_product_code_prepaid'] }}"
+                                                    selected>{{ $campaign['reward_product_code_prepaid'] }}</option>
+                                        @endif
 
                                     </select>
                                     <span class="text-warning">If item exists in the list, select dropdown otherwise, type then enter</span>
@@ -92,8 +98,12 @@
                                     <select class="product_code" name="reward_product_code_postpaid" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select Reward Postpaid">
                                         <option value="">Select product code</option>
                                         @foreach($products as $productCodes)
-                                        <option value="{{ $productCodes['product_code'] }}" {{$productCodes['product_code'] == $campaign['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes['commercial_name_en'] . " / " . $productCodes['product_code'] }}</option>
+                                            <option value="{{ $productCodes }}" {{$productCodes == $campaign['reward_product_code_postpaid'] ? 'selected':''}}>{{ $productCodes }}</option>
                                         @endforeach
+                                        @if(!in_array($campaign['reward_product_code_postpaid'], $products))
+                                            <option value="{{ $campaign['reward_product_code_postpaid'] }}"
+                                                    selected>{{ $campaign['reward_product_code_postpaid'] }}</option>
+                                        @endif
 
                                     </select>
                                     <span class="text-warning">If item exists in the list, select dropdown otherwise, type then enter</span>
@@ -107,10 +117,10 @@
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Status: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <input type="radio" name="status" value="1" id="input-radio-15" {{ $campaign['status'] == 1 ? 'checked' : '' }}>
-                                        <label for="input-radio-15" class="mr-3">Active</label>
-                                        <input type="radio" name="status" value="0" id="input-radio-16" {{ $campaign['status'] == 0 ? 'checked' : '' }}>
-                                        <label for="input-radio-16" class="mr-3">Inactive</label>
+                                        <input type="radio" name="status" value="1" id="input-radio-155" {{ $campaign['status'] == 1 ? 'checked' : '' }}>
+                                        <label for="input-radio-155" class="mr-3">Active</label>
+                                        <input type="radio" name="status" value="0" id="input-radio-166" {{ $campaign['status'] == 0 ? 'checked' : '' }}>
+                                        <label for="input-radio-166" class="mr-3">Inactive</label>
                                         @if ($errors->has('status'))
                                         <div class="help-block"> {{ $errors->first('status') }}</div>
                                         @endif
@@ -198,6 +208,9 @@
                 'imageFormat': 'File must be valid format'
             }
         });
+
+        // set previous start date value for existing campaign
+        $('#start_date').val("{{$campaign['start_date']}}");
     });
 </script>
 

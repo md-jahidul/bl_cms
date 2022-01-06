@@ -46,8 +46,13 @@ class EventBaseTaskV2Controller extends Controller
     public function edit($id)
     {
         $task     = $this->taskService->findOne($id);
-        $products = $this->productCoreService->findAll();
+        $product_list = $this->productCoreService->findAll();
         $events   = $this->taskService->eventAll();
+        $products = [];
+
+        foreach ($product_list as $key => $value) {
+            $products[] = $value['product_code'];
+        }
 
         return view('admin.event-base-bonus.tasks.v2.edit', compact('task', 'products', 'events'));
     }

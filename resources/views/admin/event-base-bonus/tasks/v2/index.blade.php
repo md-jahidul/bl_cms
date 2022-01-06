@@ -18,7 +18,7 @@
                 <div class="card-header"></div>
                 <div class="card-content">
                     <div class="card-body card-dashboard">
-                        <table class="table table-striped table-bordered task-tabel">
+                        <table class="table table-striped table-bordered task-tabel w-100 h-100">
                             <thead>
                                 <tr>
                                     <th>Title EN</th>
@@ -67,7 +67,8 @@
 @push('page-js')
 <script>
     $('.task-tabel').DataTable({
-        "scrollX": true
+        "scrollX": true,
+        "ordering":false
     });
 
     $('.delete').click(function() {
@@ -86,7 +87,7 @@
             if (result.value) {
                 $.ajax({
                     url: "{{ url('event-base-bonus/v2/tasks-del') }}/" + id,
-                    methods: "get",
+                    type: "get",
                     success: function(res) {
                         Swal.fire(
                             'Deleted!',
@@ -96,7 +97,7 @@
                         setTimeout(redirect, 2000)
 
                         function redirect() {
-                            window.location.href = "{{ url('event-base-bonus/tasks') }}"
+                            window.location.href = "{{ url('event-base-bonus/v2/tasks') }}"
                         }
                     }
                 })

@@ -52,9 +52,15 @@ class EventBaseCampaignController extends Controller
     public function edit($id)
     {
         $campaign = $this->campaignService->findOne($id);
-        $products = $this->productCoreService->findAll();
+        $product_list = $this->productCoreService->findAll();
         $tasks = $this->taskService->findAll();
         $taskIds = array_column($campaign['tasks'], 'id');
+
+        $products = [];
+
+        foreach ($product_list as $key => $value) {
+            $products[] = $value['product_code'];
+        }
 
         return view('admin.event-base-bonus.campaigns.edit', compact('campaign', 'products', 'tasks', 'taskIds'));
     }

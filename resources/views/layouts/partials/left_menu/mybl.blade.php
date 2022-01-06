@@ -137,6 +137,9 @@
                     <a class="menu-item" href="{{ route('app-launch.report') }}">
                         <i class="ft-list"></i>Purchase Report</a>
                 </li>
+                <li class="{{ is_active_match('event-base-bonus/analytics')}}">
+                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Analytics</a>
+                </li>
             </ul>
         </li>
     @endif
