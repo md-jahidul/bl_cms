@@ -773,6 +773,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('guest-user-track-list', 'CMS\GuestUserTrackController@index')
         ->name('guest-user-track-list');
 
+//    Route::get('non-bl-request-logs', 'CMS\GuestUserTrackController@getNonBlNumberLogs')
+//        ->name('non-bl-request-logs');
+
 });
 
 // 4G Map View Route

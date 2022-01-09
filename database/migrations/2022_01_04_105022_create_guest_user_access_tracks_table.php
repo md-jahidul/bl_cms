@@ -15,9 +15,11 @@ class CreateGuestUserAccessTracksTable extends Migration
     {
         Schema::create('guest_user_access_tracks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('device_id')->nullable();
+            $table->string('device_id')->nullable()->index();
             $table->string('fcm_token')->nullable();
             $table->string('platform')->nullable();
+            $table->string('msisdn')->nullable()->index();
+            $table->string('msisdn_entry_type')->nullable();
             $table->string('page_name')->nullable();
             $table->timestamps();
         });

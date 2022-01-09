@@ -20,8 +20,9 @@ class GuestUserTrackController extends Controller
      * GuestUserTrackController constructor.
      * @param GuestUserTrackService $guestUserTrackService
      */
-    public function __construct(GuestUserTrackService $guestUserTrackService)
-    {
+    public function __construct(
+        GuestUserTrackService $guestUserTrackService
+    ) {
         $this->guestUserTrackService = $guestUserTrackService;
     }
 

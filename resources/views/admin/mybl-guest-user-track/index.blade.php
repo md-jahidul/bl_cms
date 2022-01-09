@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Guest User Data')
-@section('card_name', 'Guest User Tracking List')
+@section('title', 'Guest User Analytics')
+@section('card_name', 'Guest User Analytics')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Guest User Tracking List</li>
+{{--    <li class="breadcrumb-item ">Guest User Tracking List</li>--}}
 @endsection
 @section('action')
 
@@ -10,22 +10,35 @@
 @section('content')
     <section>
         <div class="card">
-            <div class="card-content collapse show">
+            <div class="card-header">
+                <h4 class="content-header-title mb-0 d-inline-block">Guest User Access Log List</h4>
+            </div>
+            <div class="card-content">
                 <div class="card-body card-dashboard">
                     <form id="filter_form" action="{{ route('lead_data.excel_export') }}" method="POST" novalidate>
                         @csrf
                         <div class="row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <input type="text" name="date_range" class="form-control filter"
                                        autocomplete="off" id="date_range" placeholder="Date">
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
+                                <input type="text" name="msisdn" class="form-control filter"
+                                       autocomplete="off" id="msisdn" placeholder="Msisdn">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <input type="text" name="msisdn_entry_type" class="form-control filter"
+                                       autocomplete="off" id="msisdn" placeholder="Msisdn Entry Type">
+                            </div>
+
+                            <div class="form-group col-md-2">
                                 <input type="text" name="device_id" class="form-control"
                                        autocomplete="off" id="device_id" placeholder="DeviceId">
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <input type="text" name="platform" class="form-control showdropdowns filter"
                                        autocomplete="off" id="platform" placeholder="Platform">
                             </div>
@@ -35,18 +48,20 @@
                                        autocomplete="off" id="page_name" placeholder="Page Name">
                             </div>
 
-                            <div class="form-group col-md-1">
-                                <button type="button" class="btn-sm btn-primary"><i class="la la-search"></i></button>
-                            </div>
+{{--                            <div class="form-group col-md-1">--}}
+{{--                                <button type="button" class="btn-sm btn-primary"><i class="la la-search"></i></button>--}}
+{{--                            </div>--}}
 
                         <table class="table table-striped table-bordered" id="guestUserTrackList"> <!--zero-configuration-->
                             <thead>
                             <tr>
                                 <td>#</td>
-                                <th>DeviceId</th>
+                                <th>Msisdn</th>
+                                <th>Msisdn Entry Type</th>
+                                <th>DeviceID</th>
                                 <th>Platform</th>
-                                <th>Page Name</th>
-                                <th>Created At</th>
+                                <th>Page Access</th>
+                                <th>Date & Time</th>
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -57,7 +72,6 @@
             </div>
         </div>
     </section>
-
 @stop
 
 @push('page-css')
@@ -89,15 +103,17 @@
             });
 
 
+            // Guest User Track Data
             $("#guestUserTrackList").dataTable({
+                lengthChange: true,
+                lengthMenu: [[5, 10, 25, 50, 100, 500], [5, 10, 25, 50, 100, 500]],
+                pageLength: 5,
                 scrollX: true,
                 processing: true,
                 searching: false,
                 serverSide: true,
                 ordering: false,
                 autoWidth: false,
-                pageLength: 10,
-                lengthChange: false,
                 ajax: {
                     url: '{{ url('guest-user-track-list') }}',
                     {{--url: '{{ route('lead-list.ajex') }}',--}}
@@ -107,6 +123,12 @@
                         },
                         device_id: function () {
                             return $('input[name="device_id"]').val();
+                        },
+                        msisdn: function () {
+                            return $('input[name="msisdn"]').val();
+                        },
+                        msisdn_entry_type: function () {
+                            return $('input[name="msisdn_entry_type"]').val();
                         },
                         platform: function () {
                             return $('input[name="platform"]').val();
@@ -136,8 +158,22 @@
                         }
                     },
                     {
+                        name: 'msisdn',
+                        width: "5%",
+                        render: function (data, type, row) {
+                            return row.msisdn;
+                        }
+                    },
+                    {
+                        name: 'msisdn_entry_type',
+                        width: "8%",
+                        render: function (data, type, row) {
+                            return row.msisdn_entry_type;
+                        }
+                    },
+                    {
                         name: 'device_id',
-                        width: "15%",
+                        width: "5%",
                         render: function (data, type, row) {
                             return row.device_id;
                         }
@@ -178,6 +214,10 @@
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
 
+            $('input[name="msisdn"]').change(function() {
+                $('#guestUserTrackList').DataTable().ajax.reload();
+            });
+
             $('input[name="page_name"]').change(function() {
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
@@ -194,6 +234,7 @@
                 $(this).val('');
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
+            // Guest User Track Data
         });
     </script>
 @endpush

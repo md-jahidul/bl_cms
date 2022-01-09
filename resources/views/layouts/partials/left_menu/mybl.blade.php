@@ -567,25 +567,25 @@
     @endif
 
     @if (Auth::user()->hasRole('developer'))
-        <li class="{{ is_active_url('developer/api/debug') }}">
-            <a class="menu-item" href="{{ route('mybl.api.debug') }}">
-                <i class="la la-code-fork"></i>Debug Panel</a>
-        </li>
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Debug Panel</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('developer/api/debug') }}">
+                    <a class="menu-item" href="{{ route('mybl.api.debug') }}">
+                        <i class="la la-code-fork"></i> BL Msisdn Log</a>
+                </li>
 
-        <li class="{{ is_active_url(route('header-enrichment-logs')) }}">
-            <a class="menu-item" href="{{ route('header-enrichment-logs') }}">
-                <i class="la la-code-fork"></i>Header Enrichment Logs</a>
+                <li class="{{ is_active_url(route('guest-user-track-list')) }}">
+                    <a class="menu-item" href="{{ route('guest-user-track-list') }}">
+                        <i class="la la-code-fork"></i> Guest User Log</a>
+                </li>
+            </ul>
         </li>
     @endif
 
     <li class="{{ is_active_url(route('support-message')) }}">
         <a class="menu-item" href="{{ route('support-message') }}">
             <i class="la la-code-fork"></i>Support Messages</a>
-    </li>
-
-    <li class="{{ is_active_url(route('guest-user-track-list')) }}">
-        <a class="menu-item" href="{{ route('guest-user-track-list') }}">
-            <i class="la la-code-fork"></i>Guest User Tracking</a>
     </li>
 
     <!-- Agent Deep link Menu -->
