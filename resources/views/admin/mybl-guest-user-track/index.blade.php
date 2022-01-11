@@ -61,6 +61,7 @@
                                 <th>DeviceID</th>
                                 <th>Platform</th>
                                 <th>Page Access</th>
+                                <th>Status</th>
                                 <th>Date & Time</th>
                             </tr>
                             </thead>
@@ -190,6 +191,20 @@
                         width: "15%",
                         render: function (data, type, row) {
                             return row.page_name;
+                        }
+                    },
+                    {
+                        name: 'status',
+                        width: "6%",
+                        class: "text-center",
+                        render: function (data, type, row) {
+                            let status = '';
+                            if(row.status === "success") {
+                                status += '<span class="badge badge-success">Success</span>'
+                            } else {
+                                status += '<span class="badge badge-danger">Failed</span>'
+                            }
+                            return status;
                         }
                     },
                     {

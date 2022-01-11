@@ -36,10 +36,6 @@ class ApiDebugController extends Controller
      * @var ContactRestoreLogService
      */
     protected $contactRestoreLogService;
-    /**
-     * @var NonBlNumberLogService
-     */
-    private $nonBlNumberLogService;
 
     /**
      * ApiDebugController constructor.
@@ -69,8 +65,7 @@ class ApiDebugController extends Controller
         CustomerSubscriptionUsageService $subscriptionUsageService,
         OtpRequestLogsService $otpRequestLogsService,
         ContactRestoreLogService $contactRestoreLogService,
-        HeaderEnrichmentLogsService $headerEnrichmentLogsService,
-        NonBlNumberLogService $nonBlNumberLogService
+        HeaderEnrichmentLogsService $headerEnrichmentLogsService
     ) {
 
         $this->balanceService = $balanceService;
@@ -87,7 +82,6 @@ class ApiDebugController extends Controller
         $this->middleware(['auth', 'debugEntryCheck']);
         $this->contactRestoreLogService = $contactRestoreLogService;
         $this->headerEnrichmentLogsService = $headerEnrichmentLogsService;
-        $this->nonBlNumberLogService = $nonBlNumberLogService;
     }
 
     /**
