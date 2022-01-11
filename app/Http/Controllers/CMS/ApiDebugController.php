@@ -313,26 +313,4 @@ class ApiDebugController extends Controller
         });
         return $response;
     }
-
-
-    /**
-     * @param Request $request
-     * @param $number
-     * @return array
-     */
-    public function getHeaderEnrichmentLogs(Request $request)
-    {
-        if ($request->ajax()) {
-            return $this->headerEnrichmentLogsService->getLogs($request);
-        }
-        return view('admin.header-enrichment.index');
-    }
-
-    public function getNonBlNumberLogs(Request $request)
-    {
-        if ($request->ajax()) {
-            return $this->nonBlNumberLogService->getLogs($request);
-        }
-        return view('admin.debug.guest-user-log.index');
-    }
 }

@@ -659,27 +659,17 @@
                         <i class="la la-code-fork"></i> BL Msisdn Log</a>
                 </li>
 
-                <li class="{{ is_active_url(route('non-bl-request-logs')) }}">
-                    <a class="menu-item" href="{{ route('non-bl-request-logs') }}">
-                        <i class="la la-code-fork"></i> Non BL Msisdn Log</a>
+                <li class="{{ is_active_url(route('guest-user-track-list')) }}">
+                    <a class="menu-item" href="{{ route('guest-user-track-list') }}">
+                        <i class="la la-code-fork"></i> Guest User Log</a>
                 </li>
             </ul>
-        </li>
-
-        <li class="{{ is_active_url(route('header-enrichment-logs')) }}">
-            <a class="menu-item" href="{{ route('header-enrichment-logs') }}">
-                <i class="la la-code-fork"></i>Header Enrichment Logs</a>
         </li>
     @endif
 
     <li class="{{ is_active_url(route('support-message')) }}">
         <a class="menu-item" href="{{ route('support-message') }}">
             <i class="la la-code-fork"></i>Support Messages</a>
-    </li>
-
-    <li class="{{ is_active_url(route('guest-user-track-list')) }}">
-        <a class="menu-item" href="{{ route('guest-user-track-list') }}">
-            <i class="la la-code-fork"></i>Guest User Tracking</a>
     </li>
 
     <!-- Agent Deep link Menu -->

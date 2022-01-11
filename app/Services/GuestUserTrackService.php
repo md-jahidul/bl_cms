@@ -52,6 +52,14 @@ class GuestUserTrackService
             $builder = $builder->where('page_name', 'LIKE', "%$request->page_name%");
         }
 
+        if (isset($request->msisdn)) {
+            $builder = $builder->where('msisdn', 'LIKE', "%$request->msisdn%");
+        }
+
+        if (isset($request->msisdn_entry_type)) {
+            $builder = $builder->where('msisdn_entry_type', 'LIKE', "%$request->msisdn_entry_type%");
+        }
+
         if (isset($request->date_range)) {
             $date = explode('-', $request->date_range);
             $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
@@ -60,7 +68,7 @@ class GuestUserTrackService
         }
 
         $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->get();
+        $items = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
 
         $response = [
             'draw' => $draw,
