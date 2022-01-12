@@ -21,7 +21,8 @@ class CreateGuestUserAccessTracksTable extends Migration
             $table->string('msisdn')->nullable()->index();
             $table->string('msisdn_entry_type')->nullable();
             $table->string('page_name')->nullable();
-            $table->string('status', 100)->nullable()->comment('success or failed');
+            $table->string('failed_reason')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

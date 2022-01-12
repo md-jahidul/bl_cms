@@ -62,6 +62,7 @@
                                 <th>Platform</th>
                                 <th>Page Access</th>
                                 <th>Status</th>
+                                <th>Failed Reason</th>
                                 <th>Date & Time</th>
                             </tr>
                             </thead>
@@ -190,7 +191,15 @@
                         name: 'page_name',
                         width: "15%",
                         render: function (data, type, row) {
-                            return row.page_name;
+                            let pageName = ""
+                            if (row.page_name === "number_verification"){
+                                pageName = "The number is not BL number"
+                            } else {
+                                pageName = row.page_name
+                                //     + `<button class="btn-sm btn-outline-danger cursor-pointer" data-toggle="tooltip"
+                                // title="Please select deeplink action in the edit form. then try to generate deeplink."> Reason</button>`;
+                            }
+                            return pageName;
                         }
                     },
                     {
@@ -199,12 +208,19 @@
                         class: "text-center",
                         render: function (data, type, row) {
                             let status = '';
-                            if(row.status === "success") {
+                            if(row.status) {
                                 status += '<span class="badge badge-success">Success</span>'
                             } else {
                                 status += '<span class="badge badge-danger">Failed</span>'
                             }
                             return status;
+                        }
+                    },
+                    {
+                        name: 'failed_reason',
+                        width: "10%",
+                        render: function (data, type, row) {
+                            return row.failed_reason;
                         }
                     },
                     {
