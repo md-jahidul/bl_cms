@@ -33,19 +33,17 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <input type="text" name="msisdn_entry_type" class="form-control filter"
-                                       autocomplete="off" id="msisdn" placeholder="Msisdn Entry Type">
+                                <select class="form-control" name="msisdn_entry_type">
+                                    <option value="">--Select Msisdn Input Type--</option>
+                                    <option value="header_input">Automatic</option>
+                                    <option value="user_input">User Input</option>
+                                </select>
                             </div>
 
                             <div class="form-group col-md-3">
                                 <input type="text" name="device_id" class="form-control"
                                        autocomplete="off" id="device_id" placeholder="DeviceId">
                             </div>
-
-{{--                            <div class="form-group col-md-3">--}}
-{{--                                <input type="text" name="platform" class="form-control"--}}
-{{--                                       autocomplete="off" id="platform" placeholder="Platform">--}}
-{{--                            </div>--}}
 
                             <div class="form-group col-md-3">
                                 <select class="form-control" name="platform" id="platform">
@@ -56,8 +54,23 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <input type="text" name="page_name" class="form-control showdropdowns filter"
-                                       autocomplete="off" id="page_name" placeholder="Page Name">
+                                <select class="form-control" name="page_name">
+                                    <option value="">--Select Page--</option>
+                                    <option value="landing_page">Landing_page</option>
+                                    <option value="otp_page">OTP Page</option>
+                                    <option value="otp_send">OTP Send</option>
+                                    <option value="password_login">Password Login</option>
+                                    <option value="password_page">Password Page</option>
+                                    <option value="forget_password_page">Forget Password Page</option>
+                                    <option value="forget_password_send_otp">Forget Password Send OTP</option>
+                                    <option value="set_new_password_page">Set New Password Page</option>
+                                    <option value="change_password">Change Password</option>
+                                    <option value="register_page">Register Page</option>
+                                    <option value="send_otp_register">Send OTP Register</option>
+                                    <option value="register_set_new_password_page">Register Set New Password Page</option>
+                                    <option value="register_password_set">Register Password Set</option>
+                                    <option value="number_verification">Number Verification</option>
+                                </select>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -67,99 +80,8 @@
                                     <option value="0">Failed</option>
                                 </select>
                             </div>
-
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="eventInput4">Status</label>--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="form-group col-md-1">--}}
-{{--                                <button type="button" class="btn-sm btn-primary"><i class="la la-search"></i></button>--}}
-{{--                            </div>--}}
-
-
-
-
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="eventInput4">Customer Msisdn</label>--}}
-{{--                                    <input type="text" name="customer_msisdn" id="" class="form-control">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="eventInput4">Bl unique ID</label>--}}
-{{--                                    <input type="text" name="unique_id" id="" class="form-control">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label>From Date</label>--}}
-{{--                                    <div class='input-group date' >--}}
-{{--                                        <input type='text' class="form-control datetimepicker1" name="from_date" />--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label>To Date</label>--}}
-{{--                                    <div class='input-group date' >--}}
-{{--                                        <input type='text' class="form-control datetimepicker1" name="to_date" />--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="eventInput4">Payment Gateway</label>--}}
-{{--                                    <select class="form-control" name="payment_gateway" >--}}
-{{--                                        <option value="">select options</option>--}}
-{{--                                        @foreach($gateways as $gateway)--}}
-{{--                                            <option value="{{$gateway->gateway_id}}">{{$gateway->payment_channel}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="eventInput4">Recharge Status</label>--}}
-{{--                                    <select class="form-control" name="recharge_status" >--}}
-{{--                                        <option value="">select options</option>--}}
-{{--                                        <option value="Successful">Success</option>--}}
-{{--                                        <option value="Failed">Fail</option>--}}
-{{--                                        <option value="refund">Refund</option>--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-12 col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="eventInput4">Recharge Platform</label>--}}
-{{--                                    <select class="form-control" name="retailer_channel_id" >--}}
-{{--                                        <option value="">select options</option>--}}
-{{--                                        @foreach($channels as $channel)--}}
-{{--                                            <option value="{{$channel->id}}">{{$channel->channel_name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
                         </div>
-
-{{--                        <footer>--}}
-{{--                            <button data-feature="filter" data-target="#dataTableBuilder"--}}
-{{--                                    data-filter="#filter-form" class="btn btn-sm btn-warning" type="button">--}}
-{{--                                <i class="fa fa-search"></i> Search--}}
-{{--                            </button>--}}
-{{--                            <button class="btn btn-sm btn-info" type="submit">--}}
-{{--                                <i class="fa fa-download"></i> Export--}}
-{{--                            </button>--}}
-{{--                        </footer>--}}
-{{--                        <hr class="clearfix">--}}
                     </form>
-
-
-
 
                     <form id="filter_form" action="{{ route('lead_data.excel_export') }}" method="POST" novalidate>
                         @csrf
@@ -174,7 +96,7 @@
                                     <th>Msisdn Input Type</th>
                                     <th>DeviceID</th>
                                     <th>Platform</th>
-                                    <th>Page Access</th>
+                                    <th>Pages</th>
                                     <th>Status</th>
                                     <th>Failed Reason</th>
                                     <th>Date & Time</th>
@@ -265,13 +187,13 @@
                             return $('input[name="msisdn"]').val();
                         },
                         msisdn_entry_type: function () {
-                            return $('input[name="msisdn_entry_type"]').val();
+                            return $('select[name="msisdn_entry_type"]').val();
                         },
                         platform: function () {
                             return $('select[name="platform"]').val();
                         },
                         page_name: function () {
-                            return $('input[name="page_name"]').val();
+                            return $('select[name="page_name"]').val();
                         },
                         status: function () {
                             return $('select[name="status"]').val();
@@ -336,15 +258,7 @@
                         name: 'page_name',
                         width: "15%",
                         render: function (data, type, row) {
-                            let pageName = ""
-                            if (row.page_name === "number_verification"){
-                                pageName = "The number is not BL number"
-                            } else {
-                                pageName = row.page_name
-                                //     + `<button class="btn-sm btn-outline-danger cursor-pointer" data-toggle="tooltip"
-                                // title="Please select deeplink action in the edit form. then try to generate deeplink."> Reason</button>`;
-                            }
-                            return pageName;
+                            return row.page_name.replace('_', ' ');
                         }
                     },
                     {
@@ -394,7 +308,7 @@
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
 
-            $('input[name="page_name"]').change(function() {
+            $('select[name="page_name"]').change(function() {
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
 
@@ -412,6 +326,10 @@
             });
 
             $('select[name="status"]').change(function() {
+                $('#guestUserTrackList').DataTable().ajax.reload();
+            });
+
+            $('select[name="msisdn_entry_type"]').change(function() {
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
             // Guest User Track Data

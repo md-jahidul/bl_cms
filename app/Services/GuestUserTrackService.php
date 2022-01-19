@@ -59,7 +59,7 @@ class GuestUserTrackService
         }
 
         if (isset($request->msisdn_entry_type)) {
-            $builder = $builder->where('msisdn_entry_type', 'LIKE', "%$request->msisdn_entry_type%");
+            $builder = $builder->where('msisdn_entry_type', $request->msisdn_entry_type);
         }
 
         if (isset($request->status)) {
