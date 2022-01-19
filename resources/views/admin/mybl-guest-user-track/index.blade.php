@@ -12,62 +12,176 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="content-header-title mb-0 d-inline-block">Guest User Access Log List</h4>
+
+                <button class="btn-sm btn-outline-warning waves-effect waves-light float-right fa-mouse-pointer" type="button" data-toggle="collapse" data-target="#filter-form" aria-expanded="false" aria-controls="filter-form">
+                    <i class="la la-filter"></i> <b>Filter</b>
+                </button>
             </div>
             <div class="card-content">
                 <div class="card-body card-dashboard">
-                    <form id="filter_form" action="{{ route('lead_data.excel_export') }}" method="POST" novalidate>
-                        @csrf
+
+                    <form action="{{--{{route('transactions.export')}}--}}" id="filter-form" class="collapse filter-container" method="GET">
                         <div class="row">
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <input type="text" name="date_range" class="form-control filter"
                                        autocomplete="off" id="date_range" placeholder="Date">
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <input type="text" name="msisdn" class="form-control filter"
                                        autocomplete="off" id="msisdn" placeholder="Msisdn">
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <input type="text" name="msisdn_entry_type" class="form-control filter"
                                        autocomplete="off" id="msisdn" placeholder="Msisdn Entry Type">
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <input type="text" name="device_id" class="form-control"
                                        autocomplete="off" id="device_id" placeholder="DeviceId">
                             </div>
 
-                            <div class="form-group col-md-2">
-                                <input type="text" name="platform" class="form-control showdropdowns filter"
-                                       autocomplete="off" id="platform" placeholder="Platform">
+{{--                            <div class="form-group col-md-3">--}}
+{{--                                <input type="text" name="platform" class="form-control"--}}
+{{--                                       autocomplete="off" id="platform" placeholder="Platform">--}}
+{{--                            </div>--}}
+
+                            <div class="form-group col-md-3">
+                                <select class="form-control" name="platform" id="platform">
+                                    <option value="">--Select Platform--</option>
+                                    <option value="android">Android</option>
+                                    <option value="ios">IOS</option>
+                                </select>
                             </div>
 
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <input type="text" name="page_name" class="form-control showdropdowns filter"
                                        autocomplete="off" id="page_name" placeholder="Page Name">
                             </div>
+
+                            <div class="form-group col-md-3">
+                                <select class="form-control" name="status" id="status">
+                                    <option value="">--Select Status--</option>
+                                    <option value="1">Success</option>
+                                    <option value="0">Failed</option>
+                                </select>
+                            </div>
+
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="eventInput4">Status</label>--}}
+
+{{--                                </div>--}}
+{{--                            </div>--}}
 
 {{--                            <div class="form-group col-md-1">--}}
 {{--                                <button type="button" class="btn-sm btn-primary"><i class="la la-search"></i></button>--}}
 {{--                            </div>--}}
 
-                        <table class="table table-striped table-bordered" id="guestUserTrackList"> <!--zero-configuration-->
-                            <thead>
-                            <tr>
-                                <td>#</td>
-                                <th>Msisdn</th>
-                                <th>Msisdn Entry Type</th>
-                                <th>DeviceID</th>
-                                <th>Platform</th>
-                                <th>Page Access</th>
-                                <th>Status</th>
-                                <th>Failed Reason</th>
-                                <th>Date & Time</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+
+
+
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="eventInput4">Customer Msisdn</label>--}}
+{{--                                    <input type="text" name="customer_msisdn" id="" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="eventInput4">Bl unique ID</label>--}}
+{{--                                    <input type="text" name="unique_id" id="" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label>From Date</label>--}}
+{{--                                    <div class='input-group date' >--}}
+{{--                                        <input type='text' class="form-control datetimepicker1" name="from_date" />--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label>To Date</label>--}}
+{{--                                    <div class='input-group date' >--}}
+{{--                                        <input type='text' class="form-control datetimepicker1" name="to_date" />--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="eventInput4">Payment Gateway</label>--}}
+{{--                                    <select class="form-control" name="payment_gateway" >--}}
+{{--                                        <option value="">select options</option>--}}
+{{--                                        @foreach($gateways as $gateway)--}}
+{{--                                            <option value="{{$gateway->gateway_id}}">{{$gateway->payment_channel}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="eventInput4">Recharge Status</label>--}}
+{{--                                    <select class="form-control" name="recharge_status" >--}}
+{{--                                        <option value="">select options</option>--}}
+{{--                                        <option value="Successful">Success</option>--}}
+{{--                                        <option value="Failed">Fail</option>--}}
+{{--                                        <option value="refund">Refund</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-12 col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="eventInput4">Recharge Platform</label>--}}
+{{--                                    <select class="form-control" name="retailer_channel_id" >--}}
+{{--                                        <option value="">select options</option>--}}
+{{--                                        @foreach($channels as $channel)--}}
+{{--                                            <option value="{{$channel->id}}">{{$channel->channel_name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                        </div>
+
+{{--                        <footer>--}}
+{{--                            <button data-feature="filter" data-target="#dataTableBuilder"--}}
+{{--                                    data-filter="#filter-form" class="btn btn-sm btn-warning" type="button">--}}
+{{--                                <i class="fa fa-search"></i> Search--}}
+{{--                            </button>--}}
+{{--                            <button class="btn btn-sm btn-info" type="submit">--}}
+{{--                                <i class="fa fa-download"></i> Export--}}
+{{--                            </button>--}}
+{{--                        </footer>--}}
+{{--                        <hr class="clearfix">--}}
+                    </form>
+
+
+
+
+                    <form id="filter_form" action="{{ route('lead_data.excel_export') }}" method="POST" novalidate>
+                        @csrf
+                        <div class="row">
+
+
+                            <table class="table table-striped table-bordered" id="guestUserTrackList"> <!--zero-configuration-->
+                                <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <th>Msisdn</th>
+                                    <th>Msisdn Input Type</th>
+                                    <th>DeviceID</th>
+                                    <th>Platform</th>
+                                    <th>Page Access</th>
+                                    <th>Status</th>
+                                    <th>Failed Reason</th>
+                                    <th>Date & Time</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                     </div>
                     </form>
                 </div>
@@ -77,6 +191,12 @@
 @stop
 
 @push('page-css')
+    <style>
+        div.dt-buttons{
+            position:relative;
+            float:right;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
 @endpush
 
@@ -108,7 +228,7 @@
             // Guest User Track Data
             $("#guestUserTrackList").dataTable({
                 lengthChange: true,
-                lengthMenu: [[5, 10, 25, 50, 100, 500], [5, 10, 25, 50, 100, 500]],
+                lengthMenu: [[5, 10, 50, 100, 500, 1000, -1], [5, 10, 50, 100, 500, '1K', 'ALL']],
                 pageLength: 5,
                 scrollX: true,
                 processing: true,
@@ -116,6 +236,21 @@
                 serverSide: true,
                 ordering: false,
                 autoWidth: false,
+                dom: 'Bflrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8 ]
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8 ]
+                        }
+                    }
+                ],
                 ajax: {
                     url: '{{ url('guest-user-track-list') }}',
                     {{--url: '{{ route('lead-list.ajex') }}',--}}
@@ -133,10 +268,13 @@
                             return $('input[name="msisdn_entry_type"]').val();
                         },
                         platform: function () {
-                            return $('input[name="platform"]').val();
+                            return $('select[name="platform"]').val();
                         },
                         page_name: function () {
                             return $('input[name="page_name"]').val();
+                        },
+                        status: function () {
+                            return $('select[name="status"]').val();
                         }
                     }
                 },
@@ -168,9 +306,16 @@
                     },
                     {
                         name: 'msisdn_entry_type',
-                        width: "8%",
+                        class: 'text-center',
+                        width: "6%",
                         render: function (data, type, row) {
-                            return row.msisdn_entry_type;
+                            let inputType = "";
+                            if(row.msisdn_entry_type === "header_input") {
+                                inputType = "<b class='text-success'>Automatic</b>"
+                            } else {
+                                inputType = "<b class='text-warning'>User Input</b>"
+                            }
+                            return inputType;
                         }
                     },
                     {
@@ -253,7 +398,7 @@
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
 
-            $('input[name="platform"]').change(function() {
+            $('select[name="platform"]').change(function() {
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
 
@@ -263,6 +408,10 @@
 
             $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
+                $('#guestUserTrackList').DataTable().ajax.reload();
+            });
+
+            $('select[name="status"]').change(function() {
                 $('#guestUserTrackList').DataTable().ajax.reload();
             });
             // Guest User Track Data

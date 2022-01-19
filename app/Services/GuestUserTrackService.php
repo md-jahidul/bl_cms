@@ -34,6 +34,8 @@ class GuestUserTrackService
 
     public function getGuestUserData($request)
     {
+//        dd($request->all());
+
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
@@ -45,7 +47,7 @@ class GuestUserTrackService
         }
 
         if (isset($request->platform)) {
-            $builder = $builder->where('platform', 'LIKE', "%$request->platform%");
+            $builder = $builder->where('platform', $request->platform);
         }
 
         if (isset($request->page_name)) {
@@ -60,6 +62,10 @@ class GuestUserTrackService
             $builder = $builder->where('msisdn_entry_type', 'LIKE', "%$request->msisdn_entry_type%");
         }
 
+        if (isset($request->status)) {
+            $builder = $builder->where('status', $request->status);
+        }
+
         if (isset($request->date_range)) {
             $date = explode('-', $request->date_range);
             $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
@@ -68,7 +74,13 @@ class GuestUserTrackService
         }
 
         $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+
+        if ($length > 1) {
+            $items = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+        } else {
+            $items = $builder->orderBy('created_at', 'DESC')->get();
+        }
+
 
         $response = [
             'draw' => $draw,
