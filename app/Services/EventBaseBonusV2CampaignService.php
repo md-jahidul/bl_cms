@@ -72,10 +72,7 @@ class EventBaseBonusV2CampaignService
             if (!empty($data['icon_image'])) {
                 $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             }
-            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
             $data['created_by']                   = auth()->user()->email;
-            $data['base_msisdn_id']               = 1;
 
             $url = $this->host . "/api/v1/campaigns";
 
@@ -101,10 +98,7 @@ class EventBaseBonusV2CampaignService
                 $data['icon_image'] = $data['icon_image_old'];
             }
             unset($data['icon_image_old']);
-            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
             $data['created_by']                   = auth()->user()->email;
-            $data['base_msisdn_id']               = 1;
 
             $url = $this->host . "/api/v1/campaigns/" . $id;
 

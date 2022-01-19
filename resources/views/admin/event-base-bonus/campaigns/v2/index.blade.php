@@ -24,8 +24,6 @@
                                     <th>Title</th>
                                     <th>Start date</th>
                                     <th>End date</th>
-                                    <th>Reward Prepaid</th>
-                                    <th>Reward Postpaid</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -37,8 +35,6 @@
                                     <td>{{ $campaign['title'] }}</td>
                                     <td>{{ $campaign['start_date'] }}</td>
                                     <td>{{ $campaign['end_date'] }}</td>
-                                    <td>{{ $campaign['reward_product_code_prepaid'] }}</td>
-                                    <td>{{ $campaign['reward_product_code_postpaid'] }}</td>
                                     <td>{{ $campaign['status'] ? 'active':'inactive'}}</td>
                                     <td>
                                         <a href="{{ url('event-base-bonus/v2/campaigns/'.$campaign['id']).'/edit' }}" class="mr-3">
