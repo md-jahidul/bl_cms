@@ -56,7 +56,7 @@
                                     <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign['campaign_user_type'] != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
                                         <label for="base_msisdn_id" class="required">Base Msisdn</label>
                                         <select id="base_msisdn_id" name="base_msisdn_id"
-                                                class="browser-default custom-select" required>
+                                                class="browser-default custom-select">
                                             <option value="">Select Action</option>
                                             @foreach ($baseMsisdnGroups as $key => $value)
                                                 <option value="{{ $value->id }}"
