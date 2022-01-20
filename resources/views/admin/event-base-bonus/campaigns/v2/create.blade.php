@@ -22,27 +22,27 @@
                             @csrf
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-12 {{ $errors->has('base_msisdn_id') ? ' error' : '' }}">
-                                        <label for="base_msisdn_group" class="required">Choose User Type</label>
+                                    <div class="form-group col-md-12 {{ $errors->has('campaign_user_type') ? ' error' : '' }}">
+                                        <label for="campaign_user_type" class="required">Choose User Type</label>
                                         <hr class="mt-0">
                                         <div class="row">
                                             <div class="col-md-2 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="all"
+                                                <input type="radio" name="campaign_user_type" value="all"
                                                        class="campaign_user_type" id="all" checked>
                                                 <label for="all">All</label>
                                             </div>
                                             <div class="col-md-3 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="prepaid"
+                                                <input type="radio" name="campaign_user_type" value="prepaid"
                                                        class="campaign_user_type" id="prepaid">
                                                 <label for="prepaid">Prepaid</label>
                                             </div>
                                             <div class="col-md-3 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="postpaid"
+                                                <input type="radio" name="campaign_user_type" value="postpaid"
                                                        class="campaign_user_type" id="postpaid">
                                                 <label for="postpaid">Postpaid</label>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="segment_wise"
+                                                <input type="radio" name="campaign_user_type" value="segment_wise"
                                                        class="campaign_user_type" id="segment_wise">
                                                 <label for="segment_wise">Segment Wise (Base Msisdn)</label>
                                             </div>
@@ -52,6 +52,18 @@
                                         @if ($errors->has('base_msisdn_id'))
                                             <div class="help-block">  {{ $errors->first('base_msisdn_id') }}</div>
                                         @endif
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign['campaign_user_type'] != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                        <label for="base_msisdn_id" class="required">Base Msisdn</label>
+                                        <select id="base_msisdn_id" name="base_msisdn_id"
+                                                class="browser-default custom-select" required>
+                                            <option value="">Select Action</option>
+                                            @foreach ($baseMsisdnGroups as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                        {{ isset($campaign) && $campaign['base_msisdn_id'] == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Title</label>
@@ -207,6 +219,14 @@
                     'imageFormat': 'File must be valid format'
                 }
             });
+
+            $('.campaign_user_type').click(function () {
+                if ($(this).val() !== "segment_wise"){
+                    $('#base_msisdn').addClass('d-none')
+                } else {
+                    $('#base_msisdn').removeClass('d-none')
+                }
+            })
         });
     </script>
 

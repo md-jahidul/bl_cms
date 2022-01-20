@@ -19,6 +19,13 @@ class EventBaseChallengeV2Controller extends Controller
     private $productCoreService;
     private $baseMsisdnService;
 
+    /**
+     * @param EventBaseBonusChallengeService $eventBaseBonusChallengeService
+     * @param TaskServiceV2 $taskService
+     * @param ProductCoreService $productCoreService
+     * @param EventBaseBonusV2CampaignService $campaignService
+     * @param BaseMsisdnService $baseMsisdnService
+     */
     public function __construct(EventBaseBonusChallengeService $eventBaseBonusChallengeService, TaskServiceV2 $taskService, ProductCoreService $productCoreService, EventBaseBonusV2CampaignService $campaignService, BaseMsisdnService $baseMsisdnService)
     {
         $this->middleware('auth');
