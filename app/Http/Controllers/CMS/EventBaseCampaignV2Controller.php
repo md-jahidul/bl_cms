@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Requests\StoreEventBasedCampaignRequest;
+use App\Services\BaseMsisdnService;
 use App\Services\EventBaseBonusV2CampaignService;
 use App\Services\ProductCoreService;
 use App\Services\TaskService;
@@ -16,14 +17,23 @@ class EventBaseCampaignV2Controller extends Controller
     private $campaignService;
     private $taskService;
     private $challengeService;
+    private $baseMsisdnService;
 
-    public function __construct(EventBaseBonusV2CampaignService $campaignService, ProductCoreService $productCoreService, TaskService $taskService, EventBaseBonusChallengeService $challengeService)
+    /**
+     * @param BaseMsisdnService $baseMsisdnService
+     * @param EventBaseBonusV2CampaignService $campaignService
+     * @param ProductCoreService $productCoreService
+     * @param TaskService $taskService
+     * @param EventBaseBonusChallengeService $challengeService
+     */
+    public function __construct(BaseMsisdnService $baseMsisdnService, EventBaseBonusV2CampaignService $campaignService, ProductCoreService $productCoreService, TaskService $taskService, EventBaseBonusChallengeService $challengeService)
     {
         $this->middleware('auth');
         $this->productCoreService = $productCoreService;
         $this->campaignService = $campaignService;
         $this->taskService = $taskService;
         $this->challengeService = $challengeService;
+        $this->baseMsisdnService = $baseMsisdnService;
     }
 
     public function index()
@@ -37,8 +47,9 @@ class EventBaseCampaignV2Controller extends Controller
     {
         $products = $this->productCoreService->findAll();
         $challenges = $this->challengeService->findAll();
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
 
-        return view('admin.event-base-bonus.campaigns.v2.create', compact('products', 'challenges'));
+        return view('admin.event-base-bonus.campaigns.v2.create', compact('products', 'challenges', 'baseMsisdnGroups'));
     }
 
     public function store(StoreEventBasedCampaignRequest $request)
@@ -57,14 +68,14 @@ class EventBaseCampaignV2Controller extends Controller
         $challenges = $this->challengeService->findAll();
         $challengeIds = array_column($campaign['challenges'], 'id');
         $challengesLeft = array_diff(collect($challenges)->pluck('id')->toArray(), $challengeIds);
-
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $products = [];
 
         foreach ($product_list as $key => $value) {
             $products[] = $value['product_code'];
         }
 
-        return view('admin.event-base-bonus.campaigns.v2.edit', compact('campaign', 'products', 'challenges', 'challengeIds', 'challengesLeft'));
+        return view('admin.event-base-bonus.campaigns.v2.edit', compact('campaign', 'products', 'challenges', 'challengeIds', 'challengesLeft', 'baseMsisdnGroups'));
     }
 
     public function update(StoreEventBasedCampaignRequest $request, $id)

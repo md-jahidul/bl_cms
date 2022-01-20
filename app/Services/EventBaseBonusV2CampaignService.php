@@ -29,7 +29,7 @@ class EventBaseBonusV2CampaignService
     /**
      * @return array
      */
-    public function findAll(): array
+    public function findAll()
     {
         try {
             Session::forget('message');
@@ -48,7 +48,7 @@ class EventBaseBonusV2CampaignService
      * @param $id
      * @return array
      */
-    public function findOne($id): array
+    public function findOne($id)
     {
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
@@ -66,16 +66,13 @@ class EventBaseBonusV2CampaignService
      * @param $data
      * @return array
      */
-    public function store($data): array
+    public function store($data)
     {
         try {
             if (!empty($data['icon_image'])) {
                 $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             }
-            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
             $data['created_by']                   = auth()->user()->email;
-            $data['base_msisdn_id']               = 1;
 
             $url = $this->host . "/api/v1/campaigns";
 
@@ -92,7 +89,7 @@ class EventBaseBonusV2CampaignService
      * @param $id
      * @return array
      */
-    public function update($data, $id): array
+    public function update($data, $id)
     {
         try {
             if (!empty($data['icon_image'])) {
@@ -101,10 +98,7 @@ class EventBaseBonusV2CampaignService
                 $data['icon_image'] = $data['icon_image_old'];
             }
             unset($data['icon_image_old']);
-            $data['reward_product_code_prepaid']  = str_replace(' ', '', strtoupper($data['reward_product_code_prepaid']));
-            $data['reward_product_code_postpaid'] = str_replace(' ', '', strtoupper($data['reward_product_code_postpaid']));
             $data['created_by']                   = auth()->user()->email;
-            $data['base_msisdn_id']               = 1;
 
             $url = $this->host . "/api/v1/campaigns/" . $id;
 

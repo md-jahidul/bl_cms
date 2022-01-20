@@ -29,10 +29,9 @@ class StoreEventBasedCampaignRequest extends FormRequest
             'description_bn'               => 'required|max:250',
             'start_date'                   => 'required|max:50',
             'end_date'                     => 'required|max:50',
-            'reward_product_code_prepaid'  => 'required|max:50',
-            'reward_product_code_postpaid' => 'required|max:50',
-            'challenge_ids'                     => 'required',
+            'challenge_ids'                => 'required',
             'status'                       => 'required|boolean',
+            'campaign_user_type'            => 'required',
         ];
     }
 }

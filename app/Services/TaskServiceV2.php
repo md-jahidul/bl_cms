@@ -28,7 +28,7 @@ class TaskServiceV2
     /**
      * @return array
      */
-    public function findAll(): array
+    public function findAll()
     {
         try {
             Session::forget('message');
@@ -57,7 +57,7 @@ class TaskServiceV2
         }
     }
 
-    public function findOne($id): array
+    public function findOne($id)
     {
         try {
             $url = $this->host . "/api/v1/campaign-task/" . $id;
@@ -71,7 +71,7 @@ class TaskServiceV2
         }
     }
 
-    public function store($data): array
+    public function store($data)
     {
         try {
             if (!empty($data['icon_image'])) {
@@ -93,7 +93,7 @@ class TaskServiceV2
         }
     }
 
-    public function update($data, $id): array
+    public function update($data, $id)
     {
         try {
             if (!empty($data['icon_image'])) {
