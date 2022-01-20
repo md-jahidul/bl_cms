@@ -2,7 +2,6 @@
 @section('title', 'Guest User Analytics')
 @section('card_name', 'Guest User Analytics')
 @section('breadcrumb')
-{{--    <li class="breadcrumb-item ">Guest User Tracking List</li>--}}
 @endsection
 @section('action')
 
@@ -11,16 +10,13 @@
     <section>
         <div class="card">
             <div class="card-header">
-                <h4 class="content-header-title mb-0 d-inline-block">Guest User Access Log List</h4>
-
-                <button class="btn-sm btn-outline-warning waves-effect waves-light float-right fa-mouse-pointer" type="button" data-toggle="collapse" data-target="#filter-form" aria-expanded="false" aria-controls="filter-form">
-                    <i class="la la-filter"></i> <b>Filter</b>
-                </button>
+                <h4 class="content-header-title mb-0 d-inline-block">Guest User Access Log Report</h4>
             </div>
             <div class="card-content">
                 <div class="card-body card-dashboard">
 
-                    <form action="{{--{{route('transactions.export')}}--}}" id="filter-form" class="collapse filter-container" method="GET">
+                    <form action="{{route('guest-user-data-export')}}" id="filter-form" class="filter-container" method="post">
+                        @csrf
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <input type="text" name="date_range" class="form-control filter"
@@ -35,7 +31,7 @@
                             <div class="form-group col-md-3">
                                 <select class="form-control" name="msisdn_entry_type">
                                     <option value="">--Select Msisdn Input Type--</option>
-                                    <option value="header_input">Automatic</option>
+                                    <option value="header_input">Automatic (Header)</option>
                                     <option value="user_input">User Input</option>
                                 </select>
                             </div>
@@ -80,31 +76,18 @@
                                     <option value="0">Failed</option>
                                 </select>
                             </div>
+
+                            <div class="col-md-12 ">
+                                <div class="pull-right">
+                                    <button type="submit" name="export_type" value="csv" class="btn btn-primary"><i
+                                            class="la la-file"></i> CSV
+                                    </button>
+                                    <button type="submit" name="export_type" value="xlsx" class="btn btn-warning"><i
+                                            class="la la-file-excel-o"></i> Excel
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-
-                    <form id="filter_form" action="{{ route('lead_data.excel_export') }}" method="POST" novalidate>
-                        @csrf
-                        <div class="row">
-
-
-                            <table class="table table-striped table-bordered" id="guestUserTrackList"> <!--zero-configuration-->
-                                <thead>
-                                <tr>
-                                    <td>#</td>
-                                    <th>Msisdn</th>
-                                    <th>Msisdn Input Type</th>
-                                    <th>DeviceID</th>
-                                    <th>Platform</th>
-                                    <th>Pages</th>
-                                    <th>Status</th>
-                                    <th>Failed Reason</th>
-                                    <th>Date & Time</th>
-                                </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                    </div>
                     </form>
                 </div>
             </div>
@@ -113,12 +96,6 @@
 @stop
 
 @push('page-css')
-    <style>
-        div.dt-buttons{
-            position:relative;
-            float:right;
-        }
-    </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
 @endpush
 
@@ -145,194 +122,6 @@
             $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
             });
-
-
-            // Guest User Track Data
-            $("#guestUserTrackList").dataTable({
-                lengthChange: true,
-                lengthMenu: [[5, 10, 50, 100, 500, 1000, -1], [5, 10, 50, 100, 500, '1K', 'ALL']],
-                pageLength: 5,
-                scrollX: true,
-                processing: true,
-                searching: false,
-                serverSide: true,
-                ordering: false,
-                autoWidth: false,
-                dom: 'Bflrtip',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8 ]
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8 ]
-                        }
-                    }
-                ],
-                ajax: {
-                    url: '{{ url('guest-user-track-list') }}',
-                    {{--url: '{{ route('lead-list.ajex') }}',--}}
-                    data: {
-                        date_range: function () {
-                            return $('input[name="date_range"]').val();
-                        },
-                        device_id: function () {
-                            return $('input[name="device_id"]').val();
-                        },
-                        msisdn: function () {
-                            return $('input[name="msisdn"]').val();
-                        },
-                        msisdn_entry_type: function () {
-                            return $('select[name="msisdn_entry_type"]').val();
-                        },
-                        platform: function () {
-                            return $('select[name="platform"]').val();
-                        },
-                        page_name: function () {
-                            return $('select[name="page_name"]').val();
-                        },
-                        status: function () {
-                            return $('select[name="status"]').val();
-                        }
-                    }
-                },
-
-                "drawCallback": function (settings) {
-                    // Here the response
-                    var response = settings.json;
-                    if (response.permission == false){
-                        $('#permission_error').show()
-                    }else {
-                        $('#permission_error').hide()
-                    }
-                },
-
-                columns: [
-                    {
-                        name: 'sl',
-                        width: "2%",
-                        render: function () {
-                            return null;
-                        }
-                    },
-                    {
-                        name: 'msisdn',
-                        width: "5%",
-                        render: function (data, type, row) {
-                            return row.msisdn;
-                        }
-                    },
-                    {
-                        name: 'msisdn_entry_type',
-                        class: 'text-center',
-                        width: "6%",
-                        render: function (data, type, row) {
-                            let inputType = "";
-                            if(row.msisdn_entry_type === "header_input") {
-                                inputType = "<b class='text-success'>Automatic</b>"
-                            } else {
-                                inputType = "<b class='text-warning'>User Input</b>"
-                            }
-                            return inputType;
-                        }
-                    },
-                    {
-                        name: 'device_id',
-                        width: "5%",
-                        render: function (data, type, row) {
-                            return row.device_id;
-                        }
-                    },
-                    {
-                        name: 'platform',
-                        width: "8%",
-                        render: function (data, type, row) {
-                            return row.platform;
-                        }
-                    },
-                    {
-                        name: 'page_name',
-                        width: "15%",
-                        render: function (data, type, row) {
-                            return row.page_name.replace('_', ' ');
-                        }
-                    },
-                    {
-                        name: 'status',
-                        width: "6%",
-                        class: "text-center",
-                        render: function (data, type, row) {
-                            let status = '';
-                            if(row.status) {
-                                status += '<span class="badge badge-success">Success</span>'
-                            } else {
-                                status += '<span class="badge badge-danger">Failed</span>'
-                            }
-                            return status;
-                        }
-                    },
-                    {
-                        name: 'failed_reason',
-                        width: "10%",
-                        render: function (data, type, row) {
-                            return row.failed_reason;
-                        }
-                    },
-                    {
-                        name: 'created_at',
-                        width: "10%",
-                        render: function (data, type, row) {
-                            return row.created_at;
-                        }
-                    }
-                ],
-                "fnCreatedRow": function (row, data, index) {
-                    $('td', row).eq(0).html(index + 1);
-                }
-
-            });
-
-            $(document).on('change', '.filter', function (e) {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('input[name="device_id"]').change(function() {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('input[name="msisdn"]').change(function() {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('select[name="page_name"]').change(function() {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('select[name="platform"]').change(function() {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('select[name="status"]').change(function() {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-
-            $('select[name="msisdn_entry_type"]').change(function() {
-                $('#guestUserTrackList').DataTable().ajax.reload();
-            });
-            // Guest User Track Data
         });
     </script>
 @endpush
