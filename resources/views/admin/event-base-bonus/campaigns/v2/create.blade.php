@@ -220,6 +220,8 @@
                 }
             });
 
+            $('#base_msisdn').addClass('d-none');
+
             $('.campaign_user_type').click(function () {
                 if ($(this).val() !== "segment_wise"){
                     $('#base_msisdn').addClass('d-none')
