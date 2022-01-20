@@ -25,6 +25,10 @@ class CreateGuestCustomerActivitiesTable extends Migration
             $table->string('number_type')->nullable()->index();
             $table->boolean('login_status')->default(0);
             $table->boolean('is_notified')->default(0)->index();
+            $table->string('msisdn_entry_type')->nullable()->index();
+            $table->string('page_name')->nullable();
+            $table->string('failed_reason')->nullable();
+            $table->boolean('page_access_status')->nullable()->index();
             $table->timestamps();
         });
     }
