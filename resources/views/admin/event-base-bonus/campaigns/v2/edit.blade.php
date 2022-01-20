@@ -28,27 +28,27 @@
                                         <hr class="mt-0">
                                         <div class="row">
                                             <div class="col-md-2 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="all"
+                                                <input type="radio" name="campaign_user_type" value="all"
                                                        class="campaign_user_type" id="all"
-                                                        {{ (isset($campaign) && $campaign['base_msisdn_id'] == "all") ? 'checked' : '' }}>
+                                                        {{ (isset($campaign) && $campaign['campaign_user_type'] == "all") ? 'checked' : '' }}>
                                                 <label for="all">All</label>
                                             </div>
                                             <div class="col-md-3 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="prepaid"
+                                                <input type="radio" name="campaign_user_type" value="prepaid"
                                                        class="campaign_user_type" id="prepaid"
-                                                        {{ (isset($campaign) && $campaign['base_msisdn_id'] == "prepaid") ? 'checked' : '' }}>
+                                                        {{ (isset($campaign) && $campaign['campaign_user_type'] == "prepaid") ? 'checked' : '' }}>
                                                 <label for="prepaid">Prepaid</label>
                                             </div>
                                             <div class="col-md-3 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="postpaid"
+                                                <input type="radio" name="campaign_user_type" value="postpaid"
                                                        class="campaign_user_type" id="postpaid"
-                                                        {{ isset($campaign) && $campaign['base_msisdn_id'] == "postpaid" ? 'checked' : '' }}>
+                                                        {{ isset($campaign) && $campaign['campaign_user_type'] == "postpaid" ? 'checked' : '' }}>
                                                 <label for="postpaid">Postpaid</label>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
-                                                <input type="radio" name="base_msisdn_id" value="segment_wise"
+                                                <input type="radio" name="campaign_user_type" value="segment_wise"
                                                        class="campaign_user_type" id="segment_wise"
-                                                        {{ isset($campaign) && $campaign['base_msisdn_id'] == "segment_wise" ? 'checked' : '' }}>
+                                                        {{ isset($campaign) && $campaign['campaign_user_type'] == "segment_wise" ? 'checked' : '' }}>
                                                 <label for="segment_wise">Segment Wise (Base Msisdn)</label>
                                             </div>
                                         </div>
@@ -56,6 +56,18 @@
                                         @if ($errors->has('type'))
                                             <div class="help-block">  {{ $errors->first('type') }}</div>
                                         @endif
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign['campaign_user_type'] != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                        <label for="base_msisdn_id" class="required">Base Msisdn</label>
+                                        <select id="base_msisdn_id" name="base_msisdn_id"
+                                                class="browser-default custom-select" required>
+                                            <option value="">Select Action</option>
+                                            @foreach ($baseMsisdnGroups as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                        {{ isset($campaign) && $campaign['base_msisdn_id'] == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="dashboard_card_title" class="required">Title</label>
@@ -220,6 +232,14 @@
 
             // set previous start date value for existing campaign
             $('#start_date').val("{{$campaign['start_date']}}");
+
+            $('.campaign_user_type').click(function () {
+                if ($(this).val() !== "segment_wise"){
+                    $('#base_msisdn').addClass('d-none')
+                } else {
+                    $('#base_msisdn').removeClass('d-none')
+                }
+            })
         });
     </script>
 

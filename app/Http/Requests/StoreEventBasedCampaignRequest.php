@@ -31,7 +31,7 @@ class StoreEventBasedCampaignRequest extends FormRequest
             'end_date'                     => 'required|max:50',
             'challenge_ids'                => 'required',
             'status'                       => 'required|boolean',
-            'base_msisdn_id'            => 'required',
+            'campaign_user_type'            => 'required',
         ];
     }
 }
