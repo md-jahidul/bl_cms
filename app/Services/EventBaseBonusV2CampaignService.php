@@ -29,7 +29,7 @@ class EventBaseBonusV2CampaignService
     /**
      * @return array
      */
-    public function findAll(): array
+    public function findAll()
     {
         try {
             Session::forget('message');
@@ -48,7 +48,7 @@ class EventBaseBonusV2CampaignService
      * @param $id
      * @return array
      */
-    public function findOne($id): array
+    public function findOne($id)
     {
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
@@ -66,7 +66,7 @@ class EventBaseBonusV2CampaignService
      * @param $data
      * @return array
      */
-    public function store($data): array
+    public function store($data)
     {
         try {
             if (!empty($data['icon_image'])) {
@@ -89,7 +89,7 @@ class EventBaseBonusV2CampaignService
      * @param $id
      * @return array
      */
-    public function update($data, $id): array
+    public function update($data, $id)
     {
         try {
             if (!empty($data['icon_image'])) {

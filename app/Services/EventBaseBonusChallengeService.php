@@ -27,7 +27,7 @@ class EventBaseBonusChallengeService
         $this->host = env('EVENT_BASE_API_HOST_V2');
     }
 
-    public function findAll(): array
+    public function findAll()
     {
         try {
             Session::forget('message');
@@ -42,7 +42,7 @@ class EventBaseBonusChallengeService
         }
     }
 
-    public function findOne($id): array
+    public function findOne($id)
     {
         try {
             $url = $this->host . "/api/v1/campaign-challenge/" . $id;
@@ -73,7 +73,7 @@ class EventBaseBonusChallengeService
         }
     }
 
-    public function store($data): array
+    public function store($data)
     {
         try {
             $challenge_data = $data;
@@ -113,7 +113,7 @@ class EventBaseBonusChallengeService
         }
     }
 
-    public function update($data, $id): array
+    public function update($data, $id)
     {
         try {
             $challenge_data = $data;
@@ -156,7 +156,7 @@ class EventBaseBonusChallengeService
         }
     }
 
-    public function delete($id): array
+    public function delete($id)
     {
         try {
             $url = $this->host . "/api/v1/campaign-challenge/" . $id;
