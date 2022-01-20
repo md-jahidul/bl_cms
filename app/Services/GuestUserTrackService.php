@@ -9,7 +9,9 @@
 
 namespace App\Services;
 
+use App\Models\GuestCustomerActivity;
 use App\Models\GuestUserAccessTracks;
+use App\Repositories\GuestCustomerActivityRepository;
 use App\Repositories\GuestUserTrackRepository;
 use App\Traits\CrudTrait;
 
@@ -18,29 +20,27 @@ class GuestUserTrackService
     use CrudTrait;
 
     /**
-     * @var $prizeService
+     * @var GuestCustomerActivityRepository
      */
-    protected $aboutPageRepository;
+    protected $guestCustomerActivityRepository;
 
     /**
      * GuestUserTrackService constructor.
-     * @param GuestUserTrackRepository $guestUserTrackRepository
+     * @param GuestCustomerActivityRepository $guestCustomerActivityRepository
      */
-    public function __construct(GuestUserTrackRepository $guestUserTrackRepository)
+    public function __construct(GuestCustomerActivityRepository $guestCustomerActivityRepository)
     {
-        $this->aboutPageRepository = $guestUserTrackRepository;
-        $this->setActionRepository($guestUserTrackRepository);
+        $this->guestCustomerActivityRepository = $guestCustomerActivityRepository;
+        $this->setActionRepository($guestCustomerActivityRepository);
     }
 
     public function getGuestUserData($request)
     {
-//        dd($request->all());
-
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = new GuestUserAccessTracks();
+        $builder = new GuestCustomerActivity();
 
         if (isset($request->device_id)) {
             $builder = $builder->where('device_id', 'LIKE', "%$request->device_id%");
