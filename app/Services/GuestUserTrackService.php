@@ -67,7 +67,7 @@ class GuestUserTrackService
         if (isset($request->date_range)) {
             $date = explode('-', $request->date_range);
             $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
-            $to = str_replace('/', '-', $date[1]) . " " . "23:59:00";
+            $to = str_replace('/', '-', $date[1]) . " " . "23:59:59";
             $builder = $builder->whereBetween('created_at', [$from, $to]);
         }
 
