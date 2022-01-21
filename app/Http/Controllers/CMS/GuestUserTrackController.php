@@ -33,9 +33,6 @@ class GuestUserTrackController extends Controller
      */
     public function index()
     {
-//        if ($request->ajax()) {
-//            return  $this->guestUserTrackService->getGuestUserData($request);
-//        }
         return view('admin.mybl-guest-user-track.index');
     }
 
