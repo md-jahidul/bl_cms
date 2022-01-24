@@ -766,6 +766,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
 
+    // Health Hub
+    Route::resource('health-hub', 'CMS\HealthHubController')->except(['show']);
+    Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
+
 });
 
 // 4G Map View Route
