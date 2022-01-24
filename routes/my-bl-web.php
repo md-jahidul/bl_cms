@@ -766,6 +766,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
 
+    /**
+     * SMS Language Config
+     */
+    Route::get('sms-languages', 'CMS\SmsLanguageController@index')->name('sms-languages.index');
+    Route::get('sms-languages/create', 'CMS\SmsLanguageController@create')->name('sms-languages.create');
+    Route::get('sms-languages/edit/{id}', 'CMS\SmsLanguageController@edit')->name('sms-languages.edit');
+    Route::post('sms-languages/store', 'CMS\SmsLanguageController@store')->name('sms-languages.store');
+    Route::put('sms-languages/update/{id}', 'CMS\SmsLanguageController@update')->name('sms-languages.update');
+
 });
 
 // 4G Map View Route

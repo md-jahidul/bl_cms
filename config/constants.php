@@ -16,4 +16,15 @@ return [
         'rafm_report_mail' => env('CS_SELFCARE_RAFM_REPORT_MAIL'),
         'cs_report_send_at' => env('CS_REPORT_SEND_AT', '02:00')
     ],
+
+    'sms' => [
+        'langs' => [
+            'bn' => 'Bengali',
+            'en' => 'English'
+        ],
+        'features' => [
+            'send-otp' => 'Send OTP',
+            'refer-and-earn' => 'Refer And Earn Invite'
+        ]
+    ]
 ];
