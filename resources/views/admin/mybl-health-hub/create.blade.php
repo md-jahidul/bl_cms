@@ -95,7 +95,7 @@
 {{--                                            <div class="help-block"></div>--}}
 {{--                                        </div>--}}
 
-                                        <input type="hidden" name="component_identifier" value="game">
+{{--                                        <input type="hidden" name="component_identifier" value="game">--}}
 
                                         <div class="col-md-6">
                                             <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">

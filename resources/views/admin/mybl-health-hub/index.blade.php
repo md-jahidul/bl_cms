@@ -8,7 +8,7 @@
 {{--    @endif--}}
 @endsection
 @section('action')
-    <a href="{{ route('mybl-manage-items.create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ route('health-hub.create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New Item
     </a>
 @endsection
@@ -23,10 +23,9 @@
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <thead>
                         <tr>
-                            <th><i class="icon-cursor-move icons"></i></th>
-                            <th>Image</th>
+                            <th width="3%"><i class="icon-cursor-move icons"></i></th>
+                            <th width="5%">Icon</th>
                             <th>Item Name</th>
-                            <th>Type</th>
                             <th>CTA Action</th>
 {{--                            @if($parentMenu->type == "service")--}}
 {{--                                <th>Deep Link</th>--}}
@@ -37,42 +36,16 @@
                         <tbody id="sortable">
                             @foreach($healthHubItems as $data)
                                 <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
-                                    <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
-                                    <td width="15%">
-                                        <img src="{{ asset($data->icon) }}" alt="Icon Image">
+                                    <td class="pt-1"><i class="icon-cursor-move icons"></i></td>
+                                    <td>
+                                        <img src="{{ asset($data->icon) }}" alt="Icon Image" width="45" height="45">
                                     </td>
                                     <td class="pt-1">
                                         {{ $data->title_en  }} {!! $data->status == 0 ? '<span class="text-danger"> ( Inactive )</span> <br>' : '' !!}
-                                        {!! $data->show_for_guest == 1 ? '<span class="text-success"> ( Showing For Guest )</span>' : '' !!}
+{{--                                        {!! $data->show_for_guest == 1 ? '<span class="text-success"> (Showing For Guest)</span>' : '' !!}--}}
                                     </td>
-                                    <td class="pt-1">{{ $data->type  }}</td>
                                     <td class="pt-1">{{ $data->component_identifier  }}</td>
-{{--                                    @if($parentMenu->type == "service")--}}
-{{--                                        <td width="5%" class="deep-link-section-{{ $data->id }} text-center">--}}
-{{--                                        @if(isset($data->dynamicLinks))--}}
-{{--                                            <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"--}}
-{{--                                                    data-toggle="tooltip" data-placement="button"--}}
-{{--                                                    data-value="{{ $data->dynamicLinks->link }}"--}}
-{{--                                                    title="Deeplink Copy to Clipboard">Copy</button>--}}
-{{--                                        @else--}}
-{{--                                            @if($data->deep_link_slug)--}}
-{{--                                                <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"--}}
-{{--                                                        title="Click for deep link"--}}
-{{--                                                        data-value="{{ $data->deep_link_slug }}"--}}
-{{--                                                        data-id="{{ $data->id }}">--}}
-{{--                                                    <i  class="la icon-link"></i>--}}
-{{--                                                </button>--}}
-{{--                                            @else--}}
-{{--                                                <button class="btn-sm btn-outline-danger cursor-pointer"--}}
-{{--                                                        data-toggle="tooltip"--}}
-{{--                                                        title="Please select deeplink action in the edit form. then try to generate deeplink.">--}}
-{{--                                                    <i  class="la icon-info"></i>--}}
-{{--                                                </button>--}}
-{{--                                            @endif--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
-{{--                                    @endif--}}
-                                    <td class="action" width="12%">
+                                    <td class="action">
 {{--                                        <a href="{{ route('mybl-manage-items.edit', [$parentMenu->id, $data->id]) }}" role="button"--}}
 {{--                                           class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
 {{--                                        <a href="#" remove="{{ route('mybl-manage-items.destroy', [$parentMenu->id, $data->id]) }}"--}}
