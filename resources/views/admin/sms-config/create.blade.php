@@ -26,7 +26,7 @@
                                 <div class="col-4">
                                         <div class="form-group">
                                             <label for="feature" class="required">Feature: </label>
-                                            <select class="form-control" name="feature" id="feature">
+                                            <select class="form-control" name="feature" id="feature" required>
                                                 @foreach($features as $key => $feature)
                                                     <option value="{{$key}}" {{($page === 'edit' && $key === $smsLanguage->feature) ? 'selected' : ''}}>
                                                         {{$feature}}
@@ -43,19 +43,19 @@
 
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="code" class="required">Default Language:</label>
-                                            <select class="form-control" name="default_lang">
-                                                @foreach($langs as $key => $lang)
+                                            <label for="platform" class="required">Platform:</label>
+                                            <select class="form-control" name="platform" id="platform" required>
+                                                @foreach($platforms as $key => $platform)
                                                     <option
-                                                        value="{{$key}}" {{($page === 'edit' && $key === $smsLanguage->default_lang) ? 'selected' : ''}}>
-                                                        {{$lang}}
+                                                        value="{{$key}}" {{($page === 'edit' && $key === $smsLanguage->platform) ? 'selected' : ''}}>
+                                                        {{$platform}}
                                                     </option>
                                                 @endforeach
                                             </select>
 
                                             <div class="help-block">
-                                                @if ($errors->has('default_lang'))
-                                                    <span class="invalid-feedback">{{ $errors->first('default_lang') }}</span>
+                                                @if ($errors->has('platform'))
+                                                    <span class="invalid-feedback">{{ $errors->first('platform') }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -63,11 +63,11 @@
 
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="code" class="required">
+                                        <label for="concat_char" class="required">
                                             Concat Char:
                                             <i style="cursor: pointer" class="la la-question-circle text-bold-600" title="concatenate dynamic values when concat char is found in the SMS Body"></i>
                                         </label>
-                                        <input name="concat_char" value="{{($page === 'edit') ? $smsLanguage->concat_char : old('concat_char')}}" class="form-control" maxlength="1">
+                                        <input name="concat_char" id="concat_char" required value="{{($page === 'edit') ? $smsLanguage->concat_char : old('concat_char')}}" class="form-control" maxlength="1">
 
                                         <div class="help-block">
                                             @if ($errors->has('concat_char'))
@@ -79,8 +79,8 @@
 
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="code" class="required">SMS BN</label>
-                                        <textarea required type="text" name="sms_bn" class="form-control"
+                                        <label for="sms_bn" class="required">SMS BN</label>
+                                        <textarea required type="text" name="sms_bn" class="form-control" id="sms_bn"
                                                   placeholder="SMS in Bangla">{{($page === 'edit') ? $smsLanguage->sms_bn : old('sms_bn')}}</textarea>
                                         <div class="help-block">
                                             @if ($errors->has('sms_bn'))

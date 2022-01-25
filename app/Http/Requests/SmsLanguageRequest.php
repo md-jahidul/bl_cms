@@ -25,7 +25,7 @@ class SmsLanguageRequest extends FormRequest
     {
         return [
             'feature' => 'required',
-            'default_lang' => 'required',
+            'platform' => 'required',
             'sms_en' => 'required',
             'sms_bn' => 'required',
             'concat_char' => 'required|max:1',

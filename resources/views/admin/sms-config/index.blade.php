@@ -25,8 +25,9 @@
                         <tr style="text-align: center">
                             <th width='2%'>Serial</th>
                             <th width='10%'>Feature</th>
-                            <th width='35%'>SMS BN</th>
-                            <th width='35%'>SMS EN</th>
+                            <th width='30%'>SMS BN</th>
+                            <th width='30%'>SMS EN</th>
+                            <th width='8%'>Platform</th>
                             <th width='5%'>Status</th>
                             <th width='15%'>Action</th>
                         </tr>
@@ -38,6 +39,7 @@
                                 <td>{{$smsLanguage->feature}}</td>
                                 <td>{{$smsLanguage->sms_bn}}</td>
                                 <td>{{$smsLanguage->sms_en}}</td>
+                                <td>{{$smsLanguage->platform}}</td>
                                 <td>{{$smsLanguage->status ? 'Active' : 'Draft'}}</td>
                                 <td>
                                     <div class="row justify-content-md-center no-gutters">

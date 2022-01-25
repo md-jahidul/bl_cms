@@ -16,7 +16,7 @@ class CreateSmsLanguagesTable extends Migration
         Schema::create('sms_languages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('feature', 20)->index();
-            $table->string('default_lang', 20);
+            $table->string('default_lang', 5)->default('bn');
             $table->string('sms_en');
             $table->text('sms_bn');
             $table->string('concat_char', 1);

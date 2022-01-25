@@ -9,6 +9,7 @@ class SmsLanguage extends Model
     protected $fillable = [
         'feature',
         'default_lang',
+        'platform',
         'sms_en',
         'sms_bn',
         'concat_char',

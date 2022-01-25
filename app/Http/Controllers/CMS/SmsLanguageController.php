@@ -40,9 +40,10 @@ class SmsLanguageController extends Controller
      */
     private function getConfigData()
     {
-        $langs = config('constants.sms.langs');
+        $platforms = config('constants.sms.platforms');
         $features = config('constants.sms.features');
-        return [$langs, $features];
+        $langs = config('constants.sms.langs');
+        return [$platforms, $features, $langs];
     }
 
     /**
@@ -52,9 +53,9 @@ class SmsLanguageController extends Controller
      */
     public function create()
     {
-        [$langs, $features] = $this->getConfigData();
+        [$platforms, $features] = $this->getConfigData();
         $page = 'create';
-        return view('admin.sms-config.create', compact('langs', 'features', 'page'));
+        return view('admin.sms-config.create', compact('platforms', 'features', 'page'));
     }
 
     /**
@@ -70,10 +71,10 @@ class SmsLanguageController extends Controller
             Session::flash('error', 'Error! SMS language config not found');
             return redirect()->back();
         }
-        [$langs, $features] = $this->getConfigData();
+        [$platforms, $features] = $this->getConfigData();
         $page = 'edit';
 
-        return view('admin.sms-config.create', compact('langs', 'features', 'page', 'smsLanguage'));
+        return view('admin.sms-config.create', compact('platforms', 'features', 'page', 'smsLanguage'));
     }
 
     public function store(SmsLanguageRequest $request)
