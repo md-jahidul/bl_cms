@@ -8,29 +8,20 @@ use Carbon\Carbon;
 use Illuminate\Http\Response;
 class NotificationV2Service
 {
-
     use CrudTrait;
-
-    private $Http;
-
-    public function __construct()
-    {
-        $this->Http = new Http();
-    }
 
     public function findAll()
     {
-        $res = $this->Http->request('get', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft');
-        $strBody = $res->getBody();
+        [$get_data, $info] = $this->callAPI('get', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft');
 
-        return json_decode($strBody, true);
+        return json_decode($get_data, true);
     }
 
     public function storeNotificationDraft($data)
     {
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
-        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft/store', ['json' => $data]);
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft/store', $data);
 
         return ("Notification Draft has been successfully created");
     }
@@ -40,9 +31,10 @@ class NotificationV2Service
         $body = [
             'id' => $id,
         ];
-        $res = $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft/show', ['json' => $body]);
-        $strBody = $res->getBody();
-        return json_decode($strBody, true);
+
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft/show', $body);
+      
+        return json_decode($get_data, true);
     }
 
     public function updateNotification($request)
@@ -66,17 +58,16 @@ class NotificationV2Service
             "expires_at"                => $request['expires_at']
         ];
 
-        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft/update', ['json' => $body]);
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationDraft/update', $body);
 
         return ("Notification Draft has been successfully Updated");
     }
 
     public function getTargetWiseNotificationReport()
     {
-        $res = $this->Http->request('get', env('NOTIFICATION_MODULE_BASE_URL') . 'notifications');
-        $strBody = $res->getBody();
+        [$get_data, $info] = $this->callAPI('get', env('NOTIFICATION_MODULE_BASE_URL') . 'notifications');
 
-        return json_decode($strBody, true);
+        return json_decode($get_data, true);
     }
 
     public function getNotificationTargetwiseReport($id)
@@ -85,9 +76,9 @@ class NotificationV2Service
             'notificationId' => $id
         ];
 
-        $res = $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'usersNotification', ['json' => $body]);
-        $strBody = $res->getBody();
-        return json_decode($strBody, true);
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'usersNotification', $body);
+        
+        return json_decode($get_data, true);
     }
 
     public function createNotificationSchedule($request, $file_name, $time)
@@ -103,8 +94,86 @@ class NotificationV2Service
             "status"                        => 'active'
         ];
 
-        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationSchedule/store', ['json' => $data]);
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationSchedule/store', $data);
 
-        return ("Notification Draft has been successfully Updated");
+        return ("Notification Draft has been successfully Created");
+    }
+
+    private function callAPI($method, $url, $data=[], $header=[], $auth=false)
+    {
+        $curl = curl_init();
+
+        switch ($method){
+           case "POST":
+              curl_setopt($curl, CURLOPT_POST, 1);
+              if (!empty($data))
+                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+              break;
+           case "PUT":
+              curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+              if (!empty($data))
+                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+              break;
+           default:
+              if (!empty($data))
+                 $url = sprintf("%s?%s", $url, http_build_query($data));
+        }
+        
+        // Set URL
+        curl_setopt($curl, CURLOPT_URL, $url);
+        // Set Return 
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        // Set SSL Disable
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        if(!empty($header)) {
+            // Set HEADER
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'APIKEY: 111111111111111111111',
+                'Content-Type: application/json',
+             ));
+        }
+        
+        if($auth) {
+            // Set Auth
+            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        }
+        
+        try {
+            // EXECUTE:
+            $result = curl_exec($curl);     
+        } catch(\Exception $e) {
+            $errorJson = json_encode([
+                "status" => "FAIL",
+                "status_code" => 422,
+                "error" => [
+                    "message" => "Notification Module Connection Error"
+                ]
+            ]);
+
+            http_response_code(422);
+            exit($errorJson);
+        }
+
+        // INFO:
+        $info = curl_getinfo($curl);
+
+        if(!$result) {
+            $errorJson = json_encode([
+                "status" => "FAIL",
+                "status_code" => 422,
+                "error" => [
+                    "message" => "Notification Module Connection Error"
+                ]
+            ]);
+
+            http_response_code(422);
+            exit($errorJson);
+        }
+
+        curl_close($curl);
+
+        return [$result, $info];
     }
 }

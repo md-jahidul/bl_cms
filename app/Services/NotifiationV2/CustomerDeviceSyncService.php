@@ -10,15 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerDeviceSyncService
 {
-
     use CrudTrait;
-
-    private $Http;
-
-    public function __construct()
-    {
-        $this->Http = new Http();
-    }
 
     public function pushCustomersDevicesTable($allCustomersAndMsisdns)
     {
@@ -26,7 +18,7 @@ class CustomerDeviceSyncService
             'allCustomers'      => $allCustomersAndMsisdns['allCustomers'],
             'customersMsisdns'  => $allCustomersAndMsisdns['customersMsisdns']
         ];
-        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', ['json' => $body]);
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
     }
 
     public function getCustomersDevices()
@@ -62,5 +54,83 @@ class CustomerDeviceSyncService
 
         return DB::table('customers_devices')
                 ->insert($bulk);
+    }
+
+    private function callAPI($method, $url, $data=[], $header=[], $auth=false)
+    {
+        $curl = curl_init();
+
+        switch ($method){
+           case "POST":
+              curl_setopt($curl, CURLOPT_POST, 1);
+              if (!empty($data))
+                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+              break;
+           case "PUT":
+              curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+              if (!empty($data))
+                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+              break;
+           default:
+              if (!empty($data))
+                 $url = sprintf("%s?%s", $url, http_build_query($data));
+        }
+        
+        // Set URL
+        curl_setopt($curl, CURLOPT_URL, $url);
+        // Set Return 
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        // Set SSL Disable
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        if(!empty($header)) {
+            // Set HEADER
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'APIKEY: 111111111111111111111',
+                'Content-Type: application/json',
+             ));
+        }
+        
+        if($auth) {
+            // Set Auth
+            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        }
+        
+        try {
+            // EXECUTE:
+            $result = curl_exec($curl);     
+        } catch(\Exception $e) {
+            $errorJson = json_encode([
+                "status" => "FAIL",
+                "status_code" => 422,
+                "error" => [
+                    "message" => "Notification Module Connection Error"
+                ]
+            ]);
+
+            http_response_code(422);
+            exit($errorJson);
+        }
+
+        // INFO:
+        $info = curl_getinfo($curl);
+
+        if(!$result) {
+            $errorJson = json_encode([
+                "status" => "FAIL",
+                "status_code" => 422,
+                "error" => [
+                    "message" => "Notification Module Connection Error"
+                ]
+            ]);
+
+            http_response_code(422);
+            exit($errorJson);
+        }
+
+        curl_close($curl);
+
+        return [$result, $info];
     }
 }
