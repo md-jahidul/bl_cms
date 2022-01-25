@@ -85,7 +85,7 @@ class MyblFlashHourService
                     $product['product_type'] = $productType;
                     $product['flash_hour_id'] = $campaign->id;
                     $product['show_in_home'] = isset($product['show_in_home']) ? 1 : 0;
-                    $product['status'] = $productData['status'] ?? 0;
+                    $product['status'] = $product['status'] ?? 0;
                     unset($product['product_id']);
                     $this->flashHourProductRepository->save($product);
                 }
