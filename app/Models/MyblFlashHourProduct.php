@@ -31,7 +31,7 @@ class MyblFlashHourProduct extends Model
         $startDate = $this->start_date;
         $endDate = $this->end_date;
 
-        if (isset($startDate) && !($currentTime >= $startDate) || isset($endDate) && !($currentTime <= $endDate)) {
+        if (($currentTime > $startDate) && isset($startDate) && !($currentTime >= $startDate) || isset($endDate) && !($currentTime <= $endDate)) {
             return true;
         }
         return false;
