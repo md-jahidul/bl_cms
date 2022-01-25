@@ -481,6 +481,12 @@
                         <i class="la la-cog"></i>OTP Config</a>
                 </li>
 
+                <li class="{{ is_active_url('sms-languages') . is_active_url('sms-languages/create') . is_active_route('sms-languages.edit')}}">
+                    <a class="menu-item" href="{{ route('sms-languages.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-cog"></i>SMS Language Config</a>
+                </li>
+
                 <li class="{{ is_active_url('recharge/prefill-amounts')}}">
                     <a class="menu-item" href="{{ route('recharge.prefill-amounts.index') }}">
                         <i class="la la-money"></i>Recharge Prefill Amount</a>
