@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\FeedCategoryRepository;
+use App\Repositories\FeedRepository;
 use App\Traits\CrudTrait;
 use Exception;
 use Illuminate\Http\Response;
@@ -16,14 +17,21 @@ class FeedCategoryService
      * @var FeedCategoryRepository
      */
     protected $feedCategoryRepository;
+    /**
+     * @var FeedRepository
+     */
+    private $feedRepository;
 
     /**
      * FeedCategoryService constructor.
      * @param FeedCategoryRepository $feedCategoryRepository
      */
-    public function __construct(FeedCategoryRepository $feedCategoryRepository)
-    {
+    public function __construct(
+        FeedCategoryRepository $feedCategoryRepository,
+        FeedRepository $feedRepository
+    ) {
         $this->feedCategoryRepository = $feedCategoryRepository;
+        $this->feedRepository = $feedRepository;
         $this->setActionRepository($feedCategoryRepository);
     }
 
@@ -93,5 +101,37 @@ class FeedCategoryService
     {
         $this->feedCategoryRepository->updateOrderingPosition($request);
         return new Response('Ordering has been successfully update');
+    }
+
+    public function getFeedForDropDown($feedCatId)
+    {
+
+
+        if (isset($feedCatId)) {
+            $feedsData = $this->feedRepository->findByProperties(['category_id' => $feedCatId]);
+//            dd($feedsData);
+        } else {
+            $feedsData = $this->getActiveAll();
+        }
+
+//        dd($feedsData);
+
+        $data = [];
+        foreach ($feedsData as $item) {
+            if (isset($feedCatId)) {
+                $data[] = [
+                    'id' => $item->id,
+                    'text' => $item->title
+                ];
+            } else {
+                $data[] = [
+                    'id' => $item->slug,
+                    'text' => $item->title,
+                    'data_id' => $item->id
+                ];
+            }
+        }
+
+        return json_encode($data, true);
     }
 }

@@ -894,7 +894,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('usim-eligibility-massage-save', 'CMS\MyblUsimEligibilityController@saveMassage')
         ->name('usim-eligibility.save.massage');
 
-
     /*
      * Remove MSISDN
      */
@@ -911,6 +910,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 //    Route::get('non-bl-request-logs', 'CMS\GuestUserTrackController@getNonBlNumberLogs')
 //        ->name('non-bl-request-logs');
+
+    // Health Hub
+    Route::resource('health-hub', 'CMS\HealthHubController')->except(['show']);
+    Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
 });
 
