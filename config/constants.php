@@ -49,5 +49,20 @@ return [
                 ]
             ]
         ]
+    ],
+
+    'sms' => [
+        'langs' => [
+            'bn' => 'Bengali',
+            'en' => 'English'
+        ],
+        'features' => [
+            'send-otp' => 'Send OTP',
+            'refer-and-earn' => 'Refer And Earn Invite'
+        ],
+        'platforms' => [
+            'mybl' => 'MyBL App',
+            'assetlite' => 'Assetlite Website',
+        ]
     ]
 ];

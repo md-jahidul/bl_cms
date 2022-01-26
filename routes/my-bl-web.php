@@ -915,6 +915,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('health-hub', 'CMS\HealthHubController')->except(['show']);
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
+    /**
+     * SMS Language Config
+     */
+    Route::get('sms-languages', 'CMS\SmsLanguageController@index')->name('sms-languages.index');
+    Route::get('sms-languages/create', 'CMS\SmsLanguageController@create')->name('sms-languages.create');
+    Route::get('sms-languages/edit/{id}', 'CMS\SmsLanguageController@edit')->name('sms-languages.edit');
+    Route::post('sms-languages/store', 'CMS\SmsLanguageController@store')->name('sms-languages.store');
+    Route::put('sms-languages/update/{id}', 'CMS\SmsLanguageController@update')->name('sms-languages.update');
+
 });
 
 // 4G Map View Route
