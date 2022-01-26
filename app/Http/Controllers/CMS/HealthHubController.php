@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Requests\MyblManageRequest;
 use App\Repositories\MyblManageItemRepository;
 use App\Services\FeedCategoryService;
+use App\Services\FeedService;
 use App\Services\HealthHubService;
 use App\Services\MyblManageService;
 use Illuminate\Contracts\Foundation\Application;
@@ -26,15 +27,21 @@ class HealthHubController extends Controller
      * @var HealthHubService
      */
     private $healthHubService;
+    /**
+     * @var FeedService
+     */
+    private $feedService;
 
     /**
      * HealthHubController constructor.
      */
     public function __construct(
         FeedCategoryService $feedCategoryService,
+        FeedService $feedService,
         HealthHubService $healthHubService
     ) {
         $this->feedCategoryService = $feedCategoryService;
+        $this->feedService = $feedService;
         $this->healthHubService = $healthHubService;
     }
 
@@ -45,7 +52,7 @@ class HealthHubController extends Controller
      */
     public function index()
     {
-        $orderBy = ['column' => 'display_order', 'direction' => 'DESC'];
+        $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
         $healthHubItems = $this->healthHubService->findBy([], null, $orderBy);
         return view('admin.mybl-health-hub.index', compact('healthHubItems'));
     }
@@ -87,34 +94,12 @@ class HealthHubController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param MyblManageRequest $request
-     * @return Application|Redirector
-     */
-    public function storeItem(Request $request, $parent_id)
-    {
-        $response = $this->manageService->storeItem($request->all());
-        Session::flash('success', $response->getContent());
-        return redirect(route("mybl-manage-items.index", $parent_id));
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function categorySortable(Request $request)
-    {
-        return $this->manageService->tableSort($request);
-    }
-
-    /**
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function itemSortable(Request $request)
     {
-        return $this->manageService->itemTableSort($request);
+        return $this->healthHubService->itemTableSort($request);
     }
 
     /**
@@ -125,23 +110,27 @@ class HealthHubController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->manageService->findOrFail($id);
-        return view('admin.mybl-manage.categories.edit', compact('category'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Application|Factory|View
-     */
-    public function editItem($parent_id, $id)
-    {
-        $manageCategory = $this->manageService->findOne($parent_id);
-        $item = $this->manageItemRepository->findOrFail($id);
-        $deeplinkActions = Helper::deepLinkList();
+        $healthHub = $this->healthHubService->findOrFail($id);
         $actionList = Helper::navigationActionList();
-        return view('admin.mybl-manage.edit', compact('item', 'manageCategory', 'deeplinkActions', 'actionList'));
+        $actionList["FEED_CATEGORY"] = "Feed Category";
+        $actionList["FEED_CATEGORY_POST"] = "Feed Category Post";
+        $feedCategories = $this->feedCategoryService->findAll();
+
+        $feedPosts = [];
+        if (isset($healthHub->other_info['feed_post_id'])) {
+            $feedCatId = $this->feedCategoryService->findOneByCatSlug($healthHub->other_info['feed_cat_slug'])->id;
+            $feedPosts = $this->feedService->findBy(['category_id' => $feedCatId]);
+        }
+
+        return view(
+            'admin.mybl-health-hub.edit',
+            compact(
+                'healthHub',
+                'actionList',
+                'feedCategories',
+                'feedPosts'
+            )
+        );
     }
 
     /**
@@ -151,25 +140,11 @@ class HealthHubController extends Controller
      * @param int $id
      * @return Application|Redirector
      */
-    public function update(MyblManageRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $response = $this->manageService->updateCategory($request->all(), $id);
+        $response = $this->healthHubService->updateHealthHub($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(route('manage-category.index'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param MyblManageRequest $request
-     * @param int $id
-     * @return Application|Redirector
-     */
-    public function updateItem(Request $request, $parent_id, $id)
-    {
-        $response = $this->manageService->updateItem($request->all(), $id);
-        Session::flash('message', $response->getContent());
-        return redirect(route("mybl-manage-items.index", $parent_id));
+        return redirect(route('health-hub.index'));
     }
 
     /**
@@ -180,18 +155,7 @@ class HealthHubController extends Controller
      */
     public function destroy($id)
     {
-        $this->manageService->deleteCategory($id);
-        return url(route('manage-category.index'));
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Application|string
-     */
-    public function destroyItem($parent_id, $id)
-    {
-        $this->manageService->deleteItem($id);
-        return url(route("mybl-manage-items.index", $parent_id));
+        $this->healthHubService->deleteHealthHubItem($id);
+        return url(route('health-hub.index'));
     }
 }

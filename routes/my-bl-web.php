@@ -912,7 +912,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 //        ->name('non-bl-request-logs');
 
     // Health Hub
-    Route::resource('health-hub', 'CMS\HealthHubController')->except(['show']);
+    Route::resource('health-hub', 'CMS\HealthHubController')->except(['show', 'destroy']);
+    Route::get('health-hub-auto-save', 'CMS\HealthHubController@itemSortable');
+    Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
+
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
     /**

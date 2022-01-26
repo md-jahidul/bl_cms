@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Explore Category List')
-@section('card_name', 'Explore Category List')
+@section('title', 'Health Hub List')
+@section('card_name', 'Health Hub')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('manage-category') }}">Category List</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('manage-category') }}">Health Hub List</a></li>
 {{--    @if($parent_id != 0)--}}
 {{--        <li class="breadcrumb-item active">{{ $parentMenu->title_en }}</li>--}}
 {{--    @endif--}}
@@ -46,12 +46,12 @@
                                     </td>
                                     <td class="pt-1">{{ $data->component_identifier  }}</td>
                                     <td class="action">
-{{--                                        <a href="{{ route('mybl-manage-items.edit', [$parentMenu->id, $data->id]) }}" role="button"--}}
-{{--                                           class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
-{{--                                        <a href="#" remove="{{ route('mybl-manage-items.destroy', [$parentMenu->id, $data->id]) }}"--}}
-{{--                                           class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete the user">--}}
-{{--                                            <i class="la la-trash"></i>--}}
-{{--                                        </a>--}}
+                                        <a href="{{ route('health-hub.edit', $data->id) }}" role="button"
+                                           class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ route('healthHubItem.destroy', $data->id) }}"
+                                           class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete the user">
+                                            <i class="la la-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,14 +70,13 @@
 @stop
 
 @push('page-css')
-{{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 @endpush
 
 @push('page-js')
     <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
     <script>
-        {{--var auto_save_url = "{{ url("mybl-manage-items/$parentMenu->id/sort-auto-save") }}";--}}
-        {{--var deep_link_create_url = "{{ url('manage-deeplink/create?') }}category=";--}}
+        var auto_save_url = "{{ url('health-hub-auto-save') }}";
     </script>
 @endpush
 

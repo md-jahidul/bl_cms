@@ -44,6 +44,11 @@ class FeedCategoryService
         return $this->feedCategoryRepository->getAllCategory();
     }
 
+    public function findOneByCatSlug($slug)
+    {
+        return $this->feedCategoryRepository->findOneByProperties(['slug' => $slug]);
+    }
+
     /**
      * Get all active category
      * @return FeedCategoryRepository|Collection|null
@@ -105,16 +110,11 @@ class FeedCategoryService
 
     public function getFeedForDropDown($feedCatId)
     {
-
-
         if (isset($feedCatId)) {
             $feedsData = $this->feedRepository->findByProperties(['category_id' => $feedCatId]);
-//            dd($feedsData);
         } else {
             $feedsData = $this->getActiveAll();
         }
-
-//        dd($feedsData);
 
         $data = [];
         foreach ($feedsData as $item) {
@@ -131,7 +131,6 @@ class FeedCategoryService
                 ];
             }
         }
-
         return json_encode($data, true);
     }
 }
