@@ -18,9 +18,6 @@
                         <form role="form" action="{{ route('health-hub.update', $healthHub->id) }}"
                               method="POST" id="editForm" enctype="multipart/form-data">
                             <div class="form-body">
-{{--                                <div class="mt-0">--}}
-{{--                                    <h4>Item Create</h4>--}}
-{{--                                </div><hr>--}}
                                 <div class="offset-2">
                                     <div class="col-md-10 row">
                                         <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -245,36 +242,17 @@
                     $("#append_div").html(url_html);
                 } else if (action === 'FEED_CATEGORY') {
                     $("#append_div").html(feed_category);
-                    $(".feed-cat-list").select2({
-                        placeholder: "Select a product",
-                        // minimumInputLength: 3,
-                        allowClear: true,
-                        selectOnClose: true,
-                        ajax: {
-                            url: "{{ route('feed.data') }}",
-                            dataType: 'json',
-                            data: function (params) {
-                                // console.log(params)
-                                var query = {
-                                    productCode: params.term
-                                }
-                                // Query parameters will be ?search=[term]&type=public
-                                return query;
-                            },
-                            processResults: function (data) {
-                                // Transforms the top-level key of the response object from 'items' to 'results'
-                                return {
-                                    results: data
-                                };
-                            }
-                        },
-                        templateResult: function (repo) {
-                            if (repo.loading) {
-                                return repo.text;
-                            }
-                            return $(`<span data-customAttribute="${repo.custom_attribute}">${repo.text}</span>`);
+                    $.ajax({
+                        url: "{{ route('feed.data') }}",
+                        type: 'GET',
+                        dataType: 'json', // added data type
+                        success: function(res) {
+                            res.map(function (data) {
+                                $(".feed-cat-list").append("<option value="+data.id+' data-id='+data.data_id+'>'+data.text+"</option>")
+                            })
                         }
                     });
+
                 } else if (action === 'FEED_CATEGORY_POST') {
                     $(".other-info-div").remove();
                     $("#append_div").append(feed_category);
