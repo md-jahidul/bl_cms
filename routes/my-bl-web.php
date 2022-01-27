@@ -774,6 +774,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('guest-user-track-list');
     Route::post('guest-user-data-export', 'CMS\GuestUserTrackController@dataExport')
         ->name('guest-user-data-export');
+    Route::post('guest-user-show-data', 'CMS\GuestUserTrackController@showData')
+        ->name('guest-user-show-data');
 
 //    Route::get('non-bl-request-logs', 'CMS\GuestUserTrackController@getNonBlNumberLogs')
 //        ->name('non-bl-request-logs');
