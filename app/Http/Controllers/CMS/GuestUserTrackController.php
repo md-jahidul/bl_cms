@@ -40,4 +40,9 @@ class GuestUserTrackController extends Controller
     {
         return  $this->guestUserTrackService->dataExportGenerator($request);
     }
+
+    public function showData(Request $request)
+    {
+        return $this->guestUserTrackService->dataExportGenerator($request, $showData = true);
+    }
 }

@@ -36,7 +36,7 @@ class GuestUserTrackService
         $this->setActionRepository($guestCustomerActivityRepository);
     }
 
-    public function dataExportGenerator($request)
+    public function dataExportGenerator($request, $showData = null)
     {
         $builder = new GuestCustomerActivity();
 
@@ -65,13 +65,19 @@ class GuestUserTrackService
         }
 
         if (isset($request->date_range)) {
-            $date = explode('-', $request->date_range);
+            $date = explode('➝', $request->date_range);
             $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
             $to = str_replace('/', '-', $date[1]) . " " . "23:59:59";
             $builder = $builder->whereBetween('created_at', [$from, $to]);
         }
 
-        $items = $builder->orderBy('created_at', 'DESC')->get();
+        $builder = $builder->orderBy('created_at', 'DESC');
+
+        if ($showData) {
+            return $builder->take(50)->get();
+        }
+
+        $items = $builder->get();
         $this->generateFile($items, $request->export_type);
     }
 
@@ -101,7 +107,8 @@ class GuestUserTrackService
             $writer = WriterEntityFactory::createXLSXWriter();
         }
 
-        $writer->openToBrowser("Guest-User-Activities-" . date('Y-m-d') . ".$exportType");
+        $currentDateTime = Carbon::now()->setTimezone('Asia/Dhaka')->toDateTimeString();
+        $writer->openToBrowser("Guest-User-Activities-" . str_replace(' ', '-', $currentDateTime) . ".$exportType");
         $row = WriterEntityFactory::createRowFromArray($headerRow, $headerRowStyle);
         $writer->addRow($row);
 
@@ -115,11 +122,11 @@ class GuestUserTrackService
                 'device_id' => $data->device_id,
                 'last_activity' => $data->last_activity,
                 'device_type' => $data->device_type,
-                'msisdn_entry_type' => ($data->msisdn_entry_type == "header_input") ? "Header Enrichment Input" : "User Input",
+                'msisdn_entry_type' => str_replace('_', ' ', strtoupper($data->msisdn_entry_type)),
                 'page_name' => str_replace('_', '-', $data->page_name),
                 'failed_reason' => $data->failed_reason,
                 'page_access_status' => ($data->page_access_status) ? "Success" : "Failed",
-                'created_at' => Carbon::parse($data->created_at)->setTimezone('Asia/Dhaka')->toDateTimeString()
+                'created_at' => $data->created_at
             ];
 
             $row = WriterEntityFactory::createRowFromArray($report, $data_style);
