@@ -20,6 +20,8 @@ class CreateMyblHealthHubsTable extends Migration
             $table->string('icon')->nullable();
             $table->string('component_identifier');
             $table->json('other_info');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
             $table->integer('display_order')->default(0);
             $table->boolean('status')->index()->default(0);
             $table->timestamps();
