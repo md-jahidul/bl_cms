@@ -19,7 +19,9 @@ class CreateMyblHealthHubsTable extends Migration
             $table->string('title_bn')->nullable();
             $table->string('icon')->nullable();
             $table->string('component_identifier');
-            $table->json('other_info');
+            $table->string('deeplink')->nullable();
+            $table->string('deeplink_hit_count')->nullable();
+            $table->json('other_info')->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->integer('display_order')->default(0);
