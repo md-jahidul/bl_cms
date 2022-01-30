@@ -148,6 +148,17 @@ class HealthHubController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function analyticData()
+    {
+        $actionList = Helper::navigationActionList();
+        return view('admin.mybl-health-hub.create', compact('actionList'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
