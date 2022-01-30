@@ -43,6 +43,7 @@ class HealthHubService
         }
         $data['display_order'] = $itemCount + 1;
         $this->save($data);
+        Redis::del(self::REDIS_HEALTH_HUB_KEY);
         return new Response('Category added successfully!');
     }
 
