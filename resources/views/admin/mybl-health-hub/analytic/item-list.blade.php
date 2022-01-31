@@ -31,7 +31,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($analytics as $data)
+                        @foreach ($itemsAnalyticData as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->campaign_title}}</td>

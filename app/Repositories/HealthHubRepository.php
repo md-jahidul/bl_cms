@@ -10,6 +10,7 @@
 namespace App\Repositories;
 
 use App\Models\MyblHealthHub;
+use Illuminate\Support\Facades\DB;
 
 class HealthHubRepository extends BaseRepository
 {
@@ -26,5 +27,21 @@ class HealthHubRepository extends BaseRepository
             $update_menu->update();
         }
         return "success";
+    }
+
+    public function getAnalyticData()
+    {
+        return $this->model
+            ->with([
+               'healthHubAnalytics' => function ($q) {
+//                $q->select('msisdn', DB::raw('count(msisdn) quantity'))->groupBy('msisdn');
+//                $q->count(DB::raw('DISTINCT msisdn'));
+//                   $q->select('msisdn', DB::raw('count(msisdn) unique_hits'))->groupBy('msisdn');
+                   $q->select('msisdn');
+                   $q->distinct();
+                   $q->count();
+               }
+            ])
+            ->get();
     }
 }

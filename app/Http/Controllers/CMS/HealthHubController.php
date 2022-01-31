@@ -154,8 +154,8 @@ class HealthHubController extends Controller
      */
     public function analyticData()
     {
-        $actionList = Helper::navigationActionList();
-        return view('admin.mybl-health-hub.create', compact('actionList'));
+        $itemsAnalyticData = $this->healthHubService->analyticReports();
+        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
     }
 
     /**

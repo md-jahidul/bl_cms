@@ -8,7 +8,7 @@
 {{--    @endif--}}
 @endsection
 @section('action')
-    <a href="{{ route('health-hub.create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-bar-chart-o"></i>
+    <a href="{{ route('health-hub.analytics') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-bar-chart-o"></i>
         Health Hub Analytic
     </a>
     <a href="{{ route('health-hub.create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
