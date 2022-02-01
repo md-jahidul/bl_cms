@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMyblHealthHubAnalyticsTable extends Migration
+class CreateHealthHubAnalyticDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateMyblHealthHubAnalyticsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mybl_health_hub_analytics', function (Blueprint $table) {
+        Schema::create('health_hub_analytic_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('health_hub_id');
-            $table->integer('hit_count')->nullable();
-            $table->integer('deeplink_hit_count')->default(0);
-            $table->bigInteger('total_session_time')->nullable()->default(0);
+            $table->unsignedBigInteger('health_hub_analytic_id');
+            $table->integer('msisdn')->nullable();
+            $table->integer('session_time')->nullable();
             $table->foreign('health_hub_id')
                 ->references('id')
                 ->on('mybl_health_hubs')
@@ -34,6 +34,6 @@ class CreateMyblHealthHubAnalyticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mybl_health_hub_analytics');
+        Schema::dropIfExists('health_hub_analytic_details');
     }
 }
