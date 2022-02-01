@@ -7,6 +7,7 @@ use App\Repositories\HealthHubRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 
 class HealthHubService
@@ -48,6 +49,8 @@ class HealthHubService
         if (request()->hasFile('icon')) {
             $data['icon'] = 'storage/' . $data['icon']->store('health-hub');
         }
+
+        $data['created_by'] = Auth::user()->id;
         $data['display_order'] = $itemCount + 1;
         $this->save($data);
         Redis::del(self::REDIS_HEALTH_HUB_KEY);
@@ -68,7 +71,7 @@ class HealthHubService
                 unlink($item->icon);
             }
         }
-
+        $data['updated_by'] = Auth::user()->id;
         $item->update($data);
         Redis::del(self::REDIS_HEALTH_HUB_KEY);
         return new Response('Health hub update successfully!');
