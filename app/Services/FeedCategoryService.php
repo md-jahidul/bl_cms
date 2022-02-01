@@ -111,7 +111,7 @@ class FeedCategoryService
     public function getFeedForDropDown($feedCatId)
     {
         if (isset($feedCatId)) {
-            $feedsData = $this->feedRepository->findByProperties(['category_id' => $feedCatId]);
+            $feedsData = $this->feedRepository->findByProperties(['category_id' => $feedCatId, 'status' => 1]);
         } else {
             $feedsData = $this->getActiveAll();
         }
