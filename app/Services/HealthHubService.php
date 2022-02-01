@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\HealthHubAnalyticRepository;
 use App\Repositories\HealthHubRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -20,15 +21,21 @@ class HealthHubService
      * @var HealthHubRepository
      */
     private $healthHubRepository;
+    /**
+     * @var HealthHubAnalyticRepository
+     */
+    private $healthHubAnalyticRepository;
 
     /**
      * HealthHubService constructor.
      * @param HealthHubRepository $healthHubRepository
      */
     public function __construct(
-        HealthHubRepository $healthHubRepository
+        HealthHubRepository $healthHubRepository,
+        HealthHubAnalyticRepository $healthHubAnalyticRepository
     ) {
         $this->healthHubRepository = $healthHubRepository;
+        $this->healthHubAnalyticRepository = $healthHubAnalyticRepository;
         $this->setActionRepository($healthHubRepository);
     }
 
@@ -79,6 +86,34 @@ class HealthHubService
         $this->healthHubRepository->itemTableSort($data);
         Redis::del(self::REDIS_HEALTH_HUB_KEY);
         return new Response('Sorted successfully');
+    }
+
+    public function analyticReports()
+    {
+        $analyticData = $this->healthHubRepository->getAnalyticData();
+
+        dd($analyticData);
+
+        $analyticData = $analyticData->map(function ($item) {
+            return [
+                'icon' => $item->icon,
+                'title_en' => $item->title_en,
+                'count' => $item->healthHubAnalytics->map(function ($data){
+//                    dd($data);
+                    return [
+                        "unique_hit_count" => $data->distinct('msisdn')->count('msisdn')
+                    ];
+                }),
+            ];
+        });
+
+
+//        $data = $data->groupBy('msisdn')->map(function ($people) {
+//            return $people->count();
+//        });
+//        // or using HigherOrder proxy on the collection
+//        $data = $data->groupBy('msisdn')->map->count();
+        dd($analyticData);
     }
 
     /**

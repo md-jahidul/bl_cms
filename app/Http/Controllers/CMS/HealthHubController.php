@@ -148,6 +148,17 @@ class HealthHubController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function analyticData()
+    {
+        $itemsAnalyticData = $this->healthHubService->analyticReports();
+        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
