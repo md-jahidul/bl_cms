@@ -97,7 +97,8 @@
                                                             <label>Select a Feed Category</label>
                                                             <select class="feed-cat-list form-control" name="other_info[feed_cat_slug]" required>
                                                                 @foreach($feedCategories as $feedCategory)
-                                                                    <option>{{ $feedCategory->title }}</option>
+                                                                    <option
+                                                                        {{ isset($healthHub->other_info['feed_cat_slug']) && $feedCategory->slug == $healthHub->other_info['feed_cat_slug'] ? 'selected' : '' }}>{{ $feedCategory->title }}</option>
                                                                 @endforeach
                                                             </select>
                                                             <div class="help-block"></div>
