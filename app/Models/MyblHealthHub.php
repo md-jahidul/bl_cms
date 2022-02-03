@@ -17,4 +17,9 @@ class MyblHealthHub extends Model
     {
         return $this->hasMany(MyblHealthHubAnalytic::class, 'health_hub_id', 'id');
     }
+
+    public function healthHubAnalyticsDetails(): HasMany
+    {
+        return $this->hasMany(HealthHubAnalyticDetails::class, 'health_hub_id', 'id');
+    }
 }

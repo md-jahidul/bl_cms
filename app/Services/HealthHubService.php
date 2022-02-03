@@ -88,32 +88,25 @@ class HealthHubService
         return new Response('Sorted successfully');
     }
 
-    public function analyticReports()
+    public function analyticReports($request)
     {
-        $analyticData = $this->healthHubRepository->getAnalyticData();
-
-        dd($analyticData);
-
-        $analyticData = $analyticData->map(function ($item) {
+        $analyticData = $this->healthHubRepository->getAnalyticData($request);
+        $data = $analyticData->map(function ($item) {
             return [
+                'id' => $item->id,
                 'icon' => $item->icon,
                 'title_en' => $item->title_en,
-                'count' => $item->healthHubAnalytics->map(function ($data){
-//                    dd($data);
-                    return [
-                        "unique_hit_count" => $data->distinct('msisdn')->count('msisdn')
-                    ];
-                }),
+                "total_hit_count" => $item->healthHubAnalytics->sum('hit_count'),
+                "total_session_time" => $item->healthHubAnalytics->sum('total_session_time'),
+                "total_unique_hit" => $item->healthHubAnalyticsDetails->groupBy('msisdn')->count(),
             ];
         });
+        return $data;
+    }
 
-
-//        $data = $data->groupBy('msisdn')->map(function ($people) {
-//            return $people->count();
-//        });
-//        // or using HigherOrder proxy on the collection
-//        $data = $data->groupBy('msisdn')->map->count();
-        dd($analyticData);
+    public function itemDetails($request, $itemId)
+    {
+        return $this->healthHubRepository->getItemDetailsData($request, $itemId);
     }
 
     /**

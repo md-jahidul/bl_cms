@@ -6,40 +6,77 @@
 @endsection
 
 @section('action')
-    <a href="{{ route('mybl-refer-and-earn.index') }}" class="btn btn-blue-grey  btn-glow px-2"><i class="la la-arrow-left"></i>
-        Back to Campaign
+    <a href="{{ route('health-hub.index') }}" class="btn btn-blue-grey  btn-glow px-2"><i class="la la-arrow-left"></i>
+        Back to Health Hub Items
     </a>
 @endsection
 
 @section('content')
-
     <section>
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
                 <div class="card-body card-dashboard">
+                    <form id="filter-form" class="form">
+                        <div class="row pl-1 mb-1">
+                            <div class="col-md-3">
+                                <label class="control-label">Date Range</label>
+                                <input type="text" name="date_range" id="from" class="form-control datetime"
+                                       value="{{\Illuminate\Support\Facades\Input::get('date_range') ?? old('date_range')}}"
+                                       placeholder="Pick Dates to filter" autocomplete="off">
+                            </div>
+                            <div class="pl-1">
+                                <br>
+                                <button type="submit" class="btn btn-outline-info" value="search">
+                                    <i class="ft ft-search"> </i> Search
+                                </button>
+                            </div>
+                            <div class="pl-1">
+                                <br>
+                                <button type="button" class="btn btn-outline-warning" id="clear-filter">
+                                    <i class="ft ft-remo"> </i> Clear Filter
+                                </button>
+                            </div>
+                            <div class="pl-1">
+                                <br>
+                                <a href="#" class="btn btn-outline-primary" id="clear-filter">
+                                    <i class="ft ft-download"> </i> Excel Export
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1"
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
-                        <tr>
-                            <th>SL</th>
-                            <th>Campaign Title</th>
-                            <th>Total Referrals</th>
-                            <th>Total Referees</th>
-                            <th>Successfully Redeemed</th>
-                            <th>Total Claimed</th>
-                            <th>Total Invited</th>
-                        </tr>
+                            <tr>
+                                <th>SL</th>
+                                <th>Icon</th>
+                                <th>Item Name</th>
+                                <th>Total Unique Hit</th>
+                                <th>Total Hit</th>
+                                <th>Total Session Time</th>
+                                <th>Deeplink Hits</th>
+                                <th>Details</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach ($itemsAnalyticData as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->campaign_title}}</td>
-                                <td>{{ $data->total_referrers}}</td>
-                                <td>{{ $data->total_referees}}</td>
-                                <td>{{ $data->total_success + $data->total_claimed }}</td>
-                                <td>{{ $data->total_claimed }}</td>
-                                <td>{{ $data->total_invited }}</td>
+                                <td>
+                                    <img src="{{ asset($data['icon']) }}" alt="Icon Image" width="45" height="45">
+                                </td>
+                                <td>{{ $data['title_en'] }}</td>
+                                <td>{{ $data['total_unique_hit'] }}</td>
+                                <td>{{ $data['total_hit_count'] }}</td>
+                                <td>{{ $data['total_session_time'] }}</td>
+                                <td>0</td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#large"
+                                       data-id="{{ $data['id'] }}"
+                                       href="{{--{{ route('refer-and-earn.campaign.details', $data->id) }}--}}"
+                                       role="button" class="btn-sm btn-bitbucket border-1 item-details">Item Details</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -50,12 +87,53 @@
         </div>
     </section>
 
+    {{--Modal Start--}}
+    <div class="col-lg-12 col-md-6 col-sm-12">
+        <!-- Modal -->
+        <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel17">Item Analytic</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="overflow-x:auto;">
+
+                        <table class="table table-striped table-bordered dataTable"
+                               role="grid" aria-describedby="Example1_info" id="referee-info">
+                            <thead>
+                            <tr>
+                                <th width="5%">SL</th>
+                                <th width="10%">MSISDN</th>
+                                <th width="10%">Hit Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Modal End--}}
 @endsection
 
 
 
 
 @push('style')
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
+
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
@@ -66,38 +144,172 @@
     </style>
 @endpush
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
+
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js"
             type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
             type="text/javascript"></script>
+
     <script>
         $(document).ready(function () {
+            $('#clear-filter').click(function () {
+                $('input[name="date_range"]').val('')
+                $('input[name="msisdn"]').val('')
+                $('#filter-form').submit();
+            })
+
+            $('.datetime').daterangepicker({
+                timePicker: false,
+                singleDatePicker: false,
+                autoApply: true,
+                locale: {
+                    format: 'YYYY/MM/DD'
+                }
+            });
+
+            $("#from").val("{{\Illuminate\Support\Facades\Input::get('date_range') ?? ''}}");
+
             $('#Example1').DataTable({
-                buttons: [],
+                autoWidth: false,
+                pageLength: 10,
+                lengthMenu: [ 10, 25, 50, 75, 100, 200, 500],
+                // dom: 'Bflrtip',
+                // buttons: [
+                //     'csv', 'excel'
+                // ],
                 paging: true,
                 searching: true,
                 "bDestroy": true,
             });
 
-            $('.delete').click(function () {
-                var id = $(this).attr('data-id');
+            $('.item-details').click(function (){
+                var itemId = $(this).attr('data-id');
+                $("#referee-info").dataTable({
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    autoWidth: false,
+                    pageLength: 10,
+                    ordering: false,
+                    lengthChange: true,
+                    ajax: {
+                        url: '{{ url('health-hub-item-details') }}' + "/" + itemId,
+                        data: {}
+                    },
+                    columns: [
+                        {
+                            name: 'sl',
+                            width: "2%",
+                            render: function () {
+                                return null;
+                            }
+                        },
+                        {
+                            name: 'referee_msisdn',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.referral.msisdn;
+                            }
+                        },
+                        {
+                            name: 'referee_msisdn',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.referral.referral_code;
+                            }
+                        },
+                        {
+                            name: 'referee_msisdn',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.referee_msisdn;
+                            }
+                        },
+                        {
+                            name: 'status',
+                            width: "6%",
+                            render: function (data, type, row) {
+                                const status = row.status[0].toUpperCase() + row.status.substring(1);
+                                let statusData = '';
+                                if (row.status === 'redeemed') {
+                                    statusData = `<span class="badge badge-info">`+status+`</span>`;
+                                } else if (row.status === 'claimed') {
+                                    statusData = `<span class="badge badge-success">`+status+`</span>`;
+                                } else {
+                                    statusData = `<span class="badge badge-warning">`+status+`</span>`;
+                                }
+                                return statusData;
+                            }
+                        },
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        event.preventDefault();
-                        document.getElementById(`delete-form-${id}`).submit();
+                        {
+                            name: 'referee_product_code',
+                            width: "15%",
+                            render: function (data, type, row) {
+
+                                let dataInfo = "";
+                                if (row.status === 'redeemed' || row.status === 'claimed') {
+                                    {{--dataInfo += "{{ $campaignDetails->referee_product_code }}"--}}
+                                }
+                                return dataInfo;
+                            }
+                        },
+                        {
+                            name: 'referee_reward_vol',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                let dataInfo = "";
+                                if (row.status === 'redeemed' || row.status === 'claimed') {
+                                    {{--dataInfo += "{{ $campaignDetails->referee_data }}"--}}
+                                }
+                                return dataInfo;
+                            }
+                        },
+                        {
+                            name: 'referrer_product_code',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                let dataInfo = "";
+                                if (row.status === 'claimed') {
+                                    {{--dataInfo += "{{ $campaignDetails->referrer_product_code }}";--}}
+                                }
+                                return dataInfo;
+                            }
+                        },
+
+                        {
+                            name: 'referrer_reward_vol',
+                            width: "15%",
+                            render: function (data, type, row) {
+
+                                let dataInfo = "";
+                                if (row.status === 'claimed') {
+                                    {{--dataInfo += "{{ $campaignDetails->referrer_data }}";--}}
+                                }
+                                return dataInfo;
+                            }
+                        },
+
+                        {
+                            name: 'created_at',
+                            width: "10%",
+                            render: function (data, type, row) {
+                                return row.created_at;
+                            }
+                        }
+                    ],
+                    "fnCreatedRow": function (row, data, index) {
+                        $('td', row).eq(0).html(index + 1);
                     }
+
+                });
+
+                $('.modal').on('hidden.bs.modal', function () {
+                    $("#referee-info").dataTable().fnDestroy();
                 })
             })
         });
