@@ -50,9 +50,12 @@
                                         <div id="image" class="form-group col-md-12 {{ $errors->has('icon') ? ' error' : '' }}">
                                             <label for="alt_text">Icon</label>
                                             <div class="custom-file">
-                                                <input type="file" name="icon" class="custom-file-input dropify" data-height="80">
+                                                <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
+                                                       data-max-file-size="50K"
+                                                       data-allowed-file-extensions='["png", "jpg", "jpeg", "gif"]'>
                                             </div>
-                                             <span class="text-primary">Please given file type (.png, .jpg, .jpeg, GIF)</span>
+                                             <span class="text-primary">Please given file type (.png, .jpg, .jpeg, GIF) </span>|
+                                             <span class="text-danger"> Icon upload maximum 50KB</span>
                                             <div class="help-block"></div>
                                             @if ($errors->has('icon'))
                                                 <div class="help-block">  {{ $errors->first('icon') }}</div>
@@ -154,6 +157,7 @@
             url_html = ` <div class="form-group other-info-div">
                                         <label>Redirect External URL</label>
                                         <input type="text" name="other_info[content]" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
+                                        <span class="text-warning">Please given URL with https://</span>
                                         <div class="help-block"></div>
                                     </div>`;
             product_html = ` <div class="form-group other-info-div">

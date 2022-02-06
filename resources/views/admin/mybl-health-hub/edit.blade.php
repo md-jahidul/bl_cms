@@ -46,9 +46,12 @@
                                             <label for="alt_text">Icon</label>
                                             <div class="custom-file">
                                                 <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
-                                                       data-default-file="{{ asset($healthHub->icon) }}">
+                                                       data-default-file="{{ asset($healthHub->icon) }}"
+                                                       data-max-file-size="50K"
+                                                       data-allowed-file-extensions='["png", "jpg", "jpeg", "gif"]'>
                                             </div>
-                                            <span class="text-primary">Please given file type (.png, .jpg, .jpeg, GIF)</span>
+                                            <span class="text-primary">Please given file type (.png, .jpg, .jpeg, GIF) </span>|
+                                            <span class="text-danger"> Icon upload maximum 50KB</span>
                                             <div class="help-block"></div>
                                             @if ($errors->has('icon'))
                                                 <div class="help-block">  {{ $errors->first('icon') }}</div>
@@ -79,7 +82,8 @@
                                                     @if($healthHub->component_identifier == "URL")
                                                         <label>Redirect URL</label>
                                                         <input type="text" name="other_info[content]" class="form-control" required
-                                                               value="@if($info) {{$info['content']}} @endif">
+                                                               value="@if($info){{$info['content']}}@endif">
+                                                        <span class="text-warning">Please given URL with https://</span>
                                                     @endif
                                                     @if($healthHub->component_identifier == "PURCHASE")
                                                         <label>Linked Product</label>
@@ -211,6 +215,7 @@
             url_html = ` <div class="form-group other-info-div">
                                         <label>Redirect External URL</label>
                                         <input type="text" name="other_info[content]" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
+                                        <span class="text-warning">Please given URL with https://</span>
                                         <div class="help-block"></div>
                                     </div>`;
             product_html = ` <div class="form-group other-info-div">
