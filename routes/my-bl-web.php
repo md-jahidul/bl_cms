@@ -717,6 +717,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
+    Route::post('welcome-banner/set-order', 'CMS\WelcomeBannerController@order');
 
 });
 

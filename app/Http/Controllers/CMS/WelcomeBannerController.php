@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WelcomeBannerStoreRequest;
 use App\Services\WelcomeBannerService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class WelcomeBannerController extends Controller
@@ -23,7 +24,7 @@ class WelcomeBannerController extends Controller
      */
     public function index()
     {
-        $welcome_banners = $this->welcomeBannerService->findAll();
+        $welcome_banners = $this->welcomeBannerService->findAll(null, null, ['column' => 'position', 'direction' => 'desc']);
 
         return view('admin.welcome-banner.index', compact('welcome_banners'));
     }
@@ -74,6 +75,11 @@ class WelcomeBannerController extends Controller
         Session::flash('message','Welcome Banner Updated successfully');
 
         return redirect('welcome-banner');
+    }
+
+    public function order(Request $request)
+    {
+        $this->welcomeBannerService->orderWelcomerBannerList($request->all());
     }
 
     /**
