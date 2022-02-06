@@ -773,6 +773,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
     Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
 
+    Route::get('health-hub-items-export', 'CMS\HealthHubController@itemsExport');
+
+
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 

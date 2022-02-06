@@ -38,7 +38,7 @@
                             </div>
                             <div class="pl-1">
                                 <br>
-                                <a href="#" class="btn btn-outline-primary" id="clear-filter">
+                                <a href="#" class="btn btn-outline-primary" id="items-export">
                                     <i class="ft ft-download"> </i> Excel Export
                                 </a>
                             </div>
@@ -49,14 +49,14 @@
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                             <tr>
-                                <th>SL</th>
+                                <th width="3%">SL</th>
                                 <th>Icon</th>
                                 <th>Item Name</th>
                                 <th>Total Unique Hit</th>
                                 <th>Total Hit</th>
-                                <th>Total Session Time</th>
-                                <th>Deeplink Hits</th>
-                                <th>Details</th>
+{{--                                <th>Total Session Time</th>--}}
+{{--                                <th>Deeplink Hits</th>--}}
+                                <th width="12%">Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,8 +69,8 @@
                                 <td>{{ $data['title_en'] }}</td>
                                 <td>{{ $data['total_unique_hit'] }}</td>
                                 <td>{{ $data['total_hit_count'] }}</td>
-                                <td>{{ $data['total_session_time'] }}</td>
-                                <td>0</td>
+{{--                                <td>{{ $data['total_session_time'] }}</td>--}}
+{{--                                <td>0</td>--}}
                                 <td>
                                     <a data-toggle="modal" data-target="#large"
                                        data-id="{{ $data['id'] }}"
@@ -101,7 +101,13 @@
                         </button>
                     </div>
                     <div class="modal-body" style="overflow-x:auto;">
-
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" name="export_type" value="xlsx" class="btn btn-outline-primary"><i
+                                        class="la la-file-excel-o"></i> Excel
+                                </button>
+                            </div>
+                        </div>
                         <table class="table table-striped table-bordered dataTable"
                                role="grid" aria-describedby="Example1_info" id="referee-info">
                             <thead>
@@ -153,9 +159,12 @@
             type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
             type="text/javascript"></script>
-
     <script>
         $(document).ready(function () {
+            $('#items-export').click(function () {
+                alert("Hii");
+            })
+
             $('#clear-filter').click(function () {
                 $('input[name="date_range"]').val('')
                 $('input[name="msisdn"]').val('')
@@ -209,96 +218,16 @@
                             }
                         },
                         {
-                            name: 'referee_msisdn',
+                            name: 'msisdn',
                             width: "15%",
                             render: function (data, type, row) {
-                                return row.referral.msisdn;
+                                return row.msisdn;
                             }
-                        },
-                        {
-                            name: 'referee_msisdn',
+                        },                        {
+                            name: 'hit_count',
                             width: "15%",
                             render: function (data, type, row) {
-                                return row.referral.referral_code;
-                            }
-                        },
-                        {
-                            name: 'referee_msisdn',
-                            width: "15%",
-                            render: function (data, type, row) {
-                                return row.referee_msisdn;
-                            }
-                        },
-                        {
-                            name: 'status',
-                            width: "6%",
-                            render: function (data, type, row) {
-                                const status = row.status[0].toUpperCase() + row.status.substring(1);
-                                let statusData = '';
-                                if (row.status === 'redeemed') {
-                                    statusData = `<span class="badge badge-info">`+status+`</span>`;
-                                } else if (row.status === 'claimed') {
-                                    statusData = `<span class="badge badge-success">`+status+`</span>`;
-                                } else {
-                                    statusData = `<span class="badge badge-warning">`+status+`</span>`;
-                                }
-                                return statusData;
-                            }
-                        },
-
-                        {
-                            name: 'referee_product_code',
-                            width: "15%",
-                            render: function (data, type, row) {
-
-                                let dataInfo = "";
-                                if (row.status === 'redeemed' || row.status === 'claimed') {
-                                    {{--dataInfo += "{{ $campaignDetails->referee_product_code }}"--}}
-                                }
-                                return dataInfo;
-                            }
-                        },
-                        {
-                            name: 'referee_reward_vol',
-                            width: "15%",
-                            render: function (data, type, row) {
-                                let dataInfo = "";
-                                if (row.status === 'redeemed' || row.status === 'claimed') {
-                                    {{--dataInfo += "{{ $campaignDetails->referee_data }}"--}}
-                                }
-                                return dataInfo;
-                            }
-                        },
-                        {
-                            name: 'referrer_product_code',
-                            width: "15%",
-                            render: function (data, type, row) {
-                                let dataInfo = "";
-                                if (row.status === 'claimed') {
-                                    {{--dataInfo += "{{ $campaignDetails->referrer_product_code }}";--}}
-                                }
-                                return dataInfo;
-                            }
-                        },
-
-                        {
-                            name: 'referrer_reward_vol',
-                            width: "15%",
-                            render: function (data, type, row) {
-
-                                let dataInfo = "";
-                                if (row.status === 'claimed') {
-                                    {{--dataInfo += "{{ $campaignDetails->referrer_data }}";--}}
-                                }
-                                return dataInfo;
-                            }
-                        },
-
-                        {
-                            name: 'created_at',
-                            width: "10%",
-                            render: function (data, type, row) {
-                                return row.created_at;
+                                return row.hit_count;
                             }
                         }
                     ],

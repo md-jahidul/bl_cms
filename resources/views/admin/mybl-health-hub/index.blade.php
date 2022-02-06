@@ -33,7 +33,7 @@
 {{--                            @if($parentMenu->type == "service")--}}
 {{--                                <th>Deep Link</th>--}}
 {{--                            @endif--}}
-                            <th>Action</th>
+                            <th class="text-right">Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">

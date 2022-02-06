@@ -161,18 +161,16 @@ class HealthHubController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View
+     * @return array
      */
     public function analyticReportsItem(Request $request, $itemId)
     {
         return $this->healthHubService->itemDetails($request, $itemId);
-//        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
     }
 
-    public function analyticItemDetails(Request $request, $itemId)
+    public function itemsExport(Request $request)
     {
-        return $this->healthHubService->itemDetails($request, $itemId);
-//        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
+        return $this->healthHubService->itemsExport($request);
     }
 
     /**

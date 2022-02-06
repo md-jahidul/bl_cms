@@ -109,6 +109,11 @@ class HealthHubService
         return $this->healthHubRepository->getItemDetailsData($request, $itemId);
     }
 
+    public function itemsExport($request)
+    {
+        return $this->healthHubRepository->getItemDetailsData($request);
+    }
+
     /**
      * @param $id
      * @return array

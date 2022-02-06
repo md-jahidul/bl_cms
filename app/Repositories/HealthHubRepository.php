@@ -58,23 +58,14 @@ class HealthHubRepository extends BaseRepository
 
     public function getItemDetailsData($request, $itemId)
     {
-//        $draw = $request->get('draw');
-//        $start = $request->get('start');
-//        $length = $request->get('length');
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
 
         $builder = new HealthHubAnalyticDetails();
 
         $builder = $builder->where('health_hub_id', $itemId);
-//        $builder = $builder->groupBy('msisdn');
-        $builder = $builder->get()
-            ->groupBy('msisdn')
-            ->map(function ($builder) {
-                return $builder->count();
-            });
 
-        return $builder;
-
-//        dd($builder);
         $from = "";
         $to = "";
 //        $builder = $builder->with([
@@ -90,34 +81,27 @@ class HealthHubRepository extends BaseRepository
 //           }
 //       ]);
 
-//        $all_items_count = $builder->count();
-//        $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+        $all_items_count = $builder->count();
+        $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
 
-        $data['test_data'] = $builder->map(function ($item) {
-//            dd($item);
-            return [
-               'unique' => $item->groupBy('msisdn')
-            ];
+
+        $data = $data->groupBy('msisdn')->map(function ($builder) {
+            return $builder->count();
         });
 
-        dd($data);
+        $msisdn = [];
+        foreach ($data as $key => $uniqueMsisdn) {
+            $msisdn[] = [
+                'msisdn' => $key,
+                'hit_count' => $uniqueMsisdn
+            ];
+        }
 
         return [
-            'data' => $data,
+            'data' => $msisdn,
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count
         ];
-
-
-        $data = $analyticData->map(function ($item) {
-            return [
-                'icon' => $item->icon,
-                'title_en' => $item->title_en,
-                "total_hit_count" => $item->healthHubAnalytics->sum('hit_count'),
-                "total_session_time" => $item->healthHubAnalytics->sum('total_session_time'),
-                "total_unique_hit" => $item->healthHubAnalyticsDetails->groupBy('msisdn')->count(),
-            ];
-        });
     }
 }
