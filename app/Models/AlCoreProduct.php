@@ -14,6 +14,8 @@ class AlCoreProduct extends Model
         'commercial_name_en',
         'commercial_name_bn',
         'short_description',
+        'sd_vat_tax_en',
+        'sd_vat_tax_bn',
         'sim_type',
         'content_type',
         'family_name',

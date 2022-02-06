@@ -70,6 +70,25 @@
                                         <div class="help-block">{{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-6 {{ $errors->has('sd_vat_tax_en') ? ' error' : '' }}">
+                                    <label for="sd_vat_tax_en">Display SD VAT Tax (English)</label>
+                                    <input type="text" name="sd_vat_tax_en" id="sd_vat_tax_en" class="form-control" placeholder="Enter SD Vat Tax in English"
+                                           value="{{ optional($product->product_core)->sd_vat_tax_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('sd_vat_tax_en'))
+                                        <div class="help-block">{{ $errors->first('sd_vat_tax_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('sd_vat_tax_bn') ? ' error' : '' }}">
+                                    <label for="sd_vat_tax_bn">Display SD VAT Tax (Bangla)</label>
+                                    <input type="text" name="sd_vat_tax_bn" id="sd_vat_tax_bn" class="form-control" placeholder="Enter SD Vat Tax in Bangla"
+                                           value="{{ optional($product->product_core)->sd_vat_tax_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('sd_vat_tax_bn'))
+                                        <div class="help-block">{{ $errors->first('sd_vat_tax_bn') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
