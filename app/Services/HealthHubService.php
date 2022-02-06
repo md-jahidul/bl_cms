@@ -64,6 +64,15 @@ class HealthHubService
                 unlink($item->icon);
             }
         }
+
+        $componentTypeURL = isset($data['other_info']['content']);
+        if ($componentTypeURL) {
+            $url = $data['other_info']['content'];
+            if (substr($url, 0, 8) != "https://") {
+                $data['other_info']['content'] = "https://" . str_replace(' ', '', $url);
+            }
+        }
+
         $data['updated_by'] = Auth::user()->id;
         $item->update($data);
         Redis::del(self::REDIS_HEALTH_HUB_KEY);
