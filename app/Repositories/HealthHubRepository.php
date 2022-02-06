@@ -58,15 +58,23 @@ class HealthHubRepository extends BaseRepository
 
     public function getItemDetailsData($request, $itemId)
     {
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $length = $request->get('length');
+//        $draw = $request->get('draw');
+//        $start = $request->get('start');
+//        $length = $request->get('length');
 
         $builder = new HealthHubAnalyticDetails();
 
         $builder = $builder->where('health_hub_id', $itemId);
-        $builder = $builder->groupBy('msisdn');
-        $builder = $builder->get();
+//        $builder = $builder->groupBy('msisdn');
+        $builder = $builder->get()
+            ->groupBy('msisdn')
+            ->map(function ($builder) {
+                return $builder->count();
+            });
+
+        return $builder;
+
+//        dd($builder);
         $from = "";
         $to = "";
 //        $builder = $builder->with([
@@ -85,10 +93,12 @@ class HealthHubRepository extends BaseRepository
 //        $all_items_count = $builder->count();
 //        $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
 
-/*        $data = $data->map(function ($item) {
-//            dd($item->groupBy('msisdn'));
-            return $item->groupBy('msisdn');
-        });*/
+        $data['test_data'] = $builder->map(function ($item) {
+//            dd($item);
+            return [
+               'unique' => $item->groupBy('msisdn')
+            ];
+        });
 
         dd($data);
 

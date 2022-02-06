@@ -169,6 +169,12 @@ class HealthHubController extends Controller
 //        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
     }
 
+    public function analyticItemDetails(Request $request, $itemId)
+    {
+        return $this->healthHubService->itemDetails($request, $itemId);
+//        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
