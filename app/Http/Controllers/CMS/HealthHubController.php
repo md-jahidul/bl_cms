@@ -170,7 +170,7 @@ class HealthHubController extends Controller
 
     public function itemsExport(Request $request)
     {
-        return $this->healthHubService->itemsExport($request);
+        return $this->healthHubService->itemsReportExport($request);
     }
 
     /**

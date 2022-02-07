@@ -162,7 +162,15 @@
     <script>
         $(document).ready(function () {
             $('#items-export').click(function () {
-                alert("Hii");
+                $.ajax({
+                    method: "get",
+                    url : "{{ url('health-hub-items-export') }}",
+                    data: {
+                        "date_range" : $('input[name="date_range"]').val()
+                    }
+                }).done(function (data) {
+                    console.log(data);
+                })
             })
 
             $('#clear-filter').click(function () {

@@ -6,6 +6,10 @@ use App\Repositories\HealthHubAnalyticRepository;
 use App\Repositories\HealthHubRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -109,9 +113,55 @@ class HealthHubService
         return $this->healthHubRepository->getItemDetailsData($request, $itemId);
     }
 
-    public function itemsExport($request)
+    public function itemsReportExport($request)
     {
-        return $this->healthHubRepository->getItemDetailsData($request);
+        $reportData = $this->analyticReports($request);
+        return $this->generateFile($reportData);
+    }
+
+
+
+    public function generateFile($items, $exportType = null)
+    {
+        $headerRow = [
+            "Item Name",
+            "Total Hit Count",
+            "Total Session Time",
+            "Total Unique Hit"
+        ];
+
+        $headerRowStyle = (new StyleBuilder())
+            ->setFontBold()
+            ->setFontSize(10)
+            ->setBackgroundColor(Color::rgb(245, 245, 240))
+            ->build();
+
+        if ($exportType == "csv") {
+            $writer = WriterEntityFactory::createCSVWriter();
+        } else {
+            $writer = WriterEntityFactory::createXLSXWriter();
+        }
+
+        $currentDateTime = Carbon::now()->setTimezone('Asia/Dhaka')->toDateTimeString();
+        $writer->openToBrowser("Guest-User-Activities-" . str_replace(' ', '-', $currentDateTime) . ".$exportType");
+        $row = WriterEntityFactory::createRowFromArray($headerRow, $headerRowStyle);
+        $writer->addRow($row);
+
+        $data_style = (new StyleBuilder())
+            ->setFontSize(9)
+            ->build();
+
+        foreach ($items as $data) {
+            $report = [
+                'title_en' => $data['msisdn'],
+                'total_hit_count' => $data['device_id'],
+                'total_session_time' => $data['total_unique_hit'],
+                'total_unique_hit' => $data['total_unique_hit'],
+            ];
+            $row = WriterEntityFactory::createRowFromArray($report, $data_style);
+            $writer->addRow($row);
+        }
+        $writer->close();
     }
 
     /**
