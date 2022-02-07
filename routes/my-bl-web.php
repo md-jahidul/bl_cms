@@ -773,6 +773,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
+    // Guest User Tracking Page Wise
+    Route::get('guest-user-track-list', 'CMS\GuestUserTrackController@index')
+        ->name('guest-user-track-list');
+    Route::post('guest-user-data-export', 'CMS\GuestUserTrackController@dataExport')
+        ->name('guest-user-data-export');
+    Route::post('guest-user-show-data', 'CMS\GuestUserTrackController@showData')
+        ->name('guest-user-show-data');
+
 });
 
 // 4G Map View Route
