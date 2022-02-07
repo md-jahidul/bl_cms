@@ -901,6 +901,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('remove-msisdn/remove', 'CMS\RemoveMsisdnController@removeMsisdn')->name('remove-msisdn.remove');
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
+    Route::post('welcome-banner/set-order', 'CMS\WelcomeBannerController@order');
 
     // Guest User Tracking Page Wise
     Route::get('guest-user-track-list', 'CMS\GuestUserTrackController@index')
