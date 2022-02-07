@@ -83,9 +83,6 @@ class MyblFlashHourService
     {
         try {
             DB::beginTransaction();
-            if ($data['status']) {
-                $this->flashHourRepository->inactiveOldCampaign();
-            }
             $data['reference_type'] = $reference_type;
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
@@ -97,7 +94,7 @@ class MyblFlashHourService
                     $product['product_type'] = $productType;
                     $product['flash_hour_id'] = $campaign->id;
                     $product['show_in_home'] = isset($product['show_in_home']) ? 1 : 0;
-                    $product['status'] = $productData['status'] ?? 0;
+                    $product['status'] = $product['status'] ?? 0;
                     unset($product['product_id']);
                     $this->flashHourProductRepository->save($product);
                 }
@@ -128,7 +125,6 @@ class MyblFlashHourService
                     $currentProductId[] = $productData['product_id'];
                     $product = $this->flashHourProductRepository->findOne($productData['product_id']);
                     $productType = $this->productCoreRepository->getProductType($productData['product_code']);
-
                     if (isset($productData['thumbnail_img'])) {
                         $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
                         if (!empty($product->thumbnail_img)) {

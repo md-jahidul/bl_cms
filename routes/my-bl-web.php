@@ -708,7 +708,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('flash-hour-analytic.report');
 
     Route::get('flash-hour-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlFlashHourController@purchaseMsisdnList')
-        ->name('purchase-msisdn.list');
+        ->name('mybl-campaign.purchase-msisdn.list');
 
     Route::get('flash-hour-purchase-msisdn/{id}', 'CMS\MyBlFlashHourController@purchaseDetails');
 
