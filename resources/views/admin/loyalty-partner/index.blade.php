@@ -69,7 +69,7 @@
                         <div id="grid" class="col-md-2 col-sm-3 col-xs-4" data-image-type="banner">
                             <div class="card">
                                 <div>
-                                    <img class="card-img-top img-fluid" src=""
+                                    <img class="card-img-top img-fluid d-none" src=""
                                          alt="Card image cap">
                                 </div>
                                 <div class="card-body">
@@ -248,12 +248,18 @@
                             $("#grid-table .card-del-btn").eq(key).attr('onclick', "deletePartnerImage(" + value.id + ")");
 
                             if (imageType == 'logo') {
-                                $("#grid-table .card-img-top").eq(key).attr('src', value.logo_img);
+                                if(value.logo_img) {
+                                    $("#grid-table .card-img-top").eq(key).attr('src', value.logo_img);
+                                    $("#grid-table .card-img-top").eq(key).removeClass('d-none');
+                                }
                                 $("#grid-table .badge").eq(key).html('logo');
                                 $("#grid-table .card-copy-btn").eq(key).attr('onclick', "copy('" + "{{$host}}" + "', '" + value.logo_img + "');return false;");
                             } else {
+                                if(value.banner_img) {
+                                    $("#grid-table .card-img-top").eq(key).attr('src', value.banner_img);
+                                    $("#grid-table .card-img-top").eq(key).removeClass('d-none');
+                                }
                                 $("#grid-table .badge").eq(key).html('banner');
-                                $("#grid-table .card-img-top").eq(key).attr('src', value.banner_img);
                                 $("#grid-table .card-copy-btn").eq(key).attr('onclick', "copy('" + "{{$host}}" + "', '" + value.banner_img + "');return false;");
                             }
                         });

@@ -77,12 +77,12 @@ echo $data;
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image_url" class="required">Upload Banner Image </label>
+                                            <label for="image_url">Upload Banner Image </label>
                                             <input type="file" id="image_url" name="banner_img" class="dropify_image"
                                                    data-min-width="799" data-min-height="449"
                                                    data-max-width="801" data-min-height="451"
                                                    data-default-file="{{ isset($loyaltyPartnerImage->banner_img) ? url('/' .$loyaltyPartnerImage->banner_img) : ''}}"
-                                                   data-allowed-file-extensions="png jpg gif" required/>
+                                                   data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block text-warning">
                                                 The Dimensions should be <strong>800x450</strong>
                                             </div>
@@ -93,12 +93,12 @@ echo $data;
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image_url" class="required">Upload Logo</label>
+                                            <label for="image_url">Upload Logo</label>
                                             <input type="file" id="image_url" name="logo_img" class="dropify_image"
                                                    data-min-width="199" data-min-height="199"
                                                    data-max-width="201" data-max-height="201"
                                                    data-default-file="{{ isset($loyaltyPartnerImage->logo_img) ? url('/' .$loyaltyPartnerImage->logo_img) : ''}}"
-                                                   data-allowed-file-extensions="png jpg gif" required/>
+                                                   data-allowed-file-extensions="png jpg gif"/>
                                             <div class="help-block text-warning">
                                                 The Dimensions should be <strong>200x200</strong>
                                             </div>
