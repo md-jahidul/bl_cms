@@ -43,6 +43,7 @@ class WelcomeBannerService
             }
 
             $data['created_by'] = auth()->user()->id;
+            $data['position'] = 0;
 
             $this->save($data);
 
@@ -95,5 +96,22 @@ class WelcomeBannerService
         $welcome_banner->delete();
 
         return new Response("Welcome Banner has been successfully updated");
+    }
+
+    /**
+     * @param $data
+     * @param $id
+     * @return bool
+     */
+    public function orderWelcomerBannerList($data)
+    {
+        $banners = $data['banner_ids'];
+
+        foreach ($banners as $index=>$banner) {
+            $position = count($banners) - $index;
+          $this->findOne($banner)->update(['position' => $position]);
+        }
+
+        return true;
     }
 }

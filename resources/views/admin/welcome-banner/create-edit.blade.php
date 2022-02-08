@@ -33,7 +33,7 @@
                 <form novalidate action="{{ route('welcome-banner.update',$welcome_banner->id) }}" method="post"
                       enctype="multipart/form-data">
                     @else
-                        <form novalidate action="{{ route('welcome-banner.store') }}" method="post"
+                        <form action="{{ route('welcome-banner.store') }}" method="post"
                               enctype="multipart/form-data">
                             @endif
 
@@ -122,19 +122,18 @@
                                     <div id="image-input" class="form-group">
                                         <div class="form-group">
                                             <label for="image_url">Upload Welcome Banner </label>
-                                            <input type="file" id="image_url" name="banner_img" class="dropify_image"
+                                            <input type="file" id="image_url" name="banner_img" class="dropify_image" required
                                                    data-width="360"
                                                    data-min-width="359" data-min-height="459"
                                                    data-max-width="361" data-min-height="461"
                                                    data-validation-required-message="Banner Image required"
                                                    data-default-file="{{ isset($welcome_banner) ? asset($welcome_banner->banner_img) : ''}}"
                                                    data-allowed-file-extensions="png jpg gif"/>
+                                            <small class="text-danger"> @error('banner_img') {{ $message }} @enderror </small>
                                             <div class="help-block">
                                                 <small class="text-warning">Banner image dimension must be <strong>360 X 460</strong> and size must not exceed <strong>100
                                                         kb</strong></small>
                                             </div>
-                                            <small class="text-danger"> @error('banner_img') {{ $message }} @enderror </small>
-                                            <small id="massage"></small>
                                         </div>
                                     </div>
                                 </div>
