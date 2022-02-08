@@ -137,6 +137,7 @@ class HealthHubService
     {
         if ($exportModuleType == "items_export") {
             //Health Hub Items
+            $fileName = "items";
             $headerRow = [
                 "SL",
                 "Item Name",
@@ -145,6 +146,7 @@ class HealthHubService
             ];
         } else {
             // Item Details
+            $fileName = "item-details";
             $headerRow = [
                 "SL",
                 "Msisdn",
@@ -161,7 +163,7 @@ class HealthHubService
         $writer = WriterEntityFactory::createXLSXWriter();
 
         $currentDateTime = Carbon::now()->setTimezone('Asia/Dhaka')->toDateTimeString();
-        $writer->openToBrowser("Guest-User-Activities-" . str_replace(' ', '-', $currentDateTime) . ".xlsx");
+        $writer->openToBrowser("health-hub-$fileName-" . str_replace(' ', '-', $currentDateTime) . ".xlsx");
         $row = WriterEntityFactory::createRowFromArray($headerRow, $headerRowStyle);
         $writer->addRow($row);
 
