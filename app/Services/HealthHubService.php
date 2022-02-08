@@ -6,6 +6,10 @@ use App\Repositories\HealthHubAnalyticRepository;
 use App\Repositories\HealthHubRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -97,32 +101,95 @@ class HealthHubService
         return new Response('Sorted successfully');
     }
 
-    public function analyticReports()
+    public function analyticReports($request)
     {
-        $analyticData = $this->healthHubRepository->getAnalyticData();
-
-        dd($analyticData);
-
-        $analyticData = $analyticData->map(function ($item) {
+        $analyticData = $this->healthHubRepository->getAnalyticData($request);
+        $data = $analyticData->map(function ($item) {
             return [
+                'id' => $item->id,
                 'icon' => $item->icon,
                 'title_en' => $item->title_en,
-                'count' => $item->healthHubAnalytics->map(function ($data){
-//                    dd($data);
-                    return [
-                        "unique_hit_count" => $data->distinct('msisdn')->count('msisdn')
-                    ];
-                }),
+                "total_hit_count" => $item->healthHubAnalytics->sum('hit_count'),
+                "total_session_time" => $item->healthHubAnalytics->sum('total_session_time'),
+                "total_unique_hit" => $item->healthHubAnalyticsDetails->groupBy('msisdn')->count(),
             ];
         });
+        return $data;
+    }
 
+    public function itemDetails($request, $itemId)
+    {
+        return $this->healthHubRepository->getItemDetailsData($request, $itemId);
+    }
 
-//        $data = $data->groupBy('msisdn')->map(function ($people) {
-//            return $people->count();
-//        });
-//        // or using HigherOrder proxy on the collection
-//        $data = $data->groupBy('msisdn')->map->count();
-        dd($analyticData);
+    public function exportReport($request)
+    {
+        $reportData = [];
+        if ($request->excel_export == "items_export") {
+            $reportData = $this->analyticReports($request);
+        } elseif ($request->excel_export == "item_export_details") {
+            $reportData = $this->healthHubRepository->getItemDetailsData($request, $request->item_id);
+        }
+        return $this->generateFileItem($reportData, $request->excel_export);
+    }
+
+    public function generateFileItem($items, $exportModuleType = null)
+    {
+        if ($exportModuleType == "items_export") {
+            //Health Hub Items
+            $headerRow = [
+                "SL",
+                "Item Name",
+                "Total Unique Hit",
+                "Total Hit Count"
+            ];
+        } else {
+            // Item Details
+            $headerRow = [
+                "SL",
+                "Msisdn",
+                "Total Hit Count"
+            ];
+        }
+
+        $headerRowStyle = (new StyleBuilder())
+            ->setFontBold()
+            ->setFontSize(10)
+            ->setBackgroundColor(Color::rgb(245, 245, 240))
+            ->build();
+
+        $writer = WriterEntityFactory::createXLSXWriter();
+
+        $currentDateTime = Carbon::now()->setTimezone('Asia/Dhaka')->toDateTimeString();
+        $writer->openToBrowser("Guest-User-Activities-" . str_replace(' ', '-', $currentDateTime) . ".xlsx");
+        $row = WriterEntityFactory::createRowFromArray($headerRow, $headerRowStyle);
+        $writer->addRow($row);
+
+        $data_style = (new StyleBuilder())
+            ->setFontSize(9)
+            ->build();
+
+        foreach ($items as $key => $data) {
+            if ($exportModuleType == "items_export") {
+                //Health Hub Items
+                $report = [
+                    'SL' => $key + 1,
+                    'title_en' => $data['title_en'],
+                    'total_unique_hit' => $data['total_unique_hit'],
+                    'total_hit_count' => $data['total_hit_count'],
+                ];
+            } else {
+                // Item Details
+                $report = [
+                    'SL' => $key + 1,
+                    'msisdn' => $data['msisdn'],
+                    'hit_count' => $data['hit_count']
+                ];
+            }
+            $row = WriterEntityFactory::createRowFromArray($report, $data_style);
+            $writer->addRow($row);
+        }
+        $writer->close();
     }
 
     /**

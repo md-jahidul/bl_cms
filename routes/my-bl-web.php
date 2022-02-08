@@ -918,6 +918,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub-auto-save', 'CMS\HealthHubController@itemSortable');
     Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
     Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
+    Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
+
+//    Route::get('health-hub-item-details-export', 'CMS\HealthHubController@itemDetailsExport');
+
+
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
