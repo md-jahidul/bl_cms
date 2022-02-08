@@ -113,22 +113,35 @@ class HealthHubService
         return $this->healthHubRepository->getItemDetailsData($request, $itemId);
     }
 
-    public function itemsReportExport($request)
+    public function exportReport($request)
     {
-        $reportData = $this->analyticReports($request);
-        return $this->generateFile($reportData);
+        $reportData = [];
+        if ($request->excel_export == "items_export") {
+            $reportData = $this->analyticReports($request);
+        } elseif ($request->excel_export == "item_export_details") {
+            $reportData = $this->healthHubRepository->getItemDetailsData($request, $request->item_id);
+        }
+        return $this->generateFileItem($reportData, $request->excel_export);
     }
 
-
-
-    public function generateFile($items, $exportType = null)
+    public function generateFileItem($items, $exportModuleType = null)
     {
-        $headerRow = [
-            "Item Name",
-            "Total Hit Count",
-            "Total Session Time",
-            "Total Unique Hit"
-        ];
+        if ($exportModuleType == "items_export") {
+            //Health Hub Items
+            $headerRow = [
+                "SL",
+                "Item Name",
+                "Total Unique Hit",
+                "Total Hit Count"
+            ];
+        } else {
+            // Item Details
+            $headerRow = [
+                "SL",
+                "Msisdn",
+                "Total Hit Count"
+            ];
+        }
 
         $headerRowStyle = (new StyleBuilder())
             ->setFontBold()
@@ -136,14 +149,10 @@ class HealthHubService
             ->setBackgroundColor(Color::rgb(245, 245, 240))
             ->build();
 
-        if ($exportType == "csv") {
-            $writer = WriterEntityFactory::createCSVWriter();
-        } else {
-            $writer = WriterEntityFactory::createXLSXWriter();
-        }
+        $writer = WriterEntityFactory::createXLSXWriter();
 
         $currentDateTime = Carbon::now()->setTimezone('Asia/Dhaka')->toDateTimeString();
-        $writer->openToBrowser("Guest-User-Activities-" . str_replace(' ', '-', $currentDateTime) . ".$exportType");
+        $writer->openToBrowser("Guest-User-Activities-" . str_replace(' ', '-', $currentDateTime) . ".xlsx");
         $row = WriterEntityFactory::createRowFromArray($headerRow, $headerRowStyle);
         $writer->addRow($row);
 
@@ -151,13 +160,23 @@ class HealthHubService
             ->setFontSize(9)
             ->build();
 
-        foreach ($items as $data) {
-            $report = [
-                'title_en' => $data['msisdn'],
-                'total_hit_count' => $data['device_id'],
-                'total_session_time' => $data['total_unique_hit'],
-                'total_unique_hit' => $data['total_unique_hit'],
-            ];
+        foreach ($items as $key => $data) {
+            if ($exportModuleType == "items_export") {
+                //Health Hub Items
+                $report = [
+                    'SL' => $key + 1,
+                    'title_en' => $data['title_en'],
+                    'total_unique_hit' => $data['total_unique_hit'],
+                    'total_hit_count' => $data['total_hit_count'],
+                ];
+            } else {
+                // Item Details
+                $report = [
+                    'SL' => $key + 1,
+                    'msisdn' => $data['msisdn'],
+                    'hit_count' => $data['hit_count']
+                ];
+            }
             $row = WriterEntityFactory::createRowFromArray($report, $data_style);
             $writer->addRow($row);
         }

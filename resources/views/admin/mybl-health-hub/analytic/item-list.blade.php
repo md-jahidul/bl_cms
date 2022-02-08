@@ -20,7 +20,7 @@
                         <div class="row pl-1 mb-1">
                             <div class="col-md-3">
                                 <label class="control-label">Date Range</label>
-                                <input type="text" name="date_range" id="from" class="form-control datetime"
+                                <input type="text" name="date_range" id="date_range" class="form-control datetime"
                                        value="{{\Illuminate\Support\Facades\Input::get('date_range') ?? old('date_range')}}"
                                        placeholder="Pick Dates to filter" autocomplete="off">
                             </div>
@@ -38,9 +38,10 @@
                             </div>
                             <div class="pl-1">
                                 <br>
-                                <a href="#" class="btn btn-outline-primary" id="items-export">
-                                    <i class="ft ft-download"> </i> Excel Export
-                                </a>
+                                <button type="submit" name="excel_export" value="items_export"
+                                        class="btn btn-outline-secondary" id="excel-export">
+                                    <i class="la la-download"></i> Excel Export
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -101,15 +102,19 @@
                         </button>
                     </div>
                     <div class="modal-body" style="overflow-x:auto;">
-                        <div class="col-md-12">
-                            <div class="pull-right">
-                                <button type="submit" name="export_type" value="xlsx" class="btn btn-outline-primary"><i
-                                        class="la la-file-excel-o"></i> Excel
-                                </button>
+                        <form id="filter-form" class="form">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <input type="hidden" name="item_id">
+                                    <button type="button" name="excel_export" value="item_export_details"
+                                            class="btn btn-outline-secondary" id="item_details_export">
+                                        <i class="la la-download"></i> Excel Export
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         <table class="table table-striped table-bordered dataTable"
-                               role="grid" aria-describedby="Example1_info" id="referee-info">
+                               role="grid" aria-describedby="Example1_info" id="itemDetails">
                             <thead>
                             <tr>
                                 <th width="5%">SL</th>
@@ -132,9 +137,6 @@
     </div>
     {{--Modal End--}}
 @endsection
-
-
-
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
@@ -161,17 +163,15 @@
             type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $('#items-export').click(function () {
-                $.ajax({
-                    method: "get",
-                    url : "{{ url('health-hub-items-export') }}",
-                    data: {
-                        "date_range" : $('input[name="date_range"]').val()
-                    }
-                }).done(function (data) {
-                    console.log(data);
-                })
-            })
+            $('#item_details_export').on('click', function () {
+                var query = {
+                    date_range: $('input[name="date_range"]').val(),
+                    excel_export: $(this).val(),
+                    item_id: $('input[name="item_id"]').val(),
+                }
+                var url = "{{URL::to('health-hub-analytic-data')}}?" + $.param(query)
+                window.location = url;
+            });
 
             $('#clear-filter').click(function () {
                 $('input[name="date_range"]').val('')
@@ -188,24 +188,12 @@
                 }
             });
 
-            $("#from").val("{{\Illuminate\Support\Facades\Input::get('date_range') ?? ''}}");
-
-            $('#Example1').DataTable({
-                autoWidth: false,
-                pageLength: 10,
-                lengthMenu: [ 10, 25, 50, 75, 100, 200, 500],
-                // dom: 'Bflrtip',
-                // buttons: [
-                //     'csv', 'excel'
-                // ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
+            $("#date_range").val("{{\Illuminate\Support\Facades\Input::get('date_range') ?? ''}}");
 
             $('.item-details').click(function (){
                 var itemId = $(this).attr('data-id');
-                $("#referee-info").dataTable({
+                $('input[name="item_id"]').val(itemId)
+                $("#itemDetails").dataTable({
                     processing: true,
                     searching: false,
                     serverSide: true,
@@ -215,7 +203,9 @@
                     lengthChange: true,
                     ajax: {
                         url: '{{ url('health-hub-item-details') }}' + "/" + itemId,
-                        data: {}
+                        data: {
+                            date_range: $('input[name="date_range"]').val()
+                        }
                     },
                     columns: [
                         {
@@ -246,7 +236,7 @@
                 });
 
                 $('.modal').on('hidden.bs.modal', function () {
-                    $("#referee-info").dataTable().fnDestroy();
+                    $("#itemDetails").dataTable().fnDestroy();
                 })
             })
         });

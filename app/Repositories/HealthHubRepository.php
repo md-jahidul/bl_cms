@@ -53,37 +53,28 @@ class HealthHubRepository extends BaseRepository
                        $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
                    }
                }
-            ])->get();
-    }
+           ])->get();
+}
 
     public function getItemDetailsData($request, $itemId)
     {
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $length = $request->get('length');
-
         $builder = new HealthHubAnalyticDetails();
-
         $builder = $builder->where('health_hub_id', $itemId);
 
-        $from = "";
-        $to = "";
-//        $builder = $builder->with([
-//           'healthHubAnalytics' => function ($q) use ($from, $to) {
-//               if (!empty($from)) {
-//                   $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
-//               }
-//           },
-//           'healthHubAnalyticsDetails' => function ($q) use ($from, $to) {
-//               if (!empty($from)) {
-//                   $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
-//               }
-//           }
-//       ]);
+        if (isset($request->date_range)) {
+            $date = explode(' - ', $request->date_range);
+            $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
+            $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
+            $builder = $builder->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
+        }
 
-        $all_items_count = $builder->count();
-        $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
-
+        if (isset($request->excel_export)) {
+            $data = $builder->get();
+        } else {
+            $start = $request->get('start');
+            $length = $request->get('length');
+            $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+        }
 
         $data = $data->groupBy('msisdn')->map(function ($builder) {
             return $builder->count();
@@ -97,6 +88,12 @@ class HealthHubRepository extends BaseRepository
             ];
         }
 
+        if (isset($request->excel_export)) {
+            return $msisdn;
+        }
+
+        $draw = $request->get('draw');
+        $all_items_count = $builder->count();
         return [
             'data' => $msisdn,
             'draw' => $draw,
