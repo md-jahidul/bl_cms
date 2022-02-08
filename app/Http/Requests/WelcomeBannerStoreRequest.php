@@ -27,7 +27,7 @@ class WelcomeBannerStoreRequest extends FormRequest
             'title_en' => 'required|max:200',
             'title_bn' => 'required|max:200',
             'description_en' => 'required|max:200',
-            'description_bn' => 'required|max:200',
+            'description_bn' => 'required|max:200'
         ];
     }
 }

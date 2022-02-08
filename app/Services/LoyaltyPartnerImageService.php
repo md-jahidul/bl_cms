@@ -73,10 +73,14 @@ class LoyaltyPartnerImageService
 
             if (!empty($data['banner_img'])) {
                 $data['banner_img'] = 'storage/' . $data['banner_img']->store('loyalty-partner');
+            }else {
+                $data['banner_img'] = '';
             }
 
             if (!empty($data['logo_img'])) {
                 $data['logo_img'] = 'storage/' . $data['logo_img']->store('loyalty-partner');
+            }else{
+                $data['logo_img'] = '';
             }
 
             $data['updated_at'] = Carbon::now()->toDateTimeString();

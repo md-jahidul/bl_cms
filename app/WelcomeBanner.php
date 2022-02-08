@@ -12,6 +12,7 @@ class WelcomeBanner extends Model
         'description_en',
         'description_bn',
         'banner_img',
-        'created_by'
+        'created_by',
+        'position'
     ];
 }
