@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WelcomeBannerStoreRequest extends FormRequest
+class StorePartnerImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,11 @@ class WelcomeBannerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_en' => 'required|max:200',
-            'title_bn' => 'required|max:200',
-            'description_en' => 'required|max:200',
-            'description_bn' => 'required|max:200'
+            'partner_category_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'status' => 'required|integer',
+            'platform' => 'required|string|max:255'
         ];
     }
 }
