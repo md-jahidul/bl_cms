@@ -205,55 +205,76 @@
 
 
     <!-- Campaign Menu -->
-    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
-            <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
-        <ul class="menu-content">
-            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
-                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-list"></i> Refer And Earn
-                </a>
-            </li>
-
-            <li class="nav-item"><a href="#"><i class="la la-users"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
-                <ul class="menu-content">
-                    <li class="{{ is_active_url('event-base-bonus/tasks')}}">
-                        <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>
+    @if( auth()->user()->can_view('MyBlReferAndEarn') || auth()->user()->can_view('EventBaseTask') || auth()->user()->can_view('EventBaseCampaign') || auth()->user()->can_view('EventBaseTaskAnalytic') || auth()->user()->can_view('MyBlFlashHour') || auth()->user()->can_view('MyBlCampaign') || auth()->user()->can_view('MyBlCashBack') )
+        <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
+            <ul class="menu-content">
+                @if( auth()->user()->can_view('MyBlReferAndEarn') )
+                    <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+                        <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i> Refer And Earn
+                        </a>
                     </li>
-                    <li class="{{ is_active_url('event-base-bonus/campaigns')}}">
-                        <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
-                    </li>
-                    <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
-                        <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
-                    </li>
-                </ul>
-            </li>
+                @endif
 
-            <li class="{{is_active_url('flash-hour-campaign')}}">
-                <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-hourglass-half"></i> Flash Hour
-                </a>
-            </li>
+                @if( auth()->user()->can_view('EventBaseTask') || auth()->user()->can_view('EventBaseCampaign') || auth()->user()->can_view('EventBaseTaskAnalytic') )
+                    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>
+                        <ul class="menu-content">
+                            @if( auth()->user()->can_view('EventBaseTask') )
+                                <li class="{{ is_active_url('event-base-bonus/tasks')}}">
+                                    <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>
+                                </li>
+                            @endif
 
-            <li class="{{is_active_url('mybl-campaign')}}">
-                <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-bullhorn"></i> Mybl Campaign
-                </a>
-            </li>
-            <li class="{{is_active_url('cash-back-campaign')}}">
-                <a class="menu-item" href="{{ route('cash-back-campaign.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-dollar"></i> Cash Back
-                </a>
-            </li>
-        </ul>
-    </li>
+                            @if( auth()->user()->can_view('EventBaseCampaign') )
+                            <li class="{{ is_active_url('event-base-bonus/campaigns')}}">
+                                <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>
+                            </li>
+                            @endif
+
+                            @if( auth()->user()->can_view('EventBaseTaskAnalytic') )
+                                <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">
+                                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+
+                @if( auth()->user()->can_view('MyBlFlashHour') )
+                    <li class="{{is_active_url('flash-hour-campaign')}}">
+                        <a class="menu-item" href="{{ route('flash-hour-campaign.index') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-hourglass-half"></i> Flash Hour
+                        </a>
+                    </li>
+                @endif
+
+                @if( auth()->user()->can_view('MyBlCampaign') )
+                    <li class="{{is_active_url('mybl-campaign')}}">
+                        <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-bullhorn"></i> Mybl Campaign
+                        </a>
+                    </li>
+                @endif
+
+                @if( auth()->user()->can_view('MyBlCashBack') )
+                    <li class="{{is_active_url('cash-back-campaign')}}">
+                        <a class="menu-item" href="{{ route('cash-back-campaign.index') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-dollar"></i> Cash Back
+                        </a>
+                    </li>
+                @endif
+            </ul>
+        </li>
+    @endif
 
     <!-- Loyalty Partner Menu -->
     @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
@@ -515,7 +536,7 @@
         </li>
     @endif
 
-    @if( auth()->user()->can_view('LearnPriyojon') )
+    @if( auth()->user()->can_view('LearnPriyojonContent', 'show') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title">Priyojon</span></a>
             <ul class="menu-content">
@@ -607,53 +628,69 @@
         </li>
     @endif
 
-    <li class="{{ is_active_url(route('support-message')) }}">
-        <a class="menu-item" href="{{ route('support-message') }}">
-            <i class="la la-code-fork"></i>Support Messages</a>
-    </li>
+    @if( auth()->user()->can_view('SupportMessageRating') )
+        <li class="{{ is_active_url(route('support-message')) }}">
+            <a class="menu-item" href="{{ route('support-message') }}">
+                <i class="la la-code-fork"></i>Support Messages</a>
+        </li>
+    @endif
 
     <!-- Agent Deep link Menu -->
-    <li class=" nav-item"><a href="#"><i class="la la-users"></i>
-            <span class="menu-title" data-i18n="nav.templates.main">Agent List</span></a>
-        <ul class="menu-content">
-            <li class=" {{is_active_url('deeplink/agent/deeplink/list')}}">
-                <a class="menu-item" href="{{ route('deeplink.agent.list') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-list"></i>Agent List
-                </a>
-            </li>
-            <li class="{{is_active_url('agent/deeplink/report')}}">
-                <a class="menu-item" href="{{ route('agent.deeplink.report') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-list"></i> Report
-                </a>
-            </li>
-        </ul>
-    </li>
+    @if( auth()->user()->can_view('AgentList') || auth()->user()->can_view('AgentList', 'agentDeeplinkReport') )
+        <li class=" nav-item"><a href="#"><i class="la la-users"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Agent List</span></a>
+            <ul class="menu-content">
+                @if( auth()->user()->can_view('AgentList') )
+                    <li class=" {{is_active_url('deeplink/agent/deeplink/list')}}">
+                        <a class="menu-item" href="{{ route('deeplink.agent.list') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i>Agent List
+                        </a>
+                    </li>
+                @endif
+
+                @if( auth()->user()->can_view('AgentList', 'agentDeeplinkReport') )
+                    <li class="{{is_active_url('agent/deeplink/report')}}">
+                        <a class="menu-item" href="{{ route('agent.deeplink.report') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i> Report
+                        </a>
+                    </li>
+                @endif
+            </ul>
+        </li>
+    @endif
 
     <!-- Others Menu -->
-    <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
-            <span class="menu-title" data-i18n="nav.templates.main">Others</span></a>
-        <ul class="menu-content">
-            <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">USIM Eligibility</span></a>
-                <ul class="menu-content">
-                    <li class=" {{is_active_url('usim-eligibility')}}">
-                        <a class="menu-item" href="{{ route('usim-eligibility.index') }} "
-                           data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-simplybuilt"></i>Landing Page
-                        </a>
-                    </li>
-                    <li class=" {{is_active_url('usim-eligibility-massage')}}">
-                        <a class="menu-item" href="{{ route('usim-eligibility.show.massage') }} "
-                           data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-file-text"></i>Eligibility Massage
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
+    @if( auth()->user()->can_view('MyblUsimEligibility') || auth()->user()->can_view('MyblUsimEligibility', 'showMassage') )
+        <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Others</span></a>
+            <ul class="menu-content">
+                <li class=" nav-item"><a href="#"><i class="la la-adjust"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">USIM Eligibility</span></a>
+                    <ul class="menu-content">
+                        @if( auth()->user()->can_view('MyblUsimEligibility') )
+                            <li class=" {{is_active_url('usim-eligibility')}}">
+                                <a class="menu-item" href="{{ route('usim-eligibility.index') }} "
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-simplybuilt"></i>Landing Page
+                                </a>
+                            </li>
+                        @endif
+
+                        @if( auth()->user()->can_view('MyblUsimEligibility', 'showMassage') )
+                            <li class=" {{is_active_url('usim-eligibility-massage')}}">
+                                <a class="menu-item" href="{{ route('usim-eligibility.show.massage') }} "
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-file-text"></i>Eligibility Massage
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    @endif
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
