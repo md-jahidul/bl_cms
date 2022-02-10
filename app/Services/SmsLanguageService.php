@@ -35,7 +35,7 @@ class SmsLanguageService
     {
         try {
             if ($data['status']) {
-                $this->smsLanguageRepository->turnStatusToDraft($data['feature']);
+                $this->smsLanguageRepository->turnStatusToDraft($data['feature'], $data['platform']);
             }
             $data['updated_by'] = Auth::user()->id;
             return $this->save($data);
@@ -48,7 +48,7 @@ class SmsLanguageService
     {
         try {
             if ($data['status']) {
-                $this->smsLanguageRepository->turnStatusToDraft($data['feature']);
+                $this->smsLanguageRepository->turnStatusToDraft($data['feature'], $data['platform']);
             }
             $data['updated_by'] = Auth::user()->id;
             return $this->findOne($id)->update($data);
