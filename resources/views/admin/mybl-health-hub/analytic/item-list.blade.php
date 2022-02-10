@@ -223,7 +223,7 @@
                             name: 'msisdn',
                             width: "15%",
                             render: function (data, type, row) {
-                                return 0 + row.msisdn;
+                                return "0" + row.msisdn;
                             }
                         },                        {
                             name: 'hit_count',
