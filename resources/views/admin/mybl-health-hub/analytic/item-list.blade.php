@@ -1,8 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Refer And Earn Analytics')
-@section('card_name', 'Refer And Earn Analytics')
+@section('title', 'Health Hub Item Analytics')
+@section('card_name', 'Health Hub Item Analytics')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">List</li>
+    <li class="breadcrumb-item active">
+        <a href="{{ route('health-hub.index') }}">Health Hub List</a>
+    </li>
+    <li class="breadcrumb-item active">Item Report List</li>
 @endsection
 
 @section('action')
@@ -198,7 +201,8 @@
                     searching: false,
                     serverSide: true,
                     autoWidth: false,
-                    pageLength: 10,
+                    pageLength: 5,
+                    lengthMenu: [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
                     ordering: false,
                     lengthChange: true,
                     ajax: {
@@ -219,7 +223,7 @@
                             name: 'msisdn',
                             width: "15%",
                             render: function (data, type, row) {
-                                return row.msisdn;
+                                return 0 + row.msisdn;
                             }
                         },                        {
                             name: 'hit_count',

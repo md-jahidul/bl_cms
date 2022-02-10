@@ -2,10 +2,7 @@
 @section('title', 'Health Hub List')
 @section('card_name', 'Health Hub')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('manage-category') }}">Health Hub List</a></li>
-{{--    @if($parent_id != 0)--}}
-{{--        <li class="breadcrumb-item active">{{ $parentMenu->title_en }}</li>--}}
-{{--    @endif--}}
+    <li class="breadcrumb-item">Health Hub List</li>
 @endsection
 @section('action')
     <a href="{{ route('health-hub.analytics') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-bar-chart-o"></i>
@@ -28,8 +25,9 @@
                         <tr>
                             <th width="3%"><i class="icon-cursor-move icons"></i></th>
                             <th width="5%">Icon</th>
-                            <th>Item Name</th>
-                            <th>CTA Action</th>
+                            <th>Item Name En</th>
+                            <th>Item Name Bn</th>
+                            <th>Destination</th>
 {{--                            @if($parentMenu->type == "service")--}}
 {{--                                <th>Deep Link</th>--}}
 {{--                            @endif--}}
@@ -45,8 +43,8 @@
                                     </td>
                                     <td class="pt-1">
                                         {{ $data->title_en  }} {!! $data->status == 0 ? '<span class="text-danger"> ( Inactive )</span> <br>' : '' !!}
-{{--                                        {!! $data->show_for_guest == 1 ? '<span class="text-success"> (Showing For Guest)</span>' : '' !!}--}}
                                     </td>
+                                    <td class="pt-1">{{ $data->title_bn  }}</td>
                                     <td class="pt-1">{{ $data->component_identifier  }}</td>
                                     <td class="action">
                                         <a href="{{ route('health-hub.edit', $data->id) }}" role="button"

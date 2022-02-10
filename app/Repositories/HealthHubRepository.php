@@ -71,14 +71,20 @@ class HealthHubRepository extends BaseRepository
         if (isset($request->excel_export)) {
             $data = $builder->get();
         } else {
-            $start = $request->get('start');
-            $length = $request->get('length');
-            $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
+            $data = $builder->orderBy('created_at', 'DESC')->get();
         }
 
         $data = $data->groupBy('msisdn')->map(function ($builder) {
             return $builder->count();
         });
+
+
+        if (!isset($request->excel_export)) {
+            $all_items_count = $data->count();
+            $start = $request->get('start');
+            $length = $request->get('length');
+            $data = collect($data)->slice($start, $length);
+        }
 
         $msisdn = [];
         foreach ($data as $key => $uniqueMsisdn) {
@@ -93,7 +99,7 @@ class HealthHubRepository extends BaseRepository
         }
 
         $draw = $request->get('draw');
-        $all_items_count = $builder->count();
+
         return [
             'data' => $msisdn,
             'draw' => $draw,
