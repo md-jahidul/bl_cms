@@ -38,7 +38,7 @@ class SmsLanguageController extends Controller
     /**
      * @return array
      */
-    private function getConfigData()
+    private function getConfigData(): array
     {
         $platforms = config('constants.sms.platforms');
         $features = config('constants.sms.features');
