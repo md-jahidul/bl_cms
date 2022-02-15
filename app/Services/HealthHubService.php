@@ -121,9 +121,9 @@ class HealthHubService
             $reportData = $this->analyticReports($request);
         } elseif ($request->excel_export == "item_export_details") {
             $reportData = $this->healthHubRepository->getItemDetailsData($request, $request->item_id);
-            $itemName = $this->healthHubRepository->findOneByProperties(['id' => $request->item_id], ['title_en']);
+            $itemName = $this->healthHubRepository->findOneByProperties(['id' => $request->item_id], ['title_en'])->title_en;
         }
-        return $this->generateFileItem($reportData, $request->excel_export, $itemName->title_en);
+        return $this->generateFileItem($reportData, $request->excel_export, $itemName);
     }
 
     public function generateFileItem($items, $exportModuleType = null, $itemName = null)
