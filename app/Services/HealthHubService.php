@@ -116,15 +116,17 @@ class HealthHubService
     public function exportReport($request)
     {
         $reportData = [];
+        $itemName = "";
         if ($request->excel_export == "items_export") {
             $reportData = $this->analyticReports($request);
         } elseif ($request->excel_export == "item_export_details") {
             $reportData = $this->healthHubRepository->getItemDetailsData($request, $request->item_id);
+            $itemName = $this->healthHubRepository->findOneByProperties(['id' => $request->item_id], ['title_en']);
         }
-        return $this->generateFileItem($reportData, $request->excel_export);
+        return $this->generateFileItem($reportData, $request->excel_export, $itemName->title_en);
     }
 
-    public function generateFileItem($items, $exportModuleType = null)
+    public function generateFileItem($items, $exportModuleType = null, $itemName = null)
     {
         if ($exportModuleType == "items_export") {
             //Health Hub Items
@@ -137,7 +139,7 @@ class HealthHubService
             ];
         } else {
             // Item Details
-            $fileName = "item-details";
+            $fileName = str_replace(' ', '-', $itemName);
             $headerRow = [
                 "SL",
                 "Msisdn",

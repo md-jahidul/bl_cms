@@ -53,7 +53,7 @@ class HealthHubRepository extends BaseRepository
                        $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
                    }
                }
-           ])->get();
+           ])->orderBy('display_order', 'ASC')->get();
 }
 
     public function getItemDetailsData($request, $itemId)
@@ -78,13 +78,13 @@ class HealthHubRepository extends BaseRepository
             return $builder->count();
         });
 
-
         if (!isset($request->excel_export)) {
             $all_items_count = $data->count();
             $start = $request->get('start');
             $length = $request->get('length');
             $data = collect($data)->slice($start, $length);
         }
+
 
         $msisdn = [];
         foreach ($data as $key => $uniqueMsisdn) {
@@ -94,6 +94,8 @@ class HealthHubRepository extends BaseRepository
             ];
         }
 
+        $msisdn = collect($msisdn)->sortBy('hit_count', null, true);
+
         if (isset($request->excel_export)) {
             return $msisdn;
         }
@@ -101,7 +103,7 @@ class HealthHubRepository extends BaseRepository
         $draw = $request->get('draw');
 
         return [
-            'data' => $msisdn,
+            'data' => array_values($msisdn->toArray()),
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count
