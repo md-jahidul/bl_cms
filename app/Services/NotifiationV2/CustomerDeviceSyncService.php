@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\DB;
 class CustomerDeviceSyncService
 {
     use CrudTrait;
+    private $Http;
+
+    public function __construct()
+    {
+        $this->Http = new Http();
+    }
 
     public function pushCustomersDevicesTable($allCustomersAndMsisdns)
     {
@@ -18,7 +24,8 @@ class CustomerDeviceSyncService
             'allCustomers'      => $allCustomersAndMsisdns['allCustomers'],
             'customersMsisdns'  => $allCustomersAndMsisdns['customersMsisdns']
         ];
-        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
+        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', ['json' => $body]);
+        // [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
     }
 
     public function getCustomersDevices()
@@ -35,12 +42,23 @@ class CustomerDeviceSyncService
 
     public function freshSync()
     {
-        $customers = DB::table('customers')
-                    ->select('phone', 'device_token', 'device_type', 'number_type')
-                    ->get();
+        $listMsisdnCustomers = DB::table('customers')
+                ->pluck('phone')
+                ->toArray();
+
+        $listMsisdnCustomersDevices = DB::table('customers_devices')
+                            ->pluck('msisdn')
+                            ->toArray();
+        
+        $listUniquePhoneNubmer = array_diff($listMsisdnCustomers, $listMsisdnCustomersDevices);
+
+        $customersList = DB::table('customers')
+                        ->when(is_array($listUniquePhoneNubmer), fn($q) => $q->whereIn('phone', $listUniquePhoneNubmer))
+                        ->select('phone', 'device_token', 'device_type', 'number_type')
+                        ->get();
 
         $bulk = array();
-        foreach($customers as $customer)
+        foreach($customersList as $customer)
         {
             $data = [
                 'msisdn'            => $customer->phone ? $customer->phone : "",
