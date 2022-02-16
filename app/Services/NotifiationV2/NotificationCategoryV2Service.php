@@ -7,6 +7,7 @@ use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use \GuzzleHttp\Client as Http;
+use Illuminate\Support\Facades\DB;
 
 class NotificationCategoryV2Service
 {
@@ -134,6 +135,34 @@ class NotificationCategoryV2Service
         [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/delete', $body);
 
         return Response('Notification Category has been successfully deleted');
+    }
+
+    public function syncNotificationCategory(){
+
+        $listNotificationsCategory = DB::table('notifications_category')
+                                ->pluck('slug')
+                                ->toArray();
+                                
+        [$get_data, $info] = $this->callAPI('GET', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/listSlug');
+
+        $data = json_decode($get_data, true);
+        $listNotificationsCategoryFromMongoDB = $data['data'];
+
+        $uniqueNotificationCategory = array_diff($listNotificationsCategory, $listNotificationsCategoryFromMongoDB);
+
+        $notificationsCategoryList = DB::table('notifications_category')
+        ->when(is_array($uniqueNotificationCategory), fn($q) => $q->whereIn('slug', $uniqueNotificationCategory))
+        ->select('name', 'slug', 'created_at', 'updated_at')
+        ->get();
+
+        $requestData = [
+            'categories' => $notificationsCategoryList,
+        ];
+        
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/storeBulk', $requestData);
+
+        dd($get_data);
+
     }
 
     private function callAPI($method, $url, $data=[], $header=[], $auth=false)

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\SyncCustomerDeviceTable;
 use App\Console\Commands\SyncCustomersAndCustomersDevicesTable;
+use App\Console\Commands\SyncNotificationCategoryTable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         SyncCustomerDeviceTable::class,
         SyncCustomersAndCustomersDevicesTable::class,
+        SyncNotificationCategoryTable::class
     ];
 
     /**
