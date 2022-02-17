@@ -24,8 +24,8 @@ class CustomerDeviceSyncService
             'allCustomers'      => $allCustomersAndMsisdns['allCustomers'],
             'customersMsisdns'  => $allCustomersAndMsisdns['customersMsisdns']
         ];
-        $this->Http->request('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', ['json' => $body]);
-        // [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
+      
+        [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
     }
 
     public function getCustomersDevices()
