@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SyncCustomerDeviceTable;
+use App\Console\Commands\SyncCustomersAndCustomersDevicesTable;
+use App\Console\Commands\SyncNotificationCategoryTable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +16,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SyncCustomerDeviceTable::class,
+        SyncCustomersAndCustomersDevicesTable::class,
+        SyncNotificationCategoryTable::class
     ];
 
     /**
@@ -30,6 +35,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:rafm-report-cs-sefcare')->withoutOverlapping()
             ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))
             ->timezone('Asia/Dhaka');
+        
+        $interval = env('TABLE_SYNC_INTERVAL');
+        $schedule->command('mybl:sync-customer-device-table')->withoutOverlapping()->everyFifteenMinutes();
     }
 
     /**

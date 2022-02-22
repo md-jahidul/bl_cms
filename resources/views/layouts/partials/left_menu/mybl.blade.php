@@ -213,6 +213,32 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
+        <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Notification V2</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+
+                <li class="{{ is_active_url('notificationCategory-v2') }}{{ is_active_url('notificationCategory-v2/create') }}">
+                    <a class="menu-item" href="{{ route('notificationCategory-v2.index') }}"
+                    data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Category List v2
+                    </a>
+                </li>
+                <li class="{{ is_active_url('notification') }}{{ is_active_url('notification/create') }}">
+                    <a class="menu-item" href="{{ route('notification-v2.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification List V2</a>
+                </li>
+                <li class="{{ is_active_url('target-wise-notification-report') }}">
+                    <a class="menu-item" href="{{ route('target-wise-notification-report-v2.report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification Report V2</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
 
     <!-- Campaign Menu -->
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
