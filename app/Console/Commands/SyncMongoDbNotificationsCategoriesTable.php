@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use App\Services\NotifiationV2\NotificationCategoryV2Service;
 use Illuminate\Console\Command;
 
-class SyncNotificationCategoryTable extends Command
+class SyncMongoDbNotificationsCategoriesTable extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'mybl-table-sync:mongodb-notificationCategory-table';
+    protected $signature = 'mybl-table-sync:mongodb-notifications_categories-table';
 
     /**
      * The console command description.

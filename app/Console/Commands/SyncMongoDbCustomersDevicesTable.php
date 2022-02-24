@@ -8,14 +8,14 @@ use App\Services\NotifiationV2\CustomerDeviceSyncService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class SyncCustomerDeviceTable extends Command
+class SyncMongoDbCustomersDevicesTable extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'mybl-table-sync:mongodb-customersDevices-table';
+    protected $signature = 'mybl-table-sync:mongodb-customers_devices-table';
 
     /**
      * The console command description.
@@ -47,7 +47,7 @@ class SyncCustomerDeviceTable extends Command
         try 
         {
             $customerDeviceSyncService->pushCustomersDevicesTable($allCustomersAndMsisdns);
-            Log::info('Success: Customer');
+            Log::info('Sync Success: MongoDb customers_devices table');
         } 
         
         catch (\Exception $e) 
