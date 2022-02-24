@@ -58,7 +58,7 @@
                                 <th>Item Name</th>
                                 <th>Total Unique Hit</th>
                                 <th>Total Hit</th>
-{{--                                <th>Total Session Time</th>--}}
+                                <th>Total Session Time</th>
 {{--                                <th>Deeplink Hits</th>--}}
                                 <th width="12%">Details</th>
                             </tr>
@@ -73,7 +73,7 @@
                                 <td>{{ $data['title_en'] }}</td>
                                 <td>{{ $data['total_unique_hit'] }}</td>
                                 <td>{{ $data['total_hit_count'] }}</td>
-{{--                                <td>{{ $data['total_session_time'] }}</td>--}}
+                                <td>{{ $data['total_session_time'] }}</td>
 {{--                                <td>0</td>--}}
                                 <td>
                                     <a data-toggle="modal" data-target="#large"
@@ -123,6 +123,7 @@
                                 <th width="5%">SL</th>
                                 <th width="10%">MSISDN</th>
                                 <th width="10%">Hit Count</th>
+                                <th width="10%">Average Session Time</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -225,11 +226,19 @@
                             render: function (data, type, row) {
                                 return "0" + row.msisdn;
                             }
-                        },                        {
+                        },
+                        {
                             name: 'hit_count',
                             width: "15%",
                             render: function (data, type, row) {
                                 return row.hit_count;
+                            }
+                        },
+                        {
+                            name: 'avg_session_count',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.avg_session_count;
                             }
                         }
                     ],

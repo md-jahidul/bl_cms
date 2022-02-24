@@ -10,6 +10,7 @@ use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -101,25 +102,48 @@ class HealthHubService
         return new Response('Sorted successfully');
     }
 
+    public function secondsConvertToTime($secondsVal): string
+    {
+        $dt = Carbon::now();
+        $days = $dt->diffInDays($dt->copy()->addSeconds($secondsVal));
+        $hours = $dt->diffInHours($dt->copy()->addSeconds($secondsVal)->subDays($days));
+        $minutes = $dt->diffInMinutes($dt->copy()->addSeconds($secondsVal)->subDays($days)->subHours($hours));
+        $seconds = $dt->diffInSeconds(
+            $dt->copy()->addSecond($secondsVal)->subDay($days)->subHours($hours)->subMinutes($minutes)
+        );
+        return CarbonInterval::days($days)->hours($hours)->minutes($minutes)->seconds($seconds)->forHumans();
+    }
+
     public function analyticReports($request)
     {
         $analyticData = $this->healthHubRepository->getAnalyticData($request);
-        $data = $analyticData->map(function ($item) {
+        return $analyticData->map(function ($item) {
+            $totalSessionSeconds = $item->healthHubAnalytics->sum('total_session_time');
             return [
                 'id' => $item->id,
                 'icon' => $item->icon,
                 'title_en' => $item->title_en,
                 "total_hit_count" => $item->healthHubAnalytics->sum('hit_count'),
-                "total_session_time" => $item->healthHubAnalytics->sum('total_session_time'),
+                "total_session_time" => $this->secondsConvertToTime($totalSessionSeconds),
                 "total_unique_hit" => $item->healthHubAnalyticsDetails->groupBy('msisdn')->count(),
             ];
         });
-        return $data;
     }
 
     public function itemDetails($request, $itemId)
     {
-        return $this->healthHubRepository->getItemDetailsData($request, $itemId);
+        $msisdns = $this->healthHubRepository->getItemDetailsData($request, $itemId);
+
+        $msisdns['data'] = collect($msisdns['data'])->map(function ($data) {
+            $data['avg_session_count'] = $this->secondsConvertToTime((int) round($data['avg_session_count']));
+            return $data;
+        });
+
+//        dd($msisdns);
+
+        return $msisdns;
+//        dd($msisdns);
+//        return
     }
 
     public function exportReport($request)

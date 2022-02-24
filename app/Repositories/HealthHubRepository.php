@@ -58,6 +58,9 @@ class HealthHubRepository extends BaseRepository
 
     public function getItemDetailsData($request, $itemId)
     {
+
+
+
         $builder = new HealthHubAnalyticDetails();
         $builder = $builder->where('health_hub_id', $itemId);
 
@@ -68,15 +71,23 @@ class HealthHubRepository extends BaseRepository
             $builder = $builder->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
         }
 
-        if (isset($request->excel_export)) {
-            $data = $builder->get();
-        } else {
-            $data = $builder->orderBy('created_at', 'DESC')->get();
-        }
+        $data = $builder->select(DB::raw('msisdn, count(*) as hit_count, avg(session_time) as avg_session_count'))
+            ->groupBy('msisdn')
+            ->get();
 
-        $data = $data->groupBy('msisdn')->map(function ($builder) {
-            return $builder->count();
-        });
+
+//        if (isset($request->excel_export)) {
+//            $data = $builder->get();
+//        } else {
+//            $data = $builder->orderBy('created_at', 'DESC')->get();
+//        }
+
+//        $data = $data->groupBy('msisdn')->map(function ($el) {
+//            dd($el);
+//            $builder['phone'] = $builder['msisdn'];
+//            $builder->count = $builder->count();
+//            return $builder;
+//        });
 
         if (!isset($request->excel_export)) {
             $all_items_count = $data->count();
@@ -86,15 +97,15 @@ class HealthHubRepository extends BaseRepository
         }
 
 
-        $msisdn = [];
-        foreach ($data as $key => $uniqueMsisdn) {
-            $msisdn[] = [
-                'msisdn' => $key,
-                'hit_count' => $uniqueMsisdn
-            ];
-        }
+//        $msisdn = [];
+//        foreach ($data as $key => $uniqueMsisdn) {
+//            $msisdn[] = [
+//                'msisdn' => $key,
+//                'hit_count' => $uniqueMsisdn
+//            ];
+//        }
 
-        $msisdn = collect($msisdn)->sortBy('hit_count', null, true);
+        $msisdn = collect($data)->sortBy('hit_count', null, true);
 
         if (isset($request->excel_export)) {
             return $msisdn;
