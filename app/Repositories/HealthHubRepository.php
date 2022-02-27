@@ -58,9 +58,6 @@ class HealthHubRepository extends BaseRepository
 
     public function getItemDetailsData($request, $itemId)
     {
-
-
-
         $builder = new HealthHubAnalyticDetails();
         $builder = $builder->where('health_hub_id', $itemId);
 
@@ -71,50 +68,26 @@ class HealthHubRepository extends BaseRepository
             $builder = $builder->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
         }
 
-        $data = $builder->select(DB::raw('msisdn, count(*) as hit_count, avg(session_time) as avg_session_count'))
+        $data = $builder
+            ->select(DB::raw('msisdn, count(*) as hit_count, avg(session_time) as avg_session_count'))
             ->groupBy('msisdn')
+            ->orderBy('hit_count', "DESC")
             ->get();
 
 
-//        if (isset($request->excel_export)) {
-//            $data = $builder->get();
-//        } else {
-//            $data = $builder->orderBy('created_at', 'DESC')->get();
-//        }
-
-//        $data = $data->groupBy('msisdn')->map(function ($el) {
-//            dd($el);
-//            $builder['phone'] = $builder['msisdn'];
-//            $builder->count = $builder->count();
-//            return $builder;
-//        });
-
-        if (!isset($request->excel_export)) {
-            $all_items_count = $data->count();
-            $start = $request->get('start');
-            $length = $request->get('length');
-            $data = collect($data)->slice($start, $length);
-        }
-
-
-//        $msisdn = [];
-//        foreach ($data as $key => $uniqueMsisdn) {
-//            $msisdn[] = [
-//                'msisdn' => $key,
-//                'hit_count' => $uniqueMsisdn
-//            ];
-//        }
-
-        $msisdn = collect($data)->sortBy('hit_count', null, true);
-
         if (isset($request->excel_export)) {
-            return $msisdn;
+            return $data;
         }
+
+        $all_items_count = $data->count();
+        $start = $request->get('start');
+        $length = $request->get('length');
+        $data = collect($data)->slice($start, $length);
 
         $draw = $request->get('draw');
 
         return [
-            'data' => array_values($msisdn->toArray()),
+            'data' => $data,
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count

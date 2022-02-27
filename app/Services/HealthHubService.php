@@ -138,12 +138,7 @@ class HealthHubService
             $data['avg_session_count'] = $this->secondsConvertToTime((int) round($data['avg_session_count']));
             return $data;
         });
-
-//        dd($msisdns);
-
         return $msisdns;
-//        dd($msisdns);
-//        return
     }
 
     public function exportReport($request)
@@ -168,15 +163,17 @@ class HealthHubService
                 "SL",
                 "Item Name",
                 "Total Unique Hit",
-                "Total Hit Count"
+                "Total Hit Count",
+                "Total Session Time",
             ];
         } else {
             // Item Details
             $fileName = str_replace(' ', '-', $itemName);
             $headerRow = [
-                "SL",
+//                "SL",
                 "Msisdn",
-                "Total Hit Count"
+                "Total Hit Count",
+                "Average Session Time"
             ];
         }
 
@@ -205,13 +202,15 @@ class HealthHubService
                     'title_en' => $data['title_en'],
                     'total_unique_hit' => $data['total_unique_hit'],
                     'total_hit_count' => $data['total_hit_count'],
+                    'total_session_time' => $data['total_session_time'],
                 ];
             } else {
                 // Item Details
                 $report = [
-                    'SL' => $key + 1,
-                    'msisdn' => $data['msisdn'],
-                    'hit_count' => $data['hit_count']
+//                    'SL' => $key + 1,
+                    'msisdn' => "0" . $data['msisdn'],
+                    'hit_count' => $data['hit_count'],
+                    'avg_session_count' => $this->secondsConvertToTime((int) round($data['avg_session_count']))
                 ];
             }
             $row = WriterEntityFactory::createRowFromArray($report, $data_style);
