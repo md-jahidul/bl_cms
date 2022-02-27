@@ -183,6 +183,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
     Route::get('notificationCategory/destroy/{id}', 'CMS\NotificationCategoryController@destroy');
 
+    // Notification categorys V2
+    Route::resource('notificationCategory-v2', 'CMS\NotificationV2\NotificationCategoryV2Controller');
+    Route::get('notificationCategory-v2/destroy/{id}', 'CMS\NotificationV2\NotificationCategoryV2Controller@destroy');
+
     // Notification
     Route::resource('notification', 'CMS\NotificationController');
 
@@ -192,6 +196,27 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
     Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
+    // Notification V2
+    Route::resource('notification-v2', 'CMS\NotificationV2\NotificationV2Controller');
+
+    Route::get('notification-v2/productlist/dropdown', 'CMS\NotificationV2\NotificationV2Controller@getProductList')->name('notification-v2.productlist.dropdown');
+    Route::get('notification-v2/destroy/{id}', 'CMS\NotificationV2\NotificationV2Controller@destroy');
+    Route::post('notification-v2/notificationData', 'CMS\NotificationV2\NotificationV2Controller@notificationData')->name('notification-v2.notificationData');
+    Route::get('notification-v2/all/{id}', 'CMS\NotificationV2\NotificationV2Controller@showAll')->name('notification-v2.show-all');
+    Route::get('notification-report-v2', 'CMS\NotificationV2\NotificationV2Controller@getNotificationReport')->name('notification-v2.report');
+    Route::post('target-wise-push-notification-v2',
+    'CMS\NotificationV2\NotificationV2Controller@targetWiseNotificationSend')->name('target_wise_notification-v2.send');
+
+    Route::get('target-wise-notification-report-v2',
+    'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReport')->name('target-wise-notification-report-v2.report');
+
+    Route::get('target-wise-notification-report-details-v2/{notificationId}',
+    'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report-v2.report-details');
+
+    // Customer Sync
+    Route::get('/fresh-sync', 'CMS\NotificationV2\NotificationV2Controller@freshSync')->name('fresh-sync');
+
+    Route::get('/test', 'CMS\NotificationV2\NotificationV2Controller@test')->name('test');
 
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
