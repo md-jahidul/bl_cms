@@ -2,7 +2,6 @@
 
 namespace App\Services\NotifiationV2;
 
-use \GuzzleHttp\Client as Http;
 use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
@@ -11,12 +10,6 @@ use Illuminate\Support\Facades\DB;
 class CustomerDeviceSyncService
 {
     use CrudTrait;
-    private $Http;
-
-    public function __construct()
-    {
-        $this->Http = new Http();
-    }
 
     public function pushCustomersDevicesTable($allCustomersAndMsisdns)
     {

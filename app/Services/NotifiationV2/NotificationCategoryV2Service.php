@@ -6,7 +6,6 @@ use App\Repositories\NotificationCategoryRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
-use \GuzzleHttp\Client as Http;
 use Illuminate\Support\Facades\DB;
 
 class NotificationCategoryV2Service
