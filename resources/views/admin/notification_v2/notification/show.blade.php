@@ -213,33 +213,33 @@
                     }
                 });
                 
-                URL="http://0.0.0.0:9000/api/notificationSchedule/file-upload";
-                $.ajax({
-                    url: URL,
-                    type: 'POST',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (result) {
-                            swal.fire({
-                                title: result.message,
-                                type: 'success',
-                                timer: 900000,
-                                showConfirmButton: false
-                            });
+                // URL="http://0.0.0.0:9000/api/notificationSchedule/file-upload";
+                // $.ajax({
+                //     url: URL,
+                //     type: 'POST',
+                //     cache: false,
+                //     contentType: false,
+                //     processData: false,
+                //     data: formData,
+                //     success: function (result) {
+                //             swal.fire({
+                //                 title: result.message,
+                //                 type: 'success',
+                //                 timer: 900000,
+                //                 showConfirmButton: false
+                //             });
 
-                            {{--window.location.href = '{{route("notification-v2.index")}}';--}}
+                //             {{--window.location.href = '{{route("notification-v2.index")}}';--}}
 
-                    },
-                    error: function (data) {
-                        console.log(data);
-                        swal.fire({
-                            title: 'Failed to send Notifications',
-                            type: 'error',
-                        });
-                    }
-                });
+                //     },
+                //     error: function (data) {
+                //         console.log(data);
+                //         swal.fire({
+                //             title: 'Failed to send Notifications',
+                //             type: 'error',
+                //         });
+                //     }
+                // });
 
             });
         });

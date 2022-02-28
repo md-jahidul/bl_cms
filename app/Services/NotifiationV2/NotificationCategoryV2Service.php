@@ -151,7 +151,9 @@ class NotificationCategoryV2Service
         $uniqueNotificationCategory = array_diff($listNotificationsCategory, $listNotificationsCategoryFromMongoDB);
 
         $notificationsCategoryList = DB::table('notifications_category')
-        ->when(is_array($uniqueNotificationCategory), fn($q) => $q->whereIn('slug', $uniqueNotificationCategory))
+        ->when(is_array($uniqueNotificationCategory), function ($q) use ($uniqueNotificationCategory) {
+            return $q->whereIn('slug', $uniqueNotificationCategory);
+        })
         ->select('name', 'slug', 'created_at', 'updated_at')
         ->get();
 
