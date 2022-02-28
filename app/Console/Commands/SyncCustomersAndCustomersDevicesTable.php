@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\NotifiationV2\CustomerDeviceSyncService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class SyncCustomersAndCustomersDevicesTable extends Command
 {
@@ -19,7 +20,7 @@ class SyncCustomersAndCustomersDevicesTable extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sync mysql customers with mysql customers_devices table';
 
     /**
      * Create a new command instance.
@@ -39,6 +40,15 @@ class SyncCustomersAndCustomersDevicesTable extends Command
     public function handle()
     {
         $customerDeviceSyncService = resolve(CustomerDeviceSyncService::class);
-        $customerDeviceSyncService->freshSync();
+        $result = null;
+        
+        try {
+            $result = $customerDeviceSyncService->freshSync();
+            Log::info('Sync Success: Syncs mysql customers and customers_devices table');
+        } catch (\Exception $e) {
+            Log::info('Sync Error: ' . $e->getMessage());
+        }
+        
+        dump($result);
     }
 }

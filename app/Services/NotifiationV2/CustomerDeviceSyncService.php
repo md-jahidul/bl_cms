@@ -20,12 +20,18 @@ class CustomerDeviceSyncService
 
     public function pushCustomersDevicesTable($allCustomersAndMsisdns)
     {
+        if(empty($allCustomersAndMsisdns['allCustomers'] || $allCustomersAndMsisdns['customersMsisdns'])) {
+            return 'Payload Empty';
+        }
+
         $body = [
             'allCustomers'      => $allCustomersAndMsisdns['allCustomers'],
             'customersMsisdns'  => $allCustomersAndMsisdns['customersMsisdns']
         ];
       
         [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
+
+        return $get_data;
     }
 
     public function getCustomersDevices()
@@ -52,12 +58,13 @@ class CustomerDeviceSyncService
         
         $listUniquePhoneNubmer = array_diff($listMsisdnCustomers, $listMsisdnCustomersDevices);
 
-        $customersList = DB::table('customers')
-                        ->when(is_array($listUniquePhoneNubmer), fn($q) => $q->whereIn('phone', $listUniquePhoneNubmer))
-                        ->select('phone', 'device_token', 'device_type', 'number_type')
-                        ->get();
+        $customersList = DB::table('customers')->when(is_array($listUniquePhoneNubmer), 
+                        function($q) use ($listUniquePhoneNubmer) {
+                            return $q->whereIn('phone', $listUniquePhoneNubmer);
+                        })->select('phone', 'device_token', 'device_type', 'number_type')->get();
 
         $bulk = array();
+
         foreach($customersList as $customer)
         {
             $data = [
@@ -70,8 +77,7 @@ class CustomerDeviceSyncService
             $bulk [] = $data;
         }
 
-        return DB::table('customers_devices')
-                ->insert($bulk);
+        return DB::table('customers_devices')->insert($bulk);
     }
 
     private function callAPI($method, $url, $data=[], $header=[], $auth=false)
