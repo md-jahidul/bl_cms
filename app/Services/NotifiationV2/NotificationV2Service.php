@@ -2,7 +2,6 @@
 
 namespace App\Services\NotifiationV2;
 
-use \GuzzleHttp\Client as Http;
 use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
