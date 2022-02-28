@@ -43,16 +43,16 @@ class SyncMongoDbCustomersDevicesTable extends Command
     {
         $customerDeviceSyncService = resolve(CustomerDeviceSyncService::class);
         $allCustomersAndMsisdns = $customerDeviceSyncService->getCustomersDevices();
-
-        try 
-        {
-            $customerDeviceSyncService->pushCustomersDevicesTable($allCustomersAndMsisdns);
-            Log::info('Sync Success: MongoDb customers_devices table');
-        } 
+        $result = null ;
         
-        catch (\Exception $e) 
+        try {
+            $result = $customerDeviceSyncService->pushCustomersDevicesTable($allCustomersAndMsisdns);
+            Log::info('Sync Success: MongoDb customers_devices table');
+        } catch (\Exception $e) 
         {
             Log::info('Sync Error:' . $e->getMessage());
         }
+
+        dump($result);
     }
 }

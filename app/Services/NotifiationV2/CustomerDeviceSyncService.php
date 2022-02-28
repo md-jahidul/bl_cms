@@ -20,12 +20,18 @@ class CustomerDeviceSyncService
 
     public function pushCustomersDevicesTable($allCustomersAndMsisdns)
     {
+        if(empty($allCustomersAndMsisdns['allCustomers'] || $allCustomersAndMsisdns['customersMsisdns'])) {
+            return 'Payload Empty';
+        }
+
         $body = [
             'allCustomers'      => $allCustomersAndMsisdns['allCustomers'],
             'customersMsisdns'  => $allCustomersAndMsisdns['customersMsisdns']
         ];
       
         [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'customersDevices/store', $body);
+
+        return $get_data;
     }
 
     public function getCustomersDevices()
@@ -60,6 +66,7 @@ class CustomerDeviceSyncService
                         ->get();
 
         $bulk = array();
+
         foreach($customersList as $customer)
         {
             $data = [
