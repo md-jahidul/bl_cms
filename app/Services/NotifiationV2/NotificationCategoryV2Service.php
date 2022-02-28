@@ -155,7 +155,7 @@ class NotificationCategoryV2Service
                 return $q->whereIn('slug', $uniqueNotificationCategory);
         })->select('name', 'slug', 'created_at', 'updated_at')->get();
 
-        if(empty($notificationsCategoryList)) {
+        if($notificationsCategoryList->isEmpty()) {
             return 'Payload Empty';
         }
 

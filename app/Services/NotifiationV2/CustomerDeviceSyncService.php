@@ -58,12 +58,10 @@ class CustomerDeviceSyncService
         
         $listUniquePhoneNubmer = array_diff($listMsisdnCustomers, $listMsisdnCustomersDevices);
 
-        $customersList = DB::table('customers')
-                        ->when(is_array($listUniquePhoneNubmer), function($q) use ($listUniquePhoneNubmer){
+        $customersList = DB::table('customers')->when(is_array($listUniquePhoneNubmer), 
+                        function($q) use ($listUniquePhoneNubmer) {
                             return $q->whereIn('phone', $listUniquePhoneNubmer);
-                        })
-                        ->select('phone', 'device_token', 'device_type', 'number_type')
-                        ->get();
+                        })->select('phone', 'device_token', 'device_type', 'number_type')->get();
 
         $bulk = array();
 
@@ -79,8 +77,7 @@ class CustomerDeviceSyncService
             $bulk [] = $data;
         }
 
-        return DB::table('customers_devices')
-                ->insert($bulk);
+        return DB::table('customers_devices')->insert($bulk);
     }
 
     private function callAPI($method, $url, $data=[], $header=[], $auth=false)
