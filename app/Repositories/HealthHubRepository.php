@@ -59,6 +59,7 @@ class HealthHubRepository extends BaseRepository
     public function getItemDetailsData($request, $itemId)
     {
         $builder = new HealthHubAnalyticDetails();
+
         $builder = $builder->where('health_hub_id', $itemId);
 
         if (isset($request->date_range)) {
@@ -87,7 +88,7 @@ class HealthHubRepository extends BaseRepository
         $draw = $request->get('draw');
 
         return [
-            'data' => $data,
+            'data' => array_values($data->toArray()),
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count
