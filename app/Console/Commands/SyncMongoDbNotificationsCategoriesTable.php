@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\NotifiationV2\NotificationCategoryV2Service;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class SyncMongoDbNotificationsCategoriesTable extends Command
 {
@@ -39,6 +40,15 @@ class SyncMongoDbNotificationsCategoriesTable extends Command
     public function handle()
     {
         $notificationsCategoryV2Service = resolve(NotificationCategoryV2Service::class);
-        $notificationsCategoryV2Service->syncNotificationCategory();
+        $result = null;
+        
+        try {
+            $result = $notificationsCategoryV2Service->syncNotificationCategory();
+            Log::info('Sync Success: Sync Notification Category Table With MongoDB');
+        } catch(\Exception $e) {
+            Log::info('Sync Error:' . $e->getMessage());
+        }
+        
+        dump($result);
     }
 }

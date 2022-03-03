@@ -6,7 +6,6 @@ use App\Repositories\NotificationCategoryRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
-use \GuzzleHttp\Client as Http;
 use Illuminate\Support\Facades\DB;
 
 class NotificationCategoryV2Service
@@ -150,10 +149,14 @@ class NotificationCategoryV2Service
 
         $uniqueNotificationCategory = array_diff($listNotificationsCategory, $listNotificationsCategoryFromMongoDB);
 
-        $notificationsCategoryList = DB::table('notifications_category')
-        ->when(is_array($uniqueNotificationCategory), fn($q) => $q->whereIn('slug', $uniqueNotificationCategory))
-        ->select('name', 'slug', 'created_at', 'updated_at')
-        ->get();
+        $notificationsCategoryList = DB::table('notifications_category')->when(is_array($uniqueNotificationCategory), 
+            function ($q) use ($uniqueNotificationCategory) {
+                return $q->whereIn('slug', $uniqueNotificationCategory);
+        })->select('name', 'slug', 'created_at', 'updated_at')->get();
+
+        if($notificationsCategoryList->isEmpty()) {
+            return 'Payload Empty';
+        }
 
         $requestData = [
             'categories' => $notificationsCategoryList,
@@ -161,8 +164,7 @@ class NotificationCategoryV2Service
         
         [$get_data, $info] = $this->callAPI('POST', env('NOTIFICATION_MODULE_BASE_URL') . 'notificationCategory/storeBulk', $requestData);
 
-        dd($get_data);
-
+        return $get_data;
     }
 
     private function callAPI($method, $url, $data=[], $header=[], $auth=false)

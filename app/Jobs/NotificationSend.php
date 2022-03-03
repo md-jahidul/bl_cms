@@ -65,7 +65,7 @@ class NotificationSend implements ShouldQueue
         $currentTime = Carbon::now()->toDateTimeString();
         if ($scheduleEnds && $scheduleEnds < $currentTime) {
             //TODO:: Add missing msisdns to db
-            Log::info('notification-send-missing-msisdns: Schedule Ends - ' . $scheduleEnds . " Process Time" . $currentTime , $this->user_phone);
+            Log::channel('notificationinfolog')->info('notification-send-missing-msisdns: Schedule Ends - ' . $scheduleEnds . " Process Time" . $currentTime , $this->user_phone);
         } else {
             $response = PushNotificationService::sendNotification($this->notification);
             $formatted_response = json_decode($response);
