@@ -25,9 +25,9 @@
                                         <input required type="number"
                                                id="validity_lower" min="1"
                                                class="form-control validity_filter_input limit-input"
-                                               placeholder="Max 365" name="lower">
+                                               placeholder="Max 365 for days" name="lower">
                                         <small class="form-text text-muted">Enter
-                                            amount in days</small>
+                                            amount in days/hours</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -36,9 +36,22 @@
                                         <input required type="number"
                                                id="validity_upper"
                                                class="form-control validity_filter_input limit-input"
-                                               placeholder="Max 365" name="upper" min="1">
+                                               placeholder="Max 365 for days" name="upper" min="1">
                                         <small class="form-text text-muted">Enter
-                                            amount in days</small>
+                                            amount in days/hours</small>
+                                    </div>
+                                </div>
+                                @php
+                                    $validityUnits = ['hour', 'hours', 'day', 'days'];
+                                @endphp
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="validity_unit">Select Validity Unit</label>
+                                        <select class="form-control required duration_categories" name="validity_unit" id="validity_unit" required>
+                                            @foreach($validityUnits as $value)
+                                                <option value="{{ $value }}" }}>{{ ucfirst($value) }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-1 add-button">
@@ -111,6 +124,9 @@
                             if (row.upper == null) {
                                 return row.lower + ' + ';
                             }
+                            else if(row.lower == row.upper) {
+                                return row.lower + ' '+row.unit;
+                            }
                             return row.lower + ' - ' + row.upper + ' ' + row.unit;
                         }
                     },
@@ -135,7 +151,8 @@
                 e.preventDefault();
                 let lower_price = $("#validity_lower").val();
                 let upper_price = $("#validity_upper").val();
-
+                let validity_unit = $("#validity_unit").val();
+                
                 if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
                         'Input Error!',
@@ -159,6 +176,7 @@
                 let callSaveValidityFilter = saveValidityFilter(new function () {
                     this._token = '{{csrf_token()}}';
                     this.lower = lower_price;
+                    this.unit = validity_unit;
                     if (upper_price != '') {
                         this.upper = upper_price;
                     }
@@ -173,7 +191,7 @@
                     );
                     $("#validity_lower").val('');
                     $("#validity_upper").val('');
-
+                    $("#validity_unit").val('');
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     let errorResponse = jqXHR.responseJSON;

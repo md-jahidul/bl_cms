@@ -928,6 +928,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
     Route::post('welcome-banner/set-order', 'CMS\WelcomeBannerController@order');
 
+    // Health Hub
+    Route::resource('health-hub', 'CMS\HealthHubController')->except(['show', 'destroy']);
+    Route::get('health-hub-auto-save', 'CMS\HealthHubController@itemSortable');
+    Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
+
+    Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
+
     // Guest User Tracking Page Wise
     Route::get('guest-user-track-list', 'CMS\GuestUserTrackController@index')
         ->name('guest-user-track-list');
@@ -951,6 +958,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
+    //Loyality Image Upload
+    Route::resource('loyalty-partner-image', 'CMS\LoyaltyPartnerImageController')->except(['show']);
+    Route::get('loyalty-partner-images/filter', 'CMS\LoyaltyPartnerImageController@filter');
+    Route::get('loyalty-partner-images/report', 'CMS\LoyaltyPartnerImageController@report');
 
     /**
      * SMS Language Config

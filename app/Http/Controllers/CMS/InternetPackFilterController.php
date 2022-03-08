@@ -114,7 +114,7 @@ class InternetPackFilterController extends Controller
             $request->all(),
             [
                 'lower' => 'required|numeric|max:365',
-                'upper' => 'numeric|gt:lower|max:365'
+                'upper' => 'numeric|gte:lower|max:365'
             ]
         );
 
@@ -125,7 +125,7 @@ class InternetPackFilterController extends Controller
             ];
             return response()->json($response, 422);
         }
-
-        return $this->service->addFilter($request, 'validation', 'days');
+        
+        return $this->service->addFilter($request, 'validation', $request->get('unit'));
     }
 }
