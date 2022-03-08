@@ -124,6 +124,9 @@
                             if (row.upper == null) {
                                 return row.lower + ' + ';
                             }
+                            else if(row.lower == row.upper) {
+                                return row.lower + ' '+row.unit;
+                            }
                             return row.lower + ' - ' + row.upper + ' ' + row.unit;
                         }
                     },
