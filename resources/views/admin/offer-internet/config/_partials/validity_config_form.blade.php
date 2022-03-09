@@ -41,14 +41,11 @@
                                             amount in days/hours</small>
                                     </div>
                                 </div>
-                                @php
-                                    $validityUnits = ['hour', 'hours', 'day', 'days'];
-                                @endphp
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="validity_unit">Select Validity Unit</label>
                                         <select class="form-control required duration_categories" name="validity_unit" id="validity_unit" required>
-                                            @foreach($validityUnits as $value)
+                                            @foreach(config('constants.validityUnits') as $value)
                                                 <option value="{{ $value }}" }}>{{ ucfirst($value) }}</option>
                                             @endforeach
                                         </select>
@@ -152,7 +149,7 @@
                 let lower_price = $("#validity_lower").val();
                 let upper_price = $("#validity_upper").val();
                 let validity_unit = $("#validity_unit").val();
-                
+
                 if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
                         'Input Error!',
