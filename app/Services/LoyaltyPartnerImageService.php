@@ -155,7 +155,7 @@ class LoyaltyPartnerImageService
 
             $report = $report->items();
             $reportCells = [];
-            $host = env('BL_API_HOST');
+            $host = env('MYBL_API_HOST');
 
             foreach ($report as $item){
                 $row_data = [];
