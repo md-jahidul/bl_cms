@@ -94,6 +94,12 @@ return [
             'path' => storage_path('logs/RetailerLog/retailer.log'),
             'level' => 'debug'
         ],
+
+        'notificationinfolog' => [
+            'driver' => 'notificationinfolog',
+            'path' => storage_path('logs/notificationLogs/laravel.log'),
+            'days' => 14
+        ],
     ],
 
 ];
