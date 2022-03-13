@@ -215,6 +215,7 @@ class NotificationController extends Controller
     }
 
     public function getProductList(Request $request){
+        
         return $this->notificationService->getActiveProducts($request);
     }
 }
