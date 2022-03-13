@@ -216,8 +216,8 @@ class NotificationController extends Controller
             ->with('notifications', $notifications);
     }
 
-    public function getProductList(Request $request)
-    {
+    public function getProductList(Request $request){
+        
         return $this->notificationService->getActiveProducts($request);
     }
 
