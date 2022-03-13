@@ -64,5 +64,7 @@ return [
             'mybl' => 'MyBL App',
             'assetlite' => 'Assetlite Website',
         ]
-    ]
+    ],
+
+    'validityUnits' => ['hour', 'hours', 'day', 'days']
 ];
