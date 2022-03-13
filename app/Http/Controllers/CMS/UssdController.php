@@ -35,7 +35,9 @@ class UssdController extends Controller
      */
     public function index()
     {
-        return view('admin.ussd-code.index')->with('ussd_cods', $this->ussdService->findAll());
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $ussd_cods =  $this->ussdService->findAll('', '', $orderBy);
+        return view('admin.ussd-code.index')->with('ussd_cods', $ussd_cods);
     }
 
     /**

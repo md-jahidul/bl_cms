@@ -30,7 +30,8 @@ class MigratePlanController extends Controller
      */
     public function index()
     {
-        $plans = $this->migratePlanService->findAll();
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $plans = $this->migratePlanService->findAll('', '', $orderBy);
         return view('admin.migrate-plan.index')
             ->with('plans', $plans);
     }

@@ -43,7 +43,8 @@ class MyBlReferAndEarnController extends Controller
      */
     public function index()
     {
-        $referEarnCampaigns = $this->referAndEarnService->findAll();
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $referEarnCampaigns = $this->referAndEarnService->findAll('', '', $orderBy);
         return view('admin.mybl-campaign.refer-and-earn.index', compact('referEarnCampaigns'));
     }
 

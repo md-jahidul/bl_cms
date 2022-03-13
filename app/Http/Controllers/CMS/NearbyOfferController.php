@@ -36,7 +36,9 @@ class NearbyOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-nearby.index')->with('nearByOffers', $this->nearbyOfferService->findAll());
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $nearByOffers = $this->nearbyOfferService->findAll('', '', $orderBy);
+        return view('admin.offer-nearby.index')->with('nearByOffers', $nearByOffers);
     }
 
     /**

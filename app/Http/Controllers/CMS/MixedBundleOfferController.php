@@ -35,7 +35,9 @@ class MixedBundleOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-mixedbundle.index')->with('mixedBundle_offers', $this->mixedBundleOfferService->findAll());
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $mixedBundle_offers = $this->mixedBundleOfferService->findAll('','', $orderBy);
+        return view('admin.offer-mixedbundle.index')->with('mixedBundle_offers', $mixedBundle_offers);
     }
 
     /**
