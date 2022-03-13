@@ -225,12 +225,12 @@
                         <i class="la la-server"></i>Category List v2
                     </a>
                 </li>
-                <li class="{{ is_active_url('notification') }}{{ is_active_url('notification/create') }}">
+                <li class="{{ is_active_url('notification-v2') }}{{ is_active_url('notification-v2/create') }}">
                     <a class="menu-item" href="{{ route('notification-v2.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification List V2</a>
                 </li>
-                <li class="{{ is_active_url('target-wise-notification-report') }}">
+                <li class="{{ is_active_url('target-wise-notification-report-v2') }}">
                     <a class="menu-item" href="{{ route('target-wise-notification-report-v2.report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification Report V2</a>
