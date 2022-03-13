@@ -31,7 +31,7 @@ class LoyaltyPartnerImageController extends Controller
     public function __construct(PartnerService $partnerService, LoyaltyPartnerImageService $loyaltyPartnerImageService)
     {
         $this->partnerService = $partnerService;
-        $this->storageHost = env('BL_API_HOST');
+        $this->storageHost = env('MYBL_API_HOST');
         $this->loyaltyPartnerImageService = $loyaltyPartnerImageService;
     }
 
