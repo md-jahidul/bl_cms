@@ -159,12 +159,24 @@ class AlCoreProductService
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
             $data['sim_type'] = (strtolower($data['type']) == 'prepaid') ? 1 : 2;
-            $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
+            
+            if(isset($data['validity_unit'])){
+                
+                $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
+            }
+            else $data['validity'] = null;
+            
             $this->save($data);
         } else {
             $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
             $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
-            $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
+            
+            if(isset($data['validity_unit'])){
+
+                $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
+            }
+            else $data['validity'] = null;
+
             $product->update($data);
         }
     }

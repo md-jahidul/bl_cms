@@ -41,7 +41,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
                                 <label for="product_code" class="required">Product Code</label>
-                                <input type="text" class="form-control" placeholder="Enter product code"
+                                <input type="text" name= "product_code" class="form-control" placeholder="Enter product code"
                                        required data-validation-required-message="Enter product code" readonly
                                        value="{{ $product->product_code }}">
                                 <div class="help-block"></div>
