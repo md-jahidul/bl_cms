@@ -195,7 +195,7 @@ class ProductService
         $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
         $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
-        $data['product_code'] =  $data['product_code'];
+        $data['product_code'] = strtoupper($data['product_code']);
  
         if(isset($data['validity_unit'])){
 

@@ -153,7 +153,7 @@ class AlCoreProductService
     
         if (!$product) {
             $data['name'] = $data['name_en'];
-            $data['product_code'] = strtoupper($id);
+            $data['product_code'] = strtoupper($data['product_code']);
             $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
             $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
             $data['commercial_name_en'] = $data['name_en'];
@@ -178,7 +178,7 @@ class AlCoreProductService
                 $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
             }
             else $data['validity'] = null;
-
+            
             $product->update($data);
         }
     }
