@@ -226,10 +226,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-
         $product = $this->productService->findProduct($type, $id);
+
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,' . $product->id,
+            'product_code' => 'required|unique:products,product_code,'. $product->id
+            
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());

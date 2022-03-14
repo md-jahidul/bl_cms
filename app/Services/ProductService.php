@@ -191,7 +191,7 @@ class ProductService
     public function updateProduct($data, $type, $id)
     {
         $product = $this->productRepository->findByCode($type, $id);
-
+        
         /**
          * Checking URL slugs and generating dynamic url redirection accordingly
          */
@@ -214,7 +214,16 @@ class ProductService
         $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
         $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
-        $data['validity_postpaid'] = ($data['validity_unit'] == "bill_period") ? "Bill period" : null;
+        $data['product_code'] = strtoupper($data['product_code']);
+ 
+        if(isset($data['validity_unit'])){
+
+            $data['validity_postpaid'] = ($data['validity_unit'] == "bill_period") ? "Bill period" : null;
+        }
+        else{
+            $data['validity_postpaid'] = null;
+        }
+        
         $product->update($data);
 
         //save Search Data
