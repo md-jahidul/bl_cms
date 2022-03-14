@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Services\BaseMsisdnService;
+use App\Services\FeedCategoryService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class MyblSliderImageController extends Controller
     private $sliderService;
     private $sliderTypeService;
     private $baseMsisdnService;
-
+    private $feedCategoryService;
 
     /**
      * BannerController constructor.
@@ -36,12 +37,14 @@ class MyblSliderImageController extends Controller
         MyblSliderImageService $sliderImageService,
         MyblSliderService $sliderService,
         AlSliderComponentTypeService $sliderTypeService,
-        BaseMsisdnService $baseMsisdnService
+        BaseMsisdnService $baseMsisdnService,
+        FeedCategoryService $feedCategoryService
     ) {
         $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
         $this->baseMsisdnService = $baseMsisdnService;
+        $this->feedCategoryService = $feedCategoryService;
         $this->middleware('auth');
     }
 
@@ -130,7 +133,8 @@ class MyblSliderImageController extends Controller
         $imageInfo = $this->sliderImageService->findOne($sliderImageId, 'baseImageCats');
         $products  = $this->sliderImageService->getActiveProducts();
         $baseGroups = $this->baseMsisdnService->findAll();
-        return view('admin.myblslider.images.edit', compact('imageInfo', 'products', 'baseGroups'));
+        $feedCategories = $this->feedCategoryService->findAll();
+        return view('admin.myblslider.images.edit', compact('imageInfo', 'products', 'baseGroups', 'feedCategories'));
     }
 
     /**
