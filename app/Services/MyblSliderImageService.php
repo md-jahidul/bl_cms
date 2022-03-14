@@ -56,14 +56,17 @@ class MyblSliderImageService
                 $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
                 $image['sequence'] = $i;
                 if (isset($image['other_attributes'])) {
-                    $other_attributes = [
-                        'type' => strtolower($image['redirect_url']),
-                        'content' => $image['other_attributes']
-                    ];
+                    if ($image['redirect_url'] == "FEED_CATEGORY") {
+                        $other_attributes = $image['other_attributes'];
+                    } else {
+                        $other_attributes = [
+                            'type' => strtolower($image['redirect_url']),
+                            'content' => $image['other_attributes']
+                        ];
+                    }
                     // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
                     $image['other_attributes'] = $other_attributes;
                 }
-
                 $sliderImg = $this->save($image);
                 if (!empty($image['segment_wise_cta'][0]['group_id']) &&
                     !empty($image['segment_wise_cta'][0]['action_name'])
@@ -134,10 +137,14 @@ class MyblSliderImageService
                     $this->deleteFile($sliderImage->image_url);
                 }
                 if (isset($data['other_attributes'])) {
-                    $other_attributes = [
-                        'type' => strtolower($data['redirect_url']),
-                        'content' => $data['other_attributes']
-                    ];
+                    if ($data['redirect_url'] == "FEED_CATEGORY") {
+                        $other_attributes = $data['other_attributes'];
+                    } else {
+                        $other_attributes = [
+                            'type' => strtolower($data['redirect_url']),
+                            'content' => $data['other_attributes']
+                        ];
+                    }
                     $data['other_attributes'] = $other_attributes;
                 }
 
