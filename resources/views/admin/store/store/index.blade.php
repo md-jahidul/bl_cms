@@ -107,12 +107,13 @@
       $(function () {
 
             $('#store_list_mybl').DataTable({
-                  dom: 'Bfrtip',
+                  //dom: 'Bfrtip',
                   buttons: [],
-                  paging: false,
+                  paging: true,
                   searching: true,
                   "bDestroy": true,
-                  "pageLength": 50
+                  "pageLength": 50,
+                  "order": [[ 0, "desc" ]]
             });
 
             $('.deleteBtn').click(function () {

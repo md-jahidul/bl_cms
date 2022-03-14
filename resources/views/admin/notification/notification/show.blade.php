@@ -211,7 +211,7 @@
                                 showConfirmButton: false
                             });
 
-                            {{--window.location.href = '{{route("notification.index")}}';--}}
+                            window.location.href = '{{route("notification.index")}}';
 
                         } else {
                             swal.close();

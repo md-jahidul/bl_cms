@@ -39,7 +39,8 @@ class AmarOfferController extends Controller
      */
     public function index()
     {
-        $amarOffers = $this->amarOfferService->findAll();
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $amarOffers = $this->amarOfferService->findAll('', '', $orderBy);
 
         return view('admin.offer-Amar.index')->with('amarOffers', $amarOffers);
     }

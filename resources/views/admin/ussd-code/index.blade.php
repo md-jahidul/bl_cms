@@ -10,7 +10,7 @@
     </a>
 @endsection
 @section('content')
-   
+
     <section>
         <div class="card">
             <div class="card-header">
@@ -53,7 +53,7 @@
                                         <div class="col-md-2">
                                             <button data-id="{{$ussd_code->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
-                                        
+
                                     </div>
                                 </td>
                             </tr>
@@ -84,8 +84,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-        
-       
+
+
 
         $(function () {
             $('.delete').click(function () {
@@ -124,13 +124,14 @@
 
         $(document).ready(function () {
             $('#Example1').DataTable({
-                dom: 'Bfrtip',
+                //dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
                 searching: true,
                 "pageLength": 10,
                 // "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 "bDestroy": true,
+                "order": [[ 0, "desc" ]]
             });
         });
 

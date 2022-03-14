@@ -8,9 +8,9 @@ class SliderImageRepository extends BaseRepository
 {
     public $modelName = SliderImage::class;
 
-    public function getSliderImage($sliderId, $type)
+    public function getSliderImage($sliderId)
     {
-        return $this->model->where('slider_id', $sliderId)->orderBy('sequence')->get();
+        return $this->model->where('slider_id', $sliderId)->orderBy('created_at','DESC')->get();
     }
 
     public function is_sequence_exist($sequence, $slider_id)
