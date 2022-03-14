@@ -226,7 +226,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-
         $product = $this->productService->findProduct($type, $id);
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,' . $product->id,

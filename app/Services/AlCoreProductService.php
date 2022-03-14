@@ -150,6 +150,7 @@ class AlCoreProductService
     public function updateProductCore($data, $id)
     {
         $product = $this->alCoreProductRepository->findOneProductCore($id);
+    
         if (!$product) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = strtoupper($id);
@@ -168,6 +169,7 @@ class AlCoreProductService
             
             $this->save($data);
         } else {
+            $data['product_code'] = strtoupper($data['product_code']);
             $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
             $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
             
