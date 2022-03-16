@@ -66,5 +66,5 @@ return [
         ]
     ],
 
-    'validityUnits' => ['hour', 'hours', 'day', 'days']
+    'validityUnits' => ['hours', 'days']
 ];
