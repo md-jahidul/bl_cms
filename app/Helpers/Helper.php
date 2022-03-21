@@ -70,6 +70,7 @@ class Helper
             "FAQ"                     => "FAQ",
             "FNF"                     => "FnF",
             "FEED"                    => "Feeds",
+            "FEED_CATEGORY"           => "Feed Category",
             "FILTER_NOTIFICATION"     => "Filter Notification",
             "HOME"                    => "Home Menu",
             "HOME_ARRANGEMENT"        => "Home Arrangement",
@@ -117,8 +118,7 @@ class Helper
             "ORANGE_CLUB"             => "Orange Club",
             "STOP_ALL_VAS"            => "Stop All VAS",
             "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
-            "MEDALIA_FEEDBACK"        => "Medalia Feedback",
-            "FEED_CATEGORY"           => "Feed Category"
+            "MEDALIA_FEEDBACK"        => "Medalia Feedback"
         ];
     }
 

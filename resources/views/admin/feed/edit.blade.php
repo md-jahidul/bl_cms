@@ -115,6 +115,34 @@
                                         <div class="help-block"></div>
                                     </div>
 
+                                    <div class="form-group col-md-6 {{ $errors->has('details_btn_en') ? ' error' : '' }}">
+                                        <label for="details_btn_en">Details Button En</label>
+                                        <div class='input-group'>
+                                            <input type='text' class="form-control" name="details_btn_en" id="details_btn_en"
+                                                   placeholder="Enter details button title in English"
+                                                   value="{{ old("details_btn_en") ? old("details_btn_en") : $feed->details_btn_en }}"
+                                                   autocomplete="off"/>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details_btn_en'))
+                                            <div class="help-block">{{ $errors->first('details_btn_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('details_btn_bn') ? ' error' : '' }}">
+                                        <label for="details_btn_bn">Details Button Bn</label>
+                                        <div class='input-group'>
+                                            <input type='text' class="form-control" name="details_btn_bn" id="details_btn_bn"
+                                                   placeholder="Enter details button title in Bangla"
+                                                   value="{{ old("details_btn_bn") ? old("details_btn_bn") : $feed->details_btn_bn }}"
+                                                   autocomplete="off"/>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details_btn_bn'))
+                                            <div class="help-block">{{ $errors->first('details_btn_bn') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
                                             <label for="image_url">Upload Image :</label>
@@ -178,6 +206,19 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="checkbox" name="ext_link_redirect" value="1" id="external_link"
+                                            {{ ($feed->ext_link_redirect) ? 'checked' : '' }}>
+                                            <label for="external_link">Redirect To External link</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ ($feed->ext_link_redirect) ? '' : 'd-none' }}" id="externalLink">
+                                        <input type="text" name="ext_link_url" class="form-control" placeholder="Enter External Link URL"
+                                        value="{{ $feed->ext_link_url }}">
+                                    </div>
+
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
                                                 class="btn btn-success round px-2">
@@ -228,6 +269,15 @@
 
     <script>
         $(function () {
+            var externalLink = $('#externalLink');
+            $('#external_link').click(function () {
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                }else{
+                    externalLink.addClass('d-none')
+                }
+            })
+
             var date = new Date();
             date.setDate(date.getDate());
             $('#start-date').datetimepicker({
