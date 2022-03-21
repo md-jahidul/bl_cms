@@ -124,7 +124,7 @@ class HealthHubService
                 'icon' => $item->icon,
                 'title_en' => $item->title_en,
                 "total_hit_count" => $item->healthHubAnalytics->sum('hit_count'),
-                "total_session_time" => $this->secondsConvertToTime($totalSessionSeconds),
+                "total_session_time" => ($totalSessionSeconds != 0) ? $totalSessionSeconds : '',
                 "total_unique_hit" => $item->healthHubAnalyticsDetails->groupBy('msisdn')->count(),
             ];
         });
@@ -135,7 +135,7 @@ class HealthHubService
         $msisdns = $this->healthHubRepository->getItemDetailsData($request, $itemId);
 
         $msisdns['data'] = collect($msisdns['data'])->map(function ($data) {
-            $data['avg_session_count'] = $this->secondsConvertToTime((int) round($data['avg_session_count']));
+            $data['avg_session_count'] = (int) round($data['avg_session_count']);
             return $data;
         });
         return $msisdns;
@@ -164,7 +164,7 @@ class HealthHubService
                 "Item Name",
                 "Total Unique Hit",
                 "Total Hit Count",
-                "Total Session Time",
+                "Total Session Time (Sec)",
             ];
         } else {
             // Item Details
@@ -173,7 +173,7 @@ class HealthHubService
 //                "SL",
                 "Msisdn",
                 "Total Hit Count",
-                "Average Session Time"
+                "Average Session Time (Sec)"
             ];
         }
 
@@ -210,7 +210,7 @@ class HealthHubService
 //                    'SL' => $key + 1,
                     'msisdn' => "0" . $data['msisdn'],
                     'hit_count' => $data['hit_count'],
-                    'avg_session_count' => $this->secondsConvertToTime((int) round($data['avg_session_count']))
+                    'avg_session_count' => (int) round($data['avg_session_count'])
                 ];
             }
             $row = WriterEntityFactory::createRowFromArray($report, $data_style);
