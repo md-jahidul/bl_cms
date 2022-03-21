@@ -575,7 +575,8 @@
                 </li>
                 <li class="{{ is_active_url('/terms-conditions/balance_transfer') }} nav-item">
                     <a href="{{route('terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
-                        <i class="la la-legal"></i><span class="menu-title">T&C For Balance Transfer</span>
+                        <i class="la la-legal"></i>
+                        <span class="menu-title">Balance Transfer</span></a>
                     </a>
                 </li>
             </ul>
