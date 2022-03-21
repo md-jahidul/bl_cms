@@ -58,7 +58,7 @@
                                 <th>Item Name</th>
                                 <th>Total Unique Hit</th>
                                 <th>Total Hit</th>
-                                <th>Total Session Time</th>
+                                <th>Total Session Time (Sec)</th>
 {{--                                <th>Deeplink Hits</th>--}}
                                 <th width="12%">Details</th>
                             </tr>
@@ -123,7 +123,7 @@
                                 <th width="5%">SL</th>
                                 <th width="10%">MSISDN</th>
                                 <th width="10%">Hit Count</th>
-                                <th width="10%">Average Session Time</th>
+                                <th width="10%">Average Session Time (Sec)</th>
                             </tr>
                             </thead>
                             <tbody>
