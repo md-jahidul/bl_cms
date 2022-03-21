@@ -127,6 +127,8 @@ class FeedService
             $data['file'] = 'storage/' . $data['file']->store('file');
         }
         $data['show_in_home'] = isset($data['show_in_home']);
+        $data['ext_link_redirect'] = isset($data['ext_link_redirect']);
+        $data['ext_link_url'] = $data['ext_link_redirect'] ? $data['ext_link_url'] : null;
         $feed = $this->feedRepository->findOne($id);
         $this->feedRepository->update($feed, $data);
         return new Response("Feed has been successfully updated");
