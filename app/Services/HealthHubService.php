@@ -102,18 +102,6 @@ class HealthHubService
         return new Response('Sorted successfully');
     }
 
-    public function secondsConvertToTime($secondsVal): string
-    {
-        $dt = Carbon::now();
-        $days = $dt->diffInDays($dt->copy()->addSeconds($secondsVal));
-        $hours = $dt->diffInHours($dt->copy()->addSeconds($secondsVal)->subDays($days));
-        $minutes = $dt->diffInMinutes($dt->copy()->addSeconds($secondsVal)->subDays($days)->subHours($hours));
-        $seconds = $dt->diffInSeconds(
-            $dt->copy()->addSecond($secondsVal)->subDay($days)->subHours($hours)->subMinutes($minutes)
-        );
-        return CarbonInterval::days($days)->hours($hours)->minutes($minutes)->seconds($seconds)->forHumans();
-    }
-
     public function analyticReports($request)
     {
         $analyticData = $this->healthHubRepository->getAnalyticData($request);
