@@ -82,9 +82,3 @@
         })
     </script>
 @endpush
-
-
-
-
-
-
