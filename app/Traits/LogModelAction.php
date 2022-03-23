@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use App\Enums\ModelActions;
-use App\LogModelAction as LogInDb;
+use App\ActivityLog as LogInDb;
 use Illuminate\Support\Facades\Auth;
 
 trait LogModelAction
