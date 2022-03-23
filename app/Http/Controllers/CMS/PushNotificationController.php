@@ -260,6 +260,10 @@ class PushNotificationController extends Controller
             $product_code = "$notificationInfo->external_url";
         }
 
+        $feedCatSlug = null;
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'FEED_CATEGORY') {
+            $feedCatSlug = "$notificationInfo->external_url";
+        }
 
         $category_id = !empty($request->input('category_id')) ? $request->input('category_id') : 1;
 
@@ -285,8 +289,8 @@ class PushNotificationController extends Controller
                 "image_url" => $image_url,
                 "component" => "offer",
                 'product_code' => "$product_code",
+                'feed_cat_slug' => $feedCatSlug,
                 'navigation_action' => "$notificationInfo->navigate_action"
-
             ],
         ];
 
@@ -320,6 +324,11 @@ class PushNotificationController extends Controller
             $product_code = "$notificationInfo->external_url";
         }
 
+        $feedCatSlug = null;
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'FEED_CATEGORY') {
+            $feedCatSlug = "$notificationInfo->external_url";
+        }
+
 
         if ($request->has('image_url')) {
             $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
@@ -350,6 +359,7 @@ class PushNotificationController extends Controller
                         "image_url" => $image_url,
                         "component" => "offer",
                         'product_code' => "$product_code",
+                        'feed_cat_slug' => $feedCatSlug,
                         'navigation_action' => "$notificationInfo->navigate_action"
                     ]
 
@@ -371,6 +381,7 @@ class PushNotificationController extends Controller
                             "image_url" => $image_url,
                             "component" => "offer",
                             'product_code' => "$product_code",
+                            'feed_cat_slug' => $feedCatSlug,
                             'navigation_action' => "$notificationInfo->navigate_action"
                         ]
 
