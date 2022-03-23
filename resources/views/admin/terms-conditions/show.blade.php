@@ -30,7 +30,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="title_en" class="required">
                                         {{ucwords(str_replace('_', ' ', $featureName))}} Terms and Conditions
                                     </label>
@@ -38,6 +38,15 @@
                                     <textarea id="terms-conditions" name="terms_conditions" required>
                                         @if($terms_conditions)
                                             {{ $terms_conditions->terms_conditions }}
+                                        @endif
+                                    </textarea>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="title_en" class="required">Terms and Conditions (Bangla)</label>
+                                    <textarea id="terms-conditions" name="terms_conditions_bn" required>
+                                        @if($terms_conditions)
+                                            {{ $terms_conditions->terms_conditions_bn }}
                                         @endif
                                     </textarea>
                                 </div>
@@ -73,9 +82,3 @@
         })
     </script>
 @endpush
-
-
-
-
-
-
