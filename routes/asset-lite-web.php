@@ -1098,6 +1098,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Activity Logs
     Route::get('activity-logs', 'ActivityLogController@index');
     Route::get('activity-logs/{activityLogId}', 'ActivityLogController@show')->name('activity-logs.show');
+    Route::post('activity-logs/search', 'ActivityLogController@search')->name('activity-logs.search');
 
     // Corporate Responsibility
     Route::resource('corporate-resp-section', 'AssetLite\CorporateRespSectionController')

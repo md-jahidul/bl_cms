@@ -29,4 +29,11 @@ class ActivityLogController extends Controller
         
         return view('admin.activity-logs.view', compact('activityLog', 'data'));
     }
+
+    public function search(Request $request){
+
+        $activityLogs = $this->activityLogService->searchByDate($request->all());
+       
+        return view('admin.activity-logs.index', compact('activityLogs'));
+    }
 }

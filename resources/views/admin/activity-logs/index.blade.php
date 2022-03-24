@@ -2,7 +2,7 @@
 @section('title', 'Activity Logs List')
 @section('card_name', 'Activity Logs List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href=""> Activity Logs List</a></li>
+    <li class="breadcrumb-item "><a href="{{route('activity-logs.search')}}"> Activity Logs List</a></li>
 @endsection
 @section('action')
 
@@ -10,9 +10,46 @@
 @section('content')
     <section>
         <div class="card">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-header">
+                                <h4 class="pb-1"><strong>Activity Logs</strong></h4>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form class="form" action="{{route('activity-logs.search')}}" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                    <div class="form-group col-md-2">
+                                        <label for="from_date">From Date</label>
+                                        <div class='input-group'>
+                                            <input type="datetime-local" id="from_date" name="from_date" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="to_date">To Date</label>
+                                        <div class='input-group'>
+                                            <input type="datetime-local" id="to_date" name="to_date" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2 pt-2" >
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            <i class="la la-check-square-o"></i> Search
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Activity Logs</strong></h4>
                     <table class="table table-responsive table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>

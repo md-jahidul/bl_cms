@@ -17,4 +17,9 @@ class ActivityLogService
         return ActivityLog::find($activityLogId);
     }
 
+    public function searchByDate($request){
+        // dd($request);
+        return ActivityLog::whereBetween('logged_at', [$request['from_date'], $request['to_date']])->latest('logged_at')->get();
+
+    }
 }
