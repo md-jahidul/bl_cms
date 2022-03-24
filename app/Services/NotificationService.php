@@ -85,7 +85,6 @@ class NotificationService
         $data = $this->save($data);
         
         if($request->action == 'save')return new Response("Notification has been successfully created");
-
         else return $data['id'];
     }
 

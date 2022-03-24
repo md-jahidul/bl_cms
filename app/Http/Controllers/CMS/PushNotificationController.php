@@ -101,7 +101,7 @@ class PushNotificationController extends Controller
         $notificationInfo = NotificationDraft::find($notification_id);
 
         $muteUsersPhone = $this->userMuteNotificationCategoryRepository->getUsersPhoneByCategory($categoryId);
-        // dd($muteUsersPhone);
+        
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();

@@ -245,7 +245,6 @@
                             <button type="submit" class="btn btn-success round px-2" name="action" value="save">
                                 <i class="la la-check-square-o"></i> Submit
                             </button>
-
                             <button type="submit" class="btn btn-success round px-2" name="action" value="quick_send">
                                 <i class="la la-check-square-o"></i> Quick Send
                             </button>
