@@ -2,7 +2,7 @@
 @section('title', 'Activity Logs List')
 @section('card_name', 'Activity Logs List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{route('activity-logs.search')}}"> Activity Logs List</a></li>
+    <li class="breadcrumb-item "><a href="/activity-logs"> Activity Logs List</a></li>
 @endsection
 @section('action')
 
