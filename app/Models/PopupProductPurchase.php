@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class PopupProductPurchase extends Model
 {
+    use LogModelAction;
+    
     public function details()
     {
         return $this->hasMany(PopupProductPurchaseDetail::class);

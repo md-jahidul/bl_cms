@@ -39,6 +39,13 @@
                                         class="la la-lock"></i> Access Logs</a>
                             </li>
                         @endif
+                        @if( auth()->user()->can_view('AccessLog') )
+                        <li class="{{ is_active_url('activity-logs')}}">
+                            <a class="menu-item" href="{{ url('activity-logs') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-lock"></i> Activity Logs</a>
+                        </li>
+                    @endif
                     </ul>
                 </li>
             </ul>

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 class OfferFilterType extends Model
 {
+    use LogModelAction;
     use Sluggable;
 
     protected $guarded = ['id'];

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class Partner extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'partner_category_id',
         'company_name_en',

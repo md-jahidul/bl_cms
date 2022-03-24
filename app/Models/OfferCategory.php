@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class OfferCategory extends Model
 {
+    use LogModelAction;
 
     protected $fillable = ['name_en', 'name_bn', 'banner_image_url',
         'banner_alt_text', 'banner_alt_text_bn', 'banner_image_mobile', 'url_slug', 'url_slug_bn',

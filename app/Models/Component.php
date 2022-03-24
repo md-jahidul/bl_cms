@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class Component extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'section_details_id',
         'page_type',

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Traits\LogModelAction;
 
 trait Authorizable
 {
+    use LogModelAction;
     /**
      * @inheritdoc
      */

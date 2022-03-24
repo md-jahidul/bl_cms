@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Models\AgentList;
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AgentDeeplink extends Model
 {
+    use LogModelAction;
     protected $fillable = [
         'agent_id',
         'deeplink_type',
