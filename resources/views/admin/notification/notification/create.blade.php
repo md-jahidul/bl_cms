@@ -241,9 +241,13 @@
 
                         {{-- </div> --}}
 
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-success round px-2">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success round px-2" name="action" value="save">
                                 <i class="la la-check-square-o"></i> Submit
+                            </button>
+
+                            <button type="submit" class="btn btn-success round px-2" name="action" value="quick_send">
+                                <i class="la la-check-square-o"></i> Quick Send
                             </button>
                         </div>
                     </div>

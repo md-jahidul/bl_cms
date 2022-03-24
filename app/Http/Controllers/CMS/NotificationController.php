@@ -85,10 +85,29 @@ class NotificationController extends Controller
      */
     public function store(NotificationRequest $request)
     {
+        // dd($request->all());
+        if($request->action == 'save'){
 
-        $content = $this->notificationService->storeNotification($request)->getContent();
-        session()->flash('message', $content);
-        return redirect(route('notification.index'));
+            $content = $this->notificationService->storeNotification($request)->getContent();
+            session()->flash('message', $content);
+            return redirect(route('notification.index'));
+        }
+
+        else{
+
+            $id = $this->notificationService->storeNotification($request);
+
+            $notification = $this->notificationService->findOne($id, ['NotificationCategory', 'schedule']);
+            $schedule = $notification ? $notification->schedule : null;
+            $scheduleStatus = $schedule ? $schedule->status : 'none';
+            $users = $this->userService->getUserListForNotification();
+    
+            return view(
+                'admin.notification.notification.show2',
+                compact('notification', 'users', 'schedule', 'scheduleStatus')
+            );
+        }
+
     }
 
     /**
