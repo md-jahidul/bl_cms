@@ -239,9 +239,9 @@ class PushNotificationController extends Controller
             $product_code = "$notificationInfo->external_url";
         }
 
-        $feedCatSlug = null;
+        $subCatSlug = null;
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'FEED_CATEGORY') {
-            $feedCatSlug = "$notificationInfo->external_url";
+            $subCatSlug = "$notificationInfo->external_url";
         }
 
         $category_id = !empty($request->input('category_id')) ? $request->input('category_id') : 1;
@@ -268,7 +268,7 @@ class PushNotificationController extends Controller
                 "image_url" => $image_url,
                 "component" => "offer",
                 'product_code' => "$product_code",
-                'feed_cat_slug' => $feedCatSlug,
+                'sub_category_slug' => $subCatSlug,
                 'navigation_action' => "$notificationInfo->navigate_action"
             ],
         ];
@@ -303,9 +303,9 @@ class PushNotificationController extends Controller
             $product_code = "$notificationInfo->external_url";
         }
 
-        $feedCatSlug = null;
+        $subCatSlug = null;
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'FEED_CATEGORY') {
-            $feedCatSlug = "$notificationInfo->external_url";
+            $subCatSlug = "$notificationInfo->external_url";
         }
 
 
@@ -338,7 +338,7 @@ class PushNotificationController extends Controller
                         "image_url" => $image_url,
                         "component" => "offer",
                         'product_code' => "$product_code",
-                        'feed_cat_slug' => $feedCatSlug,
+                        'sub_category_slug' => $subCatSlug,
                         'navigation_action' => "$notificationInfo->navigate_action"
                     ]
 
@@ -360,7 +360,7 @@ class PushNotificationController extends Controller
                             "image_url" => $image_url,
                             "component" => "offer",
                             'product_code' => "$product_code",
-                            'feed_cat_slug' => $feedCatSlug,
+                            'sub_category_slug' => $subCatSlug,
                             'navigation_action' => "$notificationInfo->navigate_action"
                         ]
 
