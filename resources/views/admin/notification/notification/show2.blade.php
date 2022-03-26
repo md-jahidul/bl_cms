@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Notification')
-@section('card_name', 'Notification')
+@section('title', 'Quick Notification Send')
+@section('card_name', 'Quick Notification Send')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Send</li>
+    <li class="breadcrumb-item active">Quick Notification Send</li>
 @endsection
 @section('action')
     <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -24,8 +24,8 @@
                     <form class="form" method="POST" id="sendNotificationForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}" readonly>
+                            {{-- <label for="title">Title</label> --}}
+                            <input type="hidden" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}" readonly>
                             <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
                             <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
@@ -34,15 +34,15 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea readonly class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                            {{-- <label for="message">Message</label> --}}
+                            <textarea name="hide" style="display:none" class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="message">Image</label> <br/>
                             <img class="" src="{{ asset($notification->image) }}" alt="Image"
                                  height="200" width="400"/>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
 
