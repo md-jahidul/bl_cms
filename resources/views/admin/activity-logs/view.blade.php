@@ -40,7 +40,7 @@
                     
                         @if ($flag)
                             <table class="table">
-                                <h4><strong> After</strong></h4>
+                                <h4 class="pb-1"><strong> After</strong></h4>
                                 @foreach($data['after'] as $k=>$d)
                                     <tr>
                                         <th>{{ $k }}</th>
@@ -49,7 +49,7 @@
                                 @endforeach
                             </table>
                             <table class="table">
-                            <h4><strong> Before</strong></h4>
+                            <h4 class="pb-1"><strong> Before</strong></h4>
                                 @foreach($data['before'] as $k=>$d)
                                     <tr>
                                         <th>{{ $k }}</th>
