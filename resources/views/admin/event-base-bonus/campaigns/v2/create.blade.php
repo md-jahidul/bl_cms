@@ -2,7 +2,7 @@
 @section('title', 'Campaign Create')
 @section('card_name', 'Campaign Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('event-base-bonus/campaigns') }}"> Campaign List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url('event-base-bonus/v2/campaigns') }}"> Campaign List</a></li>
     <li class="breadcrumb-item active"> Campaign Create</li>
 @endsection
 @section('action')

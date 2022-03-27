@@ -2,16 +2,18 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
+use App\Models\NotificationSchedule;
+use App\Repositories\NotificationScheduleRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Http\Response;
+use Illuminate\Notifications\Notification;
+use Carbon\Carbon;
 use App\Traits\FileTrait;
 use App\Models\MyBlProduct;
-use Illuminate\Http\Response;
 use App\Models\NotificationDraft;
 use App\Models\NotificationSchedule;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\NotificationRequest;
-use Illuminate\Notifications\Notification;
 use App\Repositories\NotificationRepository;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationScheduleRepository;
@@ -294,18 +296,18 @@ class NotificationService
             'details',
             function ($q) use ($request) {
 
-                if($request->has('productCode') && !empty($request->input('productCode'))){
-                    $productCode=trim($request->input('productCode'));
-                      $q->where('product_code','like',"$productCode%");
-                  }
-                  $q->whereIn('content_type', ['data','voice','sms','mix']);
+                if ($request->has('productCode') && !empty($request->input('productCode'))) {
+                    $productCode = trim($request->input('productCode'));
+                    $q->where('product_code', 'like', "$productCode%");
+                }
+                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
             }
         )->get();
         $data = [];
         foreach ($products as $product) {
             $data [] = [
-                'id'    => $product->details->product_code,
-                'text' =>  $product->details->product_code .' (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+                'id' => $product->details->product_code,
+                'text' => $product->details->product_code . ' (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
             ];
         }
 

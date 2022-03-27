@@ -888,8 +888,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
     /*
-    * Event Base bonus
-    */
+     * Event Base bonus
+     */
     Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
     Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
     Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
@@ -906,6 +906,22 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
         ->name('free-product-purchase-msisdn.list');
+
+    /*
+     * Event Base bonus V2
+     */
+    Route::get('event-base-bonus/v2/tasks-del/{id}', 'CMS\EventBaseTaskV2Controller@delete');
+    Route::resource('event-base-bonus/v2/tasks', 'CMS\EventBaseTaskV2Controller')->except(['show']);
+    Route::resource('event-base-bonus/v2/campaigns', 'CMS\EventBaseCampaignV2Controller')->except(['show']);
+    Route::get('event-base-bonus/v2/analytics', 'CMS\EventBaseTaskAnalyticV2Controller@index');
+    Route::post('event-base-bonus/v2/analytics/find', 'CMS\EventBaseTaskAnalyticV2Controller@analytics');
+    Route::post('event-base-bonus/v2/analytics/search', 'CMS\EventBaseTaskAnalyticV2Controller@analyticsUserDetails');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallenges');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
+    Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
+    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');        
+
     /*
     * Usim Eligibility
     */
