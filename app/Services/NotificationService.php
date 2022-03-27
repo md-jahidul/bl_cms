@@ -61,6 +61,8 @@ class NotificationService
     public function storeNotification(NotificationRequest $request)
     {
         $data = $request->all();
+        
+        if($request->type != 'only_save')$data['quick_notification'] = true;
 
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
         unset($data['display_period']);

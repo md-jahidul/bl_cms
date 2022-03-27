@@ -107,7 +107,7 @@ class NotificationController extends Controller
         }
 
         else{
-            $request->quick_notification = true;
+            
             $notification = $this->notificationService->storeNotification($request);
             $id = $notification['id'];
             $schedule = $notification ? $notification->schedule : null;
