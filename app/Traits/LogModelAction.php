@@ -23,12 +23,15 @@ trait LogModelAction
 
         });
 
-        static::updated(function($item) {      
+        static::updating(function($item) {      
             
             LogInDb::create([
                 'user_id' => Auth::id(),
                 'action' => ModelActions::U,
-                'data' => $item,
+                'data' => json_encode([
+                    'before' => $item,
+                    'after' => $item->getOriginal(),
+                ]),
                 'model' => (new \ReflectionClass($item))->getName()
             ]);
 
