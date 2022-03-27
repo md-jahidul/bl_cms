@@ -134,7 +134,6 @@ class BaseMsisdnService
     {
         if (isset($request->base_msisdn_files)) {
             $currentFileId = [];
-            $insertData = array();
             foreach ($request->base_msisdn_files as $file) {
                 if ($action == "update" && isset($file['file_id'])) {
                     $findFile = $this->baseMsisdnFileRepository->findOne($file['file_id']);
@@ -151,7 +150,6 @@ class BaseMsisdnService
                     $file_path = $this->getPath($path);
                     $reader = ReaderFactory::createFromFile($file_path); // for XLSX and CSV files
                     $reader->open($file_path);
-
                     $baseFileData = [
                         'file_name' => $path,
                         'title' => $file['file_title'],
@@ -159,6 +157,7 @@ class BaseMsisdnService
                         'status' => 0,
                     ];
 
+                    $insertData = array();
                     foreach ($reader->getSheetIterator() as $sheet) {
                         foreach ($sheet->getRowIterator() as $rowNum => $row) {
                             $cells = $row->getCells();
@@ -175,20 +174,19 @@ class BaseMsisdnService
                         }
                     }
 
+                    // Check maximum upload
+                    $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
+                    $msisdnLimit = 100000 * 10 * $million;
+
+                    if (count($insertData) > $msisdnLimit) {
+                        $inputMsisdn = count($insertData) / 1000000;
+                        return [
+                            'status' => false,
+                            'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
+                        ];
+                    }
                     $this->fileWiseMsisdnUpload($insertData, $baseFileData);
                 }
-            }
-
-            // Check maximum upload
-            $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
-            $msisdnLimit = 100000 * 10 * $million;
-
-            if (count($insertData) > $msisdnLimit) {
-                $inputMsisdn = count($insertData) / 1000000;
-                return [
-                    'status' => false,
-                    'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
-                ];
             }
 
             // File Delete Section
@@ -233,7 +231,6 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request) {
                 $baseGroup = $this->baseMsisdnGroupRepository->save($request->all());
                 $response = $this->uploadPrepare($request, $baseGroup);
-//                dd($response);
                 if (!$response['status']) {
                     DB::rollBack();
                 }
