@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group">
                             {{-- <label for="message">Message</label> --}}
-                            <textarea name="hide" style="display:none" class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                            <textarea type="hide" style="display:none" class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
                         </div>
 
                         {{-- <div class="form-group">
