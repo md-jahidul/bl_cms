@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class InternetPackFilter extends Model
 {
+    use LogModelAction;
+    
     protected $guarded = ['id'];
 
     public function scopePrice($builder)

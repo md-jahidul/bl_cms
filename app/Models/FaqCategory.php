@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 class FaqCategory extends Model
 {
-    use Sluggable;
+    use Sluggable, LogModelAction;
 
     protected $guarded = ['id'];
     //public  $primaryKey = 'slug';

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MyblHealthHub extends Model
 {
+    use LogModelAction;
     protected $guarded = [];
 
     protected $casts = [

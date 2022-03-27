@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class Priyojon extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'parent_id',
         'title_en',

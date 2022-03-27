@@ -6,10 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Authorizable;
+use App\Traits\LogModelAction;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, LogModelAction;
     use Authorizable;
 
     /**

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class LeadRequest extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = ['status'];
 
     protected $casts = [
