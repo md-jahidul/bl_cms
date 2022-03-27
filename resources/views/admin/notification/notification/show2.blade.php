@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Quick Notification Send</li>
 @endsection
 @section('action')
-    <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2">
         Notification List
     </a>
 @endsection
