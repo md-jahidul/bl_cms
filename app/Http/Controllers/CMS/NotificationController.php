@@ -239,6 +239,7 @@ class NotificationController extends Controller
     }
 
     public function quickNotificationList(){
+
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
         $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', true);
         $notifications = $notifications->sortByDesc(function ($notification){
@@ -258,5 +259,14 @@ class NotificationController extends Controller
         
         return redirect(route('notification.index'));
         
+    }
+
+    public function duplicateQuickNotification($notificationId){
+       
+        $data = $this->notificationService->findOne($notificationId);
+        $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
+        session()->flash('message', ' Quick Notification has been successfully Duplicate');
+        
+        return redirect(route('quick-notification.index'));
     }
 }
