@@ -88,6 +88,14 @@ class NotificationService
         else return $data['id'];
     }
 
+    public function storeDuplicateNotification($data)
+    {
+        // dd($data);
+        $data = $this->save($data);
+        
+        return new Response("Notification has been successfully Duplicate");
+    }
+
     /**
      * @param $request
      * @param $id
@@ -301,5 +309,10 @@ class NotificationService
         }
 
         return $data;
+    }
+
+    public function  findOneById($id){
+
+        return $this->findOne($id);
     }
 }

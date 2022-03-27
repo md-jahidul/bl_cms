@@ -177,6 +177,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Notification
     Route::resource('notification', 'CMS\NotificationController');
+    Route::get('quick-notification', 'CMS\NotificationController@quickNotificationList')->name('quick-notification.index');
+    Route::get('quick-duplicate/{notificationId}', 'CMS\NotificationController@duplicateNotification')->name('notification.duplicate');
 
     Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');

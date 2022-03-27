@@ -57,7 +57,7 @@ class NotificationController extends Controller
     public function index()
     {
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
-        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy);
+        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', false);
         $notifications = $notifications->sortByDesc(function ($notification){
             return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
         })->values();
@@ -236,5 +236,27 @@ class NotificationController extends Controller
     public function getProductList(Request $request){
         
         return $this->notificationService->getActiveProducts($request);
+    }
+
+    public function quickNotificationList(){
+        $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
+        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', true);
+        $notifications = $notifications->sortByDesc(function ($notification){
+            return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
+        })->values();
+        $category = $this->notificationCategoryService->findAll();
+        return view('admin.notification.notification.quick_notification_index')
+            ->with('category', $category)
+            ->with('notifications', $notifications);
+    }
+
+    public function duplicateNotification($notificationId){
+
+        $data = $this->notificationService->findOne($notificationId);
+        $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
+        session()->flash('message', $content);
+        
+        return redirect(route('notification.index'));
+        
     }
 }
