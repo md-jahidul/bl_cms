@@ -84,8 +84,8 @@ class NotificationService
 
         $data = $this->save($data);
         
-        if($request->action == 'save')return new Response("Notification has been successfully created");
-        else return $data['id'];
+        if($request->type == 'only_save')return new Response("Notification has been successfully created");
+        else return $data;
     }
 
     public function storeDuplicateNotification($data)

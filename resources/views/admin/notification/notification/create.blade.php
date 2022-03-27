@@ -4,7 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">Notification List</li>
 @endsection
-
+<?php $scheduleStatus = "inactive"; ?>
 @section('content')
 <div class="card mb-0 px-1" style="box-shadow:none;">
     <div class="card-content">
@@ -55,78 +55,6 @@
                                 </div>
                             </div>
                         </div>
-
-{{--                        <div class="col-md-4">--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label for="start_date" class="required">Time Period</label>--}}
-{{--                                <div class='input-group'>--}}
-{{--                                    <input type='text'--}}
-{{--                                           class="form-control datetime"--}}
-{{--                                           value="{{ old("display_period") ? old("display_period") : '' }}"--}}
-{{--                                           name="display_period"--}}
-{{--                                           id="display_period"/>--}}
-{{--                                    @if($errors->has('display_period'))--}}
-{{--                                        <p class="text-left">--}}
-{{--                                            <small class="danger text-muted">{{ $errors->first('display_period') }}</small>--}}
-{{--                                        </p>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-                        {{-- <div class="col-md-4">
-
-                            <div class="form-group">
-                                <label for="cta_name" class="required">
-                                    CTA Name:
-                                </label>
-                                <div class="controls">
-                                    <select name="cta_name" id="cta_name" required class="form-control">
-                                    <option value="">Select CTA name</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                    <option value="buy_now">Buy Now</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="cta_action" class="required">
-                                    CTA Action :
-                                </label>
-                                <div class="controls">
-                                    <select name="cta_action" id="cta_action" required class="form-control">
-                                    <option value="">Select CTA type</option>
-                                    <option value="direct_purchase">Direct purchase</option>
-                                    <option value="internal_link">Internal Link</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="category_id" class="required">
-                                    Notification type :
-                                </label>
-                                <div class="controls">
-                                    <select name="notification_type" id="notification_type" required class="form-control">
-                                    <option value="">Select notification type</option>
-                                    <option value="individual">Individual</option>
-                                    <option value="bulk">Bulk</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('notification_type') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div> --}}
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="device_type" class="required">
@@ -202,7 +130,6 @@
                                 @endif
                             @endif
                         </div>
-
 {{-- ========================================================= --}}
                     </div>
                     <div class="row">
@@ -241,13 +168,49 @@
 
                         {{-- </div> --}}
 
+                        <div class="collapse col-md-12" id="myDiv" >
+                            <div class="form-group">
+                                <label for="message">Upload Customer List</label> <a href="{{ asset('sample-format/customers.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                                <input type="file" class="dropify" name="customer_file" data-height="80"
+                                    data-allowed-file-extensions="xlsx"/>
+                            </div>
+                            <div class="from-group">
+                                <input type="checkbox" name="is_scheduled" id="is_scheduled"
+                                    {{ $scheduleStatus == 'active' ? 'checked' : '' }}>
+                                <label>Notification Schedule</label>
+                                {{ $scheduleStatus == 'active' ? \Carbon\Carbon::parse($schedule->start)->format('Y/m/d h:i A') . ' - ' . \Carbon\Carbon::parse($schedule->end)->format('Y/m/d h:i A') : '' }}
+                                <div class='input-group'>
+                                    <input type='text' {{ $scheduleStatus == 'active' ? '' : 'disabled' }}
+                                        class="form-control datetime"
+                                        value="{{ old('display_period') ?? "" }}"
+                                        name="schedule_time"
+                                        id="schedule_time"/>
+                                    @if($errors->has('display_period'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('display_period') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <br>
+                            </div>
+                        </div>
                         <div class="col-md-6">
+                            <input type="hidden" name="type" id="save_type" value="only_save">
                             <button type="submit" class="btn btn-success round px-2" name="action" value="save">
                                 <i class="la la-check-square-o"></i> Submit
                             </button>
-                            <button type="submit" class="btn btn-success round px-2" name="action" value="quick_send">
-                                <i class="la la-check-square-o"></i> Quick Send
-                            </button>
+                            <button 
+                                type="button" 
+                                id="quick_notification_send"
+                                class="btn btn-success round px-2" 
+                                data-toggle="collapse"
+                                data-target="#myDiv" 
+                                value="true" 
+                                aria-controls="myDiv"
+                                onclick="quickSend()"
+                                >
+                                    <i class="la la-check-square-o"></i> Quick Send Option
+                        </button>
                         </div>
                     </div>
                 </div>
@@ -356,7 +319,6 @@
                                         <div class="help-block"></div>
                                     </div>`;
 
-
             $('#navigate_action').on('change', function () {
                 let action = $(this).val();
                 if (action == 'DIAL') {
@@ -428,7 +390,19 @@
             })
         });
 
+        function quickSend() {
+            let flag = $('#quick_notification_send').val();
 
+            if(flag == "true") {
+                $('#quick_notification_send').val("false");
+                $('#save_type').val("send_notification");
+            } else {
+                $('#quick_notification_send').val("true");
+                $('#save_type').val("only_save");
+            }
+
+            console.log($('#save_type').val);
+        }
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
@@ -449,6 +423,92 @@
                     'imageFormat': 'The image ratio must be 1:1.'
                 }
             });
+        });
+
+        var date;
+        // Date & Time
+        date = new Date();
+        date.setDate(date.getDate());
+        $('.datetime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 5,
+            startDate: '{{$scheduleStatus == 'active' ? $schedule->start : date('Y-m-d H:i:s')}}',
+            endDate: '{{$scheduleStatus == 'active' ? $schedule->end : date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}',
+            minDate: date,
+            locale: {
+                format: 'YYYY/MM/DD h:mm A'
+            }
+        });
+
+        $('#is_scheduled').change(function () {
+
+            if ($(this).is(':checked')) {
+                $('#schedule_time').removeAttr('disabled');
+            } else {
+                $('#schedule_time').attr('disabled', 'true');
+            }
+
+            //alert($(this).is(':checked'))
+        })
+            /* file handled  */
+        $('#sendNotificationForm').submit(function (e) {
+
+            e.preventDefault();
+            swal.fire({
+                title: 'Data Uploading.Please Wait ...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                onOpen: () => {
+                    swal.showLoading();
+                }
+            });
+            let URL="{{ route('notification.send') }}";
+            let formData = new FormData($(this)[0]);
+            let clickBtn = $(".e-clicked").val();
+            if(clickBtn === "Submit Device" )
+            {
+                URL="{{ route('target_wise_notification.send')}}";
+            }
+            if ($('#is_scheduled').is(':checked')) {
+                URL = "{{route('notification-schedule.send')}}";
+            }
+            $.ajax({
+                url: URL,
+                type: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (result) {
+
+                    if (result.success) {
+                        swal.fire({
+                            title: result.message,
+                            type: 'success',
+                            timer: 900000,
+                            showConfirmButton: false
+                        });
+
+                        window.location.href = '{{route("notification.index")}}';
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    swal.fire({
+                        title: 'Failed to send Notifications',
+                        type: 'error',
+                    });
+                }
+            });
+
         });
 
     </script>
