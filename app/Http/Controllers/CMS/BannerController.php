@@ -41,6 +41,7 @@ class BannerController extends Controller
     {
         $orderBy = ['column' => "id", 'direction' => 'desc'];
         $banners = $this->bannerService->findAll('','', $orderBy);
+        
         return view('admin.banner.index')->with('banners', $banners);
     }
 

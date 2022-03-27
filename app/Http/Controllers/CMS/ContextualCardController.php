@@ -37,10 +37,10 @@ class ContextualCardController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            return $this->contextualCardService->prepareDataForDatatable($request);
-        }
-        return view('admin.contextual-card.index');
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
+        $contextualCards = $this->contextualCardService->findAll('', '', $orderBy);
+        
+        return view('admin.contextual-card.index')->with('contextualCards', $contextualCards);
     }
 
     /**
