@@ -37,18 +37,36 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>Activity</strong></h4>
-                    <table class="table">
-                        {{-- <tr>
-                            <th>Model</th>
-                            <td></td>
-                        </tr> --}}
-                        @foreach($data as $k=>$d)
-                            <tr>
-                                <th>{{ $k }}</th>
-                                <td>{{ $d }}</td>
-                            </tr>
-                        @endforeach
-                    </table>
+                    
+                        @if ($flag)
+                            <table class="table">
+                                <h4><strong> After</strong></h4>
+                                @foreach($data['after'] as $k=>$d)
+                                    <tr>
+                                        <th>{{ $k }}</th>
+                                        <td>{{ $d }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                            <table class="table">
+                            <h4><strong> Before</strong></h4>
+                                @foreach($data['before'] as $k=>$d)
+                                    <tr>
+                                        <th>{{ $k }}</th>
+                                        <td>{{ $d }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        @else
+                            <table class="table">
+                                @foreach($data as $k=>$d)
+                                    <tr>
+                                        <th>{{ $k }}</th>
+                                        <td>{{ $d }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        @endif
                 </div>
             </div>
         </div>

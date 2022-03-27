@@ -26,8 +26,10 @@ class ActivityLogController extends Controller
     {
         $activityLog = $this->activityLogService->findById($activityLogId);
         $data = json_decode($activityLog['data'], true);
-        
-        return view('admin.activity-logs.view', compact('activityLog', 'data'));
+        $flag = false;
+        if(isset($data['before']))$flag= true;
+
+        return view('admin.activity-logs.view', compact('activityLog', 'data', 'flag'));
     }
 
     public function search(Request $request){
