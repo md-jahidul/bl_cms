@@ -2,11 +2,11 @@
 @section('title', 'Task Create')
 @section('card_name', 'Task Create')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/tasks') }}"> Task List</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('event-base-bonus/v2/tasks') }}"> Task List</a></li>
 <li class="breadcrumb-item active"> Task Create</li>
 @endsection
 @section('action')
-<a href="{{ url('event-base-bonus/tasks') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+<a href="{{ url('event-base-bonus/v2/tasks') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
 
