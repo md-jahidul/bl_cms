@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\NotificationSchedule;
-use App\Repositories\NotificationScheduleRepository;
+
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\Notification;
