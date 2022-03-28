@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ContextualCardIcon;
 
 class ContextualCards extends Model
 {
+    use LogModelAction;
+    
     protected $table = 'contextual_cards';
     protected $fillable = [
         'title',

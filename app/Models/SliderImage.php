@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class SliderImage extends Model
 {
+    use LogModelAction;
+
     protected $fillable = [
             'slider_id',
             'title',

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -9,7 +10,8 @@ use Illuminate\Support\Str;
 
 class MyBlFeedCategory extends Model
 {
-
+    use LogModelAction;
+    
     protected static function boot()
     {
         parent::boot();

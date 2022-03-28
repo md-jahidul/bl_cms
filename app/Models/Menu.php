@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    use LogModelAction;
+
     protected $fillable = [
         'parent_id', 'en_label_text', 'bn_label_text',
         'external_site', 'code', 'url', 'url_bn',

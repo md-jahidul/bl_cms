@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MyblFlashHour extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'title',
         'base_msisdn_groups_id',

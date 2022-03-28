@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class PushNotificationProductPurchase extends Model
 {
-
+    use LogModelAction;
+    
     protected $fillable = [
         'id',
         'notification_id',

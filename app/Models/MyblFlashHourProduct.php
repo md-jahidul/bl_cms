@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class MyblFlashHourProduct extends Model
 {
+    use LogModelAction;
     protected $guarded = [];
 
     /**

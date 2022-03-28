@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class MyBlStoreApp extends Model
 {
+    use LogModelAction;
+    
     /**
      * The attributes that aren't mass assignable.
      *
