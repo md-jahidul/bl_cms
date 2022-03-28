@@ -94,9 +94,16 @@ class PushNotificationSendService
         ];
     }
 
-    public function storeScheduledNotification(array $data, $id = null)
+    public function storeScheduledNotification(array $data, array $data1 = null)
     {
-        if($id)$data['id'] = $id;
+        if($data1){
+            $data['id']             = $data1['id'];
+            $data['title']          = $data1['title'];
+            $data["category_id"]    = $data1["category_id"];
+            $data["category_slug"]  = $data1["category_slug"];
+            $data["category_name"]  = $data1["category_name"];
+            $data["image_url"]      = $data1["image_url"];
+        }
 
         try {
             $scheduleArr = explode('-', $data['schedule_time']);

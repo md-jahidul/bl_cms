@@ -114,12 +114,14 @@ class NotificationController extends Controller
             $notification = $this->notificationService->storeNotification($request);
             $id = $notification['id'];
             $schedule = $notification ? $notification->schedule : null;
-
             $request['title']          = $notification->title;
             $request["category_id"]    = $notification->NotificationCategory->id;
-            $request["category_slug"]  =$notification->NotificationCategory->slug;
-            $request["category_name"]  =$notification->NotificationCategory->name;
-            $request["image_url"]      =$notification->image;
+            $request["category_slug"]  = $notification->NotificationCategory->slug;
+            $request["category_name"]  = $notification->NotificationCategory->name;
+            $request["image_url"]      = $notification->image;
+            $request['id']             = $id;
+            $request['message']        = $notification['body'];
+            $data = $request->all();
             $flag =  isset($request->is_scheduled) ? 1 : 0 ;
 
             if(!$flag){
@@ -176,7 +178,7 @@ class NotificationController extends Controller
                 }
             }
             else {
-                return $this->pushNotificationSendService->storeScheduledNotification($request->all(), $id);
+                return $this->pushNotificationSendService->storeScheduledNotification($request->all(), $data);
             }
         }
     }
