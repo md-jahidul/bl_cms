@@ -16,12 +16,4 @@ use App\Models\Prize;
 class MyblCashBackRepository extends BaseRepository
 {
     public $modelName = MyblCashBack::class;
-
-    public function inactiveOldCampaign()
-    {
-        $campaigns = $this->model->all();
-        foreach ($campaigns as $campaign) {
-            $campaign->update(['status' => 0]);
-        }
-    }
 }
