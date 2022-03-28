@@ -138,7 +138,6 @@ class PushNotificationController extends Controller
                 NotificationSend::dispatch($notification, $notification_id, $customer,
                     $this->notificationService)
                     ->onQueue('notification');
-                    dd("here");
             }
            
             Log::info('Success: Notification sending from excel');
