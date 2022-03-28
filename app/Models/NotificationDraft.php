@@ -36,7 +36,8 @@ class NotificationDraft extends Model
         'external_url',
         'image',
         'starts_at',
-        'expires_at'
+        'expires_at',
+        'quick_notification'
     ];
 
 

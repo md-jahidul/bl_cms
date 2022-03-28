@@ -94,8 +94,17 @@ class PushNotificationSendService
         ];
     }
 
-    public function storeScheduledNotification(array $data)
+    public function storeScheduledNotification(array $data, array $data1 = null)
     {
+        if($data1){
+            $data['id']             = $data1['id'];
+            $data['title']          = $data1['title'];
+            $data["category_id"]    = $data1["category_id"];
+            $data["category_slug"]  = $data1["category_slug"];
+            $data["category_name"]  = $data1["category_name"];
+            $data["image_url"]      = $data1["image_url"];
+        }
+
         try {
             $scheduleArr = explode('-', $data['schedule_time']);
 
@@ -127,13 +136,13 @@ class PushNotificationSendService
                 $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
                 $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
                 $notificationSchedule->status = 'active';
-
                 $notificationSchedule->save();
             }
 
             return [
                 'success' => true,
-                'message' => 'Notification Schedule Stored'
+                'message' => 'Notification Schedule Stored',
+                'quick_notification' => true,
             ];
         } catch (\Exception $e) {
             Log::info('Error:' . $e->getMessage());

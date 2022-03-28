@@ -2,7 +2,7 @@
 @section('title', 'Notification')
 @section('card_name', 'Notification')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification List</li>
+    <li class="breadcrumb-item active">Quick Notification List</li>
 @endsection
 
 @section('action')
@@ -81,9 +81,10 @@
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
-                                                href="{{route('notification.duplicate',$notification->id)}}"
+                                                href="{{route('quick-notification.duplicate',$notification->id)}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
+                                                title="Duplicate Notification"
                                                 onclick=""><i class="la la-copy"></i></a>
                                         </div>
 

@@ -62,6 +62,8 @@ class NotificationService
     public function storeNotification(NotificationRequest $request)
     {
         $data = $request->all();
+        
+        if($request->type != 'only_save')$data['quick_notification'] = true;
 
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
         unset($data['display_period']);
@@ -83,9 +85,18 @@ class NotificationService
 
         }
 
+        $data = $this->save($data);
+        
+        if($request->type == 'only_save')return new Response("Notification has been successfully created");
+        else return $data;
+    }
 
-        $this->save($data);
-        return new Response("Notification has been successfully created");
+    public function storeDuplicateNotification($data)
+    {
+        // dd($data);
+        $data = $this->save($data);
+        
+        return new Response("Notification has been successfully Duplicate");
     }
 
     /**
@@ -311,5 +322,10 @@ class NotificationService
         }
 
         return $data;
+    }
+
+    public function  findOneById($id){
+
+        return $this->findOne($id);
     }
 }

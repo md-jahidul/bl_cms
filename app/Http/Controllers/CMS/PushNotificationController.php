@@ -122,12 +122,11 @@ class PushNotificationController extends Controller
         $notificationInfo = NotificationDraft::find($notification_id);
 
         $muteUsersPhone = $this->userMuteNotificationCategoryRepository->getUsersPhoneByCategory($categoryId);
-
+        
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
-
             /*
              * Reading and parsing users from the uploaded spreadsheet
              */
@@ -148,19 +147,20 @@ class PushNotificationController extends Controller
              */
             $filteredUserPhones = array_diff($userPhones, $muteUsersPhone);
             $filteredUserPhoneChunks = array_chunk($filteredUserPhones, 300);
-
+            
             /*
              * Dispatching chunks of users to notification send job
              */
             foreach ($filteredUserPhoneChunks as $userPhoneChunk) {
+                
                 list($customer, $notification) = $this->checkTargetWise($request, $notificationInfo,
                     $userPhoneChunk, $notification_id, $notification_data);
-
+                
                 NotificationSend::dispatch($notification, $notification_id, $customer,
                     $this->notificationService)
                     ->onQueue('notification');
             }
-
+           
             Log::info('Success: Notification sending from excel');
             return [
                 'success' => true,
