@@ -103,7 +103,10 @@ class NotificationController extends Controller
         if($request->type == 'only_save'){
             $content = $this->notificationService->storeNotification($request)->getContent();
             session()->flash('message', $content);
-            return redirect(route('notification.index'));
+            return [
+                'success' => true,
+                'message' => $content,
+            ];
         }
 
         else{
@@ -149,6 +152,7 @@ class NotificationController extends Controller
                             }
                         }
                     }
+                    dd($user_phone);
                     $reader->close();
                     if (!empty($user_phone)) {
                         $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);

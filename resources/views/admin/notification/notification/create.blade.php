@@ -1,15 +1,17 @@
 @extends('layouts.admin')
 @section('title', 'Notification')
 @section('card_name', 'Notification')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Notification List</li>
+@section('action')
+    <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2">
+        Notification List
+    </a>
 @endsection
 <?php $scheduleStatus = "inactive"; ?>
 @section('content')
 <div class="card mb-0 px-1" style="box-shadow:none;">
     <div class="card-content">
         <div class="card-body">
-            <form novalidate class="form" method="POST" action="{{route('notification.store')}}" enctype="multipart/form-data">
+            <form class="form" method="POST" id="sendNotificationForm" enctype="multipart/form-data">
                 @csrf
                 @method('post')
 
@@ -196,21 +198,22 @@
                         </div>
                         <div class="col-md-6">
                             <input type="hidden" name="type" id="save_type" value="only_save">
-                            <button type="submit" class="btn btn-success round px-2" name="action" value="save">
-                                <i class="la la-check-square-o"></i> Submit
-                            </button>
-                            <button 
-                                type="button" 
-                                id="quick_notification_send"
-                                class="btn btn-success round px-2" 
-                                data-toggle="collapse"
-                                data-target="#myDiv" 
-                                value="true" 
-                                aria-controls="myDiv"
-                                onclick="quickSend()"
-                                >
+                            <div style="display: flex">
+                                <input class="btn btn-success" style="width:25%;padding:7.5px 12px; border-radius: 20px; margin-right: 10px;" type="submit" name="submit" value="Submit" id="submit"  onclick="return selectMethord('submit');">
+                                <button 
+                                    type="button" 
+                                    id="quick_notification_send"
+                                    class="btn btn-success round px-2" 
+                                    data-toggle="collapse"
+                                    data-target="#myDiv" 
+                                    value="true" 
+                                    aria-controls="myDiv"
+                                    onclick="quickSend()"
+                                    >
                                     <i class="la la-check-square-o"></i> Quick Send Option
-                        </button>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -462,16 +465,9 @@
                     swal.showLoading();
                 }
             });
-            let URL="{{ route('notification.send') }}";
+            let URL="{{ route('notification.store') }}";
             let formData = new FormData($(this)[0]);
-            let clickBtn = $(".e-clicked").val();
-            if(clickBtn === "Submit Device" )
-            {
-                URL="{{ route('target_wise_notification.send')}}";
-            }
-            if ($('#is_scheduled').is(':checked')) {
-                URL = "{{route('notification-schedule.send')}}";
-            }
+
             $.ajax({
                 url: URL,
                 type: 'POST',
