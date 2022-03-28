@@ -152,7 +152,6 @@ class NotificationController extends Controller
                             }
                         }
                     }
-                    dd($user_phone);
                     $reader->close();
                     if (!empty($user_phone)) {
                         $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
