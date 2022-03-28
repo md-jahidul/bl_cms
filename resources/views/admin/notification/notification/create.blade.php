@@ -484,8 +484,9 @@
                             timer: 900000,
                             showConfirmButton: false
                         });
-
-                        window.location.href = '{{route("notification.index")}}';
+                        
+                        if(!result.quick_notification)window.location.href = '{{route("notification.index")}}';
+                        else window.location.href = '{{route("quick-notification.index")}}';
 
                     } else {
                         swal.close();

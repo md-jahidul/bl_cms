@@ -106,6 +106,7 @@ class NotificationController extends Controller
             return [
                 'success' => true,
                 'message' => $content,
+                'quick_notification' => false,
             ];
         }
 
@@ -168,6 +169,7 @@ class NotificationController extends Controller
                     return [
                         'success' => true,
                         'message' => 'Notification Sent',
+                        'quick_notification' => true,
                     ];
                 } catch (\Exception $e) {
                     Log::info('Error:' . $e->getMessage());

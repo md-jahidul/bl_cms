@@ -137,7 +137,8 @@ class PushNotificationSendService
 
             return [
                 'success' => true,
-                'message' => 'Notification Schedule Stored'
+                'message' => 'Notification Schedule Stored',
+                'quick_notification' => true,
             ];
         } catch (\Exception $e) {
             Log::info('Error:' . $e->getMessage());
