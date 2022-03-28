@@ -84,6 +84,7 @@
                                                 href="{{route('quick-notification.duplicate',$notification->id)}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
+                                                title="Duplicate Notification"
                                                 onclick=""><i class="la la-copy"></i></a>
                                         </div>
 
