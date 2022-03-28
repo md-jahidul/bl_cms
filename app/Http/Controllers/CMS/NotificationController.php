@@ -176,7 +176,7 @@ class NotificationController extends Controller
                 }
             }
             else {
-                return $this->pushNotificationSendService->storeScheduledNotification($request->all());
+                return $this->pushNotificationSendService->storeScheduledNotification($request->all(), $id);
             }
         }
     }

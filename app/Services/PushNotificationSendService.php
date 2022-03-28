@@ -94,8 +94,10 @@ class PushNotificationSendService
         ];
     }
 
-    public function storeScheduledNotification(array $data)
+    public function storeScheduledNotification(array $data, $id = null)
     {
+        if($id)$data['id'] = $id;
+
         try {
             $scheduleArr = explode('-', $data['schedule_time']);
             $uploadedFile = $this->upload($data['customer_file'], 'notification-scheduler-files');
@@ -123,7 +125,6 @@ class PushNotificationSendService
                 $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
                 $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
                 $notificationSchedule->status = 'active';
-
                 $notificationSchedule->save();
             }
 
