@@ -199,11 +199,11 @@
                         <div class="col-md-6">
                             <input type="hidden" name="type" id="save_type" value="only_save">
                             <div style="display: flex">
-                                <input class="btn btn-success" style="width:25%;padding:7.5px 12px; border-radius: 20px; margin-right: 10px;" type="submit" name="submit" value="Submit" id="submit"  onclick="return selectMethord('submit');">
+                                <input class="btn btn-success" style="width:25%;padding:7.5px 12px; border-radius: 20px; margin-right: 10px;" type="submit" name="submit" value="Save" id="submit"  onclick="return selectMethord('submit');">
                                 <button 
                                     type="button" 
                                     id="quick_notification_send"
-                                    class="btn btn-success round px-2" 
+                                    class="btn btn-info round px-2" 
                                     data-toggle="collapse"
                                     data-target="#myDiv" 
                                     value="true" 
@@ -398,8 +398,10 @@
 
             if(flag == "true") {
                 $('#quick_notification_send').val("false");
+                $('#submit').val("Save & Send");
                 $('#save_type').val("send_notification");
             } else {
+                $('#submit').val("Save");
                 $('#quick_notification_send').val("true");
                 $('#save_type').val("only_save");
             }
