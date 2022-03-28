@@ -22,7 +22,9 @@ class MyBlAppLaunchPopup extends Model
         'other_info',
         'created_by',
         'status',
-        'product_code'
+        'product_code',
+        'thumbnail_image',
+        'title_bn'
     ];
 
     public function schedule()
