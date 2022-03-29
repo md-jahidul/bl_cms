@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\ActivityLog;
 use App\Services\ActivityLogService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class ActivityLogController extends Controller
 {
-    protected $activityLogService;
 
-    public function __construct(ActivityLogService $activityLogService){
+    protected $activityLogService, $userService;
+    
+    public function __construct(ActivityLogService $activityLogService, UserService $userService){
 
         $this->activityLogService = $activityLogService;
+        $this->userService = $userService;
     }
 
     public function index()
@@ -27,9 +30,11 @@ class ActivityLogController extends Controller
         $activityLog = $this->activityLogService->findById($activityLogId);
         $data = json_decode($activityLog['data'], true);
         $flag = false;
+        $user = $this->userService->findById($activityLog->user_id);
+       
         if(isset($data['before']))$flag= true;
 
-        return view('admin.activity-logs.view', compact('activityLog', 'data', 'flag'));
+        return view('admin.activity-logs.view', compact('activityLog', 'data', 'flag', 'user'));
     }
 
     public function search(Request $request){
