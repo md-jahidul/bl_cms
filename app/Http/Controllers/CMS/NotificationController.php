@@ -55,14 +55,15 @@ class NotificationController extends Controller
         NotificationCategoryService $notificationCategoryService,
         UserService $userService,
         CustomerService $customerService,
-        PushNotificationSendService $pushNotificationSendService
-    )
-    {
+        PushNotificationSendService $pushNotificationSendService,
+        FeedCategoryService $feedCategoryService
+    ) {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
         $this->customerService = $customerService;
         $this->pushNotificationSendService = $pushNotificationSendService;
+        $this->feedCategoryService = $feedCategoryService;
         $this->middleware('auth');
     }
 
@@ -118,7 +119,7 @@ class NotificationController extends Controller
         }
 
         else{
-            
+
             $notification = $this->notificationService->storeNotification($request);
             $id = $notification['id'];
             $schedule = $notification ? $notification->schedule : null;
@@ -140,18 +141,18 @@ class NotificationController extends Controller
                     $reader = ReaderFactory::createFromType(Type::XLSX);
                     $path = $request->file('customer_file')->getRealPath();
                     $reader->open($path);
-        
+
                     foreach ($reader->getSheetIterator() as $sheet) {
                         if ($sheet->getIndex() > 0) {
                             break;
                         }
-        
+
                         foreach ($sheet->getRowIterator() as $row) {
                             $cells = $row->getCells();
                             $number = $cells[0]->getValue();
                             $user_phone[] = $number;
                             // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
-        
+
                             if (count($user_phone) == 300) {
                                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
@@ -169,9 +170,9 @@ class NotificationController extends Controller
                         // $notification = $this->getNotificationArray($request, $user_phone);
                         NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                             ->onQueue('notification');
-        
+
                     }
-        
+
                     Log::info('Success: Notification sending from excel');
                     return [
                         'success' => true,
@@ -406,17 +407,17 @@ class NotificationController extends Controller
         $data = $this->notificationService->findOne($notificationId);
         $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
         session()->flash('message', $content);
-        
+
         return redirect(route('notification.index'));
-        
+
     }
 
     public function duplicateQuickNotification($notificationId){
-       
+
         $data = $this->notificationService->findOne($notificationId);
         $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
         session()->flash('message', ' Quick Notification has been successfully Duplicate');
-        
+
         return redirect(route('quick-notification.index'));
     }
 
