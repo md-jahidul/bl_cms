@@ -74,7 +74,16 @@ class AppLaunchPopupService
                             'public'
                         );
                         $data['content'] = $path;
-                    } elseif (!isset($data['content_data']) && is_null($id)) {
+                    } 
+                    if(isset($data['thumbnail_img'])){
+                        $file = $data['thumbnail_img'];
+                        $path = $file->storeAs(
+                            'app-launch-popup/images',
+                            strtotime(now()) . '1.' . $file->getClientOriginalExtension(),
+                            'public'
+                        );
+                        $data['thumbnail'] = $path;
+                    }elseif (!isset($data['content_data']) && is_null($id)) {
                         return redirect()->back()->with('error', 'Image is required');
                     }
 
