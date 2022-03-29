@@ -36,17 +36,17 @@
                                             </p>
                                         @endif
                                     </div>
-                                    <div class="form-group @if($errors->has('title_bangla')) error @endif">
+                                    <div class="form-group @if($errors->has('title')) error @endif">
                                         <label for="title" class="required">Title Bangla</label>
                                         <input class="form-control"
-                                               name="title_bangla"
-                                               id="title_bangla"
+                                               name="title_bn"
+                                               id="title_bn"
                                                maxlength="20"
-                                               value="{{ $page == 'edit' ? $popup->title : old("title_bangla") }}"
+                                               value="{{ $page == 'edit' ? $popup->title_bn : old("title_bn") }}"
                                                >
-                                        @if($errors->has('title_bangla'))
+                                        @if($errors->has('title'))
                                             <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('title_bangla') }}</small>
+                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
                                             </p>
                                         @endif
                                     </div>
@@ -296,7 +296,7 @@
                                                data-allowed-formats="portrait square"
                                                data-allowed-file-extensions="jpeg png jpg"
                                                @if($page == 'edit')
-                                               data-default-file="{{ url('storage/' .$popup->content) }}"
+                                               data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
                                                @else
                                                @endif
                                                class="dropify"/>

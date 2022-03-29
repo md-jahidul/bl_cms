@@ -43,7 +43,6 @@ class AppLaunchPopupController extends Controller
         $productList = $this->getActiveProducts();
         $hourSlots = $this->appLaunchPopupService->getHourSlots();
         $page = 'create';
-
         return view('admin.app-launch-popup.create', compact('productList', 'hourSlots', 'page'));
     }
 
@@ -86,7 +85,6 @@ class AppLaunchPopupController extends Controller
             Carbon::parse($popup->end_date)->format($format);
         $hourSlots = $this->appLaunchPopupService->getHourSlots();
         $page = 'edit';
-
         return view(
             'admin.app-launch-popup.create',
             compact('popup', 'productList', 'hourSlots', 'page', 'dateRange')

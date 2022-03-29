@@ -24,7 +24,8 @@ class MyBlAppLaunchPopup extends Model
         'status',
         'product_code',
         'thumbnail_image',
-        'title_bn'
+        'title_bn',
+        'thumbnail'
     ];
 
     public function schedule()
