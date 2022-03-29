@@ -7,8 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Http\Requests\NotificationRequest;
+use App\Jobs\NotificationSend;
+use App\Models\NotificationDraft;
+use App\Services\CustomerService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Box\Spout\Common\Type;
+use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use App\Services\PushNotificationSendService;
 
 class NotificationController extends Controller
 {
@@ -27,6 +34,7 @@ class NotificationController extends Controller
      * @var UserService
      */
     protected $userService;
+    protected $customerService;
 
 
     /**
@@ -38,12 +46,14 @@ class NotificationController extends Controller
     public function __construct(
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
-        UserService $userService
+        UserService $userService,
+        CustomerService $customerService
     )
     {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
+        $this->customerService = $customerService;
         $this->middleware('auth');
     }
 
@@ -57,7 +67,7 @@ class NotificationController extends Controller
     public function index()
     {
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
-        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy);
+        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', false);
         $notifications = $notifications->sortByDesc(function ($notification){
             return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
         })->values();
@@ -150,8 +160,14 @@ class NotificationController extends Controller
      */
     public function update(NotificationRequest $request, $id)
     {
+        $quick_notification = $request->quick_notification;
         $content = $this->notificationService->updateNotification($request, $id)->getContent();
         session()->flash('success', $content);
+
+        if($quick_notification==1){
+            return redirect(route('quick-notification.index'));
+        }
+
         return redirect(route('notification.index'));
     }
 
@@ -220,5 +236,32 @@ class NotificationController extends Controller
     public function getProductList(Request $request){
         
         return $this->notificationService->getActiveProducts($request);
+    }
+
+    public function duplicateNotification($notificationId){
+
+        $data = $this->notificationService->findOne($notificationId);
+        $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
+        session()->flash('message', $content);
+        
+        return redirect(route('quick-notification.index'));
+        
+    }
+
+    public function quickNotificationIndex(){
+        $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
+        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', true);;
+        $notifications = $notifications->sortByDesc(function ($notification){
+            return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
+        })->values();
+        $category = $this->notificationCategoryService->findAll();
+        return view('admin.notification.notification.quick_notification_index')
+            ->with('category', $category)
+            ->with('notifications', $notifications);
+    }
+
+    public function quickNotificationCreate(){
+        $categories = $this->notificationCategoryService->findAll();
+        return view('admin.notification.notification.quick_notification_create')->with('categories', $categories);
     }
 }

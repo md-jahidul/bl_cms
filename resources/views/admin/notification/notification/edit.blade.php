@@ -20,6 +20,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <input type="hidden" name="id" value="{{$notification->id}}">
+                            <input type="hidden" name="quick_notification" value="{{$notification->quick_notification}}">
                             <div class="form-group">
                                 <label for="title" class="required">Title :</label>
                                 <input name="title"
