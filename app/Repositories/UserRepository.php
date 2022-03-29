@@ -37,4 +37,9 @@ class UserRepository extends BaseRepository
         return $users;
     }
 
+    public function findById($userId){
+        
+        return User::where('id', $userId)->first();
+    }
+
 }

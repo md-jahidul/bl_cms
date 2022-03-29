@@ -14,8 +14,12 @@
                 <div class="card-body card-dashboard">
                     <table class="table">
                         <tr>
-                            <th>User ID</th>
-                            <td>{{ $activityLog->user_id }}</td>
+                            <th>User Name</th>
+                            <td>{{ $user->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>User Email</th>
+                            <td>{{ $user->email }}</td>
                         </tr>
                         <tr>
                             <th>Action</th>
