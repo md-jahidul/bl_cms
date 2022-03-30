@@ -93,15 +93,6 @@ class NotificationService
 
     public function storeDuplicateNotification($data)
     {
-        // dd($data);
-        $data = $this->save($data);
-        
-        return new Response("Notification has been successfully Duplicate");
-    }
-
-
-    public function storeDuplicateNotification($data)
-    {
         $data = $this->save($data);
         
         return new Response("Quick Notification has been successfully Duplicate");
