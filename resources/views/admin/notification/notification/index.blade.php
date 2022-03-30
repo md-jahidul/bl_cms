@@ -81,10 +81,10 @@
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
-                                                href="{{route('notification.duplicate',$notification->id)}}"
+                                                href="{{route('notification.show-all',$notification->id)}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
-                                                onclick=""><i class="la la-copy"></i></a>
+                                                onclick=""><i class="la la-adn"></i></a>
                                         </div>
 
                                     </div>
@@ -179,7 +179,6 @@
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
-
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -210,15 +209,12 @@
                 })
             })
         })
-
-
         // $(".showButton").click(function(){
         //     $('#sendUser').modal()
         //     $('#title').html($(this).attr('data-original-title'))
         //     $('#category').html($(this).attr('data-original-category'))
         //     $('#discription').html($(this).attr('data-original-discription'))
         // })
-
         $(document).ready(function () {
             $('#Example1').DataTable({
                 //dom: 'Bfrtip',
@@ -230,6 +226,5 @@
                 "order": [],
             });
         });
-
     </script>
 @endpush
