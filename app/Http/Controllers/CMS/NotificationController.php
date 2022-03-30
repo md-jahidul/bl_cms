@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
+use App\Services\FeedCategoryService;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Http\Requests\NotificationRequest;
+use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use App\Jobs\NotificationSend;
 use App\Models\NotificationDraft;
 use App\Services\CustomerService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
@@ -34,7 +39,11 @@ class NotificationController extends Controller
      * @var UserService
      */
     protected $userService;
-    protected $customerService;
+    protected $feedCategoryService;
+    /**
+     * @var CustomerService
+     */
+    private $customerService;
 
 
     /**
@@ -47,12 +56,13 @@ class NotificationController extends Controller
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
         UserService $userService,
+        FeedCategoryService $feedCategoryService,
         CustomerService $customerService
-    )
-    {
+    ) {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
+        $this->feedCategoryService = $feedCategoryService;
         $this->customerService = $customerService;
         $this->middleware('auth');
     }
@@ -68,9 +78,6 @@ class NotificationController extends Controller
     {
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
         $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', false);
-        $notifications = $notifications->sortByDesc(function ($notification){
-            return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
-        })->values();
         $category = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.index')
             ->with('category', $category)
@@ -78,24 +85,24 @@ class NotificationController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      * @author ahasan habib <habib.cst@gmail.com>
      */
     public function create()
     {
         $categories = $this->notificationCategoryService->findAll();
-        return view('admin.notification.notification.create')->with('categories', $categories);
+        $actionList = Helper::navigationActionList();
+        return view('admin.notification.notification.create', compact('categories', 'actionList'));
     }
 
 
     /**
      * @param NotificationRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-    * @author ahasan habib <habib.cst@gmail.com>
+     * @return Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @author ahasan habib <habib.cst@gmail.com>
      */
     public function store(NotificationRequest $request)
     {
-
         $content = $this->notificationService->storeNotification($request)->getContent();
         session()->flash('message', $content);
         return redirect(route('notification.index'));
@@ -105,7 +112,7 @@ class NotificationController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Factory|\Illuminate\Http\Response|View
      */
     public function show($id)
     {
@@ -142,20 +149,24 @@ class NotificationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
         $categories = $this->notificationCategoryService->findAll();
+        $actionList = Helper::navigationActionList();
+        $feedCategories = $this->feedCategoryService->findAll();
         return view('admin.notification.notification.edit')
             ->with('categories', $categories)
+            ->with('actionList', $actionList)
+            ->with('feedCategories', $feedCategories)
             ->with('notification', $this->notificationService->findOne($id));
     }
 
     /**
      * @param NotificationRequest $request
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @author ahasan habib <habib.cst@gmail.com>
      */
     public function update(NotificationRequest $request, $id)
@@ -164,7 +175,7 @@ class NotificationController extends Controller
         $content = $this->notificationService->updateNotification($request, $id)->getContent();
         session()->flash('success', $content);
 
-        if($quick_notification==1){
+        if ($quick_notification == 1) {
             return redirect(route('quick-notification.index'));
         }
 
@@ -189,12 +200,11 @@ class NotificationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function getNotificationReport()
     {
         $notifications = $this->notificationService->getNotificationReport();
-
         return view('admin.notification.notification.list')
             ->with('notifications', $notifications);
     }
@@ -216,25 +226,22 @@ class NotificationController extends Controller
         }
     }
 
-
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|\Illuminate\Http\Response|View
      */
     public function getTargetWiseNotificationReportDetails(Request $request,$title)
     {
 
         $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
-    //    dd($notifications);
+        //    dd($notifications);
 
         return view('admin.notification.target-wise-notification.details')
             ->with('notifications', $notifications);
     }
 
     public function getProductList(Request $request){
-        
         return $this->notificationService->getActiveProducts($request);
     }
 
@@ -243,9 +250,9 @@ class NotificationController extends Controller
         $data = $this->notificationService->findOne($notificationId);
         $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
         session()->flash('message', $content);
-        
+
         return redirect(route('quick-notification.index'));
-        
+
     }
 
     public function quickNotificationIndex(){
