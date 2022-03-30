@@ -43,24 +43,33 @@
                     <h4 class="pb-1"><strong>Activity</strong></h4>
                     
                         @if ($flag)
-                            <table class="table">
-                                <h4 class="pb-1"><strong> After</strong></h4>
-                                @foreach($data['after'] as $k=>$d)
-                                    <tr>
-                                        <th>{{ $k }}</th>
-                                        <td>{{ $d }}</td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                            <table class="table">
-                            <h4 class="pb-1"><strong> Before</strong></h4>
-                                @foreach($data['before'] as $k=>$d)
-                                    <tr>
-                                        <th>{{ $k }}</th>
-                                        <td>{{ $d }}</td>
-                                    </tr>
-                                @endforeach
-                            </table>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table ">
+                                        <h4 class="pb-1"><strong> Before</strong></h4>
+                                        @foreach($data['after'] as $k=>$d)
+                                            <tr>
+                                                <th>{{ $k }}</th>
+                                                <td>{{ $d }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table col-md-6">
+                                        <h4 class="pb-1"><strong> After</strong></h4>
+                                        @foreach($data['before'] as $k=>$d)
+                                            <tr>
+                                                <th>{{ $k }}</th>
+                                                <td>{{ $d }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+
+
+                            </div>
+
                         @else
                             <table class="table">
                                 @foreach($data as $k=>$d)
