@@ -445,5 +445,6 @@
                     $(".other-info-div").remove();
                 }
             });
+            $("#navigate_action").select2();
     </script>
 @endpush
