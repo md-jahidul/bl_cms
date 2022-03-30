@@ -118,7 +118,8 @@ class Helper
             "ORANGE_CLUB"             => "Orange Club",
             "STOP_ALL_VAS"            => "Stop All VAS",
             "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
-            "MEDALIA_FEEDBACK"        => "Medalia Feedback"
+            "MEDALIA_FEEDBACK"        => "Medalia Feedback",
+            "EVENT_BASED_BONUS"       => "Event Based Bonus"
         ];
     }
 
