@@ -30,6 +30,7 @@ class NotificationDraft extends Model
         // 'cta_name',
         // 'cta_action',
         // 'notification_type',
+        'quick_notification',
         'device_type',
         'customer_type',
         'navigate_action',

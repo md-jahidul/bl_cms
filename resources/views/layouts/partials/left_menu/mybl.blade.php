@@ -195,7 +195,7 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
-                <li class="{{ is_active_url('notification') }}{{ is_active_url('notification') }}">
+                <li class="{{ is_active_url('quick-notification') }}{{ is_active_url('quick-notification.create') }}">
                     <a class="menu-item" href="{{ route('quick-notification.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Quick Notification List</a>

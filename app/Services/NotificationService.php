@@ -99,6 +99,44 @@ class NotificationService
         return new Response("Notification has been successfully Duplicate");
     }
 
+
+    public function storeDuplicateNotification($data)
+    {
+        $data = $this->save($data);
+        
+        return new Response("Quick Notification has been successfully Duplicate");
+    }
+
+    public function storeQuickNotification($request)
+    {
+        $data = $request->all();
+        $data['quick_notification'] = true;
+
+        $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
+        unset($data['display_period']);
+
+        /* if ($request->hasFile('image')) {
+             $file = $request->image;
+             $path = $file->storeAs(
+                 'notification/images',
+                 strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                 'public'
+             );
+             $data['image'] = $path;
+         } else {
+             $data['image'] = null;
+         }*/
+
+        if (isset($data['image'])) {
+            $data['image'] = 'storage/' . $data['image']->store('notification');
+
+        }
+
+        $data = $this->save($data);
+        
+        return $data;
+    }
+
     /**
      * @param $request
      * @param $id

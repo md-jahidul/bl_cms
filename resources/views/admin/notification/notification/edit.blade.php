@@ -6,41 +6,32 @@
 @endsection
 
 @section('content')
-    <div class="card mb-0 px-1" style="box-shadow:none;">
-        <div class="card-content">
-            <div class="card-body">
-                <form novalidate class="form" method="post" action="{{route('notification.update',$notification->id)}}"
-                      enctype="multipart/form-data">
-                    @csrf
-                    @method('put')
-                    @php
-                        $schedule = optional($notification)->schedule ?? null;
-                        $scheduleStatus = is_null($schedule) ? "" : $schedule->status;
-                    @endphp
+<div class="card mb-0 px-1" style="box-shadow:none;">
+    <div class="card-content">
+        <div class="card-body">
+            <form novalidate class="form" method="post" action="{{route('notification.update',$notification->id)}}"  enctype="multipart/form-data">
+                @csrf
+                @method('put')
 
-                    <div class="form-body">
-                        <h4 class="form-section"><i class="la la-key"></i>
-                            Edit Notification
-                        </h4>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input type="hidden" name="id" value="{{$notification->id}}">
-                                <div class="form-group">
-                                    <label for="title" class="required">Title :</label>
-                                    <input name="title"
-                                           required
-                                           maxlength="100"
-                                           data-validation-required-message="Title is required"
-                                           data-validation-maxlength-message="Title can not be more then 100 Characters"
+                <div class="form-body">
+                    <h4 class="form-section"><i class="la la-key"></i>
+                        Edit Notification
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="hidden" name="id" value="{{$notification->id}}">
+                            <input type="hidden" name="quick_notification" value="{{$notification->quick_notification}}">
+                            <div class="form-group">
+                                <label for="title" class="required">Title :</label>
+                                <input name="title"
+                                       required
+                                       maxlength="100"
+                                       data-validation-required-message="Title is required"
+                                       data-validation-maxlength-message = "Title can not be more then 100 Characters"
 
-                                           style="height:100%" type="text"
-                                           value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif"
-                                           class="form-control @error('title') is-invalid @enderror" id="title"
-                                           placeholder="Enter title..">
-                                    <div class="help-block">
-                                        <small class="text-info"> Title can not be more then 100 Characters</small><br>
-                                    </div>
-                                    <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                <div class="help-block">
+                                    <small class="text-info"> Title can not be more then 100 Characters</small><br>
                                 </div>
                             </div>
 

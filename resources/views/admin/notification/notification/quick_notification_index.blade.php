@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Notification')
-@section('card_name', 'Notification')
+@section('title', 'Quick Notification')
+@section('card_name', 'Quick Notification')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Quick Notification List</li>
 @endsection
@@ -11,8 +11,8 @@
             There is no category
         </a>
     @else
-        <a href="{{route('notification.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-            Create Notification
+        <a href="{{route('quick-notification.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+            Create Quick Notification
         </a>
     @endif
 
@@ -77,17 +77,14 @@
                                                 class="showButton btn btn-outline-info btn-sm"
                                                 onclick=""><i class="la la-paper-plane"></i></a>
                                         </div>
-
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
-                                                href="{{route('quick-notification.duplicate',$notification->id)}}"
+                                                href="{{route('notification.duplicate',$notification->id)}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"
-                                                title="Duplicate Notification"
                                                 onclick=""><i class="la la-copy"></i></a>
                                         </div>
-
                                     </div>
                                 </td>
                             </tr>

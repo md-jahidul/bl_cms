@@ -16,7 +16,6 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
@@ -39,9 +38,7 @@ class NotificationController extends Controller
      * @var UserService
      */
     protected $userService;
-    protected $feedCategoryService;
     protected $customerService;
-    protected $pushNotificationSendService;
 
 
     /**
@@ -54,16 +51,13 @@ class NotificationController extends Controller
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
         UserService $userService,
-        CustomerService $customerService,
-        PushNotificationSendService $pushNotificationSendService,
-        FeedCategoryService $feedCategoryService
-    ) {
+        CustomerService $customerService
+    )
+    {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
         $this->customerService = $customerService;
-        $this->pushNotificationSendService = $pushNotificationSendService;
-        $this->feedCategoryService = $feedCategoryService;
         $this->middleware('auth');
     }
 
@@ -256,8 +250,14 @@ class NotificationController extends Controller
      */
     public function update(NotificationRequest $request, $id)
     {
+        $quick_notification = $request->quick_notification;
         $content = $this->notificationService->updateNotification($request, $id)->getContent();
         session()->flash('success', $content);
+
+        if($quick_notification==1){
+            return redirect(route('quick-notification.index'));
+        }
+
         return redirect(route('notification.index'));
     }
 
@@ -327,72 +327,19 @@ class NotificationController extends Controller
         return $this->notificationService->getActiveProducts($request);
     }
 
-    public function getGuestUserList(Request $request)
-    {
-        if ($request->has('draw')) {
-            return $this->getLoggedOutCustomerList($request);
-        }
+    public function duplicateNotification($notificationId){
 
-        if ($request->isMethod('get')) {
-            return view('admin.notification.guest-user-tracking.list');
-        }
+        $data = $this->notificationService->findOne($notificationId);
+        $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
+        session()->flash('message', $content);
+        
+        return redirect(route('quick-notification.index'));
+        
     }
 
-    public function getLoggedOutCustomerList($request)
-    {
-        $draw = $request->get('draw');
-        $start = $request->get('start');
-        $length = $request->get('length');
-
-        $guestCustomerActivityBuilder = $this->notificationService->getLoggedOutCustomers();
-
-        if ($request->date_range != null) {
-            $date = explode('--', $request->date_range);
-            $from = Carbon::createFromFormat('Y/m/d', $date[0])->toDateString();
-            $to = Carbon::createFromFormat('Y/m/d', $date[1])->toDateString();
-            $guestCustomerActivityBuilder->whereBetween('updated_at', [$from, $to]);
-        }
-
-        if ($request->device_type) {
-            $guestCustomerActivityBuilder->where('device_type', $request->device_type);
-        }
-
-        if ($request->number_type) {
-            $guestCustomerActivityBuilder->where('number_type', $request->number_type);
-        }
-
-        $response = [
-            'draw' => $draw,
-            'data' => []
-        ];
-
-        if ($request->has('search') && !empty($request->get('search'))) {
-            $input = $request->get('search');
-
-            if (!empty($input['value'])) {
-                $searchString = $input['value'];
-                $items = $guestCustomerActivityBuilder->where('msisdn', 'LIKE',
-                    "%{$searchString}%")->skip($start)->take($length)->get();
-            } else {
-                $items = $guestCustomerActivityBuilder->skip($start)->take($length)->get();
-            }
-        }
-
-        $items->each(function ($item) use (&$response) {
-            $response['data'][] = [
-                'msisdn' => $item->msisdn,
-                'device_type' => $item->device_type,
-                'number_type' => $item->number_type
-            ];
-        });
-
-        return $response;
-    }
-
-    public function quickNotificationList(){
-
+    public function quickNotificationIndex(){
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
-        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', true);
+        $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', true);;
         $notifications = $notifications->sortByDesc(function ($notification){
             return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
         })->values();
@@ -402,71 +349,8 @@ class NotificationController extends Controller
             ->with('notifications', $notifications);
     }
 
-    public function duplicateNotification($notificationId){
-
-        $data = $this->notificationService->findOne($notificationId);
-        $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
-        session()->flash('message', $content);
-
-        return redirect(route('notification.index'));
-
-    }
-
-    public function duplicateQuickNotification($notificationId){
-
-        $data = $this->notificationService->findOne($notificationId);
-        $content = $this->notificationService->storeDuplicateNotification($data->toArray())->getContent();
-        session()->flash('message', ' Quick Notification has been successfully Duplicate');
-
-        return redirect(route('quick-notification.index'));
-    }
-
-    public function prepareDataForSendNotification(Request $request, array $customar, $notification_id)
-    {
-
-        $notificationInfo = NotificationDraft::find($notification_id);
-
-        $url = "test.com";
-
-        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
-            $url = "$notificationInfo->external_url";
-        }
-
-        $product_code = "0000";
-
-        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
-            $product_code = "$notificationInfo->external_url";
-        }
-
-
-        $category_id = !empty($request->input('category_id')) ? $request->input('category_id') : 1;
-
-        if ($request->has('image_url')) {
-            $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
-        } else {
-            $image_url = null;
-        }
-
-        return [
-            'title' => $request->input('title'),
-            'body' => $request->input('message'),
-            'category_slug' => $request->input('category_slug'),
-            'category_name' => $request->input('category_name'),
-            "sending_from" => "cms",
-            "send_to_type" => "INDIVIDUALS",
-            "recipients" => $customar,
-            "is_interactive" => "Yes",
-            "mutable_content" => true,
-            "data" => [
-                "cid" => "$category_id",
-                "url" => "$url",
-                "image_url" => $image_url,
-                "component" => "offer",
-                'product_code' => "$product_code",
-                'navigation_action' => "$notificationInfo->navigate_action"
-
-            ],
-        ];
-
+    public function quickNotificationCreate(){
+        $categories = $this->notificationCategoryService->findAll();
+        return view('admin.notification.notification.quick_notification_create')->with('categories', $categories);
     }
 }
