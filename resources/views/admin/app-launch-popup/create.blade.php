@@ -292,8 +292,6 @@
                                         <label class="required">Thumbnail Image</label>
                                         <input type="file"
                                                name="thumbnail_img"
-                                               data-max-file-size="2M"
-                                               data-allowed-formats="portrait square"
                                                data-allowed-file-extensions="jpeg png jpg"
                                                @if($page == 'edit')
                                                data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
