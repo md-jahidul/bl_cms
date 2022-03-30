@@ -63,8 +63,6 @@ class NotificationService
     {
         $data = $request->all();
         
-        if($request->type != 'only_save')$data['quick_notification'] = true;
-
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
         unset($data['display_period']);
 
@@ -87,8 +85,8 @@ class NotificationService
 
         $data = $this->save($data);
         
-        if($request->type == 'only_save')return new Response("Notification has been successfully created");
-        else return $data;
+        return new Response("Notification has been successfully created");
+    
     }
 
     public function storeDuplicateNotification($data)
