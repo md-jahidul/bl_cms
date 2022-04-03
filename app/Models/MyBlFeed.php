@@ -21,7 +21,11 @@ class MyBlFeed extends Model
         'order',
         'status',
         'availability',
-        'show_in_home'
+        'show_in_home',
+        'details_btn_en',
+        'details_btn_bn',
+        'ext_link_redirect',
+        'ext_link_url'
     ];
 
     protected $dates = ['start_date', 'end_date'];

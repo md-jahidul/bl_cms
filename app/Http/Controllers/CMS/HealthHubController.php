@@ -65,7 +65,7 @@ class HealthHubController extends Controller
     public function create()
     {
         $actionList = Helper::navigationActionList();
-        $actionList["FEED_CATEGORY"] = "Feed Category";
+//        $actionList["FEED_CATEGORY"] = "Feed Category";
         $actionList["FEED_CATEGORY_POST"] = "Feed Category Post";
         return view('admin.mybl-health-hub.create', compact('actionList'));
     }
@@ -112,7 +112,7 @@ class HealthHubController extends Controller
     {
         $healthHub = $this->healthHubService->findOrFail($id);
         $actionList = Helper::navigationActionList();
-        $actionList["FEED_CATEGORY"] = "Feed Category";
+//        $actionList["FEED_CATEGORY"] = "Feed Category";
         $actionList["FEED_CATEGORY_POST"] = "Feed Category Post";
         $feedCategories = $this->feedCategoryService->findAll();
 

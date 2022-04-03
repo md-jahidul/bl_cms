@@ -185,6 +185,18 @@
                                                         @endforeach
                                                     </select>
                                             @endif
+                                            @if($imageInfo->redirect_url == "FEED_CATEGORY")
+                                                <div class="form-group other-info-div">
+                                                    <label>Select a Feed Category</label>
+                                                    <select class="feed-cat-list form-control" name="other_attributes[feed_cat_slug]" required>
+                                                        @foreach($feedCategories as $feedCategory)
+                                                            <option value="{{ $feedCategory->slug }}" data-id="{{ $feedCategory->id }}"
+                                                                {{ isset($imageInfo->other_attributes['feed_cat_slug']) && $feedCategory->slug == $imageInfo->other_attributes['feed_cat_slug'] ? 'selected' : '' }}>{{ $feedCategory->title }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="help-block"></div>
+                                                </div>
+                                            @endif
                                             <div class="help-block"></div>
                                         </div>
                                     @endif
@@ -376,6 +388,7 @@
             var dial_content = "";
             var redirect_content = "";
             var purchase_content = "";
+            var feed_category = "";
             var url_html;
             var product_html;
             var parse_data;
@@ -420,6 +433,14 @@
                                         <div class="help-block"></div>
                                     </div>`;
 
+            feed_category = ` <div class="form-group other-info-div">
+                                    <label>Feed Category</label>
+                                    <select class="feed-cat-list form-control" name="other_attributes[feed_cat_slug]" required>
+                                        <option value="">---Select Feed Category---</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>`;
+
 
             $('#navigate_action').on('change', function () {
                 let action = $(this).val();
@@ -428,13 +449,25 @@
                     $("#append_div").html(dial_html);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);
+                } else if (action === 'FEED_CATEGORY') {
+                    $("#append_div").html(feed_category);
+                    $.ajax({
+                        url: "{{ route('feed.data') }}",
+                        type: 'GET',
+                        dataType: 'json', // added data type
+                        success: function(res) {
+                            res.map(function (data) {
+                                $(".feed-cat-list").append("<option value="+data.id+' data-id='+data.data_id+'>'+data.text+"</option>")
+                            })
+                        }
+                    });
                 } else if (action == 'PURCHASE') {
                     $("#append_div").html(product_html);
                     $(".product-list").select2({
                         placeholder: "Select a product",
-                        minimumInputLength:3,
+                        minimumInputLength: 2,
                         allowClear: true,
-                        selectOnClose:true,
+                        selectOnClose: false,
                         ajax: {
                             url: "{{ route('notification.productlist.dropdown') }}",
                             dataType: 'json',
@@ -457,7 +490,7 @@
                     $(".other-info-div").remove();
                 }
             })
-
+            $("#navigate_action").select2();
         });
 
 

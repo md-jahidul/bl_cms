@@ -24,10 +24,10 @@
             <div class="card-content">
                 <div class="card-body">
                     @if($page == "create")
-                        <form novalidate class="form" action="{{route('myblslider.base.msisdn.store')}}" method="POST" enctype="multipart/form-data">
+                        <form novalidate class="form repeater" action="{{route('myblslider.base.msisdn.store')}}" method="POST" enctype="multipart/form-data">
                         @method('post')
                     @else
-                        <form novalidate class="form" action="{{route('myblslider.base.msisdn.update', $baseMsisdn->id)}}" method="POST" enctype="multipart/form-data">
+                        <form novalidate class="form repeater" action="{{route('myblslider.base.msisdn.update', $baseMsisdn->id)}}" method="POST" enctype="multipart/form-data">
                         @method('put')
                     @endif
                         @csrf
@@ -66,40 +66,106 @@
 {{--                                        @enderror--}}
 {{--                                    </div>--}}
 
-
-
-                                    <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">
-                                        <h5><strong class="text-success ml-1">Create For New Msisdn List</strong></h5>
-                                        <div class="form-actions mt-0"></div>
-
-                                        <label><b>Msisdn for Banner segment</b></label>
-                                        <div class="form-group">
-                                            <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">
-                                            <label for="input-radio-19" class="mr-3">Comma-separated Number</label>
-                                            <div class="help-block"></div>
-                                        </div>
-                                        <div class="form-group" id="customMsisdnExcel">
-                                            <input type="file" class="dropify" name="msisdn_file" data-height="100"
-                                                   data-allowed-file-extensions="xlsx csv"/>
-                                            <div class="help-block"></div>
-                                        </div>
-{{--                                        <div class="help-block"></div>--}}
-                                        @if ($errors->has('msisdn_file'))
-                                            <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>
-                                        @endif
-                                        <div class="form-group hidden" id="customMsisdn">
-                                            <textarea class="form-control" name="custom_msisdn" cols="3" rows="5"
-                                                      placeholder="01900000000,01400000000"></textarea>
-                                        </div>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('custom_msisdn'))
-                                            <div class="help-block">  {{ $errors->first('custom_msisdn') }}</div>
+                                    <div class="form-group col-md-12" id="BannerSegmentWiseDiv">
+                                        <label><b>Upload Base Msisdn File</b></label>
+                                        @if(isset($baseMsisdn))
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>File Title</th>
+                                                    <th>Input File</th>
+                                                    <th class="text-center" style="width: 2%">
+                                                        <i class="la la-plus text-info cursor-pointer add-more"
+                                                           id="repeater-button" title="Add More">
+                                                        </i>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="repeater-items">
+                                                    @foreach($baseMsisdnFiles as $key => $baseMsisdnFile)
+                                                        <input name="old_ids[]" type="hidden" value="{{ $baseMsisdnFile->id }}">
+                                                        <tr class="row-count">
+                                                            <td>
+                                                                <input name="base_msisdn_files[{{ $key }}][file_title]" type="text" class="form-control"
+                                                                       value="{{ $baseMsisdnFile->title }}">
+                                                                <input name="base_msisdn_files[{{ $key }}][file_id]" type="hidden" value="{{ $baseMsisdnFile->id }}">
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ config('filesystems.file_base_url') . $baseMsisdnFile->file_name }}" class=""
+                                                                 download title="Click To Download"><i class="la la-download"> </i> {{ $baseMsisdnFile->file_name }}</a>
+                                                            </td>
+                                                            <td class="text-center align-middle delete-item">
+                                                                <i class="la la-trash-o text-danger cursor-pointer"></i>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>File Title</th>
+                                                        <th>Input File</th>
+                                                        <th class="text-center" style="width: 2%">
+                                                            <i data-repeater-create
+                                                               class="la la-plus text-info cursor-pointer"
+                                                               id="repeater-button" title="Add More">
+                                                            </i>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-repeater-list="base_msisdn_files" id="cta_table">
+                                                    <tr data-repeater-item>
+                                                        <td>
+                                                            <input name="file_title" type="text" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input name="file_name" type="file" class="form-control-file" accept=".xlsx,.csv, application/vnd.ms-excel">
+                                                        </td>
+                                                        <td class="text-center align-middle">
+                                                            <i data-repeater-delete class="la la-trash-o text-danger cursor-pointer"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         @endif
                                     </div>
+
+
+
+{{--                                    <div class="form-group col-md-12" id="CustomMsisdnSegmentDiv">--}}
+{{--                                        <h5><strong class="text-success ml-1">Create For New Msisdn List</strong></h5>--}}
+{{--                                        <div class="form-actions mt-0"></div>--}}
+
+{{--                                        <label><b>Msisdn for Banner segment</b></label>--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="checkbox" name="segment_type" value="yes" id="input-radio-19">--}}
+{{--                                            <label for="input-radio-19" class="mr-3">Comma-separated Number</label>--}}
+{{--                                            <div class="help-block"></div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-group" id="customMsisdnExcel">--}}
+{{--                                            <input type="file" class="dropify" name="msisdn_file" data-height="100"--}}
+{{--                                                   data-allowed-file-extensions="xlsx csv"/>--}}
+{{--                                            <div class="help-block"></div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('msisdn_file'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('msisdn_file') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                        <div class="form-group hidden" id="customMsisdn">--}}
+{{--                                            <textarea class="form-control" name="custom_msisdn" cols="3" rows="5"--}}
+{{--                                                      placeholder="01900000000,01400000000"></textarea>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('custom_msisdn'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('custom_msisdn') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
                                 </div>
 
                                 @if($page == "edit")
-                                    <h5><strong class="text-info ml-1">Previous Msisdn List</strong></h5>
+                                    <h5><strong class="text-warning ml-1">Uploaded Msisdn List</strong></h5>
                                     <div class="form-actions mt-0"></div>
 
                                     <div class="col-6">
@@ -109,10 +175,7 @@
                                         </div>
                                     </div>
                                     @include('admin.myblslider.base.msisdn-table', $baseMsisdn)
-
-
                                 @endif
-
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-success round px-2">
@@ -151,16 +214,29 @@
             }
         });
         $(function () {
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an XLSX or CSV File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
+            function deleteItem(){
+                $('.delete-item').click(function () {
+                    $(this).parent().remove()
+                })
+            }
 
-            $("#navigate_action").select2();
+            $('.add-more').click(function (){
+                let countRow = $('.row-count').length + 1;
+                let newField = `<tr class="row-count">
+                                    <td><input name="base_msisdn_files[`+countRow+`][file_title]" type="text" class="form-control"></td>
+                                    <td>
+                                        <input name="base_msisdn_files[`+countRow+`][file_name]" type="file" class="form-control-file"
+                                                accept=".xlsx,.csv, application/vnd.ms-excel">
+                                    </td>
+                                    <td class="text-center align-middle delete-item">
+                                        <i class="la la-trash-o text-danger cursor-pointer"></i>
+                                    </td>
+                                </tr>`
+                $('#repeater-items').append(newField);
+                deleteItem()
+            })
+            // Delete Event Trigger
+            deleteItem()
         })
     </script>
 @endpush

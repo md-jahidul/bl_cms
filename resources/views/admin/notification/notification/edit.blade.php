@@ -166,10 +166,6 @@
 
 
                         <div class="col-md-4" id="action_div">
-                            @php
-                                $actionList = Helper::navigationActionList();
-                            @endphp
-
                             <div class="form-group">
                                 <label class="required">Navigate Action :</label>
                                 <select name="navigate_action" class="browser-default custom-select"
@@ -192,9 +188,19 @@
                             @if(isset($notification))
                                 @if(!empty($notification->external_url))
                                     <div class="form-group other-info-div">
-                                        <label id="lavel_id">Redirect URL</label>
-                                        <input type="text" name="external_url" class="form-control" required
-                                    value="{{$notification->external_url}}">
+                                        @if($notification->navigate_action == "FEED_CATEGORY")
+                                            <label id="lavel_id">Feed Categories</label>
+                                            <select class="feed-cat-list form-control" name="external_url" required>
+                                                @foreach($feedCategories as $feedCategory)
+                                                    <option value="{{ $feedCategory->slug }}" data-id="{{ $feedCategory->id }}"
+                                                        {{ isset($notification->external_url) && $feedCategory->slug == $notification->external_url ? 'selected' : '' }}>{{ $feedCategory->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        @elseif(in_array($notification->navigate_action, ['DIAL','URL','FEED_CATEGORY','PURCHASE']))
+                                            <label id="lavel_id">Redirect URL</label>
+                                            <input type="text" name="external_url" class="form-control" required
+                                                   value="{{$notification->external_url}}">
+                                        @endif
                                         <div class="help-block"></div>
                                     </div>
                                 @endif
@@ -352,7 +358,8 @@
             });
         });
 
-        var dial_content = "";
+            var feed_category = "";
+            var dial_content = "";
             var redirect_content = "";
             var purchase_content = "";
             var url_html;
@@ -394,12 +401,32 @@
                                          </select>
                                         <div class="help-block"></div>
                                     </div>`;
+
+            feed_category = `<div class="form-group other-info-div">
+                                    <label>Feed Category</label>
+                                    <select class="feed-cat-list form-control" name="external_url" required>
+                                        <option value="">---Select Feed Category---</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>`;
         $('#navigate_action').on('change', function () {
                 let action = $(this).val();
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
                 }else if(action == 'URL') {
                     $("#append_div").html(url_html);
+                } else if (action === 'FEED_CATEGORY') {
+                    $("#append_div").html(feed_category);
+                    $.ajax({
+                        url: "{{ route('feed.data') }}",
+                        type: 'GET',
+                        dataType: 'json', // added data type
+                        success: function(res) {
+                            res.map(function (data) {
+                                $(".feed-cat-list").append("<option value="+data.id+' data-id='+data.data_id+'>'+data.text+"</option>")
+                            })
+                        }
+                    });
                 } else if (action == 'PURCHASE') {
                     $("#append_div").html(product_html);
                     $(".product-list").select2({
@@ -429,5 +456,6 @@
                     $(".other-info-div").remove();
                 }
             });
+            $("#navigate_action").select2();
     </script>
 @endpush

@@ -301,6 +301,7 @@
                 var content = "";
                 var url_html;
                 var product_html;
+                var feed_category;
                 var parse_data;
                 let dial_html, other_attributes = '';
                 var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
@@ -332,6 +333,14 @@
                                             <div class="help-block"></div>
                                         </div>`;
 
+                feed_category = ` <div class="form-group other-info-div">
+                                    <label>Feed Category</label>
+                                    <select class="feed-cat-list form-control" name="other_attributes[feed_cat_slug]" required>
+                                        <option value="">---Select Feed Category---</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>`;
+
 
                 $('#navigate_action').on('change', function () {
                     let action = $(this).val();
@@ -340,6 +349,18 @@
                         $("#append_div").html(dial_html);
                     } else if (action == 'URL') {
                         $("#append_div").html(url_html);
+                    } else if (action === 'FEED_CATEGORY') {
+                        $("#append_div").html(feed_category);
+                        $.ajax({
+                            url: "{{ route('feed.data') }}",
+                            type: 'GET',
+                            dataType: 'json', // added data type
+                            success: function(res) {
+                                res.map(function (data) {
+                                    $(".feed-cat-list").append("<option value="+data.id+' data-id='+data.data_id+'>'+data.text+"</option>")
+                                })
+                            }
+                        });
                     } else if (action == 'PURCHASE') {
                         $("#append_div").html(product_html);
                         $(".product-list").select2({
