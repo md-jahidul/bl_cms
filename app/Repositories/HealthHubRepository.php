@@ -43,22 +43,23 @@ class HealthHubRepository extends BaseRepository
 
         return $this->model
             ->with([
-               'healthHubAnalytics' => function ($q) use ($from, $to) {
-                   if (!empty($from)) {
-                       $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
-                   }
-               },
-               'healthHubAnalyticsDetails' => function ($q) use ($from, $to) {
-                   if (!empty($from)) {
-                       $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
-                   }
-               }
-           ])->orderBy('display_order', 'ASC')->get();
-}
+                       'healthHubAnalytics' => function ($q) use ($from, $to) {
+                           if (!empty($from)) {
+                               $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
+                           }
+                       },
+                       'healthHubAnalyticsDetails' => function ($q) use ($from, $to) {
+                           if (!empty($from)) {
+                               $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
+                           }
+                       }
+                   ])->orderBy('display_order', 'ASC')->get();
+    }
 
     public function getItemDetailsData($request, $itemId)
     {
         $builder = new HealthHubAnalyticDetails();
+
         $builder = $builder->where('health_hub_id', $itemId);
 
         if (isset($request->date_range)) {
@@ -68,42 +69,26 @@ class HealthHubRepository extends BaseRepository
             $builder = $builder->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
         }
 
-        if (isset($request->excel_export)) {
-            $data = $builder->get();
-        } else {
-            $data = $builder->orderBy('created_at', 'DESC')->get();
-        }
+        $data = $builder
+            ->select(DB::raw('msisdn, count(*) as hit_count, avg(session_time) as avg_session_count'))
+            ->groupBy('msisdn')
+            ->orderBy('hit_count', "DESC")
+            ->get();
 
-        $data = $data->groupBy('msisdn')->map(function ($builder) {
-            return $builder->count();
-        });
-
-        if (!isset($request->excel_export)) {
-            $all_items_count = $data->count();
-            $start = $request->get('start');
-            $length = $request->get('length');
-            $data = collect($data)->slice($start, $length);
-        }
-
-
-        $msisdn = [];
-        foreach ($data as $key => $uniqueMsisdn) {
-            $msisdn[] = [
-                'msisdn' => $key,
-                'hit_count' => $uniqueMsisdn
-            ];
-        }
-
-        $msisdn = collect($msisdn)->sortBy('hit_count', null, true);
 
         if (isset($request->excel_export)) {
-            return $msisdn;
+            return $data;
         }
+
+        $all_items_count = $data->count();
+        $start = $request->get('start');
+        $length = $request->get('length');
+        $data = collect($data)->slice($start, $length);
 
         $draw = $request->get('draw');
 
         return [
-            'data' => array_values($msisdn->toArray()),
+            'data' => array_values($data->toArray()),
             'draw' => $draw,
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count
