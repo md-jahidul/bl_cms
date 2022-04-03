@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Repositories\BaseMsisdnFileRepository;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
@@ -15,22 +18,28 @@ class BaseMsisdnController extends Controller
      * @var BaseMsisdnService
      */
     private $baseMsisdnService;
+    /**
+     * @var BaseMsisdnFileRepository
+     */
+    private $baseMsisdnFileRepository;
 
     /**
      * BaseMsisdnController constructor.
      * @param \App\Services\BaseMsisdnService $baseMsisdnService
      */
-    public function __construct(BaseMsisdnService $baseMsisdnService)
-    {
+    public function __construct(
+        BaseMsisdnService $baseMsisdnService,
+        BaseMsisdnFileRepository $baseMsisdnFileRepository
+    ) {
         $this->baseMsisdnService = $baseMsisdnService;
-        $this->middleware('auth');
+        $this->baseMsisdnFileRepository = $baseMsisdnFileRepository;
         ini_set('max_execution_time', 120);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -47,7 +56,7 @@ class BaseMsisdnController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function msisdnExcelExport($id)
     {
@@ -61,7 +70,7 @@ class BaseMsisdnController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -74,7 +83,7 @@ class BaseMsisdnController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\BaseMsisdnRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
      * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
@@ -82,7 +91,6 @@ class BaseMsisdnController extends Controller
     public function store(BaseMsisdnRequest $request)
     {
         $response = $this->baseMsisdnService->storeBaseMsisdnGroup($request);
-//        dd($response);
         if ($response['status']) {
             Session()->flash('success', $response['message']);
             return redirect(route('myblslider.baseMsisdnList.index'));
@@ -106,13 +114,15 @@ class BaseMsisdnController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         $baseMsisdn = $this->baseMsisdnService->findOne($id, 'baseMsisdns');
+        $baseMsisdnFiles = $this->baseMsisdnFileRepository->findByProperties(['base_msisdn_group_id' => $id]);
+
         $page = 'edit';
-        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page'));
+        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles'));
     }
 
     /**
@@ -120,18 +130,14 @@ class BaseMsisdnController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $response = $this->baseMsisdnService->updateBaseMsisdnGroup($request, $id);
-//        Session()->flash('message', $response->content());
-//        return redirect(route('myblslider.baseMsisdnList.index'));
-
-
         if ($response['status']) {
             Session()->flash('success', $response['message']);
-            return redirect(route('myblslider.baseMsisdnList.index'));
+            return back();
         }
         Session()->flash('error', $response['message']);
         return back();
