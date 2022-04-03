@@ -114,6 +114,34 @@
                                         <div class="help-block"></div>
                                     </div>
 
+                                    <div class="form-group col-md-6 {{ $errors->has('details_btn_en') ? ' error' : '' }}">
+                                        <label for="details_btn_en">Details Button En</label>
+                                        <div class='input-group'>
+                                            <input type='text' class="form-control" name="details_btn_en" id="details_btn_en"
+                                                   placeholder="Enter details button title in English"
+                                                   value="{{ old("details_btn_en") ? old("details_btn_en") : '' }}"
+                                                   autocomplete="off"/>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details_btn_en'))
+                                            <div class="help-block">{{ $errors->first('details_btn_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('details_btn_bn') ? ' error' : '' }}">
+                                        <label for="details_btn_bn">Details Button Bn</label>
+                                        <div class='input-group'>
+                                            <input type='text' class="form-control" name="details_btn_bn" id="details_btn_bn"
+                                                   placeholder="Enter details button title in Bangla"
+                                                   value="{{ old("details_btn_bn") ? old("details_btn_bn") : '' }}"
+                                                   autocomplete="off"/>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details_btn_bn'))
+                                            <div class="help-block">{{ $errors->first('details_btn_bn') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
                                             <label for="image_url">Upload Image :</label>
@@ -153,26 +181,33 @@
                                         <div class="form-group" id="show_in_home">
                                             <label for="trending"></label><br>
                                             <input type="checkbox" name="show_in_home" value="1" id="trending">
-                                            <label for="trending" class="ml-1"> <strong>Show In Home</strong></label><br>
+                                            <label for="trending" class="ml-1">Show In Home</label>
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-6 mb-0">
                                         <label for="status_input">Status: </label>
-                                        <div
-                                            class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-
+                                        <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <input type="radio" name="status" value="1" id="input-radio-15">
                                             <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16"
-                                                   checked>
+                                            <input type="radio" name="status" value="0" id="input-radio-16" checked>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
-
                                             @if ($errors->has('status'))
                                                 <div
                                                     class="help-block">  {{ $errors->first('status') }}</div>
                                             @endif
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="checkbox" name="ext_link_redirect" value="1" id="external_link">
+                                            <label for="external_link">Redirect To External link </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6 d-none" id="externalLink">
+                                        <input type="text" name="ext_link_url" class="form-control" placeholder="Enter External Link URL">
                                     </div>
 
                                     <div class="form-group col-md-12">
@@ -226,6 +261,14 @@
     <script>
         $("#post-input").hide();
         $(document).ready(function(){
+            var externalLink = $('#externalLink');
+            $('#external_link').click(function () {
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                }else{
+                    externalLink.addClass('d-none')
+                }
+            })
 
             $("input[name='feed_type']").on('change', function(){
                 formHandler();

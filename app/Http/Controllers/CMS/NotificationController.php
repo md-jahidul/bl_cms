@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
+use App\Services\FeedCategoryService;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Http\Requests\NotificationRequest;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class NotificationController extends Controller
 {
@@ -27,6 +32,7 @@ class NotificationController extends Controller
      * @var UserService
      */
     protected $userService;
+    protected $feedCategoryService;
 
 
     /**
@@ -38,12 +44,13 @@ class NotificationController extends Controller
     public function __construct(
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
-        UserService $userService
-    )
-    {
+        UserService $userService,
+        FeedCategoryService $feedCategoryService
+    ) {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
+        $this->feedCategoryService = $feedCategoryService;
         $this->middleware('auth');
     }
 
@@ -68,24 +75,24 @@ class NotificationController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      * @author ahasan habib <habib.cst@gmail.com>
      */
     public function create()
     {
         $categories = $this->notificationCategoryService->findAll();
-        return view('admin.notification.notification.create')->with('categories', $categories);
+        $actionList = Helper::navigationActionList();
+        return view('admin.notification.notification.create', compact('categories', 'actionList'));
     }
 
 
     /**
      * @param NotificationRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     * @author ahasan habib <habib.cst@gmail.com>
      */
     public function store(NotificationRequest $request)
     {
-
         $content = $this->notificationService->storeNotification($request)->getContent();
         session()->flash('message', $content);
         return redirect(route('notification.index'));
@@ -95,7 +102,7 @@ class NotificationController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Factory|\Illuminate\Http\Response|View
      */
     public function show($id)
     {
@@ -132,20 +139,24 @@ class NotificationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
         $categories = $this->notificationCategoryService->findAll();
+        $actionList = Helper::navigationActionList();
+        $feedCategories = $this->feedCategoryService->findAll();
         return view('admin.notification.notification.edit')
             ->with('categories', $categories)
+            ->with('actionList', $actionList)
+            ->with('feedCategories', $feedCategories)
             ->with('notification', $this->notificationService->findOne($id));
     }
 
     /**
      * @param NotificationRequest $request
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @author ahasan habib <habib.cst@gmail.com>
      */
     public function update(NotificationRequest $request, $id)
@@ -173,12 +184,11 @@ class NotificationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function getNotificationReport()
     {
         $notifications = $this->notificationService->getNotificationReport();
-
         return view('admin.notification.notification.list')
             ->with('notifications', $notifications);
     }
