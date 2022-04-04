@@ -148,4 +148,15 @@ class MyBlFlashHourController extends Controller
         $this->myblFlashHourService->deleteCampaign($id);
         return url('flash-hour-campaign');
     }
+
+    public function duplicateFlashHours($flashHoursId){
+
+        $data = $this->myblFlashHourService->findById($flashHoursId);
+        $data['start_date'] = null;
+        $data['end_date']  = null;
+        $response = $this->myblFlashHourService->storeCampaign($data->toArray(), self::FLASH_HOUR);
+        Session::flash('message', 'Campaign has been successfully duplicated');
+
+        return redirect(route('flash-hour-campaign.index'));
+    }
 }

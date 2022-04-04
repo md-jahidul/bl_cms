@@ -43,18 +43,18 @@ class HealthHubRepository extends BaseRepository
 
         return $this->model
             ->with([
-               'healthHubAnalytics' => function ($q) use ($from, $to) {
-                   if (!empty($from)) {
-                       $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
-                   }
-               },
-               'healthHubAnalyticsDetails' => function ($q) use ($from, $to) {
-                   if (!empty($from)) {
-                       $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
-                   }
-               }
-           ])->orderBy('display_order', 'ASC')->get();
-}
+                       'healthHubAnalytics' => function ($q) use ($from, $to) {
+                           if (!empty($from)) {
+                               $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
+                           }
+                       },
+                       'healthHubAnalyticsDetails' => function ($q) use ($from, $to) {
+                           if (!empty($from)) {
+                               $q->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59']);
+                           }
+                       }
+                   ])->orderBy('display_order', 'ASC')->get();
+    }
 
     public function getItemDetailsData($request, $itemId)
     {

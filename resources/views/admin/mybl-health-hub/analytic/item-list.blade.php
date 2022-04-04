@@ -52,16 +52,16 @@
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1"
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
-                            <tr>
-                                <th width="3%">SL</th>
-                                <th>Icon</th>
-                                <th>Item Name</th>
-                                <th>Total Unique Hit</th>
-                                <th>Total Hit</th>
-                                <th>Total Session Time (Sec)</th>
-{{--                                <th>Deeplink Hits</th>--}}
-                                <th width="12%">Details</th>
-                            </tr>
+                        <tr>
+                            <th width="3%">SL</th>
+                            <th>Icon</th>
+                            <th>Item Name</th>
+                            <th>Total Unique Hit</th>
+                            <th>Total Hit</th>
+                            <th>Total Session Time (Sec)</th>
+                            {{--                                <th>Deeplink Hits</th>--}}
+                            <th width="12%">Details</th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach ($itemsAnalyticData as $data)
@@ -74,7 +74,7 @@
                                 <td>{{ $data['total_unique_hit'] }}</td>
                                 <td>{{ $data['total_hit_count'] }}</td>
                                 <td>{{ $data['total_session_time'] }}</td>
-{{--                                <td>0</td>--}}
+                                {{--                                <td>0</td>--}}
                                 <td>
                                     <a data-toggle="modal" data-target="#large"
                                        data-id="{{ $data['id'] }}"
