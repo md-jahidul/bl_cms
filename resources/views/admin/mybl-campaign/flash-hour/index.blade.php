@@ -50,7 +50,12 @@
                                        class="btn-sm btn-outline-info border-0">
                                         <i class="la la-pencil" disabled="disabled" aria-hidden="true"></i>
                                     </a>
-
+                                    <a  role="button"
+                                        data-id=""
+                                        href="{{route('flash-hour-campaign.duplicate',$data->id)}}"
+                                        data-placement="right"
+                                        class="showButton btn btn-outline-info btn-sm"
+                                    onclick=""><i class="la la-copy"></i></a>
                                     @if(!$data->checkCampaignExpire())
                                         <a href="#" remove="{{ url("flash-hour-campaign/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                             <i class="la la-trash"></i>

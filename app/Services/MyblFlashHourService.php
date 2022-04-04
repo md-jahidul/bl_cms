@@ -199,4 +199,8 @@ class MyblFlashHourService
     {
         return $this->flashHourRepository->msisdnInfo($request, $id);
     }
+
+    public function findById($id){
+        return $this->flashHourRepository->findOne($id);
+    }
 }
