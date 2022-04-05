@@ -26,13 +26,13 @@
                                     <div class="form-group col-md-2">
                                         <label for="from_date">From Date</label>
                                         <div class='input-group'>
-                                            <input type="datetime-local" id="from_date" name="from_date" required>
+                                            <input type="date" id="from_date" name="from_date" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="to_date">To Date</label>
                                         <div class='input-group'>
-                                            <input type="datetime-local" id="to_date" name="to_date" required>
+                                            <input type="date" id="to_date" name="to_date" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-2 pt-2" >
@@ -54,7 +54,7 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th>User ID</th>
+                            <th>User Name</th>
                             <th>Action</th>
                             <th>Model</th>
                             <th>Logged At</th>
@@ -69,7 +69,7 @@
                             @foreach($activityLogs as $activityLog)
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $activityLog->user_id }}</td>
+                                    <td>{{ $activityLog->user_name }}</td>
                                     <td>{{ $activityLog->action }}</td>
                                     <td>{{ $activityLog->model }}</td>
                                     <td>{{ $activityLog->logged_at }}</td>
