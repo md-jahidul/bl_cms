@@ -48,6 +48,26 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="name_bn">Name Bn:</label>
+                                        <input
+                                        maxlength="200"
+                                        data-validation-maxlength-message = "Name Bn can not be more then 200 characters"
+                                        type="text" value="@if(old('name_bn')){{old('name_bn')}}@endif" id="name_bn" class="form-control @error('name_bn') is-invalid @enderror" placeholder="Enter name Bn...." name="name_bn">
+                                        <div class="help-block">
+                                            <small class="text-info">Name Bn can not be more then 200 characters</small>
+                                        </div>
+                                        @error('name_bn')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="category" class="required">Slug:</label>
                                         <input  class="form-control @error('slug') is-invalid @enderror" name="slug"  id="slug" placeholder="Enter Slug"  value="@if(old('slug')){{old('slug')}}@endif" required
                                         data-validation-required-message="Slug is required"

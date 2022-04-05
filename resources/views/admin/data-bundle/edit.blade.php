@@ -49,6 +49,24 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="title_bn">Name Bn:<small class="text-danger">*</small></label>
+                                        <input
+                                        maxlength="40"
+                                        type="text" value="{{$internet_offer->name_bn}}" id="name_bn" class="form-control @error('name_bn') is-invalid @enderror" placeholder="Enter name Bn...." name="name_bn">
+                                        <div class="help-block">
+                                            <small class="text-info">Name can not be more then 200 characters</small>
+                                        </div>
+                                        @error('title_bn')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="category" class="required">Slug:</label>
                                         <input  class="form-control @error('slug') is-invalid @enderror" name="slug"  id="slug" placeholder="Enter Slug"  value="{{$internet_offer->slug}}" required
                                         data-validation-required-message="Slug is required"
