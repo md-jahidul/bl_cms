@@ -197,6 +197,17 @@
 
     <script>
         $(document).ready(function () {
+            $('.dropify_image').dropify({
+                messages: {
+                    'default': 'Browse for an Image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Image file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
+                }
+            });
             $(".product-list").select2()
             $('.report-repeater').repeater();
 
@@ -215,6 +226,20 @@
             }
 
             $('#repeater-button').click(function (){
+                $('.dropify_image').dropify({
+                    messages: {
+                        'default': 'Browse for an Image to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct Image file'
+                    },
+                    error: {
+                        'imageFormat': 'The image must be valid format'
+                    }
+                });
+
+                $('.dropify_image').prop('data-default-file', "")
+
                 $(".product-list").select2()
                 var date = new Date();
                 date.setDate(date.getDate());
