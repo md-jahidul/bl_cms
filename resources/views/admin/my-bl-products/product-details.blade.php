@@ -297,6 +297,7 @@
 
 {{--                                {{ dd($details->details->content_type) }}--}}
                                 @if(  $details->details->content_type == 'data' ||
+                                      $details->details->content_type == 'mix' ||
                                       $details->details->content_type == 'data loan' ||
                                       $details->details->content_type == 'gift' ||
                                       $details->details->content_type == 'volume transfer'
