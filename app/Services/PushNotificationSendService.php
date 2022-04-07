@@ -64,6 +64,11 @@ class PushNotificationSendService
             $product_code = "$notificationInfo->external_url";
         }
 
+        $subCatSlug = null;
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'FEED_CATEGORY') {
+            $subCatSlug = $notificationInfo->external_url;
+        }
+
         $category_id = !empty($data['category_id']) ? $data['category_id'] : 1;
 
 
@@ -89,7 +94,7 @@ class PushNotificationSendService
                 "image_url" => $image_url,
                 "component" => "offer",
                 'product_code' => "$product_code",
-                'sub_category_slug' => $data['category_slug'] === 'FEED_CATEGORY' ? $notificationInfo->external_url : '',
+                'sub_category_slug' => $subCatSlug,
                 'navigation_action' => "$notificationInfo->navigate_action"
             ],
         ];
