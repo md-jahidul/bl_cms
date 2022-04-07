@@ -89,6 +89,7 @@ class PushNotificationSendService
                 "image_url" => $image_url,
                 "component" => "offer",
                 'product_code' => "$product_code",
+                'sub_category_slug' => $data['category_slug'] === 'FEED_CATEGORY' ? $notificationInfo->external_url : '',
                 'navigation_action' => "$notificationInfo->navigate_action"
             ],
         ];
