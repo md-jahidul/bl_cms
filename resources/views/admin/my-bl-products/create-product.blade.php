@@ -532,6 +532,7 @@
             console.log(type)
             if (
                 type === 'data' ||
+                type === 'mix' ||
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||

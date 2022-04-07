@@ -3,7 +3,23 @@
 {{--    @if(isset($product) && !$product->checkCampaignProductExpire())--}}
         <input type="hidden" name="product_id" value="{{ isset($product) ? $product->id : "" }}">
 {{--    @endif--}}
-    <div class="form-group col-md-6 mb-2">
+    <div id="image-input" class="form-group col-md-4 mb-2">
+        <div class="form-group">
+            <label for="image_url">Thumbnail Image</label>
+            <input type="file"
+                id="image_url"
+                name="thumbnail_img"
+                class="dropify_image"
+                data-height="77"
+                data-default-file="{{ isset($product) ? asset($product->thumbnail_img) : ''}}"
+                data-allowed-file-extensions="png jpg jpeg gif"/>
+            <div class="help-block"></div>
+            <small
+                class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+            <small id="massage"></small>
+        </div>
+    </div>
+    <div class="form-group col-md-4 mb-2">
         <label for="desc_en" class="required">Description En</label>
         <textarea rows="3" id="desc_en" {{ (isset($product) && $product->checkCampaignProductExpire()) ? 'readonly' : '' }}
                   name="desc_en" class="form-control @error('desc_en') is-invalid @enderror"
@@ -12,7 +28,7 @@
         <div class="help-block"></div>
     </div>
 
-    <div class="form-group col-md-6 mb-2">
+    <div class="form-group col-md-4 mb-2">
         <label for="desc_bn" class="required">Description Bn</label>
         <textarea rows="3" id="desc_bn" {{ (isset($product) && $product->checkCampaignProductExpire()) ? 'readonly' : '' }}
                   name="desc_bn"
@@ -76,14 +92,14 @@
     </div>
 
     <!-- Product Row Delete -->
-    @if(isset($product) && !$product->checkCampaignProductExpire())
+    {{-- @if(isset($product) && !$product->checkCampaignProductExpire()) --}}
         <div class="form-group col-md-12 mb-1">
             <button data-repeater-delete type="button"
                     class="btn-sm btn-danger cursor-pointer float-right">
                 <i class="la la-trash"></i>
             </button>
         </div>
-    @endif
+    {{-- @endif --}}
     <div class="form-group col-md-12 mb-2" id="cta_action">
         {!! (isset($product) && $product->checkCampaignProductExpire()) ? "<b class='text-danger'>(This product is expired. You can't change anymore)</b>" : '' !!}
     </div>
