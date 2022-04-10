@@ -271,4 +271,15 @@ class NotificationController extends Controller
         $categories = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.quick_notification_create')->with('categories', $categories);
     }
+
+    public function quickNotificationShowAll($id)
+    {
+        $notification = $this->notificationService->findOne($id, 'NotificationCategory');
+
+        $users = $this->userService->getUserListForNotification();
+
+        return view('admin.notification.notification.quick_notification_show-all')
+            ->with('notification', $notification)
+            ->with('users', $users);
+    }
 }

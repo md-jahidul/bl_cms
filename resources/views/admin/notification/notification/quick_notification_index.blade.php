@@ -80,6 +80,14 @@
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
+                                                href="{{route('quick-notification.show-all',$notification->id)}}"
+                                                data-placement="right"
+                                                class="showButton btn btn-outline-info btn-sm"
+                                                onclick=""><i class="la la-adn"></i></a>
+                                        </div>
+                                        <div class="col-md-2 m-1">
+                                            <a  role="button"
+                                                data-id=""
                                                 href="{{route('notification.duplicate',$notification->id)}}"
                                                 data-placement="right"
                                                 class="showButton btn btn-outline-info btn-sm"

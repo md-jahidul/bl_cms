@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuickNotificationRequest;
 use App\Jobs\NotificationSend;
 use App\Models\Customer;
 use App\Models\NotificationDraft;
@@ -239,7 +240,7 @@ class PushNotificationController extends Controller
         }
     }
 
-    public function quickNotificationStoreAndSend(Request $request){
+    public function quickNotificationStoreAndSend(QuickNotificationRequest $request){
 
         $notification = $this->notificationService->storeQuickNotification($request);
         $id = $notification['id'];
