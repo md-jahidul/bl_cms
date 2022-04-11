@@ -201,6 +201,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::post('package/related-product/store', 'AssetLite\ProductController@packageRelatedProductStore');
 
+    // al internet offer category
+    Route::get('al-internet-offer-category', 'AssetLite\AlInternetOffersCategoryController@index')->name('al-internet-offer-category');
+    Route::POST('al-internet-offer-category', 'AssetLite\AlInternetOffersCategoryController@saveSortFilter')->name('al-internet-offer-category.store');
+    Route::get('al-internet-offer-category/create', 'AssetLite\AlInternetOffersCategoryController@create')->name('al.internetOffer.category.create');
+    Route::get('al-internet-offer-category/edit/{id}', 'AssetLite\AlInternetOffersCategoryController@edit')->name('al.internetOffer.category.edit');
+    Route::put('al-internet-offer-category/update/{id}', 'AssetLite\AlInternetOffersCategoryController@update')->name('al.internetOffer.category.update');
+    Route::get('al-internet-offer-category/delete/{id}', 'AssetLite\AlInternetOffersCategoryController@destroy')->name('al.internetOffer.category.delete');
+
     // Product Offers Details  ======================================
     Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
         ->name('product.details');

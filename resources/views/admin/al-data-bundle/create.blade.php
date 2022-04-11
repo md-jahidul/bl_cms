@@ -8,7 +8,7 @@
 @endsection
 
 @section('action')
-    <a href="{{route('mybl-internet-offer-category')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-arrow-left"></i>
+    <a href="{{route('al-internet-offer-category')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-arrow-left"></i>
         Back to List
     </a>
 @endsection
@@ -18,7 +18,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                    <form novalidate class="form" action="{{route('mybl-internet-offer-category.store')}}" method="POST">
+                    <form novalidate class="form" action="{{route('al-internet-offer-category.store')}}" method="POST">
                         @csrf
                         @method('post')
                         <div class="form-body">
@@ -45,7 +45,7 @@
 
                                 </div>
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name_bn">Name Bn:</label>
@@ -64,7 +64,7 @@
                                     </div>
 
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

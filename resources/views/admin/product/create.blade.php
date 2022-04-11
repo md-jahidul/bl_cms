@@ -29,7 +29,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
@@ -44,7 +44,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <select id="product_core" name="product_code"
                                             data-url="{{ url('product-core/match') }}"
@@ -59,6 +59,23 @@
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Please Select Category</label>
+                                        <select multiple
+                                                class="form-control data-section"
+                                                name="offer_categories[]" required>
+                                            <option value="">Please Select Category</option>
+
+                                            @foreach ($offerCategory as $key => $category)
+                                                <option
+                                                    value="{{ $category['id'] }}">  {{$category['name']}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
@@ -254,6 +271,10 @@
                     validate.removeClass('hidden')
                 }
             })
+            $('.data-section').select2({
+                placeholder: 'Please Select Category',
+                allowClear: true
+            });
         })
     </script>
 @endpush
