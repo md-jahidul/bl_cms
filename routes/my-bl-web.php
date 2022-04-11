@@ -764,7 +764,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
     Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
-    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');        
+    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');
 
     /*
     * Usim Eligibility
@@ -789,8 +789,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
     Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
     Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
-
-//    Route::get('health-hub-item-details-export', 'CMS\HealthHubController@itemDetailsExport');
+    Route::get('health-hub-deeplink/analytic', 'CMS\HealthHubController@deeplinkAnalytic')
+        ->name('health-hub-deeplink.analytic');
+    Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
+        ->name('health-hub-deeplink-analytic-details');
 
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Repositories\DeeplinkMsisdnHitCountRepository;
 use App\Repositories\HealthHubAnalyticRepository;
 use App\Repositories\HealthHubRepository;
+use App\Repositories\MyblDynamicDeeplinkRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Box\Spout\Common\Entity\Style\Color;
@@ -11,6 +13,7 @@ use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use http\Env\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -30,6 +33,14 @@ class HealthHubService
      * @var HealthHubAnalyticRepository
      */
     private $healthHubAnalyticRepository;
+    /**
+     * @var FeedCategoryService
+     */
+    private $feedCategoryService;
+    /**
+     * @var DeeplinkMsisdnHitCountRepository
+     */
+    private $deeplinkMsisdnHitCountRepository;
 
     /**
      * HealthHubService constructor.
@@ -37,10 +48,14 @@ class HealthHubService
      */
     public function __construct(
         HealthHubRepository $healthHubRepository,
-        HealthHubAnalyticRepository $healthHubAnalyticRepository
+        HealthHubAnalyticRepository $healthHubAnalyticRepository,
+        FeedCategoryService $feedCategoryService,
+        DeeplinkMsisdnHitCountRepository $deeplinkMsisdnHitCountRepository
     ) {
         $this->healthHubRepository = $healthHubRepository;
         $this->healthHubAnalyticRepository = $healthHubAnalyticRepository;
+        $this->feedCategoryService = $feedCategoryService;
+        $this->deeplinkMsisdnHitCountRepository = $deeplinkMsisdnHitCountRepository;
         $this->setActionRepository($healthHubRepository);
     }
 
@@ -205,6 +220,22 @@ class HealthHubService
             $writer->addRow($row);
         }
         $writer->close();
+    }
+
+    public function deeplinkAnalyticData()
+    {
+        $feedCatData = $this->feedCategoryService->findOneByCatSlug('health-hub');
+        return [
+            "id" => $feedCatData->dynamicLinks->id,
+            'title_en' => "Health Hub",
+            "total_hit_count" => $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->count(),
+            "total_unique_hit" => $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->groupBy('msisdn')->count(),
+        ];
+    }
+
+    public function deeplinkAnalyticDetails($request, $dynamicDeepLinkId)
+    {
+        return $this->deeplinkMsisdnHitCountRepository->deeplinkAnalyticMsisdnCount($request, $dynamicDeepLinkId);
     }
 
     /**

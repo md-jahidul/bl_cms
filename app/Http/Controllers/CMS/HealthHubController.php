@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Helpers\Helper;
 use App\Http\Requests\MyblManageRequest;
+use App\Repositories\MyblDynamicDeeplinkRepository;
 use App\Repositories\MyblManageItemRepository;
 use App\Services\FeedCategoryService;
 use App\Services\FeedService;
@@ -31,6 +32,10 @@ class HealthHubController extends Controller
      * @var FeedService
      */
     private $feedService;
+    /**
+     * @var MyblDynamicDeeplinkRepository
+     */
+    private $dynamicDeeplinkRepository;
 
     /**
      * HealthHubController constructor.
@@ -38,11 +43,13 @@ class HealthHubController extends Controller
     public function __construct(
         FeedCategoryService $feedCategoryService,
         FeedService $feedService,
-        HealthHubService $healthHubService
+        HealthHubService $healthHubService,
+        MyblDynamicDeeplinkRepository $dynamicDeeplinkRepository
     ) {
         $this->feedCategoryService = $feedCategoryService;
         $this->feedService = $feedService;
         $this->healthHubService = $healthHubService;
+        $this->dynamicDeeplinkRepository = $dynamicDeeplinkRepository;
     }
 
     /**
@@ -174,6 +181,18 @@ class HealthHubController extends Controller
 //    {
 //        return $this->healthHubService->exportReport($request);
 //    }
+
+    public function deeplinkAnalytic()
+    {
+        $deeplinkAnalyticData = $this->healthHubService->deeplinkAnalyticData();
+        return view('admin.mybl-health-hub.analytic.deeplink', compact('deeplinkAnalyticData'));
+    }
+
+    public function deeplinkAnalyticDetails(Request $request, $dynamicDeepLinkId)
+    {
+        return $this->healthHubService->deeplinkAnalyticDetails($request, $dynamicDeepLinkId);
+    }
+
 
     /**
      * Remove the specified resource from storage.
