@@ -7230,5 +7230,11 @@
         "ext-json": "*"
     },
     "platform-dev": [],
+<<<<<<< Updated upstream
     "plugin-api-version": "1.1.0"
+=======
+
+    "plugin-api-version": "1.1.0"
+
+>>>>>>> Stashed changes
 }
