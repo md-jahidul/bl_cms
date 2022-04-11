@@ -32,5 +32,7 @@ return [
         ]
     ],
 
-    'validityUnits' => ['hours', 'days']
+    'validityUnits' => ['hours', 'days'],
+
+    'partnerChannelName' => ['bKash', 'Nagad', 'EBL']
 ];

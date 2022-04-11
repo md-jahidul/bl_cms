@@ -274,6 +274,12 @@
                     <i class="la la-dollar"></i> Cash Back
                 </a>
             </li>
+            <li class="{{is_active_url('own-recharge-inventory')}}">
+                <a class="menu-item" href="{{ route('own-recharge-inventory.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-dollar"></i> Own Recharge Inventory
+                </a>
+            </li>
         </ul>
     </li>
 
