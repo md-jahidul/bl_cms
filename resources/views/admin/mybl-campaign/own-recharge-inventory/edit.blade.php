@@ -67,43 +67,6 @@
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="form-group col-md-4 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                        <label for="start_date">Start Date</label>
-                                        <div class='input-group'>
-                                            <input type='text' class="form-control" name="start_date" id="start_date"
-                                                   placeholder="Please select start date"
-                                                   value = {{ $campaign->start_date }}
-                                                   autocomplete="off"/>
-                                        </div>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('start_date'))
-                                            <div class="help-block">{{ $errors->first('start_date') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-4 {{ $errors->has('end_date') ? ' error' : '' }}">
-                                        <label for="end_date">End Date</label>
-                                        <input type="text" name="end_date" id="end_date" class="form-control"
-                                               value = {{ $campaign->end_date }}
-                                               placeholder="Please select end date"
-                                               >
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('end_date'))
-                                            <div class="help-block">{{ $errors->first('end_date') }}</div>
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
-                                        <label for="redirect_url" class="required">Base Msisdn</label>
-                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
-                                                class="browser-default custom-select">
-                                            <option value="">Select Action</option>
-                                            @foreach ($baseMsisdnGroups as $key => $value)
-                                                <option value="{{ $value->id }}"
-                                                    {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
                                     <div class="form-group col-md-4" >
                                         <label  class="required">Purchase Eligibility : </label>
                                         <select name="purchase_eligibility" class="browser-default custom-select"
@@ -133,6 +96,153 @@
                                         @if ($errors->has('partner_channel_names'))
                                             <div class="help-block">  {{ $errors->first('partner_channel_names') }}</div>
                                         @endif
+                                    </div>
+                                    <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                        <label for="redirect_url" class="required">Base Msisdn</label>
+                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
+                                                class="browser-default custom-select">
+                                            <option value="">Select Action</option>
+                                            @foreach ($baseMsisdnGroups as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <!-- Recurring schedule -->
+                                    <div class="col-md-8">
+                                        <label class="form-label">Recurring Schedule<span class="red">*</span></label>
+                                        @php
+                                            $recurringType = isset($campaign) ? $campaign->recurring_type : 'none';
+                                        @endphp
+                                        <div class="">
+                                            <ul class="list list-inline">
+                                                <li class="list-inline-item">
+                                                    <input type="radio" name="recurring_type" id="none" value="none"
+                                                        {{$recurringType == 'none' ? 'checked' : ''}}>
+                                                    <label for="none" class="small">None</label>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <input id="daily" type="radio" name="recurring_type" value="daily"
+                                                        {{$recurringType == 'daily' ? 'checked' : ''}}>
+                                                    <label for="daily" class="small">Daily</label>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <input id="weekly" type="radio" name="recurring_type" value="weekly"
+                                                        {{$recurringType == 'weekly' ? 'checked' : ''}}>
+                                                    <label for="weekly" class="small">Weekly</label>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <input id="monthly" type="radio" name="recurring_type" value="monthly"
+                                                        {{$recurringType == 'monthly' ? 'checked' : ''}}>
+                                                    <label for="monthly" class="small">Monthly</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="row">
+                                            <!-- Regular time period (When recurring type is none) -->
+                                            <div class="col-md-12">
+                                                <div class="form-group" id="time_period">
+                                                    <label class="small">Date Range</label>
+                                                    <div class='input-group'>
+                                                        <input type='text'
+                                                            class="form-control datetime"
+                                                            value="{{ $page == 'edit' ? $dateRange : old('display_period') }}"
+                                                            name="display_period"
+                                                            id="display_period"/>
+                                                        @if($errors->has('display_period'))
+                                                            <p class="text-left">
+                                                                <small class="danger text-muted">
+                                                                    {{ $errors->first('display_period') }}
+                                                                </small>
+                                                            </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Weekday Picker -->
+                                            <div class="col-md-12">
+                                                @php
+                                                    $weekdays = isset($campaign) ? explode(',', optional($campaign->schedule)->weekdays) ?? [] : [];
+                                                @endphp
+
+                                                <div class="weekDays-selector" id="weekday_selector"
+                                                    @if($recurringType != 'weekly')
+                                                    style="display: none"
+                                                    @endif>
+                                                    <input name="weekdays[]" value="sun" type="checkbox" id="weekday-sun"
+                                                        class="weekday" {{in_array('sun', $weekdays) ? 'checked' : ''}}/>
+                                                    <label for="weekday-sun">SU</label>
+                                                    <input name="weekdays[]" value="mon" type="checkbox" id="weekday-mon"
+                                                        {{in_array('mon', $weekdays) ? 'checked' : ''}} class="weekday"/>
+                                                    <label for="weekday-mon">MO</label>
+                                                    <input name="weekdays[]" value="tue" type="checkbox" id="weekday-tue"
+                                                        {{in_array('tue', $weekdays) ? 'checked' : ''}} class="weekday"/>
+                                                    <label for="weekday-tue">TU</label>
+                                                    <input name="weekdays[]" value="wed" type="checkbox" id="weekday-wed"
+                                                        {{in_array('wed', $weekdays) ? 'checked' : ''}} class="weekday"/>
+                                                    <label for="weekday-wed">WE</label>
+                                                    <input name="weekdays[]" value="thu" type="checkbox" id="weekday-thu"
+                                                        {{in_array('thu', $weekdays) ? 'checked' : ''}} class="weekday"/>
+                                                    <label for="weekday-thu">TH</label>
+                                                    <input name="weekdays[]" value="fri" type="checkbox" id="weekday-fri"
+                                                        {{in_array('fri', $weekdays) ? 'checked' : ''}} class="weekday"/>
+                                                    <label for="weekday-fri">FR</label>
+                                                    <input name="weekdays[]" value="sat" type="checkbox" id="weekday-sat"
+                                                        {{in_array('sat', $weekdays) ? 'checked' : ''}} class="weekday"/>
+                                                    <label for="weekday-sat">SA</label>
+                                                </div>
+                                                <br>
+                                            </div>
+
+                                            <!-- Month dates selector -->
+                                            <div class="col-md-12" id="dates"
+                                                @if($recurringType != 'monthly')
+                                                style="display: none"
+                                                @endif>
+                                                <div class="form-group">
+                                                    @php
+                                                        $dates = isset($campaign) ? explode(',', optional($campaign->schedule)->month_dates) ?? [] : [];
+                                                    @endphp
+                                                    <select name="month_dates[]" id="month_dates" class="form-control"
+                                                            multiple>
+                                                        @for($i = 1; $i < 32; $i++)
+                                                            <option
+                                                                value="{{$i}}" {{in_array($i, $dates) ? 'selected' : ''}}>
+                                                                {{$i}}
+                                                            </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Time slot/hour selector -->
+                                            <div class="col-md-12" id="time_slot"
+                                                @if($recurringType == 'none')
+                                                style="display: none"
+                                                @endif>
+                                                <div class="form-group">
+                                                    @php
+                                                        $slots = isset($campaign) ? $campaign->timeSlots->each(function ($item) {
+                                                            return $item->slot = date('h:i A', strtotime($item->start_time))
+                                                            . ' - ' . date('h:i A', strtotime($item->end_time));
+                                                            })->pluck('slot')->toArray() ?? [] : [];
+                                                    @endphp
+                                                    <select class="form-control" name="time_ranges[]" id="time_range"
+                                                            multiple>
+                                                        <option value=""></option>
+                                                        @foreach($hourSlots as $slot)
+                                                            <option
+                                                                value="{{$slot}}" {{in_array($slot, $slots) ? 'selected' : ''}}>
+                                                                {{$slot}}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Campaign Image</label>
@@ -245,6 +355,7 @@
 @endpush
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/weekday-picker.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
 
@@ -255,6 +366,7 @@
 @endpush
 
 @push('page-js')
+    <script src="{{ asset('app-assets/js/recurring-schedule/recurring.js')}}"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
@@ -313,6 +425,95 @@
                 });
             }
             initiateDropify('.dropify');
+            function dateTime(element){
+                var date = new Date();
+                date.setDate(date.getDate());
+                element.datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            }
+
+            $('#repeater-button').click(function (){
+                $(".product-list").select2()
+                var date = new Date();
+                date.setDate(date.getDate());
+                $('.product_start_date').datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+                $('.product_end_date').datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            });
+
+            $('.campaign_user_type').click(function () {
+                if ($(this).val() !== "segment_wise"){
+                    $('#base_msisdn').addClass('d-none')
+                } else {
+                    $('#base_msisdn').removeClass('d-none')
+                }
+            });
+
+            dateTime(campaignStart)
+            dateTime(campaignEnd)
+            dateTime(productStart)
+            dateTime(productEnd)
+            var date;
+            // Date & Time
+            date = new Date();
+            date.setDate(date.getDate());
+            $('input[name=recurring_type]').change(function () {
+            pickerFormat();
+            });
+
+            $('input[name=recurring_type]').ready(function () {
+                pickerFormat();
+            })
+            function pickerFormat()
+            {
+                recurringType = $('input[name=recurring_type]:checked').val();
+                let page = "{{$page}}";
+                if (page == 'edit') {
+                        let startTime = "{{$campaign->start_time ?? ""}}";
+                        date = new Date(Date.parse(startTime));
+                    }
+                if (recurringType != 'none') {
+                    $('.datetime').daterangepicker({
+                        timePicker: false,
+                        minDate: date,
+                        locale: {
+                            format: 'YYYY/MM/DD'
+                        }
+                    });
+                } else {
+                    $('.datetime').daterangepicker({
+                        timePicker: true,
+                        timePickerIncrement: 5,
+                        minDate: date,
+                        locale: {
+                            format: 'YYYY/MM/DD hh:mm A'
+                        }
+                    });
+                }
+            }
+            $("#month_dates").select2({
+                placeholder: 'Choose dates'
+            });
+
+            $("#time_range").select2({
+                placeholder: 'Time slots'
+            });
+
+            $('.form').submit(function () {
+                if ($('input[name=recurring_type]:checked').val() != 'none') {
+                    let dateRange = $('#display_period').val().split("-");
+                    var start = dateRange[0] + ' 12:00 AM';
+                    var end = dateRange[1] + ' 11:59 PM';
+                    $('#display_period').val(start + ' - ' + end);
+                }
+            });
         });
     </script>
 

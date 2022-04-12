@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Services\MyblOwnRechargeInventoryService;
 use App\Services\ProductCoreService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
@@ -79,8 +80,13 @@ class MyBlOwnRechargeInvertoryController extends Controller
         $campaign = $this->ownRechargeInventoryService->findOne($id);
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $partnerChannelNames = (json_decode($campaign['partner_channel_names']));
+        $format = $campaign->recurring_type == 'none' ? 'Y/m/d h:i A' : 'Y/m/d';
+        $dateRange = Carbon::parse($campaign->start_date)->format($format) . ' - ' .
+            Carbon::parse($campaign->end_date)->format($format);
+        $hourSlots = $this->ownRechargeInventoryService->getHourSlots();
+        $page = 'edit';
         
-        return view('admin.mybl-campaign.own-recharge-inventory.edit', compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames'));
+        return view('admin.mybl-campaign.own-recharge-inventory.edit', compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange'));
     }
 
     /**

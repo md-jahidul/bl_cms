@@ -88,6 +88,11 @@ class MyblOwnRechargeInventoryService
         try{
             
             $data['partner_channel_names'] = json_encode($data['partner_channel_names']);
+            $date_range_array = explode('-', $data['display_period']);
+            $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
+                ->toDateTimeString();
+            $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
+                ->toDateTimeString();
             $campaign = $this->findOne($id);
             
             $this->ownRechargeInventoryProductRepository->deleteCampaignWiseProduct($id);
@@ -99,6 +104,16 @@ class MyblOwnRechargeInventoryService
             }
             // if($campaign->campaign_user_type != )
             $campaign->update($data);
+            // Storing recurring schedule
+            if ($data['recurring_type'] != 'none') {
+                $this->saveSchedule(
+                    $data['time_ranges'],
+                    $id,
+                    $data['weekdays'] ?? null,
+                    $data['month_dates'] ?? null
+                );
+            }
+
             return Response('Own Recharge Inventory campaign has been successfully updated');
 
         }catch (\Exception $e) {
