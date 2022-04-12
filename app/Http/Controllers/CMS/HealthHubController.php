@@ -160,7 +160,7 @@ class HealthHubController extends Controller
      */
     public function analyticData(Request $request)
     {
-        $itemsAnalyticData =     $this->healthHubService->analyticReports($request);
+        $itemsAnalyticData = $this->healthHubService->analyticReports($request);
         if ($request->excel_export) {
             return $this->healthHubService->exportReport($request);
         }
@@ -182,9 +182,12 @@ class HealthHubController extends Controller
 //        return $this->healthHubService->exportReport($request);
 //    }
 
-    public function deeplinkAnalytic()
+    public function deeplinkAnalytic(Request $request)
     {
-        $deeplinkAnalyticData = $this->healthHubService->deeplinkAnalyticData();
+        if (isset($request->excel_export)) {
+            return $this->healthHubService->deeplinkAnalyticData($request);
+        }
+        $deeplinkAnalyticData = $this->healthHubService->deeplinkAnalyticData($request);
         return view('admin.mybl-health-hub.analytic.deeplink', compact('deeplinkAnalyticData'));
     }
 

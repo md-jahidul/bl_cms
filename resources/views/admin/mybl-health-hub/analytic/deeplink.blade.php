@@ -41,7 +41,7 @@
                             </div>
                             <div class="pl-1">
                                 <br>
-                                <button type="submit" name="excel_export" value="items_export"
+                                <button type="submit" name="excel_export" value="deeplink_items_export"
                                         class="btn btn-outline-secondary" id="excel-export">
                                     <i class="la la-download"></i> Excel Export
                                 </button>
@@ -69,10 +69,12 @@
                                 <td>{{ $deeplinkAnalyticData['total_hit_count'] }}</td>
                                 {{--                                <td>0</td>--}}
                                 <td>
-                                    <a data-toggle="modal" data-target="#large"
-                                       data-id="{{ $deeplinkAnalyticData['id'] }}"
-                                       href="{{--{{ route('refer-and-earn.campaign.details', $data->id) }}--}}"
-                                       role="button" class="btn-sm btn-bitbucket border-1 item-details">Item Details</a>
+                                    @if($deeplinkAnalyticData['id'])
+                                        <a data-toggle="modal" data-target="#large"
+                                           data-id="{{ $deeplinkAnalyticData['id'] }}"
+                                           href="#"
+                                           role="button" class="btn-sm btn-bitbucket border-1 item-details">Item Details</a>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
@@ -101,7 +103,7 @@
                             <div class="col-md-12">
                                 <div class="pull-right">
                                     <input type="hidden" name="item_id">
-                                    <button type="button" name="excel_export" value="item_export_details"
+                                    <button type="button" name="excel_export" value="deeplink_item_export_details"
                                             class="btn btn-outline-secondary" id="item_details_export">
                                         <i class="la la-download"></i> Excel Export
                                     </button>
@@ -164,7 +166,7 @@
                     excel_export: $(this).val(),
                     item_id: $('input[name="item_id"]').val(),
                 }
-                var url = "{{URL::to('health-hub-analytic-data')}}?" + $.param(query)
+                var url = "{{URL::to('health-hub-deeplink/analytic')}}?" + $.param(query)
                 window.location = url;
             });
 
