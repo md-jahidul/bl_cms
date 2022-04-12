@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use App\RecurringSchedule;
 use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyblCashBackRepository;
 use App\Repositories\MyblOwnRechargeInventoryProductRepository;
 use App\Repositories\MyblOwnRechargeInventoryRepository;
+use App\Repositories\RecurringScheduleRepository;
 use App\Traits\CrudTrait;
+use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
@@ -16,13 +19,19 @@ class MyblOwnRechargeInventoryService
 
     private $ownRechargeInventoryRepository;
     private $ownRechargeInventoryProductRepository;
+    private $recurringScheduleHourService;
+    private $recurringScheduleRepository;
 
     public function __construct(
         MyblOwnRechargeInventoryRepository $ownRechargeInventoryRepository,
-        MyblOwnRechargeInventoryProductRepository $ownRechargeInventoryProductRepository
+        MyblOwnRechargeInventoryProductRepository $ownRechargeInventoryProductRepository,
+        RecurringScheduleHourService $recurringScheduleHourService,
+        RecurringScheduleRepository $recurringScheduleRepository
     ) {
         $this->ownRechargeInventoryRepository = $ownRechargeInventoryRepository;
         $this->ownRechargeInventoryProductRepository = $ownRechargeInventoryProductRepository;
+        $this->recurringScheduleHourService = $recurringScheduleHourService;
+        $this->recurringScheduleRepository = $recurringScheduleRepository;
         $this->setActionRepository($ownRechargeInventoryRepository);
     }
 
@@ -34,10 +43,15 @@ class MyblOwnRechargeInventoryService
     public function storeCampaign($data): Response
     {
         try{
+            $date_range_array = explode('-', $data['display_period']);
+            $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
+                ->toDateTimeString();
+            $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
+                ->toDateTimeString();
             $data['partner_channel_names'] = json_encode($data['partner_channel_names']);
             $data['banner'] = 'storage/' . $data['banner']->store('own_recharge_inventory');
             $data['thumbnail_image'] = 'storage/' . $data['thumbnail_image']->store('own_recharge_inventory');
-
+            
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
@@ -45,6 +59,16 @@ class MyblOwnRechargeInventoryService
                     $this->ownRechargeInventoryProductRepository->save($product);
                 }
             }
+            // Storing recurring schedule
+            if ($data['recurring_type'] != 'none') {
+                $this->saveSchedule(
+                    $data['time_ranges'],
+                    $campaign->id,
+                    $data['weekdays'] ?? null,
+                    $data['month_dates'] ?? null
+                );
+            }
+
             return new Response("Own Recharge Inventory campaign has been successfully created");
         }catch (\Exception $e){
 
@@ -99,5 +123,41 @@ class MyblOwnRechargeInventoryService
             return Response('Own Recharge Inventory campaign Delete Failed');
         }
 
+    }
+
+    public function getHourSlots()
+    {
+        return $this->recurringScheduleHourService->getHourSlots('own_recharge_inventory');
+    }
+
+    private function saveSchedule($timeSlots, $schedulerId, $weekdays = null, $monthDates = null)
+    {
+        foreach ($timeSlots as $key => $timeSlot) {
+            $timeRange = explode('-', $timeSlot);
+            $hourSlotData = [
+                'scheduler_id' => $schedulerId,
+                'feature' => 'own_recharge_inventory',
+                'start_time' => Carbon::parse($timeRange[0])->format('H:i:s'),
+                'end_time' => Carbon::parse($timeRange[1])->format('H:i:s'),
+                'used' => true
+            ];
+            $this->recurringScheduleHourService->addOrReplace($hourSlotData, $key === 0 ? true : false);
+        }
+
+        $checkSchedule = $this->recurringScheduleRepository->findBy(['schedulable_item_id' => $schedulerId]);
+
+        $scheduleData = [
+            'schedulable_item' => 'own_recharge_inventory',
+            'schedulable_item_id' => $schedulerId,
+            'weekdays' => (!is_null($weekdays)) ? implode(',', $weekdays) : null,
+            'month_dates' => (!is_null($monthDates)) ? implode(',', $monthDates) : null,
+            'status' => true
+        ];
+
+        if (count($checkSchedule)) {
+            RecurringSchedule::where('schedulable_item_id', $schedulerId)->update($scheduleData);
+        } else {
+            $this->recurringScheduleRepository->save($scheduleData);
+        }
     }
 }

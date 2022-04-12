@@ -39,8 +39,9 @@ class MyBlOwnRechargeInvertoryController extends Controller
     {
         $products = $this->productCoreService->findAll();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+        $hourSlots = $this->ownRechargeInventoryService->getHourSlots();
 
-        return view('admin.mybl-campaign.own-recharge-inventory.create', compact('products', 'baseMsisdnGroups'));
+        return view('admin.mybl-campaign.own-recharge-inventory.create', compact('products', 'baseMsisdnGroups', 'hourSlots'));
     }
 
     /**
