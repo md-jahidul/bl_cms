@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Repositories\DeeplinkMsisdnHitCountRepository;
+use App\Repositories\FeedCategoryRepository;
 use App\Repositories\HealthHubAnalyticRepository;
 use App\Repositories\HealthHubRepository;
+use App\Repositories\MyblDynamicDeeplinkRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Box\Spout\Common\Entity\Style\Color;
@@ -11,6 +14,7 @@ use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use http\Env\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -30,6 +34,14 @@ class HealthHubService
      * @var HealthHubAnalyticRepository
      */
     private $healthHubAnalyticRepository;
+    /**
+     * @var DeeplinkMsisdnHitCountRepository
+     */
+    private $deeplinkMsisdnHitCountRepository;
+    /**
+     * @var FeedCategoryRepository
+     */
+    private $feedCategoryRepository;
 
     /**
      * HealthHubService constructor.
@@ -37,10 +49,14 @@ class HealthHubService
      */
     public function __construct(
         HealthHubRepository $healthHubRepository,
-        HealthHubAnalyticRepository $healthHubAnalyticRepository
+        HealthHubAnalyticRepository $healthHubAnalyticRepository,
+        FeedCategoryRepository $feedCategoryRepository,
+        DeeplinkMsisdnHitCountRepository $deeplinkMsisdnHitCountRepository
     ) {
         $this->healthHubRepository = $healthHubRepository;
         $this->healthHubAnalyticRepository = $healthHubAnalyticRepository;
+        $this->feedCategoryRepository = $feedCategoryRepository;
+        $this->deeplinkMsisdnHitCountRepository = $deeplinkMsisdnHitCountRepository;
         $this->setActionRepository($healthHubRepository);
     }
 
@@ -144,25 +160,29 @@ class HealthHubService
 
     public function generateFileItem($items, $exportModuleType = null, $itemName = null)
     {
-        if ($exportModuleType == "items_export") {
+        if ($exportModuleType == "items_export" || $exportModuleType == "deeplink_items_export") {
             //Health Hub Items
-            $fileName = "items";
+            $fileName = $itemName;
             $headerRow = [
                 "SL",
                 "Item Name",
                 "Total Unique Hit",
-                "Total Hit Count",
-                "Total Session Time (Sec)",
+                "Total Hit Count"
             ];
+            if ($exportModuleType == "items_export") {
+                $fileName = "items";
+                $headerRow[] = "Total Session Time (Sec)";
+            }
         } else {
             // Item Details
             $fileName = str_replace(' ', '-', $itemName);
             $headerRow = [
-//                "SL",
                 "Msisdn",
-                "Total Hit Count",
-                "Average Session Time (Sec)"
+                "Total Hit Count"
             ];
+            if ($exportModuleType != "deeplink_item_export_details") {
+                $headerRow[] = "Average Session Time (Sec)";
+            }
         }
 
         $headerRowStyle = (new StyleBuilder())
@@ -182,29 +202,70 @@ class HealthHubService
             ->setFontSize(9)
             ->build();
 
-        foreach ($items as $key => $data) {
-            if ($exportModuleType == "items_export") {
-                //Health Hub Items
-                $report = [
-                    'SL' => $key + 1,
-                    'title_en' => $data['title_en'],
-                    'total_unique_hit' => $data['total_unique_hit'],
-                    'total_hit_count' => $data['total_hit_count'],
-                    'total_session_time' => $data['total_session_time'],
-                ];
-            } else {
-                // Item Details
-                $report = [
-//                    'SL' => $key + 1,
-                    'msisdn' => "0" . $data['msisdn'],
-                    'hit_count' => $data['hit_count'],
-                    'avg_session_count' => (int) round($data['avg_session_count'])
-                ];
-            }
+        if ($exportModuleType == "deeplink_items_export") {
+            //Health Hub Deeplink Info
+            $report = [
+                'SL' => 1,
+                'title_en' => $items['title_en'],
+                'total_unique_hit' => $items['total_unique_hit'],
+                'total_hit_count' => $items['total_hit_count']
+            ];
             $row = WriterEntityFactory::createRowFromArray($report, $data_style);
             $writer->addRow($row);
+        } else {
+            foreach ($items as $key => $data) {
+                if ($exportModuleType == "items_export") {
+                    //Health Hub Items
+                    $report = [
+                        'SL' => $key + 1,
+                        'title_en' => $data['title_en'],
+                        'total_unique_hit' => $data['total_unique_hit'],
+                        'total_hit_count' => $data['total_hit_count'],
+                        'total_session_time' => $data['total_session_time'],
+                    ];
+                } else {
+                    // Item Details
+                    $report = [
+                        'msisdn' => "0" . $data['msisdn'],
+                        'hit_count' => $data['hit_count']
+                    ];
+                    if ($exportModuleType != "deeplink_item_export_details") {
+                        $report['avg_session_count'] = (int)round($data['avg_session_count']);
+                    }
+                }
+                $row = WriterEntityFactory::createRowFromArray($report, $data_style);
+                $writer->addRow($row);
+            }
         }
         $writer->close();
+    }
+
+    public function deeplinkAnalyticData($request)
+    {
+        $feedCatData = $this->feedCategoryRepository->getFeedCatWithDeeplinkInfo($request, 'health-hub');
+        $data = [
+            "id" => $feedCatData->dynamicLinks->id ?? 0,
+            'title_en' => "Health Hub",
+            "total_hit_count" => ($feedCatData->dynamicLinks) ? $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->count(
+            ) : 0,
+            "total_unique_hit" => ($feedCatData->dynamicLinks) ? $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->groupBy(
+                'msisdn'
+            )->count() : 0,
+        ];
+
+        if (isset($request->excel_export) && $request->excel_export == "deeplink_items_export") {
+            return $this->generateFileItem($data, $request->excel_export, 'deeplink-analytic-export');
+        } elseif (isset($request->excel_export) && $request->excel_export == "deeplink_item_export_details") {
+            $itemDetails = $this->deeplinkAnalyticDetails($request, $request->item_id);
+            return $this->generateFileItem($itemDetails, $request->excel_export, 'deeplink-analytic-details-export');
+        } else {
+            return $data;
+        }
+    }
+
+    public function deeplinkAnalyticDetails($request, $dynamicDeepLinkId)
+    {
+        return $this->deeplinkMsisdnHitCountRepository->deeplinkAnalyticMsisdnCount($request, $dynamicDeepLinkId);
     }
 
     /**

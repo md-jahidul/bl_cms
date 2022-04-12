@@ -12,4 +12,9 @@ class MyblDynamicDeeplink extends Model
     {
         return $this->morphTo();
     }
+
+    public function deeplinkMsisdnHitCounts()
+    {
+        return $this->hasMany(MyblDeeplinkMsisdnCount::class, 'dynamic_deeplink_id', 'id');
+    }
 }

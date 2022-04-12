@@ -728,8 +728,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
 
-    //    Banner Analytic
-    //    Route::resource('banner-analytic', 'CMS\BannerAnalyticController');
+//    Banner Analytic
+//    Route::resource('banner-analytic', 'CMS\BannerAnalyticController');
     Route::get('banner-analytic', 'CMS\BannerAnalyticController@index')->name('banner-analytic.index');
     Route::Get('banner-analytic/data', 'CMS\BannerAnalyticController@data')->name('banner-analytic.data');
     Route::Get('banner-analytic/report/details/{id}', 'CMS\BannerAnalyticController@detailreport')->name('banner-analytic.report.details');
@@ -926,7 +926,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
     Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
-    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');        
+    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');
 
     /*
     * Usim Eligibility
@@ -954,6 +954,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('health-hub', 'CMS\HealthHubController')->except(['show', 'destroy']);
     Route::get('health-hub-auto-save', 'CMS\HealthHubController@itemSortable');
     Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
+    Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
+    Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
+    Route::get('health-hub-deeplink/analytic', 'CMS\HealthHubController@deeplinkAnalytic')
+        ->name('health-hub-deeplink.analytic');
+    Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
+        ->name('health-hub-deeplink-analytic-details');
+
+
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
