@@ -822,3 +822,5 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+Route::get('sse-test', 'TestController@test');

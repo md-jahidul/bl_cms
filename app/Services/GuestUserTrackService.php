@@ -16,6 +16,7 @@ use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class GuestUserTrackService
 {
@@ -39,6 +40,22 @@ class GuestUserTrackService
     public function dataExportGenerator($request, $showData = null)
     {
         $builder = new GuestCustomerActivity();
+
+        // dd('here');
+
+        try {
+            $result = DB::select("SELECT * from users  
+            INTO OUTFILE '/var/lib/mysql-files/file224name.csv'     
+            FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' ");
+            // $result = DB::select("SHOW VARIABLES LIKE 'secure_file_priv'");
+            dd($result);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        dd('here');
+
+        
 
         if (isset($request->device_id)) {
             $builder = $builder->where('device_id', 'LIKE', "%$request->device_id%");

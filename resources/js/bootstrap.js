@@ -53,3 +53,9 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+// var es = new EventSource("<?php echo action('TestController@test'); ?>");
+  
+// es.onmessage = function(e) {
+//     console.log(e);
+// }
