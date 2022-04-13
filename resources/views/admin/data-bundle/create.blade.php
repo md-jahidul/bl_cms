@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Internet Offer Category')
-@section('card_name', "Internet Offer Category")
+@section('title', 'Products Category')
+@section('card_name', "Products Category")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Create Internet Offer Category
+        Create Products Category
     </li>
 @endsection
 
@@ -22,7 +22,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Internet Offer Category.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Products Category.</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
