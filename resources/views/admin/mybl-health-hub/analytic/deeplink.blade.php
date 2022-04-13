@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Health Hub Item Analytics')
-@section('card_name', 'Health Hub Item Analytics')
+@section('card_name', 'Health Hub Deeplink Analytics')
 @section('breadcrumb')
     <li class="breadcrumb-item active">
         <a href="{{ route('health-hub.index') }}">Health Hub List</a>
