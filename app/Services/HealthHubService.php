@@ -246,9 +246,9 @@ class HealthHubService
         $data = [
             "id" => $feedCatData->dynamicLinks->id ?? 0,
             'title_en' => "Health Hub",
-            "total_hit_count" => ($feedCatData->dynamicLinks) ? $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->count(
+            "total_hit_count" => isset($feedCatData->dynamicLinks) ? $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->count(
             ) : 0,
-            "total_unique_hit" => ($feedCatData->dynamicLinks) ? $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->groupBy(
+            "total_unique_hit" => isset($feedCatData->dynamicLinks) ? $feedCatData->dynamicLinks->deeplinkMsisdnHitCounts->groupBy(
                 'msisdn'
             )->count() : 0,
         ];
