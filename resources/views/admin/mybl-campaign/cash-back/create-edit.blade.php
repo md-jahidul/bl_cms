@@ -154,12 +154,10 @@
         $(document).ready(function () {
             $(".product-list").select2()
             $('.report-repeater').repeater();
-
             let campaignStart = $('#start_date');
             let campaignEnd = $('#end_date');
             let productStart = $('.product_start_date');
             let productEnd = $('.product_end_date');
-
             function dateTime(element){
                 var date = new Date();
                 date.setDate(date.getDate());
@@ -168,7 +166,6 @@
                     showClose: true,
                 });
             }
-
             $('#repeater-button').click(function (){
                 $(".product-list").select2()
                 var date = new Date();
@@ -182,7 +179,6 @@
                     showClose: true,
                 });
             })
-
             dateTime(campaignStart)
             dateTime(campaignEnd)
             dateTime(productStart)
