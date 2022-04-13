@@ -894,6 +894,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
     /*
+     * Own Recharge Inventory
+     */
+
+    Route::resource('own-recharge-inventory', 'CMS\MyBlOwnRechargeInvertoryController')->except(['show', 'destroy']);
+    Route::get('own-recharge-inventory/destroy/{id}', 'CMS\MyBlOwnRechargeInvertoryController@destroy');
+
+    /*
      * Event Base bonus
      */
     Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
