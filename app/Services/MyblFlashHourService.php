@@ -106,6 +106,7 @@ class MyblFlashHourService
         unset($data['id']);
         $data['start_date'] = null;
         $data['end_date']   = null;
+        $data['status']     = 0;
 
         try {
             DB::beginTransaction();
