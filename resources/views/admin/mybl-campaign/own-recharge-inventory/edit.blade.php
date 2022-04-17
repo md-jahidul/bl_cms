@@ -264,7 +264,7 @@
                                         <input type="file"
                                             id="thumbnail_image"
                                             name="thumbnail_image"
-                                            class="dropify"
+                                            class="dropify1"
                                             data-default-file="{{ url($campaign->thumbnail_image) }}"
                                        />
                                         @if($errors->has('thumbnail_image'))
@@ -427,6 +427,26 @@
                 });
             }
             initiateDropify('.dropify');
+            function dateTime(element){
+                var date = new Date();
+                date.setDate(date.getDate());
+                element.datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            }
+
+            function initiateDropify1(selector) {
+                $(selector).dropify({
+                    messages: {
+                        'default': 'Browse for an Thumbnail Image to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct Thumbnail Image file'
+                    }
+                });
+            }
+            initiateDropify1('.dropify1');
             function dateTime(element){
                 var date = new Date();
                 date.setDate(date.getDate());

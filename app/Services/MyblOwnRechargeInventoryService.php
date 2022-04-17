@@ -86,6 +86,8 @@ class MyblOwnRechargeInventoryService
     public function updateCampaign($data, $id)
     {
         try{
+            if(isset($data['banner']))$data['banner'] = 'storage/' . $data['banner']->store('own_recharge_inventory');
+            if(isset($data['thumbnail_image']))$data['thumbnail_image'] = 'storage/' . $data['thumbnail_image']->store('own_recharge_inventory');
             
             $data['partner_channel_names'] = json_encode($data['partner_channel_names']);
             $date_range_array = explode('-', $data['display_period']);
