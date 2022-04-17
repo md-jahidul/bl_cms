@@ -264,7 +264,7 @@
                                         <input type="file"
                                             id="thumbnail_image"
                                             name="thumbnail_image"
-                                            class="dropify"
+                                            class="dropify1"
                                             data-default-file="{{ url($campaign->thumbnail_image) }}"
                                        />
                                         @if($errors->has('thumbnail_image'))
@@ -358,7 +358,7 @@
     <link rel="stylesheet" href="{{ asset('app-assets/css/weekday-picker.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
@@ -370,6 +370,8 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script>
         $(document).ready(function () {
             $(".product-list").select2()
@@ -425,6 +427,26 @@
                 });
             }
             initiateDropify('.dropify');
+            function dateTime(element){
+                var date = new Date();
+                date.setDate(date.getDate());
+                element.datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            }
+
+            function initiateDropify1(selector) {
+                $(selector).dropify({
+                    messages: {
+                        'default': 'Browse for an Thumbnail Image to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct Thumbnail Image file'
+                    }
+                });
+            }
+            initiateDropify1('.dropify1');
             function dateTime(element){
                 var date = new Date();
                 date.setDate(date.getDate());
