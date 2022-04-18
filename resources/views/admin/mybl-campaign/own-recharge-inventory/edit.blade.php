@@ -71,10 +71,8 @@
                                         <label  class="required">Purchase Eligibility : </label>
                                         <select name="purchase_eligibility" class="browser-default custom-select"
                                                 id="purchase_eligibility" required data-validation-required-message="Please select Purchase Eligibility">
-                                            <option value="">Select Purchase Eligibility</option>
-                                            <option value="all" @if($campaign->purchase_eligibility == 'all') selected @endif>MA + Recharge</option>
                                             <option value="recharge" @if($campaign->purchase_eligibility == 'recharge') selected @endif>Recharge Only</option>
-                                            <option value="ma" @if($campaign->purchase_eligibility == 'ma') selected @endif>MA Only</option>
+
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('purchase_eligibility'))
@@ -244,6 +242,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="max_amount">Max Cash Back Amount</label>
+                                        <input required type="number" name="max_amount" class="form-control"
+                                            value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
+                                            placeholder="Please Enter Max Cash Back Amount For Campaign"
+                                            >
+                                    </div>
+                        
+                                    <div class="form-group col-md-4">
+                                        <label for="number_of_apply_times">No of apply times</label>    
+                                        <input required type="number" name="number_of_apply_times" class="form-control"
+                                            value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
+                                            placeholder="Please Enter No of Apply Times For Campaign"
+                                            >
+                                    </div>
                                     <div class="form-group col-md-6">
                                         <label>Campaign Image</label>
                                         <input type="file"
@@ -258,7 +271,6 @@
                                             </p>
                                         @endif
                                     </div>
-    
                                     <div class="form-group col-md-6">
                                         <label>Thumbnail Image</label>
                                         <input type="file"
