@@ -243,6 +243,7 @@ class HealthHubService
     public function deeplinkAnalyticData($request)
     {
         $feedCatData = $this->feedCategoryRepository->getFeedCatWithDeeplinkInfo($request, 'health-hub');
+//        dd($feedCatData);
         $data = [
             "id" => $feedCatData->dynamicLinks->id ?? 0,
             'title_en' => "Health Hub",

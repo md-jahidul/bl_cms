@@ -161,10 +161,16 @@ class HealthHubController extends Controller
     public function analyticData(Request $request)
     {
         $itemsAnalyticData = $this->healthHubService->analyticReports($request);
-        if ($request->excel_export) {
+        if ($request->excel_export == "item_export_details" || $request->excel_export == "items_export") {
             return $this->healthHubService->exportReport($request);
         }
-        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData'));
+
+        if (isset($request->excel_export)) {
+            return $this->healthHubService->deeplinkAnalyticData($request);
+        }
+        $deeplinkAnalyticData = $this->healthHubService->deeplinkAnalyticData($request);
+
+        return view('admin.mybl-health-hub.analytic.item-list', compact('itemsAnalyticData', 'deeplinkAnalyticData'));
     }
 
     /**
