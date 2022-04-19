@@ -20,11 +20,6 @@
                         <div class="col-md-7">
                             <h4 class="menu-title mb-2"><strong>Health Hub Item List</strong></h4>
                         </div>
-                        <div class="col-md-5">
-                            <a href="{{ route('health-hub-deeplink.analytic') }}" class="btn-sm btn-dark  round btn-glow px-2"><i class="la la-bar-chart-o"></i> Health Hub Source Analytic
-                            </a>
-
-                        </div>
                     </div>
 
 
