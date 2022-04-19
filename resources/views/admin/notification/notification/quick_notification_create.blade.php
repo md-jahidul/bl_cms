@@ -238,7 +238,7 @@
             date.setDate(date.getDate());
             $('.datetime').daterangepicker({
                 timePicker: true,
-                timePickerIncrement: 30,
+                timePickerIncrement: 1,
                 minDate: date,
                 locale: {
                     format: 'YYYY/MM/DD h:mm A'

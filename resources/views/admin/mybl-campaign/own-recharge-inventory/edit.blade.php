@@ -71,10 +71,8 @@
                                         <label  class="required">Purchase Eligibility : </label>
                                         <select name="purchase_eligibility" class="browser-default custom-select"
                                                 id="purchase_eligibility" required data-validation-required-message="Please select Purchase Eligibility">
-                                            <option value="">Select Purchase Eligibility</option>
-                                            <option value="all" @if($campaign->purchase_eligibility == 'all') selected @endif>MA + Recharge</option>
                                             <option value="recharge" @if($campaign->purchase_eligibility == 'recharge') selected @endif>Recharge Only</option>
-                                            <option value="ma" @if($campaign->purchase_eligibility == 'ma') selected @endif>MA Only</option>
+
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('purchase_eligibility'))
@@ -244,6 +242,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="max_amount">Max Cash Back Amount</label>
+                                        <input required type="number" name="max_amount" class="form-control"
+                                            value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
+                                            placeholder="Please Enter Max Cash Back Amount For Campaign"
+                                            >
+                                    </div>
+                        
+                                    <div class="form-group col-md-4">
+                                        <label for="number_of_apply_times">No of apply times</label>    
+                                        <input required type="number" name="number_of_apply_times" class="form-control"
+                                            value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
+                                            placeholder="Please Enter No of Apply Times For Campaign"
+                                            >
+                                    </div>
                                     <div class="form-group col-md-6">
                                         <label>Campaign Image</label>
                                         <input type="file"
@@ -258,13 +271,12 @@
                                             </p>
                                         @endif
                                     </div>
-    
                                     <div class="form-group col-md-6">
                                         <label>Thumbnail Image</label>
                                         <input type="file"
                                             id="thumbnail_image"
                                             name="thumbnail_image"
-                                            class="dropify"
+                                            class="dropify1"
                                             data-default-file="{{ url($campaign->thumbnail_image) }}"
                                        />
                                         @if($errors->has('thumbnail_image'))
@@ -358,7 +370,7 @@
     <link rel="stylesheet" href="{{ asset('app-assets/css/weekday-picker.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
@@ -370,6 +382,8 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script>
         $(document).ready(function () {
             $(".product-list").select2()
@@ -425,6 +439,26 @@
                 });
             }
             initiateDropify('.dropify');
+            function dateTime(element){
+                var date = new Date();
+                date.setDate(date.getDate());
+                element.datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            }
+
+            function initiateDropify1(selector) {
+                $(selector).dropify({
+                    messages: {
+                        'default': 'Browse for an Thumbnail Image to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct Thumbnail Image file'
+                    }
+                });
+            }
+            initiateDropify1('.dropify1');
             function dateTime(element){
                 var date = new Date();
                 date.setDate(date.getDate());
