@@ -5,7 +5,9 @@
     <li class="breadcrumb-item">Health Hub List</li>
 @endsection
 @section('action')
-
+    <a href="{{ route('health-hub.analytics') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-bar-chart-o"></i>
+        Health Hub Analytic
+    </a>
     <a href="{{ route('health-hub.create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>Add New Item
     </a>
 @endsection
@@ -21,9 +23,7 @@
                         <div class="col-md-5">
                             <a href="{{ route('health-hub-deeplink.analytic') }}" class="btn-sm btn-dark  round btn-glow px-2"><i class="la la-bar-chart-o"></i> Health Hub Source Analytic
                             </a>
-                            <a href="{{ route('health-hub.analytics') }}" class="btn-sm btn-primary  round btn-glow px-2"><i class="la la-bar-chart-o"></i>
-                                Health Hub Analytic
-                            </a>
+
                         </div>
                     </div>
 
