@@ -343,7 +343,95 @@
                                             @endif
                                         </div>
                                     </div>
-
+                                     {{-- WINNING LOGIC & CAPPING --}}
+                                    <div class="row">
+                                        <input type="hidden" name="winning_capping_id" value={{ $winningCampaignLogics->id }}>
+                                        <div class="form-group col-md-12 mb-0 pl-0"><h5><strong>WINNING LOGIC & CAPPING</strong></h5></div>
+                                        <div class="form-actions col-md-12 mt-0"></div>
+                                        <div class="form-group col-md-4">
+                                            <label for="winning_type">Winning Type: </label>
+                                            <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
+                                                <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15"
+                                                {{ (isset($winningCampaignLogics->winning_type) && $winningCampaignLogics->winning_type == "first_recharge") ? 'checked' : '' }}>
+                                                <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label>
+                                                <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16"
+                                                {{ (isset($winningCampaignLogics->winning_type) && $winningCampaignLogics->winning_type == "highest_recharge") ? 'checked' : '' }}>
+                                                <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
+                                                @if ($errors->has('winning_type'))
+                                                    <div class="help-block">  {{ $errors->first('winning_type') }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="winner_count">Highest Recharge/Purchase Winner Check</label>
+                                            <input required type="number" name="winner_count" class="form-control"
+                                                value="{{ isset($winningCampaignLogics) ? $winningCampaignLogics->winner_count : old('winner_count') }}"
+                                                placeholder="Please Enter Highest Recharge/Purchase Winner Check"
+                                                >
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="winning_time_period_type">Winning Time Period Type: </label>
+                                            <div class="form-group {{ $errors->has('winning_time_period_type') ? ' error' : '' }}">
+                                                <input type="radio" name="winning_time_period_type" value="min" id="input-radio-15"
+                                                {{ (isset($winningCampaignLogics->winning_time_period_type) && $winningCampaignLogics->winning_time_period_type == "min") ? 'checked' : '' }}>
+                                                <label for="input-radio-15" class="mr-3">MIN</label>
+                                                <input type="radio" name="winning_time_period_type" value="hour" id="input-radio-16"
+                                                {{ (isset($winningCampaignLogics->winning_time_period_type) && $winningCampaignLogics->winning_time_period_type == "hour") ? 'checked' : '' }}>
+                                                <label for="input-radio-16" class="mr-3">HOUR</label>
+                                                <input type="radio" name="winning_time_period_type" value="day" id="input-radio-16"
+                                                {{ (isset($winningCampaignLogics->winning_time_period_type) && $winningCampaignLogics->winning_time_period_type == "day") ? 'checked' : '' }}>
+                                                <label for="input-radio-16" class="mr-3">Day</label>
+                                                @if ($errors->has('winning_time_period_type'))
+                                                    <div class="help-block">  {{ $errors->first('winning_time_period_type') }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="reward_getting_type">Reward Getting Type: </label>
+                                            <div class="form-group {{ $errors->has('reward_getting_type') ? ' error' : '' }}">
+                                                <input type="radio" name="reward_getting_type" value="single_time" id="input-radio-15"
+                                                {{ (isset($winningCampaignLogics->reward_getting_type) && $winningCampaignLogics->reward_getting_type == "single_time") ? 'checked' : '' }}>
+                                                <label for="input-radio-15" class="mr-3">Single Time</label>
+                                                <input type="radio" name="reward_getting_type" value="multiple_time" id="input-radio-16"
+                                                {{ (isset($winningCampaignLogics->reward_getting_type) && $winningCampaignLogics->reward_getting_type == "multiple_time") ? 'checked' : '' }}>
+                                                <label for="input-radio-16" class="mr-3">Multiple Time</label>
+                                                @if ($errors->has('reward_getting_type'))
+                                                    <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="max_no_of_winnig_times">Enter Maximum No. of Winning</label>    
+                                            <input required type="number" name="max_no_of_winnig_times" class="form-control"
+                                                value="{{ isset($winningCampaignLogics) ? $winningCampaignLogics->max_no_of_winnig_times : old('max_no_of_winnig_times') }}"
+                                                placeholder="Please Enter Maximum No. of Winning"
+                                                >
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="max_cash_back_winning_amount">Max Cash Back Amount</label>
+                                            <input required type="number" name="max_cash_back_winning_amount" class="form-control"
+                                                value="{{ isset($winningCampaignLogics) ? $winningCampaignLogics->max_cash_back_winning_amount : old('max_cash_back_winning_amount') }}"
+                                                placeholder="Please Enter Max Cash Back Amount"
+                                                >
+                                        </div>
+                                        <div class="form-group col-md-6 mb-2">
+                                            <label for="communication_message_en" >Write Communication Message (EN):</label>
+                                            <textarea
+                                            required
+                                            data-validation-required-message="Description (EN) is required"
+                                            class="form-control @error('communication_message_en') is-invalid @enderror" placeholder="Enter body description....." id="communication_message_en" name="communication_message_en" rows="10">{{ $winningCampaignLogics->communication_message_en }}</textarea>
+                                            <div class="help-block"></div>
+                                            <small class="text-danger"> @error('communication_message_en') {{ $message }} @enderror </small>
+                                        </div>
+                                        <div class="form-group col-md-6 mb-2">
+                                            <label for="communication_message_bn" >Write Communication Message (BN):</label>
+                                            <textarea
+                                            data-validation-required-message="Description (BN) is required"
+                                            class="form-control @error('communication_message_bn') is-invalid @enderror" placeholder="Enter body description....." id="communication_message_bn" name="communication_message_bn" rows="10">{{ $winningCampaignLogics->communication_message_bn }}</textarea>
+                                            <div class="help-block"></div>
+                                            <small class="text-danger"> @error('communication_message_bn') {{ $message }} @enderror </small>
+                                        </div>
+                                    </div>
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
                                             <button id="save" class="btn btn-primary"><i

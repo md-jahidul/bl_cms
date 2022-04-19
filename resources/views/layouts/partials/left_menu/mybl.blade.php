@@ -319,6 +319,18 @@
                 <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-bullhorn"></i> Mybl Campaign
+            {{-- <li class="{{is_active_url('own-recharge-inventory')}}">
+                <a class="menu-item" href="{{ route('own-recharge-inventory.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-dollar"></i> Own Recharge Inventory
+                </a>
+            </li> --}}
+        </ul>
+    </li>
+        <!-- Campaign Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Own Recharge Mangement</span></a>
+        <ul class="menu-content">
             <li class="{{is_active_url('own-recharge-inventory')}}">
                 <a class="menu-item" href="{{ route('own-recharge-inventory.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
@@ -327,7 +339,6 @@
             </li>
         </ul>
     </li>
-
     <!-- Loyalty Partner Menu -->
     @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
