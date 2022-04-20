@@ -311,25 +311,7 @@
                                 </div>
 
                                 <!-- Product Selection End -->
-                                <div class="row">
-                                    <div class="form-actions col-md-12 mt-0 text-danger"></div>
 
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="status_input">Campaign Status: </label>
-                                        <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                            <input type="radio" name="status" value="1" id="input-radio-15"
-                                                {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
-                                            <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16"
-                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}
-                                                {{ isset($campaign->status) ? '' : 'checked' }}>
-                                            <label for="input-radio-16" class="mr-3">Inactive</label>
-                                            @if ($errors->has('status'))
-                                                <div class="help-block">  {{ $errors->first('status') }}</div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
                                 {{-- WINNING LOGIC & CAPPING --}}
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-0 pl-0"><h5><strong>WINNING LOGIC & CAPPING</strong></h5></div>
@@ -338,7 +320,7 @@
                                         <label for="winning_type">Winning Type: </label>
                                         <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
                                             <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15">
-                                            <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label>
+                                            <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label> <br>
                                             <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16">
                                             <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
                                             @if ($errors->has('winning_type'))
@@ -406,6 +388,25 @@
                                         class="form-control @error('communication_message_bn') is-invalid @enderror" placeholder="Enter body description....." id="communication_message_bn" name="communication_message_bn" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('communication_message_bn') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-actions col-md-12 mt-0 text-danger"></div>
+
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="status_input">Campaign Status: </label>
+                                        <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                            <input type="radio" name="status" value="1" id="input-radio-15"
+                                                {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
+                                            <label for="input-radio-15" class="mr-3">Active</label>
+                                            <input type="radio" name="status" value="0" id="input-radio-16"
+                                                {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}
+                                                {{ isset($campaign->status) ? '' : 'checked' }}>
+                                            <label for="input-radio-16" class="mr-3">Inactive</label>
+                                            @if ($errors->has('status'))
+                                                <div class="help-block">  {{ $errors->first('status') }}</div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-actions col-md-12">
