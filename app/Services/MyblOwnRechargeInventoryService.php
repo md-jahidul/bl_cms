@@ -86,6 +86,7 @@ class MyblOwnRechargeInventoryService
 
             return new Response("Own Recharge Inventory campaign has been successfully created");
         }catch (\Exception $e){
+            dd($e->getMessage());
             return new Response("Own Recharge Inventory campaign Create Failed");
         }
 
