@@ -27,13 +27,14 @@ class MyBlInternetOffersCategoryService
         $this->internetOffersCategoryRepository = $internetOffersCategoryRepository;
         $this->setActionRepository($internetOffersCategoryRepository);
     }
+
     /**
      * Undocumented function
      *
      * @param [type] $data
-     * @return void
+     * @return Response
      */
-   public function storeInternetOffersCategory($data)
+    public function storeInternetOffersCategory($data): Response
     {
         $this->internetOffersCategoryRepository->save($data);
         return new Response("Internet Offer has been successfully created");

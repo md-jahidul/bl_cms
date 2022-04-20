@@ -239,4 +239,14 @@ class Helper
           'others' => 'Others'
         ];
     }
+
+
+    public static function productType()
+    {
+        return [
+            'internet_pack' => 'DATA',
+            'voice' => 'VOICE BUNDLES',
+            'bundle' => 'MIX BUNDLES'
+        ];
+    }
 }

@@ -42,7 +42,18 @@
                                             </span>
                                         @enderror
                                     </div>
+                                </div>
 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="category">Product Type</label>
+                                        <select name="product_type" id="category" class="form-control" required>
+                                            <option value=""> Select Product Type</option>
+                                            @foreach($product_types as $key => $val)
+                                                <option value="{{ $key }}"> {{ $val }} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -61,25 +72,21 @@
                                     </div>
 
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="required" for="sort">Sort:</label>
                                         <input
-                                        required
-                                        type="number" min="1" max="5120" value="@if(old('sort')){{old('sort')}}@endif" id="sort" class="form-control @error('sort') is-invalid @enderror" placeholder="Enter sort...." name="sort">
+                                            required
+                                            type="number" min="1" max="5120" value="@if(old('sort')){{old('sort')}}@endif" id="sort" class="form-control @error('sort') is-invalid @enderror" placeholder="Enter sort...." name="sort">
 
                                         @error('sort')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
-                            </div>
-
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
