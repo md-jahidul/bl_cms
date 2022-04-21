@@ -101,6 +101,7 @@ class MyblFlashHourService
 
     public function duplicateFlashHours($data, $reference_type)
     {
+        $data['title'] = $data['title'] . ' Copy';
         unset($data['created_at']);
         unset($data['updated_at']);
         unset($data['id']);
