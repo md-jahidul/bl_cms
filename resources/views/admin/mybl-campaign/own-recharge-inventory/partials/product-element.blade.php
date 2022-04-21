@@ -31,17 +31,17 @@
                     placeholder="Enter The Fixed/Percentage of Cashback"
                     >
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 cash_back_amount_for_product">
                 <label for="max_amount">Max Cash Back Amount</label>
-                <input required type="number" name="max_amount" class="form-control"
+                <input type="number" name="max_amount" class="form-control"
                     value="{{ isset($product) ? $product->max_amount : old('max_amount') }}"
                     placeholder="Please Enter Max Amount"
                     >
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 number_of_apply_times_for_product">
                 <label for="number_of_apply_times">No of apply times</label>    
-                <input required type="number" name="number_of_apply_times" class="form-control"
+                <input type="number" name="number_of_apply_times" class="form-control"
                     value="{{ isset($product) ? $product->number_of_apply_times : old('number_of_apply_times') }}"
                     placeholder="Please Enter Max Amount"
                     >
