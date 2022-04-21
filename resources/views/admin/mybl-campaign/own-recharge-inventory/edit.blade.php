@@ -27,9 +27,9 @@
                             @method('put')
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
-                                        <label for="title" class="required">Choose User Type</label><hr class="mt-0">
-                                        <div class="row">
+                                    {{-- <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}"> --}}
+                                        {{-- <label for="title" class="required">Choose User Type</label><hr class="mt-0"> --}}
+                                        {{-- <div class="row">
                                             <div class="col-md-2 col-sm-12">
                                                 <input type="radio" name="campaign_user_type" value="all" class="campaign_user_type" id="all"
                                                     {{ (isset($campaign) && $campaign->campaign_user_type == "all") ? 'checked' : '' }}>
@@ -55,8 +55,20 @@
                                         @if ($errors->has('type'))
                                             <div class="help-block">  {{ $errors->first('type') }}</div>
                                         @endif
-                                    </div>
-                                    <div class="form-group col-md-4">
+                                    </div> --}}
+                                    {{-- <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                        <label for="redirect_url" class="required">Base Msisdn</label>
+                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
+                                                class="browser-default custom-select">
+                                            <option value="">Select Action</option>
+                                            @foreach ($baseMsisdnGroups as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div> --}}
+                                    <div class="form-group col-md-6">
                                         <label for="title" class="required">Campaign Name</label>
                                         <input required maxlength="250"
                                                data-validation-required-message="Title is required"
@@ -67,7 +79,7 @@
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="form-group col-md-4" >
+                                    <div class="form-group col-md-6" >
                                         <label  class="required">Purchase Eligibility : </label>
                                         <select name="purchase_eligibility" class="browser-default custom-select"
                                                 id="purchase_eligibility" required data-validation-required-message="Please select Purchase Eligibility">
@@ -95,23 +107,12 @@
                                             <div class="help-block">  {{ $errors->first('partner_channel_names') }}</div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
-                                        <label for="redirect_url" class="required">Base Msisdn</label>
-                                        <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
-                                                class="browser-default custom-select">
-                                            <option value="">Select Action</option>
-                                            @foreach ($baseMsisdnGroups as $key => $value)
-                                                <option value="{{ $value->id }}"
-                                                    {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
                                     <!-- Recurring schedule -->
                                     <div class="col-md-8">
                                         <label class="form-label">Recurring Schedule<span class="red">*</span></label>
                                         @php
                                             $recurringType = isset($campaign) ? $campaign->recurring_type : 'none';
+                                            $denoType      = isset($campaign) ? $campaign->deno_type : 'none';
                                         @endphp
                                         <div class="">
                                             <ul class="list list-inline">
@@ -242,21 +243,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="max_amount">Max Cash Back Amount</label>
-                                        <input required type="number" name="max_amount" class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
-                                            placeholder="Please Enter Max Cash Back Amount For Campaign"
-                                            >
-                                    </div>
-                        
-                                    <div class="form-group col-md-4">
-                                        <label for="number_of_apply_times">No of apply times</label>    
-                                        <input required type="number" name="number_of_apply_times" class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
-                                            placeholder="Please Enter No of Apply Times For Campaign"
-                                            >
-                                    </div>
                                     <div class="form-group col-md-6">
                                         <label>Campaign Image</label>
                                         <input type="file"
@@ -318,6 +304,23 @@
 
                                 <!-- Product Selection Start -->
                                 <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
+                                        <div class="form-group col-md-8">
+                                            <div class="form-group {{ $errors->has('deno_type') ? ' error' : '' }}">
+                                                <input type="radio" name="deno_type" value="selective" id="input-radio-15"
+                                                {{ $campaign->deno_type == "selective" ? 'checked' : '' }}>
+                                                <label for="input-radio-15" class="mr-3">Selective Deno</label>
+                                                <input type="radio" name="deno_type" value="all" id="input-radio-16"
+                                                {{ $campaign->deno_type == "all" ? 'checked' : '' }}>
+                                                <label for="input-radio-16" class="mr-3">All Deno</label>
+                                                <input type="radio" name="" value="" id="disable-radio-button" >
+                                                <label for="input-radio-16" class="mr-3">Product Category</label>
+                                                <input type="radio" name="" value="" id="disable-radio-button1" >
+                                                <label for="input-radio-16" class="mr-3">Selective Category</label>
+                                                @if ($errors->has('deno_type'))
+                                                    <div class="help-block">  {{ $errors->first('deno_type') }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
                                         @foreach($campaign->cashBackProducts as $product)
                                             @include('admin.mybl-campaign.own-recharge-inventory.partials.product-element', ['product' => $product])
                                         @endforeach
@@ -329,44 +332,6 @@
                                         <input type="hidden" name="winning_capping_id" value={{ $winningCampaignLogics->id }}>
                                         <div class="form-group col-md-12 mb-0 pl-0"><h5><strong>WINNING LOGIC & CAPPING</strong></h5></div>
                                         <div class="form-actions col-md-12 mt-0"></div>
-                                        <div class="form-group col-md-4">
-                                            <label for="winning_type">Winning Type: </label>
-                                            <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
-                                                <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15"
-                                                {{ (isset($winningCampaignLogics->winning_type) && $winningCampaignLogics->winning_type == "first_recharge") ? 'checked' : '' }}>
-                                                <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label> <br>
-                                                <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16"
-                                                {{ (isset($winningCampaignLogics->winning_type) && $winningCampaignLogics->winning_type == "highest_recharge") ? 'checked' : '' }}>
-                                                <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
-                                                @if ($errors->has('winning_type'))
-                                                    <div class="help-block">  {{ $errors->first('winning_type') }}</div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="winner_count">Highest Recharge/Purchase Winner Check</label>
-                                            <input required type="number" name="winner_count" class="form-control"
-                                                value="{{ isset($winningCampaignLogics) ? $winningCampaignLogics->winner_count : old('winner_count') }}"
-                                                placeholder="Please Enter Highest Recharge/Purchase Winner Check"
-                                                >
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="winning_time_period_type">Winning Time Period Type: </label>
-                                            <div class="form-group {{ $errors->has('winning_time_period_type') ? ' error' : '' }}">
-                                                <input type="radio" name="winning_time_period_type" value="min" id="input-radio-15"
-                                                {{ (isset($winningCampaignLogics->winning_time_period_type) && $winningCampaignLogics->winning_time_period_type == "min") ? 'checked' : '' }}>
-                                                <label for="input-radio-15" class="mr-3">MIN</label>
-                                                <input type="radio" name="winning_time_period_type" value="hour" id="input-radio-16"
-                                                {{ (isset($winningCampaignLogics->winning_time_period_type) && $winningCampaignLogics->winning_time_period_type == "hour") ? 'checked' : '' }}>
-                                                <label for="input-radio-16" class="mr-3">HOUR</label>
-                                                <input type="radio" name="winning_time_period_type" value="day" id="input-radio-16"
-                                                {{ (isset($winningCampaignLogics->winning_time_period_type) && $winningCampaignLogics->winning_time_period_type == "day") ? 'checked' : '' }}>
-                                                <label for="input-radio-16" class="mr-3">Day</label>
-                                                @if ($errors->has('winning_time_period_type'))
-                                                    <div class="help-block">  {{ $errors->first('winning_time_period_type') }}</div>
-                                                @endif
-                                            </div>
-                                        </div>
                                         <div class="form-group col-md-4">
                                             <label for="reward_getting_type">Reward Getting Type: </label>
                                             <div class="form-group {{ $errors->has('reward_getting_type') ? ' error' : '' }}">
@@ -382,40 +347,68 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="max_no_of_winnig_times">Enter Maximum No. of Winning</label>    
-                                            <input required type="number" name="max_no_of_winnig_times" class="form-control"
-                                                value="{{ isset($winningCampaignLogics) ? $winningCampaignLogics->max_no_of_winnig_times : old('max_no_of_winnig_times') }}"
-                                                placeholder="Please Enter Maximum No. of Winning"
+                                            <label for="max_amount">Max Cash Back Amount</label>
+                                            <input required type="number" name="max_amount" class="form-control"
+                                                value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
+                                                placeholder="Please Enter Max Cash Back Amount For Campaign"
                                                 >
                                         </div>
+                            
                                         <div class="form-group col-md-4">
-                                            <label for="max_cash_back_winning_amount">Max Cash Back Amount</label>
-                                            <input required type="number" name="max_cash_back_winning_amount" class="form-control"
-                                                value="{{ isset($winningCampaignLogics) ? $winningCampaignLogics->max_cash_back_winning_amount : old('max_cash_back_winning_amount') }}"
-                                                placeholder="Please Enter Max Cash Back Amount"
+                                            <label for="number_of_apply_times">No of apply times</label>    
+                                            <input required type="number" name="number_of_apply_times" class="form-control"
+                                                value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
+                                                placeholder="Please Enter No of Apply Times For Campaign"
                                                 >
                                         </div>
-                                        <div class="form-group col-md-6 mb-2">
-                                            <label for="communication_message_en" >Write Communication Message (EN):</label>
-                                            <textarea
-                                            required
-                                            data-validation-required-message="Description (EN) is required"
-                                            class="form-control @error('communication_message_en') is-invalid @enderror" placeholder="Enter body description....." id="communication_message_en" name="communication_message_en" rows="10">{{ $winningCampaignLogics->communication_message_en }}</textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12 mb-0 pl-0"><h5><strong>Select User Group</strong></h5></div>
+                                        <div class="form-actions col-md-12 mt-0"></div>
+                                        <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
+                                            <label for="title" class="required">Choose User Type</label><hr class="mt-0">
+                                            <div class="row">
+                                                <div class="col-md-2 col-sm-12">
+                                                    <input  type="radio" name="campaign_user_type" value="all" class="campaign_user_type" id="all"
+                                                        {{ (isset($campaign) && $campaign->campaign_user_type == "all") ? 'checked' : '' }}>
+                                                    <label for="all">All</label>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    <input type="radio" name="campaign_user_type" value="prepaid" class="campaign_user_type" id="prepaid"
+                                                        {{ (isset($campaign) && $campaign->campaign_user_type == "prepaid") ? 'checked' : '' }}>
+                                                    <label for="prepaid">Prepaid</label>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    <input type="radio" name="campaign_user_type" value="postpaid" class="campaign_user_type" id="postpaid"
+                                                        {{ isset($campaign) && $campaign->campaign_user_type == "postpaid" ? 'checked' : '' }}>
+                                                    <label for="postpaid">Postpaid</label>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12">
+                                                    <input type="radio" name="campaign_user_type" value="segment_wise" class="campaign_user_type" id="segment_wise"
+                                                        {{ isset($campaign) && $campaign->campaign_user_type == "segment_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
+                                                    <label for="segment_wise">Segment Wise (Base Msisdn)</label>
+                                                </div>
+                                            </div>
                                             <div class="help-block"></div>
-                                            <small class="text-danger"> @error('communication_message_en') {{ $message }} @enderror </small>
+                                            @if ($errors->has('type'))
+                                                <div class="help-block">  {{ $errors->first('type') }}</div>
+                                            @endif
                                         </div>
-                                        <div class="form-group col-md-6 mb-2">
-                                            <label for="communication_message_bn" >Write Communication Message (BN):</label>
-                                            <textarea
-                                            data-validation-required-message="Description (BN) is required"
-                                            class="form-control @error('communication_message_bn') is-invalid @enderror" placeholder="Enter body description....." id="communication_message_bn" name="communication_message_bn" rows="10">{{ $winningCampaignLogics->communication_message_bn }}</textarea>
+                                        <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                            <label for="redirect_url" class="required">Base Msisdn</label>
+                                            <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
+                                                    class="browser-default custom-select">
+                                                <option value="">Select Action</option>
+                                                @foreach ($baseMsisdnGroups as $key => $value)
+                                                    <option value="{{ $value->id }}"
+                                                        {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                @endforeach
+                                            </select>
                                             <div class="help-block"></div>
-                                            <small class="text-danger"> @error('communication_message_bn') {{ $message }} @enderror </small>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-actions col-md-12 mt-0 text-danger"></div>
-    
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="status_input">Campaign Status: </label>
                                             <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
@@ -431,6 +424,8 @@
                                                 @endif
                                             </div>
                                         </div>
+                                    </div>
+                                    
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
                                             <button id="save" class="btn btn-primary"><i
@@ -473,6 +468,8 @@
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script>
         $(document).ready(function () {
+            document.getElementById("disable-radio-button").disabled = true;
+            document.getElementById("disable-radio-button1").disabled = true;
             $(".product-list").select2()
             $('.report-repeater').repeater();
 
@@ -633,6 +630,17 @@
                     var start = dateRange[0] + ' 12:00 AM';
                     var end = dateRange[1] + ' 11:59 PM';
                     $('#display_period').val(start + ' - ' + end);
+                }
+            });
+            $('input[name=deno_type]').change(function () {
+                denoType      = $('input[name=deno_type]:checked').val();
+                if(denoType == 'all') {
+                    $('.cash_back_amount_for_product').hide();
+                    $('.number_of_apply_times_for_product').hide();
+                }
+                else {
+                    $('.cash_back_amount_for_product').show();
+                    $('.number_of_apply_times_for_product').show();
                 }
             });
         });

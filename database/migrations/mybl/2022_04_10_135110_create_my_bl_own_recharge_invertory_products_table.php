@@ -19,8 +19,8 @@ class CreateMyBlOwnRechargeInvertoryProductsTable extends Migration
             $table->integer('recharge_amount');
             $table->string('cash_back_type');
             $table->integer('cash_back_amount');
-            $table->integer('number_of_apply_times');
-            $table->integer('max_amount');
+            $table->integer('number_of_apply_times')->nullable();
+            $table->integer('max_amount')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
             $table->foreign('own_recharge_id')

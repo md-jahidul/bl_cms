@@ -58,20 +58,17 @@ class MyblOwnRechargeInventoryService
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
+                    if($data['deno_type'] == 'all'){
+                        $product['max_amount']            = null;
+                        $product['number_of_apply_times'] = null;
+                    }
                     $product['own_recharge_id'] = $campaign->id;
                     $this->ownRechargeInventoryProductRepository->save($product);
                 }
             }
             // WINNING LOGIC & CAPPING Storing
             $winningLogicAndCampaign['own_recharge_id']                 = $campaign->id;
-            $winningLogicAndCampaign['winning_type']                    = $data['winning_type'];
-            $winningLogicAndCampaign['winner_count']                    = $data['winner_count'];
-            $winningLogicAndCampaign['winning_time_period_type']        = $data['winning_time_period_type'];
             $winningLogicAndCampaign['reward_getting_type']             = $data['reward_getting_type'];
-            $winningLogicAndCampaign['max_no_of_winnig_times']          = $data['max_no_of_winnig_times'];
-            $winningLogicAndCampaign['max_cash_back_winning_amount']    = $data['max_cash_back_winning_amount'] ;
-            $winningLogicAndCampaign['communication_message_en']        = $data['communication_message_en'] ;
-            $winningLogicAndCampaign['communication_message_bn']        = $data['communication_message_bn'];
             
             $this->ownRechargeWinningCappingService->create($winningLogicAndCampaign);
             // Storing recurring schedule
@@ -86,6 +83,7 @@ class MyblOwnRechargeInventoryService
 
             return new Response("Own Recharge Inventory campaign has been successfully created");
         }catch (\Exception $e){
+            dd($e->getMessage());
             return new Response("Own Recharge Inventory campaign Create Failed");
         }
 
@@ -114,6 +112,10 @@ class MyblOwnRechargeInventoryService
             $this->ownRechargeInventoryProductRepository->deleteCampaignWiseProduct($id);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
+                    if($data['deno_type'] == 'all'){
+                        $product['max_amount']            = null;
+                        $product['number_of_apply_times'] = null;
+                    }
                     $product['own_recharge_id'] = $id;
                     $this->ownRechargeInventoryProductRepository->save($product);
                 }
@@ -123,14 +125,7 @@ class MyblOwnRechargeInventoryService
             
             // WINNING LOGIC & CAPPING Storing
             $winningLogicAndCampaign['own_recharge_id']                 = $campaign->id;
-            $winningLogicAndCampaign['winning_type']                    = $data['winning_type'];
-            $winningLogicAndCampaign['winner_count']                    = $data['winner_count'];
-            $winningLogicAndCampaign['winning_time_period_type']        = $data['winning_time_period_type'];
             $winningLogicAndCampaign['reward_getting_type']             = $data['reward_getting_type'];
-            $winningLogicAndCampaign['max_no_of_winnig_times']          = $data['max_no_of_winnig_times'];
-            $winningLogicAndCampaign['max_cash_back_winning_amount']    = $data['max_cash_back_winning_amount'] ;
-            $winningLogicAndCampaign['communication_message_en']        = $data['communication_message_en'] ;
-            $winningLogicAndCampaign['communication_message_bn']        = $data['communication_message_bn'];
             $winning_capping_id                                         = $data['winning_capping_id'];
 
             $this->ownRechargeWinningCappingService->update($winning_capping_id,$winningLogicAndCampaign);
@@ -147,6 +142,7 @@ class MyblOwnRechargeInventoryService
             return Response('Own Recharge Inventory campaign has been successfully updated');
 
         }catch (\Exception $e) {
+            dd($e->getMessage());
             return Response('Own Recharge Inventory campaign Update Failed');
         }
     }

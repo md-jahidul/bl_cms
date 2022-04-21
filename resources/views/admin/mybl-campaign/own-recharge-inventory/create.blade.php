@@ -51,8 +51,7 @@
                                     <div class="form-group col-md-6">
                                             <label for="partner_channel_names" class="required">Select Partner Channel Name</label>
                                             <div class="role-select">
-                                                <select class="select2 form-control" multiple="multiple" name="partner_channel_names[]"
-                                                        required data-validation-required-message="Please Select Partner Channel Name">
+                                                <select class="select2 form-control" multiple="multiple" name="partner_channel_names[]">
                                                     @foreach(config('constants.partnerChannelName') as $name)
                                                         <option value="{{ $name }}">{{$name}} </option>
                                                     @endforeach
@@ -589,6 +588,7 @@
                 else {
                     $('.cash_back_amount_for_product').show();
                     $('.number_of_apply_times_for_product').show();
+                    $('.cash_back_amount_for_product').prop('required',true);
                 }
             });
 
