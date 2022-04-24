@@ -21,17 +21,20 @@ class MyblOwnRechargeInventoryService
     private $ownRechargeInventoryProductRepository;
     private $recurringScheduleHourService;
     private $recurringScheduleRepository;
+    private $ownRechargeWinningCappingService;
 
     public function __construct(
         MyblOwnRechargeInventoryRepository $ownRechargeInventoryRepository,
         MyblOwnRechargeInventoryProductRepository $ownRechargeInventoryProductRepository,
         RecurringScheduleHourService $recurringScheduleHourService,
-        RecurringScheduleRepository $recurringScheduleRepository
+        RecurringScheduleRepository $recurringScheduleRepository,
+        OwnRechargeWinningCappintService $ownRechargeWinningCappingService
     ) {
         $this->ownRechargeInventoryRepository = $ownRechargeInventoryRepository;
         $this->ownRechargeInventoryProductRepository = $ownRechargeInventoryProductRepository;
         $this->recurringScheduleHourService = $recurringScheduleHourService;
         $this->recurringScheduleRepository = $recurringScheduleRepository;
+        $this->ownRechargeWinningCappingService = $ownRechargeWinningCappingService;
         $this->setActionRepository($ownRechargeInventoryRepository);
     }
 
@@ -55,10 +58,19 @@ class MyblOwnRechargeInventoryService
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
+                    if($data['deno_type'] == 'all'){
+                        $product['max_amount']            = null;
+                        $product['number_of_apply_times'] = null;
+                    }
                     $product['own_recharge_id'] = $campaign->id;
                     $this->ownRechargeInventoryProductRepository->save($product);
                 }
             }
+            // WINNING LOGIC & CAPPING Storing
+            $winningLogicAndCampaign['own_recharge_id']                 = $campaign->id;
+            $winningLogicAndCampaign['reward_getting_type']             = $data['reward_getting_type'];
+            
+            $this->ownRechargeWinningCappingService->create($winningLogicAndCampaign);
             // Storing recurring schedule
             if ($data['recurring_type'] != 'none') {
                 $this->saveSchedule(
@@ -71,7 +83,6 @@ class MyblOwnRechargeInventoryService
 
             return new Response("Own Recharge Inventory campaign has been successfully created");
         }catch (\Exception $e){
-
             return new Response("Own Recharge Inventory campaign Create Failed");
         }
 
@@ -100,12 +111,23 @@ class MyblOwnRechargeInventoryService
             $this->ownRechargeInventoryProductRepository->deleteCampaignWiseProduct($id);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
+                    if($data['deno_type'] == 'all'){
+                        $product['max_amount']            = null;
+                        $product['number_of_apply_times'] = null;
+                    }
                     $product['own_recharge_id'] = $id;
                     $this->ownRechargeInventoryProductRepository->save($product);
                 }
             }
             // if($campaign->campaign_user_type != )
             $campaign->update($data);
+            
+            // WINNING LOGIC & CAPPING Storing
+            $winningLogicAndCampaign['own_recharge_id']                 = $campaign->id;
+            $winningLogicAndCampaign['reward_getting_type']             = $data['reward_getting_type'];
+            $winning_capping_id                                         = $data['winning_capping_id'];
+
+            $this->ownRechargeWinningCappingService->update($winning_capping_id,$winningLogicAndCampaign);
             // Storing recurring schedule
             if ($data['recurring_type'] != 'none') {
                 $this->saveSchedule(
@@ -119,7 +141,6 @@ class MyblOwnRechargeInventoryService
             return Response('Own Recharge Inventory campaign has been successfully updated');
 
         }catch (\Exception $e) {
-
             return Response('Own Recharge Inventory campaign Update Failed');
         }
     }

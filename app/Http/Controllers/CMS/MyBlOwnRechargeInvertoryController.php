@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Services\MyblOwnRechargeInventoryService;
+use App\Services\OwnRechargeWinningCappintService;
 use App\Services\ProductCoreService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -12,16 +13,18 @@ use Illuminate\Http\Request;
 
 class MyBlOwnRechargeInvertoryController extends Controller
 {
-    protected $ownRechargeInventoryService, $productCoreService, $baseMsisdnService;
+    protected $ownRechargeInventoryService, $productCoreService, $baseMsisdnService, $ownRechargeWinningCappingService;
 
     public function __construct(
         MyblOwnRechargeInventoryService $ownRechargeInventoryService, 
         BaseMsisdnService $baseMsisdnService,
-        ProductCoreService $productCoreService
+        ProductCoreService $productCoreService,
+        OwnRechargeWinningCappintService $ownRechargeWinningCappingService
     ) {
-        $this->ownRechargeInventoryService = $ownRechargeInventoryService;
-        $this->productCoreService          = $productCoreService;
-        $this->baseMsisdnService           = $baseMsisdnService;
+        $this->ownRechargeInventoryService      = $ownRechargeInventoryService;
+        $this->productCoreService               = $productCoreService;
+        $this->baseMsisdnService                = $baseMsisdnService;
+        $this->ownRechargeWinningCappingService = $ownRechargeWinningCappingService;
     }
 
 
@@ -85,8 +88,8 @@ class MyBlOwnRechargeInvertoryController extends Controller
             Carbon::parse($campaign->end_date)->format($format);
         $hourSlots = $this->ownRechargeInventoryService->getHourSlots();
         $page = 'edit';
-        
-        return view('admin.mybl-campaign.own-recharge-inventory.edit', compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange'));
+        $winningCampaignLogics = $this->ownRechargeWinningCappingService->find($campaign->id);
+        return view('admin.mybl-campaign.own-recharge-inventory.edit', compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange', 'winningCampaignLogics'));
     }
 
     /**
