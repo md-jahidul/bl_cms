@@ -21,8 +21,8 @@ class CreateMyBlOwnRechargeInvertoriesTable extends Migration
             $table->json('partner_channel_names')->nullable();
             $table->string('purchase_eligibility');
             $table->string('recurring_type')->default('none');
-            $table->integer('number_of_apply_times');
-            $table->integer('max_amount');
+            $table->integer('number_of_apply_times')->nullable();
+            $table->integer('max_amount')->nullable();
             $table->string('deno_type');
             $table->string('banner');
             $table->string('thumbnail_image');
