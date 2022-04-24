@@ -516,11 +516,11 @@
                                 </div>`
 
             let sectionType = `<div class="form-group col-md-4">
-                                    <label class="required">Select Data Section</label>
+                                    <label class="required">Product Categories</label>
                                     <select multiple
                                             class="form-control data-section"
                                             name="offer_section_slug[]" required>
-                                        <option value="">Please Select Data Section</option>
+                                        <option value="">Please Select Product Category</option>
                                         @foreach ($internet_categories as $key => $category)
                                            <option value="{{ $key }}">  {{$category}}</option>
                                         @endforeach
@@ -542,7 +542,7 @@
             } else if (type === 'mix' || type === 'recharge_offer') {
                 offer_types.append(data + dataUnit + voiceVol + smsVol)
             } else if (type === 'voice') {
-                offer_types.append(voiceVol)
+                offer_types.append(voiceVol + sectionType)
             } else if (type === 'sms') {
                 offer_types.append(smsVol)
             } else if (type === 'scr') {
@@ -552,7 +552,7 @@
             }
 
             $('.data-section').select2({
-                placeholder: 'Please Select Data Section',
+                placeholder: 'Please Select Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });
