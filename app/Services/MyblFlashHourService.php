@@ -87,7 +87,7 @@ class MyblFlashHourService
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
-                    if ($reference_type == "mybl_campaign" && !empty($product['thumbnail_img'])) {
+                    if (!empty($product['thumbnail_img'])) {
                         $product['thumbnail_img'] = 'storage/' . $product['thumbnail_img']->store('mybl_campaign');
                     }
                     $productType = $this->productCoreRepository->getProductType($product['product_code']);
