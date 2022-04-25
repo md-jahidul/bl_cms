@@ -707,6 +707,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
+    Route::get('flash-hour-campaign-duplicate/{id}', 'CMS\MyBlFlashHourController@duplicateFlashHours')->name('flash-hour-campaign.duplicate');
     Route::get('flash-hour-campaign/destroy/{id}', 'CMS\MyBlFlashHourController@destroy');
 
     Route::get('flash-hour-analytic/{campaign_id}', 'CMS\MyBlFlashHourController@analyticReport')

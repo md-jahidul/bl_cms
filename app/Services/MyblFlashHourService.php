@@ -108,6 +108,45 @@ class MyblFlashHourService
         }
     }
 
+    public function duplicateFlashHours($data, $reference_type)
+    {
+        $data['title'] = $data['title'] . ' Copy';
+        unset($data['created_at']);
+        unset($data['updated_at']);
+        unset($data['id']);
+        $data['start_date'] = null;
+        $data['end_date']   = null;
+        $data['status']     = 0;
+
+        try {
+            DB::beginTransaction();
+            $data['reference_type'] = $reference_type;
+            $campaign = $this->save($data);
+            if (isset($data['product-group'])) {
+                foreach ($data['product-group'] as $product) {
+                    if ($reference_type == "mybl_campaign" && !empty($product['thumbnail_img'])) {
+                        $product['thumbnail_img'] = 'storage/' . $product['thumbnail_img']->store('mybl_campaign');
+                    }
+                    $productType                = $this->productCoreRepository->getProductType($product['product_code']);
+                    $product['product_type']    = $productType;
+                    $product['flash_hour_id']   = $campaign->id;
+                    $product['show_in_home']    = isset($product['show_in_home']) ? 1 : 0;
+                    $product['status']          = $product['status'] ?? 0;
+                    $product['start_date']      = null;
+                    $product['end_date']        = null;
+                    unset($product['id']);
+                    $this->flashHourProductRepository->save($product);
+                }
+            }
+            DB::commit();
+            return new Response("Campaign has been successfully Duplicated");
+        } catch (\Exception $exception) {
+            DB::rollback();
+            $error = "Campaign Create Failed!! <br><br>" . $exception->getMessage();
+            return new Response($error);
+        }
+    }
+
     /**
      * Updating the Store
      * @param $data
@@ -198,5 +237,9 @@ class MyblFlashHourService
     public function msisdnPurchaseDetails($request, $id)
     {
         return $this->flashHourRepository->msisdnInfo($request, $id);
+    }
+
+    public function findById($id){
+        return $this->flashHourRepository->findOne($id);
     }
 }
