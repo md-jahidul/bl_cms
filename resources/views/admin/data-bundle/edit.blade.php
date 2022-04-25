@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Internet Offer Category')
-@section('card_name', "Internet Offer Category")
+@section('title', 'Product Category')
+@section('card_name', "Product Category")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Edit Internet Offer Category
+        Edit Product Category
     </li>
 @endsection
 
@@ -24,7 +24,7 @@
                         @method('put')
                         <input type="hidden" name="id" value="{{$internet_offer->id}}">
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Internet offer category</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Product Category</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

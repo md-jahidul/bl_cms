@@ -243,11 +243,11 @@
                                 </div>
 
 {{--                                <div class="form-group col-md-4">--}}
-{{--                                    <label>Select Data Section</label>--}}
+{{--                                    <label>Select Product Category</label>--}}
 {{--                                    <select multiple--}}
 {{--                                            class="form-control data-section"--}}
 {{--                                            name="offer_section_slug[]" required>--}}
-{{--                                        <option value="">Please Select Data Section</option>--}}
+{{--                                        <option value="">Please Selcet Product Category</option>--}}
 {{--                                            @foreach ($internet_categories as $key => $category)--}}
 {{--                                                <option--}}
 {{--                                                    value="{{ $key }}">  {{$category}}--}}
@@ -412,7 +412,7 @@
 
             $("#commentForm").validate();
             $('.data-section').select2({
-                placeholder: 'Please Select Data Section',
+                placeholder: 'Please Selcet Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });
@@ -516,11 +516,11 @@
                                 </div>`
 
             let sectionType = `<div class="form-group col-md-4">
-                                    <label class="required">Select Data Section</label>
+                                    <label class="required">Product Categories</label>
                                     <select multiple
                                             class="form-control data-section"
                                             name="offer_section_slug[]" required>
-                                        <option value="">Please Select Data Section</option>
+                                        <option value="">Please Select Product Category</option>
                                         @foreach ($internet_categories as $key => $category)
                                            <option value="{{ $key }}">  {{$category}}</option>
                                         @endforeach
@@ -539,7 +539,7 @@
             ) {
                 offer_types.append(data + dataUnit + sectionType)
             } else if (type === 'mix' || type === 'recharge_offer') {
-                offer_types.append(data + dataUnit + voiceVol + smsVol)
+                offer_types.append(data + dataUnit + voiceVol + smsVol + sectionType)
             } else if (type === 'voice') {
                 offer_types.append(voiceVol)
             } else if (type === 'sms') {
@@ -551,7 +551,7 @@
             }
 
             $('.data-section').select2({
-                placeholder: 'Please Select Data Section',
+                placeholder: 'Please Selcet Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });

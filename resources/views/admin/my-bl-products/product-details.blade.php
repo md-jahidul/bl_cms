@@ -298,6 +298,7 @@
 {{--                                {{ dd($details->details->content_type) }}--}}
                                 @if(  $details->details->content_type == 'data' ||
                                       $details->details->content_type == 'data loan' ||
+                                      $details->details->content_type == 'mix' ||
                                       $details->details->content_type == 'gift' ||
                                       $details->details->content_type == 'volume transfer'
                                     )
@@ -306,11 +307,11 @@
                                     @endphp
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Select Data Section </label>
+                                            <label>Product Categories </label>
                                             <select multiple
                                                     class="form-control data-section"
                                                     name="offer_section_slug[]" required>
-                                                <option value="">Please Select Data Section</option>
+                                                <option value="">Please Select Product Category</option>
 
                                                 @foreach ($internet_categories as $key => $category)
                                                     <option
@@ -493,7 +494,7 @@
     <script>
         $(function () {
             $('.data-section').select2({
-                placeholder: 'Please Select Data Section',
+                placeholder: 'Please Select Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });
