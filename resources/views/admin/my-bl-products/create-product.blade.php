@@ -412,7 +412,7 @@
 
             $("#commentForm").validate();
             $('.data-section').select2({
-                placeholder: 'Please Select Data Section',
+                placeholder: 'Please Selcet Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });
@@ -532,7 +532,6 @@
             console.log(type)
             if (
                 type === 'data' ||
-                type === 'mix' ||
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||
@@ -540,7 +539,7 @@
             ) {
                 offer_types.append(data + dataUnit + sectionType)
             } else if (type === 'mix' || type === 'recharge_offer') {
-                offer_types.append(data + dataUnit + voiceVol + smsVol)
+                offer_types.append(data + dataUnit + voiceVol + smsVol + sectionType)
             } else if (type === 'voice') {
                 offer_types.append(voiceVol + sectionType)
             } else if (type === 'sms') {
@@ -552,7 +551,7 @@
             }
 
             $('.data-section').select2({
-                placeholder: 'Please Select Product Category',
+                placeholder: 'Please Selcet Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });

@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Products Categories')
-@section('card_name', 'Products Categories')
+@section('title', 'Product Categories')
+@section('card_name', 'Product Categories')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Products Category List</li>
+    <li class="breadcrumb-item active">Product Category List</li>
 @endsection
 @section('action')
     <a href="{{ route('mybl.internetOffer.category.create')}}" id="add_category_btn" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Products Category
+        Create Product Category
     </a>
 @endsection
 @section('content')
