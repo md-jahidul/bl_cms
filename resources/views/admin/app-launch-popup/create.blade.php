@@ -36,6 +36,20 @@
                                             </p>
                                         @endif
                                     </div>
+                                    <div class="form-group @if($errors->has('title')) error @endif">
+                                        <label for="title" class="required">Title Bangla</label>
+                                        <input class="form-control"
+                                               name="title_bn"
+                                               id="title_bn"
+                                               maxlength="20"
+                                               value="{{ $page == 'edit' ? $popup->title_bn : old("title_bn") }}"
+                                               >
+                                        @if($errors->has('title'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -273,7 +287,31 @@
                                         </p>
                                     @endif
                                 </div>
-
+                                <div class="col-md-6" id="content_div">
+                                    <div class="form-group">
+                                        <label class="required">Thumbnail Image</label>
+                                        <input type="file"
+                                               name="thumbnail_img"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               @if($page == 'edit')
+                                               data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
+                                               @else
+                                               @endif
+                                               data-min-width="1279" data-min-height="719"
+                                               data-max-width="1281" data-min-height="721"
+                                               data-allowed-file-extensions="png jpg jpeg gif"
+                                               class="dropify"/>
+                                    </div>
+                                    <div class="help-block"></div>
+                                    <div class="help-block text-warning">
+                                        The Dimensions should be <strong>1280x720</strong>
+                                    </div>
+                                    @if($errors->has('content_div'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="card-footer">
