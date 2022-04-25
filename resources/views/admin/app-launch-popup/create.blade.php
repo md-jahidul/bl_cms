@@ -297,7 +297,14 @@
                                                data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
                                                @else
                                                @endif
+                                               data-min-width="1279" data-min-height="719"
+                                               data-max-width="1281" data-min-height="721"
+                                               data-allowed-file-extensions="png jpg jpeg gif"
                                                class="dropify"/>
+                                    </div>
+                                    <div class="help-block"></div>
+                                    <div class="help-block text-warning">
+                                        The Dimensions should be <strong>1280x720</strong>
                                     </div>
                                     @if($errors->has('content_div'))
                                         <p class="text-left">
