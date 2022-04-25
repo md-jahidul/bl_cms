@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class FourGDevice extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'offer_tag_id',
         'card_logo',

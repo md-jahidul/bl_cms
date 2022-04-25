@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Slider;
 use App\Models\SliderImage;
+use App\Traits\LogModelAction;
 
 class BannerAnalytic extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'banner_id',
         'view_count',
