@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class MyBlFeed extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'category_id',
         'type',

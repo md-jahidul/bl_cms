@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class CorpInitiativeTabComponent extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'initiative_tab_id',
         'component_type',

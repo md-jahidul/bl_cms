@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class CsSelfcareReferrer extends Model
 {
+    use LogModelAction;
+    
     protected $guarded = ['id'];
 
     public function referees()

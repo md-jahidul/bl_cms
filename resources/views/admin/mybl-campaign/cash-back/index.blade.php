@@ -6,12 +6,10 @@
 @endsection
 
 @section('action')
-    @if(!$cashBackCampaigns->count())
-        <a href="{{route('cash-back-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
-                class="la la-plus"></i>
-            Create Campaign
-        </a>
-    @endif
+    <a href="{{route('cash-back-campaign.create')}}" class="btn btn-primary round btn-glow px-2"><i
+            class="la la-plus"></i>
+        Create Campaign
+    </a>
 @endsection
 
 @section('content')

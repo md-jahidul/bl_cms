@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Models\SliderComponentTypes;
 use App\Models\SliderImage;
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class Slider extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'component_id',
         'title',

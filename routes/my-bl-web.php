@@ -177,6 +177,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Notification
     Route::resource('notification', 'CMS\NotificationController');
+    Route::get('notification-duplicate/{notificationId}', 'CMS\NotificationController@duplicateNotification')->name('notification.duplicate');
+    Route::get('quick-notification', 'CMS\NotificationController@quickNotificationIndex')->name('quick-notification.index');
+    Route::get('quick-notification/create', 'CMS\NotificationController@quickNotificationCreate')->name('quick-notification.create');
+    Route::post('quick-notification/store', 'CMS\PushNotificationController@quickNotificationStoreAndSend')->name('quick-notification.store');
+    Route::get('quick-notification/all/{id}', 'CMS\NotificationController@quickNotificationShowAll')->name('quick-notification.show-all');
 
     Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
@@ -702,6 +707,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
+    Route::get('flash-hour-campaign-duplicate/{id}', 'CMS\MyBlFlashHourController@duplicateFlashHours')->name('flash-hour-campaign.duplicate');
     Route::get('flash-hour-campaign/destroy/{id}', 'CMS\MyBlFlashHourController@destroy');
 
     Route::get('flash-hour-analytic/{campaign_id}', 'CMS\MyBlFlashHourController@analyticReport')
@@ -764,7 +770,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
     Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
     Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
-    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');        
+    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');
 
     /*
     * Usim Eligibility
@@ -789,8 +795,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
     Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
     Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
-
-//    Route::get('health-hub-item-details-export', 'CMS\HealthHubController@itemDetailsExport');
+    Route::get('health-hub-deeplink/analytic', 'CMS\HealthHubController@deeplinkAnalytic')
+        ->name('health-hub-deeplink.analytic');
+    Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
+        ->name('health-hub-deeplink-analytic-details');
 
 
 

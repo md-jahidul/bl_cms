@@ -8,8 +8,7 @@
     <a href="{{ route('health-hub.analytics') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-bar-chart-o"></i>
         Health Hub Analytic
     </a>
-    <a href="{{ route('health-hub.create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
-        Add New Item
+    <a href="{{ route('health-hub.create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>Add New Item
     </a>
 @endsection
 @section('content')
@@ -17,7 +16,13 @@
         <div class="card col-sm-12">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title mb-2"><strong>Health Hub Item List</strong></h4>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h4 class="menu-title mb-2"><strong>Health Hub Item List</strong></h4>
+                        </div>
+                    </div>
+
+
                     @if(count($healthHubItems) == !0)
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class BannerProductPurchaseDetail extends Model
 {
+    use LogModelAction;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

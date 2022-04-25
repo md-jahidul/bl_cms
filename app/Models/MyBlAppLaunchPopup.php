@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\RecurringSchedule;
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class MyBlAppLaunchPopup extends Model
 {
+    use LogModelAction;
+    
     protected $fillable = [
         'type',
         'title',
@@ -22,7 +25,10 @@ class MyBlAppLaunchPopup extends Model
         'other_info',
         'created_by',
         'status',
-        'product_code'
+        'product_code',
+        'thumbnail_image',
+        'title_bn',
+        'thumbnail'
     ];
 
     public function schedule()

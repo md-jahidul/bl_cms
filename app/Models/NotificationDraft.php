@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Notification;
+use App\Traits\LogModelAction;
 
 class NotificationDraft extends Model
 {
+    use LogModelAction;
 
     /**
      * The table associated with the model.
@@ -28,6 +30,7 @@ class NotificationDraft extends Model
         // 'cta_name',
         // 'cta_action',
         // 'notification_type',
+        'quick_notification',
         'device_type',
         'customer_type',
         'navigate_action',

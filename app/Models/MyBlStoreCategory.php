@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class MyBlStoreCategory extends Model
 {
+    use LogModelAction;
+    
     /**
      * The attributes that are mass assignable.
      *

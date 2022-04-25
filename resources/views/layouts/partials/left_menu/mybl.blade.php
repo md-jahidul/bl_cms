@@ -39,6 +39,13 @@
                                         class="la la-lock"></i> Access Logs</a>
                             </li>
                         @endif
+                        @if( auth()->user()->can_view('AccessLog') )
+                        <li class="{{ is_active_url('activity-logs')}}">
+                            <a class="menu-item" href="{{ url('activity-logs') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-lock"></i> Activity Logs</a>
+                        </li>
+                    @endif
                     </ul>
                 </li>
             </ul>
@@ -114,7 +121,7 @@
                 <li class="{{is_active_url('mybl-internet-offer-category')}}">
                     <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
                        data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i> Data Pack Categories
+                        <i class="la la-align-center"></i> Product Categories
                     </a>
                 </li>
 
@@ -181,6 +188,11 @@
                     <a class="menu-item" href="{{ route('notification.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification List</a>
+                </li>
+                <li class="{{ is_active_url('quick-notification') }}{{ is_active_url('quick-notification.create') }}">
+                    <a class="menu-item" href="{{ route('quick-notification.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Quick Notification List</a>
                 </li>
 
                 {{-- <li class="{{ is_active_url('notification-report')}}">

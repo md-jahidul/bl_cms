@@ -45,4 +45,8 @@ class UserService
     public function storeUser($data)
     {
     }
+
+    public function findById($userId){
+        return $this->userRepository->findById($userId);
+    }
 }
