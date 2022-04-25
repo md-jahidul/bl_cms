@@ -19,6 +19,7 @@
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
                 <div class="card-body card-dashboard">
+                    <h4><strong>In App Analytic Data</strong></h4><hr>
                     <form id="filter-form" class="form">
                         <div class="row pl-1 mb-1">
                             <div class="col-md-3">
@@ -140,6 +141,127 @@
         </div>
     </div>
     {{--Modal End--}}
+
+
+    <section>
+        <div class="card card-info mt-0" style="box-shadow: 0px 0px">
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <h4><strong>Deeplink Analytic Data</strong></h4><hr>
+                    <form id="filter-form" class="form">
+                        <div class="row pl-1 mb-1">
+                            <div class="col-md-3">
+                                <label class="control-label">Date Range</label>
+                                <input type="text" name="date_range_deeplink" id="date_range_deeplink" class="form-control datetime"
+                                       value="{{\Illuminate\Support\Facades\Input::get('date_range_deeplink') ?? old('date_range_deeplink')}}"
+                                       placeholder="Pick Dates to filter" autocomplete="off">
+                            </div>
+                            <div class="pl-1">
+                                <br>
+                                <button type="submit" class="btn btn-outline-info" value="search">
+                                    <i class="ft ft-search"> </i> Search
+                                </button>
+                            </div>
+                            <div class="pl-1">
+                                <br>
+                                <button type="button" class="btn btn-outline-warning" id="clear-filter-deeplink">
+                                    <i class="ft ft-remo"> </i> Clear Filter
+                                </button>
+                            </div>
+                            <div class="pl-1">
+                                <br>
+                                <button type="submit" name="excel_export" value="deeplink_items_export"
+                                        class="btn btn-outline-secondary" id="excel-export">
+                                    <i class="la la-download"></i> Excel Export
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1"
+                           role="grid" aria-describedby="Example1_info" style="">
+                        <thead>
+                        <tr>
+                            <th width="3%">SL</th>
+                            <th>Item Name</th>
+                            <th>Total Unique Hit</th>
+                            <th>Total Hit</th>
+                            {{--                                <th>Deeplink Hits</th>--}}
+                            <th width="12%">Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>{{ $deeplinkAnalyticData['title_en'] }}</td>
+                            <td>{{ $deeplinkAnalyticData['total_unique_hit'] }}</td>
+                            <td>{{ $deeplinkAnalyticData['total_hit_count'] }}</td>
+                            {{--                                <td>0</td>--}}
+                            <td>
+                                @if($deeplinkAnalyticData['id'])
+                                    <a data-toggle="modal" data-target="#deeplinkItem"
+                                       data-id="{{ $deeplinkAnalyticData['id'] }}"
+                                       href="#"
+                                       role="button" class="btn-sm btn-bitbucket border-1 item-details-deeplink">Item Details</a>
+                                @endif
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{--Modal Start--}}
+    <div class="col-lg-12 col-md-6 col-sm-12">
+        <!-- Modal -->
+        <div class="modal fade text-left" id="deeplinkItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel17">Item Analytic</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="overflow-x:auto;">
+                        <form id="filter-form" class="form">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <input type="hidden" name="deeplink_item_id">
+                                    <button type="button" name="excel_export" value="deeplink_item_export_details"
+                                            class="btn btn-outline-secondary" id="deeplink_item_details_export">
+                                        <i class="la la-download"></i> Excel Export
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <table class="table table-striped table-bordered dataTable"
+                               role="grid" aria-describedby="Example1_info" id="deeplinkItemDetails">
+                            <thead>
+                            <tr>
+                                <th width="5%">SL</th>
+                                <th width="10%">MSISDN</th>
+                                <th width="10%">Hit Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--Modal End--}}
 @endsection
 
 @push('style')
@@ -177,8 +299,25 @@
                 window.location = url;
             });
 
+            $('#deeplink_item_details_export').on('click', function () {
+                var query = {
+                    date_range: $('input[name="date_range_deeplink"]').val(),
+                    excel_export: $(this).val(),
+                    item_id: $('input[name="deeplink_item_id"]').val(),
+                }
+                var url = "{{URL::to('health-hub-deeplink/analytic')}}?" + $.param(query)
+                window.location = url;
+            });
+
             $('#clear-filter').click(function () {
                 $('input[name="date_range"]').val('')
+                $('input[name="msisdn"]').val('')
+                $('#filter-form').submit();
+            })
+
+
+            $('#clear-filter-deeplink').click(function () {
+                $('input[name="date_range_deeplink"]').val('')
                 $('input[name="msisdn"]').val('')
                 $('#filter-form').submit();
             })
@@ -193,6 +332,7 @@
             });
 
             $("#date_range").val("{{\Illuminate\Support\Facades\Input::get('date_range') ?? ''}}");
+            $("#date_range_deeplink").val("{{\Illuminate\Support\Facades\Input::get('date_range_deeplink') ?? ''}}");
 
             $('.item-details').click(function (){
                 var itemId = $(this).attr('data-id');
@@ -250,6 +390,58 @@
 
                 $('.modal').on('hidden.bs.modal', function () {
                     $("#itemDetails").dataTable().fnDestroy();
+                })
+            })
+
+            $('.item-details-deeplink').click(function (){
+                var itemId = $(this).attr('data-id');
+                $('input[name="deeplink_item_id"]').val(itemId)
+                $("#deeplinkItemDetails").dataTable({
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    autoWidth: false,
+                    pageLength: 5,
+                    lengthMenu: [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+                    ordering: false,
+                    lengthChange: true,
+                    ajax: {
+                        url: '{{ url('health-hub-deeplink/analytic-details/') }}' + "/" + itemId,
+                        data: {
+                            date_range: $('input[name="date_range_deeplink"]').val()
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'sl',
+                            width: "2%",
+                            render: function () {
+                                return null;
+                            }
+                        },
+                        {
+                            name: 'msisdn',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return "0" + row.msisdn;
+                            }
+                        },
+                        {
+                            name: 'hit_count',
+                            width: "15%",
+                            render: function (data, type, row) {
+                                return row.hit_count;
+                            }
+                        }
+                    ],
+                    "fnCreatedRow": function (row, data, index) {
+                        $('td', row).eq(0).html(index + 1);
+                    }
+
+                });
+
+                $('.modal').on('hidden.bs.modal', function () {
+                    $("#deeplinkItemDetails").dataTable().fnDestroy();
                 })
             })
         });
