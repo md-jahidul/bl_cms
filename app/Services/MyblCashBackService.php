@@ -42,14 +42,11 @@ class MyblCashBackService
      */
     public function storeCampaign($data): Response
     {
-        if ($data['status']) {
-            $this->cashBackRepository->inactiveOldCampaign();
-        }
-
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
                 $product['mybl_cash_back_id'] = $campaign->id;
+                $product['status'] = isset($product['status']) ?? 0;
                 $this->cashBackProductRepo->save($product);
             }
         }
@@ -64,15 +61,12 @@ class MyblCashBackService
      */
     public function updateCampaign($data, $id)
     {
-        if ($data['status']) {
-            $this->cashBackRepository->inactiveOldCampaign();
-        }
-
         $campaign = $this->findOne($id);
         $this->cashBackProductRepo->deleteCampaignWiseProduct($id);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
                 $product['mybl_cash_back_id'] = $id;
+                $product['status'] = isset($product['status']) ?? 0;
                 $this->cashBackProductRepo->save($product);
             }
         }
