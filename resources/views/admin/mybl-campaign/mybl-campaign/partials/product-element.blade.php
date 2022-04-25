@@ -8,10 +8,14 @@
                    id="image_url"
                    name="thumbnail_img"
                    class="dropify_image"
-                   data-height="77"
+                   data-min-width="1279" data-min-height="719"
+                   data-max-width="1281" data-min-height="721"
                    data-default-file="{{ isset($product) ? asset($product->thumbnail_img) : ''}}"
                    data-allowed-file-extensions="png jpg jpeg gif"/>
             <div class="help-block"></div>
+            <div class="help-block text-warning">
+                The Dimensions should be <strong>1280x720</strong>
+            </div>
             <small
                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>
             <small id="massage"></small>
