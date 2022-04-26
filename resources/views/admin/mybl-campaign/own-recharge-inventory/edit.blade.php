@@ -346,7 +346,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-4" id="max_amount_for_campaign">
+                                        <div class="form-group col-md-4 {{ $winningCampaignLogics->reward_getting_type == "single_time" ? 'd-none': '' }}" id="max_amount_for_campaign">
                                             <label for="max_amount">Max Cash Back Amount</label>
                                             <input required type="number" name="max_amount" class="form-control"
                                                 value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
@@ -354,7 +354,7 @@
                                                 >
                                         </div>
                             
-                                        <div class="form-group col-md-4" id="number_of_apply_times_for_campaign">
+                                        <div class="form-group col-md-4 {{ $winningCampaignLogics->reward_getting_type == "single_time" ? 'd-none': '' }} " id="number_of_apply_times_for_campaign">
                                             <label for="number_of_apply_times">No of apply times</label>    
                                             <input required type="number" name="number_of_apply_times" class="form-control"
                                                 value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
