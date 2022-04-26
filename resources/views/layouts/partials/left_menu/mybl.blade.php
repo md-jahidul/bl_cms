@@ -284,7 +284,7 @@
     </li>
         <!-- Campaign Menu -->
         <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
-            <span class="menu-title" data-i18n="nav.templates.main">Own Recharge Mangement</span></a>
+            <span class="menu-title" data-i18n="nav.templates.main">Own Recharge</span></a>
         <ul class="menu-content">
             <li class="{{is_active_url('own-recharge-inventory')}}">
                 <a class="menu-item" href="{{ route('own-recharge-inventory.index') }} "

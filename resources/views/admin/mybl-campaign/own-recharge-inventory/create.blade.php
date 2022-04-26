@@ -310,23 +310,23 @@
                                     <div class="form-group col-md-4">
                                         <label for="reward_getting_type">Reward Getting Type: </label>
                                         <div class="form-group {{ $errors->has('reward_getting_type') ? ' error' : '' }}">
-                                            <input type="radio" name="reward_getting_type" value="single_time" id="input-radio-15">
+                                            <input type="radio" name="reward_getting_type" class="reward_getting_type" value="single_time" id="input-radio-15">
                                             <label for="input-radio-15" class="mr-3">Single Time</label>
-                                            <input type="radio" name="reward_getting_type" value="multiple_time" id="input-radio-16">
+                                            <input type="radio" name="reward_getting_type" class="reward_getting_type" value="multiple_time" id="input-radio-16">
                                             <label for="input-radio-16" class="mr-3">Multiple Time</label>
                                             @if ($errors->has('reward_getting_type'))
                                                 <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4" id="max_amount_for_campaign">
                                         <label for="max_amount">Max Cash Back Amount</label>
                                         <input required type="number" name="max_amount" class="form-control"
                                             placeholder="Please Enter Max Cash Back Amount For Campaign"
                                             >
                                     </div>
                         
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4" id="number_of_apply_times_for_campaign">
                                         <label for="number_of_apply_times">No of apply times</label>    
                                         <input required type="number" name="number_of_apply_times" class="form-control"
                                             placeholder="Please Enter No of Apply Times For Campaign"
@@ -591,7 +591,16 @@
                     $('.cash_back_amount_for_product').prop('required',true);
                 }
             });
-
+            $('.reward_getting_type').click(function () {
+                if ($(this).val() == "single_time"){
+                    $('#max_amount_for_campaign').addClass('d-none');
+                    $('#number_of_apply_times_for_campaign').addClass('d-none');
+                    
+                } else {
+                    $('#max_amount_for_campaign').removeClass('d-none');
+                    $('#number_of_apply_times_for_campaign').removeClass('d-none');
+                }
+            });
         });
     </script>
 
