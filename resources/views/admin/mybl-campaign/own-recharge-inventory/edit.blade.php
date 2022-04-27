@@ -322,7 +322,7 @@
                                             </div>
                                         </div>
                                         @foreach($campaign->cashBackProducts as $product)
-                                            @include('admin.mybl-campaign.own-recharge-inventory.partials.product-element', ['product' => $product])
+                                            @include('admin.mybl-campaign.own-recharge-inventory.partials.product-element', ['product' => $product, 'denoType' => $denoType])
                                         @endforeach
                                 </div>
 
@@ -348,7 +348,7 @@
                                         </div>
                                         <div class="form-group col-md-4 {{ $winningCampaignLogics->reward_getting_type == "single_time" ? 'd-none': '' }}" id="max_amount_for_campaign">
                                             <label for="max_amount">Max Cash Back Amount</label>
-                                            <input required type="number" name="max_amount" class="form-control"
+                                            <input  type="number" name="max_amount" class="form-control"
                                                 value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
                                                 placeholder="Please Enter Max Cash Back Amount For Campaign"
                                                 >
@@ -356,7 +356,7 @@
                             
                                         <div class="form-group col-md-4 {{ $winningCampaignLogics->reward_getting_type == "single_time" ? 'd-none': '' }} " id="number_of_apply_times_for_campaign">
                                             <label for="number_of_apply_times">No of apply times</label>    
-                                            <input required type="number" name="number_of_apply_times" class="form-control"
+                                            <input  type="number" name="number_of_apply_times" class="form-control"
                                                 value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
                                                 placeholder="Please Enter No of Apply Times For Campaign"
                                                 >
@@ -635,12 +635,12 @@
             $('input[name=deno_type]').change(function () {
                 denoType      = $('input[name=deno_type]:checked').val();
                 if(denoType == 'all') {
-                    $('.cash_back_amount_for_product').hide();
-                    $('.number_of_apply_times_for_product').hide();
+                    $('.cash_back_amount_for_product').addClass('d-none');
+                    $('.number_of_apply_times_for_product').addClass('d-none');
                 }
                 else {
-                    $('.cash_back_amount_for_product').show();
-                    $('.number_of_apply_times_for_product').show();
+                    $('.cash_back_amount_for_product').removeClass('d-none');
+                    $('.number_of_apply_times_for_product').removeClass('d-none');
                 }
             });
 
