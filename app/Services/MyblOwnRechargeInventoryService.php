@@ -46,6 +46,17 @@ class MyblOwnRechargeInventoryService
     public function storeCampaign($data): Response
     {
         try{
+            if($data['deno_type'] != 'all'){
+                $flag = $this->checkValidationForProduct($data['product-group']);
+                if(!$flag) return new Response("Own Recharge Inventory campaign Created Failed. For Deno, Max Amount and Number of Apply Time is Required");
+            }
+            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] == null || $data['number_of_apply_times'] == null)){
+                return new Response("Own Recharge Inventory campaign Created Failed. For Campaign, Max Amount and Number of Apply Time is Required");
+            }
+            if($data['reward_getting_type'] == 'single_time'){
+                $data['max_amount'] = null;
+                $data['number_of_apply_times'] = null;
+            }
             $date_range_array = explode('-', $data['display_period']);
             $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
                 ->toDateTimeString();
@@ -97,6 +108,17 @@ class MyblOwnRechargeInventoryService
     public function updateCampaign($data, $id)
     {
         try{
+            if($data['deno_type'] != 'all'){
+                $flag = $this->checkValidationForProduct($data['product-group']);
+                if(!$flag) return new Response("Own Recharge Inventory campaign Created Failed. For Deno, Max Amount and Number of Apply Time is Required");
+            }
+            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] == null || $data['number_of_apply_times'] == null)){
+                return new Response("Own Recharge Inventory campaign Created Failed. For Campaign, Max Amount and Number of Apply Time is Required");
+            }
+            if($data['reward_getting_type'] == 'single_time'){
+                $data['max_amount'] = null;
+                $data['number_of_apply_times'] = null;
+            }
             if(isset($data['banner']))$data['banner'] = 'storage/' . $data['banner']->store('own_recharge_inventory');
             if(isset($data['thumbnail_image']))$data['thumbnail_image'] = 'storage/' . $data['thumbnail_image']->store('own_recharge_inventory');
             
@@ -197,5 +219,12 @@ class MyblOwnRechargeInventoryService
         } else {
             $this->recurringScheduleRepository->save($scheduleData);
         }
+    }
+
+    public function checkValidationForProduct($products){
+        foreach ($products as $product){
+            if($product['max_amount'] == null || $product['number_of_apply_times'] == null)return false;
+        }
+        return true;
     }
 }
