@@ -335,10 +335,10 @@
                                         <div class="form-group col-md-4">
                                             <label for="reward_getting_type">Reward Getting Type: </label>
                                             <div class="form-group {{ $errors->has('reward_getting_type') ? ' error' : '' }}">
-                                                <input type="radio" name="reward_getting_type" value="single_time" id="input-radio-15"
+                                                <input type="radio" name="reward_getting_type" class="reward_getting_type" value="single_time" id="input-radio-15"
                                                 {{ (isset($winningCampaignLogics->reward_getting_type) && $winningCampaignLogics->reward_getting_type == "single_time") ? 'checked' : '' }}>
                                                 <label for="input-radio-15" class="mr-3">Single Time</label>
-                                                <input type="radio" name="reward_getting_type" value="multiple_time" id="input-radio-16"
+                                                <input type="radio" name="reward_getting_type" class="reward_getting_type" value="multiple_time" id="input-radio-16"
                                                 {{ (isset($winningCampaignLogics->reward_getting_type) && $winningCampaignLogics->reward_getting_type == "multiple_time") ? 'checked' : '' }}>
                                                 <label for="input-radio-16" class="mr-3">Multiple Time</label>
                                                 @if ($errors->has('reward_getting_type'))
@@ -346,7 +346,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-4 {{ $winningCampaignLogics->reward_getting_type == "single_time" ? 'd-none': '' }}" id="max_amount_for_campaign">
                                             <label for="max_amount">Max Cash Back Amount</label>
                                             <input required type="number" name="max_amount" class="form-control"
                                                 value="{{ isset($campaign) ? $campaign->max_amount : old('max_amount') }}"
@@ -354,7 +354,7 @@
                                                 >
                                         </div>
                             
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-4 {{ $winningCampaignLogics->reward_getting_type == "single_time" ? 'd-none': '' }} " id="number_of_apply_times_for_campaign">
                                             <label for="number_of_apply_times">No of apply times</label>    
                                             <input required type="number" name="number_of_apply_times" class="form-control"
                                                 value="{{ isset($campaign) ? $campaign->number_of_apply_times : old('number_of_apply_times') }}"
@@ -641,6 +641,17 @@
                 else {
                     $('.cash_back_amount_for_product').show();
                     $('.number_of_apply_times_for_product').show();
+                }
+            });
+
+            $('.reward_getting_type').click(function () {
+                if ($(this).val() == "single_time"){
+                    $('#max_amount_for_campaign').addClass('d-none');
+                    $('#number_of_apply_times_for_campaign').addClass('d-none');
+                    
+                } else {
+                    $('#max_amount_for_campaign').removeClass('d-none');
+                    $('#number_of_apply_times_for_campaign').removeClass('d-none');
                 }
             });
         });
