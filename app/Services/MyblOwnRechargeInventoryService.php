@@ -50,7 +50,7 @@ class MyblOwnRechargeInventoryService
                 $flag = $this->checkValidationForProduct($data['product-group']);
                 if(!$flag) return new Response("Own Recharge Inventory campaign Created Failed. For Deno, Max Amount and Number of Apply Time is Required");
             }
-            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] || $data['number_of_apply_times'] == null)){
+            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] == null || $data['number_of_apply_times'] == null)){
                 return new Response("Own Recharge Inventory campaign Created Failed. For Campaign, Max Amount and Number of Apply Time is Required");
             }
             if($data['reward_getting_type'] == 'single_time'){
@@ -112,8 +112,8 @@ class MyblOwnRechargeInventoryService
                 $flag = $this->checkValidationForProduct($data['product-group']);
                 if(!$flag) return new Response("Own Recharge Inventory campaign Created Failed. For Deno, Max Amount and Number of Apply Time is Required");
             }
-            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] || $data['number_of_apply_times'] == null)){
-                return new Response("Own Recharge Inventory campaign Created Failed. For Campaign Max Amount and Number of Apply Time is Required");
+            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] == null || $data['number_of_apply_times'] == null)){
+                return new Response("Own Recharge Inventory campaign Created Failed. For Campaign, Max Amount and Number of Apply Time is Required");
             }
             if($data['reward_getting_type'] == 'single_time'){
                 $data['max_amount'] = null;
@@ -223,7 +223,8 @@ class MyblOwnRechargeInventoryService
 
     public function checkValidationForProduct($products){
         foreach ($products as $product){
-            if($product['max_amount'] == null && $product['number_of_apply_times'] == null)return false;
+            if($product['max_amount'] == null || $product['number_of_apply_times'] == null)return false;
         }
+        return true;
     }
 }
