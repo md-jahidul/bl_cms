@@ -21,7 +21,7 @@
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <input type="text" name="date_range" class="form-control filter"
-                                       autocomplete="off" id="date_range" placeholder="Date">
+                                       autocomplete="off" id="date_range" placeholder="Date" required>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -54,21 +54,9 @@
                             <div class="form-group col-md-3">
                                 <select class="form-control" name="page_name">
                                     <option value="">--Select Page--</option>
-                                    <option value="landing_page">Landing_page</option>
-                                    <option value="otp_page">OTP Page</option>
-                                    <option value="otp_send">OTP Send</option>
-                                    <option value="password_login">Password Login</option>
-                                    <option value="password_page">Password Page</option>
-                                    <option value="forget_password_page">Forget Password Page</option>
-                                    <option value="forget_password_send_otp">Forget Password Send OTP</option>
-                                    <option value="set_new_password_page">Set New Password Page</option>
-                                    <option value="change_password">Change Password</option>
-                                    <option value="register_page">Register Page</option>
-                                    <option value="send_otp_register">Send OTP Register</option>
-                                    <option value="register_set_new_password_page">Register Set New Password Page
-                                    </option>
-                                    <option value="register_password_set">Register Password Set</option>
-                                    <option value="number_verification">Number Verification</option>
+                                    @foreach($pages as $key => $page)
+                                        <option value="{{ $key }}">{{ $page }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -154,8 +142,16 @@
 
             // Show Guest User Track Data
             $('#search-btn').click(function (e) {
-                // e.preventDefault()
-                // alert('Hi')
+                e.preventDefault()
+                swal.fire({
+                    title: 'Data Loading. Please wait...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    onOpen: () => {
+                        swal.showLoading();
+                    }
+                });
+
                 $.ajax({
                     method: 'POST',
                     url: '{{ url('guest-user-show-data') }}',
@@ -185,7 +181,7 @@
                     },
                     success: function (result) {
                         $("#guestUserTrackList tbody").children().remove()
-                        result.map(function (data, index) {
+                        result.data.map(function (data, index) {
                             let count = index + 1;
                             let msisdn = (data.msisdn) ? data.msisdn : "" ;
                             let failedReason = (data.failed_reason) ? data.failed_reason : "" ;
@@ -218,6 +214,22 @@
                                         </tr>`;
                             $("#guestUserTrackList tbody").append(tbody);
                         })
+
+                        if (result.success) {
+                            swal.fire({
+                                title: result.massage,
+                                type: 'success',
+                                timer: 1000,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            swal.fire({
+                                title: result.massage,
+                                type: 'warning',
+                                timer: 1000,
+                                showConfirmButton: false
+                            });
+                        }
                     }
                 });
             })

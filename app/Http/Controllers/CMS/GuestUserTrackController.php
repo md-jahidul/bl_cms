@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Services\GuestUserTrackService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -33,7 +34,8 @@ class GuestUserTrackController extends Controller
      */
     public function index()
     {
-        return view('admin.mybl-guest-user-track.index');
+        $pages = Helper::guestUserActivityList();
+        return view('admin.mybl-guest-user-track.index', compact('pages'));
     }
 
     public function dataExport(Request $request)
