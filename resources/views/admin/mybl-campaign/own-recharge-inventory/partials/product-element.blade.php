@@ -31,7 +31,7 @@
                     placeholder="Enter The Fixed/Percentage of Cashback"
                     >
             </div>
-            <div class="form-group col-md-4 cash_back_amount_for_product">
+            <div class="form-group col-md-4 cash_back_amount_for_product {{ $denoType == 'all' ? 'd-none': '' }}">
                 <label for="max_amount">Max Cash Back Amount</label>
                 <input type="number" name="max_amount" class="form-control"
                     value="{{ isset($product) ? $product->max_amount : old('max_amount') }}"
@@ -39,7 +39,7 @@
                     >
             </div>
 
-            <div class="form-group col-md-4 number_of_apply_times_for_product">
+            <div class="form-group col-md-4 number_of_apply_times_for_product {{ $denoType == 'all' ? 'd-none' : '' }}">
                 <label for="number_of_apply_times">No of apply times</label>    
                 <input type="number" name="number_of_apply_times" class="form-control"
                     value="{{ isset($product) ? $product->number_of_apply_times : old('number_of_apply_times') }}"
