@@ -294,12 +294,6 @@
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-0 pl-0"><h5><strong>Product Selection Section</strong></h5></div>
                                     <div class="form-actions col-md-12 mt-0"></div>
-                                    <div class="form-group col-md-12 mb-0">
-                                        <button data-repeater-create id="repeater-button" type="button"
-                                                class="btn-sm btn-success cursor-pointer float-right">
-                                            <i class="la la-plus"></i>
-                                        </button>
-                                    </div>
                                 </div>
 
                                 <!-- Product Selection Start -->
@@ -324,6 +318,14 @@
                                         @foreach($campaign->cashBackProducts as $product)
                                             @include('admin.mybl-campaign.own-recharge-inventory.partials.product-element', ['product' => $product, 'denoType' => $denoType])
                                         @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-0">
+                                        <button data-repeater-create id="repeater-button" type="button"
+                                                class="btn-sm btn-success cursor-pointer float-right">
+                                            <i class="la la-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <!-- Product Selection End -->
