@@ -92,14 +92,14 @@
     </div>
 
     <!-- Product Row Delete -->
-    @if(isset($product) && !$product->checkCampaignProductExpire())
+    {{-- @if(isset($product) && !$product->checkCampaignProductExpire()) --}}
         <div class="form-group col-md-12 mb-1">
             <button data-repeater-delete type="button"
                     class="btn-sm btn-danger cursor-pointer float-right">
                 <i class="la la-trash"></i>
             </button>
         </div>
-    @endif
+    {{-- @endif --}}
     <div class="form-group col-md-12 mb-2" id="cta_action">
         {!! (isset($product) && $product->checkCampaignProductExpire()) ? "<b class='text-danger'>(This product is expired. You can't change anymore)</b>" : '' !!}
     </div>

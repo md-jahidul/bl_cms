@@ -51,6 +51,8 @@ class NotificationController extends Controller
      * @param NotificationService $notificationService
      * @param NotificationCategoryService $notificationCategoryService
      * @param UserService $userService
+     * @param CustomerService $customerService
+     * @param FeedCategoryService $feedCategoryService
      */
     public function __construct(
         NotificationService $notificationService,
@@ -62,6 +64,7 @@ class NotificationController extends Controller
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
+        $this->customerService = $customerService;
         $this->feedCategoryService = $feedCategoryService;
         $this->customerService = $customerService;
         $this->middleware('auth');
