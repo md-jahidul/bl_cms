@@ -79,6 +79,11 @@ class BaseMsisdnService
         $writer->close();
     }
 
+    public function getPaginatedBaseMsisdn($id)
+    {
+        return BaseMsisdn::where('group_id', $id)->paginate(5);
+    }
+
     public function getBaseMsisdn($request, $id)
     {
         $draw = $request->get('draw');

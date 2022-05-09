@@ -1,22 +1,35 @@
-<table class="table table-striped table-bordered dataTable"
-       id="msisdn_list">
+<table class="table table-striped table-bordered dataTable" id="msisdn_list">
     <thead>
-    <tr>
-        <th ># SL</th>
-        <th>Msisdn</th>
-    </tr>
+        <tr>
+            <th width=5%># SL</th>
+            <th>Msisdn</th>
+        </tr>
     </thead>
     <tbody>
+        @php $i = 0 @endphp
+        @foreach ($msisdnList as $item)
+        <tr>
+            <th>{{++$i}}</th>
+            <th>{{ $item->msisdn }}</th>
+        </tr>    
+        @endforeach
     </tbody>
+    <div class="pull-right">
+        {{ $msisdnList->links() }}
+    </div>
 </table>
 
+{{--<div class="card">
+    @foreach ($msisdnList as $user)
+        {{ $user->msisdn }}
+    @endforeach
+</div>--}}
 
 @push('page-js')
-    {{--    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript">
-        </script>--}}
+{{--<script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>--}}
     <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script>
+{{--<script>
         $(function () {
             // new Clipboard('.copy-text');
             $("#msisdn_list").dataTable({
@@ -68,6 +81,5 @@
             //     $('#product_list').DataTable().ajax.reload();
             // });
         });
-    </script>
-
+</script>--}}
 @endpush

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Http\Requests\BaseMsisdnRequest;
+use App\Models\BaseMsisdn;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -118,11 +119,12 @@ class BaseMsisdnController extends Controller
      */
     public function edit($id)
     {
+        $msisdnList = $this->baseMsisdnService->getPaginatedBaseMsisdn($id);
         $baseMsisdn = $this->baseMsisdnService->findOne($id, 'baseMsisdns');
         $baseMsisdnFiles = $this->baseMsisdnFileRepository->findByProperties(['base_msisdn_group_id' => $id]);
-
         $page = 'edit';
-        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles'));
+        // dd($baseMsisdn, $baseMsisdnFiles);
+        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles', 'msisdnList'));
     }
 
     /**
