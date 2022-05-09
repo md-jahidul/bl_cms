@@ -89,6 +89,7 @@ class MyBlOwnRechargeInvertoryController extends Controller
         $hourSlots = $this->ownRechargeInventoryService->getHourSlots();
         $page = 'edit';
         $winningCampaignLogics = $this->ownRechargeWinningCappingService->find($campaign->id);
+        // dd($campaign->visibilityStatus());
         return view('admin.mybl-campaign.own-recharge-inventory.edit', compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange', 'winningCampaignLogics'));
     }
 

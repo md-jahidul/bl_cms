@@ -430,9 +430,11 @@
                                     
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
-                                            <button id="save" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> Save
-                                            </button>
+                                            @if($campaign->visibilityStatus()==false)
+                                                <button id="save" class="btn btn-primary"><i
+                                                        class="la la-check-square-o"></i> Save
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
