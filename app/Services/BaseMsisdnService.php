@@ -113,16 +113,7 @@ class BaseMsisdnService
     protected function fileWiseMsisdnUpload($insertData, $baseFileData)
     {
         $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-        foreach (array_chunk($insertData, 1000) as $smallerArray) {
-            foreach ($smallerArray as $index => $value) {
-                $temp[$index] = [
-                    'group_id' => $baseFileData['base_msisdn_group_id'],
-                    'base_msisdn_file_id' => $baseFileInfo->id,
-                    'msisdn' => $value
-                ];
-            }
-            BaseMsisdn::insert($temp);
-        }
+        dispatch(new BaseMsisdnFileUpload($insertData, $baseFileData, $baseFileInfo));
     }
 
     /**
