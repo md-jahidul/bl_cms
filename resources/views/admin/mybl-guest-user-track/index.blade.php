@@ -19,9 +19,10 @@
                           method="post">
                         @csrf
                         <div class="row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-3" id="date_range">
                                 <input type="text" name="date_range" class="form-control filter"
                                        autocomplete="off" id="date_range" placeholder="Date" required>
+                                <div class="help-block"></div>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -68,6 +69,14 @@
                                 </select>
                             </div>
 
+                            <div class="form-group col-md-3">
+                                <select class="form-control" name="user_activity_type" id="status">
+                                    <option value="">--User Type--</option>
+                                    <option value="1">Logged In User</option>
+                                    <option value="0">Guest User</option>
+                                </select>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="pull-right">
                                     <a href="#" id="search-btn" class="btn btn-outline-dark"><i
@@ -76,9 +85,9 @@
                                     <button type="submit" name="export_type" value="csv" class="btn btn-primary"><i
                                             class="la la-file"></i> CSV
                                     </button>
-                                    <button type="submit" name="export_type" value="xlsx" class="btn btn-warning"><i
-                                            class="la la-file-excel-o"></i> Excel
-                                    </button>
+{{--                                    <button type="submit" name="export_type" value="xlsx" class="btn btn-warning"><i--}}
+{{--                                            class="la la-file-excel-o"></i> Excel--}}
+{{--                                    </button>--}}
                                 </div>
                             </div>
                             <div class="col-md-12 mt-1">
@@ -120,9 +129,11 @@
     <script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
+            $('#filter-form').validate()
             $('input[name="date_range"]').daterangepicker({
                 autoUpdateInput: false,
                 showDropdowns: true,
@@ -142,66 +153,73 @@
 
             // Show Guest User Track Data
             $('#search-btn').click(function (e) {
-                e.preventDefault()
-                swal.fire({
-                    title: 'Data Loading. Please wait...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        swal.showLoading();
-                    }
-                });
-
-                $.ajax({
-                    method: 'POST',
-                    url: '{{ url('guest-user-show-data') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        date_range: function () {
-                            return $('input[name="date_range"]').val();
-                        },
-                        device_id: function () {
-                            return $('input[name="device_id"]').val();
-                        },
-                        msisdn: function () {
-                            return $('input[name="msisdn"]').val();
-                        },
-                        msisdn_entry_type: function () {
-                            return $('select[name="msisdn_entry_type"]').val();
-                        },
-                        platform: function () {
-                            return $('select[name="platform"]').val();
-                        },
-                        page_name: function () {
-                            return $('select[name="page_name"]').val();
-                        },
-                        status: function () {
-                            return $('select[name="status"]').val();
+                let date = $('input[name="date_range"]');
+                if(!date.val()) {
+                    $('#filter-form').submit()
+                } else {
+                    e.preventDefault()
+                    swal.fire({
+                        title: 'Data Loading. Please wait...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        onOpen: () => {
+                            swal.showLoading();
                         }
-                    },
-                    success: function (result) {
-                        $("#guestUserTrackList tbody").children().remove()
-                        result.data.map(function (data, index) {
-                            let count = index + 1;
-                            let msisdn = (data.msisdn) ? data.msisdn : "" ;
-                            let failedReason = (data.failed_reason) ? data.failed_reason : "" ;
-                            let inputType = "";
-                            if (data.msisdn_entry_type === "header_input") {
-                                inputType = "<b class='text-success'>Automatic (Header Input)</b>";
-                            } else if (data.msisdn_entry_type === "n/a") {
-                                inputType = "<b class='text-primary'>N/A</b>";
-                            } else {
-                                inputType = "<b class='text-warning'>User Input</b>";
-                            }
+                    });
 
-                            let status = '';
-                            if (data.page_access_status) {
-                                status += '<span class="badge badge-success">Success</span>'
-                            } else {
-                                status += '<span class="badge badge-danger">Failed</span>'
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ url('guest-user-show-data') }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            date_range: function () {
+                                return $('input[name="date_range"]').val();
+                            },
+                            device_id: function () {
+                                return $('input[name="device_id"]').val();
+                            },
+                            msisdn: function () {
+                                return $('input[name="msisdn"]').val();
+                            },
+                            msisdn_entry_type: function () {
+                                return $('select[name="msisdn_entry_type"]').val();
+                            },
+                            platform: function () {
+                                return $('select[name="platform"]').val();
+                            },
+                            page_name: function () {
+                                return $('select[name="page_name"]').val();
+                            },
+                            status: function () {
+                                return $('select[name="status"]').val();
+                            },
+                            user_activity_type: function () {
+                                return $('select[name="user_activity_type"]').val();
                             }
+                        },
+                        success: function (result) {
+                            $("#guestUserTrackList tbody").children().remove()
+                            result.data.map(function (data, index) {
+                                let count = index + 1;
+                                let msisdn = (data.msisdn) ? data.msisdn : "" ;
+                                let failedReason = (data.failed_reason) ? data.failed_reason : "" ;
+                                let inputType = "";
+                                if (data.msisdn_entry_type === "header_input") {
+                                    inputType = "<b class='text-success'>Automatic (Header Input)</b>";
+                                } else if (data.msisdn_entry_type === "n/a") {
+                                    inputType = "<b class='text-primary'>N/A</b>";
+                                } else {
+                                    inputType = "<b class='text-warning'>User Input</b>";
+                                }
 
-                            let tbody = `<tr>
+                                let status = '';
+                                if (data.page_access_status) {
+                                    status += '<span class="badge badge-success">Success</span>'
+                                } else {
+                                    status += '<span class="badge badge-danger">Failed</span>'
+                                }
+
+                                let tbody = `<tr>
                                             <td>`+count+`</td>
                                             <td>`+msisdn+`</td>
                                             <td>`+inputType+`</td>
@@ -212,26 +230,27 @@
                                             <td>`+failedReason+`</td>
                                             <td>`+data.created_at+`</td>
                                         </tr>`;
-                            $("#guestUserTrackList tbody").append(tbody);
-                        })
+                                $("#guestUserTrackList tbody").append(tbody);
+                            })
 
-                        if (result.success) {
-                            swal.fire({
-                                title: result.massage,
-                                type: 'success',
-                                timer: 1000,
-                                showConfirmButton: false
-                            });
-                        } else {
-                            swal.fire({
-                                title: result.massage,
-                                type: 'warning',
-                                timer: 1000,
-                                showConfirmButton: false
-                            });
+                            if (result.success) {
+                                swal.fire({
+                                    title: result.massage,
+                                    type: 'success',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                });
+                            } else {
+                                swal.fire({
+                                    title: result.massage,
+                                    type: 'warning',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
             })
             // Show Guest User Track Data
         });
