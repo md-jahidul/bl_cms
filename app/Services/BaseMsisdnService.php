@@ -110,9 +110,8 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function fileWiseMsisdnUpload($insertData, $baseFileData)
+    protected function fileWiseMsisdnUpload($insertData, $baseFileData, $baseFileInfo)
     {
-        $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
         dispatch(new BaseMsisdnFileUpload($insertData, $baseFileData, $baseFileInfo));
     }
 
@@ -147,9 +146,10 @@ class BaseMsisdnService
                         'base_msisdn_group_id' => $baseGroup->id,
                         'status' => 0,
                     ];
-
+                    $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
                     $insertData = array();
                     foreach ($reader->getSheetIterator() as $sheet) {
+                        $cnt=0;
                         foreach ($sheet->getRowIterator() as $rowNum => $row) {
                             $cells = $row->getCells();
                             $msisdn = trim($cells[0]->getValue());
@@ -161,22 +161,28 @@ class BaseMsisdnService
                                     'message' => "<b>FIle Name:</b>  $fileOrgName <br> Upload Failed! Wrong msisdn at row: " . $rowNum
                                 ];
                             }
+                            ++$cnt;
                             $insertData[] = "0" . substr($msisdn, -10);
+                            if($cnt%300==0){
+                                $this->fileWiseMsisdnUpload($insertData, $baseFileData, $baseFileInfo);
+                                $cnt=0;
+                                $insertData = [];
+                            }
                         }
+                        $this->fileWiseMsisdnUpload($insertData, $baseFileData, $baseFileInfo);
                     }
 
                     // Check maximum upload
-                    $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
-                    $msisdnLimit = 100000 * 10 * $million;
+                    // $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
+                    // $msisdnLimit = 100000 * 10 * $million;
 
-                    if (count($insertData) > $msisdnLimit) {
-                        $inputMsisdn = count($insertData) / 1000000;
-                        return [
-                            'status' => false,
-                            'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
-                        ];
-                    }
-                    $this->fileWiseMsisdnUpload($insertData, $baseFileData);
+                    // if (count($insertData) > $msisdnLimit) {
+                    //     $inputMsisdn = count($insertData) / 1000000;
+                    //     return [
+                    //         'status' => false,
+                    //         'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
+                    //     ];
+                    // }
                 }
             }
 
