@@ -14,6 +14,21 @@
             </div>
             <div class="card-content">
                 <div class="card-body card-dashboard">
+                    @if($fileDownloadStatus === "0")
+                        <div class="alert bg-info alert-dismissible mb-2" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            File generate in progress. Please refresh again after faw minute
+                        </div>
+{{--                    @elseif($fileDownloadStatus != null)--}}
+{{--                        <div class="alert bg-success alert-dismissible mb-2" role="alert">--}}
+{{--                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
+{{--                                <span aria-hidden="true">×</span>--}}
+{{--                            </button>--}}
+{{--                            File is now available for download.--}}
+{{--                        </div>--}}
+                    @endif
 
                     <form action="{{route('guest-user-data-export')}}" id="filter-form" class="filter-container"
                           method="post">
@@ -85,6 +100,11 @@
                                     <button type="submit" name="export_type" value="csv" class="btn btn-primary"><i
                                             class="la la-file"></i> CSV
                                     </button>
+                                    @if($fileDownloadStatus > 0 && $filePathExists)
+                                        <a href="{{ url('guest-user-data-download') }}" id="search-btn" class="btn btn-success"><i
+                                                class="la la-download"></i> Download
+                                        </a>
+                                    @endif
 {{--                                    <button type="submit" name="export_type" value="xlsx" class="btn btn-warning"><i--}}
 {{--                                            class="la la-file-excel-o"></i> Excel--}}
 {{--                                    </button>--}}

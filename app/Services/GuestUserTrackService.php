@@ -9,11 +9,14 @@
 
 namespace App\Services;
 
+use App\Jobs\GuestUserDataDownload;
 use App\Repositories\GuestCustomerActivityRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class GuestUserTrackService
 {
@@ -37,7 +40,7 @@ class GuestUserTrackService
 
     public function dataExportGenerator($request, $showData = null)
     {
-        $rawQuery = 'SELECT msisdn, device_id,last_activity,last_login_at,device_type,
+        $rawQuery = 'SELECT msisdn,page_access_status,device_id,last_activity,last_login_at,device_type,
                            msisdn_entry_type,page_name,failed_reason,created_at
                      FROM guest_customer_activities WHERE';
         if (isset($request->device_id)) {
@@ -78,27 +81,12 @@ class GuestUserTrackService
         $rawQueryFiltered = str_replace("WHERE AND", 'WHERE', $rawQuery);
 
         if (isset($request->export_type)) {
-            $dbUser = env('DB_USERNAME');
-            $dbPPassword = env('DB_PASSWORD');
-            $dbName = env('DB_DATABASE');
-            $logUploadPath = env('GUEST_USER_LOG_FILE', "");
-            $fileName = "guest_user.csv";
-
-            // Raw Mysql Query
-            $cmd = 'mysql -e ' . '"' . $rawQueryFiltered . '"' . ' -u ' . $dbUser . ' -p' . $dbPPassword . ' ' . $dbName . ' > ' . $logUploadPath . $fileName;
-            // Query Execution
-            exec($cmd);
-
-            // File download
-            $file = $logUploadPath . $fileName;
-            $headers = array(
-                'Content-Type: application/csv',
-            );
-            return Response::download($file, $fileName, $headers);
+            GuestUserDataDownload::dispatch($rawQueryFiltered);
+            return response('File generate in progress. Please refresh again after faw minute');
         }
 
         // Show Data
-        $guestUserActivity = DB::select(DB::raw($rawQueryFiltered));
+        $guestUserActivity = DB::select($rawQueryFiltered);
         $guestUserActivity = json_decode(json_encode($guestUserActivity), true);
 
         if ($showData) {
@@ -116,5 +104,21 @@ class GuestUserTrackService
                 ];
             }
         }
+    }
+
+    /**
+     * @return BinaryFileResponse
+     * File download
+     */
+    public function fileDownloadRequest()
+    {
+        $logUploadPath = env('GUEST_USER_LOG_FILE', "");
+        $fileName = "guest_user.csv";
+        $file = $logUploadPath . $fileName;
+        $headers = array(
+            'Content-Type: application/csv',
+        );
+        Redis::del("guest_user_file_generate_status");
+        return Response::download($file, $fileName, $headers);
     }
 }
