@@ -18,7 +18,7 @@ class BaseMsisdnFileUpload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-   private $insertData;
+   private $insertData, $sheet, $filePath;
    private $baseFileData, $baseFileInfo;
 
     /**
@@ -26,11 +26,11 @@ class BaseMsisdnFileUpload implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($insertData, $baseFileData, $baseFileInfo)
+    public function __construct($filePath, $baseFileData, $baseFileInfo)
     {
-       $this->insertData = $insertData;
-       $this->baseFileData = $baseFileData;
-       $this->baseFileInfo = $baseFileInfo;
+       $this->filePath      = $filePath;
+       $this->baseFileData  = $baseFileData;
+       $this->baseFileInfo  = $baseFileInfo;
     }
 
     /**
@@ -40,15 +40,41 @@ class BaseMsisdnFileUpload implements ShouldQueue
      */
     public function handle()
     {
-        foreach (array_chunk($this->insertData, 1000) as $smallerArray) {
-            foreach ($smallerArray as $index => $value) {
-                $temp[$index] = [
-                    'group_id' => $this->baseFileData['base_msisdn_group_id'],
-                    'base_msisdn_file_id' => $this->baseFileInfo->id,
-                    'msisdn' => $value
-                ];
+        $reader = ReaderFactory::createFromFile($this->filePath); // for XLSX and CSV files
+        $reader->open($this->filePath);
+        foreach ($reader->getSheetIterator() as $sheet) {
+            $cnt=0;
+            $insertData = array();
+            foreach ($sheet->getRowIterator() as $rowNum => $row) {
+                $cells = $row->getCells();
+                $msisdn = trim($cells[0]->getValue());
+                ++$cnt;
+                $insertData[] = "0" . substr($msisdn, -10);
+                if($cnt%3000==0){
+                    foreach (array_chunk($insertData, 1000) as $smallerArray) {
+                        foreach ($smallerArray as $index => $value) {
+                            $temp[$index] = [
+                                'group_id' => $this->baseFileData['base_msisdn_group_id'],
+                                'base_msisdn_file_id' => $this->baseFileInfo->id,
+                                'msisdn' => $value
+                            ];
+                        }
+                        BaseMsisdn::insert($temp);
+                    }
+                    $cnt=0;
+                    $insertData = [];
+                }
             }
-            BaseMsisdn::insert($temp);
+            foreach (array_chunk($insertData, 1000) as $smallerArray) {
+                foreach ($smallerArray as $index => $value) {
+                    $temp[$index] = [
+                        'group_id' => $this->baseFileData['base_msisdn_group_id'],
+                        'base_msisdn_file_id' => $this->baseFileInfo->id,
+                        'msisdn' => $value
+                    ];
+                }
+                BaseMsisdn::insert($temp);
+            }
         }
     }
 }

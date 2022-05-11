@@ -110,11 +110,6 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function fileWiseMsisdnUpload($insertData, $baseFileData, $baseFileInfo)
-    {
-        dispatch(new BaseMsisdnFileUpload($insertData, $baseFileData, $baseFileInfo));
-    }
-
     /**
      * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
      * @throws UnsupportedTypeException
@@ -138,8 +133,8 @@ class BaseMsisdnService
                     $fileName = $fileName . "-" . uniqid(2) . "." . $fileExt;
                     $path = $this->upload($file['file_name'], 'base-msisdn-files', $fileName);
                     $file_path = $this->getPath($path);
-                    $reader = ReaderFactory::createFromFile($file_path); // for XLSX and CSV files
-                    $reader->open($file_path);
+                    // $reader = ReaderFactory::createFromFile($file_path); // for XLSX and CSV files
+                    // $reader->open($file_path);
                     $baseFileData = [
                         'file_name' => $path,
                         'title' => $file['file_title'],
@@ -147,30 +142,9 @@ class BaseMsisdnService
                         'status' => 0,
                     ];
                     $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-                    $insertData = array();
-                    foreach ($reader->getSheetIterator() as $sheet) {
-                        $cnt=0;
-                        foreach ($sheet->getRowIterator() as $rowNum => $row) {
-                            $cells = $row->getCells();
-                            $msisdn = trim($cells[0]->getValue());
 
-                            // Check msisdn length less than 10
-                            if (strlen($msisdn) < 10) {
-                                return [
-                                    'status' => false,
-                                    'message' => "<b>FIle Name:</b>  $fileOrgName <br> Upload Failed! Wrong msisdn at row: " . $rowNum
-                                ];
-                            }
-                            ++$cnt;
-                            $insertData[] = "0" . substr($msisdn, -10);
-                            if($cnt%300==0){
-                                $this->fileWiseMsisdnUpload($insertData, $baseFileData, $baseFileInfo);
-                                $cnt=0;
-                                $insertData = [];
-                            }
-                        }
-                        $this->fileWiseMsisdnUpload($insertData, $baseFileData, $baseFileInfo);
-                    }
+                    dispatch(new BaseMsisdnFileUpload($file_path, $baseFileData, $baseFileInfo));
+                    // dd("success");
 
                     // Check maximum upload
                     // $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
@@ -234,7 +208,7 @@ class BaseMsisdnService
                 return $response;
             });
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             Log::error('Base Msisdn Save: ' . $e->getMessage());
             return $e->getMessage();
         }
@@ -255,7 +229,7 @@ class BaseMsisdnService
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return $e->getMessage();
         }
     }
