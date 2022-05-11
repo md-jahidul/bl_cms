@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Al Internet Offer Categories')
-@section('card_name', 'Al Internet Offer Categories')
+@section('title', 'Product Category List')
+@section('card_name', 'Product Category List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Al Internet Offer Category List</li>
+    <li class="breadcrumb-item active">Product Category List</li>
 @endsection
 @section('action')
     <a href="{{ route('al.internetOffer.category.create')}}" id="add_category_btn" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Al Internet Offer Category
+        Create Product Category List
     </a>
 @endsection
 @section('content')
@@ -25,7 +25,7 @@
                             <th width='20%'>Slug</th>
                             <th width='10%'>Sort</th>
                             <th width='10%'>Date</th>
-                            <th width='3%'>Deep Link</th>
+                            {{-- <th width='3%'>Deep Link</th> --}}
                             <th width='20%'>Action</th>
                         </tr>
                         </thead>
@@ -37,7 +37,7 @@
                                 <td width='10%'>{{$internet_offer->slug}}</td>
                                 <td width='10%'>{{$internet_offer->sort}}</td>
                                 <td width='15%'>{{$internet_offer->created_at}}</td>
-                                <td width='5%' class="deep-link-section-{{ $internet_offer->id }}">
+                                {{-- <td width='5%' class="deep-link-section-{{ $internet_offer->id }}">
                                     @if(isset($internet_offer->dynamicLinks))
                                         <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
                                                 data-toggle="tooltip" data-placement="button"
@@ -51,7 +51,7 @@
                                             <i  class="la icon-link"></i>
                                         </button>
                                     @endif
-                                </td>
+                                </td> --}}
 
                                 <td width='10%'>
 {{--                                    <button class="btn btn-icon btn-outline-success edit create_deep_link"--}}
