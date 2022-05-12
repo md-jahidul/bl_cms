@@ -50,6 +50,7 @@ class GuestUserDataDownload implements ShouldQueue
                 "MSISDN ENTRY TYPE",
                 "PAGE NAME",
                 "FAILED REASON",
+                "PAGE ACCESS STATUS",
                 "DATE TIME"
             ],
         ];

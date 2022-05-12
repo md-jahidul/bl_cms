@@ -40,8 +40,8 @@ class GuestUserTrackService
 
     public function dataExportGenerator($request, $showData = null)
     {
-        $rawQuery = 'SELECT msisdn,page_access_status,device_id,last_activity,last_login_at,device_type,
-                           msisdn_entry_type,page_name,failed_reason,created_at
+        $rawQuery = 'SELECT msisdn,device_id,last_activity,last_login_at,device_type,
+                           msisdn_entry_type,page_name,failed_reason,page_access_status,created_at
                      FROM guest_customer_activities WHERE';
         if (isset($request->device_id)) {
             $rawQuery .= " AND device_id LIKE " . "'%" . $request->device_id . "%'";
