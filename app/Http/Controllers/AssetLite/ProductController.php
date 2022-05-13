@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -345,6 +346,35 @@ class ProductController extends Controller
             "url" => url("offers/$type"),
             "success" => true
         ]);
+    }
+
+    public function  uploadExcel(){
+
+        return view('admin.product.excel_upload');
+    }
+    public function uploadProductCodeAndSlugByExcel(Request $request){
+        try {
+            $file = $request->file('product_file');
+            $path = $file->storeAs(
+                'al-products/' . strtotime(now() . '/'),
+                "products" . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+            $path = Storage::disk('public')->path($path);
+
+            $this->alCoreProductService->syncProductCategory($path);
+
+            $response = [
+                'success' => 'SUCCESS'
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
     }
 
 }

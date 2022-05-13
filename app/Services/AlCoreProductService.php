@@ -12,6 +12,7 @@ use App\Models\ProductDetail;
 use App\Repositories\AlCoreProductRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
+use App\Services\Assetlite\AlInternetOffersCategoryService;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Common\Type;
@@ -44,6 +45,7 @@ class AlCoreProductService
     protected $alCoreProductRepository;
     protected $searchRepository;
     protected $tagRepository;
+    private $alInternetOffersCategoryService;
 
     /**
      * @var array
@@ -59,11 +61,13 @@ class AlCoreProductService
     public function __construct(
         AlCoreProductRepository $alCoreProductRepository,
         SearchDataRepository $searchRepository,
-        TagCategoryRepository $tagRepository
+        TagCategoryRepository $tagRepository,
+        AlInternetOffersCategoryService $alInternetOffersCategoryService
     ) {
         $this->alCoreProductRepository = $alCoreProductRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
+        $this->alInternetOffersCategoryService = $alInternetOffersCategoryService;
         $this->setActionRepository($alCoreProductRepository);
     }
 
@@ -939,6 +943,44 @@ class AlCoreProductService
         //Log::info(json_encode($values));
         if (!empty($values)) {
             Redis::del($values);
+        }
+    }
+
+    public function syncProductCategory($path){
+
+        try {
+            $productCodes = [];
+            $slugs       = [];
+            $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
+            $file_path = $path;
+            $reader->open($file_path);
+
+            foreach ($reader->getSheetIterator() as $sheet) {
+                $row_number = 1;
+                foreach ($sheet->getRowIterator() as $row) {
+                    if($row_number==1){
+                        ++$row_number;
+                        continue;
+                    }
+                    $cells          = $row->getCells();
+                    $productCode    = $cells[0]->getValue();
+                    $slugs          = (explode(",",$cells[1]->getValue()));
+                    
+                    if(!isset($productCodes[$productCode])){
+                        $findProduct = $this->alCoreProductRepository->findWithProduct($productCode);
+                        if($findProduct == null)continue;
+                        $productCodes[$productCode] = true;
+                    }
+                    // dd($productCode, $slugs[$slug]);
+                    $categoriesIds = $this->alInternetOffersCategoryService->findCategoryIdByslugs($slugs);
+                    $this->alInternetOffersCategoryService->upSert($productCode, $categoriesIds);
+                }
+            }
+            $reader->close();
+            return true;
+        } catch (Exception $e) {
+            Log::error('Excel Entry Error: ' . $e->getMessage());
+            return 0;
         }
     }
 }
