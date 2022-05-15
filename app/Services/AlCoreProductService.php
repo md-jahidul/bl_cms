@@ -959,6 +959,16 @@ class AlCoreProductService
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
                     if($row_number==1){
+                        $cells          = $row->getCells();
+                        $cell1Title     = strtolower($cells[0]->getValue());
+                        $cell2Title     = strtolower($cells[1]->getValue());
+                        if($cell1Title != "product code" || $cell2Title != "slug"){
+                            return response()->json([
+                                'failed' => 'FAILED',
+                                'message' => 'Failed to upload excel'
+                            ], 500);
+                        }
+                        
                         ++$row_number;
                         continue;
                     }
@@ -977,10 +987,15 @@ class AlCoreProductService
                 }
             }
             $reader->close();
-            return true;
+            return response()->json([
+                'success' => 'SUCCESS'
+            ], 200);
         } catch (Exception $e) {
             Log::error('Excel Entry Error: ' . $e->getMessage());
-            return 0;
+            return response()->json([
+                'failed' => 'FAILED',
+                'message' => 'Failed to upload excel'
+            ], 500);
         }
     }
 }

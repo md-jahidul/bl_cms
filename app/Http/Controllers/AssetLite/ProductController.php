@@ -362,12 +362,8 @@ class ProductController extends Controller
             );
             $path = Storage::disk('public')->path($path);
 
-            $this->alCoreProductService->syncProductCategory($path);
-
-            $response = [
-                'success' => 'SUCCESS'
-            ];
-            return response()->json($response, 200);
+            return $this->alCoreProductService->syncProductCategory($path);
+            
         } catch (\Exception $e) {
             $response = [
                 'success' => 'FAILED',
