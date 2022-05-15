@@ -14,10 +14,12 @@
                             <form class="form" method="POST" id="uploadProduct" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="message">Upload Excel</label>
+                                    <div class="form-group">
+                                        <label for="message">Upload Excel</label> <a href="{{ asset('sample-format/categories-sync-with-product.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                                    </div>
                                     <p class="text-left">
                                         <small class="warning text-muted">
-                                            Please upload excell in a specific format.
+                                            Please download the format and upload in a specific format.
                                         </small>
                                     </p>
                                     <input type="file" class="dropify" name="product_file" data-height="80"
