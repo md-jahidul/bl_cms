@@ -202,6 +202,17 @@ class HealthHubController extends Controller
         return $this->healthHubService->deeplinkAnalyticDetails($request, $dynamicDeepLinkId);
     }
 
+    public function categoryInAppAnalyticDetails(Request $request, $feedCatId)
+    {
+        return $this->healthHubService->feedCatDetails($request, $feedCatId);
+    }
+
+
+    public function categoryInAppAnalytic(Request $request)
+    {
+        return $this->healthHubService->categoryInAppHitCount($request);
+    }
+
 
     /**
      * Remove the specified resource from storage.

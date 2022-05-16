@@ -800,6 +800,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
         ->name('health-hub-deeplink-analytic-details');
 
+    Route::post('health-hub-category/in-app-analytic', 'CMS\HealthHubController@categoryInAppAnalytic')
+        ->name('health_hub.in_app.analytic');
+    Route::post('health-hub-category/in-app-analytic-details/{feed_cat_id}', 'CMS\HealthHubController@categoryInAppAnalyticDetails')
+        ->name('health_hub.in_app.analytic.details');
+
 
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');

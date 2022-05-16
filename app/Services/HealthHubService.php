@@ -268,6 +268,31 @@ class HealthHubService
         return $this->deeplinkMsisdnHitCountRepository->deeplinkAnalyticMsisdnCount($request, $dynamicDeepLinkId);
     }
 
+    public function feedCatDetails($request, $feedCatId)
+    {
+        dd($request->all());
+        return $this->feedCategoryRepository->feedCatHitMsisdnCount($request, $feedCatId);
+    }
+
+    public function categoryInAppHitCount($request)
+    {
+//        $feedCat = $this->feedCategoryRepository->findOneByProperties(['slug' => 'health-hub']);
+
+        $feedCatData = $this->feedCategoryRepository->hitCountByfeedCatId($request, 'health-hub');
+
+        $data = [
+            "id" => $feedCatData->id ?? 0,
+            "title_en" => "Health Hub",
+            "total_hit_count" => isset($feedCatData->categoryInAppHitCounts) ? $feedCatData->categoryInAppHitCounts->count(
+            ) : 0,
+            "total_unique_hit" => isset($feedCatData->categoryInAppHitCounts) ? $feedCatData->categoryInAppHitCounts->groupBy(
+                'msisdn'
+            )->count() : 0,
+        ];
+
+        return $data;
+    }
+
     /**
      * @param $id
      * @return array
