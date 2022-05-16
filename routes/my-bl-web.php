@@ -800,7 +800,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
         ->name('health-hub-deeplink-analytic-details');
 
-
+    // Health Hub New Journey
+    Route::resource('health-hub-feature-dashboard', 'CMS\HealthHubNewJourney\HealthHubDashboardController');
+    Route::get('health-hub-feature-dashboard/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubDashboardController@destroy')->name('health-hub-feature-dashboard.destroy');
+    Route::resource('health-hub-feature-service', 'CMS\HealthHubNewJourney\HealthHubServiceController');
+    Route::get('health-hub-feature-service/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@destroy');
+    Route::resource('health-hub-feature-partner', 'CMS\HealthHubNewJourney\HealthHubPartnerController');
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 

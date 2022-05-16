@@ -289,6 +289,31 @@
         </ul>
     </li>
 
+     <!-- Health Hub New Journey -->
+    <li class=" nav-item"><a href="#"><i class="la la-h-square"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Health Hub New Journey</span></a>
+        <ul class="menu-content">
+            {{--page--}}
+            <li class="{{ is_active_url('health-hub-feature-dashboard') }}{{ is_active_url('health-hub-feature-dashboard') }}">
+                <a class="menu-item" href="{{ route('health-hub-feature-dashboard.index') }}"
+                data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Dashboard
+                </a>
+            </li>
+            <li class="{{ is_active_url('health-hub-feature-service') }}{{ is_active_url('health-hub-feature-service') }}">
+                <a class="menu-item" href="{{ route('health-hub-feature-service.index') }}"
+                data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Services
+                </a>
+            </li>
+            <li class="{{ is_active_url('health-hub-feature-partner') }}{{ is_active_url('health-hub-feature-partner') }}">
+                <a class="menu-item" href="{{ route('health-hub-feature-partner.index') }}"
+                data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-users"></i>Partners
+                </a>
+            </li>
+        </ul>
+    </li>
     <!-- Loyalty Partner Menu -->
     @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
