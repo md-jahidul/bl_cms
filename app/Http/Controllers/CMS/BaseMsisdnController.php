@@ -11,6 +11,8 @@ use App\Services\BaseMsisdnService;
 use App\Http\Requests\BaseMsisdnRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redis;
+
 
 class BaseMsisdnController extends Controller
 {
@@ -120,9 +122,10 @@ class BaseMsisdnController extends Controller
     {
         $baseMsisdn = $this->baseMsisdnService->findOne($id, 'baseMsisdns');
         $baseMsisdnFiles = $this->baseMsisdnFileRepository->findByProperties(['base_msisdn_group_id' => $id]);
-
+        $keyValue = Redis::get("categories-sync-with-product".$id);
+    
         $page = 'edit';
-        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles'));
+        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles', 'keyValue'));
     }
 
     /**
