@@ -122,7 +122,7 @@ class BaseMsisdnController extends Controller
     public function edit($id)
     {
         $msisdnList = $this->baseMsisdnService->getPaginatedBaseMsisdn($id);
-        $baseMsisdn = $this->baseMsisdnService->findOne($id, 'baseMsisdns');
+        $baseMsisdn = $this->baseMsisdnService->findOne($id);
         $baseMsisdnFiles = $this->baseMsisdnFileRepository->findByProperties(['base_msisdn_group_id' => $id]);
         $page = 'edit';
         $keyValue = Redis::get("categories-sync-with-product".$id);
