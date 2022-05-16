@@ -142,7 +142,7 @@ class BaseMsisdnService
                         'status' => 0,
                     ];
                     $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-
+                    Redis::set('categories-sync-with-product'. $baseFileInfo->base_msisdn_group_id, 1);
                     dispatch(new BaseMsisdnFileUpload($file_path, $baseFileData, $baseFileInfo));
                     // dd("success");
 
