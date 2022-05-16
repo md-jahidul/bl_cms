@@ -13,6 +13,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
+
 
 class BaseMsisdnFileUpload implements ShouldQueue
 {
@@ -76,5 +78,7 @@ class BaseMsisdnFileUpload implements ShouldQueue
                 BaseMsisdn::insert($temp);
             }
         }
+
+        Redis::set('categories-sync-with-product'. $this->baseFileInfo->base_msisdn_group_id, 2);
     }
 }
