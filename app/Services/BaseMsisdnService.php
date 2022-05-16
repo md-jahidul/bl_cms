@@ -81,7 +81,7 @@ class BaseMsisdnService
 
     public function getPaginatedBaseMsisdn($id)
     {
-        return BaseMsisdn::where('group_id', $id)->paginate(5);
+        return BaseMsisdn::select('msisdn')->where('group_id', $id)->paginate(5);
     }
 
     public function getBaseMsisdn($request, $id)
