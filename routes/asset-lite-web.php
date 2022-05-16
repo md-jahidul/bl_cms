@@ -198,7 +198,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('offers/{type}/{id}/edit/', 'AssetLite\ProductController@edit')->name('product.edit');
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
-
+    Route::get('al-product-category-sync', 'AssetLite\ProductController@uploadExcel')->name('excel.upload');
+    Route::post('al-product-category-sync', 'AssetLite\ProductController@uploadProductCodeAndSlugByExcel')->name('al-product-category-sync');
     Route::post('package/related-product/store', 'AssetLite\ProductController@packageRelatedProductStore');
 
     // al internet offer category
