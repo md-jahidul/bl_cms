@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\CMS\HealthHubNewJourney;
 
 use App\HealthHubPartner;
+use App\Services\HealthHubNewJourney\HealthHubPartnerService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HealthHubPartnerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $healthHubPartnerService;
+    public function __construct(HealthHubPartnerService $healthHubPartnerService)
+    {
+        $this->healthHubPartnerService = $healthHubPartnerService;
+    }
+
     public function index()
     {
-        //
+        $partners = $this->healthHubPartnerService->findAll();
+       
+        return view('admin.health-hub-new-journey.partner.index', compact('partners'));
     }
 
     /**
@@ -25,7 +29,7 @@ class HealthHubPartnerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.health-hub-new-journey.partner.create'); 
     }
 
     /**
@@ -36,7 +40,10 @@ class HealthHubPartnerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($this->healthHubPartnerService->save($request->all()))Session()->flash('message', 'Partner Created successfully.');
+        else session()->flash('warning', 'Partner Created Failed');
+
+        return redirect('health-hub-feature-partner');
     }
 
     /**
@@ -56,9 +63,11 @@ class HealthHubPartnerController extends Controller
      * @param  \App\HealthHubPartner  $healthHubPartner
      * @return \Illuminate\Http\Response
      */
-    public function edit(HealthHubPartner $healthHubPartner)
+    public function edit($id)
     {
-        //
+        $partner = $this->healthHubPartnerService->findOne($id);
+
+        return view('admin.health-hub-new-journey.partner.edit', compact('partner'));
     }
 
     /**
@@ -68,9 +77,12 @@ class HealthHubPartnerController extends Controller
      * @param  \App\HealthHubPartner  $healthHubPartner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HealthHubPartner $healthHubPartner)
+    public function update(Request $request,  $id)
     {
-        //
+        if($this->healthHubPartnerService->update($request->all(), $id))Session()->flash('message', 'Partner Update successfully.');
+        else session()->flash('warning', 'Partner Updated Failed');
+
+        return redirect('health-hub-feature-partner');
     }
 
     /**
@@ -79,8 +91,8 @@ class HealthHubPartnerController extends Controller
      * @param  \App\HealthHubPartner  $healthHubPartner
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HealthHubPartner $healthHubPartner)
+    public function destroy($id)
     {
-        //
+        return $this->healthHubPartnerService->delete($id);
     }
 }
