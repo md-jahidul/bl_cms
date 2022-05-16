@@ -121,7 +121,7 @@ class AlInternetOffersCategoryService
 
     public function findCategoryIdBySlugs($slugs){
 
-        return MyBlInternetOffersCategory::whereIn('slug', $slugs)->pluck('id');
+        return MyBlInternetOffersCategory::whereIn('slug', $slugs)->where('platform', 'al')->pluck('id');
     }
 
 }

@@ -962,7 +962,7 @@ class AlCoreProductService
                         $cells          = $row->getCells();
                         $cell1Title     = strtolower($cells[0]->getValue());
                         $cell2Title     = strtolower($cells[1]->getValue());
-                        if($cell1Title != "product code" || $cell2Title != "slug"){
+                        if($cell1Title != "code" || $cell2Title != "slugs"){
                             return response()->json([
                                 'failed' => 'FAILED',
                                 'message' => 'Failed to upload excel'
@@ -983,7 +983,7 @@ class AlCoreProductService
                     }
                     // dd($productCode, $slugs[$slug]);
                     $categoriesIds = $this->alInternetOffersCategoryService->findCategoryIdByslugs($slugs);
-                    $this->alInternetOffersCategoryService->upSert($productCode, $categoriesIds);
+                    if(isset($categoriesIds[0]))$this->alInternetOffersCategoryService->upSert($productCode, $categoriesIds);
                 }
             }
             $reader->close();
