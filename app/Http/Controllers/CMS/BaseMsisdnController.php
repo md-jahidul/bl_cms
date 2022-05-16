@@ -10,9 +10,9 @@ use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Http\Requests\BaseMsisdnRequest;
 use App\Models\BaseMsisdn;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redis;
 
 
 class BaseMsisdnController extends Controller
@@ -127,7 +127,7 @@ class BaseMsisdnController extends Controller
         $page = 'edit';
         $keyValue = Redis::get("categories-sync-with-product".$id);
         
-        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles', 'msisdnList'));
+        return view('admin.myblslider.base.create', compact('keyValue', 'baseMsisdn', 'page', 'baseMsisdnFiles', 'msisdnList'));
     }
 
     /**
