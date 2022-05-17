@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\CMS\HealthHubNewJourney;
 
 use App\HealthHubService;
+use App\Services\HealthHubNewJourney\HealthHubDashboardService;
 use App\Services\HealthHubNewJourney\HealthHubFeatureService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HealthHubServiceController extends Controller
 {
-    private $healthHubFeatureService;
+    private $healthHubFeatureService, $healthHubDashBoardService;
 
-    public function __construct(HealthHubFeatureService $healthHubFeatureService)
+    public function __construct(HealthHubFeatureService $healthHubFeatureService, HealthHubDashboardService $healthHubDashBoardService)
     {
-        $this->healthHubFeatureService = $healthHubFeatureService;
+        $this->healthHubFeatureService   = $healthHubFeatureService;
+        $this->healthHubDashBoardService = $healthHubDashBoardService;
     }
     public function index()
     {
@@ -92,6 +94,24 @@ class HealthHubServiceController extends Controller
      */
     public function destroy($id)
     {
-        return $this->healthHubFeatureService->delete($id);
+        return $this->healthHubFeatureService->destroy($id);
+    }
+
+    public function updateDashboardId($id){
+        $dashboard = $this->healthHubDashBoardService->first();
+        $this->healthHubFeatureService->updateDashboardId($id, $dashboard->id);
+
+        return [
+            'value' => true
+        ];
+    }
+
+    public function deleteDashboardId($id){
+
+        $this->healthHubFeatureService->deleteDashboardId($id);
+
+        return [
+            'value' => true
+        ];
     }
 }

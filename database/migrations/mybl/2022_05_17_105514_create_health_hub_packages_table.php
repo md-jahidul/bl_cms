@@ -17,6 +17,7 @@ class CreateHealthHubPackagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('health_hub_partner_id');
             $table->unsignedBigInteger('health_hub_plan_id');
+            $table->unsignedBigInteger('health_hub_dashboard_id')->nullable();
             $table->string('title_en');
             $table->string('title_bn');
             $table->string('logo');
@@ -36,6 +37,9 @@ class CreateHealthHubPackagesTable extends Migration
                 ->on('health_hub_plans')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreign('health_hub_dashboard_id')
+                ->references('id')
+                ->on('health_hub_dashboards');
         });
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HealthHubPackage extends Model
 {
-    protected $fillable = ['title_en', 'title_bn', 'logo', 'callback_url',
+    protected $fillable = ['title_en', 'title_bn', 'logo', 'callback_url', 'health_hub_dashboard_id',
                             'redirect_url', 'health_hub_partner_id', 'details_en', 'details_bn', 'health_hub_plan_id', 'status'];
 
     public function partner(){

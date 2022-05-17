@@ -4,6 +4,8 @@ namespace App\Http\Controllers\CMS\HealthHubNewJourney;
 
 use App\HealthHubDashboard;
 use App\Services\HealthHubNewJourney\HealthHubDashboardService;
+use App\Services\HealthHubNewJourney\HealthHubFeatureService;
+use App\Services\HealthHubNewJourney\HealthHubPackageService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,18 +16,23 @@ class HealthHubDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private  $healthHubDashBoardService;
-    public function __construct(HealthHubDashboardService $healthHubDashBoardService)
-    {
+    private  $healthHubDashBoardService, $healthHubPackageService, $healthHubFeatureService;
+    public function __construct(
+        HealthHubDashboardService $healthHubDashBoardService,
+        HealthHubPackageService $healthHubPackageService,
+        HealthHubFeatureService $healthHubFeatureService
+    ){
         $this->healthHubDashBoardService = $healthHubDashBoardService;
+        $this->healthHubPackageService   = $healthHubPackageService;
+        $this->healthHubFeatureService   = $healthHubFeatureService;
     }
 
     public function index()
     {
-        $data = $this->healthHubDashBoardService->findAll();
-        // dd($data[0]);
-        $data = $data[0];
-        return view('admin.health-hub-new-journey.dashboard.index', compact('data'));
+        $data       = $this->healthHubDashBoardService->first();
+        $packages   = $this->healthHubPackageService->findAll();
+        $services   = $this->healthHubFeatureService->findAll();
+        return view('admin.health-hub-new-journey.dashboard.index', compact('data', 'packages', 'services'));
     }
 
     /**
@@ -49,7 +56,7 @@ class HealthHubDashboardController extends Controller
         $flag = $this->healthHubDashBoardService->storeOrUpdate($request->all());
         if ($flag == 2) return redirect()->back()->with('success', 'Dashboard Added successfully.');
         else if($flag=1)return redirect()->back()->with('success', 'Dashboard Update Successfully.');
-        
+
         return redirect()->back()->with('error', 'Error! Dashboard not saved.');
     }
 

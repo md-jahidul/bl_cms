@@ -25,6 +25,10 @@ class HealthHubDashboardService
         return $this->healthHubDashboardRepo->findAll();
     }
 
+    public function first(){
+        return$this->healthHubDashboardRepo->first();
+    }
+
     public function storeOrUpdate(array $data, $id = null)
     {
         try {

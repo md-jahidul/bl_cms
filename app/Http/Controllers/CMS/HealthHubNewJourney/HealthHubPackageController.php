@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS\HealthHubNewJourney;
 
 use App\Http\Controllers\Controller;
 use App\Models\HealthHubNewJourney\HealthHubPackage;
+use App\Services\HealthHubNewJourney\HealthHubDashboardService;
 use App\Services\HealthHubNewJourney\HealthHubPackageService;
 use App\Services\HealthHubNewJourney\HealthHubPartnerService;
 use App\Services\HealthHubNewJourney\HealthHubPlanService;
@@ -16,16 +17,19 @@ class HealthHubPackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $healthHubPackageService, $healthHubPartnerService, $healthHubPlanService;
+    private $healthHubPackageService, $healthHubPartnerService, $healthHubPlanService, $healthHubDashBoardService;
 
     public function __construct(
-        HealthHubPackageService $healthHubPackageService,
-        HealthHubPartnerService $healthHubPartnerService,
-        HealthHubPlanService    $healthHubPlanService
+        HealthHubPackageService     $healthHubPackageService,
+        HealthHubPartnerService     $healthHubPartnerService,
+        HealthHubPlanService        $healthHubPlanService,
+        HealthHubDashboardService   $healthHubDashBoardService
+
     ){
-        $this->healthHubPackageService = $healthHubPackageService;
-        $this->healthHubPartnerService = $healthHubPartnerService;
-        $this->healthHubPlanService    = $healthHubPlanService;
+        $this->healthHubPackageService      = $healthHubPackageService;
+        $this->healthHubPartnerService      = $healthHubPartnerService;
+        $this->healthHubPlanService         = $healthHubPlanService;
+        $this->healthHubDashBoardService    = $healthHubDashBoardService;
      }
     public function index()
     {
@@ -111,5 +115,23 @@ class HealthHubPackageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateDashboardId($id){
+        $dashboard = $this->healthHubDashBoardService->first();
+        $this->healthHubPackageService->updateDashboardId($id, $dashboard->id);
+
+        return [
+            'value' => true
+        ];
+    }
+
+    public function deleteDashboardId($id){
+
+        $this->healthHubPackageService->deleteDashboardId($id);
+
+        return [
+            'value' => true
+        ];
     }
 }

@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Log;
 class HealthHubFeatureService
 {
     use CrudTrait;
-    private $healthHubServiceRepository;
+    private $healthHubServiceRepository, $healthHubDashboardService;
 
-    public function __construct(HealthHubFeatureServiceRepository $healthHubServiceRepository)
+    public function __construct(HealthHubFeatureServiceRepository $healthHubServiceRepository, HealthHubDashboardService $healthHubDashboardService)
     {
 
         $this->healthHubServiceRepository = $healthHubServiceRepository;
@@ -73,8 +73,21 @@ class HealthHubFeatureService
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        return $this->healthHubServiceRepository->delete($id);
+        return $this->healthHubServiceRepository->destroy($id);
+    }
+
+    public function updateDashboardId($id, $dashboardId)
+    {
+        $service   = $this->healthHubServiceRepository->findOne($id);
+
+        return $service->update(['health_hub_dashboard_id' => $dashboardId]);
+    }
+
+    public function deleteDashboardId($id)
+    {
+        $service   = $this->healthHubServiceRepository->findOne($id);
+        return $service->update(['health_hub_dashboard_id' => null]);
     }
 }

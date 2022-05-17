@@ -12,6 +12,7 @@ class HealthHubService extends Model
         'logo',
         'details_en',
         'details_bn',
-        'status'
+        'status',
+        'health_hub_dashboard_id'
     ];
 }

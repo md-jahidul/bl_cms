@@ -37,7 +37,7 @@
                                     <a href="{{ route('health-hub-feature-service.edit', $service->id) }}" role="button"
                                         class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                      <a href="#"
-                                        class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $service->id }}" title="Delete the user">
+                                        class="border-0 btn btn-outline-danger delete_btn delete" data-id="{{ $service->id }}" title="Delete the user">
                                          <i class="la la-trash"></i>
                                      </a>
                                 </td>

@@ -74,4 +74,18 @@ class HealthHubPackageService
     {
         return $this->healthHubPackageRepository->delete($id);
     }
+
+    public function updateDashboardId($id, $dashboardId)
+    {
+        $service   = $this->healthHubPackageRepository->findOne($id);
+
+        return $service->update(['health_hub_dashboard_id' => $dashboardId]);
+    }
+
+    public function deleteDashboardId($id)
+    {
+        $service   = $this->healthHubPackageRepository->findOne($id);
+        
+        return $service->update(['health_hub_dashboard_id' => null]);
+    }
 }

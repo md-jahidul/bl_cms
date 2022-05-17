@@ -11,7 +11,7 @@
                         <h5 class="menu-title"><strong>Dashboard</strong></h5>
                         <hr>
                         <form role="form"
-                              action="{{ isset($data->id) ? route('health-hub-feature-dashboard.store') : route('health-hub-feature-dashboard.update', $data->id)}}"
+                              action="{{ route('health-hub-feature-dashboard.store') }}"
                               method="POST"
                               class="form"
                               enctype="multipart/form-data">
@@ -86,6 +86,61 @@
                             </div>
                             <h5 class="menu-title"><strong>Services</strong></h5>
                             <hr>
+                            <table class="table table-striped table-bordered dataTable" id="Example1">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+                                @foreach ($services as $key => $service)
+                                    <tr>
+                                        <td width='10%'>{{ ++$key }}</td>
+                                        <td width='10%'>{{ $service->title_en }}</td>
+                                        <td 
+                                            width='10%'><img style="height:50px;width:100px" src="{{asset($service->logo)}}" alt="Service Logo" srcset="">
+                                            @if (isset($service->health_hub_dashboard_id))
+                                                <a href="#"
+                                                    class="border-0 btn btn-outline-danger float-right delete_service_btn delete_service" data-id="{{ $service->id }}" title="Remove Service">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                            @else 
+                                                <a href="#"
+                                                    class="btn-sm btn-success cursor-pointer  float-right add_service add_service_btn" data-id="{{ $service->id }}" title="Add Service">
+                                                    <i class="la la-plus"></i>
+                                                </a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            <h5 class="menu-title"><strong>Packages</strong></h5>
+                            <hr>
+                            <table class="table table-striped table-bordered dataTable" id="Example1">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                @foreach ($packages as $key => $package)
+                                    <tr>
+                                        <td width='10%'>{{ ++$key }}</td>
+                                        <td width='10%'>{{ $package->title_en }}</td>
+                                        <td 
+                                            width='10%'><img style="height:50px;width:100px" src="{{asset($package->logo)}}" alt="Package Logo" srcset="">
+                                            @if (isset($package->health_hub_dashboard_id))
+                                                <a href="#"
+                                                    class="border-0 btn btn-outline-danger float-right delete_package_btn delete_package" data-id="{{ $package->id }}" title="Remove Package">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                            @else 
+                                                <a href="#"
+                                                    class="btn-sm btn-success cursor-pointer  float-right add_package add_package_btn" data-id="{{ $package->id }}" title="Add Package">
+                                                    <i class="la la-plus"></i>
+                                                </a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
                                     <i class="ft-save"></i> Save
@@ -120,7 +175,134 @@
     <script>
 
         $(function () {
-
+            $('.delete_service').click(function () {
+                var id = $(this).attr('data-id');
+                console.log(id);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_service_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Remove it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('health-hub-feature-service/delete-dashboard-id') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Removed!',
+                                    'Your Service has been removed from the Dashboard.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('health-hub-feature-dashboard') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            });
+            $('.delete_package').click(function () {
+                var id = $(this).attr('data-id');
+                console.log(id);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_package_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Remove it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('health-hub-feature-package/delete-dashboard-id') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Removed!',
+                                    'Your Package has been removed from the Dashboard.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('health-hub-feature-dashboard') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            });
+            $('.add_service').click(function () {
+                var id = $(this).attr('data-id');
+                console.log(id);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.add_service_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Add it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('health-hub-feature-service/update-dashboard-id') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Added!',
+                                    'Your Service has been added to the Dashboard.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('health-hub-feature-dashboard') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            });
+            $('.add_package').click(function () {
+                var id = $(this).attr('data-id');
+                console.log(id);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.add_package_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Add it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('health-hub-feature-package/update-dashboard-id') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Added!',
+                                    'Your Package has been added to the Dashboard.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('health-hub-feature-dashboard') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            });
             function initiateDropify(selector) {
                 $(selector).dropify({
                     messages: {
@@ -186,15 +368,7 @@
 
                 initiateSummernote('#html_content');
             }
-
             initiateDropify('.dropify');
-
-            product_html = ` <div class="form-group other-info-div">
-                                        <label>Select a product</label>
-                                        <select class="product-list form-control"  name="product_code" required></select>
-                                        <div class="help-block"></div>
-                                    </div>`;
-
         })
     </script>
 @endpush

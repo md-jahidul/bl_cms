@@ -12,4 +12,12 @@ class HealthHubDashboard extends Model
         'home_banner',
         'landing_page_banner'
     ];
+
+    public function services(){
+        return $this->hasMany(HealthHubService::class, 'health_hub_dashboard_id', 'id');
+    }
+
+    public function packages(){
+        return $this->hasMany(HealthHubPackage::class, 'health_hub_dashboard_id', 'id');
+    }
 }
