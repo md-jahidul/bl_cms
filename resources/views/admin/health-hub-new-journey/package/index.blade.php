@@ -37,7 +37,7 @@
                                     <a href="{{ route('health-hub-feature-package.edit', $package->id) }}" role="button"
                                         class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                      <a href="#"
-                                        class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $package->id }}" title="Delete the Package">
+                                        class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $package->id }}" title="Delete the Package">
                                          <i class="la la-trash"></i>
                                      </a>
                                 </td>

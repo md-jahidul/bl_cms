@@ -72,6 +72,6 @@ class HealthHubPlanService
 
     public function delete($id)
     {
-        return $this->healthHubPlanRepository->delete($id);
+        return $this->healthHubPlanRepository->destroy($id);
     }
 }

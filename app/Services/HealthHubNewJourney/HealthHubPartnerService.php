@@ -72,6 +72,6 @@ class HealthHubPartnerService
 
     public function delete($id)
     {
-        return $this->healthHubPartnerRepository->delete($id);
+        return $this->healthHubPartnerRepository->destroy($id);
     }
 }

@@ -94,6 +94,6 @@ class HealthHubPlanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->healthHubPlanService->delete($id);
     }
 }

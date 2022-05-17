@@ -8,4 +8,8 @@ class HealthHubPackageRepository extends BaseRepository
 {
     public $modelName = HealthHubPackage::class;
 
+    public function destroy($id)
+    {
+        return HealthHubPackage::where('id',$id)->delete();
+    }
 }

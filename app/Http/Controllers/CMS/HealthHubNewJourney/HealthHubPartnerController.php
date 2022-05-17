@@ -18,7 +18,7 @@ class HealthHubPartnerController extends Controller
     public function index()
     {
         $partners = $this->healthHubPartnerService->findAll();
-       
+
         return view('admin.health-hub-new-journey.partner.index', compact('partners'));
     }
 
@@ -29,7 +29,7 @@ class HealthHubPartnerController extends Controller
      */
     public function create()
     {
-        return view('admin.health-hub-new-journey.partner.create'); 
+        return view('admin.health-hub-new-journey.partner.create');
     }
 
     /**

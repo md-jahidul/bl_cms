@@ -9,4 +9,8 @@ class HealthHubPlanRepository extends BaseRepository
 {
     public $modelName = HealthHubPlan::class;
 
+    public function destroy($id)
+    {
+        return HealthHubPlan::where('id',$id)->delete();
+    }
 }

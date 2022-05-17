@@ -114,7 +114,7 @@ class HealthHubPackageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->healthHubPackageService->delete($id);
     }
 
     public function updateDashboardId($id){

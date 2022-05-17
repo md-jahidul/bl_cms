@@ -72,7 +72,7 @@ class HealthHubPackageService
 
     public function delete($id)
     {
-        return $this->healthHubPackageRepository->delete($id);
+        return $this->healthHubPackageRepository->destroy($id);
     }
 
     public function updateDashboardId($id, $dashboardId)
@@ -85,7 +85,7 @@ class HealthHubPackageService
     public function deleteDashboardId($id)
     {
         $service   = $this->healthHubPackageRepository->findOne($id);
-        
+
         return $service->update(['health_hub_dashboard_id' => null]);
     }
 }
