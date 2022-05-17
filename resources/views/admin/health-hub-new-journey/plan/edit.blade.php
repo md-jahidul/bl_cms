@@ -1,28 +1,29 @@
 @extends('layouts.admin')
-@section('title', 'Health Hub New Journey')
-@section('card_name', 'Health Hub New Journey')
-
+@section('title', 'Edit Health Hub Plan')
+@section('card_name', 'Edit Health Hub Plan')
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Edit Health Hub Plan</li>
+@endsection
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <h5 class="menu-title"><strong>Dashboard</strong></h5>
-                        <hr>
                         <form role="form"
-                              action="{{ isset($data->id) ? route('health-hub-feature-dashboard.store') : route('health-hub-feature-dashboard.update', $data->id)}}"
+                        action="{{route('health-hub-feature-plan.update',$plan->id)}}"
                               method="POST"
                               class="form"
                               enctype="multipart/form-data">
                             @csrf
+                            @method("PUT")
                             <div class="row">
                                     <div class="form-group col-md-6">
-                                        <label for="title" class="required">Title English</label>
+                                        <label for="title" class="required">Plan Title En</label>
                                         <input class="form-control"
                                                name="title_en"
                                                id="title_en"
-                                               value="{{ isset($data->title_en) ? $data->title_en : old("title_en") }}"
+                                               value = "{{ $plan->title_en }}"
                                                required>
                                         @if($errors->has('title_en'))
                                             <p class="text-left">
@@ -31,11 +32,11 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="title" class="required">Title Bangla</label>
+                                        <label for="title_bn" class="required">Plan Title BN</label>
                                         <input class="form-control"
                                                name="title_bn"
-                                               id="title_bn"
-                                               value="{{ isset($data->title_bn) ? $data->title_bn : old("title_bn") }}"
+                                               id="name_bn"
+                                               value = "{{ $plan->title_bn }}"
                                                required>
                                         @if($errors->has('title_bn'))
                                             <p class="text-left">
@@ -43,18 +44,14 @@
                                             </p>
                                         @endif
                                     </div>
-                                <div class="col-md-6" id="content_div">
+                                <div class="col-md-4" id="content_div">
                                     <div class="form-group">
-                                        <label class="required">Home Banner</label>
+                                        <label class="required">Logo</label>
                                         <input type="file"
-                                               name="home_banner"
-                                               data-max-file-size="2M"
-                                               data-allowed-file-extensions="jpeg png jpg"
-                                               @if(isset($data->home_banner))
-                                                data-default-file="{{ url('storage/' .$data->home_banner) }}"
-                                               @else
-                                                required
-                                               @endif
+                                               name="logo"
+                                                data-max-file-size="2M"
+                                                data-default-file="{{ url('storage/' .$plan->logo) }}"
+                                                data-allowed-file-extensions="jpeg png jpg"
                                                class="dropify"/>
                                     </div>
                                     @if($errors->has('content_div'))
@@ -63,32 +60,32 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="col-md-6" id="content_div">
-                                    <div class="form-group">
-                                        <label class="required">Landing Page Image</label>
-                                        <input type="file"
-                                               name="landing_page_banner"
-                                               data-allowed-file-extensions="jpeg png jpg"
-                                               @if(isset($data->landing_page_banner))
-                                                data-default-file="{{ url('storage/' .$data->landing_page_banner) }}"
-                                               @else
-                                               @endif
-                                               data-allowed-file-extensions="png jpg jpeg gif"
-                                               class="dropify"/>
-                                    </div>
-                                    <div class="help-block"></div>
-                                    @if($errors->has('content_div'))
+                                <div class="col-md-4">
+                                    <label for="slug" class="required">Slug</label>
+                                    <input class="form-control"
+                                           name="slug"
+                                           id="slug"
+                                           value = {{ $plan->slug }}
+                                           required>
+                                    @if($errors->has('slug'))
                                         <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
+                                            <small class="danger text-muted">{{ $errors->first('slug') }}</small>
                                         </p>
                                     @endif
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control">
+                                            <option value="1"{{$plan->status=='1' ? 'selected':''}} >Active</option>
+                                            <option value="0"{{$plan->status=='0' ? 'selected':''}}>Inactive</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <h5 class="menu-title"><strong>Services</strong></h5>
-                            <hr>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
-                                    <i class="ft-save"></i> Save
+                                    <i class="ft-save"></i> Update
                                 </button>
                             </div>
 

@@ -806,6 +806,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('health-hub-feature-service', 'CMS\HealthHubNewJourney\HealthHubServiceController');
     Route::get('health-hub-feature-service/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@destroy');
     Route::resource('health-hub-feature-partner', 'CMS\HealthHubNewJourney\HealthHubPartnerController');
+    Route::resource('health-hub-feature-package', 'CMS\HealthHubNewJourney\HealthHubPackageController');
+    Route::resource('health-hub-feature-plan', 'CMS\HealthHubNewJourney\HealthHubPlanController');
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
