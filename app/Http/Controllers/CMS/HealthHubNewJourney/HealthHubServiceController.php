@@ -44,7 +44,7 @@ class HealthHubServiceController extends Controller
         if($this->healthHubFeatureService->save($request->all()))Session()->flash('message', 'Service Created successfully.');
         else session()->flash('warning', 'Service Created Failed');
 
-        return redirect('health-hub-feature-service');
+        return redirect('health-hub-feature-dashboard');
     }
 
     /**
@@ -83,7 +83,7 @@ class HealthHubServiceController extends Controller
         if($this->healthHubFeatureService->update($request->all(), $id))Session()->flash('message', 'Service Update successfully.');
         else session()->flash('warning', 'Service Updated Failed');
 
-        return redirect('health-hub-feature-service');
+        return redirect('health-hub-feature-dashboard');
     }
 
     /**
