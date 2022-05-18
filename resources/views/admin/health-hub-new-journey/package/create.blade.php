@@ -70,7 +70,8 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="health_hub_partner_id" class="required">Partner</label>
+                                        <label for="health_hub_partner_id" class="required">Partner </label>
+                                        <a href="{{ route('health-hub-feature-partner.create') }}" class="ui-btn float-right">Create New Partner</a>
                                         <select id="health_hub_partner_id" name="health_hub_partner_id" required
                                                 class="browser-default custom-select product-list">
                                             <option value="">Select Partner</option>
@@ -86,6 +87,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="health_hub_plan_id" class="required">Plan</label>
+                                        <a href="{{ route('health-hub-feature-plan.create') }}" class="ui-btn float-right">Create New Plan</a>
                                         <select id="health_hub_plan_id" name="health_hub_plan_id" required
                                                 class="browser-default custom-select product-list">
                                             <option value="">Select Plan</option>

@@ -68,6 +68,7 @@ class HealthHubPlanController extends Controller
     public function edit($id)
     {
         $plan = $this->healthHubPlanService->findOne($id);
+
         return view('admin.health-hub-new-journey.plan.edit', compact('plan'));
     }
 

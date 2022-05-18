@@ -43,7 +43,29 @@
                                             </p>
                                         @endif
                                     </div>
-                                <div class="col-md-4" id="content_div">
+                                <div class="col-md-6">
+                                    <label for="slug" class="required">Slug</label>
+                                    <input class="form-control"
+                                           name="slug"
+                                           id="slug"
+                                           placeholder="Enter Slug"
+                                           required>
+                                    @if($errors->has('slug'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('slug') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control">
+                                            <option value="1" >Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="content_div">
                                     <div class="form-group">
                                         <label class="required">Logo</label>
                                         <input type="file"
@@ -58,28 +80,6 @@
                                             <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
                                         </p>
                                     @endif
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="slug" class="required">Slug</label>
-                                    <input class="form-control"
-                                           name="slug"
-                                           id="slug"
-                                           placeholder="Enter Slug"
-                                           required>
-                                    @if($errors->has('slug'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('slug') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="eventInput3">Status</label>
-                                        <select name="status" class="form-control">
-                                            <option value="1" >Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">

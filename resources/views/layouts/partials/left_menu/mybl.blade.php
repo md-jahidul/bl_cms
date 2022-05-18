@@ -300,12 +300,12 @@
                     <i class="la la-server"></i> Dashboard
                 </a>
             </li>
-            <li class="{{is_active_url('health-hub-feature-service')}}">
+            {{-- <li class="{{is_active_url('health-hub-feature-service')}}">
                 <a class="menu-item" href="{{ route('health-hub-feature-service.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-server"></i> Services
                 </a>
-            </li>
+            </li> --}}
             <li class="{{is_active_url('health-hub-feature-partner')}}">
                 <a class="menu-item" href="{{ route('health-hub-feature-partner.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
@@ -318,12 +318,12 @@
                     <i class="la la-server"></i> Packges
                 </a>
             </li>
-            <li class="{{is_active_url('health-hub-feature-plan')}}">
+            {{-- <li class="{{is_active_url('health-hub-feature-plan')}}">
                 <a class="menu-item" href="{{ route('health-hub-feature-plan.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-server"></i> Plans
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </li>
     <!-- Loyalty Partner Menu -->

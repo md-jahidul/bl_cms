@@ -44,7 +44,29 @@
                                             </p>
                                         @endif
                                     </div>
-                                <div class="col-md-4" id="content_div">
+                                <div class="col-md-6">
+                                    <label for="slug" class="required">Slug</label>
+                                    <input class="form-control"
+                                           name="slug"
+                                           id="slug"
+                                           value = {{ $plan->slug }}
+                                           required>
+                                    @if($errors->has('slug'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('slug') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control">
+                                            <option value="1"{{$plan->status=='1' ? 'selected':''}} >Active</option>
+                                            <option value="0"{{$plan->status=='0' ? 'selected':''}}>Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="content_div">
                                     <div class="form-group">
                                         <label class="required">Logo</label>
                                         <input type="file"
@@ -60,26 +82,43 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="slug" class="required">Slug</label>
-                                    <input class="form-control"
-                                           name="slug"
-                                           id="slug"
-                                           value = {{ $plan->slug }}
-                                           required>
-                                    @if($errors->has('slug'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('slug') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="eventInput3">Status</label>
-                                        <select name="status" class="form-control">
-                                            <option value="1"{{$plan->status=='1' ? 'selected':''}} >Active</option>
-                                            <option value="0"{{$plan->status=='0' ? 'selected':''}}>Inactive</option>
-                                        </select>
+                            </div>
+                            <h5 class="menu-title"><strong>Packages</strong></h5>
+                            <hr>
+                            <div class="card card-info mt-0" style="box-shadow: 0px 0px">
+                                <div class="card-content">
+                                    {{-- <div class="card-header">
+                                    </div> --}}
+                                    <div class="card-body card-dashboard">
+                                        <table class="table table-striped table-bordered dataTable" id="Example1">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Title English</th>
+                                                <th>Title Bangla</th>
+                                                <th>Status</th>
+                                                {{-- <th>Action</th> --}}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($plan->packages as $key => $package)
+                                                <tr>
+                                                    <td>{{ ++$key }}</td>
+                                                    <td>{{ $package->title_en }}</td>
+                                                    <td>{{ $package->title_bn }}</td>
+                                                    <td>{{ $package['status'] ? 'Active':'Inactive' }}</td>
+                                                    {{-- <td>
+                                                        <a href="{{ route('health-hub-feature-package.edit', $package->id) }}" role="button"
+                                                            class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                         <a href="#"
+                                                            class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $package->id }}" title="Delete the Package">
+                                                             <i class="la la-trash"></i>
+                                                         </a>
+                                                    </td> --}}
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
