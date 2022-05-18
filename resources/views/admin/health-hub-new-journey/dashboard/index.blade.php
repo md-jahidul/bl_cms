@@ -113,7 +113,7 @@
                                                         <td>{{ ++$key }}</td>
                                                         <td>{{ $service->title_en }}</td>
                                                         <td>{{ $service->title_bn }}</td>
-                                                        <td>{{ $service['status'] ? 'active':'inactive' }}</td>
+                                                        <td>{{ $service['status'] ? 'Active':'Inactive' }}</td>
                                                         <td>
                                                             <a href="{{ route('health-hub-feature-service.edit', $service->id) }}" role="button"
                                                                 class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
@@ -161,12 +161,12 @@
                                                     <td>{{ $plan->title_en }}</td>
                                                     <td>{{ $plan->title_bn }}</td>
                                                     <td>{{ $plan->slug }}</td>
-                                                    <td>{{ $plan->status ? 'active':'inactive' }}</td>
+                                                    <td>{{ $plan->status ? 'Active':'Inactive' }}</td>
                                                     <td>
                                                         <a href="{{ route('health-hub-feature-plan.edit', $plan->id) }}" role="button"
                                                             class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                                          <a href="#"
-                                                            class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $plan->id }}" title="Delete the Plan">
+                                                            class="border-0 btn btn-outline-danger delete_plan_btn delete_plan" data-id="{{ $plan->id }}" title="Delete the Plan">
                                                              <i class="la la-trash"></i>
                                                          </a>
                                                     </td>
@@ -211,7 +211,7 @@
     <script>
 
         $(function () {
-            $('.delete_service').click(function () {
+            $('.delete').click(function () {
                 var id = $(this).attr('data-id');
                 console.log(id);
                 Swal.fire({
@@ -226,13 +226,13 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('health-hub-feature-service/delete-dashboard-id') }}/"+id,
+                            url: "{{ url('health-hub-feature-service/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
-                                    'Removed!',
-                                    'Your Service has been removed from the Dashboard.',
-                                    'success',
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
@@ -243,14 +243,14 @@
                     }
                 })
             });
-            $('.delete_package').click(function () {
+            $('.delete_plan').click(function () {
                 var id = $(this).attr('data-id');
                 console.log(id);
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
                     type: 'warning',
-                    html: jQuery('.delete_package_btn').html(),
+                    html: jQuery('.delete_plan_btn').html(),
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -258,13 +258,13 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('health-hub-feature-package/delete-dashboard-id') }}/"+id,
+                            url: "{{ url('health-hub-feature-plan/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
-                                    'Removed!',
-                                    'Your Package has been removed from the Dashboard.',
-                                    'success',
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {

@@ -75,7 +75,6 @@ class HealthHubFeatureService
 
     public function destroy($id)
     {
-        dd("here");
         return $this->healthHubServiceRepository->destroy($id);
     }
 
