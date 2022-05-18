@@ -24,7 +24,7 @@
                         <div class="row">
                             <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
                             <input type="hidden" name="type" value="{{ $type }}">
-                            <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                 <label for="offer_category_id" class="required">Offer Type</label>
                                 <select class="form-control" name="offer_category_id" id="offer_type"
                                         required data-validation-required-message="Please select offer">
@@ -39,7 +39,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                 <label for="product_code" class="required">Product Code</label>
                                 <input type="text" class="form-control" name="product_code" placeholder="Enter product code"
                                        required data-validation-required-message="Enter product code"
@@ -49,6 +49,23 @@
                                     <div class="help-block">{{ $errors->first('product_code') }}</div>
                                 @endif
                             </div>
+                            <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Please Select Category</label>
+                                        <select multiple
+                                                class="form-control data-section"
+                                                name="offer_categories[]" required>
+                                            <option value="">Please Select Category</option>
+
+                                            @foreach ($offerCategory as $key => $category)
+                                                <option
+                                                    value="{{ $category['id'] }}" @if(in_array($category['id'], $selectedCategory)) selected @endif >  {{$category['name']}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en">Offer Name</label>
@@ -214,6 +231,10 @@
                 format : 'YYYY-MM-DD HH:mm:ss',
                 showClose: true,
 
+            });
+            $('.data-section').select2({
+                placeholder: 'Please Select Category',
+                allowClear: true
             });
             $('#end_date').datetimepicker({
                 format : 'YYYY-MM-DD HH:mm:ss',

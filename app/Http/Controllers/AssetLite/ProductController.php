@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\SimCategory;
 use App\Models\ProductPriceSlab;
 use App\Services\AlCoreProductService;
+use App\Services\Assetlite\AlInternetOffersCategoryService;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
 use App\Services\ProductDetailService;
@@ -23,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -34,7 +36,7 @@ class ProductController extends Controller
     private $productDetailService;
     private $tagCategoryService;
     private $offerCategoryService;
-    private $durationCategoryService;
+    private $durationCategoryService, $alInternetOffersCategoryService;
     protected $info = [];
 
     /**
@@ -47,7 +49,13 @@ class ProductController extends Controller
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
-        ProductService $productService, AlCoreProductService $alCoreProductService, ProductDetailService $productDetailService, TagCategoryService $tagCategoryService, OfferCategoryService $offerCategoryService, DurationCategoryService $durationCategoryService
+        ProductService $productService, 
+        AlCoreProductService $alCoreProductService, 
+        ProductDetailService $productDetailService, 
+        TagCategoryService $tagCategoryService, 
+        OfferCategoryService $offerCategoryService, 
+        DurationCategoryService $durationCategoryService,
+        AlInternetOffersCategoryService $alInternetOffersCategoryService
     )
     {
         $this->productService = $productService;
@@ -56,6 +64,7 @@ class ProductController extends Controller
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
         $this->durationCategoryService = $durationCategoryService;
+        $this->alInternetOffersCategoryService = $alInternetOffersCategoryService;
     }
 
     /**
@@ -107,7 +116,10 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offers'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-
+        $this->info['offerCategory']=$this->alInternetOffersCategoryService->findAll(null,null, [
+            'column' => 'sort',
+            'direction' => 'ASC'
+        ])->where('platform', 'al');
         foreach ($this->info['offers'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)
@@ -116,6 +128,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+        // dd($this->info['offerCategory']->toArray());
         return view('admin.product.create', $this->info);
     }
 
@@ -143,6 +156,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+        
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:products,url_slug_bn'
@@ -151,7 +165,7 @@ class ProductController extends Controller
             Session::flash('error', $validator->messages()->first());
             return redirect()->back();
         }
-
+        $this->alInternetOffersCategoryService->storeProductTabs($request->product_code, $request->offer_categories);
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->alCoreProductService->storeProductCore($request->all(), $simId);
         $this->strToint($request);
@@ -202,8 +216,11 @@ class ProductController extends Controller
         $this->info['durations'] = $this->durationCategoryService->findAll();
         $this->info['offerInfo'] = $product->offer_info;
         $this->info['price_slabs'] = ProductPriceSlab::get();
-
-//        dd($product);
+        $this->info['offerCategory']=$this->alInternetOffersCategoryService->findAll(null,null, [
+            'column' => 'sort',
+            'direction' => 'ASC'
+        ])->where('platform', 'al');
+        $this->info['selectedCategory'] = $this->alInternetOffersCategoryService->selectedCategory($product->product_code);
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
@@ -213,6 +230,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+        
         return view('admin.product.edit', $this->info);
     }
 
@@ -226,6 +244,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+        $this->alInternetOffersCategoryService->upSert($request->product_code, $request->offer_categories);
+
         $product = $this->productService->findProduct($type, $id);
 
         $validator = Validator::make($request->all(), [
@@ -326,6 +346,31 @@ class ProductController extends Controller
             "url" => url("offers/$type"),
             "success" => true
         ]);
+    }
+
+    public function  uploadExcel(){
+
+        return view('admin.product.excel_upload');
+    }
+    public function uploadProductCodeAndSlugByExcel(Request $request){
+        try {
+            $file = $request->file('product_file');
+            $path = $file->storeAs(
+                'al-products/' . strtotime(now() . '/'),
+                "products" . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+            $path = Storage::disk('public')->path($path);
+
+            return $this->alCoreProductService->syncProductCategory($path);
+            
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
     }
 
 }
