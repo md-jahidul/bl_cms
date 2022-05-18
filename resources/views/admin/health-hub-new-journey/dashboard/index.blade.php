@@ -84,7 +84,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <h5 class="menu-title"><strong>Services</strong></h5>
+                            <h5 class="menu-title"><strong>Services List</strong></h5>
                             <hr>
                             <section>
                                 <div class="card card-info mt-0" style="box-shadow: 0px 0px">
@@ -94,8 +94,6 @@
                                         </a>
                                     </div>
                                     <div class="card-content">
-                                        <div class="card-header">
-                                        </div>
                                         <div class="card-body card-dashboard">
                                             <table class="table table-striped table-bordered dataTable" id="Example1">
                                                 <thead>
@@ -131,16 +129,14 @@
                                     </div>
                                 </div>
                             </section>
-                            <h5 class="menu-title"><strong>Plans</strong></h5>
+                            <h5 class="menu-title"><strong>Plans List</strong></h5>
                             <hr>
                             <div class="card card-info mt-0" style="box-shadow: 0px 0px">
-                                <div style="text-align: right">
-                                    <a href="{{route('health-hub-feature-plan.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                                        Create Health Hub Plan
-                                    </a>
-                                </div>
                                 <div class="card-content">
-                                    <div class="card-header">
+                                    <div style="text-align: right">
+                                        <a href="{{route('health-hub-feature-plan.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                                            Create Health Hub Plan
+                                        </a>
                                     </div>
                                     <div class="card-body card-dashboard">
                                         <table class="table table-striped table-bordered dataTable" id="Example2">

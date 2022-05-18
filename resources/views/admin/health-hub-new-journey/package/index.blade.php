@@ -21,7 +21,8 @@
                         <tr>
                             <th>#</th>
                             <th>Title English</th>
-                            <th>Title Bangla</th>
+                            <th>Plan</th>
+                            <th>Partner</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -31,7 +32,8 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $package->title_en }}</td>
-                                <td>{{ $package->title_bn }}</td>
+                                <td>{{ $package->plan->title_en }}</td>
+                                <td>{{ $package->partner->name_en }}</td>
                                 <td>{{ $package['status'] ? 'Active':'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('health-hub-feature-package.edit', $package->id) }}" role="button"
