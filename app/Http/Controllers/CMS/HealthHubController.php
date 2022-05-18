@@ -72,7 +72,6 @@ class HealthHubController extends Controller
     public function create()
     {
         $actionList = Helper::navigationActionList();
-//        $actionList["FEED_CATEGORY"] = "Feed Category";
         $actionList["FEED_CATEGORY_POST"] = "Feed Category Post";
         return view('admin.mybl-health-hub.create', compact('actionList'));
     }
@@ -119,7 +118,6 @@ class HealthHubController extends Controller
     {
         $healthHub = $this->healthHubService->findOrFail($id);
         $actionList = Helper::navigationActionList();
-//        $actionList["FEED_CATEGORY"] = "Feed Category";
         $actionList["FEED_CATEGORY_POST"] = "Feed Category Post";
         $feedCategories = $this->feedCategoryService->findAll();
 
@@ -161,7 +159,7 @@ class HealthHubController extends Controller
     public function analyticData(Request $request)
     {
         $itemsAnalyticData = $this->healthHubService->analyticReports($request);
-        if ($request->excel_export == "item_export_details" || $request->excel_export == "items_export") {
+        if (!empty($request->excel_export) && $request->excel_export == "feed_cat_export") {
             return $this->healthHubService->exportReport($request);
         }
 
@@ -193,13 +191,26 @@ class HealthHubController extends Controller
         if (isset($request->excel_export)) {
             return $this->healthHubService->deeplinkAnalyticData($request);
         }
-        $deeplinkAnalyticData = $this->healthHubService->deeplinkAnalyticData($request);
-        return view('admin.mybl-health-hub.analytic.deeplink', compact('deeplinkAnalyticData'));
+        if ($request->ajax()) {
+            return $this->healthHubService->deeplinkAnalyticData($request);
+        }
+        return view('admin.mybl-health-hub.analytic.deeplink');
     }
 
     public function deeplinkAnalyticDetails(Request $request, $dynamicDeepLinkId)
     {
         return $this->healthHubService->deeplinkAnalyticDetails($request, $dynamicDeepLinkId);
+    }
+
+    public function categoryInAppAnalyticDetails(Request $request, $feedCatId)
+    {
+        return $this->healthHubService->feedCatDetails($request, $feedCatId);
+    }
+
+
+    public function categoryInAppAnalytic(Request $request)
+    {
+        return $this->healthHubService->categoryInAppHitCount($request);
     }
 
 
