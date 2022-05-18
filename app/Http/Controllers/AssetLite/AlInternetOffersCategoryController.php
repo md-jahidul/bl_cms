@@ -1,32 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\CMS;
+namespace App\Http\Controllers\AssetLite;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\MyBlInternetOffersCategoryService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\MyBlInternetOffersCategory;
 use App\Http\Requests\MyBlInternetOffersCategoryRequest;
+use App\Services\Assetlite\AlInternetOffersCategoryService;
 
-class MyBlInternetOffersCategoryController extends Controller
+class AlInternetOffersCategoryController extends Controller
 {
-    /**
-     * @var MyBlInternetOffersCategoryService
-     */
-    private $myBlInternetOffersCategoryService;
-    /**
-     * @var bool
-     */
-    private $isAuthenticated = true;
+    private $alInternetOffersCategoryService;
 
-    /**
-     * MyBlInternetOffersCategory constructor.
-     * @param MyBlInternetOffersCategoryService $myBlInternetOffersCategoryService
-     */
-    public function __construct(MyBlInternetOffersCategoryService $myBlInternetOffersCategoryService)
+
+    public function __construct(AlInternetOffersCategoryService $alInternetOffersCategoryService)
     {
-        $this->myBlInternetOffersCategoryService = $myBlInternetOffersCategoryService;
+        $this->alInternetOffersCategoryService = $alInternetOffersCategoryService;
         $this->middleware('auth');
     }
     /**
@@ -37,11 +27,12 @@ class MyBlInternetOffersCategoryController extends Controller
 
     public function index()
     {
-        $offerCategory=$this->myBlInternetOffersCategoryService->findAll(null,null, [
+        $offerCategory=$this->alInternetOffersCategoryService->findAll(null,null, [
             'column' => 'sort',
             'direction' => 'ASC'
-        ]);
-        return view('admin.data-bundle.index',compact('offerCategory'));
+        ])->where('platform', 'al');
+
+        return view('admin.al-data-bundle.index',compact('offerCategory'));
     }
 
  /**
@@ -52,7 +43,7 @@ class MyBlInternetOffersCategoryController extends Controller
     public function create()
     {
         $page='create';
-        return view('admin.data-bundle.create',compact('page'));
+        return view('admin.al-data-bundle.create',compact('page'));
     }
 /**
  * Undocumented function
@@ -71,13 +62,11 @@ class MyBlInternetOffersCategoryController extends Controller
 
         if ($validate->fails()) {
             Session()->flash('error', 'validation error');
-                return redirect('mybl-internet-offer-category/create')
+                return redirect('al-internet-offer-category/create')
                             ->withErrors($validate)
                             ->withInput();
             }
-
-        $response = $this->myBlInternetOffersCategoryService->storeInternetOffersCategory($request->all());
-
+        $response = $this->alInternetOffersCategoryService->storeInternetOffersCategory($request->all());
         if($response['status'] == 200){
             Session()->flash('message', $response['message']);
         }
@@ -85,7 +74,7 @@ class MyBlInternetOffersCategoryController extends Controller
             Session()->flash('error', $response['message']);
         }
 
-        return redirect()->back();
+        return redirect('al-internet-offer-category');
     }
 /**
  * Undocumented function
@@ -96,7 +85,7 @@ class MyBlInternetOffersCategoryController extends Controller
     public function edit($id=null){
         $page='create';
         $internet_offer=MyBlInternetOffersCategory::find($id);
-        return view('admin.data-bundle.edit',compact('page','internet_offer'));
+        return view('admin.al-data-bundle.edit',compact('page','internet_offer'));
     }
 /**
  * Undocumented function
@@ -106,8 +95,8 @@ class MyBlInternetOffersCategoryController extends Controller
  * @return void
  */
     public function update(MyBlInternetOffersCategoryRequest $request, $id){
-        
-        $response = $this->myBlInternetOffersCategoryService->updateInternetOffersCategory($request->all(),$id);
+
+        $response = $this->alInternetOffersCategoryService->updateInternetOffersCategory($request->all(),$id);
 
         if($response['status'] == 200){
             Session()->flash('message', $response['message']);
@@ -115,7 +104,8 @@ class MyBlInternetOffersCategoryController extends Controller
         else {
             Session()->flash('error', $response['message']);
         }
-        return redirect('mybl-internet-offer-category');
+
+        return redirect('al-internet-offer-category');
 
     }
 /**
@@ -125,7 +115,7 @@ class MyBlInternetOffersCategoryController extends Controller
  * @return void
  */
     public function destroy($id){
-        return $this->myBlInternetOffersCategoryService->delFilter($id);
+        return $this->alInternetOffersCategoryService->delFilter($id);
 
     }
 }

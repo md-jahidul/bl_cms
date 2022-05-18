@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Assetlite;
 
+use App\Models\MyBlInternetOffersCategory;
+use App\Models\MyBlProductTab;
 use App\Traits\CrudTrait;
 use Exception;
 use Illuminate\Http\Response;
 use App\Repositories\MyBlInternetOffersCategoryRepository;
 use Illuminate\Http\Request;
 
-class MyBlInternetOffersCategoryService
+class AlInternetOffersCategoryService
 {
     use CrudTrait;
 
@@ -36,18 +38,18 @@ class MyBlInternetOffersCategoryService
    public function storeInternetOffersCategory($data)
     {
         try{
+            $data['platform'] = 'al';
             $this->internetOffersCategoryRepository->save($data);
             return [
                 "status" => 200,
-                "message" => 'Internet Offer has been successfully created'
+                "message" => 'Product Category has been successfully created'
             ];
         }catch (\Exception $e){
             return [
                 "status" => 500,
-                "message" => 'Internet Offer has been Created Failed'
+                "message" => 'Product Category has been created Failed'
             ];
         }
-
     }
     /**
      * Undocumented function
@@ -82,22 +84,64 @@ class MyBlInternetOffersCategoryService
 
     public function updateInternetOffersCategory($request, $id)
     {
-        try{
+        try {
+            $request['platform'] = 'al';
             $nearByOffer = $this->findOne($id);
             $nearByOffer->update($request);
-        
             return [
                 "status" => 200,
-                "message" => 'MyBl Internet Offers Category has been successfully updated'
+                "message" => 'Product Category has been successfully updated'
             ];
         }catch (\Exception $e){
             return [
                 "status" => 500,
-                "message" => 'Internet Offer Update Failed'
+                "message" => 'Product Category Update Failed'
             ];
         }
-
     }
 
+    public function storeProductTabs($product_code, $categorys){
+
+        foreach($categorys as $category){
+            $data ['product_code'] = $product_code;
+            $data ['platform'] = 'al';
+            $data ['my_bl_internet_offers_category_id']  = $category;
+
+            MyBlProductTab::create($data);
+        }
+    }
+
+    public function selectedCategory($product_code){
+
+        $data =  MyBlProductTab::where('product_code', $product_code)
+                                ->where('platform', 'al')
+                                ->select('my_bl_internet_offers_category_id')->get();
+        $data = $data->toArray();
+        $selectedCategory = array();
+
+        foreach ($data as $category){
+            $selectedCategory[] = $category['my_bl_internet_offers_category_id'];
+        }
+
+        return $selectedCategory;
+    }
+
+    public function upSert($product_code, $categorys){
+
+        MyBlProductTab::Where('product_code', $product_code)->Where('platform', 'al')->delete();
+
+        foreach($categorys as $category){
+            $data ['product_code'] = $product_code;
+            $data ['platform'] = 'al';
+            $data ['my_bl_internet_offers_category_id']  = $category;
+
+            MyBlProductTab::create($data);
+        }
+    }
+
+    public function findCategoryIdBySlugs($slugs){
+
+        return MyBlInternetOffersCategory::whereIn('slug', $slugs)->where('platform', 'al')->pluck('id');
+    }
 
 }
