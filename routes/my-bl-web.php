@@ -795,14 +795,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
     Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
     Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
+
     Route::get('health-hub-deeplink/analytic', 'CMS\HealthHubController@deeplinkAnalytic')
         ->name('health-hub-deeplink.analytic');
     Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
         ->name('health-hub-deeplink-analytic-details');
 
-    Route::post('health-hub-category/in-app-analytic', 'CMS\HealthHubController@categoryInAppAnalytic')
+    Route::get('health-hub-category/in-app-analytic', 'CMS\HealthHubController@categoryInAppAnalytic')
         ->name('health_hub.in_app.analytic');
-    Route::post('health-hub-category/in-app-analytic-details/{feed_cat_id}', 'CMS\HealthHubController@categoryInAppAnalyticDetails')
+    Route::get('health-hub-category/in-app-analytic-details/{feed_cat_id}', 'CMS\HealthHubController@categoryInAppAnalyticDetails')
         ->name('health_hub.in_app.analytic.details');
 
 
