@@ -37,9 +37,19 @@ class AlInternetOffersCategoryService
      */
    public function storeInternetOffersCategory($data)
     {
-        $data['platform'] = 'al';
-        $this->internetOffersCategoryRepository->save($data);
-        return new Response("Al Internet Offer has been successfully created");
+        try{
+            $data['platform'] = 'al';
+            $this->internetOffersCategoryRepository->save($data);
+            return [
+                "status" => 200,
+                "message" => 'Product Category has been successfully created'
+            ];
+        }catch (\Exception $e){
+            return [
+                "status" => 500,
+                "message" => 'Product Category has been created Failed'
+            ];
+        }
     }
     /**
      * Undocumented function
@@ -74,10 +84,20 @@ class AlInternetOffersCategoryService
 
     public function updateInternetOffersCategory($request, $id)
     {
-        $request['platform'] = 'al';
-        $nearByOffer = $this->findOne($id);
-        $nearByOffer->update($request);
-        return Response('Al Internet Offers Category has been successfully updated');
+        try {
+            $request['platform'] = 'al';
+            $nearByOffer = $this->findOne($id);
+            $nearByOffer->update($request);
+            return [
+                "status" => 200,
+                "message" => 'Product Category has been successfully updated'
+            ];
+        }catch (\Exception $e){
+            return [
+                "status" => 500,
+                "message" => 'Product Category Update Failed'
+            ];
+        }
     }
 
     public function storeProductTabs($product_code, $categorys){
@@ -86,7 +106,7 @@ class AlInternetOffersCategoryService
             $data ['product_code'] = $product_code;
             $data ['platform'] = 'al';
             $data ['my_bl_internet_offers_category_id']  = $category;
-            
+
             MyBlProductTab::create($data);
         }
     }
@@ -107,14 +127,14 @@ class AlInternetOffersCategoryService
     }
 
     public function upSert($product_code, $categorys){
-        
+
         MyBlProductTab::Where('product_code', $product_code)->Where('platform', 'al')->delete();
-        
+
         foreach($categorys as $category){
             $data ['product_code'] = $product_code;
             $data ['platform'] = 'al';
             $data ['my_bl_internet_offers_category_id']  = $category;
-            
+
             MyBlProductTab::create($data);
         }
     }

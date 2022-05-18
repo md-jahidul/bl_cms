@@ -65,8 +65,6 @@ class MyBlInternetOffersCategoryController extends Controller
         $validate = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:my_bl_internet_offers_categories',
-                'slug' => 'required|unique:my_bl_internet_offers_categories',
                 'sort' => 'required',
             ]
         );
@@ -78,8 +76,15 @@ class MyBlInternetOffersCategoryController extends Controller
                             ->withInput();
             }
 
-            $response = $this->myBlInternetOffersCategoryService->storeInternetOffersCategory($request->all());
-            Session()->flash('message', $response->content());
+        $response = $this->myBlInternetOffersCategoryService->storeInternetOffersCategory($request->all());
+
+        if($response['status'] == 200){
+            Session()->flash('message', $response['message']);
+        }
+        else {
+            Session()->flash('error', $response['message']);
+        }
+
         return redirect()->back();
     }
 /**
@@ -101,8 +106,15 @@ class MyBlInternetOffersCategoryController extends Controller
  * @return void
  */
     public function update(MyBlInternetOffersCategoryRequest $request, $id){
+        
         $response = $this->myBlInternetOffersCategoryService->updateInternetOffersCategory($request->all(),$id);
-        Session()->flash('message', $response->content());
+
+        if($response['status'] == 200){
+            Session()->flash('message', $response['message']);
+        }
+        else {
+            Session()->flash('error', $response['message']);
+        }
         return redirect('mybl-internet-offer-category');
 
     }

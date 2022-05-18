@@ -56,8 +56,6 @@ class AlInternetOffersCategoryController extends Controller
         $validate = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:my_bl_internet_offers_categories',
-                'slug' => 'required|unique:my_bl_internet_offers_categories',
                 'sort' => 'required',
             ]
         );
@@ -68,8 +66,13 @@ class AlInternetOffersCategoryController extends Controller
                             ->withErrors($validate)
                             ->withInput();
             }
-            $response = $this->alInternetOffersCategoryService->storeInternetOffersCategory($request->all());
-            Session()->flash('message', $response->content());
+        $response = $this->alInternetOffersCategoryService->storeInternetOffersCategory($request->all());
+        if($response['status'] == 200){
+            Session()->flash('message', $response['message']);
+        }
+        else {
+            Session()->flash('error', $response['message']);
+        }
 
         return redirect('al-internet-offer-category');
     }
@@ -94,7 +97,13 @@ class AlInternetOffersCategoryController extends Controller
     public function update(MyBlInternetOffersCategoryRequest $request, $id){
 
         $response = $this->alInternetOffersCategoryService->updateInternetOffersCategory($request->all(),$id);
-        Session()->flash('message', $response->content());
+
+        if($response['status'] == 200){
+            Session()->flash('message', $response['message']);
+        }
+        else {
+            Session()->flash('error', $response['message']);
+        }
 
         return redirect('al-internet-offer-category');
 
