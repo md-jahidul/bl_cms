@@ -86,61 +86,97 @@
                             </div>
                             <h5 class="menu-title"><strong>Services</strong></h5>
                             <hr>
-                            <table class="table table-striped table-bordered dataTable" id="Example1">
-                                <thead>
-
-                                </thead>
-                                <tbody>
-                                @foreach ($services as $key => $service)
-                                    <tr>
-                                        <td width='10%'>{{ ++$key }}</td>
-                                        <td width='10%'>{{ $service->title_en }}</td>
-                                        <td 
-                                            width='10%'><img style="height:50px;width:100px" src="{{asset($service->logo)}}" alt="Service Logo" srcset="">
-                                            @if (isset($service->health_hub_dashboard_id))
-                                                <a href="#"
-                                                    class="border-0 btn btn-outline-danger float-right delete_service_btn delete_service" data-id="{{ $service->id }}" title="Remove Service">
-                                                    <i class="la la-trash"></i>
-                                                </a>
-                                            @else 
-                                                <a href="#"
-                                                    class="btn-sm btn-success cursor-pointer  float-right add_service add_service_btn" data-id="{{ $service->id }}" title="Add Service">
-                                                    <i class="la la-plus"></i>
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <h5 class="menu-title"><strong>Packages</strong></h5>
+                            <section>
+                                <div class="card card-info mt-0" style="box-shadow: 0px 0px">
+                                    <div style="text-align: right">
+                                        <a href="{{route('health-hub-feature-service.create')}}" class="btn btn-primary round btn-glow px-2 float-right col-md-2"><i class="la la-plus"></i>
+                                            Create Health Hub Service
+                                        </a>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-header">
+                                        </div>
+                                        <div class="card-body card-dashboard">
+                                            <table class="table table-striped table-bordered dataTable" id="Example1">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Title English</th>
+                                                    <th>Title Bangla</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($services as $key => $service)
+                                                    <tr>
+                                                        <td>{{ ++$key }}</td>
+                                                        <td>{{ $service->title_en }}</td>
+                                                        <td>{{ $service->title_bn }}</td>
+                                                        <td>{{ $service['status'] ? 'active':'inactive' }}</td>
+                                                        <td>
+                                                            <a href="{{ route('health-hub-feature-service.edit', $service->id) }}" role="button"
+                                                                class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                             <a href="#"
+                                                                class="border-0 btn btn-outline-danger delete_btn delete" data-id="{{ $service->id }}" title="Delete the user">
+                                                                 <i class="la la-trash"></i>
+                                                             </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <h5 class="menu-title"><strong>Plans</strong></h5>
                             <hr>
-                            <table class="table table-striped table-bordered dataTable" id="Example1">
-                                <thead>
-                                </thead>
-                                <tbody>
-                                @foreach ($packages as $key => $package)
-                                    <tr>
-                                        <td width='10%'>{{ ++$key }}</td>
-                                        <td width='10%'>{{ $package->title_en }}</td>
-                                        <td 
-                                            width='10%'><img style="height:50px;width:100px" src="{{asset($package->logo)}}" alt="Package Logo" srcset="">
-                                            @if (isset($package->health_hub_dashboard_id))
-                                                <a href="#"
-                                                    class="border-0 btn btn-outline-danger float-right delete_package_btn delete_package" data-id="{{ $package->id }}" title="Remove Package">
-                                                    <i class="la la-trash"></i>
-                                                </a>
-                                            @else 
-                                                <a href="#"
-                                                    class="btn-sm btn-success cursor-pointer  float-right add_package add_package_btn" data-id="{{ $package->id }}" title="Add Package">
-                                                    <i class="la la-plus"></i>
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                            <div class="card card-info mt-0" style="box-shadow: 0px 0px">
+                                <div style="text-align: right">
+                                    <a href="{{route('health-hub-feature-plan.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                                        Create Health Hub Plan
+                                    </a>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-header">
+                                    </div>
+                                    <div class="card-body card-dashboard">
+                                        <table class="table table-striped table-bordered dataTable" id="Example2">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Title En</th>
+                                                <th>Title Bn</th>
+                                                <th>Slug</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($plans as $key => $plan)
+                                                <tr>
+                                                    <td>{{ ++$key }}</td>
+                                                    <td>{{ $plan->title_en }}</td>
+                                                    <td>{{ $plan->title_bn }}</td>
+                                                    <td>{{ $plan->slug }}</td>
+                                                    <td>{{ $plan->status ? 'active':'inactive' }}</td>
+                                                    <td>
+                                                        <a href="{{ route('health-hub-feature-plan.edit', $plan->id) }}" role="button"
+                                                            class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                         <a href="#"
+                                                            class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $plan->id }}" title="Delete the Plan">
+                                                             <i class="la la-trash"></i>
+                                                         </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
                                     <i class="ft-save"></i> Save
@@ -302,6 +338,24 @@
                         })
                     }
                 })
+            });
+            $('#Example1').DataTable({
+                //dom: 'Bfrtip',
+                buttons: [],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+                "pageLength": 10,
+                "order": [],
+            });
+            $('#Example2').DataTable({
+                //dom: 'Bfrtip',
+                buttons: [],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+                "pageLength": 10,
+                "order": [],
             });
             function initiateDropify(selector) {
                 $(selector).dropify({

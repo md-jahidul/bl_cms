@@ -17,7 +17,7 @@ class HealthHubDashboard extends Model
         return $this->hasMany(HealthHubService::class, 'health_hub_dashboard_id', 'id');
     }
 
-    public function packages(){
-        return $this->hasMany(HealthHubPackage::class, 'health_hub_dashboard_id', 'id');
+    public function plans(){
+        return $this->hasMany(HealthHubPlan::class, 'health_hub_dashboard_id', 'id');
     }
 }

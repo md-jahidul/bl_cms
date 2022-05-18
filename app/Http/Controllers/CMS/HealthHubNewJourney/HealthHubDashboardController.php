@@ -6,6 +6,7 @@ use App\HealthHubDashboard;
 use App\Services\HealthHubNewJourney\HealthHubDashboardService;
 use App\Services\HealthHubNewJourney\HealthHubFeatureService;
 use App\Services\HealthHubNewJourney\HealthHubPackageService;
+use App\Services\HealthHubNewJourney\HealthHubPlanService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,23 +17,23 @@ class HealthHubDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private  $healthHubDashBoardService, $healthHubPackageService, $healthHubFeatureService;
+    private  $healthHubDashBoardService, $healthHubPlanService, $healthHubFeatureService;
     public function __construct(
         HealthHubDashboardService $healthHubDashBoardService,
-        HealthHubPackageService $healthHubPackageService,
-        HealthHubFeatureService $healthHubFeatureService
+        HealthHubPlanService      $healthHubPlanService,
+        HealthHubFeatureService   $healthHubFeatureService
     ){
         $this->healthHubDashBoardService = $healthHubDashBoardService;
-        $this->healthHubPackageService   = $healthHubPackageService;
+        $this->healthHubPlanService   = $healthHubPlanService;
         $this->healthHubFeatureService   = $healthHubFeatureService;
     }
 
     public function index()
     {
         $data       = $this->healthHubDashBoardService->first();
-        $packages   = $this->healthHubPackageService->findAll();
+        $plans      = $this->healthHubPlanService->findAll();
         $services   = $this->healthHubFeatureService->findAll();
-        return view('admin.health-hub-new-journey.dashboard.index', compact('data', 'packages', 'services'));
+        return view('admin.health-hub-new-journey.dashboard.index', compact('data', 'plans', 'services'));
     }
 
     /**

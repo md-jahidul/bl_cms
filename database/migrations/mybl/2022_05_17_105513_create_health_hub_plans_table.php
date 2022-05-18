@@ -15,12 +15,16 @@ class CreateHealthHubPlansTable extends Migration
     {
         Schema::create('health_hub_plans', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('health_hub_dashboard_id')->nullable();
             $table->string('title_bn');
             $table->string('title_en');
             $table->string('slug');
             $table->string('logo');
             $table->boolean('status');
             $table->timestamps();
+            $table->foreign('health_hub_dashboard_id')
+                ->references('id')
+                ->on('health_hub_dashboards');
         });
     }
 

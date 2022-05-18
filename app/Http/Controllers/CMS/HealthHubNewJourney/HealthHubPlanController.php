@@ -45,7 +45,7 @@ class HealthHubPlanController extends Controller
         if($this->healthHubPlanService->save($request->all()))Session()->flash('message', 'HealthHub Plan Created successfully.');
         else session()->flash('warning', 'HealthHub Plan Created Failed');
 
-        return redirect('health-hub-feature-plan');
+        return redirect('health-hub-feature-dashboard');
     }
 
     /**
@@ -83,7 +83,7 @@ class HealthHubPlanController extends Controller
         if($this->healthHubPlanService->update($request->all(), $id))Session()->flash('message', 'Plan Update successfully.');
         else session()->flash('warning', 'Plan Updated Failed');
 
-        return redirect('health-hub-feature-plan');
+        return redirect('health-hub-feature-dashboard');
     }
 
     /**
