@@ -79,6 +79,11 @@ class BaseMsisdnService
         $writer->close();
     }
 
+    public function getPaginatedBaseMsisdn($id)
+    {
+        return BaseMsisdn::select('msisdn')->where('group_id', $id)->paginate(5);
+    }
+
     public function getBaseMsisdn($request, $id)
     {
         $draw = $request->get('draw');
@@ -142,7 +147,7 @@ class BaseMsisdnService
                         'status' => 0,
                     ];
                     $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-
+                    Redis::set('categories-sync-with-product'. $baseFileInfo->base_msisdn_group_id, 1);
                     dispatch(new BaseMsisdnFileUpload($file_path, $baseFileData, $baseFileInfo));
                     // dd("success");
 

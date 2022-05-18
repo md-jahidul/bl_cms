@@ -2,6 +2,7 @@
 
 namespace App\Services\Assetlite;
 
+use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProductTab;
 use App\Traits\CrudTrait;
 use Exception;
@@ -116,6 +117,11 @@ class AlInternetOffersCategoryService
             
             MyBlProductTab::create($data);
         }
+    }
+
+    public function findCategoryIdBySlugs($slugs){
+
+        return MyBlInternetOffersCategory::whereIn('slug', $slugs)->where('platform', 'al')->pluck('id');
     }
 
 }

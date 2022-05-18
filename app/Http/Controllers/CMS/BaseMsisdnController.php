@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Http\Requests\BaseMsisdnRequest;
+use App\Models\BaseMsisdn;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+
 
 class BaseMsisdnController extends Controller
 {
@@ -118,11 +121,13 @@ class BaseMsisdnController extends Controller
      */
     public function edit($id)
     {
-        $baseMsisdn = $this->baseMsisdnService->findOne($id, 'baseMsisdns');
+        $msisdnList = $this->baseMsisdnService->getPaginatedBaseMsisdn($id);
+        $baseMsisdn = $this->baseMsisdnService->findOne($id);
         $baseMsisdnFiles = $this->baseMsisdnFileRepository->findByProperties(['base_msisdn_group_id' => $id]);
-
         $page = 'edit';
-        return view('admin.myblslider.base.create', compact('baseMsisdn', 'page', 'baseMsisdnFiles'));
+        $keyValue = Redis::get("categories-sync-with-product".$id);
+        
+        return view('admin.myblslider.base.create', compact('keyValue', 'baseMsisdn', 'page', 'baseMsisdnFiles', 'msisdnList'));
     }
 
     /**
