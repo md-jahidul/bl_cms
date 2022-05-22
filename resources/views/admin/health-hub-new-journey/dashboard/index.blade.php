@@ -111,7 +111,12 @@
                                                         <td>{{ ++$key }}</td>
                                                         <td>{{ $service->title_en }}</td>
                                                         <td>{{ $service->title_bn }}</td>
-                                                        <td>{{ $service['status'] ? 'Active':'Inactive' }}</td>
+                                                        <td>
+                                                            @if($service['status'])
+                                                                <span class="badge badge-success badge-pill mr-1">Active</span>
+                                                            @else
+                                                                <span class="badge badge-danger badge-pill mr-1">Inactive</span>
+                                                            @endif</td>
                                                         <td>
                                                             <a href="{{ route('health-hub-feature-service.edit', $service->id) }}" role="button"
                                                                 class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
@@ -157,7 +162,13 @@
                                                     <td>{{ $plan->title_en }}</td>
                                                     <td>{{ $plan->title_bn }}</td>
                                                     <td>{{ $plan->slug }}</td>
-                                                    <td>{{ $plan->status ? 'Active':'Inactive' }}</td>
+                                                    <td>
+                                                        @if($plan->status)
+                                                            <span class="badge badge-success badge-pill mr-1">Active</span>
+                                                        @else
+                                                            <span class="badge badge-danger badge-pill mr-1">Inactive</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <a href="{{ route('health-hub-feature-plan.edit', $plan->id) }}" role="button"
                                                             class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

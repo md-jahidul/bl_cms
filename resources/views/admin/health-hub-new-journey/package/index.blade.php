@@ -34,7 +34,13 @@
                                 <td>{{ $package->title_en }}</td>
                                 <td>{{ $package->plan->title_en }}</td>
                                 <td>{{ $package->partner->name_en }}</td>
-                                <td>{{ $package['status'] ? 'Active':'Inactive' }}</td>
+                                <td>
+                                    @if($package['status'])
+                                        <span class="badge badge-success badge-pill mr-1">Active</span>
+                                    @else
+                                        <span class="badge badge-danger badge-pill mr-1">Inactive</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ route('health-hub-feature-package.edit', $package->id) }}" role="button"
                                         class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

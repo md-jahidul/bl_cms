@@ -120,8 +120,8 @@
                                     <div class="form-group">
                                         <label for="eventInput3">Status</label>
                                         <select name="status" class="form-control">
-                                            <option value="1" >Active</option>
-                                            <option value="0">Inactive</option>
+                                            <option value="1" {{$package->status=='1' ? 'selected':''}}>Active</option>
+                                            <option value="0" {{$package->status=='0' ? 'selected':''}}>Inactive</option>
                                         </select>
                                     </div>
                                 </div>
