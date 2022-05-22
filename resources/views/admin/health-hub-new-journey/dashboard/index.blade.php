@@ -90,7 +90,7 @@
                                 <div class="card card-info mt-0" style="box-shadow: 0px 0px">
                                     <div style="text-align: right">
                                         <a href="{{route('health-hub-feature-service.create')}}" class="btn btn-primary round btn-glow px-2 float-right col-md-2"><i class="la la-plus"></i>
-                                            Create Health Hub Service
+                                            Create Service
                                         </a>
                                     </div>
                                     <div class="card-content">
@@ -129,13 +129,13 @@
                                     </div>
                                 </div>
                             </section>
-                            <h5 class="menu-title"><strong>Plans List</strong></h5>
+                            <h5 class="menu-title"><strong>Plans & Packages List</strong></h5>
                             <hr>
                             <div class="card card-info mt-0" style="box-shadow: 0px 0px">
                                 <div class="card-content">
                                     <div style="text-align: right">
                                         <a href="{{route('health-hub-feature-plan.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                                            Create Health Hub Plan
+                                            Create Plan
                                         </a>
                                     </div>
                                     <div class="card-body card-dashboard">
