@@ -79,7 +79,7 @@ class HealthHubPlanController extends Controller
      * @param  \App\Models\HealthHubNewJourney\HealthHubPackageCategory  $healthHubPackageCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(HealthHubPlanRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if($this->healthHubPlanService->update($request->all(), $id))Session()->flash('message', 'Plan Update successfully.');
         else session()->flash('warning', 'Plan Updated Failed');

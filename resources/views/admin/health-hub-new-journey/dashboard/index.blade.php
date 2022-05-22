@@ -90,7 +90,7 @@
                                 <div class="card card-info mt-0" style="box-shadow: 0px 0px">
                                     <div style="text-align: right">
                                         <a href="{{route('health-hub-feature-service.create')}}" class="btn btn-primary round btn-glow px-2 float-right col-md-2"><i class="la la-plus"></i>
-                                            Create Health Hub Service
+                                            Create Service
                                         </a>
                                     </div>
                                     <div class="card-content">
@@ -111,7 +111,12 @@
                                                         <td>{{ ++$key }}</td>
                                                         <td>{{ $service->title_en }}</td>
                                                         <td>{{ $service->title_bn }}</td>
-                                                        <td>{{ $service['status'] ? 'Active':'Inactive' }}</td>
+                                                        <td>
+                                                            @if($service['status'])
+                                                                <span class="badge badge-success badge-pill mr-1">Active</span>
+                                                            @else
+                                                                <span class="badge badge-danger badge-pill mr-1">Inactive</span>
+                                                            @endif</td>
                                                         <td>
                                                             <a href="{{ route('health-hub-feature-service.edit', $service->id) }}" role="button"
                                                                 class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
@@ -129,13 +134,13 @@
                                     </div>
                                 </div>
                             </section>
-                            <h5 class="menu-title"><strong>Plans List</strong></h5>
+                            <h5 class="menu-title"><strong>Plans & Packages List</strong></h5>
                             <hr>
                             <div class="card card-info mt-0" style="box-shadow: 0px 0px">
                                 <div class="card-content">
                                     <div style="text-align: right">
                                         <a href="{{route('health-hub-feature-plan.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                                            Create Health Hub Plan
+                                            Create Plan
                                         </a>
                                     </div>
                                     <div class="card-body card-dashboard">
@@ -157,7 +162,13 @@
                                                     <td>{{ $plan->title_en }}</td>
                                                     <td>{{ $plan->title_bn }}</td>
                                                     <td>{{ $plan->slug }}</td>
-                                                    <td>{{ $plan->status ? 'Active':'Inactive' }}</td>
+                                                    <td>
+                                                        @if($plan->status)
+                                                            <span class="badge badge-success badge-pill mr-1">Active</span>
+                                                        @else
+                                                            <span class="badge badge-danger badge-pill mr-1">Inactive</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <a href="{{ route('health-hub-feature-plan.edit', $plan->id) }}" role="button"
                                                             class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
