@@ -44,6 +44,19 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6">
+                                        <label for="subscription_url" class="required">Subscription Url</label>
+                                        <input class="form-control"
+                                               name="subscription_url"
+                                               id="subscription_url"
+                                               placeholder="Enter Subscription Url"
+                                               required>
+                                        @if($errors->has('subscription_url'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('subscription_url') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="callback_url" class="required">Callback Url</label>
                                         <input class="form-control"
                                                name="callback_url"
@@ -53,19 +66,6 @@
                                         @if($errors->has('sub_title_bn'))
                                             <p class="text-left">
                                                 <small class="danger text-muted">{{ $errors->first('sub_title_bn') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="redirect_url" class="required">Redirect Url</label>
-                                        <input class="form-control"
-                                               name="redirect_url"
-                                               id="redirect_url"
-                                               placeholder="Enter Redirect Url"
-                                               required>
-                                        @if($errors->has('redirect_url'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('redirect_url') }}</small>
                                             </p>
                                         @endif
                                     </div>

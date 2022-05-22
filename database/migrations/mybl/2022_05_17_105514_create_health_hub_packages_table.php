@@ -21,7 +21,7 @@ class CreateHealthHubPackagesTable extends Migration
             $table->string('title_bn');
             $table->string('logo');
             $table->string('callback_url');
-            $table->string('redirect_url');
+            $table->string('subscription_url');
             $table->string('details_en');
             $table->string('details_bn');
             $table->boolean('status');
