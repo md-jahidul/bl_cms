@@ -44,6 +44,19 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6">
+                                        <label for="subscription_url" class="required">Subscription Url</label>
+                                        <input class="form-control"
+                                               name="subscription_url"
+                                               id="subscription_url"
+                                               placeholder="Enter Subscription Url"
+                                               required>
+                                        @if($errors->has('subscription_url'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('subscription_url') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="callback_url" class="required">Callback Url</label>
                                         <input class="form-control"
                                                name="callback_url"
@@ -53,19 +66,6 @@
                                         @if($errors->has('sub_title_bn'))
                                             <p class="text-left">
                                                 <small class="danger text-muted">{{ $errors->first('sub_title_bn') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="redirect_url" class="required">Redirect Url</label>
-                                        <input class="form-control"
-                                               name="redirect_url"
-                                               id="redirect_url"
-                                               placeholder="Enter Redirect Url"
-                                               required>
-                                        @if($errors->has('redirect_url'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('redirect_url') }}</small>
                                             </p>
                                         @endif
                                     </div>
@@ -101,7 +101,27 @@
                                             </p>
                                         @endif
                                     </div>
-                                <div class="col-md-6" id="content_div">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Select Customer</label>
+                                        <select name="allowed_customer" class="form-control" required>
+                                            <option value="" >Select Customer Type</option>
+                                            <option value="all" >All Customer</option>
+                                            <option value="loyalty_customer">Only For Loyalty Customer</option>
+                                            <option value="non_loyalty_customer">Non Loyalty Customer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control" required>
+                                            <option value="1" >Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="content_div">
                                     <div class="form-group">
                                         <label class="required">Service Logo</label>
                                         <input type="file"
@@ -117,16 +137,7 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="eventInput3">Status</label>
-                                        <select name="status" class="form-control">
-                                            <option value="1" >Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="details_en" >Package Details (EN):</label>
                                     <textarea
                                     required
@@ -135,7 +146,7 @@
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('details_en') {{ $message }} @enderror </small>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="details_bn" >Package Details (BN):</label>
                                     <textarea
                                     required

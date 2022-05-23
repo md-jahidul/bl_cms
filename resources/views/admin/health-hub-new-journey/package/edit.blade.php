@@ -45,6 +45,19 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6">
+                                        <label for="subscription_url" class="required">Subscription Url</label>
+                                        <input class="form-control"
+                                               name="subscription_url"
+                                               id="subscription_url"
+                                               value="{{ $package->subscription_url }}"
+                                               required>
+                                        @if($errors->has('subscription_url'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('subscription_url') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="callback_url" class="required">Callback Url</label>
                                         <input class="form-control"
                                                name="callback_url"
@@ -54,19 +67,6 @@
                                         @if($errors->has('sub_title_bn'))
                                             <p class="text-left">
                                                 <small class="danger text-muted">{{ $errors->first('sub_title_bn') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="redirect_url" class="required">Redirect Url</label>
-                                        <input class="form-control"
-                                               name="redirect_url"
-                                               id="redirect_url"
-                                               value="{{ $package->redirect_url }}"
-                                               required>
-                                        @if($errors->has('redirect_url'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('redirect_url') }}</small>
                                             </p>
                                         @endif
                                     </div>
@@ -100,55 +100,66 @@
                                             </p>
                                         @endif
                                     </div>
-                                <div class="col-md-6" id="content_div">
-                                    <div class="form-group">
-                                        <label class="required">Service Logo</label>
-                                        <input type="file"
-                                               name="logo"
-                                                data-max-file-size="2M"
-                                                data-default-file="{{ url('storage/' .$package->logo) }}"
-                                                data-allowed-file-extensions="jpeg png jpg"
-                                               class="dropify"/>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="eventInput3">Select Customer</label>
+                                            <select name="allowed_customer" class="form-control" required>
+                                                <option value="" >Select Customer Type</option>
+                                                <option value="all" {{$package->allowed_customer=='all' ? 'selected':''}}>All Customer</option>
+                                                <option value="loyalty_customer" {{$package->allowed_customer=='loyalty_customer' ? 'selected':''}}>Only For Loyalty Customer</option>
+                                                <option value="non_loyalty_customer" {{$package->allowed_customer=='non_loyalty_customer' ? 'selected':''}}>Non Loyalty Customer</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    @if($errors->has('content_div'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="eventInput3">Status</label>
-                                        <select name="status" class="form-control">
-                                            <option value="1" {{$package->status=='1' ? 'selected':''}}>Active</option>
-                                            <option value="0" {{$package->status=='0' ? 'selected':''}}>Inactive</option>
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group" class="required">
+                                            <label for="eventInput3">Status</label>
+                                            <select name="status" class="form-control">
+                                                <option value="1" {{$package->status=='1' ? 'selected':''}}>Active</option>
+                                                <option value="0" {{$package->status=='0' ? 'selected':''}}>Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="content_div">
+                                        <div class="form-group">
+                                            <label class="required">Service Logo</label>
+                                            <input type="file"
+                                                name="logo"
+                                                    data-max-file-size="2M"
+                                                    data-default-file="{{ url('storage/' .$package->logo) }}"
+                                                    data-allowed-file-extensions="jpeg png jpg"
+                                                class="dropify"/>
+                                        </div>
+                                        @if($errors->has('content_div'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="details_en" >Package Details (EN):</label>
+                                        <textarea
+                                        required
+                                        data-validation-required-message="Description (EN) is required"
+                                        class="form-control @error('details_en') is-invalid @enderror" placeholder="Enter body description....." id="details_en" name="details_en" rows="10">{{ $package->details_en }}</textarea>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('details_en') {{ $message }} @enderror </small>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="details_bn" >Package Details (BN):</label>
+                                        <textarea
+                                        required
+                                        data-validation-required-message="Description (BN) is required"
+                                        class="form-control @error('details_bn') is-invalid @enderror" placeholder="Enter body description....." id="details_bn" name="details_bn" rows="10">{{ $package->details_en }}</textarea>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('details_bn') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="details_en" >Package Details (EN):</label>
-                                    <textarea
-                                    required
-                                    data-validation-required-message="Description (EN) is required"
-                                    class="form-control @error('details_en') is-invalid @enderror" placeholder="Enter body description....." id="details_en" name="details_en" rows="10">{{ $package->details_en }}</textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('details_en') {{ $message }} @enderror </small>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success mt-2">
+                                        <i class="ft-save"></i> Update
+                                    </button>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="details_bn" >Package Details (BN):</label>
-                                    <textarea
-                                    required
-                                    data-validation-required-message="Description (BN) is required"
-                                    class="form-control @error('details_bn') is-invalid @enderror" placeholder="Enter body description....." id="details_bn" name="details_bn" rows="10">{{ $package->details_en }}</textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('details_bn') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-success mt-2">
-                                    <i class="ft-save"></i> Update
-                                </button>
-                            </div>
 
                         </form>
                     </div>
