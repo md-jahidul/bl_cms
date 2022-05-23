@@ -26,7 +26,7 @@ class HealthHubDashboardService
     }
 
     public function first(){
-        return$this->healthHubDashboardRepo->first();
+        return $this->healthHubDashboardRepo->first();
     }
 
     public function storeOrUpdate(array $data, $id = null)
@@ -63,7 +63,6 @@ class HealthHubDashboardService
                     $deshboard = $this->save($data);
                     return 2;
                 }
-
             });
 
         } catch (\Exception $e) {

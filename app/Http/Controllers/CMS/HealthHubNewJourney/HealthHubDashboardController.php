@@ -18,6 +18,7 @@ class HealthHubDashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     private  $healthHubDashBoardService, $healthHubPlanService, $healthHubFeatureService;
+    
     public function __construct(
         HealthHubDashboardService $healthHubDashBoardService,
         HealthHubPlanService      $healthHubPlanService,
@@ -30,9 +31,9 @@ class HealthHubDashboardController extends Controller
 
     public function index()
     {
-        $data       = $this->healthHubDashBoardService->first();
-        $plans      = $this->healthHubPlanService->findAll();
-        $services   = $this->healthHubFeatureService->findAll();
+        $plans = $this->healthHubPlanService->findAll();
+        $data = $this->healthHubDashBoardService->first();
+        $services = $this->healthHubFeatureService->findAll();
         return view('admin.health-hub-new-journey.dashboard.index', compact('data', 'plans', 'services'));
     }
 
@@ -55,10 +56,16 @@ class HealthHubDashboardController extends Controller
     public function store(Request $request)
     {
         $flag = $this->healthHubDashBoardService->storeOrUpdate($request->all());
-        if ($flag == 2) return redirect()->back()->with('success', 'Dashboard Added successfully.');
-        else if($flag=1)return redirect()->back()->with('success', 'Dashboard Update Successfully.');
-
-        return redirect()->back()->with('error', 'Error! Dashboard not saved.');
+        $msg = 'Error! Dashboard not saved.';
+        $type = 'error';
+        if ($flag == 1) {
+            $msg = 'Dashboard Updated Successfully';
+            $type = 'success';
+        } else if($flag == 2) {
+            $msg = 'Dashboard Updated Successfully';
+            $type = 'success';
+        } 
+        return redirect()->back()->with($type, $msg);
     }
 
     /**
@@ -92,11 +99,14 @@ class HealthHubDashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->healthHubDashBoardService->storeOrUpdate($request->all())) {
-            return redirect()->back()->with('success', 'Dashboard Update Successfully.');
+        $type = 'error';
+        $msg = 'Error! Dashboard Update Failed';
+        $updated = $this->healthHubDashBoardService->storeOrUpdate($request->all());
+        if ($updated) {
+            $type = 'error';
+            $msg = 'Error! Dashboard Updated Successfully';
         }
-
-        return redirect()->back()->with('error', 'Error! Dashboard not Updated.');
+        return redirect()->back()->with($type, $msg);
     }
 
     /**
