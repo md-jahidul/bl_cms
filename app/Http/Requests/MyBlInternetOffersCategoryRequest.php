@@ -24,8 +24,6 @@ class MyBlInternetOffersCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:200|unique:my_bl_internet_offers_categories,name,'. $this->id,
-            'slug' => 'required|max:200|unique:my_bl_internet_offers_categories,slug,'. $this->id,
             'sort' => 'required|min:0',
         ];
     }

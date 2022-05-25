@@ -36,8 +36,19 @@ class MyBlInternetOffersCategoryService
      */
     public function storeInternetOffersCategory($data): Response
     {
-        $this->internetOffersCategoryRepository->save($data);
-        return new Response("Internet Offer has been successfully created");
+        try{
+            $this->internetOffersCategoryRepository->save($data);
+            return [
+                "status" => 200,
+                "message" => 'Internet Offer has been successfully created'
+            ];
+        }catch (\Exception $e){
+            return [
+                "status" => 500,
+                "message" => 'Internet Offer has been Created Failed'
+            ];
+        }
+
     }
     /**
      * Undocumented function
@@ -72,9 +83,21 @@ class MyBlInternetOffersCategoryService
 
     public function updateInternetOffersCategory($request, $id)
     {
-        $nearByOffer = $this->findOne($id);
-        $nearByOffer->update($request);
-        return Response('MyBl Internet Offers Category has been successfully updated');
+        try{
+            $nearByOffer = $this->findOne($id);
+            $nearByOffer->update($request);
+        
+            return [
+                "status" => 200,
+                "message" => 'MyBl Internet Offers Category has been successfully updated'
+            ];
+        }catch (\Exception $e){
+            return [
+                "status" => 500,
+                "message" => 'Internet Offer Update Failed'
+            ];
+        }
+
     }
 
 
