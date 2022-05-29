@@ -1,5 +1,26 @@
 <?php
 
+//$serve = "mysql-5";
+//$user = "root";
+//$password = "root";
+//$db = "bl_cms";
+//try {
+//    $con = mysqli_connect($serve, $user, $password, $db);
+//
+//    $query = ' Select id, referrer from cs_selfcare_referrers where code_type = "retailer" AND is_active = 1';
+//    $result = $con->query($query);
+//
+//    foreach ($result as $value) {
+//        $msisdn = substr($value->referrer->msisdn, -9);
+//        $newCode = decoct($msisdn);
+//        $updateQuery = "update cs_selfcare_referrers set referral_code = '$newCode' where id = value->id";
+//        $con->query($updateQuery);
+//    }
+//}catch (PDOException $e){
+//
+//    echo $sql . "<br>" . $e->getMessage();
+//}
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes for MY BL
@@ -10,6 +31,8 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
@@ -825,6 +848,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('sms-languages/edit/{id}', 'CMS\SmsLanguageController@edit')->name('sms-languages.edit');
     Route::post('sms-languages/store', 'CMS\SmsLanguageController@store')->name('sms-languages.store');
     Route::put('sms-languages/update/{id}', 'CMS\SmsLanguageController@update')->name('sms-languages.update');
+
+    /**
+     * New Campaign Modality
+     */
+    Route::resource('new-campaign-modality', 'CMS\MyBlCampaignNewModalityController')->except(['show', 'destroy']);
+    Route::get('new-campaign-modality/destroy/{id}', 'CMS\MyBlCampaignNewModalityController@destroy');
 
 });
 

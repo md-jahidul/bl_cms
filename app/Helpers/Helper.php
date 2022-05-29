@@ -239,4 +239,14 @@ class Helper
           'others' => 'Others'
         ];
     }
+
+    public static function campaignType()
+    {
+        return [
+            'flash_hour_one' => 'Flash Hour 1.0',
+            'flash_hour_two' => 'Flash Hour 2.0',
+            'cash_back' => 'Cash Back',
+            'mybl_campaign' => 'Mybl Campaign',
+        ];
+    }
 }

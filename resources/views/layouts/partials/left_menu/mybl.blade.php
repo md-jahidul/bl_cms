@@ -286,6 +286,12 @@
                     <i class="la la-dollar"></i> Cash Back
                 </a>
             </li>
+            <li class="{{is_active_url('new-campaign-modality')}}">
+                <a class="menu-item" href="{{ route('new-campaign-modality.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> New Campaign Modality
+                </a>
+            </li>
         </ul>
     </li>
 
