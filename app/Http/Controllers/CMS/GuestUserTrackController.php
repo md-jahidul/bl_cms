@@ -46,7 +46,7 @@ class GuestUserTrackController extends Controller
     public function dataExport(Request $request)
     {
         $response = $this->guestUserTrackService->dataExportGenerator($request);
-        session()->flash('message', $response->getContent());
+        session()->flash('warning', $response->getContent());
         return redirect(route('guest-user-track-list'));
     }
 

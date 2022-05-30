@@ -15,19 +15,12 @@
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     @if($fileDownloadStatus === "0")
-                        <div class="alert bg-info alert-dismissible mb-2" role="alert">
+                        <div class="alert bg-warning alert-dismissible mb-2" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            File generate in progress. Please refresh again after faw minute
+                            <i class="la la-refresh"></i> File is the generation in progress... Please refresh again after a few minutes.
                         </div>
-{{--                    @elseif($fileDownloadStatus != null)--}}
-{{--                        <div class="alert bg-success alert-dismissible mb-2" role="alert">--}}
-{{--                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--                                <span aria-hidden="true">×</span>--}}
-{{--                            </button>--}}
-{{--                            File is now available for download.--}}
-{{--                        </div>--}}
                     @endif
 
                     <form action="{{route('guest-user-data-export')}}" id="filter-form" class="filter-container"

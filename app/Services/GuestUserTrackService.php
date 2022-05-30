@@ -82,7 +82,7 @@ class GuestUserTrackService
 
         if (isset($request->export_type)) {
             GuestUserDataDownload::dispatch($rawQueryFiltered);
-            return response('File generate in progress. Please refresh again after faw minute');
+            return response('File is the generation in progress... Please refresh again after a few minutes.');
         }
 
         // Show Data
