@@ -36,11 +36,11 @@
                                 <div class="row mb-1">
                                     <div class="form-group col-md-12 mb-2">
                                         @if(isset($keyValue) && $keyValue != "2")
-                                            <div class="alert bg-info alert-dismissible mb-2" role="alert">
+                                            <div class="alert bg-info alert-warning mb-2" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">×</span>
                                                 </button>
-                                                Base Upload Processing...
+                                                Base Upload Processing... <br>Please, Refresh after a few minutes.
                                             </div>
                                         @endif
                                     </div>

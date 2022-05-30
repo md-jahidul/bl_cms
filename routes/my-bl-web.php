@@ -975,6 +975,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('health_hub.in_app.analytic.details');
 
 
+    // Health Hub New Journey
+    Route::resource('health-hub-feature-dashboard', 'CMS\HealthHubNewJourney\HealthHubDashboardController');
+    Route::get('health-hub-feature-dashboard/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubDashboardController@destroy')->name('health-hub-feature-dashboard.destroy');
+    Route::resource('health-hub-feature-service', 'CMS\HealthHubNewJourney\HealthHubServiceController');
+    Route::get('health-hub-feature-service/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@destroy');
+    Route::get('health-hub-feature-service/update-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@updateDashboardId');
+    Route::get('health-hub-feature-service/delete-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@deleteDashboardId');
+    Route::resource('health-hub-feature-partner', 'CMS\HealthHubNewJourney\HealthHubPartnerController');
+    Route::get('health-hub-feature-partner/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubPartnerController@destroy');
+    Route::resource('health-hub-feature-package', 'CMS\HealthHubNewJourney\HealthHubPackageController');
+    Route::get('health-hub-feature-package/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubPackageController@destroy');
+    Route::get('health-hub-feature-package/update-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubPackageController@updateDashboardId');
+    Route::get('health-hub-feature-package/delete-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubPackageController@deleteDashboardId');
+    Route::resource('health-hub-feature-plan', 'CMS\HealthHubNewJourney\HealthHubPlanController');
+    Route::get('health-hub-feature-plan/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubPlanController@destroy');
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 

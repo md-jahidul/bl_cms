@@ -95,7 +95,7 @@ class BaseMsisdnController extends Controller
     {
         $response = $this->baseMsisdnService->storeBaseMsisdnGroup($request);
         if ($response['status']) {
-            Session()->flash('success', $response['message']);
+            Session()->flash('warning', $response['base_title_en']. ' Upload is processing...');
             return redirect(route('myblslider.baseMsisdnList.index'));
         }
         Session()->flash('error', $response['message']);
@@ -141,7 +141,7 @@ class BaseMsisdnController extends Controller
     {
         $response = $this->baseMsisdnService->updateBaseMsisdnGroup($request, $id);
         if ($response['status']) {
-            Session()->flash('success', $response['message']);
+            // Session()->flash('warning', $response['base_title_en']. ' Upload is processing.');
             return back();
         }
         Session()->flash('error', $response['message']);

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MyBlInternetOffersCategoryRequest extends FormRequest
+class HealthHubPlanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class MyBlInternetOffersCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'sort' => 'required|min:0',
+            'slug' => 'required|max:200|unique:health_hub_plans,slug,'. $this->id,
         ];
     }
 }

@@ -125,6 +125,7 @@ class MyblFlashHourService
                     $product['status']          = $product['status'] ?? 0;
                     $product['start_date']      = null;
                     $product['end_date']        = null;
+                    $product['status']          = 0;
                     unset($product['id']);
                     $this->flashHourProductRepository->save($product);
                 }
