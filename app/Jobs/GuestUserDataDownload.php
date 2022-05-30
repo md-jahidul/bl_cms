@@ -61,7 +61,7 @@ class GuestUserDataDownload implements ShouldQueue
         }
         fclose($handle);
 
-//        Redis::del("guest_user_file_generate_status");
-//        Redis::set("guest_user_file_generate_status", 1);
+        Redis::del("guest_user_file_generate_status");
+        Redis::set("guest_user_file_generate_status", 1);
     }
 }
