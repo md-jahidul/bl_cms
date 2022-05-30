@@ -205,6 +205,7 @@ class BaseMsisdnService
                 if (!$response['status']) {
                     DB::rollBack();
                 }
+                $response['base_title_en'] = $baseGroup->title;
                 return $response;
             });
         } catch (\Exception $e) {
@@ -225,7 +226,9 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request, $id) {
                 $baseGroup = $this->findOne($id);
                 $baseGroup->update($request->all());
-                return $this->uploadPrepare($request, $baseGroup, 'update');
+                $response = $this->uploadPrepare($request, $baseGroup, 'update');
+                $response['base_title_en'] = $baseGroup->title;
+                return $response;
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());
