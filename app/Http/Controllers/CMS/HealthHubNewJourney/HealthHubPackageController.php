@@ -10,6 +10,8 @@ use App\Services\HealthHubNewJourney\HealthHubPartnerService;
 use App\Services\HealthHubNewJourney\HealthHubPlanService;
 use Illuminate\Http\Request;
 
+use function PHPSTORM_META\type;
+
 class HealthHubPackageController extends Controller
 {
     /**
@@ -34,7 +36,6 @@ class HealthHubPackageController extends Controller
     public function index()
     {
         $packages = $this->healthHubPackageService->findAll();
-
         return view('admin.health-hub-new-journey.package.index', compact('packages'));
     }
 
@@ -45,9 +46,8 @@ class HealthHubPackageController extends Controller
      */
     public function create()
     {
-        $partners = $this->healthHubPartnerService->findAll();
         $plans    = $this->healthHubPlanService->findAll();
-
+        $partners = $this->healthHubPartnerService->findAll();
         return view('admin.health-hub-new-journey.package.create', compact('partners', 'plans'));
     }
 
@@ -59,9 +59,14 @@ class HealthHubPackageController extends Controller
      */
     public function store(Request $request)
     {
-        if($this->healthHubPackageService->save($request->all()))Session()->flash('message', 'HealthHub Package Created successfully.');
-        else session()->flash('warning', 'HealthHub Package Created Failed');
-
+        $type = 'warning';
+        $msg = 'HealthHub Package Update successfully.';
+        $saved = $this->healthHubPackageService->save($request->all());
+        if($saved) {
+            $type = 'message';
+            $msg = 'HealthHub Package Created successfully.';
+        }     
+        session()->flash($type, $msg);
         return redirect('health-hub-feature-package');
     }
 
@@ -87,7 +92,6 @@ class HealthHubPackageController extends Controller
         $partners = $this->healthHubPartnerService->findAll();
         $plans    = $this->healthHubPlanService->findAll();
         $package  = $this->healthHubPackageService->findOne($id);
-//        dd($package);
         return view('admin.health-hub-new-journey.package.edit', compact('package', 'plans', 'partners'));
     }
 
@@ -100,9 +104,14 @@ class HealthHubPackageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($this->healthHubPackageService->update($request->all(), $id))Session()->flash('message', 'HealthHub Package Update successfully.');
-        else session()->flash('warning', 'HealthHub Package Updated Failed');
-
+        $type = 'warning';
+        $msg = 'HealthHub Package Update successfully.';
+        $updated = $this->healthHubPackageService->update($request->all(), $id);
+        if($updated) {
+            $type = 'message';
+            $msg = 'HealthHub Package Update successfully.';
+        }
+        Session()->flash($type, $msg);
         return redirect('health-hub-feature-package');
     }
 
@@ -114,24 +123,20 @@ class HealthHubPackageController extends Controller
      */
     public function destroy($id)
     {
-        return $this->healthHubPackageService->delete($id);
+        $deleted = $this->healthHubPackageService->delete($id);
+        return $deleted;
     }
 
-    public function updateDashboardId($id){
+    public function updateDashboardId($id)
+    {
         $dashboard = $this->healthHubDashBoardService->first();
         $this->healthHubPackageService->updateDashboardId($id, $dashboard->id);
-
-        return [
-            'value' => true
-        ];
+        return ['value' => true];
     }
 
-    public function deleteDashboardId($id){
-
+    public function deleteDashboardId($id)
+    {
         $this->healthHubPackageService->deleteDashboardId($id);
-
-        return [
-            'value' => true
-        ];
+        return ['value' => true];
     }
 }

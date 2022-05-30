@@ -42,7 +42,6 @@ class HealthHubPackageService
 
             return $this->healthHubPackageRepository->create($data);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             Log::error('Error while saving deshboard : ' . $e->getMessage());
             return false;
         }
@@ -64,7 +63,6 @@ class HealthHubPackageService
 
             return $Service->update($data);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             Log::error('Error while Updating Package : ' . $e->getMessage());
             return false;
         }
@@ -72,20 +70,19 @@ class HealthHubPackageService
 
     public function delete($id)
     {
-        return $this->healthHubPackageRepository->destroy($id);
+        $deleted = $this->healthHubPackageRepository->destroy($id);
+        return $deleted;
     }
 
     public function updateDashboardId($id, $dashboardId)
     {
-        $service   = $this->healthHubPackageRepository->findOne($id);
-
+        $service = $this->healthHubPackageRepository->findOne($id);
         return $service->update(['health_hub_dashboard_id' => $dashboardId]);
     }
 
     public function deleteDashboardId($id)
     {
         $service   = $this->healthHubPackageRepository->findOne($id);
-
         return $service->update(['health_hub_dashboard_id' => null]);
     }
 }
