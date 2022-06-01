@@ -35,6 +35,16 @@
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
                                     <div class="form-group col-md-12 mb-2">
+                                        @if(isset($keyValue) && $keyValue != "2")
+                                            <div class="alert bg-info alert-warning mb-2" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                                Base Upload Processing... <br>Please, Refresh after a few minutes.
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-12 mb-2">
                                         <label for="title" class="required">Base Msisdn Group Title:</label>
                                         <input
                                             required
