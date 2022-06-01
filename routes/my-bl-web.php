@@ -811,6 +811,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('guest-user-data-export');
     Route::post('guest-user-show-data', 'CMS\GuestUserTrackController@showData')
         ->name('guest-user-show-data');
+    Route::get('guest-user-data-download', 'CMS\GuestUserTrackController@downloadFile');
 
     //Loyality Image Upload
     Route::resource('loyalty-partner-image', 'CMS\LoyaltyPartnerImageController')->except(['show']);
