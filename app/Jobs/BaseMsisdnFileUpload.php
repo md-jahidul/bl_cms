@@ -44,9 +44,9 @@ class BaseMsisdnFileUpload implements ShouldQueue
     {
         $reader = ReaderFactory::createFromFile($this->filePath); // for XLSX and CSV files
         $reader->open($this->filePath);
+        $insertData = array();
         foreach ($reader->getSheetIterator() as $sheet) {
             $cnt=0;
-            $insertData = array();
             foreach ($sheet->getRowIterator() as $rowNum => $row) {
                 $cells = $row->getCells();
                 $msisdn = trim($cells[0]->getValue());
@@ -67,6 +67,7 @@ class BaseMsisdnFileUpload implements ShouldQueue
                     $insertData = [];
                 }
             }
+            $temp = array();
             foreach ($insertData as $value) {
                     $temp[] = [
                         'group_id' => $this->baseFileData['base_msisdn_group_id'],
