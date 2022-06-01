@@ -66,7 +66,6 @@ class MyblCashBackService
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
                 $product['mybl_cash_back_id'] = $id;
-                $product['status'] = isset($product['status']) ?? 0;
                 $this->cashBackProductRepo->save($product);
             }
         }
