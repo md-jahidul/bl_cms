@@ -32,5 +32,10 @@ return [
         ]
     ],
 
-    'validityUnits' => ['hours', 'days']
+    'validityUnits' => ['hours', 'days'],
+    
+    'terms_conditions_feature_names' => [
+        'general' => 'General',
+        'balance_transfer' => 'Balance Transfer'
+    ]
 ];

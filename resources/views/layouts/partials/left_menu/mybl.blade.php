@@ -195,6 +195,12 @@
                         <i class="la la-comment-o"></i>Quick Notification List</a>
                 </li>
 
+                {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
+                     <a class="menu-item" href="{{ route('notification.report') }}"
+                        data-i18n="nav.templates.vert.classic_menu">
+                         <i class="la la-comment-o"></i>Notification Report</a>
+                 </li>--}}
+
                 {{-- <li class="{{ is_active_url('notification-report')}}">
                     <a class="menu-item" href="{{ url('notification-report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
@@ -335,7 +341,6 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>App List</a>
                 </li>
-
 
             </ul>
         </li>
@@ -498,6 +503,12 @@
 
                 </li>
 
+                <li class="{{ is_active_url('balance-transfer/prefill-amounts')}}">
+                    <a class="menu-item" href="{{ route('balance-transfer.prefill-amounts.create') }}">
+                        <i class="la la-money"></i>Balance Transfer Prefill Amount</a>
+
+                </li>
+
                 <li class="{{ is_active_url('mybl/settings/najat')}}">
                     <a class="menu-item" href="{{ route('mybl.settings.najat.index') }}">
                         <i class="la la-feed"></i>Najat Content Config</a>
@@ -525,17 +536,26 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Migrate Plan List</a>
                 </li>
-
-
             </ul>
         </li>
     @endif
 
 
     @if( auth()->user()->can_view('TermsAndConditions') )
-        <li class="{{ is_active_url('/terms-conditions') }} nav-item"><a href="{{route('terms-conditions.show')}}"><i
-                    class="la la-legal"></i>
-                <span class="menu-title">Terms and Conditions</span></a>
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Terms and Conditions</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('/terms-conditions/general') }} nav-item">
+                    <a href="{{route('terms-conditions.show', ['feature_name' => 'general'])}}">
+                        <i class="la la-legal"></i>
+                        <span class="menu-title">T&C For App</span></a>
+                </li>
+                <li class="{{ is_active_url('/terms-conditions/balance_transfer') }} nav-item">
+                    <a href="{{route('terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
+                        <i class="la la-legal"></i><span class="menu-title">Balance Transfer</span>
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -695,6 +715,11 @@
         </ul>
     </li>
 @endif
+
+<li class="{{ is_active_url('developer/api/debug') }}">
+    <a class="menu-item" href="{{ route('support-message') }}">
+        <i class="la la-code-fork"></i>Support Messages</a>
+</li>
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
