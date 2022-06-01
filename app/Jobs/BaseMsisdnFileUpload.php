@@ -67,7 +67,7 @@ class BaseMsisdnFileUpload implements ShouldQueue
                     $insertData = [];
                 }
             }
-            foreach (array_chunk($insertData, 1000) as $smallerArray) {
+            foreach (array_chunk($insertData, 1) as $smallerArray) {
                 foreach ($smallerArray as $index => $value) {
                     $temp[$index] = [
                         'group_id' => $this->baseFileData['base_msisdn_group_id'],
