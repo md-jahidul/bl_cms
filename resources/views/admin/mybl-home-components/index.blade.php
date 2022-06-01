@@ -14,40 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1 mb-0"><strong>Fixed Components</strong></h4>
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            <th width="3%">SL</th>
-                            <th>Component Type</th>
-                            {{--                            <th>Component Status</th>--}}
-                            {{--                            <th class="text-right">Action</th>--}}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($components['fixed_components'] as $index=> $component)
-                            <tr data-index="{{ $component['id'] }}" data-position="{{ $component['display_order'] }}"
-                                data-component-id="{{ $component['component_id'] ?? 0 }}">
-                                {{--                                <tr>--}}
-                                <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $component['title_en'] }}
-                                {{--{!! $component->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}--}}</td>
-                                {{--  <td class="action" width="8%">--}}
-                                {{--      @if($component->is_active == 0)--}}
-                                {{--          <a href="{{ route("update-component-status", [ $component->page_id, $component->id ]) }}"--}}
-                                {{--             class="btn btn-success border-0" title="Click to enable"> Enable</a>--}}
-                                {{--      @else--}}
-                                {{--          <a href="{{ route("update-component-status", [ $component->page_id, $component->id ]) }}"--}}
-                                {{--             role="button" class="btn btn-danger border-0" title="Click to disable"> Disable</a>--}}
-                                {{--      @endif--}}
-                                {{--  </td>--}}
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-
-
-                    <h4 class="pt-2 pb-1 mb-0"><strong>Sortable Components</strong></h4>
+                    <h4 class="pb-1 mb-0"><strong>Sortable Components</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr width="100%">
@@ -58,7 +25,7 @@
                         </tr>
                         </thead>
                         <tbody id="sortable">
-                            @foreach($components['sortable_components'] as $index=> $component)
+                            @foreach($components as $index=> $component)
                                 <tr width="3%" data-index="{{ $component['id'] }}" data-position="{{ $component['display_order'] }}"
                                     data-component-id="{{ $component['component_id'] ?? 0 }}" style="width: 100%">
                                     <td><i class="icon-cursor-move icons"></i></td>
