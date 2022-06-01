@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\MyBlInternetOffersCategoryService;
@@ -44,15 +47,16 @@ class MyBlInternetOffersCategoryController extends Controller
         return view('admin.data-bundle.index',compact('offerCategory'));
     }
 
- /**
+    /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
-        $page='create';
-        return view('admin.data-bundle.create',compact('page'));
+        $page = 'create';
+        $product_types = Helper::productType();
+        return view('admin.data-bundle.create', compact('page', 'product_types'));
     }
 /**
  * Undocumented function
@@ -96,7 +100,8 @@ class MyBlInternetOffersCategoryController extends Controller
     public function edit($id=null){
         $page='create';
         $internet_offer=MyBlInternetOffersCategory::find($id);
-        return view('admin.data-bundle.edit',compact('page','internet_offer'));
+        $product_types = Helper::productType();
+        return view('admin.data-bundle.edit',compact('page','internet_offer', 'product_types'));
     }
 /**
  * Undocumented function
