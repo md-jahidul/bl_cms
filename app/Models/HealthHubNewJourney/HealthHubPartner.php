@@ -10,6 +10,7 @@ class HealthHubPartner extends Model
         'name_en',
         'name_bn',
         'logo',
-        'status'
+        'status', 
+        'access_key'
     ];
 }

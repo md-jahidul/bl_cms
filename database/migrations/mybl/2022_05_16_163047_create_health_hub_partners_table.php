@@ -17,6 +17,7 @@ class CreateHealthHubPartnersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name_en');
             $table->string('name_bn');
+            $table->string('access_key');
             $table->string('logo');
             $table->boolean('status');
             $table->timestamps();
