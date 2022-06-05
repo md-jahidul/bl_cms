@@ -17,32 +17,54 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label for="title" class="required">Partner Name English</label>
-                                        <input class="form-control"
-                                               name="name_en"
-                                               id="name_en"
-                                               placeholder="Enter English Title"
-                                               required>
-                                        @if($errors->has('name_en'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('name_en') }}</small>
-                                            </p>
-                                        @endif
+                                <div class="form-group col-md-6">
+                                    <label for="title" class="required">Partner Name English</label>
+                                    <input class="form-control"
+                                            name="name_en"
+                                            id="name_en"
+                                            placeholder="Enter English Title"
+                                            required>
+                                    @if($errors->has('name_en'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('name_en') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="title" class="required">Partner Name Bangla</label>
+                                    <input class="form-control"
+                                            name="name_bn"
+                                            id="name_bn"
+                                            placeholder="Enter Bangla Title"
+                                            required>
+                                    @if($errors->has('name_bn'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('name_bn') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="access_key" class="required">Partner Name English</label>
+                                    <input class="form-control"
+                                            name="access_key"
+                                            id="access_key"
+                                            placeholder="Enter Access Key"
+                                            required>
+                                    @if($errors->has('access_key'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('access_key') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control">
+                                            <option value="1" >Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="title" class="required">Partner Name Bangla</label>
-                                        <input class="form-control"
-                                               name="name_bn"
-                                               id="name_bn"
-                                               placeholder="Enter Bangla Title"
-                                               required>
-                                        @if($errors->has('name_bn'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('name_bn') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
+                                </div>
                                 <div class="col-md-6" id="content_div">
                                     <div class="form-group">
                                         <label class="required">Service Logo</label>
@@ -58,15 +80,6 @@
                                             <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
                                         </p>
                                     @endif
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="eventInput3">Status</label>
-                                        <select name="status" class="form-control">
-                                            <option value="1" >Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">

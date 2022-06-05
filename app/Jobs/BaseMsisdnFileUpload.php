@@ -44,9 +44,9 @@ class BaseMsisdnFileUpload implements ShouldQueue
     {
         $reader = ReaderFactory::createFromFile($this->filePath); // for XLSX and CSV files
         $reader->open($this->filePath);
+        $insertData = array();
         foreach ($reader->getSheetIterator() as $sheet) {
             $cnt=0;
-            $insertData = array();
             foreach ($sheet->getRowIterator() as $rowNum => $row) {
                 $cells = $row->getCells();
                 $msisdn = trim($cells[0]->getValue());
@@ -67,16 +67,15 @@ class BaseMsisdnFileUpload implements ShouldQueue
                     $insertData = [];
                 }
             }
-            foreach (array_chunk($insertData, 1000) as $smallerArray) {
-                foreach ($smallerArray as $index => $value) {
-                    $temp[$index] = [
+            $temp = array();
+            foreach ($insertData as $value) {
+                    $temp[] = [
                         'group_id' => $this->baseFileData['base_msisdn_group_id'],
                         'base_msisdn_file_id' => $this->baseFileInfo->id,
                         'msisdn' => $value
                     ];
-                }
-                BaseMsisdn::insert($temp);
             }
+            BaseMsisdn::insert($temp);
         }
 
         Redis::set('categories-sync-with-product'. $this->baseFileInfo->base_msisdn_group_id, 2);
