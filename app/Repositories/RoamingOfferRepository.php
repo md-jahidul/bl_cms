@@ -235,9 +235,6 @@ class RoamingOfferRepository extends BaseRepository {
                 $count++;
             }
 
-            dd($insert);
-
-
             RoamingOtherOfferComponents::insert($insert);
 
 
