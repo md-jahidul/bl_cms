@@ -247,7 +247,19 @@
                                 </div>
 
                                 <!-- Product Selection Start -->
-                                <div class="row report-repeater" id="productSection" data-repeater-list="product-group">
+                                <div class="row report-repeater" data-repeater-list="product-group">
+                                    <div class="col-md-12 d-none denoSection">
+                                        <div class="form-group">
+                                            <input type="radio" name="deno_type" value="selective" id="input-radio-15">
+                                            <label for="input-radio-15" class="mr-3">Selective Deno</label>
+                                            <input type="radio" name="deno_type" value="all" id="input-radio-16">
+                                            <label for="input-radio-16" class="mr-3">All Deno</label>
+                                        </div>
+                                    </div>
+
+                                    <slot id="productSection">
+
+                                    </slot>
 {{--                                    <slot class="product-element d-none">--}}
 {{--                                        @include('admin.mybl-campaign.new-campaign-modality.partials.product-element', ['denoType' => $denoType])--}}
 {{--                                    </slot>--}}
@@ -256,7 +268,7 @@
 {{--                                    </slot>--}}
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-0">
+                                    <div class="form-group col-md-12">
                                         <button data-repeater-create id="repeater-button" type="button"
                                                 class="btn-sm btn-success cursor-pointer float-right">
                                             <i class="la la-plus"></i>
@@ -436,7 +448,7 @@
 @push('style')
     <style>
         .section-row {
-            background-color: #c9cbff;
+            background-color: #d0d1e1;
         }
         .section-row h5 {
             padding-top: 10px;
@@ -463,7 +475,6 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script>
         $(document).ready(function () {
             // document.getElementById("disable-radio-button").disabled = true;
@@ -513,131 +524,120 @@
                                                       placeholder="Enter description in Bangla"></textarea>
                                         </div>
                                         @php
-                                            $productType = '<span class="text-success">(Prepaid) </span>'
-                                        @endphp
-                                        <div class="form-group col-md-4 mb-2" id="cta_action">
-                                            <label for="product_code" class="required">Product Code</label>
-                                            <select id="product_code" name="product_code" class="browser-default custom-select product-list">
-                                                <option value="">Select Product</option>
-                                            @foreach ($products as $key => $value)
-                                            <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
-                                            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
-                                            @endforeach
-                                            </select>
-                                            <div class="help-block"></div>
-                                        </div>
-
-                                        <div class="form-group col-md-3">
-                                            <label for="start_date">Start Date</label>
-                                            <div class='input-group'>
-                                                <input type='text' class="form-control product_start_date" name="start_date" placeholder="Please select start date" autocomplete="off"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-md-3 {{ $errors->has('end_date') ? ' error' : '' }}">
-                                            <label for="end_date">End Date</label>
-                                            <input type="text" name="end_date" class="form-control product_end_date" placeholder="Please select end date" autocomplete="off">
-                                        </div>
-
-                                        <div class="form-group col-md-2 mb-2" id="cta_action">
-                                            <label for="redirect_url">Product Status</label>
-                                            <select id="navigate_action" name="status" class="browser-default custom-select">
-                                                <option value="">Select Status</option>
-                                                <option class="text-success" value="1">Enable</option>
-                                                <option class="text-danger" value="0">Disable</option>
-                                            </select>
-                                            <div class="help-block"></div>
-                                        </div>
-
-                                        <!-- Product Row Delete -->
-                                        <div class="form-group col-md-12 mb-1">
-                                            <button data-repeater-delete type="button"
-                                                    class="btn-sm btn-danger cursor-pointer float-right">
-                                                <i class="la la-trash"></i>
-                                            </button>
-                                        </div>
-                                        </slot>`
-            let rechargeElement = `
-            <slot data-repeater-list="group-a" data-repeater-item>
-            <div class="col-md-12" >
-                <div class="form-group {{ $errors->has('deno_type') ? ' error' : '' }}">
-                <input type="radio" name="deno_type" value="selective" id="input-radio-15">
-                <label for="input-radio-15" class="mr-3">Selective Deno</label>
-                <input type="radio" name="deno_type" value="all" id="input-radio-16">
-                    <label for="input-radio-16" class="mr-3">All Deno</label>
-                    {{--                                            <input type="radio" name="" value="" id="disable-radio-button" >--}}
-            {{--                                            <label for="input-radio-16" class="mr-3">Product Category</label>--}}
-            {{--                                            <input type="radio" name="" value="" id="disable-radio-button1" >--}}
-            {{--                                            <label for="input-radio-16" class="mr-3">Selective Category</label>--}}
-            </div>
-<slot data-repeater-list="group-a" data-repeater-item>
-<div class="form-group col-12 mb-2 file-repeater">
-    <div class="row mb-1">
-        <div class="form-group col-md-4 }}">
-            <label for="recharge_amount">Recharge Amount</label>
-            <div class='input-group'>
-                <input type='number' class="form-control" name="recharge_amount" required placeholder="Please select recharge amount" autocomplete="off"/>
-            </div>
-        </div>
-
-        <div class="col-md-4" >
-            <div class="form-group">
-                <label class="required">Cashback Type : </label>
-                <select name="cash_back_type" class="browser-default custom-select" id="cash_back_type" required>
-                    <option value="">Select Cashback Type</option>
-                    <option value="fixed_amount">Fixed Amount</option>
-                    <option value="percentage">Percentage</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
-            <input required type="number" name="cash_back_amount" id="cash_back_amount" class="form-control"
-                placeholder="Enter The Fixed/Percentage of Cashback">
-        </div>
-        <div class="form-group col-md-4 cash_back_amount_for_product">
-            <label for="max_amount">Max Cash Back Amount</label>
-            <input type="number" name="max_amount" class="form-control" placeholder="Please Enter Max Amount">
-        </div>
-
-        <div class="form-group col-md-4 number_of_apply_times_for_product">
-            <label for="number_of_apply_times">No of apply times</label>
-            <input type="number" name="number_of_apply_times" class="form-control" placeholder="Please Enter Max Amount">
-        </div>
-        <div class="form-group col-md-3 mb-2" id="cta_action">
-            <label for="redirect_url">Cashback Status</label>
-            <select id="navigate_action" name="status"
-                    class="browser-default custom-select">
-                <option value="">Select Status</option>
-                <option class="text-success" value="1">Enable</option>
-                <option class="text-danger" value="0">Disable</option>
+                $productType = '<span class="text-success">(Prepaid) </span>'
+            @endphp
+            <div class="form-group col-md-4 mb-2" id="cta_action">
+                <label for="product_code" class="required">Product Code</label>
+                <select id="product_code" name="product_code" class="browser-default custom-select product-list">
+                    <option value="">Select Product</option>
+            @foreach ($products as $key => $value)
+                <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
+                >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+            @endforeach
             </select>
             <div class="help-block"></div>
         </div>
 
-        <!-- Product Row Delete -->
-        <div class="form-group col-md-1 pt-2">
-            <label for="redirect_url"></label>
-            <button data-repeater-delete type="button"
-                    class="btn-sm btn-danger cursor-pointer float-right">
-                <i class="la la-trash"></i>
-            </button>
+        <div class="form-group col-md-3">
+            <label for="start_date">Start Date</label>
+            <div class='input-group'>
+                <input type='text' class="form-control product_start_date" name="start_date" placeholder="Please select start date" autocomplete="off"/>
+            </div>
         </div>
-    </div>
-</div>
-</slot> `;
+
+            <div class="form-group col-md-3">
+                <label for="end_date">End Date</label>
+                <input type="text" name="end_date" class="form-control product_end_date" placeholder="Please select end date" autocomplete="off">
+            </div>
+
+            <div class="form-group col-md-2 mb-2" id="cta_action">
+                <label for="redirect_url">Product Status</label>
+                <select id="navigate_action" name="status" class="browser-default custom-select">
+                    <option value="">Select Status</option>
+                    <option class="text-success" value="1">Enable</option>
+                    <option class="text-danger" value="0">Disable</option>
+                </select>
+                <div class="help-block"></div>
+            </div>
+
+            <!-- Product Row Delete -->
+            <div class="form-group col-md-12 mb-1">
+                <button data-repeater-delete type="button"
+                        class="btn-sm btn-danger cursor-pointer float-right">
+                    <i class="la la-trash"></i>
+                </button>
+            </div>
+        </slot>`
+
+            let denoType = ``
+            let rechargeElement = `
+                <slot data-repeater-list="group-a" data-repeater-item>
+                    <div class="row pl-2">
+                        <div class="form-group col-md-4 }}">
+                            <label for="recharge_amount">Recharge Amount</label>
+                            <div class='input-group'>
+                                <input type='number' class="form-control" name="recharge_amount" required placeholder="Please select recharge amount" autocomplete="off"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" >
+                            <div class="form-group">
+                                <label class="required">Cashback Type : </label>
+                                <select name="cash_back_type" class="browser-default custom-select" id="cash_back_type" required>
+                                    <option value="">Select Cashback Type</option>
+                                    <option value="fixed_amount">Fixed Amount</option>
+                                    <option value="percentage">Percentage</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
+                            <input required type="number" name="cash_back_amount" id="cash_back_amount" class="form-control"
+                                placeholder="Enter The Fixed/Percentage of Cashback">
+                        </div>
+                        <div class="form-group col-md-4 cash_back_amount_for_product">
+                            <label for="max_amount">Max Cash Back Amount</label>
+                            <input type="number" name="max_amount" class="form-control" placeholder="Please Enter Max Amount">
+                        </div>
+
+                        <div class="form-group col-md-4 number_of_apply_times_for_product">
+                            <label for="number_of_apply_times">No of apply times</label>
+                            <input type="number" name="number_of_apply_times" class="form-control" placeholder="Please Enter Max Amount">
+                        </div>
+                        <div class="form-group col-md-2 mb-2" id="cta_action">
+                            <label for="redirect_url">Cashback Status</label>
+                            <select id="navigate_action" name="status"
+                                    class="browser-default custom-select">
+                                <option value="">Select Status</option>
+                                <option class="text-success" value="1">Enable</option>
+                                <option class="text-danger" value="0">Disable</option>
+                            </select>
+                            <div class="help-block"></div>
+                        </div>
+
+                        <!-- Product Row Delete -->
+                        <div class="form-group col-md-1 pt-2">
+                            <label for="redirect_url"></label>
+                            <button data-repeater-delete type="button"
+                                    class="btn-sm btn-danger cursor-pointer float-right">
+                                <i class="la la-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </slot> `;
 
             $('#campaign-type').change(function () {
                 let camType = $(this).val()
                 if (camType === "cash_back") {
-                    $('#productSection').append(rechargeElement)
-                    // $('.product-element').addClass('d-none')
-                    // $('.recharge-element').removeClass('d-none')
+                    console.log($('.denoSection'))
+                    $('.denoSection').removeClass('d-none')
+                    $('#productSection').empty()
+                    $('#productSection').append(denoType + rechargeElement)
                 } else {
+                    $('.denoSection').addClass('d-none')
+                    $('#productSection').empty()
                     $('#productSection').append(productElement)
                     dropify()
-                    // $('.product-element').removeClass('d-none')
-                    // $('.recharge-element').addClass('d-none')
                 }
 
             })
@@ -699,7 +699,7 @@
             date = new Date();
             date.setDate(date.getDate());
             $('input[name=recurring_type]').change(function () {
-            pickerFormat();
+                pickerFormat();
             });
 
             $('input[name=recurring_type]').ready(function () {
@@ -708,8 +708,6 @@
             function pickerFormat()
             {
                 recurringType = $('input[name=recurring_type]:checked').val();
-                console.log(recurringType);
-
                 if (recurringType != 'none') {
                     $('.datetime').daterangepicker({
                         timePicker: false,
@@ -747,7 +745,7 @@
             });
 
             $('input[name=deno_type]').change(function () {
-                denoType      = $('input[name=deno_type]:checked').val();
+                denoType = $('input[name=deno_type]:checked').val();
                 if(denoType == 'all') {
                     $('.cash_back_amount_for_product').addClass('d-none');
                     $('.number_of_apply_times_for_product').addClass('d-none');
@@ -769,4 +767,5 @@
             });
         });
     </script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
 @endpush
