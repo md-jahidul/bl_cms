@@ -13,27 +13,26 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
+
 
 class BaseMsisdnFileUpload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-//    private $baseFileData;
-//    private $reader;
-//    private $baseFileInfo;
-    private $data;
+   private $insertData, $sheet, $filePath;
+   private $baseFileData, $baseFileInfo;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($filePath, $baseFileData, $baseFileInfo)
     {
-        $this->data = $data;
-//        $this->reader = $reader;
-//        $this->baseFileData = $baseGroupId;
-//        $this->baseFileInfo = $baseFileInfo;
+       $this->filePath      = $filePath;
+       $this->baseFileData  = $baseFileData;
+       $this->baseFileInfo  = $baseFileInfo;
     }
 
     /**
@@ -43,43 +42,42 @@ class BaseMsisdnFileUpload implements ShouldQueue
      */
     public function handle()
     {
-//        $reader = $this->reader;
-//        $action = $this->action;
-//        $baseFileData = $this->baseFileData;
-//        $baseFileInfo = $this->baseFileInfo;
+        $reader = ReaderFactory::createFromFile($this->filePath); // for XLSX and CSV files
+        $reader->open($this->filePath);
+        $insertData = array();
+        foreach ($reader->getSheetIterator() as $sheet) {
+            $cnt=0;
+            foreach ($sheet->getRowIterator() as $rowNum => $row) {
+                $cells = $row->getCells();
+                $msisdn = trim($cells[0]->getValue());
+                ++$cnt;
+                $insertData[] = "0" . substr($msisdn, -10);
+                if($cnt%3000==0){
+                    foreach (array_chunk($insertData, 1000) as $smallerArray) {
+                        foreach ($smallerArray as $index => $value) {
+                            $temp[$index] = [
+                                'group_id' => $this->baseFileData['base_msisdn_group_id'],
+                                'base_msisdn_file_id' => $this->baseFileInfo->id,
+                                'msisdn' => $value
+                            ];
+                        }
+                        BaseMsisdn::insert($temp);
+                    }
+                    $cnt=0;
+                    $insertData = [];
+                }
+            }
+            $temp = array();
+            foreach ($insertData as $value) {
+                    $temp[] = [
+                        'group_id' => $this->baseFileData['base_msisdn_group_id'],
+                        'base_msisdn_file_id' => $this->baseFileInfo->id,
+                        'msisdn' => $value
+                    ];
+            }
+            BaseMsisdn::insert($temp);
+        }
 
-//        $insertData = array();
-//
-//        Log::error("Failed: $insertData");
-//        foreach ($this->reader->getSheetIterator() as $sheet) {
-//            foreach ($sheet->getRowIterator() as $key => $row) {
-//                $cells = $row->getCells();
-//                $msisdn = trim($cells[0]->getValue());
-//
-//                Log::error("Failed: $msisdn");
-//
-//                if (strlen($msisdn) < 10) {
-//                    return [
-//                        'status' => false,
-//                        'message' => 'Upload Failed! Wrong msisdn at row: ' . $key
-//                    ];
-//                }
-//                $insertData[] = "0" . substr($msisdn, -10);
-//            }
-//        }
-//
-//        foreach (array_chunk($insertData, 800) as $smallerArray) {
-//            foreach ($smallerArray as $index => $value) {
-//                $temp[$index] = [
-//                    'group_id' => $this->baseFileData,
-//                    'base_msisdn_file_id' => $this->baseFileInfo->id,
-//                    'msisdn' => $value
-//                ];
-//            }
-//            BaseMsisdn::insert($temp);
-////            BaseMsisdnFileUpload::dispatch($reader, $baseFileInfo, $baseFileData);
-//        }
-
-        BaseMsisdn::insert($this->data);
+        Redis::set('categories-sync-with-product'. $this->baseFileInfo->base_msisdn_group_id, 2);
     }
 }

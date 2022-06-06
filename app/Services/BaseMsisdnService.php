@@ -79,6 +79,11 @@ class BaseMsisdnService
         $writer->close();
     }
 
+    public function getPaginatedBaseMsisdn($id)
+    {
+        return BaseMsisdn::select('msisdn')->where('group_id', $id)->paginate(5);
+    }
+
     public function getBaseMsisdn($request, $id)
     {
         $draw = $request->get('draw');
@@ -110,21 +115,6 @@ class BaseMsisdnService
         return $response;
     }
 
-    protected function fileWiseMsisdnUpload($insertData, $baseFileData)
-    {
-        $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
-        foreach (array_chunk($insertData, 1000) as $smallerArray) {
-            foreach ($smallerArray as $index => $value) {
-                $temp[$index] = [
-                    'group_id' => $baseFileData['base_msisdn_group_id'],
-                    'base_msisdn_file_id' => $baseFileInfo->id,
-                    'msisdn' => $value
-                ];
-            }
-            BaseMsisdn::insert($temp);
-        }
-    }
-
     /**
      * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
      * @throws UnsupportedTypeException
@@ -148,44 +138,30 @@ class BaseMsisdnService
                     $fileName = $fileName . "-" . uniqid(2) . "." . $fileExt;
                     $path = $this->upload($file['file_name'], 'base-msisdn-files', $fileName);
                     $file_path = $this->getPath($path);
-                    $reader = ReaderFactory::createFromFile($file_path); // for XLSX and CSV files
-                    $reader->open($file_path);
+                    // $reader = ReaderFactory::createFromFile($file_path); // for XLSX and CSV files
+                    // $reader->open($file_path);
                     $baseFileData = [
                         'file_name' => $path,
                         'title' => $file['file_title'],
                         'base_msisdn_group_id' => $baseGroup->id,
                         'status' => 0,
                     ];
-
-                    $insertData = array();
-                    foreach ($reader->getSheetIterator() as $sheet) {
-                        foreach ($sheet->getRowIterator() as $rowNum => $row) {
-                            $cells = $row->getCells();
-                            $msisdn = trim($cells[0]->getValue());
-
-                            // Check msisdn length less than 10
-                            if (strlen($msisdn) < 10) {
-                                return [
-                                    'status' => false,
-                                    'message' => "<b>FIle Name:</b>  $fileOrgName <br> Upload Failed! Wrong msisdn at row: " . $rowNum
-                                ];
-                            }
-                            $insertData[] = "0" . substr($msisdn, -10);
-                        }
-                    }
+                    $baseFileInfo = $this->baseMsisdnFileRepository->save($baseFileData);
+                    Redis::set('categories-sync-with-product'. $baseFileInfo->base_msisdn_group_id, 1);
+                    dispatch(new BaseMsisdnFileUpload($file_path, $baseFileData, $baseFileInfo));
+                    // dd("success");
 
                     // Check maximum upload
-                    $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
-                    $msisdnLimit = 100000 * 10 * $million;
+                    // $million = env('BASE_MSISDN_LIMIT_MILLION', 3);
+                    // $msisdnLimit = 100000 * 10 * $million;
 
-                    if (count($insertData) > $msisdnLimit) {
-                        $inputMsisdn = count($insertData) / 1000000;
-                        return [
-                            'status' => false,
-                            'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
-                        ];
-                    }
-                    $this->fileWiseMsisdnUpload($insertData, $baseFileData);
+                    // if (count($insertData) > $msisdnLimit) {
+                    //     $inputMsisdn = count($insertData) / 1000000;
+                    //     return [
+                    //         'status' => false,
+                    //         'message' => " Limit exceeded!! Maximum base limit is $million Million. You provided input $inputMsisdn Million"
+                    //     ];
+                    // }
                 }
             }
 
@@ -234,10 +210,11 @@ class BaseMsisdnService
                 if (!$response['status']) {
                     DB::rollBack();
                 }
+                $response['base_title_en'] = $baseGroup->title;
                 return $response;
             });
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             Log::error('Base Msisdn Save: ' . $e->getMessage());
             return $e->getMessage();
         }
@@ -254,11 +231,13 @@ class BaseMsisdnService
             return DB::transaction(function () use ($request, $id) {
                 $baseGroup = $this->findOne($id);
                 $baseGroup->update($request->all());
-                return $this->uploadPrepare($request, $baseGroup, 'update');
+                $response = $this->uploadPrepare($request, $baseGroup, 'update');
+                $response['base_title_en'] = $baseGroup->title;
+                return $response;
             });
         } catch (\Exception $e) {
             Log::error('Base Msisdn Save: ' . $e->getMessage());
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return $e->getMessage();
         }
     }

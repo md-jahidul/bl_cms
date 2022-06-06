@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Product Categories')
-@section('card_name', 'Product Categories')
+@section('title', 'Products Categories')
+@section('card_name', 'Products Categories')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Product Category List</li>
+    <li class="breadcrumb-item active">Products Category List</li>
 @endsection
 @section('action')
     <a href="{{ route('mybl.internetOffer.category.create')}}" id="add_category_btn" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Product Category
+        Create Products Category
     </a>
 @endsection
 @section('content')
@@ -22,6 +22,7 @@
                         <tr>
                             <th width='5%'>SL</th>
                             <th width='15%'>Name</th>
+                            <th width='15%'>Product Type</th>
                             <th width='20%'>Slug</th>
                             <th width='10%'>Sort</th>
                             <th width='10%'>Date</th>
@@ -34,6 +35,7 @@
                             <tr>
                                 <td width='5%'>{{++$key}}</td>
                                 <td width='10%'>{{$internet_offer->name}}</td>
+                                <td width='10%'>{{$internet_offer->product_type}}</td>
                                 <td width='10%'>{{$internet_offer->slug}}</td>
                                 <td width='10%'>{{$internet_offer->sort}}</td>
                                 <td width='15%'>{{$internet_offer->created_at}}</td>

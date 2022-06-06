@@ -21,7 +21,8 @@ class PrefillRechargeController extends Controller
 
     public function show()
     {
-        $amounts = PrefillRechargeAmount::all()->sortBy('sort');
+        $amounts = PrefillRechargeAmount::where('type', 'recharge')->get()->sortBy('sort');
+
         return view('admin.recharge.prefill-amount.show', compact('amounts'));
     }
 
