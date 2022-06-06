@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Product Category')
-@section('card_name', "Product Category")
+@section('title', 'Products Category')
+@section('card_name', "Products Category")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Edit Product Category
+        Edit Products Category
     </li>
 @endsection
 
@@ -24,7 +24,7 @@
                         @method('put')
                         <input type="hidden" name="id" value="{{$internet_offer->id}}">
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Product Category</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Products category</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -43,6 +43,18 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="category">Product Type</label>
+                                        <select name="product_type" id="category" class="form-control" required>
+                                            <option value=""> Select Product Type</option>
+                                            @foreach($product_types as $key => $val)
+                                                <option value="{{ $key }}" {{ $internet_offer->product_type == $key ? 'selected' : '' }}> {{ $val }} </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -78,26 +90,23 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                 </div>
-                            </div>
-                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="required" for="sort">Sort:</label>
                                         <input
-                                        required
-                                        type="number" min="1" max="5120" value="{{$internet_offer->sort}}" id="sort" class="form-control @error('sort') is-invalid @enderror" placeholder="Enter sort...." name="sort">
+                                            required
+                                            type="number" min="1" max="5120" value="{{$internet_offer->sort}}" id="sort" class="form-control @error('sort') is-invalid @enderror" placeholder="Enter sort...." name="sort">
 
                                         @error('sort')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">

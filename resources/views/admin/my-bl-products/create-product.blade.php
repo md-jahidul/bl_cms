@@ -532,6 +532,7 @@
             console.log(type)
             if (
                 type === 'data' ||
+                type === 'mix' ||
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||
@@ -541,7 +542,7 @@
             } else if (type === 'mix' || type === 'recharge_offer') {
                 offer_types.append(data + dataUnit + voiceVol + smsVol + sectionType)
             } else if (type === 'voice') {
-                offer_types.append(voiceVol)
+                offer_types.append(voiceVol + sectionType)
             } else if (type === 'sms') {
                 offer_types.append(smsVol)
             } else if (type === 'scr') {
@@ -551,7 +552,7 @@
             }
 
             $('.data-section').select2({
-                placeholder: 'Please Selcet Product Category',
+                placeholder: 'Please Select Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });

@@ -239,4 +239,36 @@ class Helper
           'others' => 'Others'
         ];
     }
+
+    
+    public static function productType()
+    {
+        return [
+            'internet_pack' => 'DATA',
+            'voice' => 'VOICE BUNDLES',
+            'bundle' => 'MIX BUNDLES'
+        ];
+    }
+
+
+    public static function guestUserActivityList(): array
+    {
+        return [
+           'landing_page' => 'Landing Page',
+           'otp_page' => 'OTP Page',
+           'otp_send' => 'OTP Send',
+           'password_login' => 'Password Login',
+           'password_page' => 'Password Page',
+           'logged_in' => 'Logged In',
+           'forget_password_page' => 'Forget Password Page',
+           'forget_password_send_otp' => 'Forget Password Send OTP',
+           'set_new_password_page' => 'Set New Password Page',
+           'change_password' => 'Change Password',
+           'register_page' => 'Register Page',
+           'send_otp_register' => 'Send OTP Register',
+           'register_set_new_password_page' => 'Register Set New Password Page',
+           'register_password_set' => 'Register Password Set',
+           'number_verification' => 'Number Verification'
+        ];
+    }
 }

@@ -297,9 +297,11 @@
 
 {{--                                {{ dd($details->details->content_type) }}--}}
                                 @if(  $details->details->content_type == 'data' ||
+                                      $details->details->content_type == 'mix' ||
                                       $details->details->content_type == 'data loan' ||
                                       $details->details->content_type == 'mix' ||
                                       $details->details->content_type == 'gift' ||
+                                      $details->details->content_type == 'voice' ||
                                       $details->details->content_type == 'volume transfer'
                                     )
                                     @php
@@ -307,7 +309,7 @@
                                     @endphp
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Product Categories </label>
+                                            <label>Product Categories</label>
                                             <select multiple
                                                     class="form-control data-section"
                                                     name="offer_section_slug[]" required>
