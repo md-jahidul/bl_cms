@@ -296,6 +296,7 @@
                                                @if($page == 'edit')
                                                data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
                                                @else
+                                               required
                                                @endif
                                                data-allowed-file-extensions="png jpg jpeg gif"
                                                class="dropify"/>
