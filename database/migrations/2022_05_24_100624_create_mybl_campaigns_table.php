@@ -24,8 +24,8 @@ class CreateMyblCampaignsTable extends Migration
             $table->integer('number_of_apply_times')->nullable();
             $table->integer('max_amount')->nullable();
             $table->string('reword_getting_type')->nullable();
-//            $table->string('banner');
-//            $table->string('thumbnail_image');
+            $table->string('payment_gateway');
+            $table->string('winning_type');
 //            $table->string('description_bn');
 //            $table->string('description_en');
 //            $table->dateTime('start_date')->nullable();

@@ -38,18 +38,19 @@
                                     </div>
                                     <div class="form-group col-md-6" >
                                         <label  class="required">Select Campaign Type </label>
-                                        <select name="purchase_eligibility" class="browser-default custom-select"
-                                                id="campaign-type" required data-validation-required-message="Please select Purchase Eligibility">
+                                        <select name="campaign_type" class="browser-default custom-select"
+                                                id="campaign-type" required data-validation-required-message="Please select campaign type">
                                             <option value="" >--Select Type--</option>
                                             @foreach($campaignType as $key => $type)
                                                 <option value="{{ $key }}" >{{ $type }}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
-                                        @if ($errors->has('purchase_eligibility'))
-                                            <div class="help-block">  {{ $errors->first('purchase_eligibility') }}</div>
+                                        @if ($errors->has('campaign_type'))
+                                            <div class="help-block">  {{ $errors->first('campaign_type') }}</div>
                                         @endif
                                     </div>
+
 
 <!--                                    <div class="form-group col-md-6">
                                             <label for="partner_channel_names" class="required">Select Partner Channel Name</label>
@@ -222,7 +223,23 @@
                                             </div>
                                         </div>
                                     </div>
-<!--                                    <div class="form-group col-md-6 mb-2">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="reward_getting_type">Purchase Eligibility</label>
+                                        <div class="form-group {{ $errors->has('purchase_eligibility') ? ' error' : '' }}">
+                                            <input type="radio" name="purchase_eligibility" value="ma_plus_recharge" id="maPlusRecharge">
+                                            <label for="maPlusRecharge" class="mr-3">MA + Recharge</label>
+                                            <input type="radio" name="purchase_eligibility" value="recharge" id="recharge">
+                                            <label for="recharge" class="mr-3">Recharge Only</label>
+                                            <input type="radio" name="purchase_eligibility" value="ma" id="ma">
+                                            <label for="ma" class="mr-3">MA Only</label>
+                                            @if ($errors->has('reward_getting_type'))
+                                                <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!--                                    <div class="form-group col-md-6 mb-2">
                                         <label for="description_en" >Write Campaign Description (EN) :</label>
                                         <textarea
                                         required
@@ -257,9 +274,7 @@
                                         </div>
                                     </div>
 
-                                    <slot id="productSection">
-
-                                    </slot>
+                                    <slot id="productSection"></slot>
 {{--                                    <slot class="product-element d-none">--}}
 {{--                                        @include('admin.mybl-campaign.new-campaign-modality.partials.product-element', ['denoType' => $denoType])--}}
 {{--                                    </slot>--}}
@@ -317,10 +332,10 @@
                                     <div class="form-group col-md-4">
                                         <label for="reward_getting_type">Reward Getting Type: </label>
                                         <div class="form-group {{ $errors->has('reward_getting_type') ? ' error' : '' }}">
-                                            <input type="radio" name="reward_getting_type" class="reward_getting_type" value="single_time" id="input-radio-15">
-                                            <label for="input-radio-15" class="mr-3">Single Time</label>
-                                            <input type="radio" name="reward_getting_type" class="reward_getting_type" value="multiple_time" id="input-radio-16">
-                                            <label for="input-radio-16" class="mr-3">Multiple Time</label>
+                                            <input type="radio" name="reward_getting_type" class="reward_getting_type" value="single_time" id="singleTime">
+                                            <label for="singleTime" class="mr-3">Single Time</label>
+                                            <input type="radio" name="reward_getting_type" class="reward_getting_type" value="multiple_time" id="multipleTime">
+                                            <label for="multipleTime" class="mr-3">Multiple Time</label>
                                             @if ($errors->has('reward_getting_type'))
                                                 <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
                                             @endif
@@ -493,8 +508,6 @@
             }
 
             dropify()
-
-
 
             let productElement = `<slot data-repeater-list="group-a" data-repeater-item>
                                         <div id="image-input" class="form-group col-md-6 mb-2">
