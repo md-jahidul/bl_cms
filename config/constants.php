@@ -33,9 +33,11 @@ return [
     ],
 
     'validityUnits' => ['hours', 'days'],
-    
+
     'terms_conditions_feature_names' => [
         'general' => 'General',
         'balance_transfer' => 'Balance Transfer'
-    ]
+    ],
+
+    'capping_internal' => ['yearly', 'monthly', 'weekly', 'daily']
 ];
