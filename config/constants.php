@@ -68,5 +68,12 @@ return [
 
     'validityUnits' => ['hours', 'days'],
 
-    'partnerChannelName' => ['bKash', 'Nagad', 'EBL']
+    'partnerChannelName' => ['bKash', 'Nagad', 'EBL'],
+    
+    'terms_conditions_feature_names' => [
+        'general' => 'General',
+        'balance_transfer' => 'Balance Transfer'
+    ],
+
+    'capping_internal' => ['yearly', 'monthly', 'weekly', 'daily']
 ];

@@ -342,5 +342,4 @@ class BaseRepository implements BaseRepositoryContract
 
         return $queryBuilder;
     }
-
 }

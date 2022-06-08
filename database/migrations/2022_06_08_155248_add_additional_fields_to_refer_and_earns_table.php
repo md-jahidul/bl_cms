@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddAdditionalFieldsToReferAndEarnsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('refer_and_earns', function (Blueprint $table) {
+            $table->string('claim_reward_type')->default('unlimited')->after('icon');
+            $table->string('capping_internal')->nullable()->after('claim_reward_type');
+            $table->integer('number_of_reffarals')->nullable()->after('capping_internal');
+            $table->longText('description_en')->nullable()->after('remind_interval_days');
+            $table->longText('description_bn')->nullable()->after('description_en');
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('refer_and_earns', function (Blueprint $table) {
+            //
+        });
+    }
+}

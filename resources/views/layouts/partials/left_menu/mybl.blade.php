@@ -201,6 +201,12 @@
                         <i class="la la-comment-o"></i>Quick Notification List</a>
                 </li>
 
+                {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
+                     <a class="menu-item" href="{{ route('notification.report') }}"
+                        data-i18n="nav.templates.vert.classic_menu">
+                         <i class="la la-comment-o"></i>Notification Report</a>
+                 </li>--}}
+
                 {{-- <li class="{{ is_active_url('notification-report')}}">
                 <a class="menu-item" href="{{ url('notification-report') }}" data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-comment-o"></i>Notification Report</a>
@@ -419,7 +425,10 @@
                         <i class="la la-comment-o"></i>App List</a>
                 </li>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/refferal-claim-settings
             </ul>
         </li>
     @endif
@@ -819,6 +828,11 @@
         </ul>
     </li>
 @endif
+
+<li class="{{ is_active_url('developer/api/debug') }}">
+    <a class="menu-item" href="{{ route('support-message') }}">
+        <i class="la la-code-fork"></i>Support Messages</a>
+</li>
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
