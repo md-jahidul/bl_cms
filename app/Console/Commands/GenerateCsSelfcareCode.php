@@ -61,7 +61,9 @@ class GenerateCsSelfcareCode extends Command
      */
     private function generateReferralCode(string $msisdn): string
     {
-        return str_shuffle(config('constants.cs_selfcare.referral_code_prefix') . strtoupper(dechex($msisdn)));
+        $msisdn = substr($msisdn, -9);
+        
+        return decoct($msisdn);
     }
 
     public function generateCsvWithCodes($fileName)
