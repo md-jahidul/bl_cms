@@ -374,7 +374,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="title_en" class="required">
-                                               Terms and Conditions
+                                                How it works description of EN
                                             </label>
                                             <textarea id="terms-conditions" name="description_en" required>
                                                 @if(isset($campaign->description_en))
@@ -384,7 +384,7 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="title_en" class="required">Terms and Conditions (Bangla)</label>
+                                            <label for="title_en" class="required">How it works description of BN</label>
                                             <textarea id="terms-conditions" name="description_bn" required>
                                                 @if(isset($campaign->description_bn))
                                                     {{ $campaign->description_bn }}
