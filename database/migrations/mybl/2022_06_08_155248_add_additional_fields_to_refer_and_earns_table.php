@@ -15,8 +15,8 @@ class AddAdditionalFieldsToReferAndEarnsTable extends Migration
     {
         Schema::table('refer_and_earns', function (Blueprint $table) {
             $table->string('claim_reward_type')->default('unlimited')->after('icon');
-            $table->string('capping_internal')->nullable()->after('claim_reward_type');
-            $table->integer('number_of_reffarals')->nullable()->after('capping_internal');
+            $table->smallInteger('capping_interval')->nullable()->after('claim_reward_type');
+            $table->integer('number_of_referrals')->nullable()->after('capping_interval');
             $table->longText('description_en')->nullable()->after('remind_interval_days');
             $table->longText('description_bn')->nullable()->after('description_en');
 

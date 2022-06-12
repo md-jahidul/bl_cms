@@ -7,7 +7,8 @@ return [
         'claimed' => 'claimed',
     ],
     'cs_selfcare' => [
-        'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y', env('CS_REFERRAL_END_DATE', '01/01/2022'))),
+        'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y',
+            env('CS_REFERRAL_END_DATE', '01/01/2022'))),
         'code_length' => 10,
         'referral_code_prefix' => 'CS',
         'log_type' => 'CS_REFERRAL',
@@ -39,5 +40,10 @@ return [
         'balance_transfer' => 'Balance Transfer'
     ],
 
-    'capping_internal' => ['yearly', 'monthly', 'weekly', 'daily']
+    'capping_interval' => [
+        1 => 'daily',
+        7 => 'weekly',
+        30 => 'monthly',
+        365 => 'yearly'
+    ]
 ];

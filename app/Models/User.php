@@ -10,7 +10,7 @@ use App\Traits\LogModelAction;
 
 class User extends Authenticatable
 {
-    use Notifiable, LogModelAction;
+    use Notifiable; //LogModelAction;
     use Authorizable;
 
     /**
