@@ -350,7 +350,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
-                                        <label for="capping_internal" class="required">Capping Internal</label>
+                                        <label for="capping_internal" class="required">Capping Interval</label>
                                         <select id="capping_internal" name="capping_internal"
                                                 class="browser-default custom-select product-list">
                                             <option value="">Select Product</option>
