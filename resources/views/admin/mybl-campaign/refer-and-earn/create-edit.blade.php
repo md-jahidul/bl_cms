@@ -335,7 +335,7 @@
                                     <div class="form-group col-md-4 mb-2">
                                         <label for="claim_reward_type">Claim Reward Type: </label>
                                         <div class="form-group {{ $errors->has('claim_reward_type') ? ' error' : '' }}">
-                                            <input type="radio" name="claim_reward_type" class="claim_reward_type" value="unlimited" id="input-radio-17"
+                                            <input type="radio" name="claim_reward_type" class="claim_reward_type radio" value="unlimited" id="input-radio-17"
                                                 {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "unlimited") ? 'checked' : '' }}>
                                             <label for="input-radio-17" class="mr-3">Unlimited</label>
                                             <input type="radio" name="claim_reward_type" class="claim_reward_type" value="automatic" id="input-radio-18"
@@ -350,25 +350,24 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
-                                        <label for="capping_internal" class="required">Capping Internal</label>
-                                        <select id="capping_internal" name="capping_internal"
+                                        <label for="capping_internal" class="required">Capping Interval</label>
+                                        <select id="capping_internal" name="capping_interval"
                                                 class="browser-default custom-select product-list">
                                             <option value="">Select Product</option>
-                                            @foreach (config('constants.capping_internal') as $key => $value)
-                                                <option value="{{ $value }}"
-                                                    {{ isset($campaign) && $campaign->capping_internal == $value ? 'selected' : '' }}>{{ strtoupper($value) }}</option>
+                                            @foreach (config('constants.capping_interval') as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    {{ isset($campaign) && $campaign->capping_interval == $key ? 'selected' : '' }}>{{ strtoupper($value) }}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-4 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
-                                        <label for="number_of_reffarals" class="required">No Of Reffaral To Be Claimed</label>
+                                        <label for="number_of_reffarals" class="required">No Of Referral To Be Claimed</label>
                                         <input
-                                               value="{{ isset($campaign) ? $campaign->number_of_reffarals : old('number_of_reffarals') }}"
+                                               value="{{ isset($campaign) ? $campaign->number_of_referrals : old('number_of_referrals') }}"
                                                id="number_of_reffarals"
-                                               name="number_of_reffarals"
                                                type="number" class="form-control"
-                                               placeholder="Enter The Number" name="number_of_reffarals">
+                                               placeholder="Enter The Number" name="number_of_referrals">
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="row">
