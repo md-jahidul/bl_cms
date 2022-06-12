@@ -15,7 +15,7 @@ class AddColumnInReferrersTable extends Migration
     {
         Schema::table('referrers', function (Blueprint $table) {
             if (!Schema::hasColumn('referrers', 'claimed_from')) {
-                $table->date('claimed_from');
+                $table->date('claimed_from')->nullable();
             }
         });
     }
