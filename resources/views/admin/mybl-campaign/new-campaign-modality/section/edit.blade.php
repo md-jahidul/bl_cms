@@ -11,7 +11,7 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('mybl-campaign-section.update') }}"
+                              action="{{ route('mybl-campaign-section.update', $section->id) }}"
                               method="POST"
                               class="form"
                               enctype="multipart/form-data">
@@ -23,7 +23,7 @@
                                     <input class="form-control"
                                            name="title_en"
                                            id="title_en"
-                                           value="{{$}}"
+                                           value="{{$section->title_en}}"
                                            placeholder="Enter Section Title"
                                            required>
                                     @if($errors->has('title_en'))
@@ -37,6 +37,7 @@
                                     <input class="form-control"
                                            name="title_bn"
                                            id="title_bn"
+                                           value="{{$section->title_bn}}"
                                            placeholder="Enter Section Title"
                                            required>
                                     @if($errors->has('title_bn'))
@@ -50,6 +51,7 @@
                                     <input class="form-control"
                                            name="slug"
                                            id="slug"
+                                           value="{{$section->slug}}"
                                            placeholder="Enter Slug"
                                            required>
                                     @if($errors->has('slug'))
@@ -64,6 +66,7 @@
                                            class="form-control"
                                            name="display_order"
                                            id="display_order"
+                                           value="{{$section->display_order}}"
                                            placeholder="Enter Display Order"
                                            required>
                                     @if($errors->has('display_order'))
@@ -76,8 +79,8 @@
                                     <div class="form-group">
                                         <label for="eventInput3">Status</label>
                                         <select name="status" class="form-control">
-                                            <option value="1" >Active</option>
-                                            <option value="0">Inactive</option>
+                                            <option value="1"{{$section->status=='1' ? 'selected':''}} >Active</option>
+                                            <option value="0"{{$section->status=='0' ? 'selected':''}}>Inactive</option>
                                         </select>
                                     </div>
                                 </div>

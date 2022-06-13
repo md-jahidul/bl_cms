@@ -78,7 +78,7 @@ class MyBlCampaignSectionController extends Controller
     {
         $section = $this->myblCampaignSectionService->findOne($myBlCampaignSectionId);
 
-        return view('admin.mybl-campaign.new-campaign-modality.section.edit');
+        return view('admin.mybl-campaign.new-campaign-modality.section.edit', compact('section'));
     }
 
     /**
