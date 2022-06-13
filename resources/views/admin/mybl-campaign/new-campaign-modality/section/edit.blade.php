@@ -47,20 +47,6 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="slug" class="required">Slug</label>
-                                    <input class="form-control"
-                                           name="slug"
-                                           id="slug"
-                                           value="{{$section->slug}}"
-                                           placeholder="Enter Slug"
-                                           required>
-                                    @if($errors->has('slug'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('slug') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6">
                                     <label for="display_order" class="required">Display Order</label>
                                     <input type="number"
                                            class="form-control"
