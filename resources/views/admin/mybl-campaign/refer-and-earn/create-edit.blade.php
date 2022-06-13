@@ -332,7 +332,7 @@
                                     </div>
                                     <div class="col-md-12 pl-0"><h5><strong>Refferal Claim And Other Settings</strong></h5></div>
                                     <div class="form-actions col-md-12 mt-0"></div>
-                                    <div class="form-group col-md-4 mb-2">
+                                    <div class="form-group col-md-3 mb-2">
                                         <label for="claim_reward_type">Claim Reward Type: </label>
                                         <div class="form-group {{ $errors->has('claim_reward_type') ? ' error' : '' }}">
                                             <input type="radio" name="claim_reward_type" class="claim_reward_type radio" value="unlimited" id="input-radio-17"
@@ -349,7 +349,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
+                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
                                         <label for="capping_internal" class="required">Capping Interval</label>
                                         <select id="capping_internal" name="capping_interval"
                                                 class="browser-default custom-select product-list">
@@ -361,13 +361,22 @@
                                         </select>
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="form-group col-md-4 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
+                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
                                         <label for="number_of_reffarals" class="required">No Of Referral To Be Claimed</label>
                                         <input
                                                value="{{ isset($campaign) ? $campaign->number_of_referrals : old('number_of_referrals') }}"
                                                id="number_of_reffarals"
                                                type="number" class="form-control"
                                                placeholder="Enter The Number" name="number_of_referrals">
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
+                                        <label for="claim_validity_days" class="required">Claim Validity(Days)</label>
+                                        <input
+                                            value="{{ isset($campaign) ? $campaign->claim_validity_days : old('claim_validity_days') }}"
+                                            id="claim_validity_days"
+                                            type="number" class="form-control"
+                                            placeholder="Enter Claim Validity Days" name="claim_validity_days">
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="row">
