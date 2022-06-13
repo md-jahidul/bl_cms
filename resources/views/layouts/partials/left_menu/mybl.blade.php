@@ -292,6 +292,12 @@
                     <i class="la la-bullhorn"></i> New Campaign Modality
                 </a>
             </li>
+            <li class="{{is_active_url('mybl-campaign-section')}}">
+                <a class="menu-item" href="{{ route('mybl-campaign-section.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Sections
+                </a>
+            </li>
         </ul>
     </li>
 
