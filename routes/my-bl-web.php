@@ -855,6 +855,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('new-campaign-modality', 'CMS\MyBlCampaignNewModalityController')->except(['show', 'destroy']);
     Route::get('new-campaign-modality/destroy/{id}', 'CMS\MyBlCampaignNewModalityController@destroy');
 
+    Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign-section/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignSectionController@destroy');
+
 });
 
 // 4G Map View Route
