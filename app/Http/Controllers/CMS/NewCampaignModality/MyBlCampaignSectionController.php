@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\NewCampaignModality\MyBlCampaignSection;
 use App\Services\NewCampaignModality\MyBlCampaignSectionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class MyBlCampaignSectionController extends Controller
 {
@@ -35,7 +36,7 @@ class MyBlCampaignSectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.mybl-campaign.new-campaign-modality.section.create');
     }
 
     /**
@@ -46,7 +47,14 @@ class MyBlCampaignSectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($this->myblCampaignSectionService->save($request->all())) {
+            Session::flash('message', 'Section store successful');
+        }
+        else{
+            Session::flash('danger', 'Section Stored Failed');
+        }
+
+        return redirect('mybl-campaign-section');
     }
 
     /**
@@ -66,9 +74,11 @@ class MyBlCampaignSectionController extends Controller
      * @param  \App\Models\NewCampaignModality\MyBlCampaignSection  $myBlCampaignSection
      * @return \Illuminate\Http\Response
      */
-    public function edit(MyBlCampaignSection $myBlCampaignSection)
+    public function edit($myBlCampaignSectionId)
     {
-        //
+        $section = $this->myblCampaignSectionService->findOne($myBlCampaignSectionId);
+
+        return view('admin.mybl-campaign.new-campaign-modality.section.edit');
     }
 
     /**
@@ -78,9 +88,16 @@ class MyBlCampaignSectionController extends Controller
      * @param  \App\Models\NewCampaignModality\MyBlCampaignSection  $myBlCampaignSection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MyBlCampaignSection $myBlCampaignSection)
+    public function update(Request $request,  $myBlCampaignSectionId)
     {
-        //
+        if ($this->myblCampaignSectionService->update($myBlCampaignSectionId, $request->all())) {
+            Session::flash('message', 'Section Update successful');
+        }
+        else{
+            Session::flash('danger', 'Section Update Failed');
+        }
+
+        return redirect('mybl-campaign-section');
     }
 
     /**
@@ -89,8 +106,8 @@ class MyBlCampaignSectionController extends Controller
      * @param  \App\Models\NewCampaignModality\MyBlCampaignSection  $myBlCampaignSection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MyBlCampaignSection $myBlCampaignSection)
+    public function destroy($myBlCampaignSectionId)
     {
-        //
+        return $this->myblCampaignSectionService->delete($myBlCampaignSectionId);
     }
 }

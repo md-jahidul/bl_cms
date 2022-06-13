@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MyBlCampaignSection extends Model
 {
-    protected $fillable = ['id', 'title_en', 'title_bn', 'campaign_type', 'slug', 'display_order', 'status'];
+    protected $fillable = ['id', 'title_en', 'title_bn', 'slug', 'display_order', 'status'];
 }
