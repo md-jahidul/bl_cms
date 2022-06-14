@@ -1,17 +1,10 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: BS23
- * Date: 27-Aug-19
- * Time: 3:51 PM
- */
-
 namespace App\Repositories;
 
-use App\Models\MyblCampaign;
+use App\Models\NewCampaignModality\MyBlCampaign;
 
 class CampaignNewModalityRepository extends BaseRepository
 {
-    public $modelName = MyblCampaign::class;
+    public $modelName = MyBlCampaign::class;
 }

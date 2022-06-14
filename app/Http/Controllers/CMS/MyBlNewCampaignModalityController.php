@@ -6,30 +6,38 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Services\CampaignNewModalityService;
-use App\Services\MyblOwnRechargeInventoryService;
-use App\Services\OwnRechargeWinningCappintService;
+use App\Services\NewCampaignModality\MyBlCampaignSectionService;
 use App\Services\ProductCoreService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
-class MyBlCampaignNewModalityController extends Controller
+class MyBlNewCampaignModalityController extends Controller
 {
     protected $productCoreService, $baseMsisdnService, $ownRechargeWinningCappingService;
     /**
      * @var CampaignNewModalityService
      */
     private $campaignNewModalityService;
+    /**
+     * @var MyBlCampaignSectionService
+     */
+    private $blCampaignSectionService;
 
     public function __construct(
         CampaignNewModalityService $campaignNewModalityService,
         BaseMsisdnService $baseMsisdnService,
-        ProductCoreService $productCoreService
+        ProductCoreService $productCoreService,
+        MyBlCampaignSectionService $blCampaignSectionService
 //        OwnRechargeWinningCappintService $ownRechargeWinningCappingService
     ) {
         $this->campaignNewModalityService      = $campaignNewModalityService;
         $this->productCoreService               = $productCoreService;
         $this->baseMsisdnService                = $baseMsisdnService;
+        $this->blCampaignSectionService                = $blCampaignSectionService;
 //        $this->ownRechargeWinningCappingService = $ownRechargeWinningCappingService;
     }
 
@@ -43,7 +51,7 @@ class MyBlCampaignNewModalityController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -51,7 +59,11 @@ class MyBlCampaignNewModalityController extends Controller
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $hourSlots = $this->campaignNewModalityService->getHourSlots();
         $campaignType = Helper::campaignType();
-        return view('admin.mybl-campaign.new-campaign-modality.create', compact('products', 'baseMsisdnGroups', 'hourSlots', 'campaignType'));
+        $campaignSection = $this->blCampaignSectionService->findAll();
+        return view(
+            'admin.mybl-campaign.new-campaign-modality.create',
+            compact('products', 'baseMsisdnGroups', 'hourSlots', 'campaignType', 'campaignSection')
+        );
     }
 
     /**

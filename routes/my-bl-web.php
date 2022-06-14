@@ -852,7 +852,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /**
      * New Campaign Modality
      */
-    Route::resource('new-campaign-modality', 'CMS\MyBlCampaignNewModalityController')->except(['show', 'destroy']);
+    Route::resource('new-campaign-modality', 'CMS\MyBlNewCampaignModalityController')->except(['show', 'destroy']);
     Route::get('new-campaign-modality/destroy/{id}', 'CMS\MyBlCampaignNewModalityController@destroy');
 
     Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
