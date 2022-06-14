@@ -22,15 +22,13 @@ class MyBlCampaignSectionService
     public function __construct(MyBlCampaignSectionRepository $myblCampaignSectionRepository)
     {
         $this->myblCampaignSectionRepository = $myblCampaignSectionRepository;
-    }
-
-    public function findAll()
-    {
-        return $this->myblCampaignSectionRepository->findAll();
+        $this->setActionRepository($myblCampaignSectionRepository);
     }
 
     public function save(array $data)
     {
+        $data['display_order'] = $this->findAll()->count() + 1;
+
         $string = strtolower($data['title_en']);
         $data['slug'] = str_replace(" ", "_", $string);
         try {
@@ -68,5 +66,12 @@ class MyBlCampaignSectionService
     public function delete($id)
     {
         return $this->myblCampaignSectionRepository->destroy($id);
+    }
+
+    public function tableSort($data)
+    {
+        $this->myblCampaignSectionRepository->manageTableSort($data);
+
+        return new Response('Sorted successfully');
     }
 }

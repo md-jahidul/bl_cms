@@ -9,67 +9,54 @@
 @endsection
 
 @section('content')
-
     <section>
-        <div class="card card-info mt-0" style="box-shadow: 0px 0px">
-            <div class="card-content">
-                <div class="card-header">
-                </div>
+        <div class="card col-sm-12">
+            <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered dataTable" id="Example1">
+                    <h4 class="menu-title">Category List</h4>
+                    <table class="table table-striped table-bordered"
+                           role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th><i class="icon-cursor-move icons"></i></th>
                             <th>Section Title En</th>
                             <th>Section Title Bn</th>
-                            <th>Display Order</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach ($sections as $key => $section)
-                            <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $section->title_en }}</td>
-                                <td>{{ $section->title_bn }}</td>
-                                <td>{{ $section->display_order }}</td>
-                                <td>{{ $section->status ? 'Active':'Inactive' }}</td>
-                                <td>
-                                    <a href="{{ route('mybl-campaign-section.edit', $section->id) }}" role="button"
-                                       class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#"
-                                       class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $section->id }}" title="Delete the section">
-                                        <i class="la la-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tbody id="sortable">
+                            @foreach ($sections as $section)
+                                <tr data-index="{{ $section->id }}" data-position="{{ $section->display_order }}">
+                                    <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
+                                    <td>{{ $section->title_en }}</td>
+                                    <td>{{ $section->title_bn }}</td>
+                                    <td>{{ $section->status ? 'Active':'Inactive' }}</td>
+                                    <td>
+                                        <a href="{{ route('mybl-campaign-section.edit', $section->id) }}" role="button"
+                                           class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#"
+                                           class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $section->id }}" title="Delete the section">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
     </section>
 @endsection
 
-
-
-
 @push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style>
-        table.dataTable tbody td {
-            max-height: 40px;
-        }
-    </style>
 @endpush
 @push('page-js')
-    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script>
+        var auto_save_url = "{{ url('mybl-campaign-section/sort-auto-save') }}";
+    </script>
     <script>
         $(function () {
             $('.delete').click(function () {
@@ -104,22 +91,5 @@
                 })
             })
         })
-        // $(".showButton").click(function(){
-        //     $('#sendUser').modal()
-        //     $('#title').html($(this).attr('data-original-title'))
-        //     $('#category').html($(this).attr('data-original-category'))
-        //     $('#discription').html($(this).attr('data-original-discription'))
-        // })
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                //dom: 'Bfrtip',
-                buttons: [],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-                "pageLength": 10,
-                "order": [],
-            });
-        });
     </script>
 @endpush

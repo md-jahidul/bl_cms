@@ -4,9 +4,13 @@ namespace App\Http\Controllers\CMS\NewCampaignModality;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewCampaignModality\MyBlCampaignSection;
+use App\Services\MyblManageService;
 use App\Services\NewCampaignModality\MyBlCampaignSectionService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class MyBlCampaignSectionController extends Controller
 {
@@ -20,12 +24,12 @@ class MyBlCampaignSectionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $sections = $this->myblCampaignSectionService->findAll();
-
+        $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
+        $sections = $this->myblCampaignSectionService->findAll(null, null,  $orderBy);
         return view('admin.mybl-campaign.new-campaign-modality.section.index', compact('sections'));
     }
 
@@ -108,6 +112,13 @@ class MyBlCampaignSectionController extends Controller
      */
     public function destroy($myBlCampaignSectionId)
     {
-        return $this->myblCampaignSectionService->delete($myBlCampaignSectionId);
+        $this->myblCampaignSectionService->delete($myBlCampaignSectionId);
+        return redirect('mybl-campaign-section');
+    }
+
+    public function categorySortable(Request $request)
+    {
+//        dd("here ",$request->all());
+        return $this->myblCampaignSectionService->tableSort($request);
     }
 }
