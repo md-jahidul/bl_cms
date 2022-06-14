@@ -155,7 +155,7 @@
 <!-- Dropify -->
 <script src="{{asset('app-assets/vendors/js/dropify/dropify.min.js')}}" type="text/javascript"></script>
 
-<script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
+
 
 @stack('page-js')
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -254,5 +254,6 @@
 
 
 </script>
+<script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 </body>
 </html>

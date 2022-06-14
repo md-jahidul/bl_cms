@@ -43,20 +43,6 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="display_order" class="required">Display Order</label>
-                                    <input type="number"
-                                           class="form-control"
-                                           name="display_order"
-                                           id="display_order"
-                                           placeholder="Enter Display Order"
-                                           required>
-                                    @if($errors->has('display_order'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('display_order') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="eventInput3">Status</label>

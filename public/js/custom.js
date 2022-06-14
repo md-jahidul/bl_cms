@@ -74,8 +74,8 @@
             console.log(auto_save_url)
             $(this).children().each(function (index) {
                 if ($(this).attr('data-position') != (index + 1)) {
-                    $(this).attr('data-position', (index + 1)).addClass('update')
                 }
+                $(this).attr('data-position', (index + 1)).addClass('update')
             });
             saveNewPositions();
         }
