@@ -23,8 +23,8 @@ class CreateHealthHubPackagesTable extends Migration
             $table->string('callback_url');
             $table->string('subscription_url');
             $table->string('allowed_customer');
-            $table->string('details_en');
-            $table->string('details_bn');
+            $table->text('details_en');
+            $table->text('details_bn');
             $table->boolean('status');
             $table->timestamps();
             $table->foreign('health_hub_partner_id')
