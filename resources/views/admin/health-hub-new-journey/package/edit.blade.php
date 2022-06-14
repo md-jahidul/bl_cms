@@ -137,22 +137,22 @@
                                         @endif
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="details_en" >Package Details (EN):</label>
-                                        <textarea
-                                        required
-                                        data-validation-required-message="Description (EN) is required"
-                                        class="form-control @error('details_en') is-invalid @enderror" placeholder="Enter body description....." id="details_en" name="details_en" rows="10">{{ $package->details_en }}</textarea>
-                                        <div class="help-block"></div>
-                                        <small class="text-danger"> @error('details_en') {{ $message }} @enderror </small>
+                                        <label for="details_en" class="required">
+                                            Description  EN
+                                        </label>
+                                        <textarea id="terms-conditions" name="details_en" required>
+                                        @if(isset($package->details_en))
+                                                {{ $package->details_en }}
+                                            @endif
+                                            </textarea>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="details_bn" >Package Details (BN):</label>
-                                        <textarea
-                                        required
-                                        data-validation-required-message="Description (BN) is required"
-                                        class="form-control @error('details_bn') is-invalid @enderror" placeholder="Enter body description....." id="details_bn" name="details_bn" rows="10">{{ $package->details_en }}</textarea>
-                                        <div class="help-block"></div>
-                                        <small class="text-danger"> @error('details_bn') {{ $message }} @enderror </small>
+                                        <label for="details_bn" class="required">Description  BN</label>
+                                        <textarea id="terms-conditions" name="details_bn" required>
+                                        @if(isset($package->details_bn))
+                                                {{ $package->details_bn }}
+                                            @endif
+                                            </textarea>
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -265,6 +265,22 @@
                                     </div>`;
 
         })
+        $(function () {
+            console.log("test");
+            $("textarea#terms-conditions").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen']]
+                ],
+                height:300
+            })
+        });
+
     </script>
 @endpush
 

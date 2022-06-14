@@ -19,8 +19,8 @@ class CreateHealthHubServicesTable extends Migration
             $table->string('title_en');
             $table->string('title_bn');
             $table->string('logo');
-            $table->string('details_en');
-            $table->string('details_bn');
+            $table->text('details_en');
+            $table->text('details_bn');
             $table->boolean('status');
             $table->timestamps();
             $table->foreign('health_hub_dashboard_id')
