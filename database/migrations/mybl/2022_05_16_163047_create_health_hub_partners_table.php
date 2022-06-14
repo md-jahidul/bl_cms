@@ -15,6 +15,7 @@ class CreateHealthHubPartnersTable extends Migration
     {
         Schema::create('health_hub_partners', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('partner_id');
             $table->string('name_en');
             $table->string('name_bn');
             $table->string('access_key');

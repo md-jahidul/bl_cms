@@ -15,6 +15,7 @@ class CreateHealthHubPackagesTable extends Migration
     {
         Schema::create('health_hub_packages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('package_id');
             $table->unsignedBigInteger('health_hub_partner_id');
             $table->unsignedBigInteger('health_hub_plan_id');
             $table->string('title_en');
