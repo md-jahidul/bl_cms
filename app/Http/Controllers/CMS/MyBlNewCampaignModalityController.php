@@ -17,7 +17,7 @@ use Illuminate\View\View;
 
 class MyBlNewCampaignModalityController extends Controller
 {
-    protected $productCoreService, $baseMsisdnService, $ownRechargeWinningCappingService;
+    protected $productCoreService, $baseMsisdnService;
     /**
      * @var CampaignNewModalityService
      */
@@ -32,13 +32,11 @@ class MyBlNewCampaignModalityController extends Controller
         BaseMsisdnService $baseMsisdnService,
         ProductCoreService $productCoreService,
         MyBlCampaignSectionService $blCampaignSectionService
-//        OwnRechargeWinningCappintService $ownRechargeWinningCappingService
     ) {
         $this->campaignNewModalityService      = $campaignNewModalityService;
         $this->productCoreService               = $productCoreService;
         $this->baseMsisdnService                = $baseMsisdnService;
         $this->blCampaignSectionService                = $blCampaignSectionService;
-//        $this->ownRechargeWinningCappingService = $ownRechargeWinningCappingService;
     }
 
 
@@ -74,6 +72,7 @@ class MyBlNewCampaignModalityController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $response = $this->campaignNewModalityService->storeCampaign($request->all());
         Session::flash('message', $response->getContent());
         return redirect(route('own-recharge-inventory.index'));

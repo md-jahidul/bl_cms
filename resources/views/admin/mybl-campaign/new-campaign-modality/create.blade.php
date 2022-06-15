@@ -33,17 +33,17 @@
                                         <div class="form-actions col-md-12 mt-0"></div>
 
                                         <div class="form-group col-md-6" >
-                                            <label  class="required">Select Campaign Section </label>
-                                            <select name="campaign_type" class="browser-default custom-select"
-                                                    id="campaign-type" required data-validation-required-message="Please select campaign type">
-                                                <option value="" >--Select Type--</option>
-                                                @foreach($campaignType as $key => $type)
-                                                    <option value="{{ $key }}" >{{ $type }}</option>
+                                            <label  class="required">Select Campaign Tab </label>
+                                            <select name="mybl_campaign_section_id" class="browser-default custom-select"
+                                                    id="campaignTab" required data-validation-required-message="Please select campaign type">
+                                                <option value="" >--Select Tap Section--</option>
+                                                @foreach($campaignSection as $tab)
+                                                    <option value="{{ $tab->id }}" >{{ $tab->title_en }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="help-block"></div>
-                                            @if ($errors->has('campaign_type'))
-                                                <div class="help-block">  {{ $errors->first('campaign_type') }}</div>
+                                            @if ($errors->has('type'))
+                                                <div class="help-block">  {{ $errors->first('type') }}</div>
                                             @endif
                                         </div>
                                         <div class="form-group col-md-6">
@@ -58,19 +58,21 @@
                             <div class="row">
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Campaign Details</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>
+
                                 <div class="form-group col-md-6">
                                     <label for="title" class="required">Campaign Name</label>
                                     <input required maxlength="250"
                                            data-validation-required-message="Title is required"
                                            data-validation-maxlength-message="Title can not be more then 250 Characters"
-                                           type="text" class="form-control @error('title') is-invalid @enderror"
-                                           placeholder="Title" name="title">
-                                    <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                           type="text" class="form-control @error('name') is-invalid @enderror"
+                                           placeholder="Title" name="name">
+                                    <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
+
                                 <div class="form-group col-md-6" >
                                     <label  class="required">Select Campaign Type </label>
-                                    <select name="campaign_type" class="browser-default custom-select"
+                                    <select name="type" class="browser-default custom-select"
                                             id="campaign-type" required data-validation-required-message="Please select campaign type">
                                         <option value="" >--Select Type--</option>
                                         @foreach($campaignType as $key => $type)
@@ -78,8 +80,8 @@
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('campaign_type'))
-                                        <div class="help-block">  {{ $errors->first('campaign_type') }}</div>
+                                    @if ($errors->has('type'))
+                                        <div class="help-block">  {{ $errors->first('type') }}</div>
                                     @endif
                                 </div>
                                 <div class="col-md-6">
@@ -420,6 +422,61 @@
                                 </div>
                             </div>
 
+                            {{-- WINNING LOGIC & CAPPING --}}
+                            <div class="row">
+                                <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>WINNING LOGIC & CAPPING</strong></h5></div>
+
+
+                                <div class="form-actions col-md-12 mt-0"></div>
+                                 <div class="form-group col-md-4">
+                                    <label for="winning_type">Winning Type: </label>
+                                    <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
+                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15">
+                                        <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label> <br>
+                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16">
+                                        <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
+                                        @if ($errors->has('winning_type'))
+                                            <div class="help-block">  {{ $errors->first('winning_type') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
+                                    <input required type="number" name="winning_interval" class="form-control"
+                                        placeholder="Please Enter Highest Recharge/Purchase Winner Check">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="winning_interval_unit">Winning Time Period Type: </label>
+                                    <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
+                                        <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15">
+                                        <label for="input-radio-15" class="mr-3">MIN</label>
+                                        <input type="radio" name="winning_interval_unit" value="hour" id="input-radio-16">
+                                        <label for="input-radio-16" class="mr-3">HOUR</label>
+                                        <input type="radio" name="winning_interval_unit" value="day" id="input-radio-16">
+                                        <label for="input-radio-16" class="mr-3">Day</label>
+                                        @if ($errors->has('winning_interval_unit'))
+                                            <div class="help-block">  {{ $errors->first('winning_interval_unit') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                 <div class="form-group col-md-6 mb-2">
+                                    <label for="winning_massage_en" >Winning Communication Message (EN):</label>
+                                    <textarea
+                                    class="form-control @error('winning_massage_en') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_en"
+                                    name="winning_massage_en" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('winning_massage_en') {{ $message }} @enderror </small>
+                                </div>
+                                <div class="form-group col-md-6 mb-2">
+                                    <label for="winning_massage_bn" >Winning Communication Message (BN):</label>
+                                    <textarea
+                                    class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
+                                    name="winning_massage_bn" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Reward Getting Type</strong></h5></div>
@@ -442,8 +499,7 @@
                                 <div class="form-group col-md-4" id="max_amount_for_campaign">
                                     <label for="max_amount">Max Cash Back Amount</label>
                                     <input  type="number" name="max_amount" class="form-control"
-                                            placeholder="Please Enter Max Cash Back Amount For Campaign"
-                                    >
+                                            placeholder="Please Enter Max Cash Back Amount For Campaign">
                                 </div>
 
                                 <div class="form-group col-md-4" id="number_of_apply_times_for_campaign">
@@ -452,30 +508,29 @@
                                             placeholder="Please Enter No of Apply Times For Campaign">
                                 </div>
 
-                                {{-- WINNING LOGIC & CAPPING --}}
-
+                                {{-- Select User Group --}}
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Select User Group</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>
                                 <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
                                     <label for="title" class="required">Choose User Type</label><hr class="mt-0">
                                     <div class="row">
                                         <div class="col-md-2 col-sm-12">
-                                            <input  type="radio" name="campaign_user_type" value="all" class="campaign_user_type" id="all"
+                                            <input  type="radio" name="user_group_type" value="all" class="campaign_user_type" id="all"
                                                 {{ (isset($campaign) && $campaign->campaign_user_type == "all") ? 'checked' : '' }}>
                                             <label for="all">All</label>
                                         </div>
                                         <div class="col-md-3 col-sm-12">
-                                            <input type="radio" name="campaign_user_type" value="prepaid" class="campaign_user_type" id="prepaid"
+                                            <input type="radio" name="user_group_type" value="prepaid" class="campaign_user_type" id="prepaid"
                                                 {{ (isset($campaign) && $campaign->campaign_user_type == "prepaid") ? 'checked' : '' }}>
                                             <label for="prepaid">Prepaid</label>
                                         </div>
                                         <div class="col-md-3 col-sm-12">
-                                            <input type="radio" name="campaign_user_type" value="postpaid" class="campaign_user_type" id="postpaid"
+                                            <input type="radio" name="user_group_type" value="postpaid" class="campaign_user_type" id="postpaid"
                                                 {{ isset($campaign) && $campaign->campaign_user_type == "postpaid" ? 'checked' : '' }}>
                                             <label for="postpaid">Postpaid</label>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
-                                            <input type="radio" name="campaign_user_type" value="segment_wise" class="campaign_user_type" id="segment_wise"
+                                            <input type="radio" name="user_group_type" value="segment_wise" class="campaign_user_type" id="segment_wise"
                                                 {{ isset($campaign) && $campaign->campaign_user_type == "segment_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
                                             <label for="segment_wise">Segment Wise (Base Msisdn)</label>
                                         </div>
@@ -485,14 +540,28 @@
                                         <div class="help-block">  {{ $errors->first('type') }}</div>
                                     @endif
                                 </div>
+
                                 <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
                                     <label for="redirect_url" class="required">Base Msisdn</label>
-                                    <select id="base_msisdn_groups_id" name="base_msisdn_groups_id"
+                                    <select id="base_groups_id" name="base_groups_id"
                                             class="browser-default custom-select">
                                         <option value="">Select Action</option>
                                         @foreach ($baseMsisdnGroups as $key => $value)
                                             <option value="{{ $value->id }}"
-                                                {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                                {{ isset($campaign) && $campaign->base_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-4 mb-2" id="exclude_base_groups_id">
+                                    <label for="redirect_url" class="required">Exclude User Group</label>
+                                    <select id="exclude_base_groups_id" name="exclude_base_groups_id"
+                                            class="browser-default custom-select">
+                                        <option value="">Select Action</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{ isset($campaign) && $campaign->exclude_base_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -608,50 +677,50 @@
                                                       placeholder="Enter description in Bangla"></textarea>
                                         </div>
                                         @php
-                $productType = '<span class="text-success">(Prepaid) </span>'
-            @endphp
-            <div class="form-group col-md-4 mb-2" id="cta_action">
-                <label for="product_code" class="required">Product Code</label>
-                <select id="product_code" name="product_code" class="browser-default custom-select product-list">
-                    <option value="">Select Product</option>
-            @foreach ($products as $key => $value)
-                <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
-                >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
-            @endforeach
-            </select>
-            <div class="help-block"></div>
-        </div>
+                                            $productType = '<span class="text-success">(Prepaid) </span>'
+                                        @endphp
+                                        <div class="form-group col-md-4 mb-2" id="cta_action">
+                                            <label for="product_code" class="required">Product Code</label>
+                                            <select id="product_code" name="product_code" class="browser-default custom-select product-list">
+                                                <option value="">Select Product</option>
+                                            @foreach ($products as $key => $value)
+                                                <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
+                                                >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+                                            @endforeach
+                                            </select>
+                                            <div class="help-block"></div>
+                                        </div>
 
-        <div class="form-group col-md-3">
-            <label for="start_date">Start Date</label>
-            <div class='input-group'>
-                <input type='text' class="form-control product_start_date" name="start_date" placeholder="Please select start date" autocomplete="off"/>
-            </div>
-        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="start_date">Start Date</label>
+                                            <div class='input-group'>
+                                                <input type='text' class="form-control product_start_date" name="start_date" placeholder="Please select start date" autocomplete="off"/>
+                                            </div>
+                                        </div>
 
-            <div class="form-group col-md-3">
-                <label for="end_date">End Date</label>
-                <input type="text" name="end_date" class="form-control product_end_date" placeholder="Please select end date" autocomplete="off">
-            </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="end_date">End Date</label>
+                                            <input type="text" name="end_date" class="form-control product_end_date" placeholder="Please select end date" autocomplete="off">
+                                        </div>
 
-            <div class="form-group col-md-2 mb-2" id="cta_action">
-                <label for="redirect_url">Product Status</label>
-                <select id="navigate_action" name="status" class="browser-default custom-select">
-                    <option value="">Select Status</option>
-                    <option class="text-success" value="1">Enable</option>
-                    <option class="text-danger" value="0">Disable</option>
-                </select>
-                <div class="help-block"></div>
-            </div>
+                                        <div class="form-group col-md-2 mb-2" id="cta_action">
+                                            <label for="redirect_url">Product Status</label>
+                                            <select id="navigate_action" name="status" class="browser-default custom-select">
+                                                <option value="">Select Status</option>
+                                                <option class="text-success" value="1">Enable</option>
+                                                <option class="text-danger" value="0">Disable</option>
+                                            </select>
+                                            <div class="help-block"></div>
+                                        </div>
 
-            <!-- Product Row Delete -->
-            <div class="form-group col-md-12 mb-1">
-                <button data-repeater-delete type="button"
-                        class="btn-sm btn-danger cursor-pointer float-right">
-                    <i class="la la-trash"></i>
-                </button>
-            </div>
-        </slot>`
+                                        <!-- Product Row Delete -->
+                                        <div class="form-group col-md-12 mb-1">
+                                            <button data-repeater-delete type="button"
+                                                    class="btn-sm btn-danger cursor-pointer float-right">
+                                                <i class="la la-trash"></i>
+                                            </button>
+                                        </div>
+                                    </slot>`
 
             let denoType = ``
 
@@ -826,6 +895,12 @@
                 // });
                 // dropify()
             });
+
+            // Campaign Section
+            $('input[name=type]').change(function () {
+                if($(this).val() === "ma_plus_recharge")
+                $('#maPlusRecharge').prop('disabled', 'disabled')
+            })
 
             $("body").on("click", "#item-delete", function(){
                 $(this).parent().parent().remove()

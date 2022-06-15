@@ -25,6 +25,8 @@ class CreateMyBlCampaignsTable extends Migration
             $table->string('winning_type')->nullable();
             $table->tinyInteger('winning_interval')->nullable();
             $table->string('winning_interval_unit', 5)->nullable();
+            $table->text('winning_massage_en')->nullable();
+            $table->text('winning_massage_bn')->nullable();
             $table->string('reward_bonus_code')->nullable();
             $table->string('deno_tytpe')->nullable();
             $table->string('recurring_type')->nullable();
