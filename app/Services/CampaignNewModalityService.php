@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\RecurringSchedule;
+use App\Repositories\CampaignNewModalityDetailRepository;
 use App\Repositories\CampaignNewModalityProductRepository;
 use App\Repositories\CampaignNewModalityRepository;
 //use App\Repositories\MyblCashBackProductRepository;
@@ -14,6 +15,7 @@ use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class CampaignNewModalityService
 {
@@ -23,9 +25,9 @@ class CampaignNewModalityService
 //    private $ownRechargeInventoryProductRepository;
 //    private $ownRechargeWinningCappingService;
     /**
-     * @var CampaignNewModalityProductRepository
+     * @var CampaignNewModalityDetailRepository
      */
-    private $campaignNewModalityProductRepository;
+    private $campaignNewModalityDetailRepository;
     /**
      * @var CampaignNewModalityRepository
      */
@@ -41,13 +43,13 @@ class CampaignNewModalityService
 
     public function __construct(
         CampaignNewModalityRepository $campaignNewModalityRepository,
-        CampaignNewModalityProductRepository $campaignNewModalityProductRepository,
+        CampaignNewModalityDetailRepository $campaignNewModalityDetailRepository,
         RecurringScheduleHourService $recurringScheduleHourService,
         RecurringScheduleRepository $recurringScheduleRepository
 //        OwnRechargeWinningCappintService $ownRechargeWinningCappingService
     ) {
         $this->campaignNewModalityRepository = $campaignNewModalityRepository;
-        $this->campaignNewModalityProductRepository = $campaignNewModalityProductRepository;
+        $this->campaignNewModalityDetailRepository = $campaignNewModalityDetailRepository;
         $this->recurringScheduleHourService = $recurringScheduleHourService;
         $this->recurringScheduleRepository = $recurringScheduleRepository;
 //        $this->ownRechargeWinningCappingService = $ownRechargeWinningCappingService;
@@ -61,15 +63,8 @@ class CampaignNewModalityService
      */
     public function storeCampaign($data): Response
     {
-        try{
-            if($data['deno_type'] != 'all'){
-                $flag = $this->checkValidationForProduct($data['product-group']);
-                if(!$flag) return new Response("Own Recharge Inventory campaign Created Failed. For Deno, Max Amount and Number of Apply Time is Required");
-            }
-            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] == null || $data['number_of_apply_times'] == null)){
-                return new Response("Own Recharge Inventory campaign Created Failed. For Campaign, Max Amount and Number of Apply Time is Required");
-            }
-            if($data['reward_getting_type'] == 'single_time'){
+        try {
+            if ($data['reward_getting_type'] == 'single_time') {
                 $data['max_amount'] = null;
                 $data['number_of_apply_times'] = null;
             }
@@ -78,25 +73,24 @@ class CampaignNewModalityService
                 ->toDateTimeString();
             $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
                 ->toDateTimeString();
-            $data['partner_channel_names'] = json_encode($data['partner_channel_names']);
-            $data['banner'] = 'storage/' . $data['banner']->store('own_recharge_inventory');
-            $data['thumbnail_image'] = 'storage/' . $data['thumbnail_image']->store('own_recharge_inventory');
+            if (isset($data['payment_channels'])) {
+                $data['payment_channels'] = json_encode($data['payment_channels']);
+            }
+            if (isset($data['payment_gateways'])) {
+                $data['payment_gateways'] = json_encode($data['payment_gateways']);
+            }
 
             $campaign = $this->save($data);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
-                    if($data['deno_type'] == 'all'){
-                        $product['max_amount']            = null;
+                    if ($data['deno_type'] == 'all') {
+                        $product['max_amount'] = null;
                         $product['number_of_apply_times'] = null;
                     }
                     $product['own_recharge_id'] = $campaign->id;
-                    $this->campaignNewModalityProductRepository->save($product);
+                    $this->campaignNewModalityDetailRepository->save($product);
                 }
             }
-            // WINNING LOGIC & CAPPING Storing
-//            $winningLogicAndCampaign['own_recharge_id']                 = $campaign->id;
-//            $winningLogicAndCampaign['reward_getting_type']             = $data['reward_getting_type'];
-//            $this->ownRechargeWinningCappingService->create($winningLogicAndCampaign);
 
             // Storing recurring schedule
             if ($data['recurring_type'] != 'none') {
@@ -108,9 +102,11 @@ class CampaignNewModalityService
                 );
             }
 
-            return new Response("Own Recharge Inventory campaign has been successfully created");
-        }catch (\Exception $e){
-            return new Response("Own Recharge Inventory campaign Create Failed");
+            return new Response("New Campaign Modality has been successfully created");
+        } catch (\Exception $e) {
+
+            Log::error($e->getMessage());
+            return new Response("New Campaign Modality campaign Create Failed");
         }
 
     }
@@ -146,7 +142,7 @@ class CampaignNewModalityService
                 ->toDateTimeString();
             $campaign = $this->findOne($id);
 
-            $this->campaignNewModalityProductRepository->deleteCampaignWiseProduct($id);
+            $this->campaignNewModalityDetailRepository->deleteCampaignWiseProduct($id);
             if (isset($data['product-group'])) {
                 foreach ($data['product-group'] as $product) {
                     if($data['deno_type'] == 'all'){
@@ -154,7 +150,7 @@ class CampaignNewModalityService
                         $product['number_of_apply_times'] = null;
                     }
                     $product['own_recharge_id'] = $id;
-                    $this->campaignNewModalityProductRepository->save($product);
+                    $this->campaignNewModalityDetailRepository->save($product);
                 }
             }
             // if($campaign->campaign_user_type != )
@@ -193,17 +189,17 @@ class CampaignNewModalityService
         try{
             $campaign = $this->findOne($id);
             $campaign->delete();
-            return Response('Own Recharge Inventory campaign has been successfully deleted');
+            return Response('Campaign has been successfully deleted');
         }catch (\Exception $e) {
 
-            return Response('Own Recharge Inventory campaign Delete Failed');
+            return Response('Campaign Delete Failed');
         }
 
     }
 
     public function getHourSlots()
     {
-        return $this->recurringScheduleHourService->getHourSlots('own_recharge_inventory');
+        return $this->recurringScheduleHourService->getHourSlots('new_campaign_modality');
     }
 
     private function saveSchedule($timeSlots, $schedulerId, $weekdays = null, $monthDates = null)
@@ -223,7 +219,7 @@ class CampaignNewModalityService
         $checkSchedule = $this->recurringScheduleRepository->findBy(['schedulable_item_id' => $schedulerId]);
 
         $scheduleData = [
-            'schedulable_item' => 'own_recharge_inventory',
+            'schedulable_item' => 'new_campaign_modality',
             'schedulable_item_id' => $schedulerId,
             'weekdays' => (!is_null($weekdays)) ? implode(',', $weekdays) : null,
             'month_dates' => (!is_null($monthDates)) ? implode(',', $monthDates) : null,
