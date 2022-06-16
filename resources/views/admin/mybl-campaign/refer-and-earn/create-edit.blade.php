@@ -353,7 +353,7 @@
                                         <label for="capping_internal" class="required">Capping Interval</label>
                                         <select id="capping_internal" name="capping_interval"
                                                 class="browser-default custom-select product-list">
-                                            <option value="">Select Product</option>
+                                            <option value="">Select Capping Interval</option>
                                             @foreach (config('constants.capping_interval') as $key => $value)
                                                 <option value="{{ $key }}"
                                                     {{ isset($campaign) && $campaign->capping_interval == $key ? 'selected' : '' }}>{{ strtoupper($value) }}</option>
