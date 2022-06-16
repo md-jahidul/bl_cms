@@ -21,6 +21,7 @@
                         <tr>
                             <th>#</th>
                             <th>Title English</th>
+                            <th>Package ID</th>
                             <th>Plan</th>
                             <th>Partner</th>
                             <th>Status</th>
@@ -32,6 +33,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $package->title_en }}</td>
+                                <td>{{ $package->package_id }}</td>
                                 <td>{{ $package->plan->title_en }}</td>
                                 <td>{{ $package->partner->name_en }}</td>
                                 <td>

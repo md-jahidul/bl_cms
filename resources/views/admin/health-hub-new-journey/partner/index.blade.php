@@ -22,6 +22,7 @@
                             <th>#</th>
                             <th>Partner Name En</th>
                             <th>Partner Name Bn</th>
+                            <th>Partner ID</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -32,7 +33,8 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $partner->name_en }}</td>
                                 <td>{{ $partner->name_bn }}</td>
-                                <td>{{ $partner->status ? 'active':'inactive' }}</td>
+                                <td>{{ $partner->partner_id }}</td>
+                                <td>{{ $partner->status ? 'Active':'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('health-hub-feature-partner.edit', $partner->id) }}" role="button"
                                         class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

@@ -100,7 +100,21 @@
                                             </p>
                                         @endif
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="form-group col-md-4">
+                                        <label for="package_id" class="required">Package ID</label>
+                                        <input class="form-control"
+                                               name="package_id"
+                                               id="package_id"
+                                               value="{{ $package->package_id }}"
+                                               placeholder="Enter Package ID"
+                                               required>
+                                        @if($errors->has('package_id'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('package_id') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="eventInput3">Select Customer</label>
                                             <select name="allowed_customer" class="form-control" required>
@@ -111,7 +125,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group" class="required">
                                             <label for="eventInput3">Status</label>
                                             <select name="status" class="form-control">
