@@ -45,7 +45,21 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="access_key" class="required">Partner Name English</label>
+                                    <label for="partner_id" class="required">Partner ID</label>
+                                    <input class="form-control"
+                                           name="partner_id"
+                                           id="partner_id"
+                                           value="{{ $partner->partner_id }}"
+                                           placeholder="Enter Partner ID"
+                                           required>
+                                    @if($errors->has('access_key'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('access_key') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="access_key" class="required">Access Key</label>
                                     <input class="form-control"
                                             name="access_key"
                                             id="access_key"
