@@ -28,9 +28,9 @@ class CreateMyBlCampaignsTable extends Migration
             $table->text('winning_massage_en')->nullable();
             $table->text('winning_massage_bn')->nullable();
             $table->string('reward_bonus_code')->nullable();
-            $table->string('deno_tytpe')->nullable();
+            $table->string('deno_type')->nullable();
             $table->string('recurring_type')->nullable();
-            $table->string('reword_getting_type')->nullable();
+            $table->string('reward_getting_type')->nullable();
             $table->integer('number_of_apply_times')->nullable();
             $table->integer('max_amount')->nullable();
             $table->string('purchase_eligibility')->nullable();

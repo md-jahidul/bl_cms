@@ -72,10 +72,9 @@ class MyBlNewCampaignModalityController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $response = $this->campaignNewModalityService->storeCampaign($request->all());
         Session::flash('message', $response->getContent());
-        return redirect(route('own-recharge-inventory.index'));
+        return redirect()->route('new-campaign-modality.index');
     }
 
     /**
@@ -99,7 +98,7 @@ class MyBlNewCampaignModalityController extends Controller
     {
         $campaign = $this->campaignNewModalityService->findOne($id);
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
-        $partnerChannelNames = (json_decode($campaign['partner_channel_names']));
+        $partnerChannelNames = (json_decode($campaign['payment_channels']));
         $format = $campaign->recurring_type == 'none' ? 'Y/m/d h:i A' : 'Y/m/d';
         $dateRange = Carbon::parse($campaign->start_date)->format($format) . ' - ' .
             Carbon::parse($campaign->end_date)->format($format);
@@ -132,6 +131,6 @@ class MyBlNewCampaignModalityController extends Controller
     public function destroy($id)
     {
         $this->campaignNewModalityService->deleteCampaign($id);
-        return url('own-recharge-inventory');
+        return url('new-campaign-modality');
     }
 }

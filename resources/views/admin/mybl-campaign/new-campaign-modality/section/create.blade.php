@@ -31,7 +31,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="title_bn" class="required">Partner Name Bangla</label>
+                                    <label for="title_bn" class="required">Section Title Bangla</label>
                                     <input class="form-control"
                                            name="title_bn"
                                            id="title_bn"

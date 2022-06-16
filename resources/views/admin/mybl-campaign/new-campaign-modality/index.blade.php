@@ -34,7 +34,7 @@
                         @foreach ($cashBackCampaigns as $data)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{ $data->title }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '<span class="success pl-1"><strong> ( Active )</strong></span>' !!}</td>
+                                <td>{{ $data->name }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '<span class="success pl-1"><strong> ( Active )</strong></span>' !!}</td>
                                 <td>{{$data->start_date}}</td>
                                 <td>{{$data->end_date}}</td>
                                 <td>
