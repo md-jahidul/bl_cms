@@ -87,7 +87,7 @@ class CampaignNewModalityService
                         $product['max_amount'] = null;
                         $product['number_of_apply_times'] = null;
                     }
-                    $product['own_recharge_id'] = $campaign->id;
+                    $product['my_bl_campaign_id'] = $campaign->id;
                     $this->campaignNewModalityDetailRepository->save($product);
                 }
             }
@@ -120,26 +120,22 @@ class CampaignNewModalityService
     public function updateCampaign($data, $id)
     {
         try{
-            if($data['deno_type'] != 'all'){
-                $flag = $this->checkValidationForProduct($data['product-group']);
-                if(!$flag) return new Response("Own Recharge Inventory campaign Created Failed. For Deno, Max Amount and Number of Apply Time is Required");
-            }
-            if($data['reward_getting_type'] == 'multiple_time' && ($data['max_amount'] == null || $data['number_of_apply_times'] == null)){
-                return new Response("Own Recharge Inventory campaign Created Failed. For Campaign, Max Amount and Number of Apply Time is Required");
-            }
-            if($data['reward_getting_type'] == 'single_time'){
+            if ($data['reward_getting_type'] == 'single_time') {
                 $data['max_amount'] = null;
                 $data['number_of_apply_times'] = null;
             }
-            if(isset($data['banner']))$data['banner'] = 'storage/' . $data['banner']->store('own_recharge_inventory');
-            if(isset($data['thumbnail_image']))$data['thumbnail_image'] = 'storage/' . $data['thumbnail_image']->store('own_recharge_inventory');
-
-            $data['partner_channel_names'] = json_encode($data['partner_channel_names']);
             $date_range_array = explode('-', $data['display_period']);
             $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
                 ->toDateTimeString();
             $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
                 ->toDateTimeString();
+            if (isset($data['payment_channels'])) {
+                $data['payment_channels'] = json_encode($data['payment_channels']);
+            }
+            if (isset($data['payment_gateways'])) {
+                $data['payment_gateways'] = json_encode($data['payment_gateways']);
+            }
+
             $campaign = $this->findOne($id);
 
             $this->campaignNewModalityDetailRepository->deleteCampaignWiseProduct($id);
@@ -149,7 +145,7 @@ class CampaignNewModalityService
                         $product['max_amount']            = null;
                         $product['number_of_apply_times'] = null;
                     }
-                    $product['own_recharge_id'] = $id;
+                    $product['my_bl_campaign_id'] = $id;
                     $this->campaignNewModalityDetailRepository->save($product);
                 }
             }
@@ -172,10 +168,10 @@ class CampaignNewModalityService
                 );
             }
 
-            return Response('Own Recharge Inventory campaign has been successfully updated');
+            return Response('Campaign has been successfully updated');
 
         }catch (\Exception $e) {
-            return Response('Own Recharge Inventory campaign Update Failed');
+            return Response('Campaign Update Failed');
         }
     }
 
@@ -208,7 +204,7 @@ class CampaignNewModalityService
             $timeRange = explode('-', $timeSlot);
             $hourSlotData = [
                 'scheduler_id' => $schedulerId,
-                'feature' => 'own_recharge_inventory',
+                'feature' => 'new_campaign_modality',
                 'start_time' => Carbon::parse($timeRange[0])->format('H:i:s'),
                 'end_time' => Carbon::parse($timeRange[1])->format('H:i:s'),
                 'used' => true
