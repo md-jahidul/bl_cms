@@ -1,4 +1,4 @@
-<slot data-repeater-list="group-a" data-repeater-item>
+<slot data-repeater-item>
 {{--    {{ !$product->checkCampaignProductExpire() }}--}}
 {{--    @if(isset($product) && !$product->checkCampaignProductExpire())--}}
     <input type="hidden" name="product_id" value="{{ isset($product) ? $product->id : "" }}">
