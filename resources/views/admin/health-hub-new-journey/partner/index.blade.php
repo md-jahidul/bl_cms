@@ -23,6 +23,7 @@
                             <th>Partner Name En</th>
                             <th>Partner Name Bn</th>
                             <th>Partner ID</th>
+                            <th>Access Key</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -34,6 +35,7 @@
                                 <td>{{ $partner->name_en }}</td>
                                 <td>{{ $partner->name_bn }}</td>
                                 <td>{{ $partner->partner_id }}</td>
+                                <td>{{ $partner->access_key }}</td>
                                 <td>{{ $partner->status ? 'Active':'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('health-hub-feature-partner.edit', $partner->id) }}" role="button"
