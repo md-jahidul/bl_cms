@@ -81,12 +81,13 @@ class CampaignNewModalityService
             }
 
             $campaign = $this->save($data);
-            if (isset($data['product-group'])) {
-                foreach ($data['product-group'] as $product) {
+            if (isset($data['campaign_details'])) {
+                foreach ($data['campaign_details'] as $product) {
                     if ($data['deno_type'] == 'all') {
                         $product['max_amount'] = null;
                         $product['number_of_apply_times'] = null;
                     }
+                    $product['status'] = 0;
                     $product['my_bl_campaign_id'] = $campaign->id;
                     $this->campaignNewModalityDetailRepository->save($product);
                 }
@@ -104,7 +105,7 @@ class CampaignNewModalityService
 
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {
-
+            dd($e->getMessage());
             Log::error($e->getMessage());
             return new Response("New Campaign Modality campaign Create Failed");
         }

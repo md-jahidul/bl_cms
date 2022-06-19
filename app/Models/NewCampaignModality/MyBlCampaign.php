@@ -36,6 +36,10 @@ class MyBlCampaign extends Model
             'status',
         ];
 
+    public function products()
+    {
+        return $this->hasMany(MyBlCampaignDetail::class, 'my_bl_campaign_id', 'id');
+    }
     public function schedule()
     {
         return $this->hasOne(RecurringSchedule::class, 'schedulable_item_id', 'id');

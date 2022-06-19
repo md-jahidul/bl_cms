@@ -21,6 +21,7 @@
                             <th><i class="icon-cursor-move icons"></i></th>
                             <th>Section Title En</th>
                             <th>Section Title Bn</th>
+                            <th>Deep Link</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -32,6 +33,21 @@
                                     <td>{{ $section->title_en }}</td>
                                     <td>{{ $section->title_bn }}</td>
                                     <td>{{ $section->status ? 'Active':'Inactive' }}</td>
+                                    <td class="deep-link-section-{{ $section->id }}">
+                                        @if(isset($section->dynamicLinks))
+                                            <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                    data-toggle="tooltip" data-placement="button"
+                                                    data-value="{{ $section->dynamicLinks->link }}"
+                                                    title="Copy to Clipboard">Copy</button>
+                                        @else
+                                            <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
+                                                    data-value="{{ $section->slug }}"
+                                                    data-id="{{ $section->id }}"
+                                                    title="Click for deep link">
+                                                <i class="la icon-link"></i>
+                                            </button>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('mybl-campaign-section.edit', $section->id) }}" role="button"
                                            class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
@@ -54,8 +70,11 @@
 @push('style')
 @endpush
 @push('page-js')
+    <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
     <script>
         var auto_save_url = "{{ url('mybl-campaign-section/sort-auto-save') }}";
+        let deep_link_create_url = "{{ url('mybl-campaign-section-deeplink/create?') }}category=";
     </script>
     <script>
         $(function () {

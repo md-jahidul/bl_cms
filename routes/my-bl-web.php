@@ -696,6 +696,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('mybl-campaign-section-deeplink/create', 'CMS\DynamicDeeplinkController@myblCampaignSectionDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
