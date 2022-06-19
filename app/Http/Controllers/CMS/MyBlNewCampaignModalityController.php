@@ -72,6 +72,7 @@ class MyBlNewCampaignModalityController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $response = $this->campaignNewModalityService->storeCampaign($request->all());
         Session::flash('message', $response->getContent());
         return redirect()->route('new-campaign-modality.index');
@@ -97,15 +98,19 @@ class MyBlNewCampaignModalityController extends Controller
     public function edit($id)
     {
         $campaign = $this->campaignNewModalityService->findOne($id);
+        $campaignSection = $this->blCampaignSectionService->findAll();
+        $campaignType = Helper::campaignType();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $partnerChannelNames = (json_decode($campaign['payment_channels']));
         $format = $campaign->recurring_type == 'none' ? 'Y/m/d h:i A' : 'Y/m/d';
         $dateRange = Carbon::parse($campaign->start_date)->format($format) . ' - ' .
             Carbon::parse($campaign->end_date)->format($format);
         $hourSlots = $this->campaignNewModalityService->getHourSlots();
+        $products = $this->productCoreService->findAll();
         $page = 'edit';
-//        $winningCampaignLogics = $this->ownRechargeWinningCappingService->find($campaign->id);
-        return view('admin.mybl-campaign.new-campaign-modality.edit', compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange'));
+//        dd($campaign);
+        return view('admin.mybl-campaign.new-campaign-modality.edit',
+            compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange', 'campaignSection', 'campaignType', 'products'));
     }
 
     /**

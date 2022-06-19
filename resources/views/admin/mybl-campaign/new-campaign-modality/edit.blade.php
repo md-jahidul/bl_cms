@@ -32,7 +32,7 @@
                                                     id="campaignTab" required data-validation-required-message="Please select campaign type">
                                                 <option value="" >--Select Tap Section--</option>
                                                 @foreach($campaignSection as $tab)
-                                                    <option value="{{ $tab->id }}"  >{{ $tab->title_en }}</option>
+                                                    <option value="{{ $tab->id }}" {{ $campaign->mybl_campaign_section_id == $tab->id ? 'selected' : "" }} >{{ $tab->title_en }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="help-block"></div>
@@ -59,6 +59,7 @@
                                            data-validation-required-message="Title is required"
                                            data-validation-maxlength-message="Title can not be more then 250 Characters"
                                            type="text" class="form-control @error('name') is-invalid @enderror"
+                                           value="{{ $campaign->name }}"
                                            placeholder="Title" name="name">
                                     <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
@@ -70,7 +71,7 @@
                                             id="campaign-type" required data-validation-required-message="Please select campaign type">
                                         <option value="" >--Select Type--</option>
                                         @foreach($campaignType as $key => $type)
-                                            <option value="{{ $key }}" >{{ $type }}</option>
+                                            <option value="{{ $key }}" {{ $campaign->type == $key ? 'selected' : "" }}>{{ $type }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -81,9 +82,8 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Recurring Schedule<span class="red">*</span></label>
                                     @php
-                                        $recurringType = 'none';
-                                        $denoType      = 'none';
-                                        $page = 'create';
+                                        $recurringType = $campaign->recurring_type;
+                                        $denoType      = $campaign->deno_type;
                                     @endphp
                                     <div class="">
                                         <ul class="list list-inline">
@@ -134,7 +134,7 @@
                                         <!-- Weekday Picker -->
                                         <div class="col-md-12">
                                             @php
-                                                $weekdays = isset($popup) ? explode(',', optional($popup->schedule)->weekdays) ?? [] : [];
+                                                $weekdays = isset($campaign) ? explode(',', optional($campaign->schedule)->weekdays) ?? [] : [];
                                             @endphp
 
                                             <div class="weekDays-selector" id="weekday_selector"
@@ -173,7 +173,7 @@
                                             @endif>
                                             <div class="form-group">
                                                 @php
-                                                    $dates = isset($popup) ? explode(',', optional($popup->schedule)->month_dates) ?? [] : [];
+                                                    $dates = isset($campaign) ? explode(',', optional($campaign->schedule)->month_dates) ?? [] : [];
                                                 @endphp
                                                 <select name="month_dates[]" id="month_dates" class="form-control"
                                                         multiple>
@@ -194,7 +194,7 @@
                                             @endif>
                                             <div class="form-group">
                                                 @php
-                                                    $slots = isset($popup) ? $popup->timeSlots->each(function ($item) {
+                                                    $slots = isset($campaign) ? $campaign->timeSlots->each(function ($item) {
                                                         return $item->slot = date('h:i A', strtotime($item->start_time))
                                                         . ' - ' . date('h:i A', strtotime($item->end_time));
                                                         })->pluck('slot')->toArray() ?? [] : [];
@@ -216,14 +216,17 @@
                                 <div class="form-group col-md-6">
                                     <label for="reward_getting_type">Purchase Eligibility</label>
                                     <div class="form-group {{ $errors->has('purchase_eligibility') ? ' error' : '' }}">
-                                        <input type="radio" name="purchase_eligibility" value="ma_plus_recharge" id="maPlusRecharge">
+                                        <input type="radio" name="purchase_eligibility" value="ma_plus_recharge" id="maPlusRecharge"
+                                            {{ $campaign->purchase_eligibility == 'ma_plus_recharge' ? 'checked' : '' }}>
                                         <label for="maPlusRecharge" class="mr-3">MA + Recharge</label>
-                                        <input type="radio" name="purchase_eligibility" value="recharge" id="recharge">
+                                        <input type="radio" name="purchase_eligibility" value="recharge" id="recharge"
+                                            {{ $campaign->purchase_eligibility == 'recharge' ? 'checked' : '' }}>
                                         <label for="recharge" class="mr-3">Recharge Only</label>
-                                        <input type="radio" name="purchase_eligibility" value="ma" id="ma">
+                                        <input type="radio" name="purchase_eligibility" value="ma" id="ma"
+                                            {{ $campaign->purchase_eligibility == 'ma' ? 'checked' : '' }}>
                                         <label for="ma" class="mr-3">MA Only</label>
-                                        @if ($errors->has('reward_getting_type'))
-                                            <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
+                                        @if ($errors->has('purchase_eligibility'))
+                                            <div class="help-block">  {{ $errors->first('purchase_eligibility') }}</div>
                                         @endif
                                     </div>
                                 </div>
@@ -239,16 +242,20 @@
                                 <!--Deno Type-->
                                 <div class="col-md-12 denoSection">
                                     <div class="form-group">
-                                        <input type="radio" name="deno_type" value="selective_deno" id="selective_deno" checked>
+                                        <input type="radio" name="deno_type" value="selective_deno" id="selective_deno"
+                                            {{ $campaign->deno_type == 'selective_deno' ? 'checked' : '' }}>
                                         <label for="selective_deno" class="mr-3">Selective Deno</label>
 
-                                        <input type="radio" name="deno_type" value="all_deno" id="all_deno">
+                                        <input type="radio" name="deno_type" value="all_deno" id="all_deno"
+                                            {{ $campaign->deno_type == 'all_deno' ? 'checked' : '' }}>
                                         <label for="all_deno" class="mr-3">All Deno</label>
 
-                                        <input type="radio" name="deno_type" value="selective_product" id="selective_product">
+                                        <input type="radio" name="deno_type" value="selective_product" id="selective_product"
+                                            {{ $campaign->deno_type == 'selective_product' ? 'checked' : '' }}>
                                         <label for="selective_product" class="mr-3">Selective Product</label>
 
-                                        <input type="radio" name="deno_type" value="product_categories" id="product_categories">
+                                        <input type="radio" name="deno_type" value="product_categories" id="product_categories"
+                                            {{ $campaign->deno_type == 'product_categories' ? 'checked' : '' }}>
                                         <label for="product_categories" class="mr-3">Product Categories</label>
                                     </div>
                                 </div>
@@ -425,9 +432,11 @@
                                 <div class="form-group col-md-4">
                                     <label for="winning_type">Winning Type: </label>
                                     <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15">
+                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15"
+                                            {{ $campaign->winning_type == 'first_recharge' ? 'checked' : '' }}>
                                         <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label> <br>
-                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16">
+                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16"
+                                            {{ $campaign->winning_type == 'highest_recharge' ? 'checked' : '' }}>
                                         <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
                                         @if ($errors->has('winning_type'))
                                             <div class="help-block">  {{ $errors->first('winning_type') }}</div>
@@ -437,16 +446,19 @@
                                 <div class="form-group col-md-4">
                                     <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
                                     <input required type="number" name="winning_interval" class="form-control"
-                                           placeholder="Please Enter Highest Recharge/Purchase Winner Check">
+                                           value="{{ $campaign->winning_interval }}">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15">
+                                        <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15"
+                                            {{ $campaign->winning_interval_unit == 'min' ? 'checked' : '' }}>
                                         <label for="input-radio-15" class="mr-3">MIN</label>
-                                        <input type="radio" name="winning_interval_unit" value="hour" id="input-radio-16">
+                                        <input type="radio" name="winning_interval_unit" value="hour" id="input-radio-16"
+                                            {{ $campaign->winning_interval_unit == 'hour' ? 'checked' : '' }}>
                                         <label for="input-radio-16" class="mr-3">HOUR</label>
-                                        <input type="radio" name="winning_interval_unit" value="day" id="input-radio-16">
+                                        <input type="radio" name="winning_interval_unit" value="day" id="input-radio-16"
+                                            {{ $campaign->winning_interval_unit == 'day' ? 'checked' : '' }}>
                                         <label for="input-radio-16" class="mr-3">Day</label>
                                         @if ($errors->has('winning_interval_unit'))
                                             <div class="help-block">  {{ $errors->first('winning_interval_unit') }}</div>
@@ -458,7 +470,7 @@
                                     <label for="winning_massage_en" >Winning Communication Message (EN):</label>
                                     <textarea
                                         class="form-control @error('winning_massage_en') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_en"
-                                        name="winning_massage_en" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                        name="winning_massage_en" rows="5">{{ $campaign->winning_massage_en }}</textarea>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('winning_massage_en') {{ $message }} @enderror </small>
                                 </div>
@@ -466,7 +478,7 @@
                                     <label for="winning_massage_bn" >Winning Communication Message (BN):</label>
                                     <textarea
                                         class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
-                                        name="winning_massage_bn" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                        name="winning_massage_bn" rows="5">{{ $campaign->winning_massage_bn }}</textarea>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>
                                 </div>
@@ -479,10 +491,11 @@
                                 <div class="form-group col-md-4">
                                     <label for="reward_getting_type">Reward Getting Type: </label>
                                     <div class="form-group {{ $errors->has('reward_getting_type') ? ' error' : '' }}">
-                                        <input type="radio" name="reward_getting_type" class="reward_getting_type" value="single_time" id="singleTime">
+                                        <input type="radio" name="reward_getting_type" class="reward_getting_type" value="single_time" id="singleTime"
+                                            {{ $campaign->reward_getting_type == 'single_time' ? 'checked' : '' }}>
                                         <label for="singleTime" class="mr-3">Single Time</label>
                                         <input type="radio" name="reward_getting_type" class="reward_getting_type"
-                                               value="multiple_time" id="multipleTime" checked>
+                                               value="multiple_time" id="multipleTime" {{ $campaign->reward_getting_type == 'multiple_time' ? 'checked' : '' }}>
                                         <label for="multipleTime" class="mr-3">Multiple Time</label>
                                         @if ($errors->has('reward_getting_type'))
                                             <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
@@ -493,13 +506,13 @@
                                 <div class="form-group col-md-4" id="max_amount_for_campaign">
                                     <label for="max_amount">Max Cash Back Amount</label>
                                     <input  type="number" name="max_amount" class="form-control"
-                                            placeholder="Please Enter Max Cash Back Amount For Campaign">
+                                           value = "{{ $campaign->max_amount }}">
                                 </div>
 
                                 <div class="form-group col-md-4" id="number_of_apply_times_for_campaign">
                                     <label for="number_of_apply_times">No of apply times</label>
                                     <input  type="number" name="number_of_apply_times" class="form-control"
-                                            placeholder="Please Enter No of Apply Times For Campaign">
+                                            value = "{{ $campaign->number_of_apply_times }}">
                                 </div>
 
                                 {{-- Select User Group --}}
@@ -510,22 +523,22 @@
                                     <div class="row">
                                         <div class="col-md-2 col-sm-12">
                                             <input  type="radio" name="user_group_type" value="all" class="campaign_user_type" id="all"
-                                                {{ (isset($campaign) && $campaign->campaign_user_type == "all") ? 'checked' : '' }}>
+                                                {{ (isset($campaign) && $campaign->user_group_type == "all") ? 'checked' : '' }}>
                                             <label for="all">All</label>
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <input type="radio" name="user_group_type" value="prepaid" class="campaign_user_type" id="prepaid"
-                                                {{ (isset($campaign) && $campaign->campaign_user_type == "prepaid") ? 'checked' : '' }}>
+                                                {{ (isset($campaign) && $campaign->user_group_type == "prepaid") ? 'checked' : '' }}>
                                             <label for="prepaid">Prepaid</label>
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <input type="radio" name="user_group_type" value="postpaid" class="campaign_user_type" id="postpaid"
-                                                {{ isset($campaign) && $campaign->campaign_user_type == "postpaid" ? 'checked' : '' }}>
+                                                {{ isset($campaign) && $campaign->user_group_type == "postpaid" ? 'checked' : '' }}>
                                             <label for="postpaid">Postpaid</label>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <input type="radio" name="user_group_type" value="segment_wise" class="campaign_user_type" id="segment_wise"
-                                                {{ isset($campaign) && $campaign->campaign_user_type == "segment_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
+                                                {{ isset($campaign) && $campaign->user_group_type == "segment_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
                                             <label for="segment_wise">Segment Wise (Base Msisdn)</label>
                                         </div>
                                     </div>
@@ -535,7 +548,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                <div class="form-group col-md-4 mb-2 {{ isset($campaign) && $campaign->user_group_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
                                     <label for="redirect_url" class="required">Base Msisdn</label>
                                     <select id="base_groups_id" name="base_groups_id"
                                             class="browser-default custom-select">
