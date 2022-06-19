@@ -247,4 +247,21 @@ class Helper
             'pack_purchase' => 'Pack Purchase',
         ];
     }
+
+    public static function productCategories()
+    {
+        return [
+            'data' => 'DATA',
+            'mix' => 'MIX BUNDLES',
+            'voice' => 'VOICE BUNDLES',
+            'sms' => 'SMS BUNDLES',
+            'scr' => 'SPECIAL CALL RATE',
+            'recharge_offer' => 'RECHARGE OFFER',
+            'ma loan' => 'MA LOAN',
+            'data loan' => 'DATA LOAN',
+            'gift' => 'GIFT',
+            'volume request' => 'VOLUME REQUEST',
+            'volume transfer' => 'VOLUME TRANSFER'
+        ];
+    }
 }

@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\BaseMsisdnService;
 use App\Services\CampaignNewModalityService;
+use App\Services\MyBlInternetOffersCategoryService;
 use App\Services\NewCampaignModality\MyBlCampaignSectionService;
 use App\Services\ProductCoreService;
 use Carbon\Carbon;
@@ -26,17 +27,23 @@ class MyBlNewCampaignModalityController extends Controller
      * @var MyBlCampaignSectionService
      */
     private $blCampaignSectionService;
+    /**
+     * @var MyBlInternetOffersCategoryService
+     */
+    private $productCategoryService;
 
     public function __construct(
         CampaignNewModalityService $campaignNewModalityService,
         BaseMsisdnService $baseMsisdnService,
         ProductCoreService $productCoreService,
-        MyBlCampaignSectionService $blCampaignSectionService
+        MyBlCampaignSectionService $blCampaignSectionService,
+        MyBlInternetOffersCategoryService $productCategoryService
     ) {
-        $this->campaignNewModalityService      = $campaignNewModalityService;
-        $this->productCoreService               = $productCoreService;
-        $this->baseMsisdnService                = $baseMsisdnService;
-        $this->blCampaignSectionService                = $blCampaignSectionService;
+        $this->campaignNewModalityService = $campaignNewModalityService;
+        $this->productCoreService = $productCoreService;
+        $this->baseMsisdnService = $baseMsisdnService;
+        $this->blCampaignSectionService = $blCampaignSectionService;
+        $this->productCategoryService = $productCategoryService;
     }
 
 
@@ -58,9 +65,10 @@ class MyBlNewCampaignModalityController extends Controller
         $hourSlots = $this->campaignNewModalityService->getHourSlots();
         $campaignType = Helper::campaignType();
         $campaignSection = $this->blCampaignSectionService->findAll();
+        $productCategories = Helper::productCategories();
         return view(
             'admin.mybl-campaign.new-campaign-modality.create',
-            compact('products', 'baseMsisdnGroups', 'hourSlots', 'campaignType', 'campaignSection')
+            compact('products', 'baseMsisdnGroups', 'hourSlots', 'campaignType', 'campaignSection', 'productCategories')
         );
     }
 
