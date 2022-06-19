@@ -75,6 +75,7 @@ class DynamicDeeplinkService
      */
     public function generateDeeplink($sectionType, $moduleData, $request)
     {
+
         $category = $request->category;
         $subCategory = $request->sub_category;
         if ($sectionType == "others") {
@@ -84,6 +85,7 @@ class DynamicDeeplinkService
         } else {
             $endPointURL = "$sectionType/$category";
         }
+//        dd($endPointURL);
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),
