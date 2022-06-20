@@ -264,33 +264,33 @@
                                     <div id="image-input" class="form-group col-md-6">
                                         <div class="form-group">
                                             <label for="image_url">Thumbnail Image</label>
-                                            <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77"/>
+                                            <input type="file" id="image_url" name="campaign_details[0][thumbnail_img]" class="dropify" data-height="77"/>
                                         </div>
                                     </div>
 
                                     <div id="image-input" class="form-group col-md-6 mb-0">
                                         <div class="form-group">
-                                            <label for="image_url">Offer Card Image</label>
-                                            <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                            <label for="image_url">Banner Image</label>
+                                            <input type="file" id="image_url" name="campaign_details[0][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
                                             <div class="help-block"></div>
                                         </div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-0">
                                         <label for="desc_en" class="required">Description En</label>
-                                        <textarea rows="3" id="desc_en" name="desc_en" class="form-control" placeholder="Enter description in English"></textarea>
+                                        <textarea rows="3" id="desc_en" name="campaign_details[0][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="desc_bn" class="required">Description Bn</label>
-                                        <textarea rows="3" id="desc_bn" name="desc_bn"
+                                        <textarea rows="3" id="desc_bn" name="campaign_details[0][desc_bn]"
                                                   class="form-control"
                                                   placeholder="Enter description in Bangla"></textarea>
                                     </div>
                                     <div class="col-md-4" >
                                         <div class="form-group">
                                             <label class="required">Product Categories</label>
-                                            <select name="campaign_details[0][cash_back_type]" class="browser-default custom-select" id="cash_back_type">
+                                            <select name="campaign_details[0][product_category_slug]" class="browser-default custom-select" id="cash_back_type">
                                                 <option value="">Select Cashback Type</option>
                                                 @foreach($productCategories as $key => $data)
                                                     <option value="{{ $key }}">{{ $data }}</option>
@@ -301,30 +301,30 @@
                                 </slot>
 
                                 <!--Selective Product-->
-                                <slot class="products-fields d-none">
+                                <slot class="selective_product d-none">
                                     <div id="image-input" class="form-group col-md-6">
                                         <div class="form-group">
                                             <label for="image_url">Thumbnail Image</label>
-                                            <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77"/>
+                                            <input type="file" id="image_url" name="campaign_details[0][thumbnail_img]" class="dropify" data-height="77"/>
                                         </div>
                                     </div>
 
                                     <div id="image-input" class="form-group col-md-6 mb-0">
                                         <div class="form-group">
-                                            <label for="image_url">Offer Card Image</label>
-                                            <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                            <label for="image_url">Banner Image</label>
+                                            <input type="file" id="image_url" name="campaign_details[0][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
                                             <div class="help-block"></div>
                                         </div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-0">
                                         <label for="desc_en" class="required">Description En</label>
-                                        <textarea rows="3" id="desc_en" name="desc_en" class="form-control" placeholder="Enter description in English"></textarea>
+                                        <textarea rows="3" id="desc_en" name="campaign_details[0][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="desc_bn" class="required">Description Bn</label>
-                                        <textarea rows="3" id="desc_bn" name="desc_bn"
+                                        <label for="desc_bn" class="required">Description Bn</label>.
+                                        <textarea rows="3" id="desc_bn" name="campaign_details[0][desc_bn]"
                                                   class="form-control"
                                                   placeholder="Enter description in Bangla"></textarea>
                                     </div>
@@ -333,7 +333,7 @@
                                     @endphp
                                     <div class="form-group col-md-4" id="cta_action">
                                         <label for="product_code" class="required">Product Code</label>
-                                        <select id="product_code" name="product_code" class="browser-default custom-select product-list">
+                                        <select id="product_code" name="campaign_details[0][product_code]" class="browser-default custom-select product-list">
                                             <option value="">Select Product</option>
                                             @foreach ($products as $key => $value)
                                                 <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
@@ -389,7 +389,6 @@
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                placeholder="Please select start date"
-                                               value="{{ isset($campaign) ? $campaign->start_date : old('start_date') }}"
                                                autocomplete="off"/>
                                     </div>
                                     <div class="help-block"></div>
@@ -534,6 +533,21 @@
                                 </div>
 
                                 {{-- Select User Group --}}
+                                <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Channel Eligibility</strong></h5></div>
+                                <div class="form-actions col-md-12 mt-0"></div>
+                                <div class="form-group col-md-4 mb-2" id="cta_action">
+                                    <label for="redirect_url">Select Channel name</label>
+                                    <select id="navigate_action"
+                                            name="payment_channels"
+                                            class="browser-default custom-select">
+                                        <option value="">Select Channel</option>
+                                        <option value="ssl_commerz" selected>SSL Commerz</option>
+                                        <option value="own_channel" disabled="disabled">Own Channel</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                {{-- Select User Group --}}
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Select User Group</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>
                                 <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
@@ -592,21 +606,37 @@
                                     <div class="help-block"></div>
                                 </div>
 
+                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="first_sign_up_user" value="1"
+                                               name="first_sign_up_user">
+                                        <label for="first_sign_up_user">first_sign_up_user</label>
+                                    </fieldset>
+                                </div>
+
                                 <div class="form-actions col-md-12 mt-0 text-danger"></div>
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Campaign Status: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <input type="radio" name="status" value="1" id="input-radio-15"
+                                        <input type="radio" name="status" value="1" id="campaignStatusActive"
                                             {{ (isset($campaign->status) && $campaign->status == 1) ? 'checked' : '' }}>
-                                        <label for="input-radio-15" class="mr-3">Active</label>
-                                        <input type="radio" name="status" value="0" id="input-radio-16"
+                                        <label for="campaignStatusActive" class="mr-3">Active</label>
+                                        <input type="radio" name="status" value="0" id="campaignStatusInactive"
                                             {{ (isset($campaign->status) && $campaign->status == 0) ? 'checked' : '' }}
                                             {{ isset($campaign->status) ? '' : 'checked' }}>
-                                        <label for="input-radio-16" class="mr-3">Inactive</label>
+                                        <label for="campaignStatusInactive" class="mr-3">Inactive</label>
                                         @if ($errors->has('status'))
                                             <div class="help-block">  {{ $errors->first('status') }}</div>
                                         @endif
                                     </div>
+                                </div>
+
+                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="show_in_home" value="1"
+                                               name="show_in_home">
+                                        <label for="show_in_home">Show in Home</label>
+                                    </fieldset>
                                 </div>
 
                                 <div class="form-actions col-md-12">
@@ -635,7 +665,7 @@
             padding-left: 10px;
         }
         .select2 {
-            width: 367px !important;
+            width: 467px !important;
         }
     </style>
 @endpush
@@ -653,11 +683,6 @@
 @endpush
 
 @push('page-js')
-{{--    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>--}}
-{{--    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>--}}
-{{--    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>--}}
-
-
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/recurring-schedule/recurring.js')}}"></script>
@@ -665,9 +690,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(document).ready(function () {
-            // document.getElementById("disable-radio-button").disabled = true;
-            // document.getElementById("disable-radio-button1").disabled = true;
             $('.report-repeater').repeater();
+
+            let campaignStart = $('#start_date');
+            let campaignEnd = $('#end_date');
+            let productStart = $('.product_start_date');
+            let productEnd = $('.product_end_date');
+
+            function dateTime(element){
+                var date = new Date();
+                date.setDate(date.getDate());
+                element.datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            }
 
             function dropify(){
                 $('.dropify').dropify({
@@ -686,18 +723,47 @@
             function repeaterItems(index, denoType) {
                 let selectiveDeno = ``;
 
+                let productCommonField = `
+                    <div id="image-input" class="form-group col-md-6 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Thumbnail Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][thumbnail_img]" class="dropify" data-height="77"/>
+                        </div>
+                    </div>
+
+                    <div id="image-input" class="form-group col-md-6 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Banner Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 mb-2">
+                        <label for="desc_en" class="required">Description En</label>
+                        <textarea rows="3" id="desc_en" name="campaign_details[`+index+`][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
+                    </div>
+
+                    <div class="form-group col-md-6 mb-2">
+                        <label for="desc_bn" class="required">Description Bn</label>
+                        <textarea rows="3" id="desc_bn" name="campaign_details[`+index+`][desc_bn]"
+                                  class="form-control"
+                                  placeholder="Enter description in Bangla"></textarea>
+                    </div>
+                `;
+
                 let commonFields = `
                 <div class="form-group col-md-4">
                     <label for="start_date">Start Date</label>
                     <div class='input-group'>
-                        <input type='text' class="form-control" name="campaign_details[`+index+`][start_date]" id="start_date"
+                        <input type='text' class="form-control product_start_date" name="campaign_details[`+index+`][start_date]" id="start_date"
                                placeholder="Please select start date" autocomplete="off"/>
                     </div>
                     <div class="help-block"></div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="end_date">End Date</label>
-                    <input type="text" name="campaign_details[`+index+`][end_date]" id="end_date" class="form-control"
+                    <input type="text" name="campaign_details[`+index+`][end_date]" id="end_date" class="form-control product_end_date"
                            placeholder="Please select end date" autocomplete="off">
                     <div class="help-block"></div>
                 </div>
@@ -729,51 +795,47 @@
                 </div>
                 `;
 
-                let productElement = `
-                <slot class="products-fields">
+                let productElement = ``;
+                productElement += `
+                <slot class="selective_product">
                     <div class="form-actions col-md-12 mt-0"></div>
-                    <div id="image-input" class="form-group col-md-6 mb-2">
-                        <div class="form-group">
-                            <label for="image_url">Thumbnail Image</label>
-                            <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77"/>
-                        </div>
-                    </div>
-
-                    <div id="image-input" class="form-group col-md-6 mb-2">
-                        <div class="form-group">
-                            <label for="image_url">Offer Card Image</label>
-                            <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
-                            <div class="help-block"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-4 mb-2">
-                        <label for="desc_en" class="required">Description En</label>
-                        <textarea rows="3" id="desc_en" name="desc_en" class="form-control" placeholder="Enter description in English"></textarea>
-                    </div>
-
-                    <div class="form-group col-md-4 mb-2">
-                        <label for="desc_bn" class="required">Description Bn</label>
-                        <textarea rows="3" id="desc_bn" name="desc_bn"
-                                  class="form-control"
-                                  placeholder="Enter description in Bangla"></textarea>
-                    </div>
+                    ` + productCommonField + `
                     @php
                         $productType = '<span class="text-success">(Prepaid) </span>'
                     @endphp
                     <div class="form-group col-md-4 mb-2" id="cta_action">
                         <label for="product_code" class="required">Product Code</label>
-                        <select id="product_code" name="product_code" class="browser-default custom-select product-list">
+                        <select id="product_code" name="campaign_details[`+index+`][product_code]" class="browser-default custom-select product-list">
                             <option value="">Select Product</option>
                             @foreach ($products as $key => $value)
-                            <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
-                            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+                        <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
+                        >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+                                @endforeach
+                        </select>
+                        <div class="help-block"></div>
+                    </div>
+                `+commonFields+`
+                </slot>`;
+
+
+                let productCategories = `
+                <slot class="products-categories">
+                    <div class="form-actions col-md-12 mt-0"></div>
+                    ` + productCommonField + `
+                    <div class="col-md-4" >
+                        <div class="form-group">
+                            <label class="required">Product Categories</label>
+                            <select name="campaign_details[` + index + `][product_category_slug]" class="browser-default custom-select" id="cash_back_type">
+                                <option value="">Select Cashback Type</option>
+                                @foreach($productCategories as $key => $data)
+                                <option value="{{ $key }}">{{ $data }}</option>
                                 @endforeach
                             </select>
-                            <div class="help-block"></div>
                         </div>
-                        `+commonFields+`
+                    </div>
+                    ` + commonFields + `
                 </slot>`;
+
 
                 let allDeno = `
                 <slot class="allDeno" data-repeater-list="category-group">
@@ -796,9 +858,9 @@
                     ` + commonFields + `
                 </slot>`;
 
-                selectiveDeno = `
                 <!--Recharge Section-->
                 <!--All Deno-->
+                selectiveDeno = `
                 <slot>
                     <div class="form-actions col-md-12 mt-0"></div>
                     <slot class="allDeno" data-repeater-list="category-group">
@@ -847,55 +909,27 @@
                     $('#productSection').append(allDeno)
                 }else if(denoType === "selective_product") {
                     $('#productSection').append(productElement)
+                }else if(denoType === "product_categories") {
+                    $('#productSection').append(productCategories)
                 }
             }
 
-            $('input[name=deno_type]').change(function () {
-                $('.report-repeater').repeater();
-                let denoType = $(this).val()
-                if (denoType === "all_deno") {
-                    $('.allDeno').removeClass('d-none')
-                    $('.otherDeno').addClass('d-none')
-                    $('.products-fields').addClass('d-none')
-                } else if (denoType === "selective_deno") {
-                    $('.allDeno').removeClass('d-none')
-                    $('.otherDeno').removeClass('d-none')
-                    $('.products-fields').addClass('d-none')
-                } else if(denoType === "selective_product"){
-                    $('.products-fields').removeClass('d-none')
-                    $('.allDeno').addClass('d-none')
-                    $('.otherDeno').addClass('d-none')
-                }
-            })
-
-            $(".product-list").select2()
-
-
-            let campaignStart = $('#start_date');
-            let campaignEnd = $('#end_date');
-            let productStart = $('.product_start_date');
-            let productEnd = $('.product_end_date');
-
-            function dateTime(element){
-                var date = new Date();
-                date.setDate(date.getDate());
-                element.datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
-                    showClose: true,
-                });
-            }
-
+            // Product Repeater
             $('#repeater-button').click(function (){
                 let denoType =  $('input[name=deno_type]:checked').val();
-                let objAllDenoCount = $('.allDeno').length
-                repeaterItems(objAllDenoCount, denoType)
-                // if (denoType === "selective_deno"){
-                //     // $('#productSection').append(rechargeElement)
-                // }else if (denoType === "all_deno") {
-                //     repeaterItems(objAllDenoCount, "all_deno")
-                // }else if (denoType === "selective_product"){
-                //     repeaterItems(objAllDenoCount, "selective_product")
-                // }
+                let elementCount = 1;
+                if (denoType === "selective_deno"){
+                    elementCount = $('.selective_deno').length
+                }else if (denoType === "all_deno") {
+                    elementCount = $('.allDeno').length
+                }else if (denoType === "selective_product"){
+                    elementCount = $('.selective_product').length
+                }else if (denoType === "product_categories"){
+                    elementCount = $('.products-categories').length
+
+                    console.log(elementCount);
+                }
+                repeaterItems(elementCount, denoType)
 
                 $(".product-list").select2()
                 var date = new Date();
@@ -909,7 +943,42 @@
                     showClose: true,
                 });
                 dropify()
+                dateTime(productStart)
+                dateTime(productEnd)
             });
+
+            // Deno Types
+            $('input[name=deno_type]').change(function () {
+                $('.report-repeater').repeater();
+                let denoType = $(this).val()
+                if (denoType === "all_deno") {
+                    $('.allDeno').removeClass('d-none')
+                    $('.otherDeno').addClass('d-none')
+                    $('.selective_deno').addClass('d-none')
+                    $('.selective_product').addClass('d-none')
+                    $('.products-categories').addClass('d-none')
+                } else if (denoType === "selective_deno") {
+                    $('.allDeno').removeClass('d-none')
+                    $('.otherDeno').removeClass('d-none')
+                    $('.selective_deno').addClass('d-none')
+                    $('.selective_product').addClass('d-none')
+                    $('.products-categories').addClass('d-none')
+                } else if(denoType === "selective_product"){
+                    $('.selective_product').removeClass('d-none')
+                    $('.selective_deno').addClass('d-none')
+                    $('.allDeno').addClass('d-none')
+                    $('.otherDeno').addClass('d-none')
+                    $('.products-categories').addClass('d-none')
+                } else if(denoType === "product_categories"){
+                    $('.products-categories').removeClass('d-none')
+                    $('.selective_deno').addClass('d-none')
+                    $('.allDeno').addClass('d-none')
+                    $('.otherDeno').addClass('d-none')
+                    $('.selective_product').addClass('d-none')
+                }
+            })
+
+            $(".product-list").select2()
 
             // Campaign Type
             $('select[name=type]').change(function () {
@@ -938,6 +1007,7 @@
             dateTime(campaignEnd)
             dateTime(productStart)
             dateTime(productEnd)
+
             var date;
             // Date & Time
             date = new Date();

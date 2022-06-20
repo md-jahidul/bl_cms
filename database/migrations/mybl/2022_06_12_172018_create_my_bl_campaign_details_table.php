@@ -25,6 +25,7 @@ class CreateMyBlCampaignDetailsTable extends Migration
             $table->string('product_code')->nullable();
             $table->text('desc_en')->nullable();
             $table->text('desc_bn')->nullable();
+            $table->string('product_category_slug')->nullable();
             $table->boolean('show_in_home')->default(0);
             $table->string('show_product_as')->nullable();
             $table->dateTime('start_date')->nullable();

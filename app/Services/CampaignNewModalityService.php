@@ -46,13 +46,11 @@ class CampaignNewModalityService
         CampaignNewModalityDetailRepository $campaignNewModalityDetailRepository,
         RecurringScheduleHourService $recurringScheduleHourService,
         RecurringScheduleRepository $recurringScheduleRepository
-//        OwnRechargeWinningCappintService $ownRechargeWinningCappingService
     ) {
         $this->campaignNewModalityRepository = $campaignNewModalityRepository;
         $this->campaignNewModalityDetailRepository = $campaignNewModalityDetailRepository;
         $this->recurringScheduleHourService = $recurringScheduleHourService;
         $this->recurringScheduleRepository = $recurringScheduleRepository;
-//        $this->ownRechargeWinningCappingService = $ownRechargeWinningCappingService;
         $this->setActionRepository($campaignNewModalityRepository);
     }
 
@@ -81,8 +79,17 @@ class CampaignNewModalityService
             }
 
             $campaign = $this->save($data);
+
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
+                    if (!empty($product['thumb_image'])) {
+                        $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
+                    }
+
+                    if (!empty($product['thumbnail_img'])) {
+                        $product['banner_image'] = 'storage/' . $product['banner_image']->store('mybl_new_campaign');
+                    }
+
                     if ($data['deno_type'] == 'all') {
                         $product['max_amount'] = null;
                         $product['number_of_apply_times'] = null;
@@ -102,6 +109,8 @@ class CampaignNewModalityService
                     $data['month_dates'] ?? null
                 );
             }
+
+            dd($data);
 
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {

@@ -80,7 +80,7 @@ class MyBlNewCampaignModalityController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
+        dd($request->all());
         $response = $this->campaignNewModalityService->storeCampaign($request->all());
         Session::flash('message', $response->getContent());
         return redirect()->route('new-campaign-modality.index');
