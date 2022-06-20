@@ -41,7 +41,7 @@ class HealthHubPartnerService
 
             return $this->healthHubPartnerRepository->create($data);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
             Log::error('Error while saving deshboard : ' . $e->getMessage());
             return false;
         }
