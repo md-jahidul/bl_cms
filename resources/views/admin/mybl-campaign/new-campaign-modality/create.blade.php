@@ -261,189 +261,25 @@
 
                                 <!--Product Categories-->
                                 <slot class="products-categories d-none">
-                                    <div id="image-input" class="form-group col-md-6">
-                                        <div class="form-group">
-                                            <label for="image_url">Thumbnail Image</label>
-                                            <input type="file" id="image_url" name="campaign_details[0][thumbnail_img]" class="dropify" data-height="77"/>
-                                        </div>
-                                    </div>
-
-                                    <div id="image-input" class="form-group col-md-6 mb-0">
-                                        <div class="form-group">
-                                            <label for="image_url">Banner Image</label>
-                                            <input type="file" id="image_url" name="campaign_details[0][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
-                                            <div class="help-block"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-0">
-                                        <label for="desc_en" class="required">Description En</label>
-                                        <textarea rows="3" id="desc_en" name="campaign_details[0][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="desc_bn" class="required">Description Bn</label>
-                                        <textarea rows="3" id="desc_bn" name="campaign_details[0][desc_bn]"
-                                                  class="form-control"
-                                                  placeholder="Enter description in Bangla"></textarea>
-                                    </div>
-                                    <div class="col-md-4" >
-                                        <div class="form-group">
-                                            <label class="required">Product Categories</label>
-                                            <select name="campaign_details[0][product_category_slug]" class="browser-default custom-select" id="cash_back_type">
-                                                <option value="">Select Cashback Type</option>
-                                                @foreach($productCategories as $key => $data)
-                                                    <option value="{{ $key }}">{{ $data }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 icheck_minimal skin mt-2">
-                                        <fieldset>
-                                            <input type="checkbox" id="show_in_home" value="1"
-                                                   name="campaign_details[0][show_in_home]">
-                                            <label for="show_in_home">Show in Home</label>
-                                        </fieldset>
-                                    </div>
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.product-category', ['key' => 0])
                                 </slot>
 
                                 <!--Selective Product-->
                                 <slot class="selective_product d-none">
-                                    <div id="image-input" class="form-group col-md-6">
-                                        <div class="form-group">
-                                            <label for="image_url">Thumbnail Image</label>
-                                            <input type="file" id="image_url" name="campaign_details[0][thumbnail_img]" class="dropify" data-height="77"/>
-                                        </div>
-                                    </div>
-
-                                    <div id="image-input" class="form-group col-md-6 mb-0">
-                                        <div class="form-group">
-                                            <label for="image_url">Banner Image</label>
-                                            <input type="file" id="image_url" name="campaign_details[0][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
-                                            <div class="help-block"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6 mb-0">
-                                        <label for="desc_en" class="required">Description En</label>
-                                        <textarea rows="3" id="desc_en" name="campaign_details[0][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="desc_bn" class="required">Description Bn</label>.
-                                        <textarea rows="3" id="desc_bn" name="campaign_details[0][desc_bn]"
-                                                  class="form-control"
-                                                  placeholder="Enter description in Bangla"></textarea>
-                                    </div>
-                                    @php
-                                        $productType = '<span class="text-success">(Prepaid) </span>'
-                                    @endphp
-                                    <div class="form-group col-md-4 product_code" id="cta_action">
-                                        <label for="product_code" class="required">Product Code</label>
-                                        <select id="product_code" name="campaign_details[0][product_code]" class="browser-default custom-select product-list">
-                                            <option value="">Select Product</option>
-                                            @foreach ($products as $key => $value)
-                                                <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
-                                                >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
-                                    <div class="col-md-3 icheck_minimal skin mt-2">
-                                        <fieldset>
-                                            <input type="checkbox" id="show_in_home" value="1"
-                                                   name="campaign_details[0][show_in_home]">
-                                            <label for="show_in_home">Show in Home</label>
-                                        </fieldset>
-                                    </div>
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['key' => 0])
                                 </slot>
 
                                 <!--All Deno-->
                                 <slot class="allDeno">
-                                    <div class="col-md-4" >
-                                        <div class="form-group">
-                                            <label class="required">Cashback Type : </label>
-                                            <select name="campaign_details[0][cash_back_type]" class="browser-default custom-select" id="cash_back_type">
-                                                <option value="">Select Cashback Type</option>
-                                                <option value="fixed_amount">Fixed Amount</option>
-                                                <option value="percentage">Percentage</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-4 cash_back_amount_for_product">
-                                        <label for="max_amount">Max Cash Back Amount</label>
-                                        <input type="number" name="campaign_details[0][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
-                                    </div>
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno')
                                 </slot>
 
                                 <!--Selective Deno-->
                                 <slot class="otherDeno" data-repeater-list="group-a" data-repeater-item>
-                                    <div class="col-md-4">
-                                        <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
-                                        <input type="number" name="campaign_details[0][cash_back_amount]" id="cash_back_amount" class="form-control"
-                                               placeholder="Enter The Fixed/Percentage of Cashback">
-                                    </div>
-
-                                    <div class="form-group col-md-4 }}">
-                                        <label for="recharge_amount">Recharge Amount</label>
-                                        <div class='input-group'>
-                                            <input type='number' class="form-control" name="campaign_details[0][recharge_amount]" placeholder="Please select recharge amount" autocomplete="off"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-4 number_of_apply_times_for_product">
-                                        <label for="number_of_apply_times">No of apply times</label>
-                                        <input type="number" name="campaign_details[0][number_of_apply_times]" class="form-control" placeholder="Please Enter Max Amount">
-                                    </div>
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.selective-deno')
                                 </slot>
 
-                                <div class="form-group col-md-4 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date">Start Date</label>
-                                    <div class='input-group'>
-                                        <input type='text' class="form-control" name="start_date" id="start_date"
-                                               placeholder="Please select start date"
-                                               autocomplete="off"/>
-                                    </div>
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('end_date') ? ' error' : '' }}">
-                                    <label for="end_date">End Date</label>
-                                    <input type="text" name="end_date" id="end_date" class="form-control"
-                                           placeholder="Please select end date"
-                                           value="{{ isset($campaign) ? $campaign->end_date : old('end_date') }}" autocomplete="off">
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="reward_getting_type">Show product as</label>
-                                    <select id="navigate_action" name="campaign_details[0][show_product_as]" class="browser-default custom-select">
-                                        <option value="bottom_sheet">Bottom Sheet</option>
-                                        <option value="pop_up">Pop-up</option>
-                                        <option value="campaign_only" selected>Campaign Section only</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-4 mb-2" id="cta_action">
-                                    <label for="redirect_url">Status</label>
-                                    <select id="navigate_action" name="campaign_details[0][status]"
-                                            class="browser-default custom-select">
-                                        <option value="">Select Status</option>
-                                        <option class="text-success" value="1">Enable</option>
-                                        <option class="text-danger" value="0">Disable</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <!-- Product Row Delete -->
-                                 <div class="form-group col-md-12">
-                                     <label for="redirect_url"></label>
-{{--                                     <button type="button" disabled="disabled"--}}
-{{--                                             class="btn-sm btn-gray cursor-pointer float-right">--}}
-{{--                                         <i class="la la-trash"></i>--}}
-{{--                                     </button>--}}
-                                 </div>
+                                @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['key' => 0])
                             </div>
 
                             <div class="row">

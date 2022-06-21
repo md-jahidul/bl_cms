@@ -12,7 +12,9 @@ use App\Services\ProductCoreService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -76,11 +78,10 @@ class MyBlNewCampaignModalityController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $response = $this->campaignNewModalityService->storeCampaign($request->all());
         Session::flash('message', $response->getContent());
         return redirect()->route('new-campaign-modality.index');
@@ -90,7 +91,7 @@ class MyBlNewCampaignModalityController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -101,7 +102,7 @@ class MyBlNewCampaignModalityController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
@@ -115,10 +116,24 @@ class MyBlNewCampaignModalityController extends Controller
             Carbon::parse($campaign->end_date)->format($format);
         $hourSlots = $this->campaignNewModalityService->getHourSlots();
         $products = $this->productCoreService->findAll();
+        $productCategories = Helper::productCategories();
         $page = 'edit';
-//        dd($campaign);
-        return view('admin.mybl-campaign.new-campaign-modality.edit',
-            compact('campaign', 'baseMsisdnGroups', 'partnerChannelNames', 'hourSlots', 'page', 'dateRange', 'campaignSection', 'campaignType', 'products'));
+
+        return view(
+            'admin.mybl-campaign.new-campaign-modality.edit',
+            compact(
+                'campaign',
+                'baseMsisdnGroups',
+                'partnerChannelNames',
+                'hourSlots',
+                'page',
+                'dateRange',
+                'campaignSection',
+                'campaignType',
+                'products',
+                'productCategories'
+            )
+        );
     }
 
     /**
@@ -126,20 +141,20 @@ class MyBlNewCampaignModalityController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $response = $this->campaignNewModalityService->updateCampaign($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(route('own-recharge-inventory.index'));
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

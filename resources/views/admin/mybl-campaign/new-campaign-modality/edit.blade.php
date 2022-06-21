@@ -260,154 +260,37 @@
                                     </div>
                                 </div>
 
-                                <!--Product Section-->
-                                {{--                                        <slot data-repeater-list="group-a" data-repeater-item>--}}
-                                {{--                                            <div id="image-input" class="form-group col-md-6">--}}
-                                {{--                                                <div class="form-group">--}}
-                                {{--                                                    <label for="image_url">Thumbnail Image</label>--}}
-                                {{--                                                    <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77"/>--}}
-                                {{--                                                </div>--}}
-                                {{--                                            </div>--}}
+                                <!--Product Categories-->
+                                <slot class="products-categories d-none">
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.product-category')
+                                </slot>
 
-                                {{--                                            <div id="image-input" class="form-group col-md-6 ">--}}
-                                {{--                                                <div class="form-group">--}}
-                                {{--                                                    <label for="image_url">Offer Card Image</label>--}}
-                                {{--                                                    <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>--}}
-                                {{--                                                    <div class="help-block"></div>--}}
-                                {{--                                                </div>--}}
-                                {{--                                            </div>--}}
-
-                                {{--                                            <div class="form-group col-md-6">--}}
-                                {{--                                                <label for="desc_en" class="required">Description En</label>--}}
-                                {{--                                                <textarea rows="3" id="desc_en" name="desc_en" class="form-control" placeholder="Enter description in English"></textarea>--}}
-                                {{--                                            </div>--}}
-
-                                {{--                                            <div class="form-group col-md-6 ">--}}
-                                {{--                                                <label for="desc_bn" class="required">Description Bn</label>--}}
-                                {{--                                                <textarea rows="3" id="desc_bn" name="desc_bn"--}}
-                                {{--                                                          class="form-control"--}}
-                                {{--                                                          placeholder="Enter description in Bangla"></textarea>--}}
-                                {{--                                            </div>--}}
-                                {{--                                            @php--}}
-                                {{--                                                $productType = '<span class="text-success">(Prepaid) </span>'--}}
-                                {{--                                            @endphp--}}
-
-                                {{--                                                <div class="form-group col-md-3">--}}
-                                {{--                                                    <label for="start_date">Start Date</label>--}}
-                                {{--                                                    <div class='input-group'>--}}
-                                {{--                                                        <input type='text' class="form-control product_start_date" name="start_date" placeholder="Please select start date" autocomplete="off"/>--}}
-                                {{--                                                    </div>--}}
-                                {{--                                                </div>--}}
-
-                                {{--                                                <div class="form-group col-md-3">--}}
-                                {{--                                                    <label for="end_date">End Date</label>--}}
-                                {{--                                                    <input type="text" name="end_date" class="form-control product_end_date" placeholder="Please select end date" autocomplete="off">--}}
-                                {{--                                                </div>--}}
-
-                                {{--                                                <div class="form-group col-md-3">--}}
-                                {{--                                                    <label for="product_code" class="required">Product Code</label>--}}
-                                {{--                                                    <select id="product_code" name="product_code" class="custom-select product-list">--}}
-                                {{--                                                        <option value="">Select Product</option>--}}
-                                {{--                                                        @foreach ($products as $key => $value)--}}
-                                {{--                                                            <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}--}}
-                                {{--                                                            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>--}}
-                                {{--                                                        @endforeach--}}
-                                {{--                                                    </select>--}}
-                                {{--                                                </div>--}}
-
-                                {{--                                                <div class="form-group col-md-3 mb-2" id="cta_action">--}}
-                                {{--                                                    <label for="redirect_url">Product Status</label>--}}
-                                {{--                                                    <select id="navigate_action" name="status" class="browser-default custom-select">--}}
-                                {{--                                                        <option value="">Select Status</option>--}}
-                                {{--                                                        <option class="text-success" value="1">Enable</option>--}}
-                                {{--                                                        <option class="text-danger" value="0">Disable</option>--}}
-                                {{--                                                    </select>--}}
-                                {{--                                                    <div class="help-block"></div>--}}
-                                {{--                                                </div>--}}
-
-                                {{--                                            <!-- Product Row Delete -->--}}
-                                {{--                                            <div class="form-group col-md-12 mb-1">--}}
-                                {{--                                                <button data-repeater-delete type="button"--}}
-                                {{--                                                        class="btn-sm btn-danger cursor-pointer float-right">--}}
-                                {{--                                                    <i class="la la-trash"></i>--}}
-                                {{--                                                </button>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </slot>--}}
-
-                                <!--Recharge Section-->
+                                <!--Selective Product-->
+                                @if(isset($campaign->products))
+                                    @foreach($campaign->products as $key => $product)
+                                        <slot class="selective_product">
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['product' => $product, 'index' => $key])
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['product' => $product, 'index' => $key])
+                                            <div class="form-actions col-md-12 mt-0"></div>
+                                        </slot>
+                                    @endforeach
+                                @else
+                                    <slot class="selective_product">
+                                        @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['index' => 0])
+                                        @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['index' => 0])
+                                        <div class="form-actions col-md-12 mt-0"></div>
+                                    </slot>
+                                @endif
 
                                 <!--All Deno-->
-                                <slot class="allDeno">
-                                    <div class="col-md-4" >
-                                        <div class="form-group">
-                                            <label class="required">Cashback Type : </label>
-                                            <select name="cash_back_type" class="browser-default custom-select" id="cash_back_type" required>
-                                                <option value="">Select Cashback Type</option>
-                                                <option value="fixed_amount">Fixed Amount</option>
-                                                <option value="percentage">Percentage</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-4 cash_back_amount_for_product">
-                                        <label for="max_amount">Max Cash Back Amount</label>
-                                        <input type="number" name="max_amount" class="form-control" placeholder="Please Enter Max Amount">
-                                    </div>
+                                <slot class="allDeno {{ $campaign->deno_type == 'all_deno' ? '' : 'd-none' }}">
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno')
                                 </slot>
 
-                                <!--Other Deno-->
-                                <slot class="otherDeno" data-repeater-list="group-a" data-repeater-item>
-                                    <div class="col-md-4">
-                                        <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
-                                        <input required type="number" name="cash_back_amount" id="cash_back_amount" class="form-control"
-                                               placeholder="Enter The Fixed/Percentage of Cashback">
-                                    </div>
-
-                                    <div class="form-group col-md-4 }}">
-                                        <label for="recharge_amount">Recharge Amount</label>
-                                        <div class='input-group'>
-                                            <input type='number' class="form-control" name="recharge_amount" required placeholder="Please select recharge amount" autocomplete="off"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-4 number_of_apply_times_for_product">
-                                        <label for="number_of_apply_times">No of apply times</label>
-                                        <input type="number" name="number_of_apply_times" class="form-control" placeholder="Please Enter Max Amount">
-                                    </div>
-
-                                    <div class="form-group col-md-4 mb-2" id="cta_action">
-                                        <label for="redirect_url">Cashback Status</label>
-                                        <select id="navigate_action" name="status"
-                                                class="browser-default custom-select">
-                                            <option value="">Select Status</option>
-                                            <option class="text-success" value="1">Enable</option>
-                                            <option class="text-danger" value="0">Disable</option>
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
+                                <!--Selective Deno-->
+                                <slot class="otherDeno {{ $campaign->deno_type == 'selective_deno' ? '' : 'd-none' }}">
+                                    @include('admin.mybl-campaign.new-campaign-modality.partials.selective-deno')
                                 </slot>
-
-                                <div class="form-group col-md-6">
-                                    <label for="reward_getting_type">Show product as</label>
-                                    <div class="form-group">
-                                        <input type="radio" name="show_product_as" value="bottom_sheet" id="bottomSheet">
-                                        <label for="bottomSheet" class="mr-3">Bottom Sheet</label>
-                                        <input type="radio" name="show_product_as" value="recharge" id="popUp">
-                                        <label for="popUp" class="mr-3">Pop-up</label>
-                                        <input type="radio" name="show_product_as" value="campaign_only"
-                                               id="campaign_only" checked>
-                                        <label for="campaign_only" class="mr-3">Campaign Section only</label>
-                                    </div>
-                                </div>
-
-                                <!-- Product Row Delete -->
-                                {{--                                <div class="form-group col-md-12">--}}
-                                {{--                                    <label for="redirect_url"></label>--}}
-                                {{--                                    <button data-repeater-delete type="button"--}}
-                                {{--                                            class="btn-sm btn-danger cursor-pointer float-right">--}}
-                                {{--                                        <i class="la la-trash"></i>--}}
-                                {{--                                    </button>--}}
-                                {{--                                </div>--}}
                             </div>
 
                             <div class="row">
@@ -426,8 +309,6 @@
                             {{-- WINNING LOGIC & CAPPING --}}
                             <div class="row">
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>WINNING LOGIC & CAPPING</strong></h5></div>
-
-
                                 <div class="form-actions col-md-12 mt-0"></div>
                                 <div class="form-group col-md-4">
                                     <label for="winning_type">Winning Type: </label>
@@ -616,6 +497,9 @@
             padding-top: 10px;
             padding-left: 10px;
         }
+        .product_code .select2 {
+            width: 367px !important;
+        }
     </style>
 @endpush
 @push('page-css')
@@ -656,208 +540,272 @@
 
             dropify()
 
-            let productElement = `<slot data-repeater-list="group-a" data-repeater-item>
-                                        <div id="image-input" class="form-group col-md-6 mb-2">
-                                            <div class="form-group">
-                                                <label for="image_url">Thumbnail Image</label>
-                                                <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77"/>
-                                            </div>
-                                        </div>
+            function repeaterItems(index, denoType) {
+                let selectiveDeno = ``;
 
-                                        <div id="image-input" class="form-group col-md-6 mb-2">
-                                            <div class="form-group">
-                                                <label for="image_url">Offer Card Image</label>
-                                                <input type="file" id="image_url" name="thumbnail_img" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
-                                                <div class="help-block"></div>
-                                            </div>
-                                        </div>
+                let productCommonField = `
+                    <div id="image-input" class="form-group col-md-6 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Thumbnail Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
+                        </div>
+                    </div>
 
-                                        <div class="form-group col-md-4 mb-2">
-                                            <label for="desc_en" class="required">Description En</label>
-                                            <textarea rows="3" id="desc_en" name="desc_en" class="form-control" placeholder="Enter description in English"></textarea>
-                                        </div>
+                    <div id="image-input" class="form-group col-md-6 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Banner Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
 
-                                        <div class="form-group col-md-4 mb-2">
-                                            <label for="desc_bn" class="required">Description Bn</label>
-                                            <textarea rows="3" id="desc_bn" name="desc_bn"
-                                                      class="form-control"
-                                                      placeholder="Enter description in Bangla"></textarea>
-                                        </div>
-                                        @php
-                $productType = '<span class="text-success">(Prepaid) </span>'
-            @endphp
-            <div class="form-group col-md-4 mb-2" id="cta_action">
-                <label for="product_code" class="required">Product Code</label>
-                <select id="product_code" name="product_code" class="browser-default custom-select product-list">
-                    <option value="">Select Product</option>
-@foreach ($products as $key => $value)
-            <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
-            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
-                                            @endforeach
-            </select>
-            <div class="help-block"></div>
-        </div>
+                    <div class="form-group col-md-6 mb-2">
+                        <label for="desc_en" class="required">Description En</label>
+                        <textarea rows="3" id="desc_en" name="campaign_details[`+index+`][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
+                    </div>
 
-        <div class="form-group col-md-3">
-            <label for="start_date">Start Date</label>
-            <div class='input-group'>
-                <input type='text' class="form-control product_start_date" name="start_date" placeholder="Please select start date" autocomplete="off"/>
-            </div>
-        </div>
+                    <div class="form-group col-md-6 mb-2">
+                        <label for="desc_bn" class="required">Description Bn</label>
+                        <textarea rows="3" id="desc_bn" name="campaign_details[`+index+`][desc_bn]"
+                                  class="form-control"
+                                  placeholder="Enter description in Bangla"></textarea>
+                    </div>
+                    <div class="col-md-3 icheck_minimal skin mt-2">
+                        <fieldset>
+                            <input type="checkbox" id="show_in_home-`+index+`" value="1"
+                                   name="campaign_details[`+index+`][show_in_home]">
+                            <label for="show_in_home-`+index+`">Show in Home</label>
+                        </fieldset>
+                    </div>
+                `;
 
-        <div class="form-group col-md-3">
-            <label for="end_date">End Date</label>
-            <input type="text" name="end_date" class="form-control product_end_date" placeholder="Please select end date" autocomplete="off">
-        </div>
+                let commonFields = `
+                <div class="form-group col-md-4">
+                    <label for="start_date">Start Date</label>
+                    <div class='input-group'>
+                        <input type='text' class="form-control product_start_date" name="campaign_details[`+index+`][start_date]" id="start_date"
+                               placeholder="Please select start date" autocomplete="off"/>
+                    </div>
+                    <div class="help-block"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="end_date">End Date</label>
+                    <input type="text" name="campaign_details[`+index+`][end_date]" id="end_date" class="form-control product_end_date"
+                           placeholder="Please select end date" autocomplete="off">
+                    <div class="help-block"></div>
+                </div>
 
-        <div class="form-group col-md-2 mb-2" id="cta_action">
-            <label for="redirect_url">Product Status</label>
-            <select id="navigate_action" name="status" class="browser-default custom-select">
-                <option value="">Select Status</option>
-                <option class="text-success" value="1">Enable</option>
-                <option class="text-danger" value="0">Disable</option>
-            </select>
-            <div class="help-block"></div>
-        </div>
+                <div class="form-group col-md-4">
+                    <label for="reward_getting_type">Show product as</label>
+                    <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                        <option value="bottom_sheet">Bottom Sheet</option>
+                        <option value="pop_up">Pop-up</option>
+                        <option value="campaign_only" selected>Campaign Section only</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4 mb-2" id="cta_action">
+                    <label for="redirect_url">Status</label>
+                    <select id="navigate_action" name="campaign_details[`+index+`][status]"
+                            class="browser-default custom-select">
+                        <option value="">Select Status</option>
+                        <option class="text-success" value="1">Enable</option>
+                        <option class="text-danger" value="0">Disable</option>
+                    </select>
+                    <div class="help-block"></div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="redirect_url"></label>
+                    <button data-repeater-delete type="button"
+                            class="btn-sm btn-danger cursor-pointer float-right item-delete">
+                        <i class="la la-trash"></i>
+                    </button>
+                </div>
+                `;
 
-        <!-- Product Row Delete -->
-        <div class="form-group col-md-12 mb-1">
-            <button data-repeater-delete type="button"
-                    class="btn-sm btn-danger cursor-pointer float-right">
-                <i class="la la-trash"></i>
-            </button>
-        </div>
-    </slot>`
+                let productElement = ``;
+                productElement += `
+                <slot class="selective_product">
+                    <div class="form-actions col-md-12 mt-0"></div>
+                    ` + productCommonField + `
+                    @php
+                    $productType = '<span class="text-success">(Prepaid) </span>'
+                @endphp
+                <div class="form-group col-md-4 mb-2 product_code" id="cta_action">
+                    <label for="product_code" class="required">Product Code</label>
+                    <select id="product_code" name="campaign_details[`+index+`][product_code]" class="browser-default custom-select product-list">
+                        <option value="">Select Product</option>
+                        @foreach ($products as $key => $value)
+                        <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
+                            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+                        @endforeach
+                    </select>
+                    <div class="help-block"></div>
+                </div>
+                `+commonFields+`
+                </slot>`;
 
-            let denoType = ``
 
-            let allDeno = `
-<slot class="allDeno">
-    <div class="col-md-4" >
-        <div class="form-group">
-            <label class="required">Cashback Type : </label>
-            <select name="cash_back_type" class="browser-default custom-select" id="cash_back_type" required>
-                <option value="">Select Cashback Type</option>
-                <option value="fixed_amount">Fixed Amount</option>
-                <option value="percentage">Percentage</option>
-            </select>
-        </div>
-    </div>
+                let productCategories = `
+                <slot class="products-categories">
+                    <div class="form-actions col-md-12 mt-0"></div>
+                    ` + productCommonField + `
+                    <div class="col-md-4" >
+                        <div class="form-group">
+                            <label class="required">Product Categories</label>
+                            <select name="campaign_details[` + index + `][product_category_slug]" class="browser-default custom-select" id="cash_back_type">
+                                <option value="">Select Cashback Type</option>
+                                @foreach($productCategories as $key => $data)
+                                    <option value="{{ $key }}">{{ $data }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                ` + commonFields + `
+                </slot>`;
 
-    <div class="form-group col-md-4 cash_back_amount_for_product">
-        <label for="max_amount">Max Cash Back Amount</label>
-        <input type="number" name="max_amount" class="form-control" placeholder="Please Enter Max Amount">
-    </div>
 
-    <div class="form-group col-md-6">
-        <label for="reward_getting_type">Show product as</label>
-        <div class="form-group">
-            <input type="radio" name="show_product_as" value="bottom_sheet" id="bottomSheet">
-            <label for="bottomSheet" class="mr-3">Bottom Sheet</label>
-            <input type="radio" name="show_product_as" value="recharge" id="popUp">
-            <label for="popUp" class="mr-3">Pop-up</label>
-            <input type="radio" name="show_product_as" value="campaign_only" checked>
-            <label class="mr-3">Campaign Section only</label>
-        </div>
-    </div>
+                let allDeno = `
+                <slot class="allDeno" data-repeater-list="category-group">
+                    <div class="form-actions col-md-12 mt-0"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="required">Cashback Type : </label>
+                            <select name="campaign_details[` + index + `][cash_back_type]" class="browser-default custom-select" id="cash_back_type" required>
+                                <option value="">Select Cashback Type</option>
+                                <option value="fixed_amount">Fixed Amount</option>
+                                <option value="percentage">Percentage</option>
+                            </select>
+                        </div>
+                    </div>
 
-    <div class="form-group col-md-12">
-        <label for="redirect_url"></label>
-        <button data-repeater-delete type="button" id="item-delete"
-                class="btn-sm btn-danger cursor-pointer float-right">
-            <i class="la la-trash"></i>
-        </button>
-    </div>
-</slot>`
+                    <div class="form-group col-md-4 cash_back_amount_for_product">
+                        <label for="max_amount">Max Cash Back Amount</label>
+                        <input type="number" name="campaign_details[` + index + `][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
+                    </div>
+                    ` + commonFields + `
+                </slot>`;
 
-            let rechargeElement = `
-<!--Recharge Section-->
-<!--All Deno-->
-<slot>
-<slot class="allDeno">
-    <div class="col-md-4" >
-        <div class="form-group">
-            <label class="required">Cashback Type : </label>
-            <select name="cash_back_type" class="browser-default custom-select" id="cash_back_type" required>
-                <option value="">Select Cashback Type</option>
-                <option value="fixed_amount">Fixed Amount</option>
-                <option value="percentage">Percentage</option>
-            </select>
-        </div>
-    </div>
+                <!--Recharge Section-->
+                <!--All Deno-->
+                selectiveDeno = `
+                <slot>
+                    <div class="form-actions col-md-12 mt-0"></div>
+                    <slot class="allDeno" data-repeater-list="category-group">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="required">Cashback Type : </label>
+                                <select name="campaign_details[`+index+`][cash_back_type]" class="browser-default custom-select" id="cash_back_type" required>
+                                    <option value="">Select Cashback Type</option>
+                                    <option value="fixed_amount">Fixed Amount</option>
+                                    <option value="percentage">Percentage</option>
+                                </select>
+                            </div>
+                        </div>
 
-    <div class="form-group col-md-4 cash_back_amount_for_product">
-        <label for="max_amount">Max Cash Back Amount</label>
-        <input type="number" name="max_amount" class="form-control" placeholder="Please Enter Max Amount">
-    </div>
-</slot>
-<!--Other Deno-->
-<slot class="otherDeno" data-repeater-list="group-a" data-repeater-item>
-    <div class="col-md-4">
-        <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
-        <input required type="number" name="cash_back_amount" id="cash_back_amount" class="form-control"
-               placeholder="Enter The Fixed/Percentage of Cashback">
-    </div>
+                        <div class="form-group col-md-4 cash_back_amount_for_product">
+                            <label for="max_amount">Max Cash Back Amount</label>
+                            <input type="number" name="campaign_details[`+index+`][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
+                        </div>
+                    </slot>
+                    <!--Other Deno-->
+                    <slot class="otherDeno" >
+                        <div class="col-md-4">
+                            <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
+                            <input required type="number" name="campaign_details[`+index+`][cash_back_amount]" id="cash_back_amount" class="form-control"
+                                   placeholder="Enter The Fixed/Percentage of Cashback">
+                        </div>
 
-    <div class="form-group col-md-4 }}">
-        <label for="recharge_amount">Recharge Amount</label>
-        <div class='input-group'>
-            <input type='number' class="form-control" name="recharge_amount" required placeholder="Please select recharge amount" autocomplete="off"/>
-        </div>
-    </div>
+                        <div class="form-group col-md-4 }}">
+                            <label for="recharge_amount">Recharge Amount</label>
+                            <div class='input-group'>
+                                <input type='number' class="form-control" name="campaign_details[`+index+`][recharge_amount]" placeholder="Please select recharge amount" autocomplete="off"/>
+                            </div>
+                        </div>
 
-    <div class="form-group col-md-4 number_of_apply_times_for_product">
-        <label for="number_of_apply_times">No of apply times</label>
-        <input type="number" name="number_of_apply_times" class="form-control" placeholder="Please Enter Max Amount">
-    </div>
+                        <div class="form-group col-md-4 number_of_apply_times_for_product">
+                            <label for="number_of_apply_times">No of apply times</label>
+                            <input type="number" name="campaign_details[`+index+`][number_of_apply_times]" class="form-control" placeholder="Please Enter Max Amount">
+                        </div>
+                    </slot>
+                   `+commonFields+`
+                </slot>
+            `;
+                if (denoType === "selective_deno"){
+                    $('#productSection').append(selectiveDeno)
+                }else if(denoType === "all_deno") {
+                    $('#productSection').append(allDeno)
+                }else if(denoType === "selective_product") {
+                    $('#productSection').append(productElement)
+                }else if(denoType === "product_categories") {
+                    $('#productSection').append(productCategories)
+                }
+            }
 
-    <div class="form-group col-md-4 mb-2" id="cta_action">
-        <label for="redirect_url">Cashback Status</label>
-        <select id="navigate_action" name="status"
-                class="browser-default custom-select">
-            <option value="">Select Status</option>
-            <option class="text-success" value="1">Enable</option>
-            <option class="text-danger" value="0">Disable</option>
-        </select>
-        <div class="help-block"></div>
-    </div>
-    <div class="form-group col-md-6">
-        <label for="reward_getting_type">Show product as</label>
-        <div class="form-group">
-            <input type="radio" name="show_product_as" value="bottom_sheet" id="bottomSheet">
-            <label for="bottomSheet" class="mr-3">Bottom Sheet</label>
-            <input type="radio" name="show_product_as" value="recharge" id="popUp">
-            <label for="popUp" class="mr-3">Pop-up</label>
-            <input type="radio" name="show_product_as" value="campaign_only" checked>
-            <label class="mr-3">Campaign Section only</label>
-        </div>
-    </div>
+            // Product Repeater
+            $('#repeater-button').click(function (){
+                let denoType =  $('input[name=deno_type]:checked').val();
+                let elementCount = 1;
+                if (denoType === "selective_deno"){
+                    elementCount = $('.selective_deno').length
+                }else if (denoType === "all_deno") {
+                    elementCount = $('.allDeno').length
+                }else if (denoType === "selective_product"){
+                    elementCount = $('.selective_product').length
+                }else if (denoType === "product_categories"){
+                    elementCount = $('.products-categories').length
 
-</slot>
-<div class="form-group col-md-12">
-    <label for="redirect_url"></label>
-    <button data-repeater-delete type="button" id="item-delete"
-            class="btn-sm btn-danger cursor-pointer float-right">
-        <i class="la la-trash"></i>
-    </button>
-</div>
-</slot>
-`;
+                    console.log(elementCount);
+                }
+                repeaterItems(elementCount, denoType)
 
+                $(".product-list").select2()
+                var date = new Date();
+                date.setDate(date.getDate());
+                $('.product_start_date').datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+                $('.product_end_date').datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+                dropify()
+                dateTime(productStart)
+                dateTime(productEnd)
+            });
+
+            $("body").on("click", ".item-delete", function(){
+                $(this).parent().parent().remove()
+            })
+
+            // Deno Types
             $('input[name=deno_type]').change(function () {
+                $('.report-repeater').repeater();
                 let denoType = $(this).val()
                 if (denoType === "all_deno") {
-                    // $('.allDeno').removeClass('d-none')
+                    $('.allDeno').removeClass('d-none')
                     $('.otherDeno').addClass('d-none')
-                    // $('#productSection').empty()
-                    // $('#productSection').append(denoType + rechargeElement)
+                    $('.selective_deno').addClass('d-none')
+                    $('.selective_product').addClass('d-none')
+                    $('.products-categories').addClass('d-none')
                 } else if (denoType === "selective_deno") {
-                    // $('.denoSection').addClass('d-none')
                     $('.allDeno').removeClass('d-none')
                     $('.otherDeno').removeClass('d-none')
-                    // $('#productSection').empty()
-                    // $('#productSection').append(productElement)
-                    dropify()
+                    $('.selective_deno').addClass('d-none')
+                    $('.selective_product').addClass('d-none')
+                    $('.products-categories').addClass('d-none')
+                } else if(denoType === "selective_product"){
+                    $('.selective_product').removeClass('d-none')
+                    $('.selective_deno').addClass('d-none')
+                    $('.allDeno').addClass('d-none')
+                    $('.otherDeno').addClass('d-none')
+                    $('.products-categories').addClass('d-none')
+                } else if(denoType === "product_categories"){
+                    $('.products-categories').removeClass('d-none')
+                    $('.selective_deno').addClass('d-none')
+                    $('.allDeno').addClass('d-none')
+                    $('.otherDeno').addClass('d-none')
+                    $('.selective_product').addClass('d-none')
                 }
             })
 
@@ -878,39 +826,10 @@
                 });
             }
 
-            $('#repeater-button').click(function (){
-                let denoType =  $('input[name=deno_type]:checked').val();
-                if (denoType === "selective_deno"){
-                    $('#productSection').append(rechargeElement)
-                }else if (denoType === "all_deno") {
-                    $('#productSection').append(allDeno)
-                }
-                // else {
-                //     $('#productSection').append(productElement)
-                // }
-
-                // $(".product-list").select2()
-                // var date = new Date();
-                // date.setDate(date.getDate());
-                // $('.product_start_date').datetimepicker({
-                //     format : 'YYYY-MM-DD HH:mm:ss',
-                //     showClose: true,
-                // });
-                // $('.product_end_date').datetimepicker({
-                //     format : 'YYYY-MM-DD HH:mm:ss',
-                //     showClose: true,
-                // });
-                // dropify()
-            });
-
             // Campaign Section
             $('input[name=type]').change(function () {
                 if($(this).val() === "ma_plus_recharge")
                     $('#maPlusRecharge').prop('disabled', 'disabled')
-            })
-
-            $("body").on("click", "#item-delete", function(){
-                $(this).parent().parent().remove()
             })
 
             $('.campaign_user_type').click(function () {

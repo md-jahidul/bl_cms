@@ -82,7 +82,7 @@ class CampaignNewModalityService
 
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
-                    if (!empty($product['thumbnail_img'])) {
+                    if (!empty($product['thumb_image'])) {
                         $product['thumb_image'] = 'storage/' . $product['thumbnail_img']->store('mybl_new_campaign');
                     }
 
@@ -146,17 +146,41 @@ class CampaignNewModalityService
 
             $campaign = $this->findOne($id);
 
-            $this->campaignNewModalityDetailRepository->deleteCampaignWiseProduct($id);
-            if (isset($data['product-group'])) {
-                foreach ($data['product-group'] as $product) {
-                    if($data['deno_type'] == 'all'){
-                        $product['max_amount']            = null;
-                        $product['number_of_apply_times'] = null;
+//            $this->campaignNewModalityDetailRepository->deleteCampaignWiseProduct($id);
+            if (isset($data['campaign_details'])) {
+                foreach ($data['campaign_details'] as $product) {
+                    $campaignDetails = $this->campaignNewModalityDetailRepository->findOne(
+                        $product['campaign_details_id'] ?? 0
+                    );
+                    if (!empty($product['thumb_image'])) {
+                        $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
+                        if (isset($campaignDetails) && file_exists($campaignDetails->thumb_image)) {
+                            unlink($campaignDetails->thumb_image);
+                        }
                     }
-                    $product['my_bl_campaign_id'] = $id;
-                    $this->campaignNewModalityDetailRepository->save($product);
+
+                    if (!empty($product['banner_image'])) {
+                        $product['banner_image'] = 'storage/' . $product['banner_image']->store('mybl_new_campaign');
+                        if (isset($campaignDetails) && file_exists($campaignDetails->banner_image)) {
+                            unlink($campaignDetails->banner_image);
+                        }
+                    }
+
+                    if (isset($campaignDetails)) {
+                        $campaignDetails->update($product);
+                    } else {
+                        $product['my_bl_campaign_id'] = $id;
+                        $this->campaignNewModalityDetailRepository->save($product);
+                    }
+
+//                    if ($data['deno_type'] == 'all') {
+//                        $product['max_amount'] = null;
+//                        $product['number_of_apply_times'] = null;
+//                    }
+
                 }
             }
+//            dd('Updated');
             // if($campaign->campaign_user_type != )
             $campaign->update($data);
 
@@ -179,6 +203,7 @@ class CampaignNewModalityService
             return Response('Campaign has been successfully updated');
 
         }catch (\Exception $e) {
+            dd($e);
             return Response('Campaign Update Failed');
         }
     }
