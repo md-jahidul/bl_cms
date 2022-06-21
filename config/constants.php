@@ -41,9 +41,9 @@ return [
     ],
 
     'capping_interval' => [
-        1 => 'daily',
-        7 => 'weekly',
-        30 => 'monthly',
-        365 => 'yearly'
+        0 => 'daily',
+        6 => 'weekly',
+        29 => 'monthly',
+        364 => 'yearly'
     ]
 ];
