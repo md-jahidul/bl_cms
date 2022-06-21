@@ -82,11 +82,11 @@ class CampaignNewModalityService
 
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
-                    if (!empty($product['thumb_image'])) {
-                        $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
+                    if (!empty($product['thumbnail_img'])) {
+                        $product['thumb_image'] = 'storage/' . $product['thumbnail_img']->store('mybl_new_campaign');
                     }
 
-                    if (!empty($product['thumbnail_img'])) {
+                    if (!empty($product['banner_image'])) {
                         $product['banner_image'] = 'storage/' . $product['banner_image']->store('mybl_new_campaign');
                     }
 
@@ -110,11 +110,9 @@ class CampaignNewModalityService
                 );
             }
 
-            dd($data);
-
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
             Log::error($e->getMessage());
             return new Response("New Campaign Modality campaign Create Failed");
         }
