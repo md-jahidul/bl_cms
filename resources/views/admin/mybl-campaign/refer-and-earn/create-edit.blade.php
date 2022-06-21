@@ -18,7 +18,7 @@
                     <h5 class="menu-title"><strong>Refer Card Information</strong></h5>
                     <hr>
                     <div class="card-body card-dashboard">
-                        <form id="feed-form" novalidate class="form row"
+                        <form id="refer_form"  class="form row"
                               action="{{ (isset($campaign)) ? route('mybl-refer-and-earn.update', $campaign->id) : route('mybl-refer-and-earn.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
@@ -351,7 +351,7 @@
                                     </div>
                                     <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
                                         <label for="capping_internal" class="required">Capping Interval</label>
-                                        <select id="capping_internal" name="capping_interval"
+                                        <select  id="capping_internal" name="capping_interval"
                                                 class="browser-default custom-select product-list">
                                             <option value="">Select Capping Interval</option>
                                             @foreach (config('constants.capping_interval') as $key => $value)
@@ -451,7 +451,11 @@
 @endsection
 
 @push('style')
-
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 @endpush
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
@@ -474,10 +478,11 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
     <script>
         $(document).ready(function () {
-
+            $('#refer_form').validate();
             var date = new Date();
             date.setDate(date.getDate());
             $('#start_date').datetimepicker({
@@ -517,10 +522,31 @@
             $('.claim_reward_type').click(function () {
                 console.log($(this).val());
                 if ($(this).val() !== "capped"){
-                    $('.capped-check').addClass('d-none')
+                    $('.capped-check').addClass('d-none');
+                    $('#capping_internal').removeAttr('required', 'required');
+                    $('#number_of_reffarals').removeAttr('required', 'required');
+                    $('#claim_validity_days').removeAttr('required', 'required');
                 } else {
-                    $('.capped-check').removeClass('d-none')
+                    $('.capped-check').removeClass('d-none');
+                    $('#capping_internal').prop('required', 'required');
+                    $('#number_of_reffarals').prop('required', 'required');
+                    $('#claim_validity_days').prop('required', 'required');
                 }
+            });
+
+            $('#capping_internal').click(function () {
+
+                $('#capping_internal').prop('required', 'required');
+            });
+
+            $('#number_of_reffarals').keyup(function () {
+
+                $('#number_of_reffarals').prop('required', 'required');
+            });
+
+            $('#claim_validity_days').keyup(function () {
+
+                $('#claim_validity_days').prop('required', 'required');
             });
 
             $(function () {
