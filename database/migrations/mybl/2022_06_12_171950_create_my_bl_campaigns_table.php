@@ -31,6 +31,8 @@ class CreateMyBlCampaignsTable extends Migration
             $table->string('deno_type')->nullable();
             $table->string('recurring_type')->nullable();
             $table->string('reward_getting_type')->nullable();
+            $table->string('bonus_reward_type')->nullable();
+            $table->string('bonus_product_code')->nullable();
             $table->integer('number_of_apply_times')->nullable();
             $table->integer('max_amount')->nullable();
             $table->string('purchase_eligibility')->nullable();

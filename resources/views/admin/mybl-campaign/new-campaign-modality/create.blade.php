@@ -298,6 +298,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-3 icheck_minimal skin mt-2">
+                                        <fieldset>
+                                            <input type="checkbox" id="show_in_home" value="1"
+                                                   name="campaign_details[0][show_in_home]">
+                                            <label for="show_in_home">Show in Home</label>
+                                        </fieldset>
+                                    </div>
                                 </slot>
 
                                 <!--Selective Product-->
@@ -331,7 +338,7 @@
                                     @php
                                         $productType = '<span class="text-success">(Prepaid) </span>'
                                     @endphp
-                                    <div class="form-group col-md-4" id="cta_action">
+                                    <div class="form-group col-md-4 product_code" id="cta_action">
                                         <label for="product_code" class="required">Product Code</label>
                                         <select id="product_code" name="campaign_details[0][product_code]" class="browser-default custom-select product-list">
                                             <option value="">Select Product</option>
@@ -341,6 +348,13 @@
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
+                                    </div>
+                                    <div class="col-md-3 icheck_minimal skin mt-2">
+                                        <fieldset>
+                                            <input type="checkbox" id="show_in_home" value="1"
+                                                   name="campaign_details[0][show_in_home]">
+                                            <label for="show_in_home">Show in Home</label>
+                                        </fieldset>
                                     </div>
                                 </slot>
 
@@ -444,7 +458,34 @@
                                     </button>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="form-group col-md-6" >
+                                    <label  class="required">Select Bonus Reward Type</label>
+                                    <select name="bonus_reward_type" class="browser-default custom-select"
+                                            id="bonus_reward_type" required data-validation-required-message="Please select  type">
+                                        <option value="" >--Select Type--</option>
+                                        <option value="bonus" >Bonus</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('type'))
+                                        <div class="help-block">  {{ $errors->first('type') }}</div>
+                                    @endif
+                                </div>
+                                @php
+                                    $productType = '<span class="text-success">(Prepaid) </span>'
+                                @endphp
+                                <div class="form-group col-md-6" id="cta_action">
+                                    <label for="bonus_product_code" class="required">Bonus Product Code</label>
+                                    <select id="bonus_product_code" name="bonus_product_code" class="browser-default custom-select product-list">
+                                        <option value="">Select Product</option>
+                                        @foreach ($products as $key => $value)
+                                            <option value="{{ $value->product_code }}"{{ isset($product) && $product->product_code == $value->product_code ? 'selected' : '' }}
+                                            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
 
                             {{-- WINNING LOGIC & CAPPING --}}
                             <div class="row">
@@ -631,14 +672,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 icheck_minimal skin mt-2">
-                                    <fieldset>
-                                        <input type="checkbox" id="show_in_home" value="1"
-                                               name="show_in_home">
-                                        <label for="show_in_home">Show in Home</label>
-                                    </fieldset>
-                                </div>
-
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
@@ -664,7 +697,7 @@
             padding-top: 10px;
             padding-left: 10px;
         }
-        .select2 {
+        .product_code .select2 {
             width: 467px !important;
         }
     </style>
@@ -750,6 +783,13 @@
                                   class="form-control"
                                   placeholder="Enter description in Bangla"></textarea>
                     </div>
+                    <div class="col-md-3 icheck_minimal skin mt-2">
+                        <fieldset>
+                            <input type="checkbox" id="show_in_home" value="1"
+                                   name="campaign_details[`+index+`][show_in_home]">
+                            <label for="show_in_home">Show in Home</label>
+                        </fieldset>
+                    </div>
                 `;
 
                 let commonFields = `
@@ -803,7 +843,7 @@
                     @php
                         $productType = '<span class="text-success">(Prepaid) </span>'
                     @endphp
-                    <div class="form-group col-md-4 mb-2" id="cta_action">
+                    <div class="form-group col-md-4 mb-2 product_code" id="cta_action">
                         <label for="product_code" class="required">Product Code</label>
                         <select id="product_code" name="campaign_details[`+index+`][product_code]" class="browser-default custom-select product-list">
                             <option value="">Select Product</option>

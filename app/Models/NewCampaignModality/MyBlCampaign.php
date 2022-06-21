@@ -26,6 +26,8 @@ class MyBlCampaign extends Model
             'deno_type',
             'recurring_type',
             'reward_getting_type',
+            'bonus_reward_type',
+            'bonus_product_code',
             'number_of_apply_times',
             'max_amount',
             'purchase_eligibility',
