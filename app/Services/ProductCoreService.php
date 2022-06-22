@@ -315,8 +315,9 @@ class ProductCoreService
                                         $mybl_data['offer_section_slug'] = str_replace(' ', '_',
                                             strtolower($titleArr[0]));
 
-                                        if (strtolower($core_data['content_type']) === 'data') {
+                                        if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
+
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
                                                 ->get()
@@ -357,6 +358,7 @@ class ProductCoreService
 
                         try {
                             $product_code = $core_data['product_code'];
+
                             $core_product = ProductCore::where('product_code', $product_code)->first();
 
                             if ($core_product) {
