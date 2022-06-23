@@ -45,7 +45,7 @@ class MyBlCampaign extends Model
 
     public function section()
     {
-        return $this->hasOne(MyBlCampaignSection::class, 'id', 'id');
+        return $this->hasOne(MyBlCampaignSection::class, 'id', 'mybl_campaign_section_id');
     }
 
     public function schedule()

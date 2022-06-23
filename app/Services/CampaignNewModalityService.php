@@ -71,9 +71,9 @@ class CampaignNewModalityService
                 ->toDateTimeString();
             $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
                 ->toDateTimeString();
-            if (isset($data['payment_channels'])) {
-                $data['payment_channels'] = json_encode($data['payment_channels']);
-            }
+//            if (isset($data['payment_channels'])) {
+//                $data['payment_channels'] = json_encode($data['payment_channels']);
+//            }
             if (isset($data['payment_gateways'])) {
                 $data['payment_gateways'] = json_encode($data['payment_gateways']);
             }
