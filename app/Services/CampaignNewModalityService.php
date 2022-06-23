@@ -71,19 +71,13 @@ class CampaignNewModalityService
                 ->toDateTimeString();
             $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
                 ->toDateTimeString();
-            if (isset($data['payment_channels'])) {
-                $data['payment_channels'] = json_encode($data['payment_channels']);
-            }
-            if (isset($data['payment_gateways'])) {
-                $data['payment_gateways'] = json_encode($data['payment_gateways']);
-            }
 
             $campaign = $this->save($data);
 
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
                     if (!empty($product['thumb_image'])) {
-                        $product['thumb_image'] = 'storage/' . $product['thumbnail_img']->store('mybl_new_campaign');
+                        $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
                     }
 
                     if (!empty($product['banner_image'])) {
@@ -94,7 +88,6 @@ class CampaignNewModalityService
                         $product['max_amount'] = null;
                         $product['number_of_apply_times'] = null;
                     }
-                    $product['status'] = 0;
                     $product['my_bl_campaign_id'] = $campaign->id;
                     $this->campaignNewModalityDetailRepository->save($product);
                 }
@@ -112,7 +105,7 @@ class CampaignNewModalityService
 
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {
-//            dd($e->getMessage());
+            dd($e->getMessage());
             Log::error($e->getMessage());
             return new Response("New Campaign Modality campaign Create Failed");
         }
@@ -127,6 +120,7 @@ class CampaignNewModalityService
      */
     public function updateCampaign($data, $id)
     {
+//        dd($data);
         try{
             if ($data['reward_getting_type'] == 'single_time') {
                 $data['max_amount'] = null;
@@ -165,23 +159,16 @@ class CampaignNewModalityService
                             unlink($campaignDetails->banner_image);
                         }
                     }
-
                     if (isset($campaignDetails)) {
                         $campaignDetails->update($product);
                     } else {
                         $product['my_bl_campaign_id'] = $id;
                         $this->campaignNewModalityDetailRepository->save($product);
                     }
-
-//                    if ($data['deno_type'] == 'all') {
-//                        $product['max_amount'] = null;
-//                        $product['number_of_apply_times'] = null;
-//                    }
-
                 }
             }
-//            dd('Updated');
-            // if($campaign->campaign_user_type != )
+
+            $data['first_sign_up_user'] = isset($data['first_sign_up_user']) ? 1 : 0;
             $campaign->update($data);
 
             // WINNING LOGIC & CAPPING Storing

@@ -119,6 +119,7 @@ class MyBlNewCampaignModalityController extends Controller
         $productCategories = Helper::productCategories();
         $page = 'edit';
 
+//        dd($campaign->porducts);
         return view(
             'admin.mybl-campaign.new-campaign-modality.edit',
             compact(

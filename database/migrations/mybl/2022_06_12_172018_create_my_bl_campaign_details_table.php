@@ -21,6 +21,8 @@ class CreateMyBlCampaignDetailsTable extends Migration
             $table->string('banner_image')->nullable();
             $table->string('thumb_image')->nullable();
             $table->string('cash_back_type')->nullable();
+            $table->integer('number_of_apply_times')->nullable();
+            $table->integer('max_amount')->nullable();
             $table->string('purchase_eligibility')->nullable();
             $table->string('product_code')->nullable();
             $table->text('desc_en')->nullable();
