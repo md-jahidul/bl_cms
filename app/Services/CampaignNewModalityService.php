@@ -4,12 +4,7 @@ namespace App\Services;
 
 use App\RecurringSchedule;
 use App\Repositories\CampaignNewModalityDetailRepository;
-use App\Repositories\CampaignNewModalityProductRepository;
 use App\Repositories\CampaignNewModalityRepository;
-//use App\Repositories\MyblCashBackProductRepository;
-//use App\Repositories\MyblCashBackRepository;
-//use App\Repositories\MyblOwnRechargeInventoryProductRepository;
-//use App\Repositories\MyblOwnRechargeInventoryRepository;
 use App\Repositories\RecurringScheduleRepository;
 use App\Traits\CrudTrait;
 use Carbon\Carbon;
@@ -21,9 +16,6 @@ class CampaignNewModalityService
 {
     use CrudTrait;
 
-//    private $ownRechargeInventoryRepository;
-//    private $ownRechargeInventoryProductRepository;
-//    private $ownRechargeWinningCappingService;
     /**
      * @var CampaignNewModalityDetailRepository
      */
@@ -105,11 +97,10 @@ class CampaignNewModalityService
 
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            Log::error($e->getMessage());
-            return new Response("New Campaign Modality campaign Create Failed");
+            $error = $e->getMessage();
+            Log::error($error);
+            return new Response("New Campaign Modality campaign Create Failed. Error: $error");
         }
-
     }
 
     /**
@@ -120,8 +111,7 @@ class CampaignNewModalityService
      */
     public function updateCampaign($data, $id)
     {
-//        dd($data);
-        try{
+        try {
             if ($data['reward_getting_type'] == 'single_time') {
                 $data['max_amount'] = null;
                 $data['number_of_apply_times'] = null;
@@ -140,7 +130,6 @@ class CampaignNewModalityService
 
             $campaign = $this->findOne($id);
 
-//            $this->campaignNewModalityDetailRepository->deleteCampaignWiseProduct($id);
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
                     $campaignDetails = $this->campaignNewModalityDetailRepository->findOne(
@@ -159,6 +148,7 @@ class CampaignNewModalityService
                             unlink($campaignDetails->banner_image);
                         }
                     }
+
                     if (isset($campaignDetails)) {
                         $campaignDetails->update($product);
                     } else {
@@ -171,12 +161,6 @@ class CampaignNewModalityService
             $data['first_sign_up_user'] = isset($data['first_sign_up_user']) ? 1 : 0;
             $campaign->update($data);
 
-            // WINNING LOGIC & CAPPING Storing
-//            $winningLogicAndCampaign['own_recharge_id']                 = $campaign->id;
-//            $winningLogicAndCampaign['reward_getting_type']             = $data['reward_getting_type'];
-//            $winning_capping_id                                         = $data['winning_capping_id'];
-//            $this->ownRechargeWinningCappingService->update($winning_capping_id,$winningLogicAndCampaign);
-
             // Storing recurring schedule
             if ($data['recurring_type'] != 'none') {
                 $this->saveSchedule(
@@ -188,29 +172,9 @@ class CampaignNewModalityService
             }
 
             return Response('Campaign has been successfully updated');
-
-        }catch (\Exception $e) {
-            dd($e);
-            return Response('Campaign Update Failed');
+        } catch (\Exception $e) {
+            return Response("Campaign Update Failed. Error: $e");
         }
-    }
-
-    /**
-     * @param $id
-     * @return ResponseFactory|Response
-     * @throws \Exception
-     */
-    public function deleteCampaign($id)
-    {
-        try{
-            $campaign = $this->findOne($id);
-            $campaign->delete();
-            return Response('Campaign has been successfully deleted');
-        }catch (\Exception $e) {
-
-            return Response('Campaign Delete Failed');
-        }
-
     }
 
     public function getHourSlots()
@@ -249,10 +213,19 @@ class CampaignNewModalityService
         }
     }
 
-    public function checkValidationForProduct($products){
-        foreach ($products as $product){
-            if($product['max_amount'] == null || $product['number_of_apply_times'] == null)return false;
+    /**
+     * @param $id
+     * @return ResponseFactory|Response
+     * @throws \Exception
+     */
+    public function deleteCampaign($id)
+    {
+        try {
+            $campaign = $this->findOne($id);
+            $campaign->delete();
+            return Response('Campaign has been successfully deleted');
+        } catch (\Exception $e) {
+            return Response('Campaign Delete Failed');
         }
-        return true;
     }
 }

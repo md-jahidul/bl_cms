@@ -25,6 +25,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Campaign Title</th>
+                            <th>Campaign Section</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Action</th>
@@ -35,6 +36,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ $data->name }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '<span class="success pl-1"><strong> ( Active )</strong></span>' !!}</td>
+                                <td>{{$data->section->title_en}}</td>
                                 <td>{{$data->start_date}}</td>
                                 <td>{{$data->end_date}}</td>
                                 <td>
