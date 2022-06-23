@@ -17,32 +17,32 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label for="title" class="required">Title English</label>
-                                        <input class="form-control"
-                                               name="title_en"
-                                               id="title_en"
-                                               value="{{ isset($data->title_en) ? $data->title_en : old("title_en") }}"
-                                               required>
-                                        @if($errors->has('title_en'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('title_en') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="title" class="required">Title Bangla</label>
-                                        <input class="form-control"
-                                               name="title_bn"
-                                               id="title_bn"
-                                               value="{{ isset($data->title_bn) ? $data->title_bn : old("title_bn") }}"
-                                               required>
-                                        @if($errors->has('title_bn'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('title_bn') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
+{{--                                    <div class="form-group col-md-6">--}}
+{{--                                        <label for="title" class="required">Title English</label>--}}
+{{--                                        <input class="form-control"--}}
+{{--                                               name="title_en"--}}
+{{--                                               id="title_en"--}}
+{{--                                               value="{{ isset($data->title_en) ? $data->title_en : old("title_en") }}"--}}
+{{--                                               required>--}}
+{{--                                        @if($errors->has('title_en'))--}}
+{{--                                            <p class="text-left">--}}
+{{--                                                <small class="danger text-muted">{{ $errors->first('title_en') }}</small>--}}
+{{--                                            </p>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group col-md-6">--}}
+{{--                                        <label for="title" class="required">Title Bangla</label>--}}
+{{--                                        <input class="form-control"--}}
+{{--                                               name="title_bn"--}}
+{{--                                               id="title_bn"--}}
+{{--                                               value="{{ isset($data->title_bn) ? $data->title_bn : old("title_bn") }}"--}}
+{{--                                               required>--}}
+{{--                                        @if($errors->has('title_bn'))--}}
+{{--                                            <p class="text-left">--}}
+{{--                                                <small class="danger text-muted">{{ $errors->first('title_bn') }}</small>--}}
+{{--                                            </p>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
                                 <div class="col-md-6" id="content_div">
                                     <div class="form-group">
                                         <label class="required">Home Banner</label>
@@ -129,7 +129,7 @@
                                                 @endforeach
                                                 </tbody>
                                             </table>
-                        
+
                                         </div>
                                     </div>
                                 </div>

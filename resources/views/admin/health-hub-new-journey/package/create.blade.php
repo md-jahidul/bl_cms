@@ -101,7 +101,20 @@
                                             </p>
                                         @endif
                                     </div>
-                                <div class="col-md-6">
+                                <div class="form-group col-md-4">
+                                    <label for="package_id" class="required">Package ID</label>
+                                    <input class="form-control"
+                                           name="package_id"
+                                           id="package_id"
+                                           placeholder="Enter Package ID"
+                                           required>
+                                    @if($errors->has('package_id'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('package_id') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="eventInput3">Select Customer</label>
                                         <select name="allowed_customer" class="form-control" required>
@@ -112,7 +125,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="eventInput3">Status</label>
                                         <select name="status" class="form-control" required>
@@ -138,22 +151,14 @@
                                     @endif
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="details_en" >Package Details (EN):</label>
-                                    <textarea
-                                    required
-                                    data-validation-required-message="Description (EN) is required"
-                                    class="form-control @error('details_en') is-invalid @enderror" placeholder="Enter body description....." id="details_en" name="details_en" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('details_en') {{ $message }} @enderror </small>
+                                    <label for="title_en" class="required">
+                                        Description EN
+                                    </label>
+                                    <textarea id="terms-conditions" name="details_en" required></textarea>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="details_bn" >Package Details (BN):</label>
-                                    <textarea
-                                    required
-                                    data-validation-required-message="Description (BN) is required"
-                                    class="form-control @error('details_bn') is-invalid @enderror" placeholder="Enter body description....." id="details_bn" name="details_bn" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('details_bn') {{ $message }} @enderror </small>
+                                    <label for="title_en" class="required">Description BN</label>
+                                    <textarea id="terms-conditions" name="details_bn" required></textarea>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -266,6 +271,22 @@
                                     </div>`;
 
         })
+
+        $(function () {
+            console.log("test");
+            $("textarea#terms-conditions").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen']]
+                ],
+                height:300
+            })
+        });
     </script>
 @endpush
 

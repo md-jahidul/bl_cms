@@ -551,7 +551,7 @@
             }
 
             $('.data-section').select2({
-                placeholder: 'Please Selcet Product Category',
+                placeholder: 'Please Select Product Category',
                 maximumSelectionLength: 5,
                 allowClear: true
             });

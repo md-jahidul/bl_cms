@@ -309,7 +309,7 @@
                                     @endphp
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Product Categories </label>
+                                            <label>Product Categories</label>
                                             <select multiple
                                                     class="form-control data-section"
                                                     name="offer_section_slug[]" required>

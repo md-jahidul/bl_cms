@@ -17,7 +17,8 @@ return [
         'completed' => 'info'
     ],
     'cs_selfcare' => [
-        'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y', env('CS_REFERRAL_END_DATE', '01/01/2022'))),
+        'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y',
+            env('CS_REFERRAL_END_DATE', '01/01/2022'))),
         'code_length' => 10,
         'referral_code_prefix' => 'CS',
         'log_type' => 'CS_REFERRAL',
@@ -68,5 +69,17 @@ return [
 
     'validityUnits' => ['hours', 'days'],
 
-    'partnerChannelName' => ['bKash', 'Nagad', 'EBL']
+    'partnerChannelName' => ['bKash', 'Nagad', 'EBL'],
+    
+    'terms_conditions_feature_names' => [
+        'general' => 'General',
+        'balance_transfer' => 'Balance Transfer'
+    ],
+
+    'capping_interval' => [
+        0 => 'daily',
+        6 => 'weekly',
+        29 => 'monthly',
+        364 => 'yearly'
+    ]
 ];

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\HealthHubNewJourney\HealthHubDashboardRepository;
+use Illuminate\Support\Facades\Log;
 
 class HealthHubPartnerService
 {
@@ -38,10 +39,10 @@ class HealthHubPartnerService
                 'public'
             );
             $data['logo'] = $path;
-
+//            dd($data);
             return $this->healthHubPartnerRepository->create($data);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
             Log::error('Error while saving deshboard : ' . $e->getMessage());
             return false;
         }
