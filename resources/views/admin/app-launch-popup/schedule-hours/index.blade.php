@@ -18,6 +18,7 @@
                                     <select name="feature" id="feature" class="form-control">
                                         <option value="popup">Popup</option>
                                         <option value="own_recharge_inventory">Own Recharge Inventory</option>
+                                        <option value="new_campaign_modality">New Campaign Modality</option>
                                     </select>
                                 </div>
                             </div>
