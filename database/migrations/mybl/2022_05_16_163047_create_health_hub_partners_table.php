@@ -18,7 +18,7 @@ class CreateHealthHubPartnersTable extends Migration
             $table->string('partner_id');
             $table->string('name_en');
             $table->string('name_bn');
-            $table->string('access_key');
+            $table->string('access_key')->nullable();
             $table->string('logo');
             $table->boolean('status');
             $table->timestamps();

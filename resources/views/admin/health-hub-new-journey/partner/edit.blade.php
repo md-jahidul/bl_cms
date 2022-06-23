@@ -58,20 +58,20 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="access_key" class="required">Access Key</label>
-                                    <input class="form-control"
-                                            name="access_key"
-                                            id="access_key"
-                                            value="{{ $partner->access_key }}"
-                                            placeholder="Enter Access Key"
-                                            required>
-                                    @if($errors->has('access_key'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('access_key') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="access_key" class="required">Access Key</label>--}}
+{{--                                    <input class="form-control"--}}
+{{--                                            name="access_key"--}}
+{{--                                            id="access_key"--}}
+{{--                                            value="{{ $partner->access_key }}"--}}
+{{--                                            placeholder="Enter Access Key"--}}
+{{--                                            required>--}}
+{{--                                    @if($errors->has('access_key'))--}}
+{{--                                        <p class="text-left">--}}
+{{--                                            <small class="danger text-muted">{{ $errors->first('access_key') }}</small>--}}
+{{--                                        </p>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="eventInput3">Status</label>
