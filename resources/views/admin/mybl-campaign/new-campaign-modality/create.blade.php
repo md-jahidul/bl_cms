@@ -721,7 +721,11 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
+                        <input required type="number" name="campaign_details[`+index+`][cash_back_amount]" id="cash_back_amount" class="form-control"
+                               placeholder="Enter The Fixed/Percentage of Cashback">
+                    </div>
                     <div class="form-group col-md-4 cash_back_amount_for_product">
                         <label for="max_amount">Max Cash Back Amount</label>
                         <input type="number" name="campaign_details[` + index + `][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
