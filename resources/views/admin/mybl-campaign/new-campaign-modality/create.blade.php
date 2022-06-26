@@ -329,7 +329,7 @@
                                 </div>
                                 <div class="form-group col-md-4 check_winning_logic">
                                     <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
-                                    <input required type="number" name="winning_interval" class="form-control"
+                                    <input type="number" name="winning_interval" class="form-control"
                                         placeholder="Please Enter Highest Recharge/Purchase Winner Check">
                                 </div>
                                 <div class="form-group col-md-4 check_winning_logic">
