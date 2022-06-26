@@ -331,23 +331,26 @@
                                 <div class="form-group col-md-4">
                                     <label for="winning_type">Winning Type: </label>
                                     <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15"
+                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15" class="winning_logic"
                                             {{ $campaign->winning_type == 'first_recharge' ? 'checked' : '' }}>
                                         <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label> <br>
-                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16"
+                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16" class="winning_logic"
                                             {{ $campaign->winning_type == 'highest_recharge' ? 'checked' : '' }}>
-                                        <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
+                                        <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label> <br>
+                                        <input type="radio" name="winning_type" value="no_logic" id="no_logic" class="winning_logic"
+                                            {{ $campaign->winning_type == 'no_logic' ? 'checked' : '' }}>
+                                        <label for="no_logic" class="mr-3">No Logic</label>
                                         @if ($errors->has('winning_type'))
                                             <div class="help-block">  {{ $errors->first('winning_type') }}</div>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
                                     <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
                                     <input required type="number" name="winning_interval" class="form-control"
                                            value="{{ $campaign->winning_interval }}">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
                                         <input type="radio" name="winning_interval_unit" value="min" id="min"
@@ -364,7 +367,8 @@
                                         @endif
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="winning_massage_en" >Winning Communication Message (EN):</label>
                                     <textarea
@@ -382,7 +386,6 @@
                                     <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Reward Getting Type</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>
@@ -951,6 +954,14 @@
                 } else {
                     $('#max_amount_for_campaign').removeClass('d-none');
                     $('#number_of_apply_times_for_campaign').removeClass('d-none');
+                }
+            });
+            $('.winning_logic').click(function () {
+                if ($(this).val() == "no_logic"){
+                    $('.check_winning_logic').addClass('d-none');
+
+                } else {
+                    $('.check_winning_logic').removeClass('d-none');
                 }
             });
         });
