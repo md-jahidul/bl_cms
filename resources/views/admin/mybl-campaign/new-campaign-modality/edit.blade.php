@@ -7,6 +7,11 @@
     </li>
     <li class="breadcrumb-item active">Create Campaign</li>
 @endsection
+@section('action')
+    <a href="{{ route('new-campaign-modality.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+        Cancel
+    </a>
+@endsection
 @section('content')
     <section>
         <div class="card">
@@ -243,54 +248,67 @@
                                 <div class="col-md-12 denoSection">
                                     <div class="form-group">
                                         <input type="radio" name="deno_type" value="selective_deno" id="selective_deno"
-                                            {{ $campaign->deno_type == 'selective_deno' ? 'checked' : '' }}>
+                                            {{ $campaign->deno_type == 'selective_deno' ? 'checked' : 'disabled' }}>
                                         <label for="selective_deno" class="mr-3">Selective Deno</label>
 
                                         <input type="radio" name="deno_type" value="all_deno" id="all_deno"
-                                            {{ $campaign->deno_type == 'all_deno' ? 'checked' : '' }}>
+                                            {{ $campaign->deno_type == 'all_deno' ? 'checked' : 'disabled' }}>
                                         <label for="all_deno" class="mr-3">All Deno</label>
 
                                         <input type="radio" name="deno_type" value="selective_product" id="selective_product"
-                                            {{ $campaign->deno_type == 'selective_product' ? 'checked' : '' }}>
+                                            {{ $campaign->deno_type == 'selective_product' ? 'checked' : 'disabled' }}>
                                         <label for="selective_product" class="mr-3">Selective Product</label>
 
                                         <input type="radio" name="deno_type" value="product_categories" id="product_categories"
-                                            {{ $campaign->deno_type == 'product_categories' ? 'checked' : '' }}>
+                                            {{ $campaign->deno_type == 'product_categories' ? 'checked' : 'disabled' }}>
                                         <label for="product_categories" class="mr-3">Product Categories</label>
                                     </div>
                                 </div>
 
                                 <!--Product Categories-->
-                                <slot class="products-categories d-none">
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.product-category')
-                                </slot>
-
-                                <!--Selective Product-->
-                                @if(isset($campaign->products))
+                                @if(isset($campaign->products) && $campaign->deno_type == 'product_categories')
                                     @foreach($campaign->products as $key => $product)
-                                        <slot class="selective_product">
-                                            @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['product' => $product, 'index' => $key])
-                                            @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['product' => $product, 'index' => $key])
-                                            <div class="form-actions col-md-12 mt-0"></div>
+                                        <slot class="products-categories">
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.product-category', ['product' => $product, 'key' => $key])
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['product' => $product, 'key' => $key])
+                                            <div class="form-actions col-md-12 mt-0 hr-line"></div>
                                         </slot>
                                     @endforeach
-                                @else
-                                    <slot class="selective_product">
-                                        @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['index' => 0])
-                                        @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['index' => 0])
-                                        <div class="form-actions col-md-12 mt-0"></div>
-                                    </slot>
+                                @endif
+
+                                <!--Selective Product-->
+                                @if(isset($campaign->products) && $campaign->deno_type == 'selective_product')
+                                    @foreach($campaign->products as $key => $product)
+                                        <slot class="selective_product">
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['product' => $product, 'key' => $key])
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['product' => $product, 'key' => $key])
+                                            <div class="form-actions col-md-12 mt-0 hr-line"></div>
+                                        </slot>
+                                    @endforeach
                                 @endif
 
                                 <!--All Deno-->
-                                <slot class="allDeno {{ $campaign->deno_type == 'all_deno' ? '' : 'd-none' }}">
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno')
-                                </slot>
+                                @if(isset($campaign->products) && $campaign->deno_type == 'all_deno')
+                                    @foreach($campaign->products as $key => $product)
+                                        <slot class="allDeno">
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno', ['product' => $product, 'key' => $key])
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['product' => $product, 'key' => $key])
+                                            <div class="form-actions col-md-12 mt-0 hr-line"></div>
+                                        </slot>
+                                    @endforeach
+                                @endif
 
                                 <!--Selective Deno-->
-                                <slot class="otherDeno {{ $campaign->deno_type == 'selective_deno' ? '' : 'd-none' }}">
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.selective-deno')
-                                </slot>
+                                @if(isset($campaign->products) && $campaign->deno_type == 'selective_deno')
+                                    @foreach($campaign->products as $key => $product)
+                                        <slot class="selective_deno">
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno', ['product' => $product, 'key' => $key])
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.selective-deno', ['product' => $product, 'key' => $key])
+                                            @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['product' => $product, 'key' => $key])
+                                            <div class="form-actions col-md-12 mt-0 hr-line"></div>
+                                        </slot>
+                                    @endforeach
+                                @endif
                             </div>
 
                             <div class="row">
@@ -332,15 +350,15 @@
                                 <div class="form-group col-md-4">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15"
+                                        <input type="radio" name="winning_interval_unit" value="min" id="min"
                                             {{ $campaign->winning_interval_unit == 'min' ? 'checked' : '' }}>
-                                        <label for="input-radio-15" class="mr-3">MIN</label>
-                                        <input type="radio" name="winning_interval_unit" value="hour" id="input-radio-16"
+                                        <label for="min" class="mr-3">MIN</label>
+                                        <input type="radio" name="winning_interval_unit" value="hour" id="hour"
                                             {{ $campaign->winning_interval_unit == 'hour' ? 'checked' : '' }}>
-                                        <label for="input-radio-16" class="mr-3">HOUR</label>
-                                        <input type="radio" name="winning_interval_unit" value="day" id="input-radio-16"
+                                        <label for="hour" class="mr-3">HOUR</label>
+                                        <input type="radio" name="winning_interval_unit" value="day" id="day"
                                             {{ $campaign->winning_interval_unit == 'day' ? 'checked' : '' }}>
-                                        <label for="input-radio-16" class="mr-3">Day</label>
+                                        <label for="day" class="mr-3">Day</label>
                                         @if ($errors->has('winning_interval_unit'))
                                             <div class="help-block">  {{ $errors->first('winning_interval_unit') }}</div>
                                         @endif
@@ -455,6 +473,15 @@
                                     <div class="help-block"></div>
                                 </div>
 
+                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="first_sign_up_user" value="1"
+                                               name="first_sign_up_user"
+                                        {{ (isset($campaign->first_sign_up_user) && $campaign->first_sign_up_user == 1) ? 'checked' : '' }}>
+                                        <label for="first_sign_up_user">first_sign_up_user</label>
+                                    </fieldset>
+                                </div>
+
                                 <div class="form-actions col-md-12 mt-0 text-danger"></div>
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Campaign Status: </label>
@@ -499,6 +526,9 @@
         }
         .product_code .select2 {
             width: 367px !important;
+        }
+        .hr-line {
+            border-top: 2px solid #6471b7 !important;
         }
     </style>
 @endpush
@@ -570,7 +600,7 @@
                                   class="form-control"
                                   placeholder="Enter description in Bangla"></textarea>
                     </div>
-                    <div class="col-md-3 icheck_minimal skin mt-2">
+                    <div class="col-md-4 icheck_minimal skin mt-2">
                         <fieldset>
                             <input type="checkbox" id="show_in_home-`+index+`" value="1"
                                    name="campaign_details[`+index+`][show_in_home]">
@@ -594,15 +624,6 @@
                            placeholder="Please select end date" autocomplete="off">
                     <div class="help-block"></div>
                 </div>
-
-                <div class="form-group col-md-4">
-                    <label for="reward_getting_type">Show product as</label>
-                    <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
-                        <option value="bottom_sheet">Bottom Sheet</option>
-                        <option value="pop_up">Pop-up</option>
-                        <option value="campaign_only" selected>Campaign Section only</option>
-                    </select>
-                </div>
                 <div class="form-group col-md-4 mb-2" id="cta_action">
                     <label for="redirect_url">Status</label>
                     <select id="navigate_action" name="campaign_details[`+index+`][status]"
@@ -625,11 +646,19 @@
                 let productElement = ``;
                 productElement += `
                 <slot class="selective_product">
-                    <div class="form-actions col-md-12 mt-0"></div>
                     ` + productCommonField + `
-                    @php
+                @php
                     $productType = '<span class="text-success">(Prepaid) </span>'
                 @endphp
+                <div class="form-group col-md-4">
+                    <label for="reward_getting_type">Show product as</label>
+                    <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                        <option value="bottom_sheet">Bottom Sheet</option>
+                        <option value="pop_up">Pop-up</option>
+                        <option value="campaign_only" selected>Campaign Section only</option>
+                    </select>
+                </div>
+
                 <div class="form-group col-md-4 mb-2 product_code" id="cta_action">
                     <label for="product_code" class="required">Product Code</label>
                     <select id="product_code" name="campaign_details[`+index+`][product_code]" class="browser-default custom-select product-list">
@@ -642,13 +671,21 @@
                     <div class="help-block"></div>
                 </div>
                 `+commonFields+`
+                <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>`;
 
 
                 let productCategories = `
                 <slot class="products-categories">
-                    <div class="form-actions col-md-12 mt-0"></div>
                     ` + productCommonField + `
+                    <div class="form-group col-md-4">
+                        <label for="reward_getting_type">Show product as</label>
+                        <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                            <option value="bottom_sheet">Bottom Sheet</option>
+                            <option value="pop_up">Pop-up</option>
+                            <option value="campaign_only" selected>Campaign Section only</option>
+                        </select>
+                    </div>
                     <div class="col-md-4" >
                         <div class="form-group">
                             <label class="required">Product Categories</label>
@@ -661,12 +698,12 @@
                         </div>
                     </div>
                 ` + commonFields + `
+                <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>`;
 
 
                 let allDeno = `
                 <slot class="allDeno" data-repeater-list="category-group">
-                    <div class="form-actions col-md-12 mt-0"></div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Cashback Type : </label>
@@ -683,13 +720,13 @@
                         <input type="number" name="campaign_details[` + index + `][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
                     </div>
                     ` + commonFields + `
+                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>`;
 
                 <!--Recharge Section-->
                 <!--All Deno-->
                 selectiveDeno = `
                 <slot>
-                    <div class="form-actions col-md-12 mt-0"></div>
                     <slot class="allDeno" data-repeater-list="category-group">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -708,7 +745,7 @@
                         </div>
                     </slot>
                     <!--Other Deno-->
-                    <slot class="otherDeno" >
+                    <slot class="selective_deno" >
                         <div class="col-md-4">
                             <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
                             <input required type="number" name="campaign_details[`+index+`][cash_back_amount]" id="cash_back_amount" class="form-control"
@@ -728,6 +765,7 @@
                         </div>
                     </slot>
                    `+commonFields+`
+                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>
             `;
                 if (denoType === "selective_deno"){
@@ -784,13 +822,13 @@
                 let denoType = $(this).val()
                 if (denoType === "all_deno") {
                     $('.allDeno').removeClass('d-none')
-                    $('.otherDeno').addClass('d-none')
+                    $('.selective_deno').addClass('d-none')
                     $('.selective_deno').addClass('d-none')
                     $('.selective_product').addClass('d-none')
                     $('.products-categories').addClass('d-none')
                 } else if (denoType === "selective_deno") {
                     $('.allDeno').removeClass('d-none')
-                    $('.otherDeno').removeClass('d-none')
+                    $('.selective_deno').removeClass('d-none')
                     $('.selective_deno').addClass('d-none')
                     $('.selective_product').addClass('d-none')
                     $('.products-categories').addClass('d-none')
@@ -798,13 +836,13 @@
                     $('.selective_product').removeClass('d-none')
                     $('.selective_deno').addClass('d-none')
                     $('.allDeno').addClass('d-none')
-                    $('.otherDeno').addClass('d-none')
+                    $('.selective_deno').addClass('d-none')
                     $('.products-categories').addClass('d-none')
                 } else if(denoType === "product_categories"){
                     $('.products-categories').removeClass('d-none')
                     $('.selective_deno').addClass('d-none')
                     $('.allDeno').addClass('d-none')
-                    $('.otherDeno').addClass('d-none')
+                    $('.selective_deno').addClass('d-none')
                     $('.selective_product').addClass('d-none')
                 }
             })

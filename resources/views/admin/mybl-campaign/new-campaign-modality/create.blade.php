@@ -259,31 +259,13 @@
                                     </div>
                                 </div>
 
-                                <!--Product Categories-->
-                                <slot class="products-categories d-none">
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.product-category', ['key' => 0])
+                                <slot id="productSection">
+                                    <slot class="otherDeno">
+                                        @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno', ['key' => 0])
+                                        @include('admin.mybl-campaign.new-campaign-modality.partials.selective-deno', ['key' => 0])
+                                        @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['key' => 0])
+                                    </slot>
                                 </slot>
-
-                                <!--Selective Product-->
-                                <slot class="selective_product d-none">
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.selective-product', ['key' => 0])
-                                </slot>
-
-                                <!--All Deno-->
-                                <slot class="allDeno">
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.all-deno')
-                                </slot>
-
-                                <!--Selective Deno-->
-                                <slot class="otherDeno" data-repeater-list="group-a" data-repeater-item>
-                                    @include('admin.mybl-campaign.new-campaign-modality.partials.selective-deno')
-                                </slot>
-
-                                @include('admin.mybl-campaign.new-campaign-modality.partials.common-fields', ['key' => 0])
-                            </div>
-
-                            <div class="row">
-                                <slot id="productSection"></slot>
                             </div>
 
                             <div class="row">
@@ -294,6 +276,8 @@
                                     </button>
                                 </div>
                             </div>
+
+                            {{--Select Bonus Reward Type--}}
                             <div class="row">
                                 <div class="form-group col-md-6" >
                                     <label  class="required">Select Bonus Reward Type</label>
@@ -534,20 +518,21 @@
             padding-left: 10px;
         }
         .product_code .select2 {
-            width: 467px !important;
+            width: 367px !important;
+        }
+        .hr-line {
+            border-top: 2px solid #6471b7 !important;
         }
     </style>
 @endpush
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('app-assets/css/weekday-picker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 
@@ -596,7 +581,7 @@
                     <div id="image-input" class="form-group col-md-6 mb-2">
                         <div class="form-group">
                             <label for="image_url">Thumbnail Image</label>
-                            <input type="file" id="image_url" name="campaign_details[`+index+`][thumbnail_img]" class="dropify" data-height="77"/>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
                         </div>
                     </div>
 
@@ -619,7 +604,7 @@
                                   class="form-control"
                                   placeholder="Enter description in Bangla"></textarea>
                     </div>
-                    <div class="col-md-3 icheck_minimal skin mt-2">
+                    <div class="col-md-4 icheck_minimal skin mt-2">
                         <fieldset>
                             <input type="checkbox" id="show_in_home" value="1"
                                    name="campaign_details[`+index+`][show_in_home]">
@@ -644,14 +629,6 @@
                     <div class="help-block"></div>
                 </div>
 
-                <div class="form-group col-md-4">
-                    <label for="reward_getting_type">Show product as</label>
-                    <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
-                        <option value="bottom_sheet">Bottom Sheet</option>
-                        <option value="pop_up">Pop-up</option>
-                        <option value="campaign_only" selected>Campaign Section only</option>
-                    </select>
-                </div>
                 <div class="form-group col-md-4 mb-2" id="cta_action">
                     <label for="redirect_url">Status</label>
                     <select id="navigate_action" name="campaign_details[`+index+`][status]"
@@ -664,8 +641,8 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label for="redirect_url"></label>
-                    <button data-repeater-delete type="button" id="item-delete"
-                            class="btn-sm btn-danger cursor-pointer float-right">
+                    <button data-repeater-delete type="button"
+                            class="btn-sm btn-danger cursor-pointer float-right item-delete">
                         <i class="la la-trash"></i>
                     </button>
                 </div>
@@ -674,8 +651,16 @@
                 let productElement = ``;
                 productElement += `
                 <slot class="selective_product">
-                    <div class="form-actions col-md-12 mt-0"></div>
+                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
                     ` + productCommonField + `
+                    <div class="form-group col-md-4">
+                        <label for="reward_getting_type">Show product as</label>
+                        <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                            <option value="bottom_sheet">Bottom Sheet</option>
+                            <option value="pop_up">Pop-up</option>
+                            <option value="campaign_only" selected>Campaign Section only</option>
+                        </select>
+                    </div>
                     @php
                         $productType = '<span class="text-success">(Prepaid) </span>'
                     @endphp
@@ -696,8 +681,16 @@
 
                 let productCategories = `
                 <slot class="products-categories">
-                    <div class="form-actions col-md-12 mt-0"></div>
+                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
                     ` + productCommonField + `
+                    <div class="form-group col-md-4">
+                        <label for="reward_getting_type">Show product as</label>
+                        <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                            <option value="bottom_sheet">Bottom Sheet</option>
+                            <option value="pop_up">Pop-up</option>
+                            <option value="campaign_only" selected>Campaign Section only</option>
+                        </select>
+                    </div>
                     <div class="col-md-4" >
                         <div class="form-group">
                             <label class="required">Product Categories</label>
@@ -715,7 +708,7 @@
 
                 let allDeno = `
                 <slot class="allDeno" data-repeater-list="category-group">
-                    <div class="form-actions col-md-12 mt-0"></div>
+                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Cashback Type : </label>
@@ -738,7 +731,7 @@
                 <!--All Deno-->
                 selectiveDeno = `
                 <slot>
-                    <div class="form-actions col-md-12 mt-0"></div>
+                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
                     <slot class="allDeno" data-repeater-list="category-group">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -795,15 +788,13 @@
                 let denoType =  $('input[name=deno_type]:checked').val();
                 let elementCount = 1;
                 if (denoType === "selective_deno"){
-                    elementCount = $('.selective_deno').length
+                    elementCount = $('.otherDeno').length
                 }else if (denoType === "all_deno") {
                     elementCount = $('.allDeno').length
                 }else if (denoType === "selective_product"){
                     elementCount = $('.selective_product').length
                 }else if (denoType === "product_categories"){
                     elementCount = $('.products-categories').length
-
-                    console.log(elementCount);
                 }
                 repeaterItems(elementCount, denoType)
 
@@ -826,32 +817,36 @@
             // Deno Types
             $('input[name=deno_type]').change(function () {
                 $('.report-repeater').repeater();
+                $('#productSection').empty()
                 let denoType = $(this).val()
+
+                let elementCount = 0;
                 if (denoType === "all_deno") {
-                    $('.allDeno').removeClass('d-none')
-                    $('.otherDeno').addClass('d-none')
-                    $('.selective_deno').addClass('d-none')
-                    $('.selective_product').addClass('d-none')
-                    $('.products-categories').addClass('d-none')
+                    elementCount = $('.products-categories').length
                 } else if (denoType === "selective_deno") {
-                    $('.allDeno').removeClass('d-none')
-                    $('.otherDeno').removeClass('d-none')
-                    $('.selective_deno').addClass('d-none')
-                    $('.selective_product').addClass('d-none')
-                    $('.products-categories').addClass('d-none')
+                    elementCount = $('.products-categories').length
                 } else if(denoType === "selective_product"){
-                    $('.selective_product').removeClass('d-none')
-                    $('.selective_deno').addClass('d-none')
-                    $('.allDeno').addClass('d-none')
-                    $('.otherDeno').addClass('d-none')
-                    $('.products-categories').addClass('d-none')
+                    elementCount = $('.products-categories').length
                 } else if(denoType === "product_categories"){
-                    $('.products-categories').removeClass('d-none')
-                    $('.selective_deno').addClass('d-none')
-                    $('.allDeno').addClass('d-none')
-                    $('.otherDeno').addClass('d-none')
-                    $('.selective_product').addClass('d-none')
+                    elementCount = $('.products-categories').length
                 }
+                repeaterItems(elementCount, denoType)
+
+                date.setDate(date.getDate());
+                $('.product_start_date').datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+                $('.product_end_date').datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+
+                dateTime(productStart)
+                dateTime(productEnd)
+                dropify()
+
+                $(".product-list").select2()
             })
 
             $(".product-list").select2()
@@ -867,7 +862,7 @@
                 }
             })
 
-            $("body").on("click", "#item-delete", function(){
+            $("body").on("click", ".item-delete", function(){
                 $(this).parent().parent().remove()
             })
 
