@@ -135,6 +135,7 @@ class CampaignNewModalityService
                     $campaignDetails = $this->campaignNewModalityDetailRepository->findOne(
                         $product['campaign_details_id'] ?? 0
                     );
+                    $product['show_in_home'] = isset($product['show_in_home']) ? 1 : 0;
                     if (!empty($product['thumb_image'])) {
                         $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
                         if (isset($campaignDetails) && file_exists($campaignDetails->thumb_image)) {
