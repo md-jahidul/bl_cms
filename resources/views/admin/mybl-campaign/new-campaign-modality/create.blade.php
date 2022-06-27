@@ -316,21 +316,23 @@
                                  <div class="form-group col-md-4">
                                     <label for="winning_type">Winning Type: </label>
                                     <div class="form-group {{ $errors->has('winning_type') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15">
+                                        <input type="radio" name="winning_type" value="first_recharge" id="input-radio-15" class="winning_logic">
                                         <label for="input-radio-15" class="mr-3">First Recharge/Purchase</label> <br>
-                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16">
-                                        <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label>
+                                        <input type="radio" name="winning_type" value="highest_recharge" id="input-radio-16" class="winning_logic">
+                                        <label for="input-radio-16" class="mr-3">Highest Recharge/Purchase</label><br>
+                                        <input type="radio" name="winning_type" value="no_logic" id="no_logic" class="winning_logic">
+                                        <label for="no_logic" class="mr-3">No Logic</label>
                                         @if ($errors->has('winning_type'))
                                             <div class="help-block">  {{ $errors->first('winning_type') }}</div>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 check_winning_logic">
                                     <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
-                                    <input required type="number" name="winning_interval" class="form-control"
+                                    <input type="number" name="winning_interval" class="form-control"
                                         placeholder="Please Enter Highest Recharge/Purchase Winner Check">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 check_winning_logic">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
                                         <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15">
@@ -344,25 +346,25 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                 <div class="form-group col-md-6 mb-2">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-2">
                                     <label for="winning_massage_en" >Winning Communication Message (EN):</label>
                                     <textarea
-                                    class="form-control @error('winning_massage_en') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_en"
-                                    name="winning_massage_en" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                        class="form-control @error('winning_massage_en') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_en"
+                                        name="winning_massage_en" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('winning_massage_en') {{ $message }} @enderror </small>
                                 </div>
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="winning_massage_bn" >Winning Communication Message (BN):</label>
                                     <textarea
-                                    class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
-                                    name="winning_massage_bn" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                        class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
+                                        name="winning_massage_bn" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
                                     <div class="help-block"></div>
-{{--                                    <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>--}}
+                                    {{--                                    <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>--}}
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Reward Getting Type</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>
@@ -719,7 +721,11 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
+                        <input required type="number" name="campaign_details[`+index+`][cash_back_amount]" id="cash_back_amount" class="form-control"
+                               placeholder="Enter The Fixed/Percentage of Cashback">
+                    </div>
                     <div class="form-group col-md-4 cash_back_amount_for_product">
                         <label for="max_amount">Max Cash Back Amount</label>
                         <input type="number" name="campaign_details[` + index + `][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
@@ -948,6 +954,15 @@
                 } else {
                     $('#max_amount_for_campaign').removeClass('d-none');
                     $('#number_of_apply_times_for_campaign').removeClass('d-none');
+                }
+            });
+
+            $('.winning_logic').click(function () {
+                if ($(this).val() == "no_logic"){
+                    $('.check_winning_logic').addClass('d-none');
+
+                } else {
+                    $('.check_winning_logic').removeClass('d-none');
                 }
             });
         });

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Create Health Hub Partner')
-@section('card_name', 'Create Health Hub Partner')
+@section('title', 'MyBl Campaign Section')
+@section('card_name', 'MyBl Campaign Section')
 
 @section('action')
     <a href="{{route('mybl-campaign-section.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
