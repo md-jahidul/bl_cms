@@ -907,7 +907,7 @@
                 } else {
                     $('.datetime').daterangepicker({
                         timePicker: true,
-                        timePickerIncrement: 5,
+                        // timePickerIncrement: 0,
                         minDate: date,
                         locale: {
                             format: 'YYYY/MM/DD hh:mm A'
