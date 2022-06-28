@@ -243,7 +243,12 @@
                                         <select class="product-list form-control"  name="product_code" required></select>
                                         <div class="help-block"></div>
                                     </div>`;
-
+            $('#Example1').DataTable({
+                buttons: [],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+            });
         })
     </script>
 @endpush

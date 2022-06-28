@@ -98,7 +98,7 @@
                                                 <th>Plan</th>
                                                 <th>Partner</th>
                                                 <th>Status</th>
-                                                {{-- <th>Action</th> --}}
+                                                 <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -109,14 +109,10 @@
                                                     <td>{{ $package->plan->title_en }}</td>
                                                     <td>{{ $package->partner->name_en }}</td>
                                                     <td>{{ $package['status'] ? 'Active':'Inactive' }}</td>
-                                                    {{-- <td>
+                                                    <td>
                                                         <a href="{{ route('health-hub-feature-package.edit', $package->id) }}" role="button"
                                                             class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                                         <a href="#"
-                                                            class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $package->id }}" title="Delete the Package">
-                                                             <i class="la la-trash"></i>
-                                                         </a>
-                                                    </td> --}}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -232,7 +228,12 @@
                                         <select class="product-list form-control"  name="product_code" required></select>
                                         <div class="help-block"></div>
                                     </div>`;
-
+            $('#Example1').DataTable({
+                buttons: [],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+            });
         })
     </script>
 @endpush
