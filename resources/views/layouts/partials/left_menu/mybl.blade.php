@@ -356,7 +356,7 @@
 
      <!-- Health Hub New Journey -->
     <li class=" nav-item"><a href="#"><i class="la la-h-square"></i>
-        <span class="menu-title" data-i18n="nav.templates.main">Health Hub New Journey</span></a>
+        <span class="menu-title" data-i18n="nav.templates.main">Health Hub Journey</span></a>
         <ul class="menu-content">
             {{--page--}}
             <li class="{{is_active_url('health-hub-feature-dashboard')}}">

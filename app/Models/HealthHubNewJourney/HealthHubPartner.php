@@ -14,4 +14,8 @@ class HealthHubPartner extends Model
         'status',
         'access_key'
     ];
+
+    public function packages(){
+        return $this->hasMany(HealthHubPackage::class, 'health_hub_partner_id', 'id');
+    }
 }
