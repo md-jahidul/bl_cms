@@ -4,6 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">Edit Health Hub Partner</li>
 @endsection
+
 @section('content')
     <section>
         <div class="card">
@@ -103,9 +104,45 @@
                                     <i class="ft-save"></i> Update
                                 </button>
                             </div>
-
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+        <h5 class="menu-title"><strong>Packages List For This Partner</strong></h5>
+        <hr>
+        <div class="card card-info mt-0" style="box-shadow: 0px 0px">
+            <div class="card-content">
+                {{-- <div class="card-header">
+                </div> --}}
+                <div class="card-body card-dashboard">
+                    <table class="table table-striped table-bordered dataTable" id="Example1">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title English</th>
+                            <th>Plan</th>
+                            <th>Partner</th>
+                            <th>Status</th>
+                             <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($partner->packages as $key => $package)
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $package->title_en }}</td>
+                                <td>{{ $package->plan->title_en }}</td>
+                                <td>{{ $package->partner->name_en }}</td>
+                                <td>{{ $package['status'] ? 'Active':'Inactive' }}</td>
+                                <td>
+                                    <a href="{{ route('health-hub-feature-package.edit', $package->id) }}" role="button"
+                                        class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
