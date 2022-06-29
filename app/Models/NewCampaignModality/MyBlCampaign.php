@@ -97,4 +97,8 @@ class MyBlCampaign extends Model
         }
         return false;
     }
+
+    public function reports(){
+        return $this->hasMany(CampaignPurchaseReport::class, 'campaign_id', 'id');
+    }
 }

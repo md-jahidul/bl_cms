@@ -214,6 +214,19 @@ class CampaignNewModalityService
         }
     }
 
+    public function analyticsData($date, $campaignId)
+    {
+        $purchaseCodes = $this->purchaseReportRepository->purchaseCodeWithMsisdn($date, $campaignId);
+        foreach ($purchaseCodes as $key => $purchaseCode) {
+            $total_success = $this->purchaseStatusCount($purchaseCode, 'action_type', 'buy_success');
+            $total_failed = $this->purchaseStatusCount($purchaseCode, 'action_type', 'buy_failure');
+
+            $purchaseCodes[$key]['total_success'] = $total_success;
+            $purchaseCodes[$key]['total_failed'] = $total_failed;
+        }
+        return $purchaseCodes;
+    }
+
     /**
      * @param $id
      * @return ResponseFactory|Response

@@ -145,4 +145,13 @@ class MyBlNewCampaignModalityController extends Controller
         $this->campaignNewModalityService->deleteCampaign($id);
         return url('new-campaign-modality');
     }
+
+    public function analyticReport(Request $request, $campaignId)
+    {
+        $campaign = $this->campaignNewModalityService->findOne($campaignId);
+        $analytics = $this->campaignNewModalityService->analyticsData($request->all(), $campaignId);
+
+        return view('admin.mybl-campaign.new-campaign-modality.analytic-report.purchase-product', compact('campaign'));
+    }
+
 }
