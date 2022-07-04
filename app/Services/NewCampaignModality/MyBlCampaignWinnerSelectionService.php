@@ -39,11 +39,8 @@ class MyBlCampaignWinnerSelectionService {
 
     public function processCampaignWinner() {
 
-      $MyBlNewCampaignProductRepository = resolve(MyBlNewCampaignProductRepository::class);
-      $MyBlNewCampaignUserRepository = resolve(MyBlNewCampaignUserRepository::class);
-      $MyBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
-
-      $productsByWinningTypes = $this->myBlNewCampaignProductRepository->getRunningCampaignProducts();
+      $myBlNewCampaignProductRepository = resolve(MyBlNewCampaignProductRepository::class);
+      $productsByWinningTypes = $myBlNewCampaignProductRepository->getRunningCampaignProducts();
       // dd($productsByWinningTypes, Carbon::now()->toDateTimeString());
       $status = [];
       foreach($productsByWinningTypes as $product) {
@@ -55,6 +52,9 @@ class MyBlCampaignWinnerSelectionService {
 
   private function processWinner($product) 
   {
+      $myBlNewCampaignUserRepository = resolve(MyBlNewCampaignUserRepository::class);
+      $myBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
+
       $slots = $this->determineSlots($product);
       
       foreach($slots as $slot) {
@@ -63,11 +63,11 @@ class MyBlCampaignWinnerSelectionService {
           $candidiate = null;
 
           if($product->campaign->winning_type == 'first_recharge') {
-              $candidiate = $this->myBlNewCampaignUserRepository->getCampaignFirstTypeUser($product, $slotStarts, $slotEnds);
+              $candidiate = $myBlNewCampaignUserRepository->getCampaignFirstTypeUser($product, $slotStarts, $slotEnds);
           }
           
           if($product->campaign->winning_type == 'highest_recharge') {
-              $candidiate = $this->myBlNewCampaignUserRepository->getCampaignHighestTypeUser($product, $slotStarts, $slotEnds);
+              $candidiate = $myBlNewCampaignUserRepository->getCampaignHighestTypeUser($product, $slotStarts, $slotEnds);
           }
           
           if(is_null($candidiate)) {
@@ -75,7 +75,7 @@ class MyBlCampaignWinnerSelectionService {
           }
 
           $winnerData = $this->buildWinnerData($product, $candidiate, $slotStarts, $slotEnds);
-          $this->myBlNewCampaignWinnerRepository->setWinner($winnerData);
+          $myBlNewCampaignWinnerRepository->setWinner($winnerData);
       }
 
       return true;
