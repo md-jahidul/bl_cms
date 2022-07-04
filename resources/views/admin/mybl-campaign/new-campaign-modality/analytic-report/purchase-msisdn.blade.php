@@ -1,10 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Flash Hour Purchase Detail')
-@section('card_name', 'Flash Hour Purchase Detail')
-
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Popup Detail History</li>
-@endsection
+@section('title', 'Campaign Modality Purchase Detail')
+@section('card_name', 'Campaign Modality Purchase Detail')
 
 @section('action')
     <a href="{{ route('flash-hour-analytic.report', $campaignId) }}" class="btn btn-primary round btn-glow px-2">

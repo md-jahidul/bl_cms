@@ -53,12 +53,12 @@
                                     <td>{{ $data->product_code }}</td>
                                     <td>{{ $data->total_success ?? 0 }}</td>
                                     <td>{{ $data->total_failed ?? 0 }}</td>
-{{--                                    <td>--}}
-{{--                                       <a href="{{ route('mybl-campaign.purchase-msisdn.list', [$campaign->id, $data->id]) }}"--}}
-{{--                                          class="btn btn-sm btn-info product-details">--}}
-{{--                                           Details--}}
-{{--                                       </a>--}}
-{{--                                    </td>--}}
+                                    <td>
+                                       <a href="{{ route('new-campaign.purchase-msisdn.list', [$campaign->id, $data->id]) }}"
+                                          class="btn btn-sm btn-info product-details">
+                                           Details
+                                       </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
