@@ -40,6 +40,8 @@ class MyBlCampaignWinnerSelectionService {
     public function processCampaignWinner() {
 
       $MyBlNewCampaignProductRepository = resolve(MyBlNewCampaignProductRepository::class);
+      $MyBlNewCampaignUserRepository = resolve(MyBlNewCampaignUserRepository::class);
+      $MyBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
 
       $productsByWinningTypes = $this->myBlNewCampaignProductRepository->getRunningCampaignProducts();
       // dd($productsByWinningTypes, Carbon::now()->toDateTimeString());

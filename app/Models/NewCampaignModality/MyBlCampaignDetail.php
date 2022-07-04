@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MyBlCampaignDetail extends Model
 {
+
+    protected $table = 'my_bl_campaign_details';
+    protected $appends = ['visibility_status'];
+    protected $dates = ['start_date','end_date'];
+
     protected $fillable =
         [
             'my_bl_campaign_id',
@@ -27,4 +32,6 @@ class MyBlCampaignDetail extends Model
             'end_date',
             'status'
         ];
+
+
 }

@@ -9,7 +9,7 @@
 
 namespace App\Repositories;
 
-use App\Models\MyblCampaignUser;
+use App\Models\NewCampaignModality\MyBlCampaignUser;
 
 class CampaignNewModalityUserRepository extends BaseRepository
 {
