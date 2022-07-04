@@ -346,14 +346,20 @@
                                     </fieldset>
                                 </div>
 
-                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer">
                                         <label for="is_rate_cutter_offer">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_favorite" value="1"
+                                               name="is_favorite">
+                                        <label for="is_favorite">Is Favorite</label>
+                                    </fieldset>
+                                </div>
                                 <div class="form-group col-md-6 mb-2" id="cta_action">
                                     <label for="base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
