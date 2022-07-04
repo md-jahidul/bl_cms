@@ -16,6 +16,7 @@ class CreateMyBlCampaignUsersTable extends Migration
         Schema::create('my_bl_campaign_users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('my_bl_campaign_id');
+            $table->unsignedBigInteger('my_bl_campaign_detail_id');
             $table->integer('msisdn')->index();
             $table->string('product_code')->index()->nullable();
             $table->integer('amount')->nullable();
@@ -24,6 +25,11 @@ class CreateMyBlCampaignUsersTable extends Migration
             $table->foreign('my_bl_campaign_id')
                 ->references('id')
                 ->on('my_bl_campaigns')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreign('my_bl_campaign_detail_id')
+                ->references('id')
+                ->on('my_bl_campaign_details')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
