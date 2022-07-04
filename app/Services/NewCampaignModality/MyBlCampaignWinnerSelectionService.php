@@ -47,7 +47,7 @@ class MyBlCampaignWinnerSelectionService {
           $status[] = $this->processWinner($product);
       }
 
-      dd($status);
+      dump($status);
   }
 
   private function processWinner($product) 
@@ -146,14 +146,13 @@ class MyBlCampaignWinnerSelectionService {
           //     break;
           // }
 
-          // Only generate 6 *slots* past/complete && For All Type Campaign
+          // Only generate X *slots* past/complete && For All Type Campaign
           // Not accepting running/continuing + future/upcomming slots
           if($currentTimePastXIntervals->gt($slotEndsAt)) {
-              // dump([$currentTime->addHours(- $slotInterval * 4)->toDateTimeLocalString(), $slotEndsAt->toDateTimeString()]);
               $slotStartsAt = Carbon::parse($slotEndsAt);
               $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
+
               continue;
-              // break;
           }
 
           // Only generate *slots* past/complete && For All Type Campaign
@@ -162,7 +161,7 @@ class MyBlCampaignWinnerSelectionService {
   
               $slotStartsAt = Carbon::parse($slotEndsAt);
               $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
-              // continue;
+
               break;
           }
 
@@ -183,14 +182,6 @@ class MyBlCampaignWinnerSelectionService {
 
           $slotStartsAt = Carbon::parse($slotEndsAt);
           $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
-      }
-
-      // if($product->campaign->id == 3) {
-      //     dump('last', [$slotStartsAt->toDayDateTimeString(), $slotEndsAt->toDayDateTimeString()]);
-      // }
-
-      if($product->campaign->id == 3) {
-          dd($productEndsAt, $slots);
       }
       
       return $slots;
