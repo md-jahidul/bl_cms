@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class MyBlCampaign extends Model
 {
+    protected $table = 'my_bl_campaigns';
+    protected $appends = ['visibility_status'];
+    protected $dates = ['start_date','end_date'];
+
     protected $fillable =
         [
             'mybl_campaign_section_id',
@@ -58,6 +62,11 @@ class MyBlCampaign extends Model
         return $this->hasMany(RecurringScheduleHour::class, 'scheduler_id', 'id');
     }
 
+    public function getVisibilityStatusAttribute(): bool 
+    {
+        return $this->visibilityStatus();
+    }
+
     /**
      * Checks and returns the visibility status according to schedule stored with it
      * @return bool
@@ -96,5 +105,9 @@ class MyBlCampaign extends Model
             }
         }
         return false;
+    }
+
+    public function reports(){
+        return $this->hasMany(CampaignPurchaseReport::class, 'campaign_id', 'id');
     }
 }

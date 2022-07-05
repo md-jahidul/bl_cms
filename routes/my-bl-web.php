@@ -32,6 +32,7 @@
 |
  */
 
+use App\Services\NewCampaignModality\MyBlCampaignWinnerSelectionService;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
@@ -1060,6 +1061,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
     Route::resource('new-campaign-modality', 'CMS\MyBlNewCampaignModalityController')->except(['show', 'destroy']);
     Route::get('new-campaign-modality/destroy/{id}', 'CMS\MyBlNewCampaignModalityController@destroy');
+    Route::get('new-campaign-analytic/{campaign_id}', 'CMS\MyBlNewCampaignModalityController@analyticReport')
+        ->name('new-campaign-analytic.report');
+    Route::get('new-campaign-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlNewCampaignModalityController@purchaseMsisdnList')
+        ->name('new-campaign.purchase-msisdn.list');
 
     Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
     Route::get('mybl-campaign-section/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignSectionController@destroy')->name('mybl-campaign-section.destroy');
@@ -1080,3 +1085,8 @@ Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {
         return "Customer not found";
     }
 });
+
+Route::get( 'winner-test', function() {
+    $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
+    return $myBlCampaignWinnerSelectionService->processCampaignWinner();
+  });

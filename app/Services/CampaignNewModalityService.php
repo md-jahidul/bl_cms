@@ -5,6 +5,7 @@ namespace App\Services;
 use App\RecurringSchedule;
 use App\Repositories\CampaignNewModalityDetailRepository;
 use App\Repositories\CampaignNewModalityRepository;
+use App\Repositories\NewCampaignModality\CampaignPurchaseReportRepository;
 use App\Repositories\RecurringScheduleRepository;
 use App\Traits\CrudTrait;
 use Carbon\Carbon;
@@ -32,17 +33,19 @@ class CampaignNewModalityService
      * @var RecurringScheduleRepository
      */
     private $recurringScheduleRepository;
-
+    private $campaignPurchaseReportRepository;
     public function __construct(
         CampaignNewModalityRepository $campaignNewModalityRepository,
         CampaignNewModalityDetailRepository $campaignNewModalityDetailRepository,
         RecurringScheduleHourService $recurringScheduleHourService,
-        RecurringScheduleRepository $recurringScheduleRepository
+        RecurringScheduleRepository $recurringScheduleRepository,
+        CampaignPurchaseReportRepository $campaignPurchaseReportRepository
     ) {
         $this->campaignNewModalityRepository = $campaignNewModalityRepository;
         $this->campaignNewModalityDetailRepository = $campaignNewModalityDetailRepository;
         $this->recurringScheduleHourService = $recurringScheduleHourService;
         $this->recurringScheduleRepository = $recurringScheduleRepository;
+        $this->campaignPurchaseReportRepository = $campaignPurchaseReportRepository;
         $this->setActionRepository($campaignNewModalityRepository);
     }
 
@@ -214,6 +217,23 @@ class CampaignNewModalityService
         }
     }
 
+    public function analyticsData($date, $campaignId)
+    {
+        $purchaseCodes = $this->campaignPurchaseReportRepository->purchaseCodeWithMsisdn($date, $campaignId);
+        foreach ($purchaseCodes as $key => $purchaseCode) {
+            $total_success = $this->purchaseStatusCount($purchaseCode, 'action_type', 'buy_success');
+            $total_failed = $this->purchaseStatusCount($purchaseCode, 'action_type', 'buy_failure');
+
+            $purchaseCodes[$key]['total_success'] = $total_success;
+            $purchaseCodes[$key]['total_failed'] = $total_failed;
+        }
+        return $purchaseCodes;
+    }
+
+    public function msisdnPurchaseDetails($request, $id)
+    {
+        return $this->campaignNewModalityRepository->msisdnInfo($request, $id);
+    }
     /**
      * @param $id
      * @return ResponseFactory|Response
@@ -229,4 +249,14 @@ class CampaignNewModalityService
             return Response('Campaign Delete Failed');
         }
     }
+    public function purchaseStatusCount($campaign, $column, $colValue)
+    {
+        return collect($campaign->msisdnReports)->sum(function ($data) use ($column, $colValue) {
+            if ($data->{$column} == $colValue) {
+                return true;
+            }
+            return false;
+        });
+    }
+
 }
