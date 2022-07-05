@@ -18,7 +18,7 @@ class CreateCampaignPurchaseMsisdnReportsTable extends Migration
             $table->unsignedBigInteger('purchase_report_id');
             $table->integer('msisdn')->index();
             $table->string('action_type', 50)->index();
-            $table->text('failed_reason');
+            $table->text('failed_reason')->nullable();
             $table->timestamps();
             $table->foreign('purchase_report_id')
                 ->references('id')
