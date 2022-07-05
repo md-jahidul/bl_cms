@@ -103,15 +103,22 @@ class MyBlCampaignWinnerSelectionService {
       $slots = [];
       $currentTime = Carbon::now();
       $campaign = $product->campaign;
+
+      if($campaign->winning_interval == 'no_logic' || is_null($campaign->winning_interval_unit)
+      ) {
+          return $slots;
+      }
+
+      $slotInterval = $campaign->winning_interval;
+      $slotIntervalUnit = ucfirst($campaign->winning_interval_unit) . 's';
+      $addTime = 'add' . $slotIntervalUnit;
       
       $campaignStartsAt = Carbon::parse($campaign->start_date);
-      $campaignEndsAt = Carbon::parse($campaign->end_date); // addExtra Interval For MaxRecharge with $campaignEndsAt For Max Type
+      $campaignEndsAt = Carbon::parse($campaign->end_date);
       $productStartsAt = Carbon::parse($product->start_date);
       $productEndsAt = Carbon::parse($product->end_date); 
-      $slotIntervalUnit = ucfirst($campaign->winning_interval_unit) . 's';
-      $slotInterval = $campaign->winning_interval;
-      $addTime = 'add' . $slotIntervalUnit;
-      $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(- $slotInterval * 4);
+
+      $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(- $slotInterval * 4); // addExtra Interval For MaxRecharge with $campaignEndsAt For Max Type
       $slotStartsAt = Carbon::parse($campaign->start_date);
       $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
 
