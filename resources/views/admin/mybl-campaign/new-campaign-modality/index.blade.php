@@ -28,6 +28,7 @@
                             <th>Campaign Section</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Report</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -39,6 +40,10 @@
                                 <td>{{$data->section->title_en}}</td>
                                 <td>{{$data->start_date}}</td>
                                 <td>{{$data->end_date}}</td>
+                                <td>
+                                    <a href="{{ route('new-campaign-analytic.report', $data->id) }}" role="button"
+                                       class="btn btn-outline-secondary"> Analytic Report</a>
+                                </td>
                                 <td>
                                     <a href="{{ route('new-campaign-modality.edit', [$data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("new-campaign-modality/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
