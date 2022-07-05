@@ -104,7 +104,7 @@ class MyBlCampaignWinnerSelectionService {
       $currentTime = Carbon::now();
       $campaign = $product->campaign;
 
-      if($campaign->winning_interval == 'no_logic' || is_null($campaign->winning_interval_unit)
+      if($campaign->winning_type == 'no_logic' || is_null($campaign->winning_interval_unit)
       ) {
           return $slots;
       }
