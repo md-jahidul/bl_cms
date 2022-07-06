@@ -130,13 +130,15 @@ class AlInternetOffersCategoryService
 
         MyBlProductTab::Where('product_code', $product_code)->Where('platform', 'al')->delete();
 
-        foreach($categorys as $category){
-            $data ['product_code'] = $product_code;
-            $data ['platform'] = 'al';
-            $data ['my_bl_internet_offers_category_id']  = $category;
+       if(!is_null($categorys)) {
+           foreach ($categorys as $category) {
+               $data ['product_code'] = $product_code;
+               $data ['platform'] = 'al';
+               $data ['my_bl_internet_offers_category_id'] = $category;
 
-            MyBlProductTab::create($data);
-        }
+               MyBlProductTab::create($data);
+           }
+       }
     }
 
     public function findCategoryIdBySlugs($slugs){

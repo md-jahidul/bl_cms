@@ -54,7 +54,7 @@
                                         <label>Please Select Category</label>
                                         <select multiple
                                                 class="form-control data-section"
-                                                name="offer_categories[]" required>
+                                                name="offer_categories[]">
                                             <option value="">Please Select Category</option>
 
                                             @foreach ($offerCategory as $key => $category)
