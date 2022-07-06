@@ -271,7 +271,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <button id="repeater-button" type="button"
-                                            class="btn-sm btn-success cursor-pointer float-right">
+                                            class="btn-sm btn-success cursor-pointer float-right plus_button">
                                         <i class="la la-plus"></i>
                                     </button>
                                 </div>
@@ -640,15 +640,16 @@
                         <option class="text-danger" value="0">Disable</option>
                     </select>
                     <div class="help-block"></div>
-                </div>
-                <div class="form-group col-md-12">
+                </div>`;
+                if (denoType !== 'all_deno') {
+                    commonFields += `<div class="form-group col-md-12">
                     <label for="redirect_url"></label>
                     <button data-repeater-delete type="button"
                             class="btn-sm btn-danger cursor-pointer float-right item-delete">
                         <i class="la la-trash"></i>
                     </button>
-                </div>
-                `;
+                </div>`;
+                }
 
                 let productElement = ``;
                 productElement += `
@@ -779,13 +780,18 @@
                 </slot>
             `;
                 if (denoType === "selective_deno"){
-                    $('#productSection').append(selectiveDeno)
+                    $('#productSection').append(selectiveDeno);
+                    $('.plus_button').removeClass('d-none');
                 }else if(denoType === "all_deno") {
-                    $('#productSection').append(allDeno)
+                    $('#productSection').append(allDeno);
+                    $('.plus_button').addClass('d-none');
+
                 }else if(denoType === "selective_product") {
-                    $('#productSection').append(productElement)
+                    $('#productSection').append(productElement);
+                    $('.plus_button').removeClass('d-none');
                 }else if(denoType === "product_categories") {
-                    $('#productSection').append(productCategories)
+                    $('#productSection').append(productCategories);
+                    $('.plus_button').removeClass('d-none');
                 }
             }
 
