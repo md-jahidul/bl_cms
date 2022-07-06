@@ -13,6 +13,7 @@ use App\Repositories\HomeNavigationRailRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class HomeNavigationRailService
 {
@@ -23,6 +24,7 @@ class HomeNavigationRailService
      */
     private $homeNavigationRailRepository;
 
+    protected const REDIS_KEY = "mybl_home_navigation_rail";
 
     /**
      * HomeNavigationRailService constructor.
@@ -58,6 +60,7 @@ class HomeNavigationRailService
         }
         $data['display_order'] = $this->findAll()->count() + 1;
         $this->save($data);
+        Redis::del(self::REDIS_KEY);
         return new Response("Navigation rail has been successfully created");
     }
 
@@ -74,7 +77,7 @@ class HomeNavigationRailService
             $this->allDefaultNone();
         }
         $navigationMenu->update($request);
-
+        Redis::del(self::REDIS_KEY);
         return new Response("Navigation rail has been successfully updated");
     }
 
@@ -87,6 +90,7 @@ class HomeNavigationRailService
     {
         $navigationRail = $this->findOne($id);
         $navigationRail->delete();
+        Redis::del(self::REDIS_KEY);
         return Response('Navigation rail has been successfully deleted');
     }
 
@@ -98,6 +102,7 @@ class HomeNavigationRailService
     public function tableSortable($request)
     {
         $this->homeNavigationRailRepository->sortData($request->position);
+        Redis::del(self::REDIS_KEY);
         return new Response('update successfully');
     }
 }

@@ -33,16 +33,16 @@
                             <label for="customer_type" class="required">Customer Type</label>
                             <select required class="form-control" value="" name="customer_type" id="customer_type">
                                 <option
-                                    @if(isset($navigationMenu)) @if($navigationMenu->customer_type == "ALL") selected
-                                    @endif @endif value="ALL">All
+                                    @if(isset($navigationMenu)) @if($navigationMenu->customer_type == "all") selected
+                                    @endif @endif value="all">All
                                 </option>
                                 <option
-                                    @if(isset($navigationMenu)) @if($navigationMenu->customer_type== "PREPAID") selected
-                                    @endif @endif value="PREPAID">Prepaid
+                                    @if(isset($navigationMenu)) @if($navigationMenu->customer_type== "prepaid") selected
+                                    @endif @endif value="prepaid">Prepaid
                                 </option>
                                 <option
-                                    @if(isset($navigationMenu)) @if($navigationMenu->customer_type== "POSTPAID") selected
-                                    @endif @endif value="POSTPAID">Postpaid
+                                    @if(isset($navigationMenu)) @if($navigationMenu->customer_type== "postpaid") selected
+                                    @endif @endif value="postpaid">Postpaid
                                 </option>
                             </select>
                         </div>
