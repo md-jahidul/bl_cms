@@ -1064,6 +1064,22 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
     Route::get('mybl-campaign-section/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignSectionController@destroy')->name('mybl-campaign-section.destroy');
     Route::get('mybl-campaign-section/sort-auto-save', 'CMS\NewCampaignModality\MyBlCampaignSectionController@categorySortable');
+    /**
+     * Home Navigation Rail
+     */
+    Route::resource('heme-navigation-rail', 'CMS\HomeNavigationRailController');
+    Route::get('heme-navigation-rail-sortable', 'CMS\HomeNavigationRailController@navigationMenuSortable')
+        ->name('navigation-rail.sort');
+    Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
+        ->name('heme-navigation-rail.destroy');
+
+//    Route::get('shortcuts/destroy/{id}', 'CMS\ShortCutController@destroy')
+//    Route::get('shortcuts', 'CMS\ShortCutController@index')->name('short_cuts.index');
+//    Route::post('shortcuts', 'CMS\ShortCutController@store')->name('short_cuts.store');
+//    Route::get('shortcuts/create', 'CMS\ShortCutController@create')->name('short_cuts.create');
+//    Route::get('shortcuts/{short_cut}/edit', 'CMS\ShortCutController@edit')->name('short_cuts.edit');
+//    Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
+
 });
 
 // 4G Map View Route
