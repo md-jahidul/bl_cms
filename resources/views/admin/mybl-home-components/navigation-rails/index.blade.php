@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    <!-- /short cut add form -->
+    <!-- /sNavigation Rail add form -->
     <section>
         <form
             action=" @if(isset($navigationMenu)) {{route('heme-navigation-rail.update',$navigationMenu->id)}} @else {{route('heme-navigation-rail.store')}} @endif "
@@ -58,8 +58,6 @@
                             <div class="help-block">
                                 <small class="text-info"> Title can not be more then 50 Characters</small>
                             </div>
-{{--                            <input type="hidden" value="@if(isset($navigationMenu)) yes @else no @endif"--}}
-{{--                                   name="value_exist">--}}
                             @if(isset($navigationMenu))
                                 <input type="hidden" value="{{$navigationMenu->id}}" name="id">
                             @endif
@@ -189,16 +187,9 @@
     </section>
 @endsection
 
-@section('content_right_side_bar')
-    <h1>
-        info
-    </h1>
-@endsection
-
 @push('page-css')
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 @endpush
-
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
@@ -223,8 +214,6 @@
             var parse_data;
             let dial_html, other_info = '';
             var js_data = `<?php echo isset($navigationMenu) ? $navigationMenu->other_info : null; ?>`;
-
-            //console.log(js_data);
 
             if (js_data) {
                 parse_data = JSON.parse(js_data);
