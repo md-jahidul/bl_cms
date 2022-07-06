@@ -101,13 +101,14 @@ class AlInternetOffersCategoryService
     }
 
     public function storeProductTabs($product_code, $categorys){
+        if(!is_null($categorys)) {
+            foreach ($categorys as $category) {
+                $data ['product_code'] = $product_code;
+                $data ['platform'] = 'al';
+                $data ['my_bl_internet_offers_category_id'] = $category;
 
-        foreach($categorys as $category){
-            $data ['product_code'] = $product_code;
-            $data ['platform'] = 'al';
-            $data ['my_bl_internet_offers_category_id']  = $category;
-
-            MyBlProductTab::create($data);
+                MyBlProductTab::create($data);
+            }
         }
     }
 
