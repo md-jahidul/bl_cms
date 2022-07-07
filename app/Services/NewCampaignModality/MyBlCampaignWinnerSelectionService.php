@@ -106,7 +106,7 @@ class MyBlCampaignWinnerSelectionService {
                   ];
 
                   $response = PushNotificationService::sendNotification($notification);
-//                  dd($response);
+
                   $notify = json_decode($response);
                   if ($notify->status == "SUCCESS") {
                       Log::info("Campaign Notification Send Successfully");
