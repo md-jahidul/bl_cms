@@ -4,9 +4,11 @@ namespace App\Console\Commands;
 
 use App\Models\MyBlProduct;
 use App\Models\MyBlSearchContent;
+use App\Services\NewCampaignModality\MyBlCampaignWinnerSelectionService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PHPUnit\Exception;
 
 /**
@@ -46,7 +48,14 @@ class MyBlNewCampaignModalityWinnerSelection extends Command
      */
     public function handle()
     {
+        $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
 
+        try {
+            $myBlCampaignWinnerSelectionService->processCampaignWinner();
+            Log::info('Success: Process Campaign Winner');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 
 }

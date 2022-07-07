@@ -37,6 +37,7 @@ class Kernel extends ConsoleKernel
                  ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))
                  ->timezone('Asia/Dhaka');
         $schedule->command('mybl-table-sync:mongodb-customers_devices-table')->withoutOverlapping()->everyMinute();
+        $schedule->command('campaign:winner-process')->withoutOverlapping()->hourly();
     }
 
     /**

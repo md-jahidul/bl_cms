@@ -18,7 +18,7 @@ class CreateMyBlCampaignWinnersTable extends Migration
             $table->unsignedBigInteger('my_bl_campaign_id');
             $table->unsignedBigInteger('my_bl_campaign_detail_id');
             $table->integer('msisdn');
-            $table->string('product_code', 50);
+            $table->string('product_code', 50)->nullable();
             $table->dateTime('winning_slot_start')->index();
             $table->dateTime('winning_slot_end')->index();
             $table->timestamps();
