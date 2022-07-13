@@ -24,7 +24,7 @@
                             <th width="25%" class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody id="componentSortable">
                             @foreach($components as $index=> $component)
                                 <tr width="3%" data-index="{{ $component['id'] }}" data-position="{{ $component['display_order'] }}"
                                     data-component-id="{{ $component['component_id'] ?? 0 }}" style="width: 100%">
@@ -150,7 +150,7 @@
 @push('page-css')
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
-        #sortable tr td{
+        #componentSortable tr td{
             padding-top: 5px !important;
             padding-bottom: 5px !important;
         }
@@ -233,7 +233,7 @@
                 });
             }
 
-            $("#sortable").sortable({
+            $("#componentSortable").sortable({
                 update: function (event, ui) {
                     // console.log(auto_save_url)
                     $(this).children().each(function (index) {
