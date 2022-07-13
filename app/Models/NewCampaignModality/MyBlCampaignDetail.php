@@ -2,10 +2,16 @@
 
 namespace App\Models\NewCampaignModality;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class MyBlCampaignDetail extends Model
 {
+
+    protected $table = 'my_bl_campaign_details';
+    protected $appends = ['visibility_status'];
+    protected $dates = ['start_date','end_date'];
+
     protected $fillable =
         [
             'my_bl_campaign_id',
@@ -27,4 +33,18 @@ class MyBlCampaignDetail extends Model
             'end_date',
             'status'
         ];
+    
+        public function campaign() 
+        {
+            return $this->belongsTo(MyBlCampaign::class, 'my_bl_campaign_id', 'id');
+        }
+    
+        public function getVisibilityStatusAttribute(): bool
+        {
+            $showFrom = $this->start_date ? Carbon::parse($this->start_date) : 0;
+            $hideFrom = $this->end_date ? Carbon::parse($this->end_date) : 0;
+            $currentTime = Carbon::now();
+            
+            return $currentTime->greaterThan($showFrom) && $currentTime->lessThan($hideFrom);
+        }
 }

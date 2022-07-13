@@ -134,6 +134,22 @@ class MyBlNewCampaignModalityController extends Controller
         return redirect()->back();
     }
 
+    public function analyticReport(Request $request, $campaignId)
+    {
+        $campaign = $this->campaignNewModalityService->findOne($campaignId);
+        $analytics = $this->campaignNewModalityService->analyticsData($request->all(), $campaignId);
+
+        return view('admin.mybl-campaign.new-campaign-modality.analytic-report.purchase-product', compact('analytics', 'campaign'));
+    }
+
+    public function purchaseMsisdnList(Request $request, $campaignId, $purchaseProductId)
+    {
+        if ($request->ajax()) {
+            return $this->campaignNewModalityService->msisdnPurchaseDetails($request, $purchaseProductId);
+        }
+        return view('admin.mybl-campaign.new-campaign-modality.analytic-report.purchase-msisdn', compact('campaignId'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
