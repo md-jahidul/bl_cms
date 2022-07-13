@@ -119,7 +119,8 @@ class Helper
             "STOP_ALL_VAS"            => "Stop All VAS",
             "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
-            "EVENT_BASED_BONUS"       => "Event Based Bonus"
+            "EVENT_BASED_BONUS"       => "Event Based Bonus",
+            "MYBL_CAMPAIGN"           => "MyBl Campaign Modality"
         ];
     }
 
