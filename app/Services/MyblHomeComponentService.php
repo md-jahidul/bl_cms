@@ -44,7 +44,6 @@ class MyblHomeComponentService
     public function findAllComponents()
     {
         $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
-        $homeFixedComponents = $this->findBy(['is_fixed_position' => true], null, $orderBy);
         $homeSortableComponents = $this->findBy(['is_fixed_position' => false], null, $orderBy)->toArray();
 
         $homeSecondarySliderCom = $this->sliderRepository->findByProperties(['component_id' => 18], [
@@ -52,12 +51,7 @@ class MyblHomeComponentService
         ])->toArray();
 
         $allMergeComponents = array_merge($homeSortableComponents, $homeSecondarySliderCom);
-        $allMergeComponents = collect($allMergeComponents)->sortBy('display_order')->values()->all();
-
-        return [
-            'fixed_components' => $homeFixedComponents,
-            'sortable_components' => $allMergeComponents
-        ];
+        return collect($allMergeComponents)->sortBy('display_order')->values()->all();
     }
 
     /**
@@ -67,7 +61,6 @@ class MyblHomeComponentService
     public function tableSort($request)
     {
         try {
-            $fixedComponentCount = $this->findBy(['is_fixed_position' => 1])->count();
             $positions = $request->position;
             foreach ($positions as $position) {
                 $menu_id = $position['id'];
@@ -75,13 +68,13 @@ class MyblHomeComponentService
                 $componentId = $position['component_id'];
                 if ($componentId == 0) {
                     $update_menu = $this->findOne($menu_id);
-                    $update_menu['display_order'] = $new_position + $fixedComponentCount;
+                    $update_menu['display_order'] = $new_position;
                     $update_menu->update();
                 } else {
                     $update_menu = $this->sliderRepository->findOneByProperties([
                         'id' => $menu_id, 'component_id' => $componentId
                     ]);
-                    $update_menu['position'] = $new_position + $fixedComponentCount;
+                    $update_menu['position'] = $new_position;
                     $update_menu->update();
                 }
             }
