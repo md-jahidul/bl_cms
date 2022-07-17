@@ -379,6 +379,27 @@
                                             placeholder="Enter Claim Validity Days" name="claim_validity_days">
                                         <div class="help-block"></div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <label for="dashboard_card_btn_text" class="required">Home Button Text En</label>
+                                        <input required maxlength="200"
+                                               data-validation-required-message="Title is required"
+                                               value="{{ isset($campaign) ? $campaign->dashboard_card_btn_text : old('dashboard_card_btn_text') }}"
+                                               id="dashboard_card_btn_text"
+                                               type="text" class="form-control"
+                                               placeholder="Enter title in English" name="dashboard_card_btn_text">
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="dashboard_card_btn_text_bn" class="required">Home Button Text Bn</label>
+                                        <input required maxlength="200"
+                                               data-validation-required-message="Title is required"
+                                               value="{{ isset($campaign) ? $campaign->dashboard_card_btn_text_bn : old('dashboard_card_btn_text_bn') }}"
+                                               id="dashboard_card_btn_text_bn"
+                                               type="text" class="form-control"
+                                               placeholder="Enter title in Bangla" name="dashboard_card_btn_text_bn">
+                                        <div class="help-block"></div><br>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="title_en" class="required">
