@@ -18,7 +18,7 @@ class CreateCampaignModalityRemaindersTable extends Migration
             $table->unsignedBigInteger('my_bl_campaign_id');
             $table->unsignedBigInteger('my_bl_campaign_detail_id');
             $table->string('msisdn');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('my_bl_campaign_id')
                 ->references('id')
