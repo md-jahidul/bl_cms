@@ -55,7 +55,7 @@ class MyBlCampaignWinnerSelectionService {
 
   private function processWinner($product)
   {
-
+      $winningType = explode('_', $product->campaign->winning_type)[0];  
       $myBlNewCampaignUserRepository = resolve(MyBlNewCampaignUserRepository::class);
       $myBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
 
@@ -67,11 +67,11 @@ class MyBlCampaignWinnerSelectionService {
           $slotEnds = Carbon::parse($slot['slot_end_at'])->toDateTimeString();
           $candidiate = null;
 
-          if($product->campaign->winning_type == 'first_recharge') {
+          if($winningType == 'first') {
               $candidiate = $myBlNewCampaignUserRepository->getCampaignFirstTypeUser($product, $slotStarts, $slotEnds);
           }
 
-          if($product->campaign->winning_type == 'highest_recharge') {
+          if($winningType == 'highest') {
               $candidiate = $myBlNewCampaignUserRepository->getCampaignHighestTypeUser($product, $slotStarts, $slotEnds);
           }
 
