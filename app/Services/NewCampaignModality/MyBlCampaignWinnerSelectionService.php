@@ -41,7 +41,6 @@ class MyBlCampaignWinnerSelectionService {
      */
 
     public function processCampaignWinner() {
-
       $myBlNewCampaignProductRepository = resolve(MyBlNewCampaignProductRepository::class);
       $productsByWinningTypes = $myBlNewCampaignProductRepository->getRunningCampaignProducts();
 //       dd($productsByWinningTypes, Carbon::now()->toDateTimeString());
@@ -60,7 +59,6 @@ class MyBlCampaignWinnerSelectionService {
       $myBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
 
       $slots = $this->determineSlots($product);
-
       foreach($slots as $slot) {
 
           $slotStarts = Carbon::parse($slot['slot_start_at'])->toDateTimeString();
@@ -81,14 +79,12 @@ class MyBlCampaignWinnerSelectionService {
 
           $winnerData = $this->buildWinnerData($product, $candidiate, $slotStarts, $slotEnds);
           $sendNotification = $myBlNewCampaignWinnerRepository->setWinner($winnerData);
-
           if($sendNotification){
-
               $user_phone = $winnerData['msisdn'];
               try {
                   $notification = [
                       'title' => "Winner Notification Title",
-                      'body' => "Winner Notification Body",
+                      'body' => $product->campaign->winning_massage_en,
                       "sending_from" => "cms",
                       "send_to_type" => "INDIVIDUALS",
                       "recipients" => $user_phone,
