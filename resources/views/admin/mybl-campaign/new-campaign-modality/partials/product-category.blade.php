@@ -2,7 +2,7 @@
     $index = isset($key) ?  $key : 0;
 @endphp
 
-<div id="image-input" class="form-group col-md-6">
+<div id="image-input" class="form-group col-md-4">
     <div class="form-group">
         <label for="image_url">Thumbnail Image</label>
         <input type="file" id="image_url" name="campaign_details[{{ $index }}][thumb_image]" class="dropify" data-height="77"
@@ -10,11 +10,20 @@
     </div>
 </div>
 
-<div id="image-input" class="form-group col-md-6 mb-0">
+<div id="image-input" class="form-group col-md-4 mb-0">
     <div class="form-group">
         <label for="image_url">Banner Image</label>
         <input type="file" id="image_url" name="campaign_details[{{ $index }}][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"
                data-default-file="{{ isset($product->banner_image) ? asset($product->banner_image) : '' }}"/>
+        <div class="help-block"></div>
+    </div>
+</div>
+
+<div id="image-input" class="form-group col-md-4 mb-0">
+    <div class="form-group">
+        <label for="image_url">Popup Image</label>
+        <input type="file" id="image_url" name="campaign_details[{{ $index }}][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"
+               data-default-file="{{ isset($product->popup_image) ? asset($product->popup_image) : '' }}"/>
         <div class="help-block"></div>
     </div>
 </div>
@@ -32,14 +41,6 @@
               placeholder="Enter description in Bangla">{{ isset($product->desc_bn) ? $product->desc_bn : '' }}</textarea>
 </div>
 
-<div class="col-md-4 icheck_minimal skin mt-2">
-    <fieldset>
-        <input type="checkbox" id="show_in_home" value="1"
-               name="campaign_details[{{ $index }}][show_in_home]" {{ isset($product->show_in_home) && $product->show_in_home ? 'checked' : '' }}>
-        <label for="show_in_home">Show in Home</label>
-    </fieldset>
-</div>
-
 <div class="col-md-4">
     <div class="form-group">
         <label class="required">Product Categories</label>
@@ -52,11 +53,3 @@
     </div>
 </div>
 
-<div class="form-group col-md-4">
-    <label for="reward_getting_type">Show product as</label>
-    <select id="navigate_action" name="campaign_details[{{ $index }}][show_product_as]" class="browser-default custom-select">
-        <option value="bottom_sheet" {{ isset($product->show_product_as) && $product->show_product_as == "bottom_sheet" ? 'selected' : '' }}>Bottom Sheet</option>
-        <option value="pop_up" {{ isset($product->show_product_as) && $product->show_product_as == "pop_up" ? 'selected' : '' }}>Pop-up</option>
-        <option value="campaign_only" {{ isset($product->show_product_as) && $product->show_product_as == "campaign_only" ? 'selected' : '' }}>Campaign Section only</option>
-    </select>
-</div>

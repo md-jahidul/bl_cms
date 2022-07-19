@@ -580,32 +580,28 @@
                 let selectiveDeno = ``;
 
                 let productCommonField = `
-                    <div id="image-input" class="form-group col-md-6 mb-2">
+                    <div id="image-input" class="form-group col-md-4 mb-2">
                         <div class="form-group">
                             <label for="image_url">Thumbnail Image</label>
                             <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
                         </div>
                     </div>
 
-                    <div id="image-input" class="form-group col-md-6 mb-2">
+                    <div id="image-input" class="form-group col-md-4 mb-2">
                         <div class="form-group">
                             <label for="image_url">Banner Image</label>
                             <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
                             <div class="help-block"></div>
                         </div>
                     </div>
-
-                    <div class="form-group col-md-6 mb-2">
-                        <label for="desc_en" class="required">Description En</label>
-                        <textarea rows="3" id="desc_en" name="campaign_details[`+index+`][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Popup Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
                     </div>
 
-                    <div class="form-group col-md-6 mb-2">
-                        <label for="desc_bn" class="required">Description Bn</label>
-                        <textarea rows="3" id="desc_bn" name="campaign_details[`+index+`][desc_bn]"
-                                  class="form-control"
-                                  placeholder="Enter description in Bangla"></textarea>
-                    </div>
                     <div class="col-md-4 icheck_minimal skin mt-2">
                         <fieldset>
                             <input type="checkbox" id="show_in_home" value="1"
@@ -640,6 +636,17 @@
                         <option class="text-danger" value="0">Disable</option>
                     </select>
                     <div class="help-block"></div>
+                </div>
+                <div class="form-group col-md-4 mb-2">
+                    <label for="desc_en" class="required">Description En</label>
+                    <textarea rows="3" id="desc_en" name="campaign_details[`+index+`][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
+                </div>
+
+                <div class="form-group col-md-4 mb-2">
+                    <label for="desc_bn" class="required">Description Bn</label>
+                    <textarea rows="3" id="desc_bn" name="campaign_details[`+index+`][desc_bn]"
+                              class="form-control"
+                              placeholder="Enter description in Bangla"></textarea>
                 </div>`;
                 if (denoType !== 'all_deno') {
                     commonFields += `<div class="form-group col-md-12">
@@ -712,6 +719,27 @@
                 let allDeno = `
                 <slot class="allDeno" data-repeater-list="category-group">
                     <div class="form-actions col-md-12 mt-0 hr-line"></div>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Thumbnail Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
+                        </div>
+                    </div>
+
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Banner Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Popup Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Cashback Type : </label>
@@ -731,6 +759,21 @@
                         <label for="max_amount">Max Cash Back Amount</label>
                         <input type="number" name="campaign_details[` + index + `][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
                     </div>
+                    <div class="col-md-4 icheck_minimal skin mt-2">
+                        <fieldset>
+                            <input type="checkbox" id="show_in_home" value="1"
+                                   name="campaign_details[`+index+`][show_in_home]">
+                            <label for="show_in_home">Show in Home</label>
+                        </fieldset>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="reward_getting_type">Show product as</label>
+                        <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                            <option value="bottom_sheet">Bottom Sheet</option>
+                            <option value="pop_up">Pop-up</option>
+                            <option value="campaign_only" selected>Campaign Section only</option>
+                        </select>
+                    </div>
                     ` + commonFields + `
                 </slot>`;
 
@@ -740,6 +783,27 @@
                 <slot>
                     <div class="form-actions col-md-12 mt-0 hr-line"></div>
                     <slot class="allDeno" data-repeater-list="category-group">
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Thumbnail Image</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
+                            </div>
+                        </div>
+
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Banner Image</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Popup Image</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="required">Cashback Type : </label>
@@ -776,6 +840,21 @@
                             <input type="number" name="campaign_details[`+index+`][number_of_apply_times]" class="form-control" placeholder="Please Enter Max Amount">
                         </div>
                     </slot>
+                    <div class="col-md-4 icheck_minimal skin mt-2">
+                        <fieldset>
+                            <input type="checkbox" id="show_in_home" value="1"
+                                   name="campaign_details[`+index+`][show_in_home]">
+                            <label for="show_in_home">Show in Home</label>
+                        </fieldset>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="reward_getting_type">Show product as</label>
+                        <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                            <option value="bottom_sheet">Bottom Sheet</option>
+                            <option value="pop_up">Pop-up</option>
+                            <option value="campaign_only" selected>Campaign Section only</option>
+                        </select>
+                    </div>
                    `+commonFields+`
                 </slot>
             `;
