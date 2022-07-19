@@ -577,17 +577,24 @@
                 let selectiveDeno = ``;
 
                 let productCommonField = `
-                    <div id="image-input" class="form-group col-md-6 mb-2">
+                    <div id="image-input" class="form-group col-md-4 mb-2">
                         <div class="form-group">
                             <label for="image_url">Thumbnail Image</label>
                             <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
                         </div>
                     </div>
 
-                    <div id="image-input" class="form-group col-md-6 mb-2">
+                    <div id="image-input" class="form-group col-md-4 mb-2">
                         <div class="form-group">
                             <label for="image_url">Banner Image</label>
                             <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Popup Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
                             <div class="help-block"></div>
                         </div>
                     </div>
@@ -732,6 +739,27 @@
                 selectiveDeno = `
                 <slot>
                     <slot class="allDeno" data-repeater-list="category-group">
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Thumbnail Image</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
+                            </div>
+                        </div>
+
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Banner Image</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Popup Image</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="required">Cashback Type : </label>

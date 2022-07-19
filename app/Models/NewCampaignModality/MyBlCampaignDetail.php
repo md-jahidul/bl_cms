@@ -2,8 +2,10 @@
 
 namespace App\Models\NewCampaignModality;
 
+use App\Models\NotificationSchedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class MyBlCampaignDetail extends Model
 {
@@ -19,6 +21,7 @@ class MyBlCampaignDetail extends Model
             'cash_back_amount',
             'banner_image',
             'thumb_image',
+            'popup_image',
             'cash_back_type',
             'max_amount',
             'number_of_apply_times',
@@ -33,18 +36,26 @@ class MyBlCampaignDetail extends Model
             'end_date',
             'status'
         ];
-    
-        public function campaign() 
+
+        public function campaign()
         {
             return $this->belongsTo(MyBlCampaign::class, 'my_bl_campaign_id', 'id');
         }
-    
+
         public function getVisibilityStatusAttribute(): bool
         {
             $showFrom = $this->start_date ? Carbon::parse($this->start_date) : 0;
             $hideFrom = $this->end_date ? Carbon::parse($this->end_date) : 0;
             $currentTime = Carbon::now();
-            
+
             return $currentTime->greaterThan($showFrom) && $currentTime->lessThan($hideFrom);
+        }
+
+        /**
+         * @return MorphOne
+         */
+        public function notificationSchedule(): MorphOne
+        {
+            return $this->morphOne(NotificationSchedule::class, 'reference')->where('status', 'active');
         }
 }

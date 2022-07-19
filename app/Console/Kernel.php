@@ -38,6 +38,11 @@ class Kernel extends ConsoleKernel
                  ->timezone('Asia/Dhaka');
         $schedule->command('mybl-table-sync:mongodb-customers_devices-table')->withoutOverlapping()->everyMinute();
         $schedule->command('campaign:winner-process')->withoutOverlapping()->hourly();
+        $schedule->command('campaign-modality-reminder:schedule')->withoutOverlapping()->everyMinute();
+        $schedule->command('campaign:winner-process')->withoutOverlapping()->hourly();
+        $schedule->command('send:rafm-report-cs-sefcare')->withoutOverlapping()
+            ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))
+            ->timezone('Asia/Dhaka');
     }
 
     /**
