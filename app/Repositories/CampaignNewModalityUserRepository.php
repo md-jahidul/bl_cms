@@ -35,8 +35,8 @@ class CampaignNewModalityUserRepository extends BaseRepository
             $q->where('created_at', '<=', $slotEnds);
         })
         ->groupBy('msisdn')
-        ->selectRaw('msisdn, sum(amount) as recharge_sum')
-        ->orderBy('recharge_sum', 'DESC')
+        ->selectRaw('msisdn, sum(amount) as amount_sum')
+        ->orderBy('amount_sum', 'DESC')
         ->first();
     }
 }
