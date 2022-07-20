@@ -34,7 +34,8 @@ class CampaignNewModalityDetailRepository extends BaseRepository
                     'winning_type',
                     'winning_interval',
                     'winning_interval_unit',
-                    'winning_massage_en'
+                    'winning_massage_en',
+                    'bonus_product_code'
                 ]);
             }
         ];

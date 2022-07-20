@@ -97,9 +97,10 @@ class MyBlCampaignWinnerSelectionService extends BaseService
                 $user_phone = $winnerData['msisdn'];
                 try {
                     $param = [
-                        'id' => $winnerData['product_code'],
+                        'id' => $product->campaign->bonus_product_code,
                         'msisdn' => $user_phone
                     ];
+
                     $result = $this->post(self::PURCHASE_ENDPOINT, $param);
                     Log::info('Campaign modality reward dispatching. Response .' . json_encode($result));
 
