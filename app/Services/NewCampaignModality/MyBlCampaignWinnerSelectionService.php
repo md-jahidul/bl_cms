@@ -116,19 +116,13 @@ class MyBlCampaignWinnerSelectionService extends BaseService
                         $notification = [
                             'title' => "Winner Notification Title",
                             'body' => $product->campaign->winning_massage_en,
-                            "sending_from" => "cms",
                             "send_to_type" => "INDIVIDUALS",
-                            "recipients" => $user_phone,
-                            "is_interactive" => "NO",
-                            "mutable_content" => true,
+                            "recipients" => ["0" . $user_phone],
+                            "is_interactive" => "YES",
                             "data" => [
-                                "cid" => "",
-                                "url" => "",
-                                "image_url" => "",
+                                "cid" => "1",
+                                "url" => "https://www.banglalink.net",
                                 "component" => "offer",
-                                'product_code' => $winnerData['product_code'],
-                                'sub_category_slug' => "",
-                                'navigation_action' => ""
                             ]
                         ];
 
