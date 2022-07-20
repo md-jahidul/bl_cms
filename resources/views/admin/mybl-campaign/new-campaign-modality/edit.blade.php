@@ -323,7 +323,35 @@
                                     </button>
                                 </div>
                             </div>
-
+                            {{--Select Bonus Reward Type--}}
+                            <div class="row">
+                                <div class="form-group col-md-6" >
+                                    <label  class="required">Select Bonus Reward Type</label>
+                                    <select name="bonus_reward_type" class="browser-default custom-select"
+                                            id="bonus_reward_type" required data-validation-required-message="Please select  type">
+                                        <option value="" >--Select Type--</option>
+                                        <option value="bonus" selected>Bonus</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('type'))
+                                        <div class="help-block">  {{ $errors->first('type') }}</div>
+                                    @endif
+                                </div>
+                                @php
+                                    $productType = '<span class="text-success">(Prepaid) </span>'
+                                @endphp
+                                <div class="form-group col-md-6" id="cta_action">
+                                    <label for="bonus_product_code" class="required">Bonus Product Code</label>
+                                    <select id="bonus_product_code" name="bonus_product_code" class="browser-default custom-select product-list">
+                                        <option value="">Select Product</option>
+                                        @foreach ($products as $key => $value)
+                                            <option value="{{ $value->product_code }}"{{ isset($campaign) && $campaign->bonus_product_code == $value->product_code ? 'selected' : '' }}
+                                            >{!! ($value->sim_type == 1 ? $productType : "(Postpaid) ") . $value->commercial_name_en . " / " . $value->product_code  !!}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
                             {{-- WINNING LOGIC & CAPPING --}}
                             <div class="row">
                                 <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>WINNING LOGIC & CAPPING</strong></h5></div>
