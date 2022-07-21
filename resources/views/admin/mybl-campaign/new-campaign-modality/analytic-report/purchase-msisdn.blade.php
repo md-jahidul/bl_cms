@@ -3,7 +3,7 @@
 @section('card_name', 'Campaign Modality Purchase Detail')
 
 @section('action')
-    <a href="{{ route('flash-hour-analytic.report', $campaignId) }}" class="btn btn-primary round btn-glow px-2">
+    <a href="{{ route('new-campaign-analytic.report', $campaignId) }}" class="btn btn-primary round btn-glow px-2">
         <i class="la la-list"></i>
         Product Purchase List
     </a>
