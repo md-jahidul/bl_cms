@@ -17,7 +17,7 @@ class CreateRechargeLogsTable extends Migration
             $table->string('trx_id')->index();
             $table->string('msisdns');
             $table->string('recharge_amounts');
-            $table->double('total_amount', 8, 2);
+            $table->double('total_payment_amount', 8, 2);
             $table->string('initiate_status');
             $table->integer('initiate_status_code');
             $table->string('gateway')->nullable();
