@@ -64,7 +64,7 @@ class AppLaunchPopupService
         try {
             return DB::transaction(function () use ($data, $id) {
                 $type = $data['type'];
-                if ($type == 'image' || $type == 'purchase') {
+                if ($type == 'image' || $type == 'purchase' || $type == 'campaign') {
                     if (isset($data['content_data'])) {
                         // upload the image
                         $file = $data['content_data'];
@@ -74,8 +74,8 @@ class AppLaunchPopupService
                             'public'
                         );
                         $data['content'] = $path;
-                    } 
-                    if(isset($data['thumbnail_img'])){
+                    }
+                    if (isset($data['thumbnail_img'])) {
                         $file = $data['thumbnail_img'];
                         $path = $file->storeAs(
                             'app-launch-popup/images',
@@ -83,7 +83,7 @@ class AppLaunchPopupService
                             'public'
                         );
                         $data['thumbnail'] = $path;
-                    }elseif (!isset($data['content_data']) && is_null($id)) {
+                    } elseif (!isset($data['content_data']) && is_null($id)) {
                         return redirect()->back()->with('error', 'Image is required');
                     }
 
@@ -119,7 +119,7 @@ class AppLaunchPopupService
             });
 
         } catch (\Exception $e) {
-
+            dd($e->getMessage());
             Log::error('Error while saving popup notification: ' . $e->getMessage());
             return false;
         }

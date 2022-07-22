@@ -26,7 +26,7 @@ class AppLaunchPopupUpdateRequest extends FormRequest
     {
         return [
             'title'          => 'required|max:20',
-            'type'           => 'required|in:image,html,purchase',
+            'type'           => 'required|in:image,html,purchase,campaign',
             'display_period' => new ValidDateRange(),
 /*            'content_data'   => 'required'*/
         ];
