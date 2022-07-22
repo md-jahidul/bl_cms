@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class MyBlAppLaunchPopup extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'type',
         'title',
@@ -29,6 +29,10 @@ class MyBlAppLaunchPopup extends Model
         'thumbnail_image',
         'title_bn',
         'thumbnail'
+    ];
+
+    protected $casts = [
+        "other_info" => "array"
     ];
 
     public function schedule()
