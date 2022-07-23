@@ -14,48 +14,20 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form"
-                              action="{{ $page == 'create' ? route('app-launch.store') : route('app-launch.update', $popup->id)}}"
-                              method="POST"
-                              class="form"
-                              enctype="multipart/form-data">
+                        <form role="form" method="POST" class="form" enctype="multipart/form-data"
+                              action="{{ $page == 'create' ? route('app-launch.store') : route('app-launch.update', $popup->id)}}">
                             @csrf
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group @if($errors->has('title')) error @endif">
-                                        <label for="title" class="required">Title</label>
-                                        <input class="form-control"
-                                               name="title"
-                                               id="title"
-                                               maxlength="20"
-                                               value="{{ $page == 'edit' ? $popup->title : old("title") }}"
-                                               required>
-                                        @if($errors->has('title'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <div class="form-group @if($errors->has('title')) error @endif">
-                                        <label for="title" class="required">Title Bangla</label>
-                                        <input class="form-control"
-                                               name="title_bn"
-                                               id="title_bn"
-                                               maxlength="20"
-                                               value="{{ $page == 'edit' ? $popup->title_bn : old("title_bn") }}"
-                                               >
-                                        @if($errors->has('title'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="type" class="required">Popup Type</label>
                                         @php
-                                            $types = ['image' => 'Image', 'html' => 'HTML Content', 'purchase' => 'Purchase'];
+                                            $types = [
+                                                'image' => 'Image',
+                                                'html' => 'HTML Content',
+                                                'purchase' => 'Purchase',
+                                                'campaign' => 'Campaign'
+                                            ];
                                         @endphp
                                         {{ Form::select('type', $types, $page == 'edit' ? $popup->type : old('type'),
                                             ['class' => 'form-control', 'required', 'id' => 'type']) }}
@@ -66,10 +38,8 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div
-                                    class="col-md-4 {{($page == 'edit' && $popup->type == 'purchase') ? '' : 'hidden'}}"
-                                    id="productCode">
+                                <div class="col-md-6 {{($page == 'edit' && $popup->type == 'purchase') ? '' : 'hidden'}}"
+                                     id="productCode">
                                     <div class="form-group ">
                                         <label for="type" class="required col-md-12" style="padding:0px">
                                             Product Code
@@ -98,10 +68,95 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6 {{($page == 'edit' && $popup->type == 'image') ? '' : 'hidden'}}" id="externalURL">
+                                    <div class="form-group">
+                                        <label for="external_url" class="required col-md-12" style="padding:0px">External URL</label>
+                                        <input class="form-control" name="other_info[external_url]" id="external_url"
+                                               value="{{ $page == 'edit' && isset($popup->other_info['external_url']) ? $popup->other_info['external_url'] : old("external_url") }}"
+                                               placeholder="Enter valid external URL">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group @if($errors->has('title')) error @endif">
+                                        <label for="title" class="required">Title English</label>
+                                        <input class="form-control" name="title" id="title" maxlength="20"
+                                               placeholder="Enter title in English"
+                                               value="{{ $page == 'edit' ? $popup->title : old("title") }}" required>
+                                        @if($errors->has('title'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group @if($errors->has('title')) error @endif">
+                                        <label for="title" class="required">Title Bangla</label>
+                                        <input class="form-control" name="title_bn" id="title_bn" maxlength="20"
+                                               placeholder="Enter title in Bangla"
+                                               value="{{ $page == 'edit' ? $popup->title_bn : old("title_bn") }}">
+                                        @if($errors->has('title'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-md-6" id="content_div">
+                                    <div class="form-group">
+                                        <label class="required">Image</label>
+                                        <input type="file"
+                                               name="content_data"
+                                               data-max-file-size="2M"
+                                               data-allowed-formats="portrait square"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               @if($page == 'edit')
+                                                   data-default-file="{{ url('storage/' .$popup->content) }}"
+                                               @else
+                                                   required
+                                               @endif
+                                               class="dropify"/>
+                                    </div>
+                                    @if($errors->has('content_div'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-6" id="content_div">
+                                    <div class="form-group">
+                                        <label class="required">Thumbnail Image</label>
+                                        <input type="file"
+                                               name="thumbnail_img"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               @if($page == 'edit')
+                                                   data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
+                                               @else
+                                               @endif
+                                               data-min-width="1279" data-min-height="719"
+                                               data-max-width="1281" data-min-height="721"
+                                               data-allowed-file-extensions="png jpg jpeg gif"
+                                               class="dropify"/>
+                                    </div>
+                                    <div class="help-block"></div>
+                                    <div class="help-block text-warning">
+                                        The Dimensions should be <strong>1280x720</strong>
+                                    </div>
+                                    @if($errors->has('content_div'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <!-- Recurring schedule -->
                                 <div class="col-md-4">
                                     <label class="form-label">Recurring Schedule<span class="red">*</span></label>
@@ -265,53 +320,6 @@
                                         </ul>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6" id="content_div">
-                                    <div class="form-group">
-                                        <label class="required">Image</label>
-                                        <input type="file"
-                                               name="content_data"
-                                               data-max-file-size="2M"
-                                               data-allowed-formats="portrait square"
-                                               data-allowed-file-extensions="jpeg png jpg"
-                                               @if($page == 'edit')
-                                               data-default-file="{{ url('storage/' .$popup->content) }}"
-                                               @else
-                                               required
-                                               @endif
-                                               class="dropify"/>
-                                    </div>
-                                    @if($errors->has('content_div'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="col-md-6" id="content_div">
-                                    <div class="form-group">
-                                        <label class="required">Thumbnail Image</label>
-                                        <input type="file"
-                                               name="thumbnail_img"
-                                               data-allowed-file-extensions="jpeg png jpg"
-                                               @if($page == 'edit')
-                                               data-default-file="{{ url('storage/' .$popup->thumbnail) }}"
-                                               @else
-                                               @endif
-                                               data-min-width="1279" data-min-height="719"
-                                               data-max-width="1281" data-min-height="721"
-                                               data-allowed-file-extensions="png jpg jpeg gif"
-                                               class="dropify"/>
-                                    </div>
-                                    <div class="help-block"></div>
-                                    <div class="help-block text-warning">
-                                        The Dimensions should be <strong>1280x720</strong>
-                                    </div>
-                                    @if($errors->has('content_div'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
                             </div>
 
                             <div class="card-footer">
@@ -411,7 +419,7 @@
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['view', ['fullscreen']]
                     ],
-                    height: 300
+                    height: 140
                 });
             }
 
@@ -468,9 +476,15 @@
                 if (action == 'image') {
                     initiateImage();
                     $('#productCode').removeClass('show').addClass('hidden');
+                    $('#externalURL').removeClass('hidden').addClass('show');
+                } else if (action == 'campaign') {
+                    initiateImage();
+                    $('#externalURL').removeClass('hidden').addClass('show');
+                    $('#productCode').removeClass('show').addClass('hidden');
                 } else if (action == 'purchase') {
                     initiatePurchaseImage();
                     $(".select2").css({"min-width": "400px"});
+                    $('#externalURL').removeClass('show').addClass('hidden');
                     $('#productCode').removeClass('hidden').addClass('show');
                     {{--$("#productCode").html(product_html);--}}
                     {{--$(".product-list").select2({--}}
@@ -487,6 +501,7 @@
                     {{--});--}}
                 } else {
                     initiateTextEditor();
+                    $('#externalURL').removeClass('show').addClass('hidden');
                     $('#productCode').removeClass('show').addClass('hidden');
                 }
             });
