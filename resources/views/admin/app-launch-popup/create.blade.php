@@ -67,7 +67,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6 {{($page == 'edit' && $popup->type == 'campaign') ? '' : 'hidden'}}" id="externalURL">
+
+                                <div class="col-md-6 {{($page == 'edit' && $popup->type == 'image' || $popup->type == 'campaign') ? '' : 'hidden'}}" id="externalURL">
                                     <div class="form-group">
                                         <label for="external_url" class="required col-md-12" style="padding:0px">External URL</label>
                                         <input class="form-control" name="other_info[external_url]" id="external_url"
@@ -475,7 +476,7 @@
                 if (action == 'image') {
                     initiateImage();
                     $('#productCode').removeClass('show').addClass('hidden');
-                    $('#externalURL').removeClass('show').addClass('hidden');
+                    $('#externalURL').removeClass('hidden').addClass('show');
                 } else if (action == 'campaign') {
                     initiateImage();
                     $('#externalURL').removeClass('hidden').addClass('show');
