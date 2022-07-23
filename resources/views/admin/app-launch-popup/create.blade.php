@@ -70,7 +70,7 @@
                                 <div class="col-md-6 {{($page == 'edit' && $popup->type == 'campaign') ? '' : 'hidden'}}" id="externalURL">
                                     <div class="form-group">
                                         <label for="external_url" class="required col-md-12" style="padding:0px">External URL</label>
-                                        <input class="form-control" name="other_info[external_url]" id="external_url" maxlength="20"
+                                        <input class="form-control" name="other_info[external_url]" id="external_url"
                                                value="{{ $page == 'edit' && isset($popup->other_info['external_url']) ? $popup->other_info['external_url'] : old("external_url") }}"
                                                placeholder="Enter valid external URL">
                                     </div>
