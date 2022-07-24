@@ -221,18 +221,10 @@
                                 <div class="form-group col-md-6">
                                     <label for="reward_getting_type">Purchase Eligibility</label>
                                     <div class="form-group {{ $errors->has('purchase_eligibility') ? ' error' : '' }}">
-                                        <input type="radio" name="purchase_eligibility" value="ma_plus_recharge" id="maPlusRecharge"
-                                            {{ $campaign->purchase_eligibility == 'ma_plus_recharge' ? 'checked' : '' }}>
-                                        <label for="maPlusRecharge" class="mr-3">MA + Recharge</label>
-                                        <input type="radio" name="purchase_eligibility" value="recharge" id="recharge"
-                                            {{ $campaign->purchase_eligibility == 'recharge' ? 'checked' : '' }}>
-                                        <label for="recharge" class="mr-3">Recharge Only</label>
-                                        <input type="radio" name="purchase_eligibility" value="ma" id="ma"
-                                            {{ $campaign->purchase_eligibility == 'ma' ? 'checked' : '' }}>
-                                        <label for="ma" class="mr-3">MA Only</label>
-                                        @if ($errors->has('purchase_eligibility'))
-                                            <div class="help-block">  {{ $errors->first('purchase_eligibility') }}</div>
-                                        @endif
+                                        <input type="hidden" name="purchase_eligibility" value="none" >
+                                        <div class="help-block text-warning">
+                                            * Purchase Eligibility depends on <strong>Product Code.</strong>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -374,11 +366,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
-                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
-                                    <input  type="number" name="winning_interval" class="form-control"
-                                           value="{{ $campaign->winning_interval }}">
-                                </div>
-                                <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
                                         <input type="radio" name="winning_interval_unit" value="min" id="min"
@@ -394,6 +381,11 @@
                                             <div class="help-block">  {{ $errors->first('winning_interval_unit') }}</div>
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
+                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
+                                    <input  type="number" name="winning_interval" class="form-control"
+                                            value="{{ $campaign->winning_interval }}">
                                 </div>
                             </div>
                             <div class="row">
@@ -666,7 +658,6 @@
                     <label for="redirect_url">Status</label>
                     <select id="navigate_action" name="campaign_details[`+index+`][status]"
                             class="browser-default custom-select">
-                        <option value="">Select Status</option>
                         <option class="text-success" value="1">Enable</option>
                         <option class="text-danger" value="0">Disable</option>
                     </select>
@@ -798,7 +789,11 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div class="col-md-4">
+                            <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
+                            <input required type="number" name="campaign_details[`+index+`][cash_back_amount]" id="cash_back_amount" class="form-control"
+                                   placeholder="Enter The Fixed/Percentage of Cashback">
+                        </div>
                         <div class="form-group col-md-4 cash_back_amount_for_product">
                             <label for="max_amount">Max Cash Back Amount</label>
                             <input type="number" name="campaign_details[`+index+`][max_amount]" class="form-control" placeholder="Please Enter Max Amount">
@@ -806,12 +801,6 @@
                     </slot>
                     <!--Other Deno-->
                     <slot class="selective_deno" >
-                        <div class="col-md-4">
-                            <label for="cash_back_amount">Enter Fixed/Percentage amount of Cashback</label>
-                            <input required type="number" name="campaign_details[`+index+`][cash_back_amount]" id="cash_back_amount" class="form-control"
-                                   placeholder="Enter The Fixed/Percentage of Cashback">
-                        </div>
-
                         <div class="form-group col-md-4 }}">
                             <label for="recharge_amount">Recharge Amount</label>
                             <div class='input-group'>
@@ -824,6 +813,13 @@
                             <input type="number" name="campaign_details[`+index+`][number_of_apply_times]" class="form-control" placeholder="Please Enter Max Amount">
                         </div>
                     </slot>
+                    <div class="col-md-4 icheck_minimal skin mt-2">
+                        <fieldset>
+                            <input type="checkbox" id="show_in_home" value="1"
+                                   name="campaign_details[`+index+`][show_in_home]">
+                            <label for="show_in_home">Show in Home</label>
+                        </fieldset>
+                    </div>
                    `+commonFields+`
                     <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>

@@ -25,7 +25,6 @@
     <label for="redirect_url">Status</label>
     <select id="navigate_action" name="campaign_details[{{ $index }}][status]"
             class="browser-default custom-select">
-        <option value="">Select Status</option>
         <option class="text-success" value="1" {{ isset($product) && $product->status == 1 ? 'selected' : '' }}>Enable</option>
         <option class="text-danger" value="0" {{ isset($product) && $product->status == 0 ? 'selected' : '' }}>Disable</option>
     </select>

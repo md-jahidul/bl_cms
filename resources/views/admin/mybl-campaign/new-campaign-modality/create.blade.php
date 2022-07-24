@@ -222,16 +222,12 @@
                                 <div class="form-group col-md-6">
                                     <label for="reward_getting_type">Purchase Eligibility</label>
                                     <div class="form-group {{ $errors->has('purchase_eligibility') ? ' error' : '' }}">
-                                        <input type="radio" name="purchase_eligibility" value="ma_plus_recharge" id="maPlusRecharge">
-                                        <label for="maPlusRecharge" class="mr-3">MA + Recharge</label>
-                                        <input type="radio" name="purchase_eligibility" value="recharge" id="recharge">
-                                        <label for="recharge" class="mr-3">Recharge Only</label>
-                                        <input type="radio" name="purchase_eligibility" value="ma" id="ma">
-                                        <label for="ma" class="mr-3">MA Only</label>
-                                        @if ($errors->has('reward_getting_type'))
-                                            <div class="help-block">  {{ $errors->first('reward_getting_type') }}</div>
-                                        @endif
+                                        <input type="hidden" name="purchase_eligibility" value="none" >
+                                        <div class="help-block text-warning">
+                                            * Purchase Eligibility depends on <strong>Product Code.</strong>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -328,11 +324,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 check_winning_logic">
-                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
-                                    <input type="number" name="winning_interval" class="form-control"
-                                        placeholder="Please Enter Highest Recharge/Purchase Winner Check">
-                                </div>
-                                <div class="form-group col-md-4 check_winning_logic">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
                                         <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15">
@@ -345,6 +336,11 @@
                                             <div class="help-block">  {{ $errors->first('winning_interval_unit') }}</div>
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group col-md-4 check_winning_logic">
+                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
+                                    <input type="number" name="winning_interval" class="form-control"
+                                           placeholder="Please Enter Highest Recharge/Purchase Winner Check">
                                 </div>
                             </div>
                             <div class="row">
