@@ -242,16 +242,16 @@ class BannerAnalyticService
             $stTime = (!empty($log->getSliderImage->start_date)) ? date('d-m-Y', strtotime($log->getSliderImage->start_date)) : '';
             $enTime = (!empty($log->getSliderImage->end_date)) ? date('d-m-Y', strtotime($log->getSliderImage->end_date)) : '';
             $result[$key]['id'] = $log->id;
-            $result[$key]['banner_name'] = $log->getSlider->title ?? 'Not Found';
-            $result[$key]['banner_image_name'] = $log->getSliderImage->title ?? 'Not Found';
-            $result[$key]['image'] = $log->getSliderImage->image_url ?? 'Not Found';
-            $result[$key]['view_count'] = $log->view_count;
-            $result[$key]['click_count'] = $log->view_count;
+            $result[$key]['banner_name'] = $log->getSlider->title ?? '';
+            $result[$key]['banner_image_name'] = $log->getSliderImage->title ?? '';
+            $result[$key]['image'] = $log->getSliderImage->image_url ?? '';
+            $result[$key]['view_count'] = $log->view_count ?? '0';
+            $result[$key]['click_count'] = $log->view_count ?? '0';
             $result[$key]['schedule_date'] = $stTime . '  -> ' . $enTime;
             $result[$key]['totalDuration'] = $this->scheduleDateCalculaton([
-                'start_date' => $stTime,
-                'end_date' => $enTime,
-                'created_at' => $log->getSliderImage->created_at ?? null,
+                'start_date' => $log->getSliderImage->start_date ?? '',
+                'end_date' => $log->getSliderImage->end_date ?? '',
+                'created_at' => $log->getSliderImage->created_at ?? '',
             ]);
             $result[$key]['log']['total_buy'] = !empty($log->getBannePurchases->total_buy) ? $log->getBannePurchases->total_buy : 0;
             $result[$key]['log']['total_buy_attempt'] = !empty($log->getBannePurchases->total_buy_attempt) ? $log->getBannePurchases->total_buy_attempt : 0;
