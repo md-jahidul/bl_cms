@@ -40,13 +40,13 @@
 {{--              placeholder="Enter description in Bangla">{{ isset($product->desc_bn) ? $product->desc_bn : '' }}</textarea>--}}
 {{--</div>--}}
 
-<div class="col-md-4 icheck_minimal skin mt-2">
-    <fieldset>
-        <input type="checkbox" id="show_in_home" value="1"
-               name="campaign_details[{{ $index }}][show_in_home]" {{ isset($product->show_in_home) && $product->show_in_home ? 'checked' : '' }}>
-        <label for="show_in_home">Show in Home</label>
-    </fieldset>
-</div>
+{{--<div class="col-md-4 icheck_minimal skin mt-2">--}}
+{{--    <fieldset>--}}
+{{--        <input type="checkbox" id="show_in_home" value="1"--}}
+{{--               name="campaign_details[{{ $index }}][show_in_home]" {{ isset($product->show_in_home) && $product->show_in_home ? 'checked' : '' }}>--}}
+{{--        <label for="show_in_home">Show in Home</label>--}}
+{{--    </fieldset>--}}
+{{--</div>--}}
 
 @php
     $productType = '<span class="text-success">(Prepaid) </span>'
