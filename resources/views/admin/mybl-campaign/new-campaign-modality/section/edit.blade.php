@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Create Health Hub Partner')
-@section('card_name', 'Create Health Hub Partner')
+@section('title', 'Edit Campaign Section')
+@section('card_name', 'Edit Campaign Section')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Create Health Hub Partner</li>
+    <li class="breadcrumb-item active">Edit Campaign Section</li>
 @endsection
 @section('content')
     <section>
