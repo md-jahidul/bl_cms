@@ -158,7 +158,14 @@
                                     <small id="message"></small>
                                 </div>
                             </div>
-
+                            <div class="form-group col-md-6 mb-2">
+                                <label for="partner_details" >Partner Details::</label>
+                                <textarea
+                                    class="form-control @error('partner_details') is-invalid @enderror" placeholder="Enter Partner Details....." id="partner_details"
+                                    name="partner_details" rows="5">{{ $imageInfo->partner_details }}</textarea>
+                                <div class="help-block"></div>
+                                <small class="text-danger"> @error('partner_details') {{ $message }} @enderror </small>
+                            </div>
                             <div id="append_div" class="col-md-6 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}">
                                 @if(isset($imageInfo))
                                     @if($info = json_decode(json_encode($imageInfo->other_attributes)))

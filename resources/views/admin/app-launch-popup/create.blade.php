@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 {{($page == 'edit' && $popup->type == 'image' || $popup->type == 'campaign') ? '' : 'hidden'}}" id="externalURL">
+                                <div class="col-md-6 {{($page == 'edit' && $popup->type == 'image') ? '' : 'hidden'}}" id="externalURL">
                                     <div class="form-group">
                                         <label for="external_url" class="required col-md-12" style="padding:0px">External URL</label>
                                         <input class="form-control" name="other_info[external_url]" id="external_url"
