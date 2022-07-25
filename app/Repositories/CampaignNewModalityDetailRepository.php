@@ -22,28 +22,31 @@ class CampaignNewModalityDetailRepository extends BaseRepository
         $winningType = $winningType === 'FIRST' ? 'first_recharge' : null;
 
         $withArr = [
-            'campaign' => function($q) {
+            'campaign' => function ($q) {
+                $q->where('status', 1);
                 $q->select([
-                    'id',
-                    'status',
-                    'first_sign_up_user',
-                    'recurring_type',
-                    'name',
-                    'start_date',
-                    'end_date',
-                    'winning_type',
-                    'winning_interval',
-                    'winning_interval_unit',
-                    'winning_massage_en',
-                    'bonus_product_code'
-                ]);
+                   'id',
+                   'status',
+                   'first_sign_up_user',
+                   'recurring_type',
+                   'name',
+                   'start_date',
+                   'end_date',
+                   'winning_type',
+                   'winning_interval',
+                   'winning_interval_unit',
+                   'winning_massage_en',
+                   'bonus_product_code'
+               ]);
             }
         ];
 
-        return $this->model->with($withArr)
-                           ->get()
-                           ->where('campaign.start_date', '<=', Carbon::now()->toDateTimeString());
-                        //    ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
-                        //    ->groupBy('campaign.winning_type');
+        return $this->model
+            ->where('status', 1)
+            ->with($withArr)
+            ->get()
+            ->where('campaign.start_date', '<=', Carbon::now()->toDateTimeString());
+            //    ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
+            //    ->groupBy('campaign.winning_type');
     }
 }
