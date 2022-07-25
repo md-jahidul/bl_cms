@@ -98,7 +98,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
                 try {
                     $param = [
                         'id' => $product->campaign->bonus_product_code,
-                        'msisdn' => $user_phone
+                        'msisdn' => "880" . $user_phone
                     ];
 
                     $result = $this->post(self::PURCHASE_ENDPOINT, $param);
