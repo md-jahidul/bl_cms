@@ -841,6 +841,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('sms-languages/store', 'CMS\SmsLanguageController@store')->name('sms-languages.store');
     Route::put('sms-languages/update/{id}', 'CMS\SmsLanguageController@update')->name('sms-languages.update');
 
+    /**
+     * Orange CLub Banner
+     */
+    Route::resource('orange-club', 'CMS\MyblOrangeClubBannerController');
+    Route::resource('orange-club-redeem', 'CMS\MyblOrangeClubRedeemDetailController');
+    Route::delete('orange-club/{id}/delete', 'CMS\MyblOrangeClubBannerController@destroy')->name('orange-club.destroy');
+    Route::get('orange-club/addImage/update-position', 'CMS\MyblOrangeClubBannerController@updatePosition');
 });
 
 // 4G Map View Route
