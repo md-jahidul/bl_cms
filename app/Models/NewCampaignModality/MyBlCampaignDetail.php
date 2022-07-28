@@ -28,6 +28,7 @@ class MyBlCampaignDetail extends Model
             'purchase_eligibility',
             'product_category_slug',
             'product_code',
+            'product_for',
             'desc_en',
             'desc_bn',
             'show_in_home',

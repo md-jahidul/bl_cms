@@ -26,6 +26,7 @@ class CreateMyBlCampaignDetailsTable extends Migration
             $table->integer('max_amount')->nullable();
             $table->string('purchase_eligibility')->nullable();
             $table->string('product_code')->nullable();
+            $table->string('product_for')->nullable();
             $table->text('desc_en')->nullable();
             $table->text('desc_bn')->nullable();
             $table->string('product_category_slug')->nullable();
