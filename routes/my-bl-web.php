@@ -841,6 +841,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('sms-languages/store', 'CMS\SmsLanguageController@store')->name('sms-languages.store');
     Route::put('sms-languages/update/{id}', 'CMS\SmsLanguageController@update')->name('sms-languages.update');
 
+    /**
+     * Ad Tech
+     */
+    Route::resource('ad-tech', 'CMS\MyblAdTechController');
+    Route::delete('ad-tech/{id}/delete', 'CMS\MyblAdTechController@destroy')->name('orange-club.destroy');
+    Route::get('ad-tech/addImage/update-position', 'CMS\MyblAdTechController@updatePosition');
 });
 
 // 4G Map View Route

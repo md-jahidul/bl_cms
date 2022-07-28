@@ -432,7 +432,11 @@
         </li>
     @endif
 
-
+    <li class="{{is_active_url('ad-tech/create')}}">
+        <a class="menu-item" href="{{ route('ad-tech.index') }}"
+           data-i18n="nav.templates.vert.bullhorn">
+            <i class="la la-globe"></i>Ad Tech</a>
+    </li>
     @if( auth()->user()->can_view('MixedBundleFilter') )
         <li class=" nav-item"><a href="#"><i class="la la-flask"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
