@@ -10,7 +10,7 @@ class SliderImageRepository extends BaseRepository
 
     public function getSliderImage($sliderId)
     {
-        return $this->model->where('slider_id', $sliderId)->orderBy('created_at','DESC')->get();
+        return $this->model->where('slider_id', $sliderId)->orderBy('sequence','ASC')->get();
     }
 
     public function is_sequence_exist($sequence, $slider_id)
