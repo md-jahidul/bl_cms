@@ -78,6 +78,17 @@
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="external_url" class="required">External Url:</label>
+                                        <input
+                                            maxlength="200"
+                                            data-validation-maxlength-message="Enter External Url"
+                                            value="{{isset($adTech->external_url) ? $adTech->external_url : ""}}" required id="external_url"
+                                            type="text" class="form-control @error('external_url') is-invalid @enderror"
+                                            placeholder="Enter External Url" name="external_url">
+                                        <small class="text-danger"> @error('external_url') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="status">Active Status:</label>
