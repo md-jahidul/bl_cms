@@ -6,6 +6,7 @@ use App\RecurringSchedule;
 use App\Repositories\CampaignNewModalityDetailRepository;
 use App\Repositories\CampaignNewModalityRepository;
 use App\Repositories\NewCampaignModality\CampaignPurchaseReportRepository;
+use App\Repositories\ProductCoreRepository;
 use App\Repositories\RecurringScheduleRepository;
 use App\Traits\CrudTrait;
 use Carbon\Carbon;
@@ -34,18 +35,25 @@ class CampaignNewModalityService
      */
     private $recurringScheduleRepository;
     private $campaignPurchaseReportRepository;
+    /**
+     * @var ProductCoreRepository
+     */
+    private $productCoreRepository;
+
     public function __construct(
         CampaignNewModalityRepository $campaignNewModalityRepository,
         CampaignNewModalityDetailRepository $campaignNewModalityDetailRepository,
         RecurringScheduleHourService $recurringScheduleHourService,
         RecurringScheduleRepository $recurringScheduleRepository,
-        CampaignPurchaseReportRepository $campaignPurchaseReportRepository
+        CampaignPurchaseReportRepository $campaignPurchaseReportRepository,
+        ProductCoreRepository $productCoreRepository
     ) {
         $this->campaignNewModalityRepository = $campaignNewModalityRepository;
         $this->campaignNewModalityDetailRepository = $campaignNewModalityDetailRepository;
         $this->recurringScheduleHourService = $recurringScheduleHourService;
         $this->recurringScheduleRepository = $recurringScheduleRepository;
         $this->campaignPurchaseReportRepository = $campaignPurchaseReportRepository;
+        $this->productCoreRepository = $productCoreRepository;
         $this->setActionRepository($campaignNewModalityRepository);
     }
 
@@ -61,16 +69,12 @@ class CampaignNewModalityService
                 $data['max_amount'] = null;
                 $data['number_of_apply_times'] = null;
             }
-            $date_range_array = explode('-', $data['display_period']);
-            $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-                ->toDateTimeString();
-            $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-                ->toDateTimeString();
-
             $campaign = $this->save($data);
 
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
+                    $coreProduct = $this->productCoreRepository->findOneByProperties(['product_code' => $product['product_code']], ['sim_type']);
+                    $product['product_for'] = isset($coreProduct->sim_type) ? ($coreProduct->sim_type == 1 ? "prepaid" : "postpaid") : null;
                     if (!empty($product['thumb_image'])) {
                         $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
                     }
@@ -104,6 +108,7 @@ class CampaignNewModalityService
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {
             $error = $e->getMessage();
+            dd($error);
             Log::error($error);
             return new Response("New Campaign Modality campaign Create Failed. Error: $error");
         }
@@ -122,11 +127,7 @@ class CampaignNewModalityService
                 $data['max_amount'] = null;
                 $data['number_of_apply_times'] = null;
             }
-            $date_range_array = explode('-', $data['display_period']);
-            $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-                ->toDateTimeString();
-            $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-                ->toDateTimeString();
+
             if (isset($data['payment_channels'])) {
                 $data['payment_channels'] = json_encode($data['payment_channels']);
             }
