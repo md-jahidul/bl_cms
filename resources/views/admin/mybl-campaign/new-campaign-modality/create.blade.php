@@ -354,7 +354,6 @@
                                         class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
                                         name="winning_massage_bn" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
                                     <div class="help-block"></div>
-                                    {{--                                    <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>--}}
                                 </div>
                             </div>
                             <div class="row">

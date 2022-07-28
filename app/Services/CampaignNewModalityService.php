@@ -73,8 +73,13 @@ class CampaignNewModalityService
 
             if (isset($data['campaign_details'])) {
                 foreach ($data['campaign_details'] as $product) {
-                    $coreProduct = $this->productCoreRepository->findOneByProperties(['product_code' => $product['product_code']], ['sim_type']);
-                    $product['product_for'] = isset($coreProduct->sim_type) ? ($coreProduct->sim_type == 1 ? "prepaid" : "postpaid") : null;
+                    if (isset($product['product_code'])) {
+                        $coreProduct = $this->productCoreRepository->findOneByProperties(
+                            ['product_code' => $product['product_code']],
+                            ['sim_type']
+                        );
+                        $product['product_for'] = isset($coreProduct->sim_type) ? ($coreProduct->sim_type == 1 ? "prepaid" : "postpaid") : null;
+                    }
                     if (!empty($product['thumb_image'])) {
                         $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
                     }
