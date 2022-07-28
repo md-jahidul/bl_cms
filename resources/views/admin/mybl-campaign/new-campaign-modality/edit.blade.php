@@ -383,9 +383,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
-                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
-                                    <input  type="number" name="winning_interval" class="form-control"
+                                    <label for="winning_interval">Winning Interval</label>
+                                    <input  type="number" min=1 name="winning_interval" class="form-control"
                                             value="{{ $campaign->winning_interval }}">
+                                    <div class="help-block text-warning">
+                                        * Winning Interval must be <strong>greater than zero.</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -618,25 +621,6 @@
                             <div class="help-block"></div>
                         </div>
                     </div>
-
-                    <div class="form-group col-md-6 mb-2">
-                        <label for="desc_en" class="required">Description En</label>
-                        <textarea rows="3" id="desc_en" name="campaign_details[`+index+`][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
-                    </div>
-
-                    <div class="form-group col-md-6 mb-2">
-                        <label for="desc_bn" class="required">Description Bn</label>
-                        <textarea rows="3" id="desc_bn" name="campaign_details[`+index+`][desc_bn]"
-                                  class="form-control"
-                                  placeholder="Enter description in Bangla"></textarea>
-                    </div>
-                    <div class="col-md-4 icheck_minimal skin mt-2">
-                        <fieldset>
-                            <input type="checkbox" id="show_in_home-`+index+`" value="1"
-                                   name="campaign_details[`+index+`][show_in_home]">
-                            <label for="show_in_home-`+index+`">Show in Home</label>
-                        </fieldset>
-                    </div>
                 `;
 
                 let commonFields = `
@@ -662,7 +646,28 @@
                         <option class="text-danger" value="0">Disable</option>
                     </select>
                     <div class="help-block"></div>
-                </div>`;
+                </div>
+                 <div class="form-group col-md-4">
+                    <label for="reward_getting_type">Show product as</label>
+                    <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
+                        <option value="bottom_sheet">Bottom Sheet</option>
+                        <option value="pop_up">Pop-up</option>
+                        <option value="campaign_only" selected>Campaign Section only</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4 mb-2">
+                    <label for="desc_en" class="required">Description En</label>
+                    <textarea rows="3" id="desc_en" name="campaign_details[`+index+`][desc_en]" class="form-control" placeholder="Enter description in English"></textarea>
+                </div>
+
+                <div class="form-group col-md-4 mb-2">
+                    <label for="desc_bn" class="required">Description Bn</label>
+                    <textarea rows="3" id="desc_bn" name="campaign_details[`+index+`][desc_bn]"
+                              class="form-control"
+                              placeholder="Enter description in Bangla"></textarea>
+                </div>
+                <div class="form-actions col-md-12 mt-0 hr-line"></div>
+                </slot>`;
                 if (denoType !== 'all_deno') {
                     commonFields += `<div class="form-group col-md-12">
                     <label for="redirect_url"></label>
@@ -676,18 +681,30 @@
                 let productElement = ``;
                 productElement += `
                 <slot class="selective_product">
-                    ` + productCommonField + `
+                     <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Thumbnail Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][thumb_image]" class="dropify" data-height="77"/>
+                        </div>
+                    </div>
+
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Banner Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][banner_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Popup Image</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
                 @php
                     $productType = '<span class="text-success">(Prepaid) </span>'
                 @endphp
-                <div class="form-group col-md-4">
-                    <label for="reward_getting_type">Show product as</label>
-                    <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
-                        <option value="bottom_sheet">Bottom Sheet</option>
-                        <option value="pop_up">Pop-up</option>
-                        <option value="campaign_only" selected>Campaign Section only</option>
-                    </select>
-                </div>
 
                 <div class="form-group col-md-4 mb-2 product_code" id="cta_action">
                     <label for="product_code" class="required">Product Code</label>
@@ -700,22 +717,20 @@
                     </select>
                     <div class="help-block"></div>
                 </div>
+                <div class="col-md-4 icheck_minimal skin mt-2">
+                    <fieldset>
+                        <input type="checkbox" id="show_in_home" value="1"
+                               name="campaign_details[`+index+`][show_in_home]">
+                        <label for="show_in_home">Show in Home</label>
+                    </fieldset>
+                </div>
                 `+commonFields+`
-                <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>`;
 
 
                 let productCategories = `
                 <slot class="products-categories">
                     ` + productCommonField + `
-                    <div class="form-group col-md-4">
-                        <label for="reward_getting_type">Show product as</label>
-                        <select id="navigate_action" name="campaign_details[`+index+`][show_product_as]" class="browser-default custom-select">
-                            <option value="bottom_sheet">Bottom Sheet</option>
-                            <option value="pop_up">Pop-up</option>
-                            <option value="campaign_only" selected>Campaign Section only</option>
-                        </select>
-                    </div>
                     <div class="col-md-4" >
                         <div class="form-group">
                             <label class="required">Product Categories</label>
@@ -727,7 +742,15 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-4 icheck_minimal skin mt-2">
+                        <fieldset>
+                            <input type="checkbox" id="show_in_home-`+index+`" value="1"
+                                   name="campaign_details[`+index+`][show_in_home]">
+                            <label for="show_in_home-`+index+`">Show in Home</label>
+                        </fieldset>
+                    </div>
                 ` + commonFields + `
+
                 <div class="form-actions col-md-12 mt-0 hr-line"></div>
                 </slot>`;
 
@@ -821,8 +844,6 @@
                         </fieldset>
                     </div>
                    `+commonFields+`
-                    <div class="form-actions col-md-12 mt-0 hr-line"></div>
-                </slot>
             `;
                 if (denoType === "selective_deno"){
                     $('#productSection').append(selectiveDeno);
