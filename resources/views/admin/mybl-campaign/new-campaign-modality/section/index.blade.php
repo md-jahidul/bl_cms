@@ -21,8 +21,8 @@
                             <th><i class="icon-cursor-move icons"></i></th>
                             <th>Section Title En</th>
                             <th>Section Title Bn</th>
-                            <th>Deep Link</th>
                             <th>Status</th>
+                            <th>Deep Link</th>
                             <th>Action</th>
                         </tr>
                         </thead>
