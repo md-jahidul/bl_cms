@@ -116,24 +116,19 @@
                                     </div>
                                     <div class="row">
                                         <!-- Regular time period (When recurring type is none) -->
-                                        <div class="col-md-12">
-                                            <div class="form-group" id="time_period">
-                                                <label class="small">Date Range</label>
-                                                <div class='input-group'>
-                                                    <input type='text'
-                                                           class="form-control datetime"
-                                                           value="{{ $page == 'edit' ? $dateRange : old('display_period') }}"
-                                                           name="display_period"
-                                                           id="display_period"/>
-                                                    @if($errors->has('display_period'))
-                                                        <p class="text-left">
-                                                            <small class="danger text-muted">
-                                                                {{ $errors->first('display_period') }}
-                                                            </small>
-                                                        </p>
-                                                    @endif
-                                                </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="start_date">Start Date</label>
+                                            <div class='input-group'>
+                                                <input type='text' class="form-control product_start_date" name="start_date" id="start_date"
+                                                       placeholder="Please select start date" autocomplete="off" value="{{ $campaign->start_date }}"/>
                                             </div>
+                                            <div class="help-block"></div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="end_date">End Date</label>
+                                            <input type="text" name="end_date" id="end_date" class="form-control product_end_date"
+                                                   placeholder="Please select end date" autocomplete="off" value="{{ $campaign->end_date }}">
+                                            <div class="help-block"></div>
                                         </div>
 
                                         <!-- Weekday Picker -->
@@ -368,9 +363,6 @@
                                 <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_interval_unit" value="min" id="min"
-                                            {{ $campaign->winning_interval_unit == 'min' ? 'checked' : '' }}>
-                                        <label for="min" class="mr-3">MIN</label>
                                         <input type="radio" name="winning_interval_unit" value="hour" id="hour"
                                             {{ $campaign->winning_interval_unit == 'hour' ? 'checked' : '' }}>
                                         <label for="hour" class="mr-3">HOUR</label>

@@ -117,24 +117,19 @@
                                     </div>
                                     <div class="row">
                                         <!-- Regular time period (When recurring type is none) -->
-                                        <div class="col-md-12">
-                                            <div class="form-group" id="time_period">
-                                                <label class="small">Date Range</label>
-                                                <div class='input-group'>
-                                                    <input type='text'
-                                                           class="form-control datetime"
-                                                           value="{{ $page == 'edit' ? $dateRange : old('display_period') }}"
-                                                           name="display_period"
-                                                           id="display_period"/>
-                                                    @if($errors->has('display_period'))
-                                                        <p class="text-left">
-                                                            <small class="danger text-muted">
-                                                                {{ $errors->first('display_period') }}
-                                                            </small>
-                                                        </p>
-                                                    @endif
-                                                </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="start_date">Start Date</label>
+                                            <div class='input-group'>
+                                                <input type='text' class="form-control product_start_date" name="start_date" id="start_date"
+                                                       placeholder="Please select start date" autocomplete="off"/>
                                             </div>
+                                            <div class="help-block"></div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="end_date">End Date</label>
+                                            <input type="text" name="end_date" id="end_date" class="form-control product_end_date"
+                                                   placeholder="Please select end date" autocomplete="off">
+                                            <div class="help-block"></div>
                                         </div>
 
                                         <!-- Weekday Picker -->
@@ -326,8 +321,6 @@
                                 <div class="form-group col-md-4 check_winning_logic">
                                     <label for="winning_interval_unit">Winning Time Period Type: </label>
                                     <div class="form-group {{ $errors->has('winning_interval_unit') ? ' error' : '' }}">
-                                        <input type="radio" name="winning_interval_unit" value="min" id="input-radio-15">
-                                        <label for="input-radio-15" class="mr-3">MIN</label>
                                         <input type="radio" name="winning_interval_unit" value="hour" id="input-radio-16">
                                         <label for="input-radio-16" class="mr-3">HOUR</label>
                                         <input type="radio" name="winning_interval_unit" value="day" id="input-radio-16">
@@ -630,7 +623,6 @@
                     <label for="redirect_url">Status</label>
                     <select id="navigate_action" name="campaign_details[`+index+`][status]"
                             class="browser-default custom-select">
-                        <option value="">Select Status</option>
                         <option class="text-success" value="1">Enable</option>
                         <option class="text-danger" value="0">Disable</option>
                     </select>

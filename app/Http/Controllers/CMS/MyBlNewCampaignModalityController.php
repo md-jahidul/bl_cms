@@ -96,8 +96,8 @@ class MyBlNewCampaignModalityController extends Controller
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $partnerChannelNames = (json_decode($campaign['payment_channels']));
         $format = $campaign->recurring_type == 'none' ? 'Y/m/d h:i A' : 'Y/m/d';
-        $dateRange = Carbon::parse($campaign->start_date)->format($format) . ' - ' .
-            Carbon::parse($campaign->end_date)->format($format);
+//        $dateRange = Carbon::parse($campaign->start_date)->format($format) . ' - ' .
+//            Carbon::parse($campaign->end_date)->format($format);
         $hourSlots = $this->campaignNewModalityService->getHourSlots();
         $products = $this->productCoreService->findAll();
         $productCategories = Helper::productCategories();
@@ -111,7 +111,6 @@ class MyBlNewCampaignModalityController extends Controller
                 'partnerChannelNames',
                 'hourSlots',
                 'page',
-                'dateRange',
                 'campaignSection',
                 'campaignType',
                 'products',
