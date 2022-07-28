@@ -383,9 +383,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 check_winning_logic {{ $campaign->winning_type == 'no_logic' ? 'd-none' : "" }}">
-                                    <label for="winning_interval">Highest Recharge/Purchase Winner Check</label>
-                                    <input  type="number" name="winning_interval" class="form-control"
+                                    <label for="winning_interval">Winning Interval</label>
+                                    <input  type="number" min=1 name="winning_interval" class="form-control"
                                             value="{{ $campaign->winning_interval }}">
+                                    <div class="help-block text-warning">
+                                        * Winning Interval must be <strong>greater than zero.</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
