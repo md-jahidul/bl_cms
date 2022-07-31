@@ -1087,6 +1087,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('orange-club-redeem', 'CMS\MyblOrangeClubRedeemDetailController');
     Route::delete('orange-club/{id}/delete', 'CMS\MyblOrangeClubBannerController@destroy')->name('orange-club.destroy');
     Route::get('orange-club/addImage/update-position', 'CMS\MyblOrangeClubBannerController@updatePosition');
+    /**
+     * Ad Tech
+     */
+    Route::resource('ad-tech', 'CMS\MyblAdTechController');
+    Route::delete('ad-tech/{id}/delete', 'CMS\MyblAdTechController@destroy')->name('orange-club.destroy');
+    Route::get('ad-tech/addImage/update-position', 'CMS\MyblAdTechController@updatePosition');
 });
 
 // 4G Map View Route
