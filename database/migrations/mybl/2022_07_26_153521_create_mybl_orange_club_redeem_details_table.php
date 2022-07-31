@@ -17,6 +17,8 @@ class CreateMyblOrangeClubRedeemDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->string('redeem_title_en');
             $table->string('redeem_title_bn');
+            $table->string('redeem_sub_title_en');
+            $table->string('redeem_sub_title_bn');
             $table->string('redeem_logo');
             $table->integer('coin_amount');
             $table->string('btn_text_en');

@@ -53,6 +53,34 @@
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
+                                        <label for="redeem_sub_title_en" class="required">Redeem Sub Title EN:</label>
+                                        <input
+                                            maxlength="200"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Title is required"
+                                            data-validation-regex-message="Title must start with alphabets"
+                                            data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                            value="{{isset($redeemDetail->redeem_sub_title_en) ? $redeemDetail->redeem_sub_title_en : ""}}" required id="redeem_title_en"
+                                            type="text" class="form-control @error('redeem_sub_title_en') is-invalid @enderror"
+                                            placeholder="Enter Sub Redeem Title BN" name="redeem_sub_title_en">
+                                        <small class="text-danger"> @error('redeem_sub_title_en') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="redeem_sub_title_bn" class="required">Redeem Sub Title BN:</label>
+                                        <input
+                                            maxlength="200"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Title is required"
+                                            data-validation-regex-message="Title must start with alphabets"
+                                            data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                            value="{{isset($redeemDetail->redeem_sub_title_bn) ? $redeemDetail->redeem_sub_title_bn : ""}}" required id="redeem_title_bn"
+                                            type="text" class="form-control @error('redeem_sub_title_bn') is-invalid @enderror"
+                                            placeholder="Enter Sub Redeem Title EN" name="redeem_sub_title_bn">
+                                        <small class="text-danger"> @error('redeem_sub_title_bn') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
                                         <label for="btn_text_en" class="required">Button Text EN:</label>
                                         <input
                                             value="{{isset($redeemDetail->btn_text_en) ? $redeemDetail->btn_text_en : "" }}" required id="btn_text_en"
@@ -62,7 +90,7 @@
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="btn_text_bn" class="required">Button Text BN:</label>
+                                        <label for="btn_text_bn" class="required">Button Text BN: </label>
                                         <input
                                             value="{{isset($redeemDetail->btn_text_bn) ? $redeemDetail->btn_text_bn : "" }}" required id="btn_text_en"
                                             type="text" class="form-control @error('btn_text_bn') is-invalid @enderror"
@@ -88,24 +116,7 @@
                                             <div class="help-block"></div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="btn_text_en" class="required">Button Text EN:</label>
-                                        <input
-                                            value="{{isset($redeemDetail->btn_text_en) ? $redeemDetail->btn_text_en : ""}}" required id="btn_text_en"
-                                            type="text" class="form-control @error('btn_text_en') is-invalid @enderror"
-                                            placeholder="Enter Button Title EN" name="btn_text_en">
-                                        <small class="text-danger"> @error('btn_text_en') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="btn_text_bn" class="required">Button Text BN:</label>
-                                        <input
-                                            value="{{isset($redeemDetail->btn_text_bn) ? $redeemDetail->btn_text_bn : ""}}" required id="btn_text_en"
-                                            type="text" class="form-control @error('btn_text_bn') is-invalid @enderror"
-                                            placeholder="Enter Button Title BN" name="btn_text_bn">
-                                        <small class="text-danger"> @error('btn_text_bn') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
+
                                     {{--<div id="link" class="form-group col-md-6">
                                         <label id="label_link" for="numbers">Web or Deep Link</label>
                                         <div class='input-group'>
