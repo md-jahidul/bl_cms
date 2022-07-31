@@ -507,7 +507,24 @@
             </ul>
         </li>
     @endif
-
+    <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Orange Club</span></a>
+        <ul class="menu-content">
+            {{--page--}}
+            <li class="{{ is_active_url('orange-club-redeem') }}">
+                <a class="menu-item" href="{{ route('orange-club-redeem.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Redeem Detail
+                </a>
+            </li>
+            <li class="{{ is_active_url('orange-club') }}">
+                <a class="menu-item" href="{{ route('orange-club.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Banner
+                </a>
+            </li>
+        </ul>
+    </li>
 
     @if( auth()->user()->can_view('HelpCenter') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
