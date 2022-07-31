@@ -133,6 +133,15 @@
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
+                                        <label for="name" class="required">Name:</label>
+                                        <input
+                                            value="{{isset($orangeClubImage->name) ? $orangeClubImage->name : "" }}" required id="btn_text_en"
+                                            type="text" class="form-control @error('name') is-invalid @enderror"
+                                            placeholder="Enter Name" name="name">
+                                        <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
                                         <label for="partner_details" class="required">Partner Details</label>
                                         <textarea rows="3" id="partner_details" name="partner_details" class="form-control" placeholder="Enter Partner Details">{{ $orangeClubImage->partner_details }}</textarea>
                                     </div>
