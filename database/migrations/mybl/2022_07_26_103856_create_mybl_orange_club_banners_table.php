@@ -15,6 +15,7 @@ class CreateMyblOrangeClubBannersTable extends Migration
     {
         Schema::create('mybl_orange_club_banners', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->string('image_url');
             $table->string('component_identifier');
             $table->string('redirect_url')->nullable();

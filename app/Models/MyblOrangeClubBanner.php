@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MyblOrangeClubBanner extends Model
 {
     protected $fillable = [
+        'name',
         'image_url',
         'component_identifier',
         'redirect_url',
