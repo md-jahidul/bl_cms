@@ -74,7 +74,7 @@
                                             data-validation-maxlength-message="Title can not be more then 200 Characters"
                                             value="{{isset($adTech->title) ? $adTech->title : ""}}" required id="title"
                                             type="text" class="form-control @error('redeem_title_en') is-invalid @enderror"
-                                            placeholder="Enter Redeem Title BN" name="title">
+                                            placeholder="Enter Title" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
