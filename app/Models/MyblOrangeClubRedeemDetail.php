@@ -9,6 +9,8 @@ class MyblOrangeClubRedeemDetail extends Model
     protected $fillable = [
         'redeem_title_en',
         'redeem_title_bn',
+        'redeem_sub_title_en',
+        'redeem_sub_title_bn',
         'redeem_logo',
         'coin_amount',
         'btn_text_en',

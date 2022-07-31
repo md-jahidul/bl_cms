@@ -74,24 +74,6 @@
                             <div class="help-block"></div>
                         </div>
                     </div>
-                    <div class="form-group col-md-6 mb-2">
-                        <label  for="btn_text_en" class="required">Button Text EN:</label>
-                        <input readonly
-                            value="{{isset($redeemDetail->btn_text_en) ? $redeemDetail->btn_text_en : ""}}" required id="btn_text_en"
-                            type="text" class="form-control @error('btn_text_en') is-invalid @enderror"
-                            placeholder="Enter Button Title EN" name="btn_text_en">
-                        <small class="text-danger"> @error('btn_text_en') {{ $message }} @enderror </small>
-                        <div class="help-block"></div>
-                    </div>
-                    <div class="form-group col-md-6 mb-2">
-                        <label for="btn_text_bn" class="required">Button Text BN:</label>
-                        <input readonly
-                            value="{{isset($redeemDetail->btn_text_bn) ? $redeemDetail->btn_text_bn : ""}}" required id="btn_text_en"
-                            type="text" class="form-control @error('btn_text_bn') is-invalid @enderror"
-                            placeholder="Enter Button Title BN" name="btn_text_bn">
-                        <small class="text-danger"> @error('btn_text_bn') {{ $message }} @enderror </small>
-                        <div class="help-block"></div>
-                    </div>
                 </div>
                 <div class="heading-elements"></div>
             </div>
