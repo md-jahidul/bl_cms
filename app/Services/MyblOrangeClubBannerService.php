@@ -72,7 +72,7 @@
                     }
                     $data['other_attributes'] = json_encode($other_attributes);
                 }
-
+//                dd($data);
                 return $orangeClubImage->update($data);
             } catch (\Exception $e) {
 
