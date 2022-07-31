@@ -79,21 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="default">Default :</label>
-                            <select required class="form-control" value="" name="is_default" id="default">
-                                <option @if(isset($navigationMenu)) @if($navigationMenu->is_default==0) selected
-                                        @endif @endif value="0">Not Default
-                                </option>
-                                <option @if(isset($navigationMenu)) @if($navigationMenu->is_default==1) selected
-                                        @endif @endif value="1">Default
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3" id="action_div">
+                    <div class="col-md-6" id="action_div">
                         @php
                             $actionList = Helper::navigationActionList();
                         @endphp
@@ -161,7 +147,7 @@
                         @foreach ($navigationMenus as $data)
                             <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $data->title_en }} {!! $data->is_default ? "<b class='text-success ml-1'>(Default)</b>" : "" !!}
+                                <td>{{ $data->title_en }}
                                     {!! $data->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>
                                     {{ isset($actionList [$data->component_identifier])?$actionList [$data->component_identifier] : '' }}
@@ -244,6 +230,8 @@
                     $(".other-info-div").remove();
                 }
             })
+
+            $("#navigate_action").select2()
         });
     </script>
 @endpush
