@@ -193,6 +193,26 @@
                                         <img style="height:100px;width:200px" id="img_display"
                                              src="{{asset($orangeClubImage->image_url)}}" alt="" srcset="">
                                     </div>
+                                    @php
+                                        $actionList = Helper::navigationActionList();
+
+                                        /*dd($actionList)*/
+                                    @endphp
+
+                                    <div class="form-group col-md-6 mb-2 "
+                                         id="slider_action">
+                                        <label for="redirect_url">Slider Action </label>
+                                        <select id="navigate_action" name="component_identifier" class="browser-default custom-select">
+                                            <option value="">Select Action</option>
+                                            @foreach ($actionList as $key => $value)
+                                                <option value="{{ $key }}" {{ ( $key == $orangeClubImage->redirect_url) ? 'selected' : '' }}>
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div>
+
                                     {{--<div id="link" class="form-group col-md-6">
                                         <label id="label_link" for="numbers">Web or Deep Link</label>
                                         <div class='input-group'>
