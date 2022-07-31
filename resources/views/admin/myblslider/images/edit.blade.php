@@ -120,7 +120,7 @@
                                 $actionList = Helper::navigationActionList();
                             @endphp
 
-                            <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
+                            <div class="form-group col-md-6 mb-2 "
                                  id="slider_action">
                                 <label for="redirect_url">Slider Action </label>
                                 <select id="navigate_action" name="redirect_url" class="browser-default custom-select">

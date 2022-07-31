@@ -23,7 +23,7 @@ class CreateMyblOrangeClubBannersTable extends Migration
             $table->string('user_group_type')->nullable();
             $table->bigInteger('base_groups_id')->nullable();
             $table->boolean('status')->default(0);
-            $table->longText('other_attributes')->nullable();
+            $table->json('other_attributes')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->timestamps();

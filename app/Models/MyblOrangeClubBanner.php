@@ -16,6 +16,7 @@ class MyblOrangeClubBanner extends Model
         'base_groups_id',
         'status',
         'start_time',
+        'other_attributes',
         'end_time'
     ];
 }

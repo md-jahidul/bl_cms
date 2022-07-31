@@ -6,6 +6,7 @@
     use App\Traits\CrudTrait;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Http\Response;
+    use Illuminate\Support\Facades\Log;
 
     class MyblOrangeClubBannerService
     {
@@ -32,8 +33,7 @@
                         'content' => $data['other_attributes']
                     ];
                 }
-                // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
-                $data['other_attributes'] = $other_attributes;
+                $data['other_attributes'] = json_encode($other_attributes, true);
             }
 
             try {
@@ -41,7 +41,7 @@
 
                 return true;
             } catch (\Exception $e){
-                dd($e->getMessage());
+
                 return false;
             }
         }
@@ -70,9 +70,9 @@
                             'content' => $data['other_attributes']
                         ];
                     }
-                    $data['other_attributes'] = $other_attributes;
+                    $data['other_attributes'] = json_encode($other_attributes);
                 }
-
+//                dd($data);
                 return $orangeClubImage->update($data);
             } catch (\Exception $e) {
 
