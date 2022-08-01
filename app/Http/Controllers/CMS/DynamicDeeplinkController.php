@@ -34,7 +34,7 @@ class DynamicDeeplinkController extends Controller
     protected const STORE = 'store';
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
-    protected const MyBlCampaignSection = 'mybl_campaign_section';
+    protected const MyBlCampaignSection = 'mybl_campaign';
     protected const OTHER = 'others';
     /**
      * @var MyBlInternetOffersCategoryService
