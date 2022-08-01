@@ -92,6 +92,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             }
 
             $winnerData = $this->buildWinnerData($product, $candidiate, $slotStarts, $slotEnds);
+
             $sendNotification = $myBlNewCampaignWinnerRepository->setWinner($winnerData);
             if ($sendNotification) {
                 $user_phone = $winnerData['msisdn'];
@@ -151,7 +152,9 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             'my_bl_campaign_id' => $product->campaign->id,
             'my_bl_campaign_detail_id' => $product->id,
             'msisdn' => $user->msisdn,
-            'product_code' => $product->product_code,
+            'product_code' => $product->product_code ?? null,
+            'recharge_amount' => $product->recharge_amount ?? null,
+            'bonus_product_code' => $product->campaign->bonus_product_code ?? null,
             'winning_slot_start' => $slotStarts,
             'winning_slot_end' => $slotEnds
         ];
