@@ -32,7 +32,7 @@
                                 <td>{{ $slider_image->id }}</td>
                                 <td><img class="" src="{{ asset($slider_image->image_url) }}" alt="Slider Image"
                                          height="100" width="200"/></td>
-                                <td>{{ $slider_image->title_en }}</td>
+                                <td>{{ $slider_image->name }}</td>
                                 <td>{{ $slider_image->user_group_type}}</td>
                                 <td>{{ $slider_image->start_time }}</td>
                                 <td>{{ $slider_image->end_time }}</td>
