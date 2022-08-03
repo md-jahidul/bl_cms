@@ -48,6 +48,10 @@ class MyblReferAndEarnService
         if (!empty($data['icon'])) {
             $data['icon'] = 'storage/' . $data['icon']->store('refer_and_earn');
         }
+        if ($data['claim_reward_type'] != "capped") {
+            $data['capping_interval'] = null;
+            $data['number_of_referrals'] = null;
+        }
         $data['referrer_product_code'] = str_replace(' ', '', strtoupper($data['referrer_product_code']));
         $data['referee_product_code'] = str_replace(' ', '', strtoupper($data['referee_product_code']));
         $this->save($data);
@@ -69,6 +73,10 @@ class MyblReferAndEarnService
 //            if ($referAndEarn->icon) {
 //                unlink($referAndEarn->icon);
 //            }
+        }
+        if ($data['claim_reward_type'] != "capped") {
+            $data['capping_interval'] = null;
+            $data['number_of_referrals'] = null;
         }
         $data['referrer_product_code'] = str_replace(' ', '', strtoupper($data['referrer_product_code']));
         $data['referee_product_code'] = str_replace(' ', '', strtoupper($data['referee_product_code']));
