@@ -18,7 +18,7 @@
                     <h5 class="menu-title"><strong>Refer Card Information</strong></h5>
                     <hr>
                     <div class="card-body card-dashboard">
-                        <form id="feed-form" novalidate class="form row"
+                        <form id="refer_form"  class="form row"
                               action="{{ (isset($campaign)) ? route('mybl-refer-and-earn.update', $campaign->id) : route('mybl-refer-and-earn.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
@@ -330,7 +330,98 @@
                                                placeholder="Enter title in English" name="redeem_card_sub_title_bn">
                                         <div class="help-block"></div>
                                     </div>
+                                    <div class="col-md-12 pl-0"><h5><strong>Refferal Claim And Other Settings</strong></h5></div>
+                                    <div class="form-actions col-md-12 mt-0"></div>
+                                    <div class="form-group col-md-3 mb-2">
+                                        <label for="claim_reward_type">Claim Reward Type: </label>
+                                        <div class="form-group {{ $errors->has('claim_reward_type') ? ' error' : '' }}">
+                                            <input type="radio" name="claim_reward_type" class="claim_reward_type radio" value="unlimited" id="input-radio-17"
+                                                {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "unlimited") ? 'checked' : '' }}>
+                                            <label for="input-radio-17" class="mr-3">Unlimited</label>
+                                            <input type="radio" name="claim_reward_type" class="claim_reward_type" value="automatic" id="input-radio-18"
+                                                {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "automatic") ? 'checked' : '' }}>
+                                            <label for="input-radio-18" class="mr-3">Automatic</label>
+                                            <input type="radio" name="claim_reward_type" class="claim_reward_type" value="capped" id="input-radio-19"
+                                                {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "capped") ? 'checked' : '' }}>
+                                            <label for="input-radio-19" class="mr-3">Capped</label>
+                                            @if ($errors->has('claim_reward_type'))
+                                                <div class="help-block">  {{ $errors->first('status') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
+                                        <label for="capping_internal" class="required">Capping Interval</label>
+                                        <select  id="capping_internal" name="capping_interval"
+                                                class="browser-default custom-select product-list">
+                                            <option value="">Select Capping Interval</option>
+                                            @foreach (config('constants.capping_interval') as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    {{ isset($campaign) && $campaign->capping_interval == $key ? 'selected' : '' }}>{{ strtoupper($value) }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
+                                        <label for="number_of_reffarals" class="required">No Of Referral To Be Claimed</label>
+                                        <input
+                                               value="{{ isset($campaign) ? $campaign->number_of_referrals : old('number_of_referrals') }}"
+                                               id="number_of_reffarals"
+                                               type="number" class="form-control"
+                                               placeholder="Enter The Number" name="number_of_referrals">
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
+                                        <label for="claim_validity_days" class="required">Claim Validity(Days)</label>
+                                        <input
+                                            value="{{ isset($campaign) ? $campaign->claim_validity_days : old('claim_validity_days') }}"
+                                            id="claim_validity_days"
+                                            type="number" class="form-control"
+                                            placeholder="Enter Claim Validity Days" name="claim_validity_days">
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="dashboard_card_btn_text" class="required">Home Button Text En</label>
+                                        <input required maxlength="200"
+                                               data-validation-required-message="Title is required"
+                                               value="{{ isset($campaign) ? $campaign->dashboard_card_btn_text : old('dashboard_card_btn_text') }}"
+                                               id="dashboard_card_btn_text"
+                                               type="text" class="form-control"
+                                               placeholder="Enter title in English" name="dashboard_card_btn_text">
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="dashboard_card_btn_text_bn" class="required">Home Button Text Bn</label>
+                                        <input required maxlength="200"
+                                               data-validation-required-message="Title is required"
+                                               value="{{ isset($campaign) ? $campaign->dashboard_card_btn_text_bn : old('dashboard_card_btn_text_bn') }}"
+                                               id="dashboard_card_btn_text_bn"
+                                               type="text" class="form-control"
+                                               placeholder="Enter title in Bangla" name="dashboard_card_btn_text_bn">
+                                        <div class="help-block"></div><br>
+                                    </div>
 
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="title_en" class="required">
+                                                How it works description of EN
+                                            </label>
+                                            <textarea id="terms-conditions" name="description_en" required>
+                                                @if(isset($campaign->description_en))
+                                                    {{ $campaign->description_en }}
+                                                @endif
+                                            </textarea>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="title_en" class="required">How it works description of BN</label>
+                                            <textarea id="terms-conditions" name="description_bn" required>
+                                                @if(isset($campaign->description_bn))
+                                                    {{ $campaign->description_bn }}
+                                                @endif
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions col-md-12 mt-0"></div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input">Status: </label>
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
@@ -381,7 +472,11 @@
 @endsection
 
 @push('style')
-
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 @endpush
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
@@ -404,10 +499,11 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
     <script>
         $(document).ready(function () {
-
+            $('#refer_form').validate();
             var date = new Date();
             date.setDate(date.getDate());
             $('#start_date').datetimepicker({
@@ -444,6 +540,51 @@
                 }
             });
 
+            $('.claim_reward_type').click(function () {
+                console.log($(this).val());
+                if ($(this).val() !== "capped"){
+                    $('.capped-check').addClass('d-none');
+                    $('#capping_internal').removeAttr('required', 'required');
+                    $('#number_of_reffarals').removeAttr('required', 'required');
+                    $('#claim_validity_days').removeAttr('required', 'required');
+                } else {
+                    $('.capped-check').removeClass('d-none');
+                    $('#capping_internal').prop('required', 'required');
+                    $('#number_of_reffarals').prop('required', 'required');
+                    $('#claim_validity_days').prop('required', 'required');
+                }
+            });
+
+            $('#capping_internal').click(function () {
+
+                $('#capping_internal').prop('required', 'required');
+            });
+
+            $('#number_of_reffarals').keyup(function () {
+
+                $('#number_of_reffarals').prop('required', 'required');
+            });
+
+            $('#claim_validity_days').keyup(function () {
+
+                $('#claim_validity_days').prop('required', 'required');
+            });
+
+            $(function () {
+                console.log("test");
+                $("textarea#terms-conditions").summernote({
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['table', ['table']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['view', ['fullscreen']]
+                    ],
+                    height:300
+                })
+            });
             // $('.js_editor_box').each(function (k, v) {
             //     $(this).summernote({
             //         toolbar: [
