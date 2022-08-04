@@ -24,6 +24,7 @@ class CampaignNewModalityUserRepository extends BaseRepository
         })
         ->selectRaw('msisdn, amount')
         ->orderBy('created_at', 'asc')
+        ->orderBy('amount', 'DESC')
         ->first();
     }
 
