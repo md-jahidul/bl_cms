@@ -36,7 +36,7 @@
                                             <label  class="required">Select Campaign Tab </label>
                                             <select name="mybl_campaign_section_id" class="browser-default custom-select"
                                                     id="campaignTab" required data-validation-required-message="Please select campaign type">
-                                                <option value="" >--Select Tap Section--</option>
+                                                <option value="" >--Select Tab Section--</option>
                                                 @foreach($campaignSection as $tab)
                                                     <option value="{{ $tab->id }}" >{{ $tab->title_en }}</option>
                                                 @endforeach
@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="max_amount"></label>
-                                            <a href="{{ route('mybl-campaign-section.create') }}" class="btn btn-outline-success mt-2"><i class="la la-plus"></i> Create New Section Tap</a>
+                                            <a href="{{ route('mybl-campaign-section.create') }}" class="btn btn-outline-success mt-2"><i class="la la-plus"></i> Create New Section Tab</a>
                                         </div>
                                     </div>
                                 </div>
