@@ -20,7 +20,7 @@ class CampaignNewModalityUserRepository extends BaseRepository
             // $q->where('my_bl_campaign_detail_id', $product->id);
             $q->where('my_bl_campaign_id', $product->my_bl_campaign_id);
             $q->where('created_at', '>=', $slotStarts);
-            $q->where('created_at', '<=', $slotEnds);
+            $q->where('created_at', '<', $slotEnds);
         })
         ->selectRaw('msisdn')
         ->orderBy('created_at', 'asc')
@@ -32,7 +32,7 @@ class CampaignNewModalityUserRepository extends BaseRepository
             // $q->where('my_bl_campaign_detail_id', $product->id);
             $q->where('my_bl_campaign_id', $product->my_bl_campaign_id);
             $q->where('created_at', '>=', $slotStarts);
-            $q->where('created_at', '<=', $slotEnds);
+            $q->where('created_at', '<', $slotEnds);
         })
         ->groupBy('msisdn')
         ->selectRaw('msisdn, sum(amount) as amount_sum')
