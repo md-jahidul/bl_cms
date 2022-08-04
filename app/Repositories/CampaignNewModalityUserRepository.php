@@ -22,8 +22,9 @@ class CampaignNewModalityUserRepository extends BaseRepository
             $q->where('created_at', '>=', $slotStarts);
             $q->where('created_at', '<', $slotEnds);
         })
-        ->selectRaw('msisdn')
+        ->selectRaw('msisdn, amount')
         ->orderBy('created_at', 'asc')
+        ->orderBy('amount', 'DESC')
         ->first();
     }
 
