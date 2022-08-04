@@ -4,10 +4,13 @@ namespace App\Models\NewCampaignModality;
 
 use App\Models\RecurringScheduleHour;
 use App\RecurringSchedule;
+use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
 class MyBlCampaign extends Model
 {
+    use LogModelAction;
+
     protected $table = 'my_bl_campaigns';
     protected $appends = ['visibility_status'];
     protected $dates = ['start_date','end_date'];
@@ -62,7 +65,7 @@ class MyBlCampaign extends Model
         return $this->hasMany(RecurringScheduleHour::class, 'scheduler_id', 'id');
     }
 
-    public function getVisibilityStatusAttribute(): bool 
+    public function getVisibilityStatusAttribute(): bool
     {
         return $this->visibilityStatus();
     }

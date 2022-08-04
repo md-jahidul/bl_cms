@@ -3,12 +3,14 @@
 namespace App\Models\NewCampaignModality;
 
 use App\Models\NotificationSchedule;
+use App\Traits\LogModelAction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class MyBlCampaignDetail extends Model
 {
+    use LogModelAction;
 
     protected $table = 'my_bl_campaign_details';
     protected $appends = ['visibility_status'];
