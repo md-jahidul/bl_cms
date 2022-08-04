@@ -50,7 +50,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
     {
         $myBlNewCampaignProductRepository = resolve(MyBlNewCampaignProductRepository::class);
         $productsByWinningTypes = $myBlNewCampaignProductRepository->getRunningCampaignProducts();
-//       dd($productsByWinningTypes, Carbon::now()->toDateTimeString());
+        // dd($productsByWinningTypes, Carbon::now()->toDateTimeString());
         $status = [];
         foreach ($productsByWinningTypes as $product) {
             $status[] = $this->processWinner($product);
@@ -153,7 +153,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             'my_bl_campaign_detail_id' => $product->id,
             'msisdn' => $user->msisdn,
             'product_code' => $product->product_code ?? null,
-            'recharge_amount' => $product->recharge_amount ?? null,
+            'recharge_amount' => $user->amount_sum ?? $user->amount ?? $product->recharge_amount ?? null,
             'bonus_product_code' => $product->campaign->bonus_product_code ?? null,
             'winning_slot_start' => $slotStarts,
             'winning_slot_end' => $slotEnds
@@ -186,13 +186,14 @@ class MyBlCampaignWinnerSelectionService extends BaseService
         $productStartsAt = Carbon::parse($product->start_date);
         $productEndsAt = Carbon::parse($product->end_date);
 
-        $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(
-            -$slotInterval * 4
-        ); // addExtra Interval For MaxRecharge with $campaignEndsAt For Max Type
+        // addExtra Interval For MaxRecharge with $campaignEndsAt For Max Type
+        $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(-$slotInterval * 4); 
+        
         $slotStartsAt = Carbon::parse($campaign->start_date);
         $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
 
         while ($productEndsAt->gte($campaignStartsAt) && $slotEndsAt->lte($campaignEndsAt)) {
+
             // Only generate Current Slot
             // if(!$currentTime->gt($slotStartsAt) && !$currentTime->lt($slotEndsAt)) {
 
