@@ -147,6 +147,15 @@ class CampaignNewModalityService
                     $campaignDetails = $this->campaignNewModalityDetailRepository->findOne(
                         $product['campaign_details_id'] ?? 0
                     );
+
+                    if (isset($product['product_code'])) {
+                        $coreProduct = $this->productCoreRepository->findOneByProperties(
+                            ['product_code' => $product['product_code']],
+                            ['sim_type']
+                        );
+                        $product['product_for'] = isset($coreProduct->sim_type) ? ($coreProduct->sim_type == 1 ? "prepaid" : "postpaid") : null;
+                    }
+
                     $product['show_in_home'] = isset($product['show_in_home']) ? 1 : 0;
                     if (!empty($product['thumb_image'])) {
                         $product['thumb_image'] = 'storage/' . $product['thumb_image']->store('mybl_new_campaign');
