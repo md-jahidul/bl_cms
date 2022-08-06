@@ -226,12 +226,12 @@ class MyBlCampaignWinnerSelectionService extends BaseService
 
             // Only generate X *slots* past/complete && For All Type Campaign
             // Not accepting running/continuing + future/upcomming slots
-            // if ($currentTimePastXIntervals->gt($slotEndsAt)) {
-            //     $slotStartsAt = Carbon::parse($slotEndsAt);
-            //     $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
+            if ($currentTimePastXIntervals->gt($slotEndsAt)) {
+                $slotStartsAt = Carbon::parse($slotEndsAt);
+                $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
 
-            //     continue;
-            // }
+                continue;
+            }
 
             // Only generate *slots* past/complete && For All Type Campaign
             // Not accepting running/continuing + future/upcomming slots
