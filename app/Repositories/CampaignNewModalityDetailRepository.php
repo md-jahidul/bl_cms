@@ -46,8 +46,8 @@ class CampaignNewModalityDetailRepository extends BaseRepository
             // ->where('status', 1)
             // ->where('campaign.status', 1)
             ->where('campaign.start_date', '<=', Carbon::now()->toDateTimeString())
-            ->where('end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
-            // ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
+            ->where('end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString())
+            ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
             // ->groupBy('campaign.winning_type');
     }
 }
