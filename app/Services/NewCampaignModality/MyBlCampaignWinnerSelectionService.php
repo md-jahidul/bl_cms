@@ -66,6 +66,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
         $myBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
 
         $slots = $this->determineSlots($product);
+        
         foreach ($slots as $slot) {
             $slotStarts = Carbon::parse($slot['slot_start_at'])->toDateTimeString();
             $slotEnds = Carbon::parse($slot['slot_end_at'])->toDateTimeString();
@@ -92,8 +93,8 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             }
 
             $winnerData = $this->buildWinnerData($product, $candidiate, $slotStarts, $slotEnds);
-
             $sendNotification = $myBlNewCampaignWinnerRepository->setWinner($winnerData);
+
             if ($sendNotification) {
                 $user_phone = $winnerData['msisdn'];
                 try {
@@ -187,7 +188,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
         $productEndsAt = Carbon::parse($product->end_date);
 
         // addExtra Interval For MaxRecharge with $campaignEndsAt For Max Type
-        $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(-$slotInterval * 4); 
+        $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(-$slotInterval * 1); 
         
         $slotStartsAt = Carbon::parse($campaign->start_date);
         $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
@@ -195,7 +196,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
         while ($productEndsAt->gte($campaignStartsAt) && $slotEndsAt->lte($campaignEndsAt)) {
 
             // Only generate Current Slot
-            // if(!$currentTime->gt($slotStartsAt) && !$currentTime->lt($slotEndsAt)) {
+            // if(!$currentTime->gt($slotStartsAt)) {
 
             //     $slotStartsAt = Carbon::parse($slotEndsAt);
             //     $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
@@ -225,12 +226,12 @@ class MyBlCampaignWinnerSelectionService extends BaseService
 
             // Only generate X *slots* past/complete && For All Type Campaign
             // Not accepting running/continuing + future/upcomming slots
-            if ($currentTimePastXIntervals->gt($slotEndsAt)) {
-                $slotStartsAt = Carbon::parse($slotEndsAt);
-                $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
+            // if ($currentTimePastXIntervals->gt($slotEndsAt)) {
+            //     $slotStartsAt = Carbon::parse($slotEndsAt);
+            //     $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
 
-                continue;
-            }
+            //     continue;
+            // }
 
             // Only generate *slots* past/complete && For All Type Campaign
             // Not accepting running/continuing + future/upcomming slots

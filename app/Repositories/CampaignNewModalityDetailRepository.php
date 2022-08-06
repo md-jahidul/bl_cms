@@ -23,7 +23,6 @@ class CampaignNewModalityDetailRepository extends BaseRepository
 
         $withArr = [
             'campaign' => function ($q) {
-                $q->where('status', 1);
                 $q->select([
                    'id',
                    'status',
@@ -42,11 +41,13 @@ class CampaignNewModalityDetailRepository extends BaseRepository
         ];
 
         return $this->model
-            ->where('status', 1)
             ->with($withArr)
             ->get()
-            ->where('campaign.start_date', '<=', Carbon::now()->toDateTimeString());
-            //    ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
-            //    ->groupBy('campaign.winning_type');
+            ->where('status', 1)
+            ->where('campaign.status', 1)
+            ->where('campaign.start_date', '<=', Carbon::now()->toDateTimeString())
+            ->where('end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
+            // ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
+            // ->groupBy('campaign.winning_type');
     }
 }
