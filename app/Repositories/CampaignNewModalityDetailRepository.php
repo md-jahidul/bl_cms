@@ -43,8 +43,8 @@ class CampaignNewModalityDetailRepository extends BaseRepository
         return $this->model
             ->with($withArr)
             ->get()
-            ->where('status', 1)
-            ->where('campaign.status', 1)
+            // ->where('status', 1)
+            // ->where('campaign.status', 1)
             ->where('campaign.start_date', '<=', Carbon::now()->toDateTimeString())
             ->where('end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
             // ->where('campaign.end_date', '>=', Carbon::now()->addHour(-1)->toDateTimeString());
