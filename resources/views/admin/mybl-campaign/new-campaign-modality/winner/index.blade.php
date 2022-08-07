@@ -15,6 +15,7 @@
                             <th>Campaign Name</th>
                             <th>Product Code</th>
                             <th>Total Recharge Amount</th>
+                            <th>Pack Purchase Amount</th>
                             <th>Msisdn</th>
                             <th>Bonus Product Code</th>
                             <th>Winner Slot Start</th>
@@ -27,7 +28,8 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $data->campaign->name }}</td>
                                 <td>{{ $data->product_code }}</td>
-                                <td>{{ $data->recharge_amount }}</td>
+                                <td>{{ isset($data->product_code) ? "" : $data->recharge_amount }}</td>
+                                <td>{{ isset($data->product_code) ? $data->recharge_amount : "" }}</td>
                                 <td>{{ $data->msisdn }}</td>
                                 <td>{{ $data->bonus_product_code }}</td>
                                 <td>{{ $data->winning_slot_start }}</td>
