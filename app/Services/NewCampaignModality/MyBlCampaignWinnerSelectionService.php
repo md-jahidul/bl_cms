@@ -96,7 +96,6 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             $sendNotification = $myBlNewCampaignWinnerRepository->setWinner($winnerData);
 
             if ($sendNotification) {
-
                 $user_phone = $winnerData['msisdn'];
                 try {
                     $param = [
@@ -118,7 +117,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
                         MasterLog::create($saveLogData);
 
                         $notification = [
-                            'title' => "Congratulations on winning ". $product->campaign->name ." Campaign",
+                            'title' => $product->campaign->winning_title,
                             'body' => $product->campaign->winning_massage_en,
                             "send_to_type" => "INDIVIDUALS",
                             "recipients" => ["0" . $user_phone],
