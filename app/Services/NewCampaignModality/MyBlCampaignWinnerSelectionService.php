@@ -96,7 +96,6 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             $sendNotification = $myBlNewCampaignWinnerRepository->setWinner($winnerData);
 
             if ($sendNotification) {
-                dd($product->campaign->winning_title);
                 $user_phone = $winnerData['msisdn'];
                 try {
                     $param = [
