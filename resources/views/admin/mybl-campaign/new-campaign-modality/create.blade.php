@@ -378,6 +378,9 @@
                                     <label for="max_amount">Max Cash Back Amount</label>
                                     <input  type="number" name="max_amount" class="form-control"
                                             placeholder="Please Enter Max Cash Back Amount For Campaign">
+                                    <div class="help-block text-warning">
+                                        * Max cashback amount only for<strong> recharge type Campaign.</strong>
+                                    </div>
                                 </div>
 
                                 <div class="form-group col-md-4" id="number_of_apply_times_for_campaign">
