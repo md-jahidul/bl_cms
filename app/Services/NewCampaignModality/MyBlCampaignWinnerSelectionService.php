@@ -66,7 +66,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
         $myBlNewCampaignWinnerRepository = resolve(MyBlNewCampaignWinnerRepository::class);
 
         $slots = $this->determineSlots($product);
-        
+
         foreach ($slots as $slot) {
             $slotStarts = Carbon::parse($slot['slot_start_at'])->toDateTimeString();
             $slotEnds = Carbon::parse($slot['slot_end_at'])->toDateTimeString();
@@ -96,6 +96,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
             $sendNotification = $myBlNewCampaignWinnerRepository->setWinner($winnerData);
 
             if ($sendNotification) {
+
                 $user_phone = $winnerData['msisdn'];
                 try {
                     $param = [
@@ -117,7 +118,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
                         MasterLog::create($saveLogData);
 
                         $notification = [
-                            'title' => "Winner Notification Title",
+                            'title' => "Congratulations on winning ". $product->campaign->name ." Campaign",
                             'body' => $product->campaign->winning_massage_en,
                             "send_to_type" => "INDIVIDUALS",
                             "recipients" => ["0" . $user_phone],
@@ -188,8 +189,8 @@ class MyBlCampaignWinnerSelectionService extends BaseService
         $productEndsAt = Carbon::parse($product->end_date);
 
         // addExtra Interval For MaxRecharge with $campaignEndsAt For Max Type
-        $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(-$slotInterval * 1); 
-        
+        $currentTimePastXIntervals = Carbon::parse($currentTime)->$addTime(-$slotInterval * 1);
+
         $slotStartsAt = Carbon::parse($campaign->start_date);
         $slotEndsAt = Carbon::parse($slotStartsAt)->$addTime($slotInterval);
 
