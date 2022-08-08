@@ -29,7 +29,7 @@ class MyBlCampaign extends Model
             'winning_interval_unit',
             'reward_bonus_code',
             "winning_massage_en",
-            "winning_massage_bn",
+            "winning_title",
             'deno_type',
             'recurring_type',
             'reward_getting_type',

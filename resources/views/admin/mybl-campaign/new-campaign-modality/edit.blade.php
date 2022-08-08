@@ -384,21 +384,22 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="winning_title" class="required">Notification Title</label>
+                                    <input required
+                                           value="{{ $campaign->winning_title }}"
+                                           type="text" class="form-control @error('winning_title') is-invalid @enderror"
+                                           placeholder="Enter Winning Title" name="winning_title">
+                                    <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
+                                    <div class="help-block"></div>
+                                </div>
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="winning_massage_en" >Winning Communication Message (EN):</label>
+                                    <label for="winning_massage_en" >Notification Body</label>
                                     <textarea
                                         class="form-control @error('winning_massage_en') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_en"
                                         name="winning_massage_en" rows="5">{{ $campaign->winning_massage_en }}</textarea>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('winning_massage_en') {{ $message }} @enderror </small>
-                                </div>
-                                <div class="form-group col-md-6 mb-2">
-                                    <label for="winning_massage_bn" >Winning Communication Message (BN):</label>
-                                    <textarea
-                                        class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
-                                        name="winning_massage_bn" rows="5">{{ $campaign->winning_massage_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>
                                 </div>
                             </div>
                             <div class="row">
