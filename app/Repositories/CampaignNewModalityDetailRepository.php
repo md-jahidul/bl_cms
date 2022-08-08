@@ -24,18 +24,19 @@ class CampaignNewModalityDetailRepository extends BaseRepository
         $withArr = [
             'campaign' => function ($q) {
                 $q->select([
-                   'id',
-                   'status',
-                   'first_sign_up_user',
-                   'recurring_type',
-                   'name',
-                   'start_date',
-                   'end_date',
-                   'winning_type',
-                   'winning_interval',
-                   'winning_interval_unit',
-                   'winning_massage_en',
-                   'bonus_product_code'
+                    'id',
+                    'status',
+                    'first_sign_up_user',
+                    'recurring_type',
+                    'name',
+                    'start_date',
+                    'end_date',
+                    'winning_type',
+                    'winning_interval',
+                    'winning_interval_unit',
+                    'winning_massage_en',
+                    'bonus_product_code',
+                    'name'
                ]);
             }
         ];
