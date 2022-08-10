@@ -6,7 +6,11 @@
         Create Amar Offer
     </li>
 @endsection
-
+@section('action')
+    <a href="{{ route('amarOffer.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i>
+        Cancel
+    </a>
+@endsection
 @section('content')
     <section>
         <div class="card card-info mb-0" style="padding-left:10px">
@@ -19,16 +23,60 @@
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Create Amar Offer.</h4>
                             <div class="row">
-                                <div class="col-md-12">
+                                {{-- Select User Group --}}
+                                <div class="form-group col-md-12 mb-0 pl-0 section-row"><h5><strong>Select User Group</strong></h5></div>
+                                <div class="form-actions col-md-12 mt-0"></div>
+                                <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
+                                    <label for="title" class="required">Choose User Type</label><hr class="mt-0">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-12">
+                                            <input  type="radio" name="user_group_type" value="all" class="campaign_user_type" id="all"
+                                                {{ (isset($campaign) && $campaign->campaign_user_type == "all") ? 'checked' : '' }}>
+                                            <label for="all">All</label>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <input type="radio" name="user_group_type" value="prepaid" class="campaign_user_type" id="prepaid"
+                                                {{ (isset($campaign) && $campaign->campaign_user_type == "prepaid") ? 'checked' : '' }}>
+                                            <label for="prepaid">Prepaid</label>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <input type="radio" name="user_group_type" value="postpaid" class="campaign_user_type" id="postpaid"
+                                                {{ isset($campaign) && $campaign->campaign_user_type == "postpaid" ? 'checked' : '' }}>
+                                            <label for="postpaid">Postpaid</label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input type="radio" name="user_group_type" value="segment_wise" class="campaign_user_type" id="segment_wise"
+                                                {{ isset($campaign) && $campaign->campaign_user_type == "segment_wise" ? 'checked' : '' }} {{ isset($campaign) ? '' : 'checked' }}>
+                                            <label for="segment_wise">Segment Wise (Base Msisdn)</label>
+                                        </div>
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('type'))
+                                        <div class="help-block">  {{ $errors->first('type') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 mb-2 {{ isset($campaign) && $campaign->campaign_user_type != "segment_wise" ? 'd-none' : '' }}" id="base_msisdn">
+                                    <label for="redirect_url" class="required">Base Msisdn</label>
+                                    <select id="base_groups_id" name="base_groups_id"
+                                            class="browser-default custom-select">
+                                        <option value="">Select Action</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{ isset($campaign) && $campaign->base_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="required">Title:</label>
                                         <input
-
                                         required
                                         data-validation-required-message="Title is required"
                                         maxlength="200"
                                         data-validation-maxlength-message = "Title name can not be more then 200 characters"
-                                        type="text" max="200" value="@if(old('title')){{old('title')}}@endif" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        type="text" max="200" value="@if(old('name')){{old('name')}}@endif" id="title" class="form-control @error('name') is-invalid @enderror" placeholder="Enter title...." name="name">
                                         <div class="help-block">
                                             <small id="minutes" class="form-text text-info">Title name can not be more then 200 characters.</small>
                                         </div>
@@ -40,7 +88,21 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="product_code" class="required">Product Code:</label>
+                                        <input
+                                            required
+                                            data-validation-required-message="Product Code is required"
+                                            maxlength="200"
+                                            type="text" value="@if(old('product_code')){{old('product_code')}}@endif" id="product_code" class="form-control @error('product_code') is-invalid @enderror" placeholder="Product code.." name="product_code">
+                                        @error('product_code')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="internet" class="required">Internet:</label>
@@ -100,7 +162,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="price" class="required">Price:</label>
                                         <input
@@ -120,82 +182,46 @@
                                         @enderror
                                     </div>
                                 </div>
-
-                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="points" class="required">Points:</label>
-                                        <input
-                                        required
-                                        maxlength="50000"
-                                        data-validation-maxlength-message = "Points can not be more then 50000 digits"
-                                        data-validation-required-message="Points is required"
-                                        type="number" min="0" value="@if(old('points')){{old('points')}}@endif" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
-                                        <div class="help-block"></div>
-                                        @error('points')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="offer_code" class="required">Offer Code:</label>
-                                        <input
-                                        required
-                                        data-validation-required-message="Offer Code is required"
-                                        maxlength="200"
-                                        data-validation-maxlength-message = "Offer Code can not be more then 200 characters"
-                                        type="text" value="@if(old('offer_code')){{old('offer_code')}}@endif" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Offer code.." name="offer_code">
-                                        <div class="help-block">
-                                            <small id="validity" class="form-text text-info">Offer Code must have *,# and number in it.</small>
-                                        </div>
-                                        @error('offer_code')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="tag">Tag:</label>
-                                        <input
-                                        maxlength="200"
-                                        data-validation-maxlength-message = "Tag can not be more then 200 characters"
-                                        type="text" value="@if(old('tag')){{old('tag')}}@endif" id="tag" class="form-control @error('tag') is-invalid @enderror" placeholder="Offer code.." name="tag">
-                                        <div class="help-block"></div>
-                                        @error('tag')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="validity" class="required">Validity:</label>
                                         <input
-                                        required
-                                        maxlength="50"
-                                        data-validation-maxlength-message = "Validity can not be more then 50 digits"
-                                        data-validation-required-message="Validity is required"
-                                        type="number" min="0" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
-                                        <div class="help-block">
-                                            <small id="validity" class="form-text text-info">Enter Validity on day.</small>
-                                        </div>
+                                            required
+                                            maxlength="50"
+                                            data-validation-required-message="Validity is required"
+                                            type="number" min="0" value="@if(old('validity')){{old('validity')}}@endif" id="price" class="form-control @error('validity') is-invalid @enderror" placeholder="Validity.." name="validity">
                                         @error('validity')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Validity Unit</label>
+                                        <select name="validity_unit" class="form-control">
+                                            <option value="hours" >Hours</option>
+                                            <option value="day">Day</option>
+                                            <option value="days">Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control">
+                                            <option value="0" >Inactive</option>
+                                            <option value="1">Active</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 mb-0">
+                                    <label for="desc_en" class="required">Description</label>
+                                    <textarea rows="3" id="desc_en" name="description" class="form-control"
+                                              placeholder="Enter Product Description"></textarea>
+                                </div>
                             </div>
-
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
@@ -209,13 +235,18 @@
 
     </section>
 @endsection
-
-
-
-
 @push('style')
-
 @endpush
 @push('page-js')
-
+    <script>
+        $(document).ready(function () {
+            $('.campaign_user_type').click(function () {
+                if ($(this).val() !== "segment_wise"){
+                    $('#base_msisdn').addClass('d-none')
+                } else {
+                    $('#base_msisdn').removeClass('d-none')
+                }
+            });
+        });
+    </script>
 @endpush

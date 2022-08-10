@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Services\BaseMsisdnService;
 use Illuminate\Http\Request;
 use App\Http\Requests\AmarOfferRequest;
 use App\Http\Controllers\Controller;
@@ -14,7 +15,7 @@ class AmarOfferController extends Controller
     /**
      * @var AmarOfferService
      */
-    private $amarOfferService;
+    private $amarOfferService, $baseMsisdnService;
 
     /**
      * @var bool
@@ -25,9 +26,14 @@ class AmarOfferController extends Controller
      * BannerController constructor.
      * @param AmarOfferService $amarOfferService
      */
-    public function __construct(AmarOfferService $amarOfferService)
-    {
+    public function __construct
+    (
+        AmarOfferService $amarOfferService,
+        BaseMsisdnService $baseMsisdnService
+    ){
+
         $this->amarOfferService = $amarOfferService;
+        $this->baseMsisdnService = $baseMsisdnService;
         $this->middleware('auth');
     }
 
@@ -39,8 +45,7 @@ class AmarOfferController extends Controller
      */
     public function index()
     {
-        $orderBy = ['column' => "id", 'direction' => 'desc'];
-        $amarOffers = $this->amarOfferService->findAll('', '', $orderBy);
+        $amarOffers = $this->amarOfferService->findAll();
 
         return view('admin.offer-Amar.index')->with('amarOffers', $amarOffers);
     }
@@ -52,7 +57,9 @@ class AmarOfferController extends Controller
      */
     public function create()
     {
-        return view('admin.offer-Amar.create');
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+
+        return view('admin.offer-Amar.create', compact('baseMsisdnGroups'));
     }
 
     /**
@@ -61,7 +68,7 @@ class AmarOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AmarOfferRequest $request)
+    public function store(Request $request)
     {
         $response = $this->amarOfferService->storeAmarOffer($request->all());
         Session()->flash('message', $response->content());
@@ -85,9 +92,12 @@ class AmarOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(AmarOffer $amarOffer)
+    public function edit($amarOfferId)
     {
-        return view('admin.offer-Amar.edit')->with('amarOffer', $amarOffer);
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+        $amarOffer = $this->amarOfferService->findOne($amarOfferId);
+
+        return view('admin.offer-Amar.edit', compact('amarOffer', 'baseMsisdnGroups'));
     }
 
     /**
@@ -97,7 +107,7 @@ class AmarOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AmarOfferRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $response = $this->amarOfferService->updateAmarOffer($request->all(), $id);
         Session()->flash('success', $response->content());
