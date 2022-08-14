@@ -211,7 +211,7 @@
                                    <label for="eventInput3">Status</label>
                                    <select name="status" class="form-control">
                                        <option value="0" {{ $amarOffer->status == 0 ? 'selected': "" }}>Inactive</option>
-                                       <option value="1" {{ $amarOffer->status == 0 ? 'selected': "" }}>Active</option>
+                                       <option value="1" {{ $amarOffer->status == 1 ? 'selected': "" }}>Active</option>
                                    </select>
                                </div>
                            </div>
