@@ -20,7 +20,7 @@ class CreateMyBlCampaignUsersTable extends Migration
             $table->integer('msisdn')->index();
             $table->string('product_code')->index()->nullable();
             $table->integer('amount')->nullable();
-            $table->integer('discount_amount')->nullable();
+            $table->double('discount_amount', 8, 2)->nullable();
             $table->timestamps();
             $table->foreign('my_bl_campaign_id')
                 ->references('id')
