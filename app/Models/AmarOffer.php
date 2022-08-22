@@ -8,16 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class AmarOffer extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
-        'title',
+        'name',
+        'user_group_type',
+        'base_groups_id',
         'internet',
         'minutes',
         'sms',
         'validity',
         'price',
-        'offer_code',
+        'product_code',
         'tag',
-        'points'
+        'validity_unit',
+        'description',
+        'status'
     ];
 }

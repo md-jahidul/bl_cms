@@ -27,9 +27,12 @@
                         <thead>
                         <tr>
                             <th width="10%">ID</th>
-                            <th width="30%">Title</th>
-                            <th width="20%">Offer code</th>
-                            <th width="10%">Points</th>
+                            <th width="30%">Name</th>
+                            <th width="20%">Product Code</th>
+                            <th width="10%">Price</th>
+                            <th width="10%">Validity</th>
+                            <th width="10%">Validity Unit</th>
+                            <th width="10%">Status</th>
                             <th width="20%">Action</th>
                         </tr>
                         </thead>
@@ -37,14 +40,17 @@
                         @foreach ($amarOffers as $amarOffer)
                             <tr>
                                 <td width="10%">{{$amarOffer->id}}</td>
-                                <td width="30%">{{$amarOffer->title}}</td>
-                                <td width="20%">{{$amarOffer->offer_code}}</td>
-                                <td width="10%">{{$amarOffer->points}}</td>
+                                <td width="30%">{{$amarOffer->name}}</td>
+                                <td width="20%">{{$amarOffer->product_code}}</td>
+                                <td width="10%">{{$amarOffer->price}}</td>
+                                <td width="10%">{{$amarOffer->validity}}</td>
+                                <td width="10%">{{$amarOffer->validity_unit}}</td>
+                                <td width="10%">{{$amarOffer->status == 1 ? "Active" : "Inactive"}}</td>
                                 <td width="20%">
                                     <div class="btn-group" role="group">
-                                        <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
-                                            <i class="la la-info"></i>
-                                        </a>
+{{--                                        <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">--}}
+{{--                                            <i class="la la-info"></i>--}}
+{{--                                        </a>--}}
                                         <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
                                             <i class="la la-pencil"></i>
                                         </a>
