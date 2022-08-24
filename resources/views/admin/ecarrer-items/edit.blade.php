@@ -102,15 +102,46 @@ $hide_title = false;
 
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('image_name') ? ' error' : '' }}">
+                                <label>Image Name EN</label>
+                                <input type="text" name="image_name"  class="form-control" placeholder="Image Name EN"
+                                       value="{{ $ecarrer_item->image_name }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('image_name'))
+                                    <div class="help-block">  {{ $errors->first('image_name') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                <label>Image Name BN</label>
+                                <input type="text" name="image_name_bn"  class="form-control" placeholder="Image Name BN"
+                                       value="{{ $ecarrer_item->image_name_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('image_name_bn'))
+                                    <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label for="alt_text" class="required1">Alt text</label>
-                                <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt_text (english)"
+                                <label for="alt_text">Alt text</label>
+                                <input type="text" name="alt_text"  class="form-control" placeholder="Alt Text EN"
                                        value="{{ $ecarrer_item->alt_text }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('alt_text'))
-                                <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                 @endif
                             </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                <label for="alt_text">Alt text BN</label>
+                                <input type="text" name="alt_text_bn"  class="form-control" placeholder="Alt Text BN"
+                                       value="{{ $ecarrer_item->alt_text_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('alt_text_bn'))
+                                    <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                @endif
+                            </div>
+
 
                             <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
                                 <label for="embed">Video Embed Code</label>

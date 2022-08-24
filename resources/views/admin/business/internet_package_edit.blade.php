@@ -38,6 +38,9 @@
                                                Postpaid
                                     </label>
                                 </div>
+                                @if ($errors->has('type'))
+                                    <div class="help-block text-danger">{{ $errors->first('type') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -64,16 +67,25 @@
                             <div class="form-group">
                                 <label>Commercial Name (EN)<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$internet->product_commercial_name_en}}" required name="product_commercial_name_en" placeholder="Product Commercial Name (EN)">
+                                @if ($errors->has('product_commercial_name_en'))
+                                    <div class="help-block text-danger">{{ $errors->first('product_commercial_name_en') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Commercial Name (BN)<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$internet->product_commercial_name_bn}}" required name="product_commercial_name_bn" placeholder="Commercial Name (BN)">
+                                @if ($errors->has('product_commercial_name_bn'))
+                                    <div class="help-block text-danger">{{ $errors->first('product_commercial_name_bn') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Short Description<span class="text-danger">*</span></label>
                                 <textarea class="form-control" required name="product_short_description">{{$internet->product_short_description}}</textarea>
+                                @if ($errors->has('product_short_description'))
+                                    <div class="help-block text-danger">{{ $errors->first('product_short_description') }}</div>
+                                @endif
                             </div>
 
 
@@ -90,16 +102,25 @@
                             <div class="form-group">
                                 <label>Activation USSD Code<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$internet->activation_ussd_code}}" required name="activation_ussd_code" placeholder="Activation USSD Code">
+                                @if ($errors->has('activation_ussd_code'))
+                                    <div class="help-block text-danger">{{ $errors->first('activation_ussd_code') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Balance Check USSD Code<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$internet->balance_check_ussd_code}}" required name="balance_check_ussd_code" placeholder="Balance Check USSD Code">
+                                @if ($errors->has('balance_check_ussd_code'))
+                                    <div class="help-block text-danger">{{ $errors->first('balance_check_ussd_code') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Data Volume<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$internet->data_volume}}" required name="data_volume" placeholder="Data Volume">
+                                @if ($errors->has('data_volume'))
+                                    <div class="help-block text-danger">{{ $errors->first('data_volume') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -117,16 +138,25 @@
                                                MB
                                     </label>
                                 </div>
+                                @if ($errors->has('volume_data_unit'))
+                                    <div class="help-block text-danger">{{ $errors->first('volume_data_unit') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Validity<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control validity" value="{{$internet->validity}}" required name="validity" placeholder="Validity">
+                                @if ($errors->has('validity'))
+                                    <div class="help-block text-danger">{{ $errors->first('validity') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Validity Unit<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$internet->validity_unit}}" required name="validity_unit" placeholder="Validity Unit">
+                                @if ($errors->has('validity_unit'))
+                                    <div class="help-block text-danger">{{ $errors->first('validity_unit') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -145,11 +175,17 @@
                             <div class="form-group">
                                 <label>MRP<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control mrp" value="{{$internet->mrp}}" required name="mrp" placeholder="MRP">
+                                @if ($errors->has('mrp'))
+                                    <div class="help-block text-danger">{{ $errors->first('mrp') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label>Price<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control price" value="{{$internet->price}}" required name="price" placeholder="Price">
+                                @if ($errors->has('price'))
+                                    <div class="help-block text-danger">{{ $errors->first('price') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -261,6 +297,12 @@
                                 @if($internet->banner_photo != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_photo }}" alt="Banner Photo" width="100%" />
                                 @endif
+
+                               @if ($errors->has('banner_photo'))
+                                   <div class="help-block text-danger">
+                                       {{ $errors->first('banner_photo') }}
+                                   </div>
+                               @endif
                             </div>
 
                         </div>
@@ -277,31 +319,68 @@
                                 @if($internet->banner_image_mobile != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_image_mobile }}" alt="Banner Photo" width="100%" />
                                 @endif
+
+                                @if ($errors->has('banner_mobile'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('banner_mobile') }}
+                                    </div>
+                                @endif
                             </div>
 
                         </div>
 
-                        <div class="col-md-6 col-xs-12">
+                        <div class="col-md-6 col-xs-12 mb-1">
 
-                           <div class="form-group">
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control" value="{{$internet->alt_text}}" name="alt_text" placeholder="Banner Alt Text">
-                            </div>
-
-                        </div>
-                        <div class="col-md-6 col-xs-12">
-
-                            <label>Banner Photo Name</label>
+                            <label>Banner Photo Name EN</label>
                             <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">
-
-                            <input type="text" class="form-control banner_name" value="{{$internet->banner_name}}" name="banner_name" placeholder="Photo Name">
+                            <input type="text" class="form-control banner_name" name="banner_name" placeholder="Photo Name EN"
+                                   value="{{$internet->banner_name}}">
 
                             <small class="text-info">
                                 <strong>i.e:</strong> package-banner (no spaces)<br>
                             </small>
 
+                            @if ($errors->has('banner_name'))
+                                <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                            @endif
+
                         </div>
 
+                        <div class="col-md-6 col-xs-12 mb-1">
+
+                            <label>Banner Photo Name BN<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" required name="banner_name_bn" placeholder="Photo Name BN"
+                                   value="{{$internet->banner_name_bn}}">
+
+                            <small class="text-info">
+                                <strong>i.e:</strong> প্যাকেজ-ব্যনার (no spaces)<br>
+                            </small>
+
+                            @if ($errors->has('banner_name_bn'))
+                                <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                            @endif
+
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+
+                            <div class="form-group">
+                                <label>Alt Text EN</label>
+                                <input type="text" class="form-control" name="alt_text" placeholder="Banner Alt Text EN"
+                                       value="{{$internet->alt_text}}">
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+
+                            <div class="form-group">
+                                <label>Alt Text BN</label>
+                                <input type="text" class="form-control" name="alt_text_bn" placeholder="Banner Alt Text BN"
+                                       value="{{$internet->alt_text_bn}}">
+                            </div>
+
+                        </div>
 
                          <div class="col-md-12 col-xs-12">
 

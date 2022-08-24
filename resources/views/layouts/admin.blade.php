@@ -160,7 +160,11 @@
 
 
 
+<!-- URL Slug Converter -->
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+
 @stack('page-js')
+
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
 <script>

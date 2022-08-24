@@ -164,10 +164,37 @@
                                     </p>
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Card Photo Alt Text</label>
-                                    <input type="text" class="form-control" value="{{$package->card_banner_alt_text}}"  name="card_banner_alt_text" placeholder="Alt Text">
-                                </div>
+                                 <div class="col-md-6 col-xs-12  mb-1">
+                                     <label class="required">Card Photo Name EN</label>
+                                     <input type="text" class="form-control" required name="card_banner_name_en" placeholder="Card Photo Name EN" value="{{ $package->card_banner_name_en }}">
+                                     <small class="text-info">
+                                         <strong>i.e:</strong> package-banner (no spaces)<br>
+                                     </small>
+                                     @if($errors->has('card_banner_name_en'))
+                                         <div class="help-block text-danger">{{ $errors->first('card_banner_name_en') }}</div>
+                                     @endif
+                                 </div>
+
+                                 <div class="col-md-6 col-xs-12  mb-1">
+                                     <label class="required">Card Photo Name BN</label>
+                                     <input type="text" class="form-control" required  name="card_banner_name_bn" placeholder="Card Photo Name BN" value="{{ $package->card_banner_name_bn }}">
+                                     <small class="text-info">
+                                         <strong>i.e:</strong> package-banner (no spaces)<br>
+                                     </small>
+                                     @if($errors->has('card_banner_name_bn'))
+                                         <div class="help-block text-danger">{{ $errors->first('card_banner_name_bn') }}</div>
+                                     @endif
+                                 </div>
+
+                                 <div class="col-md-6 col-xs-12">
+                                     <label>Card Photo Alt Text EN</label>
+                                     <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text EN" value="{{ $package->card_banner_alt_text_bn }}">
+                                 </div>
+
+                                 <div class="col-md-6 col-xs-12">
+                                     <label>Card Photo Alt Text BN</label>
+                                     <input type="text" class="form-control"  name="card_banner_alt_text_bn" placeholder="Alt Text BN" value="{{ $package->card_banner_alt_text_bn }}">
+                                 </div>
 
                             </div>
 
@@ -206,20 +233,41 @@
 
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Banner Photo Name EN<span class="text-danger">*</span></label>
                                     <input type="hidden" name="old_banner_name" value="{{$package->banner_name}}">
-
-                                    <input type="text" class="form-control banner_name" required name="banner_name" value="{{ $package->banner_name }}" placeholder="Photo Name">
+                                    <input type="text" class="form-control" required name="banner_name" placeholder="Photo Name BN" value="{{$package->banner_name}}">
 
                                     <small class="text-info">
                                         <strong>i.e:</strong> package-banner (no spaces)<br>
                                     </small>
+
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Banner Photo Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="banner_name_bn" placeholder="Photo Name EN" value="{{ $package->banner_name_bn }}">
+
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
-                                    <label>Alt Text</label>
-                                    <input type="text" class="form-control" value="{{$package->alt_text}}" name="alt_text" placeholder="Alt Text">
+                                    <label>Alt Text EN</label>
+                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text EN" value="{{$package->alt_text}}">
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" class="form-control"  name="alt_text_bn" placeholder="Alt Text BN" value="{{$package->alt_text_bn}}">
                                 </div>
 
                             </div>

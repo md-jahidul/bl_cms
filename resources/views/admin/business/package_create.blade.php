@@ -120,52 +120,99 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-6 col-xs-12">
+                                <div class="col-md-6 col-xs-12 mb-1">
                                     <label for="Banner Photo">Card Photo (Web)<span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_web" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 </div>
-                                <div class="col-md-6 col-xs-12">
+                                <div class="col-md-6 col-xs-12  mb-1">
                                     <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 </div>
 
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Card Photo Name EN</label>
+                                    <input type="text" class="form-control"  name="card_banner_name_en" placeholder="Card Photo Name EN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+                                    @if($errors->has('card_banner_name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('card_banner_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Card Photo Name BN</label>
+                                    <input type="text" class="form-control"  name="card_banner_name_bn" placeholder="Card Photo Name BN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+                                    @if($errors->has('card_banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('card_banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6 col-xs-12">
-                                    <label>Card Photo Alt Text</label>
-                                    <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text">
+                                    <label>Card Photo Alt Text EN</label>
+                                    <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text EN">
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Card Photo Alt Text BN</label>
+                                    <input type="text" class="form-control"  name="card_banner_alt_text_bn" placeholder="Alt Text BN">
                                 </div>
 
                             </div>
 
                             <div class="form-group row">
 
-                                <div class="col-md-6 col-xs-12">
+                                <div class="col-md-6 col-xs-12  mb-1">
                                     <label for="Banner Photo">Banner Photo (Web)<span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 </div>
-                                <div class="col-md-6 col-xs-12">
+                                <div class="col-md-6 col-xs-12  mb-1">
                                     <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Banner Photo Name EN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="banner_name" placeholder="Photo Name BN">
 
                                     <small class="text-info">
                                         <strong>i.e:</strong> package-banner (no spaces)<br>
                                     </small>
+
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Banner Photo Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="banner_name_bn" placeholder="Photo Name EN">
+
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
-                                    <label>Alt Text</label>
-                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
+                                    <label>Alt Text EN</label>
+                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text EN">
                                 </div>
 
-
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" class="form-control"  name="alt_text_bn" placeholder="Alt Text BN">
+                                </div>
 
                             </div>
 

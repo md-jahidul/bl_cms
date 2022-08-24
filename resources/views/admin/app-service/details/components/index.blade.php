@@ -74,51 +74,51 @@
 
 {{-- {{ dd($data) }} --}}
 
-<div class="modal fade" id="add_compoent_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add component with type</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-            <form id="product_details_form" role="form" action="{{ route('appservice.component.create') }}" method="GET" novalidate enctype="multipart/form-data">
-                @csrf
-              <div class="modal-body">
-                <input type="hidden" name="tab_type" value="{{ $data['tab_type'] }}">
-                <input type="hidden" name="section_id" value="{{ $data['section_id'] }}">
+{{--<div class="modal fade" id="add_compoent_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}}
+{{--    <div class="modal-dialog" role="document">--}}
+{{--        <div class="modal-content">--}}
+{{--          <div class="modal-header">--}}
+{{--            <h5 class="modal-title" id="exampleModalLabel">Add component with type</h5>--}}
+{{--            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--              <span aria-hidden="true">&times;</span>--}}
+{{--            </button>--}}
+{{--          </div>--}}
+{{--            <form id="product_details_form" role="form" action="{{ route('appservice.component.create') }}" method="GET" novalidate enctype="multipart/form-data">--}}
+{{--                @csrf--}}
+{{--              <div class="modal-body">--}}
+{{--                <input type="hidden" name="tab_type" value="{{ $data['tab_type'] }}">--}}
+{{--                <input type="hidden" name="section_id" value="{{ $data['section_id'] }}">--}}
 
-                <div class="row">
+{{--                <div class="row">--}}
 
-                    <div class="form-group col-md-12">
-                        <label for="category_type">Select Component Type</label>
-                        <select class="form-control" name="component_type" aria-invalid="false">
-                                <option value="text_with_image_right">Text with image right</option>
-                                <option value="text_with_image_bottom">Text with image bottom</option>
-                                <option value="slider_text_with_image_right">Slider text with image right</option>
-                                <option value="title_text_editor">Title with table editor</option>
-                                <option value="video_with_text_right">Video with text right</option>
-                                <option value="multiple_image_banner">Multiple image banner</option>
-                                <option value="editor_only">Text Editor Only</option>
-                                <option value="accordion">Accordion</option>
-                            </select>
-                    </div>
+{{--                    <div class="form-group col-md-12">--}}
+{{--                        <label for="category_type">Select Component Type</label>--}}
+{{--                        <select class="form-control" name="component_type" aria-invalid="false">--}}
+{{--                                <option value="text_with_image_right">Text with image right</option>--}}
+{{--                                <option value="text_with_image_bottom">Text with image bottom</option>--}}
+{{--                                <option value="slider_text_with_image_right">Slider text with image right</option>--}}
+{{--                                <option value="title_text_editor">Title with table editor</option>--}}
+{{--                                <option value="video_with_text_right">Video with text right</option>--}}
+{{--                                <option value="multiple_image_banner">Multiple image banner</option>--}}
+{{--                                <option value="editor_only">Text Editor Only</option>--}}
+{{--                                <option value="accordion">Accordion</option>--}}
+{{--                            </select>--}}
+{{--                    </div>--}}
 
 
 
-                </div>
+{{--                </div>--}}
 
-              </div>
-              <div class="modal-footer">
-                <a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                <button type="submit" class="btn btn-primary">Create Component</button>
-              </div>
-          </form>
-        </div>
-    </div>
-</div><!-- /.modal -->
-<!-- Modal -->
+{{--              </div>--}}
+{{--              <div class="modal-footer">--}}
+{{--                <a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>--}}
+{{--                <button type="submit" class="btn btn-primary">Create Component</button>--}}
+{{--              </div>--}}
+{{--          </form>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div><!-- /.modal -->--}}
+{{--<!-- Modal -->--}}
 
 
 @stop

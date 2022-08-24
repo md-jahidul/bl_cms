@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\DynamicPageStoreRequest;
+use App\Repositories\CorpCaseStudyDetailsBannerRepository;
 use App\Services\Assetlite\ComponentService;
 use App\Services\CorpCaseStudyComponentService;
 use App\Services\DynamicPageService;
@@ -25,18 +26,26 @@ class CorpCaseStudyComponentDetailsController extends Controller
      * @var CorpCaseStudyComponentService
      */
     private $corpCaseStudyComponentService;
+    /**
+     * @var CorpCaseStudyDetailsBannerRepository
+     */
+    private $bannerRepository;
 
     /**
      * DynamicPageController constructor.
      * @param CorpCaseStudyComponentService $corpCaseStudyComponentService
      * @param ComponentService $componentService
+     * @param CorpCaseStudyDetailsBannerRepository $bannerRepository
      */
     public function __construct(
         CorpCaseStudyComponentService $corpCaseStudyComponentService,
-        ComponentService $componentService
-    ) {
+        ComponentService $componentService,
+        CorpCaseStudyDetailsBannerRepository $bannerRepository
+    )
+    {
         $this->corpCaseStudyComponentService = $corpCaseStudyComponentService;
         $this->componentService = $componentService;
+        $this->bannerRepository = $bannerRepository;
     }
 
     protected $componentTypes = [
@@ -52,7 +61,9 @@ class CorpCaseStudyComponentDetailsController extends Controller
     {
         $sectionComponent = $this->corpCaseStudyComponentService->findOne($componentId);
         $components = $this->componentService->componentList($componentId, self::PAGE_TYPE);
-        return view('admin.corporate-responsibility.case-study-and-report.details-components.index', compact('components', 'sectionComponent'));
+        $banner = $this->bannerRepository->findOneByProperties(['details_id' => $componentId]);
+        return view('admin.corporate-responsibility.case-study-and-report.details-components.index',
+            compact('components', 'sectionComponent', 'banner'));
     }
 
     public function componentCreateForm($sectionComId)
@@ -85,7 +96,7 @@ class CorpCaseStudyComponentDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $sectionComId, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id);
+        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('case-study-details.index', [$sectionComId]));
     }

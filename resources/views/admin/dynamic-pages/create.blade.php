@@ -31,7 +31,9 @@
                             $desktopImg = null;
                             $mobileImg = null;
                             $altText = "";
+                            $altTextBn = "";
                             $photoName = "";
+                            $photoNameBn = "";
                             $pageHeader = "";
                             $pageHeaderBn = "";
                             $schemaMarkup = "";
@@ -46,7 +48,9 @@
                                 $desktopImg = $page->banner_image_url;
                                 $mobileImg = $page->banner_mobile_view;
                                 $altText = $page->alt_text;
+                                $altTextBn = $page->alt_text_bn;
                                 $photoName = $page->banner_name;
+                                $photoNameBn = $page->banner_name_bn;
                                 $pageHeader = $page->page_header;
                                 $pageHeaderBn = $page->page_header_bn;
                                 $schemaMarkup = $page->schema_markup;
@@ -68,12 +72,13 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label>English URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ $urlSlug }}" name="url_slug"
+                                <input type="text" class="form-control slug-convert" value="{{ $urlSlug }}" name="url_slug"
                                        required placeholder="URL">
                                 <div class="help-block"></div>
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
+                                <div class="help-block"></div>
                                 @if ($errors->has('url_slug'))
                                     <div class="help-block">  {{ $errors->first('url_slug') }}</div>
                                 @endif
@@ -81,12 +86,13 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                 <label>Bangla URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ $urlSlugBn }}" name="url_slug_bn"
+                                <input type="text" class="form-control slug-convert" value="{{ $urlSlugBn }}" name="url_slug_bn"
                                        required placeholder="URL bangla">
                                 <div class="help-block"></div>
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
+                                <div class="help-block"></div>
                                 @if ($errors->has('url_slug_bn'))
                                     <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
                                 @endif
@@ -95,7 +101,6 @@
                             <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                 <label for="mobileImg">Desktop View Image</label>
                                 <div class="custom-file">
-                                    <input type="hidden" name="old_web_img" value="{{ isset($desktopImg) ? $desktopImg : null }}">
                                     <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
                                            data-default-file="{{ isset($desktopImg) ?  config('filesystems.file_base_url') . $desktopImg : null  }}">
                                 </div>
@@ -109,7 +114,6 @@
                             <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                 <label for="mobileImg">Mobile View Image</label>
                                 <div class="custom-file">
-                                    <input type="hidden" name="old_mob_img" value="{{ isset($mobileImg) ? $mobileImg : null }}">
                                     <input type="file" name="banner_mobile_view" class="dropify" data-height="80" id="image"
                                            data-default-file="{{ isset($mobileImg) ?  config('filesystems.file_base_url') . $mobileImg : null  }}">
                                 </div>
@@ -121,25 +125,52 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label for="alt_text">Alt Text</label>
-                                <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter offer name in English"
-                                       value="{{ $altText }}">
+                            <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label for="alt_text">Alt Text English</label>
+                                <input type="text" name="alt_text" id="alt_text" class="form-control"
+                                       placeholder="Enter offer name in English" value="{{ $altText }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('alt_text'))
                                     <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name</label>
-                                <input type="hidden" name="old_banner_name" value="{{ $photoName }}">
-                                <input type="text" class="form-control" name="banner_name" value="{{ $photoName }}"
-                                       placeholder="Photo Name">
+                            <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                <label for="alt_text_bn">Alt Text Bangla</label>
+                                <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
+                                       placeholder="Enter offer name in English" value="{{ $altTextBn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('alt_text_bn'))
+                                    <div class="help-block">{{ $errors->first('alt_text_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-3 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                <label>Banner Image Name En</label>
+                                <input type="text" class="form-control slug-convert" name="banner_name"
+                                       value="{{ $photoName }}" placeholder="Photo Name">
                                 <small class="text-info">
                                     <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_name'))
+                                    <div class="help-block">{{ $errors->first('banner_name') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-3 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                <label>Banner Image Name Bn</label>
+                                <input type="text" class="form-control slug-convert" name="banner_name_bn"
+                                       value="{{ $photoNameBn }}" placeholder="Photo Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_name_bn'))
+                                    <div class="help-block">{{ $errors->first('banner_name_bn') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('page_content_en') ? ' error' : '' }}">

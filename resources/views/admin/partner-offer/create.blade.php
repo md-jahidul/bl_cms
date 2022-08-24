@@ -242,7 +242,7 @@
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label> URL (url slug) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{ old("url_slug") ? old("url_slug") : '' }}"
                                        name="url_slug" placeholder="URL">
@@ -264,7 +264,7 @@
                                     <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
                                 </small>
                                 @if ($errors->has('url_slug_bn'))
-                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                    <div class="help-block">{{ $errors->first('url_slug_bn') }}</div>
                                 @endif
                             </div>
 

@@ -75,6 +75,24 @@ class OfferCategoryService
     public function updateOfferCategory($data, $id)
     {
         try {
+//<<<<<<< HEAD
+//            $status = true;
+//            $update = [];
+//
+//            $update['name_en'] = $data['name_en'];
+//            $update['name_bn'] = $data['name_bn'];
+//            $update['url_slug'] = $data['url_slug'];
+//            $update['url_slug_bn'] = $data['url_slug_bn'];
+//            $update['schema_markup'] = $data['schema_markup'];
+//            $update['page_header'] = $data['page_header'];
+//            $update['page_header_bn'] = $data['page_header_bn'];
+//            $update['banner_name'] = $data['banner_name'];
+//            $update['banner_name_bn'] = $data['banner_name_bn'];
+//            $update['banner_alt_text'] = $data['banner_alt_text'];
+//            $update['banner_alt_text_bn'] = $data['banner_alt_text_bn'];
+//            $update['updated_by'] = Auth::id();
+//=======
+//>>>>>>> seo_cms
             $offerCategory = $this->findOne($id);
             $data['updated_by'] = Auth::id();
 

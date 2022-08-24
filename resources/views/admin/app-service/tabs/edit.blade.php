@@ -44,6 +44,9 @@
                                     <small class="text-info">
                                         <strong>i.e:</strong> apps (no spaces and slash)<br>
                                     </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
@@ -52,6 +55,9 @@
                                     <small class="text-info">
                                         <strong>i.e:</strong> অ্যাপ (no spaces and slash)<br>
                                     </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
@@ -90,23 +96,49 @@
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                    <label for="banner_alt_text" class="required">Alt Text</label>
+                                    <label for="banner_alt_text">Alt Text</label>
                                     <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ $appServiceTab->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
+                                           value="{{ $appServiceTab->banner_alt_text }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_alt_text'))
                                         <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Banner Photo Name</label>
+                                <div class="form-group col-md-4 {{ $errors->has('banner_alt_text_bn') ? ' error' : '' }}">
+                                    <label for="banner_alt_text_bn">Alt Text</label>
+                                    <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text bn"
+                                           value="{{ $appServiceTab->banner_alt_text_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_alt_text'))
+                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Name EN<span class="text-danger">*</span></label>
                                     <input type="hidden" name="old_banner_name" value="{{$appServiceTab->banner_name}}">
-                                    <input type="text" class="form-control" name="banner_name" value="{{$appServiceTab->banner_name}}" placeholder="Photo Name">
+                                    <input type="text" class="form-control" required name="banner_name" value="{{$appServiceTab->banner_name}}" placeholder="Banner EN Name">
                                     <small class="text-info">
                                         <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('banner_name_bn') ? ' error' : '' }} col-xs-12 mb-1">
+                                    <label>Banner Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name_bn"
+                                           placeholder="Banner Name BN" value="{{ $appServiceTab->banner_name_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> এপ-সার্ভিস-ব্যনার (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">

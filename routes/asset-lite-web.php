@@ -1275,4 +1275,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
+
+    Route::get('component-multiple-data/{imgName}', "AssetLite\ComponentMultiDataController@findSingleData");
 });
