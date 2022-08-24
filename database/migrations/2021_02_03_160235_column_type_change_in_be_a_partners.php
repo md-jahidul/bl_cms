@@ -15,7 +15,7 @@ class ColumnTypeChangeInBeAPartners extends Migration
     public function up()
     {
         Schema::table('be_a_partners', function (Blueprint $table) {
-            $table->string('banner_image')->change();
+            $table->string('banner_image')->nullable()->change();
             DB::table('be_a_partners')->update(['banner_image' => null]);
         });
     }
