@@ -286,12 +286,17 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+        $request->validate([
+           'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details,banner_name,' . $id : '',
+           'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details,banner_name_bn,' . $id : '',
         ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-        }
+
+//        $validator = Validator::make($request->all(), [
+//            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+//        ]);
+//        if ($validator->fails()) {
+//            Session::flash('error', $validator->messages()->first());
+//        }
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);

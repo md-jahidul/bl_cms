@@ -109,9 +109,11 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->short_text_en = $request->short_text_en;
             $offer->short_text_bn = $request->short_text_bn;
             $offer->banner_name = $request->banner_name;
+            $offer->banner_name_bn = $request->banner_name_bn;
             $offer->banner_web = $webPath;
             $offer->banner_mobile = $mobilePath;
             $offer->alt_text = $request->alt_text;
+            $offer->alt_text_bn = $request->alt_text_bn;
             $offer->url_slug = $request->url_slug;
             $offer->url_slug_bn = $request->url_slug_bn;
             $offer->page_header = $request->html_header;
@@ -234,6 +236,7 @@ class RoamingOfferRepository extends BaseRepository {
 
                 $count++;
             }
+
 
             RoamingOtherOfferComponents::insert($insert);
 

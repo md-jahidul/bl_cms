@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\RoamingInfoTipsRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\RoamingInfoService;
@@ -66,23 +67,8 @@ class RoamingInfoController extends Controller {
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
      */
-    public function saveInfo(Request $request) 
+    public function saveInfo(RoamingInfoTipsRequest $request)
     {
-        $validator =  Validator::make($request->all(), [
-            'name_en' => 'required',
-            'name_bn' => 'required',
-            'card_text_en' => 'required',
-            'card_text_bn' => 'required',
-            'banner_name' => 'required|regex:/^\S*$/u',
-            'url_slug' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,url_slug,' . $request->info_id,
-            'url_slug_bn' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,url_slug_bn,' . $request->info_id,
-        ]);
-
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect()->back();
-        }
-
         if ($request->info_id == "") {
             $response = $this->infoService->saveInfo($request);
         } else {

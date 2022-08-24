@@ -17,10 +17,13 @@ class AlSliderImage extends Model
         'start_date',
         'end_date',
         'alt_text',
+        'alt_text_bn',
         'redirect_url',
         'is_active',
         'image_url',
         'mobile_view_img',
+        'image_name',
+        'image_name_bn',
         'display_order',
         'other_attributes',
     ];

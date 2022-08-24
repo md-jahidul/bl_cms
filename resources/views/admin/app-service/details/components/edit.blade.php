@@ -2,8 +2,8 @@
 @section('title', 'Component')
 @section('card_name', 'Component')
 @section('breadcrumb')
-{{--    <li class="breadcrumb-item active"> <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}"> Component List</a></li>--}}
-{{--    <li class="breadcrumb-item active"> Component Edit</li>--}}
+    <li class="breadcrumb-item active"> <a href="{{  url("app-service/details/$tab_type/$product_id") }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
 {{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
@@ -64,8 +64,37 @@
                                     {{--Slider text with image right--}}
                                     <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="{{ ($section['sections']->section_type ==  "slider_text_with_image_right"  ) ? '' : "d-none" }}">
 {{--                                        @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')--}}
-                                        @include('admin.app-service.details.section.component_modal.slider.edit_slider_text_with_image_right')
-                                        @include('admin.app-service.details.section.component_modal.slider.single_item_edit_slider_text_with_image_right')
+{{--                                        @include('admin.app-service.details.section.component_modal.slider.edit_slider_text_with_image_right')--}}
+{{--                                        @include('admin.app-service.details.section.component_modal.slider.single_item_edit_slider_text_with_image_right')--}}
+
+
+                                        @if(isset($component->componentMultiData))
+                                            @foreach($component->componentMultiData as $key => $image)
+                                                <h3><strong>Slider {{ $key+1 }}</strong></h3>
+                                                <div class="form-actions col-md-12 mt-0"></div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="alt_text">Short Description En</label>
+                                                    <input type="text" name="details_en[]" class="form-control img-data"
+                                                           value="{{ isset($image['details_en']) ? $image['details_en'] : '' }}">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="alt_text">Short Description Bn</label>
+                                                    <input type="text" name="details_bn[]" class="form-control img-data"
+                                                           value="{{ isset($image['details_bn']) ? $image['details_bn'] : '' }}">
+                                                </div>
+                                                @include('layouts.partials.product-details.component.common-field.multiple-image', [$image, $key])
+                                            @endforeach
+                                        @endif
+                                    </slot>
+
+                                    {{--Multiple image--}}
+                                    <slot id="multiple_image_banner" data-offer-type="multiple_image_banner" class="{{ ($section['sections']->section_type ==  "multiple_image_banner"  ) ? '' : "d-none" }}">
+                                        @if(isset($component->componentMultiData))
+{{--                                            {{ dd($component->componentMultiData) }}--}}
+                                            @foreach($component->componentMultiData as $key => $image)
+                                                @include('layouts.partials.product-details.component.common-field.multiple-image', [$image, $key])
+                                            @endforeach
+                                        @endif
                                     </slot>
 
                                     {{--Video with text right--}}
@@ -133,12 +162,16 @@
     </style>
 @endpush
 @push('page-js')
+    <script>
+        var duplicateChecker = "{{ url('component-multiple-data') }}";
+    </script>
     <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>
 
     <script>
         $(function () {

@@ -18,6 +18,7 @@ class AppServiceTab extends Model
         'banner_alt_text_bn',
         'banner_image_mobile',
         'banner_name',
+        'banner_name_bn',
         'url_slug',
         'url_slug_bn',
         'schema_markup',

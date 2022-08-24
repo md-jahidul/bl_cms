@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\CorpCaseStudyComponentRepository;
 use App\Repositories\CorporateCaseStudySectionRepository;
+use App\Repositories\CorpCaseStudyDetailsBannerRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -29,18 +30,25 @@ class CorpCaseStudyComponentService
      * @var CorporateCaseStudySectionRepository
      */
     private $caseStudySectionRepository;
+    /**
+     * @var CorpCaseStudyDetailsBannerRepository
+     */
+    private $bannerRepository;
 
     /**
      * DigitalServicesService constructor.
      * @param CorpCaseStudyComponentRepository $corpCaseStudyComponentRepository
      * @param CorporateCaseStudySectionRepository $caseStudySectionRepository
+     * @param CorpCaseStudyDetailsBannerRepository $bannerRepository
      */
     public function __construct(
         CorpCaseStudyComponentRepository $corpCaseStudyComponentRepository,
-        CorporateCaseStudySectionRepository $caseStudySectionRepository
+        CorporateCaseStudySectionRepository $caseStudySectionRepository,
+        CorpCaseStudyDetailsBannerRepository $bannerRepository
     ) {
         $this->corpCaseStudyComponentRepo = $corpCaseStudyComponentRepository;
         $this->caseStudySectionRepository = $caseStudySectionRepository;
+        $this->bannerRepository = $bannerRepository;
         $this->setActionRepository($corpCaseStudyComponentRepository);
     }
 
@@ -68,8 +76,8 @@ class CorpCaseStudyComponentService
         }
 
         $directory = 'assetlite/images/corporate-responsibility';
-        if (isset($data['other_attributes']['thumbnail_image'])) {
-            $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
+        if (isset($data['base_image'])) {
+            $data['base_image'] = $this->upload($data['base_image'], $directory);
         }
         $data['section_id'] = $sectionId;
         $this->save($data);
@@ -86,9 +94,9 @@ class CorpCaseStudyComponentService
         $component = $this->findOne($id);
 
         $directory = 'assetlite/images/corporate-responsibility';
-//        $file = $data['other_attributes']['thumbnail_image'];
-        if (!empty($data['other_attributes']['thumbnail_image'])) {
-            $result['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
+        if (isset($data['base_image'])) {
+            $data['base_image'] = $this->upload($data['base_image'], $directory);
+            $this->deleteFile($component->base_image);
         }
         // get original data
         $new_multiple_attributes = $component->other_attributes;
@@ -128,35 +136,34 @@ class CorpCaseStudyComponentService
 
     public function bannerImageUpload($data)
     {
-        $sectionComponent = $this->findOne($data['section_component_id']);
+        $banner = $this->bannerRepository->findOneByProperties(['details_id' => $data['section_component_id']]);
+
+        if ($banner) {
+            request()->validate([
+                'image_name_en' => 'required|unique:corp_case_study_details_banners,image_name_en,' . $banner->id,
+                'image_name_bn' => 'required|unique:corp_case_study_details_banners,image_name_bn,' . $banner->id,
+            ]);
+        } else {
+            request()->validate([
+                'image_name_en' => 'required|unique:corp_case_study_details_banners,image_name_en',
+                'image_name_bn' => 'required|unique:corp_case_study_details_banners,image_name_bn',
+            ]);
+        }
 
         $directory = 'assetlite/images/banner/corporate-responsibility';
-        if (!empty($data['banner']['banner_image_url'])) {
-            $data['banner']['banner_image_url'] = $this->upload($data['banner']['banner_image_url'], $directory);
-            $filePath = isset($sectionComponent->banner['banner_image_url']) ? $sectionComponent->banner['banner_image_url'] : null;
+        if (!empty($data['banner_web'])) {
+            $data['banner_web'] = $this->upload($data['banner_web'], $directory);
+            $filePath = isset($banner->banner_web) ? $banner->banner_web : null;
             $this->deleteFile($filePath);
         }
 
-        if (!empty($data['banner']['banner_mobile_view'])) {
-            $data['banner']['banner_mobile_view'] = $this->upload($data['banner']['banner_mobile_view'], $directory);
-            $filePath = isset($sectionComponent->banner['banner_mobile_view']) ? $sectionComponent->banner['banner_mobile_view'] : null;
+        if (!empty($data['banner_mobile'])) {
+            $data['banner_mobile'] = $this->upload($data['banner_mobile'], $directory);
+            $filePath = isset($banner->banner_mobile) ? $banner->banner_mobile : null;
             $this->deleteFile($filePath);
         }
-
-        // get original data
-        $new_multiple_attributes = $sectionComponent->banner;
-//         contains all the inputs from the form as an array
-        $input_multiple_attributes = isset($data['banner']) ? $data['banner'] : null;
-//         loop over the product array
-
-        if ($input_multiple_attributes) {
-            foreach ($input_multiple_attributes as $key => $inputData) {
-                $new_multiple_attributes[$key] = $inputData;
-            }
-        }
-        unset($data['section_component_id']);
-        $data['banner'] = $new_multiple_attributes;
-        $sectionComponent->update($data);
+        $data['details_id'] = $data['section_component_id'];
+        ($banner) ? $banner->update($data) : $this->bannerRepository->save($data);
         return Response('Details Banner image has been successfully updated');
     }
 
