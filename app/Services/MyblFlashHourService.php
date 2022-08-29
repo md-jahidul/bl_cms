@@ -159,7 +159,9 @@ class MyblFlashHourService
                     if (isset($productData['thumbnail_img'])) {
                         $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
                         if (!empty($product->thumbnail_img)) {
-                            unlink($product->thumbnail_img);
+                            if (file_exists(storage_path('mybl_campaign/' . $product->thumbnail_img))) {
+                                unlink($product->thumbnail_img);
+                            }
                         }
                     }
                     $productData['show_in_home'] = isset($productData['show_in_home']) ? 1 : 0;
