@@ -499,7 +499,7 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="col-md-4 tag_schedule">
+                                <div class="col-md-4 tag_schedule {{ isset($details->is_tags_schedule) && $details->is_tags_schedule == true ? "": 'd-none'}}">
                                     <div class="form-group">
                                         <label>Schedule Tags </label>
                                         @php
