@@ -327,7 +327,7 @@
                                     </div>
                                 @endif
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 ">
                                     <div class="form-group">
                                         <label>Tags </label>
                                         @php
@@ -489,7 +489,7 @@
                                         <label for="is_base_msisdn_group_id_schedule">Base Msisdn Schedule</label>
                                     </fieldset>
                                 </div>
-                                <div class="form-group col-md-4 schedule_media {{ isset($details->is_banner_schedule) && $details->is_banner_schedule == true ? "": d-none}}">
+                                <div class="form-group col-md-4 schedule_media {{ isset($details->is_banner_schedule) && $details->is_banner_schedule == true ? "": 'd-none'}}">
                                     <label>Schedule Product Image</label>
                                         <input type="file" id="input-file-now" name="schedule_media" class="dropify"
                                                data-default-file="{{ isset($productSchedulerData->media) && $productSchedulerData->media ? url('storage/' .$productSchedulerData->media) : ""}}"/>
@@ -499,7 +499,7 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 tag_schedule">
                                     <div class="form-group">
                                         <label>Schedule Tags </label>
                                         @php
@@ -515,7 +515,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4 schedule_visibility {{ isset($details->is_visible_schedule) && $details->is_visible_schedule == true ? "": d-none}}">
+                                <div class="col-md-4 schedule_visibility {{ isset($details->is_visible_schedule) && $details->is_visible_schedule == true ? "": 'd-none'}}">
                                     <label class="required">Schedule Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
@@ -528,7 +528,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-4 schedule_pin_to_top {{ isset($details->is_pin_to_top_schedule) && $details->is_pin_to_top_schedule == true ? "": d-none}}">
+                                <div class="col-md-4 schedule_pin_to_top {{ isset($details->is_pin_to_top_schedule) && $details->is_pin_to_top_schedule == true ? "": 'd-none'}}">
                                     <label class="required">Schedule Pin To Top Schedule (On/Off)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
@@ -541,7 +541,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="form-group col-md-4 mb-2 schedule_base_msisdn_groups {{ isset($details->is_base_msisdn_group_id_schedule) && $details->is_base_msisdn_group_id_schedule == true ? "": d-none}}">
+                                <div class="form-group col-md-4 mb-2 schedule_base_msisdn_groups {{ isset($details->is_base_msisdn_group_id_schedule) && $details->is_base_msisdn_group_id_schedule == true ? "": 'd-none'}}">
                                     <label for="schedule_base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="schedule_base_msisdn_groups_id" name="schedule_base_msisdn_groups_id"
                                             class="browser-default custom-select">
