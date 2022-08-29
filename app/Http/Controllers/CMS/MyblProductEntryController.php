@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
 use App\Services\FreeProductPurchaseReportService;
 use App\Services\ProductCoreService;
@@ -45,17 +46,20 @@ class MyblProductEntryController extends Controller
      * @param ProductCoreService $service
      * @param ProductTagService $productTagService
      */
+    private $myblProductScheduleRepository;
     public function __construct(
         ProductCoreService $service,
         ProductTagService $productTagService,
         BaseMsisdnService $baseMsisdnService,
-        FreeProductPurchaseReportService $freeProductPurchaseReportService
+        FreeProductPurchaseReportService $freeProductPurchaseReportService,
+        MyBlProductSchedulerRepository $myblProductScheduleRepository
     ) {
         $this->middleware('auth');
         $this->service = $service;
         $this->productTagService = $productTagService;
         $this->baseMsisdnService = $baseMsisdnService;
         $this->freeProductPurchaseReportService = $freeProductPurchaseReportService;
+        $this->myblProductScheduleRepository = $myblProductScheduleRepository;
     }
 
     /**
@@ -100,10 +104,11 @@ class MyblProductEntryController extends Controller
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
+        $productSchedulerData = $this->myblProductScheduleRepository->findScheduleDataByProductCode($product_code);
 
         return view(
             'admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups')
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData')
         );
     }
 
