@@ -30,4 +30,10 @@ class MyBlProductSchedulerRepository extends BaseRepository
             return $data->update($productSchedule);
         }
     }
+
+    public function updateDataById($id, $data)
+    {
+
+        return $this->model::where('id', $id)->update($data);
+    }
 }
