@@ -140,7 +140,7 @@
                                         <label for="start_time">Start Date</label>
                                         <div class='input-group'>
                                             <input type='text' class="form-control" name="start_time" id="start_date"
-                                                   placeholder="Please select start date"/>
+                                                   placeholder="Please select start date" required/>
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('start_date'))
@@ -151,7 +151,7 @@
                                         <label for="end_time">End Date</label>
                                         <input type="text" name="end_time" id="end_date" class="form-control"
                                                placeholder="Please select end date"
-                                               value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="off">
+                                               value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="off" required>
                                         <div class="help-block"></div>
                                         @if ($errors->has('end_date'))
                                             <div class="help-block">{{ $errors->first('end_date') }}</div>
