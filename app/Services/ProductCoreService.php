@@ -909,31 +909,44 @@ class ProductCoreService
                 $productSchedule['media'] = $path;
             }
             $isProductSchedule = true;
+        } else {
+            $productSchedule['media'] = null;
         }
 
         if ($data['is_tags_schedule'] == true) {
             $productSchedule['tags'] = json_encode($request->schedule_tags);
             $isProductSchedule = true;
+        } else {
+            $productSchedule['tags'] = null;
         }
 
         if ($data['is_visible_schedule'] == true) {
             $productSchedule['is_visible'] = $request->schedule_visibility;
             $isProductSchedule = true;
+        } else {
+            $productSchedule['is_visible'] = 0;
         }
 
         if ($data['is_pin_to_top_schedule'] == true) {
             $productSchedule['pin_to_top'] = $request->schedule_pin_to_top;
             $isProductSchedule = true;
+        } else {
+            $productSchedule['pin_to_top'] = 0;
         }
 
         if ($data['is_base_msisdn_group_id_schedule'] == true) {
             $productSchedule['base_msisdn_group_id'] = $request->schedule_base_msisdn_groups_id;
             $isProductSchedule = true;
+        } else {
+            $productSchedule['base_msisdn_group_id'] = null;
         }
 
         if($isProductSchedule == true) {
             $productSchedule['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d H:i:s');
             $productSchedule['end_date'] = Carbon::parse($request->end_date)->format('Y-m-d H:i:s');
+        } else {
+            $productSchedule['start_date'] = null;
+            $productSchedule['end_date'] = null;
         }
 
         try {
@@ -941,10 +954,9 @@ class ProductCoreService
 
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
-            if ($isProductSchedule == true) {
-                $productSchedule['product_code'] = $request->product_code;
-                $this->myblProductScheduleRepository->updateByProductCode($productSchedule);
-            }
+
+            $productSchedule['product_code'] = $request->product_code;
+            $this->myblProductScheduleRepository->updateByProductCode($productSchedule);
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);

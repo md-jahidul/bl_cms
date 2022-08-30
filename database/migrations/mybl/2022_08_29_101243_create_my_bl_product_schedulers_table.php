@@ -20,9 +20,10 @@ class CreateMyBlProductSchedulersTable extends Migration
             $table->json('tags')->nullable();
             $table->boolean('is_visible')->nullable();
             $table->boolean('pin_to_top')->nullable();
-            $table->boolean('base_msisdn_group_id')->nullable();
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->integer('base_msisdn_group_id')->nullable();
+            $table->boolean('change_state_status')->default(0);
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }

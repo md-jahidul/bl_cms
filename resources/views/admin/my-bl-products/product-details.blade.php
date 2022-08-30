@@ -499,11 +499,11 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="col-md-4 tag_schedule {{ isset($details->is_tags_schedule) && $details->is_tags_schedule == true ? "": 'd-none'}}">
+                                <div class="col-md-4 tag_schedule">
                                     <div class="form-group">
                                         <label>Schedule Tags </label>
                                         @php
-                                            $thisProductTags = json_decode($productSchedulerData->tags) ?? [];
+                                            $thisProductTags = isset($productSchedulerData->tags) ? json_decode($productSchedulerData->tags) : [];
                                         @endphp
                                         <select multiple class="form-control tags" name="schedule_tags[]">
                                             <option value=""></option>
@@ -519,11 +519,11 @@
                                     <label class="required">Schedule Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
-                                            <input type="radio" name="schedule_visibility" value="1" id="show" {{ $productSchedulerData->is_visible == true ? 'checked' : "" }}>
+                                            <input type="radio" name="schedule_visibility" value="1" id="show" {{ isset($productSchedulerData->is_visible) && $productSchedulerData->is_visible == true ? 'checked' : "" }}>
                                             <label for="show">Show</label>
                                         </li>
                                         <li class="list-inline-item">
-                                            <input type="radio" name="schedule_visibility" value="0" id="hide" {{ $productSchedulerData->is_visible == false ? 'checked' : "" }}>
+                                            <input type="radio" name="schedule_visibility" value="0" id="hide" {{ isset($productSchedulerData->is_visible) && $productSchedulerData->is_visible == false ? 'checked' : "" }}>
                                             <label for="hide">Hide</label>
                                         </li>
                                     </ul>
@@ -532,11 +532,11 @@
                                     <label class="required">Schedule Pin To Top Schedule (On/Off)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
-                                            <input type="radio" name="schedule_pin_to_top" value="1" id="show" {{ $productSchedulerData->pin_to_top == true ? 'checked' : "" }}>
+                                            <input type="radio" name="schedule_pin_to_top" value="1" id="show" {{ isset($productSchedulerData->pin_to_top) && $productSchedulerData->pin_to_top == true ? 'checked' : "" }}>
                                             <label for="show">On</label>
                                         </li>
                                         <li class="list-inline-item">
-                                            <input type="radio" name="schedule_pin_to_top" value="0" id="hide" {{ $productSchedulerData->pin_to_top == false ? 'checked' : "" }}>
+                                            <input type="radio" name="schedule_pin_to_top" value="0" id="hide" {{ isset($productSchedulerData->pin_to_top) &&$productSchedulerData->pin_to_top == false ? 'checked' : "" }}>
                                             <label for="hide">Off</label>
                                         </li>
                                     </ul>
@@ -560,7 +560,7 @@
                                                 <div class='input-group'>
                                                     <input type='text' class="form-control start_date" name="start_date" id="start_date"
                                                            placeholder="Please select start date" autocomplete="off"
-                                                           value="{{ $productSchedulerData->start_date }}"/>
+                                                           value="{{ isset($productSchedulerData->start_date) ? $productSchedulerData->start_date : "" }}"/>
                                                 </div>
                                                 <div class="help-block"></div>
                                             </div>
@@ -568,7 +568,7 @@
                                                 <label for="end_date">End Date</label>
                                                 <input type="text" name="end_date" id="end_date" class="form-control end_date"
                                                        placeholder="Please select end date" autocomplete="off"
-                                                       value="{{ $productSchedulerData->end_date }}">
+                                                       value="{{ isset($productSchedulerData->end_date) ? $productSchedulerData->end_date : "" }}">
                                                 <div class="help-block"></div>
                                             </div>
                                         </div>

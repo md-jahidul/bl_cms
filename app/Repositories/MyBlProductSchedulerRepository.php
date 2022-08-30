@@ -23,6 +23,11 @@ class MyBlProductSchedulerRepository extends BaseRepository
 
     public function updateByProductCode($productSchedule) {
         $data = $this->model::where('product_code', $productSchedule['product_code'])->first();
-        $data->update($productSchedule);
+        if(is_null($data)) {
+            return $this->model::create($productSchedule);
+        } else {
+
+            return $data->update($productSchedule);
+        }
     }
 }
