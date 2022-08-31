@@ -67,6 +67,7 @@ class MyBlProductSchedulerService
 
                     if(!is_null($productSchedule->tags)) {
 
+                        //TODO : Need ProductTag Repository to get ProductTag Title
                         $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                         $tag = $firstTag->title;
                         $productData['tag'] = $tag;
@@ -122,7 +123,7 @@ class MyBlProductSchedulerService
                 }
 
                 if ($product->is_tags_schedule) {
-
+                    //TODO : Need ProductTag Repository to get ProductTag Title
                     $productTags = $this->myblProductTagRepository->findTagIdByProductCode($product['product_code']);
                     $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                     $tag = $firstTag->title;

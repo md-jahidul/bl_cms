@@ -105,10 +105,25 @@ class MyblProductEntryController extends Controller
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
         $productSchedulerData = $this->myblProductScheduleRepository->findScheduleDataByProductCode($product_code);
+        $productScheduleRunning = false;
+        $warningText = "";
+
+        if(!is_null($productSchedulerData)) {
+            $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date)) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule is running.";
+            }
+
+            if($productSchedulerData->change_state_status && !$productScheduleRunning) {
+                $productScheduleRunning = true;
+                $warningText = "It has not been reverted yet. ";
+            }
+        }
 
         return view(
             'admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData')
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText')
         );
     }
 

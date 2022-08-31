@@ -453,6 +453,10 @@
                                 {{--                                    </div>--}}
                                 {{--                                </div>--}}
                                 <div class="col-md-12 pl-0"><h5><strong>Product Schedule Settings</strong></h5></div>
+                                @if($productScheduleRunning == true)
+                                    <span class="text-danger"><strong><i class="la la-warning"></i> Warning:</strong> {{ $warningText }} So don't change in <strong>Product Schedule Settings.</strong></span>
+                                    <div class="help-block"></div>
+                                @endif
                                 <div class="form-actions col-md-12 mt-0"></div>
                                 <div class="col-md-2">
                                     <fieldset>
