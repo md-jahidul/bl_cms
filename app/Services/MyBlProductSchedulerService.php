@@ -6,10 +6,12 @@ use App\Models\MyBlProduct;
 use App\Models\MyBlProductTab;
 use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
+use App\Models\ProductTag;
 use App\Repositories\CustomerRepository;
 use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
+use App\Repositories\MyBlProductTagRepository;
 use App\Services\BlApiHub\BaseService;
 use App\Traits\CrudTrait;
 use App\Models\NotificationDraft;
@@ -26,12 +28,16 @@ class MyBlProductSchedulerService
 {
     use CrudTrait;
 
-    private $myblProductScheduleRepository, $myblProductRepository;
+    private $myblProductScheduleRepository, $myblProductRepository, $myblProductTagRepository;
 
-    public function __construct(MyBlProductSchedulerRepository $myblProductScheduleRepository, MyBlProductRepository $myBlProductRepository)
-    {
+    public function __construct(
+        MyBlProductSchedulerRepository $myblProductScheduleRepository,
+        MyBlProductRepository $myBlProductRepository,
+        MyBlProductTagRepository $myBlProductTagRepository
+    ) {
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
         $this->myblProductRepository = $myBlProductRepository;
+        $this->myblProductTagRepository = $myBlProductTagRepository;
     }
 
     public function productSchedule()
@@ -57,7 +63,25 @@ class MyBlProductSchedulerService
                 }
 
                 if ($product->is_tags_schedule) {
-                    //TODO
+                    $productTags = $this->myblProductTagRepository->findTagIdByProductCode($product['product_code']);
+
+                    if(!is_null($productSchedule->tags)) {
+
+                        $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
+                        $tag = $firstTag->title;
+                        $productData['tag'] = $tag;
+                        $productScheduleData['tags'] = json_encode($productTags);
+                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
+                        $tags = [];
+                        foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
+
+                            $data['product_code'] = $product['product_code'];
+                            $data['product_tag_id'] = $productScheduleTag;
+
+                            $tags [] = $data;
+                        }
+                        $this->myblProductTagRepository->insert($tags);
+                    }
                 }
 
                 if ($product->is_visible_schedule) {
@@ -98,7 +122,22 @@ class MyBlProductSchedulerService
                 }
 
                 if ($product->is_tags_schedule) {
-                    //TODO
+
+                    $productTags = $this->myblProductTagRepository->findTagIdByProductCode($product['product_code']);
+                    $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
+                    $tag = $firstTag->title;
+                    $productData['tag'] = $tag;
+                    $productScheduleData['tags'] = $productTags;
+                    $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
+                    $tags = [];
+                    foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
+
+                        $data['product_code'] = $product['product_code'];
+                        $data['product_tag_id'] = $productScheduleTag;
+
+                        $tags [] = $data;
+                    }
+                    $this->myblProductTagRepository->insert($tags);
                 }
 
                 if ($product->is_visible_schedule) {
