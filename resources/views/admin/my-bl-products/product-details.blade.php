@@ -260,7 +260,7 @@
                                 </div>
 
                                 @php
-                                    $validityUnits = ['hours', 'days'];
+                                    $validityUnits = ['day', 'days', 'hour', 'hours', 'month', 'months', 'year', 'years'];
                                 @endphp
 
                                 <div class="form-group col-md-4 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
