@@ -20,10 +20,11 @@ class BaseMsisdnFileUpload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-   private $insertData, $sheet, $filePath;
-   private $baseFileData, $baseFileInfo;
-   public $timeout = 1800;
-   public $retryAfter = 1860;
+    private $insertData, $sheet, $filePath;
+    private $baseFileData, $baseFileInfo;
+    public $timeout = 1800;
+    public $retryAfter = 1860;
+
     /**
      * Create a new job instance.
      *
