@@ -172,4 +172,70 @@ class MyBlProductSchedulerService
             }
         }
     }
+
+    public function cancelSchedule($id) {
+        $productSchedule = $this->myblProductScheduleRepository->findOne($id);
+        $product = ($this->myblProductRepository->findByProperties(['product_code' => $productSchedule->product_code], ['*']))->first();
+
+        $productData = [];
+        $productScheduleData = [];
+        if ($product->is_banner_schedule) {
+            $productData['media'] = $productSchedule['media'];
+            $productScheduleData['media'] = $product['media'];
+        }
+
+        if ($product->is_tags_schedule) {
+            //TODO : Need ProductTag Repository to get ProductTag Title
+            $productTags = $this->myblProductTagRepository->findTagIdByProductCode($product['product_code']);
+            $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
+            $tag = $firstTag->title;
+            $productData['tag'] = $tag;
+            $productScheduleData['tags'] = $productTags;
+            $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
+            $tags = [];
+            foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
+
+                $data['product_code'] = $product['product_code'];
+                $data['product_tag_id'] = $productScheduleTag;
+
+                $tags [] = $data;
+            }
+            $this->myblProductTagRepository->insert($tags);
+        }
+
+        if ($product->is_visible_schedule) {
+            $productData['is_visible'] = $productSchedule['is_visible'];
+            $productScheduleData['is_visible'] = $product['is_visible'];
+        }
+
+        if ($product->is_pin_to_top_schedule) {
+            $productData['pin_to_top'] = $productSchedule['pin_to_top'];
+            $productScheduleData['pin_to_top'] = $product['pin_to_top'];
+        }
+
+        if ($product->is_base_msisdn_group_id_schedule) {
+            $productData['base_msisdn_group_id'] = $productSchedule['base_msisdn_group_id'];
+            $productScheduleData['base_msisdn_group_id'] = $product['base_msisdn_group_id'];
+        }
+        $productScheduleData['change_state_status'] = 0;
+        $productScheduleData['start_date'] = null;
+        $productScheduleData['end_date'] = null;
+
+        try {
+            DB::beginTransaction();
+
+            if($productSchedule->change_state_status) {
+
+                $this->myblProductRepository->updateDataById($product['id'], $productData);
+            }
+
+            $this->myblProductScheduleRepository->updateDataById($productSchedule['id'], $productScheduleData);
+
+            DB::commit();
+        } catch (\Exception $e) {
+
+            DB::rollback();
+            Log::info($e->getMessage());
+        }
+    }
 }

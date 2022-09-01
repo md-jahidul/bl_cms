@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 
 use App\Models\MyBlProductScheduler;
+use Carbon\Carbon;
 
 class MyBlProductSchedulerRepository extends BaseRepository
 {
@@ -35,5 +36,11 @@ class MyBlProductSchedulerRepository extends BaseRepository
     {
 
         return $this->model::where('id', $id)->update($data);
+    }
+
+    public function getAllScheduleProducts() {
+        $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+
+        return $this->model::where('start_date', '<=' ,$currentTime)->where('end_date', '>=' ,$currentTime)->orWhere('change_state_status', 1)->get();
     }
 }

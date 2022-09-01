@@ -771,6 +771,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
         ->name('free-product-purchase-msisdn.list');
 
+    Route::get('product-schedule', 'CMS\MyblProductEntryController@getScheduleProduct')
+        ->name('product.schedule');
+
+    Route::get('product-schedule-revert/{id}', 'CMS\MyblProductEntryController@getScheduleProductRevert');
+
     /*
      * Event Base bonus V2
      */

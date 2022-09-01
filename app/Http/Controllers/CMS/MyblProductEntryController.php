@@ -9,6 +9,7 @@ use App\Models\MyBlProduct;
 use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
 use App\Services\FreeProductPurchaseReportService;
+use App\Services\MyBlProductSchedulerService;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
 use Carbon\Carbon;
@@ -46,13 +47,14 @@ class MyblProductEntryController extends Controller
      * @param ProductCoreService $service
      * @param ProductTagService $productTagService
      */
-    private $myblProductScheduleRepository;
+    private $myblProductScheduleRepository, $myBlProductSchedulerService;
     public function __construct(
         ProductCoreService $service,
         ProductTagService $productTagService,
         BaseMsisdnService $baseMsisdnService,
         FreeProductPurchaseReportService $freeProductPurchaseReportService,
-        MyBlProductSchedulerRepository $myblProductScheduleRepository
+        MyBlProductSchedulerRepository $myblProductScheduleRepository,
+        MyBlProductSchedulerService $myBlProductSchedulerService
     ) {
         $this->middleware('auth');
         $this->service = $service;
@@ -60,6 +62,7 @@ class MyblProductEntryController extends Controller
         $this->baseMsisdnService = $baseMsisdnService;
         $this->freeProductPurchaseReportService = $freeProductPurchaseReportService;
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
+        $this->myBlProductSchedulerService = $myBlProductSchedulerService;
     }
 
     /**
@@ -118,6 +121,11 @@ class MyblProductEntryController extends Controller
             if($productSchedulerData->change_state_status && !$productScheduleRunning) {
                 $productScheduleRunning = true;
                 $warningText = "It has not been reverted yet. ";
+            }
+
+            if ($productSchedulerData->start_date > $currentTime && !$productScheduleRunning) {
+                $productScheduleRunning = true;
+                $warningText = "Already Scheduled. ";
             }
         }
 
@@ -273,5 +281,17 @@ class MyblProductEntryController extends Controller
         }
         $purchaseProduct = $this->freeProductPurchaseReportService->findOne($purchaseProductId);
         return view('admin.free-product-analytic.purchase-msisdn', compact('purchaseProduct'));
+    }
+
+    public function getScheduleProduct() {
+
+        $scheduleProducts = $this->myblProductScheduleRepository->getAllScheduleProducts();
+
+        return view('admin.my-bl-products.schedule-products', compact('scheduleProducts'));
+    }
+
+    public function getScheduleProductRevert($id) {
+
+        return $this->myBlProductSchedulerService->cancelSchedule($id);
     }
 }
