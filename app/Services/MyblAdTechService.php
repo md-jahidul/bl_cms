@@ -9,6 +9,7 @@ use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DataTables;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class MyblAdTechService
 {

@@ -327,7 +327,7 @@
                                     </div>
                                 @endif
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 ">
                                     <div class="form-group">
                                         <label>Tags </label>
                                         @php
@@ -459,6 +459,128 @@
                                 {{--                                        </button>--}}
                                 {{--                                    </div>--}}
                                 {{--                                </div>--}}
+                                <div class="col-md-12 pl-0"><h5><strong>Product Schedule Settings</strong></h5></div>
+                                <div class="form-actions col-md-12 mt-0"></div>
+                                <div class="col-md-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_banner_schedule" name="is_banner_schedule"
+                                        @if($details->is_banner_schedule) checked @endif>
+                                        <label for="is_banner_schedule">Banner Schedule</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_tags_schedule" value="1"
+                                               name="is_tags_schedule" @if($details->is_tags_schedule) checked @endif>
+                                        <label for="is_tags_schedule">Tags Schedule</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_visible_schedule" value="1"
+                                               name="is_visible_schedule" @if($details->is_visible_schedule) checked @endif>
+                                        <label for="is_visible_schedule">Visibility Schedule</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_pin_to_top_schedule" value="1"
+                                               name="is_pin_to_top_schedule" @if($details->is_pin_to_top_schedule) checked @endif>
+                                        <label for="is_pin_to_top_schedule">Pin To Top Schedule</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_base_msisdn_group_id_schedule" value="1"
+                                               name="is_base_msisdn_group_id_schedule" @if($details->is_base_msisdn_group_id_schedule) checked @endif>
+                                        <label for="is_base_msisdn_group_id_schedule">Base Msisdn Schedule</label>
+                                    </fieldset>
+                                </div>
+                                <div class="form-group col-md-4 schedule_media {{ isset($details->is_banner_schedule) && $details->is_banner_schedule == true ? "": 'd-none'}}">
+                                    <label>Schedule Product Image</label>
+                                        <input type="file" id="input-file-now" name="schedule_media" class="dropify"
+                                               data-default-file="{{ isset($productSchedulerData->media) && $productSchedulerData->media ? url('storage/' .$productSchedulerData->media) : ""}}"/>
+                                    @if($errors->has('schedule_media'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('schedule_media') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-4 tag_schedule">
+                                    <div class="form-group">
+                                        <label>Schedule Tags </label>
+                                        @php
+                                            $thisProductTags = isset($productSchedulerData->tags) ? json_decode($productSchedulerData->tags) : [];
+                                        @endphp
+                                        <select multiple class="form-control tags" name="schedule_tags[]">
+                                            <option value=""></option>
+                                            @foreach ($tags as $key => $tag)
+                                                <option {{ in_array($key, $thisProductTags, false) ? 'selected' : '' }}
+                                                        value="{{ $key }}">  {{$tag}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 schedule_visibility {{ isset($details->is_visible_schedule) && $details->is_visible_schedule == true ? "": 'd-none'}}">
+                                    <label class="required">Schedule Visibility (show/hide in app)</label>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="schedule_visibility" value="1" id="show" {{ isset($productSchedulerData->is_visible) && $productSchedulerData->is_visible == true ? 'checked' : "" }}>
+                                            <label for="show">Show</label>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="schedule_visibility" value="0" id="hide" {{ isset($productSchedulerData->is_visible) && $productSchedulerData->is_visible == false ? 'checked' : "" }}>
+                                            <label for="hide">Hide</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4 schedule_pin_to_top {{ isset($details->is_pin_to_top_schedule) && $details->is_pin_to_top_schedule == true ? "": 'd-none'}}">
+                                    <label class="required">Schedule Pin To Top Schedule (On/Off)</label>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="schedule_pin_to_top" value="1" id="show" {{ isset($productSchedulerData->pin_to_top) && $productSchedulerData->pin_to_top == true ? 'checked' : "" }}>
+                                            <label for="show">On</label>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="schedule_pin_to_top" value="0" id="hide" {{ isset($productSchedulerData->pin_to_top) &&$productSchedulerData->pin_to_top == false ? 'checked' : "" }}>
+                                            <label for="hide">Off</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group col-md-4 mb-2 schedule_base_msisdn_groups {{ isset($details->is_base_msisdn_group_id_schedule) && $details->is_base_msisdn_group_id_schedule == true ? "": 'd-none'}}">
+                                    <label for="schedule_base_msisdn_groups_id">Base Msisdn</label>
+                                    <select id="schedule_base_msisdn_groups_id" name="schedule_base_msisdn_groups_id"
+                                            class="browser-default custom-select">
+                                        <option value="">No Base Msisdn Group Selected</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{ isset($productSchedulerData) && $productSchedulerData->base_msisdn_group_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="start_date">Start Date</label>
+                                                <div class='input-group'>
+                                                    <input type='text' class="form-control start_date" name="start_date" id="start_date"
+                                                           placeholder="Please select start date" autocomplete="off"
+                                                           value="{{ isset($productSchedulerData->start_date) ? $productSchedulerData->start_date : "" }}"/>
+                                                </div>
+                                                <div class="help-block"></div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="end_date">End Date</label>
+                                                <input type="text" name="end_date" id="end_date" class="form-control end_date"
+                                                       placeholder="Please select end date" autocomplete="off"
+                                                       value="{{ isset($productSchedulerData->end_date) ? $productSchedulerData->end_date : "" }}">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -489,7 +611,7 @@
 
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
     <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/icheck.css">
     <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
@@ -497,7 +619,7 @@
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
-
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
@@ -541,6 +663,21 @@
                 format: 'YYYY/MM/DD h:mm A'
             }
         });
+        let productStart = $('.start_date');
+        let productEnd = $('.end_date');
+
+        var date = new Date();
+        date.setDate(date.getDate());
+        $('.start_date').datetimepicker({
+            format : 'YYYY-MM-DD HH:mm:ss',
+            showClose: true,
+        });
+        $('.end_date').datetimepicker({
+            format : 'YYYY-MM-DD HH:mm:ss',
+            showClose: true,
+        });
+
+
         $('#show_from').val("{{$details->show_from ? \Carbon\Carbon::parse($details->show_from)->format('Y/m/d h:i A') : ''}}");
         $('#hide_from').val("{{$details->hide_from ? \Carbon\Carbon::parse($details->hide_from)->format('Y/m/d h:i A') : ''}}");
         //$('#hide_from').val('');
@@ -621,6 +758,44 @@
             });
 
         });
+        $('#is_banner_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_media').removeClass('d-none');
+            } else {
+                $('.schedule_media').addClass('d-none');
+            }
+        });
 
+        $('#is_tags_schedule').change(function () {
+            if(this.checked) {
+                $('.tag_schedule').removeClass('d-none');
+            } else {
+                $('.tag_schedule').addClass('d-none');
+            }
+        });
+
+        $('#is_visible_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_visibility').removeClass('d-none');
+            } else {
+                $('.schedule_visibility').addClass('d-none');
+            }
+        });
+
+        $('#is_pin_to_top_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_pin_to_top').removeClass('d-none');
+            } else {
+                $('.schedule_pin_to_top').addClass('d-none');
+            }
+        });
+
+        $('#is_base_msisdn_group_id_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_base_msisdn_groups').removeClass('d-none');
+            } else {
+                $('.schedule_base_msisdn_groups').addClass('d-none');
+            }
+        });
     </script>
 @endpush

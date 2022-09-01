@@ -123,10 +123,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 {{ $errors->has('start_time') ? ' error' : '' }}">
-                                        <label for="end_time">Start Date</label>
-                                        <input type="text" name="start_time" id="start_date" class="form-control"
+                                        <label for="start_time">Start Date</label>
+                                        <input type="text" name="start_time" id="start_date" class="form-control start_date"
                                                placeholder="Please select end date"
-                                               value="{{ $adTech->end_time }}" autocomplete="off">
+                                               value="{{ $adTech->start_time }}" autocomplete="off" required>
                                         <div class="help-block"></div>
                                         @if ($errors->has('end_date'))
                                             <div class="help-block">{{ $errors->first('end_date') }}</div>
@@ -134,9 +134,9 @@
                                     </div>
                                     <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                         <label for="end_time">End Date</label>
-                                        <input type="text" name="end_time" id="end_date" class="form-control"
+                                        <input type="text" name="end_time" id="end_date" class="form-control end_date"
                                                placeholder="Please select end date"
-                                               value="{{ $adTech->end_time }}" autocomplete="off">
+                                               value="{{ $adTech->end_time }}" autocomplete="off" required>
                                         <div class="help-block"></div>
                                         @if ($errors->has('end_date'))
                                             <div class="help-block">{{ $errors->first('end_date') }}</div>
@@ -340,5 +340,19 @@
                 })
             };
         })
+        let productStart = $('.start_date');
+        let productEnd = $('.end_date');
+
+        var date = new Date();
+        date.setDate(date.getDate());
+        $('.start_date').datetimepicker({
+            format : 'YYYY-MM-DD HH:mm:ss',
+            showClose: true,
+        });
+        $('.end_date').datetimepicker({
+            format : 'YYYY-MM-DD HH:mm:ss',
+            showClose: true,
+        });
+
     </script>
 @endpush

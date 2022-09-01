@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('notification:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('redis-reset:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('flash-hour-reminder:schedule')->withoutOverlapping()->everyMinute();
+        $schedule->command('product-data:schedule')->withoutOverlapping()->hourly();
         $schedule->command('send:rafm-report-cs-sefcare')
                  ->withoutOverlapping()
                  ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))

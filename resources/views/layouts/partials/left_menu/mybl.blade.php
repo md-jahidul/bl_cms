@@ -566,7 +566,7 @@
         </li>
     @endif
 
-    <li class="{{is_active_url('ad-tech/create')}}">
+    <li class="{{is_active_url('ad-tech')}}">
         <a class="menu-item" href="{{ route('ad-tech.index') }}"
            data-i18n="nav.templates.vert.bullhorn">
             <i class="la la-globe"></i>Ad Tech</a>
