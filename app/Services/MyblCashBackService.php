@@ -45,6 +45,9 @@ class MyblCashBackService
         $campaign = $this->save($data);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
+                if(isset($product['override_other_campaign'])) {
+                    $product['override_other_campaign'] = 1;
+                }
                 $product['mybl_cash_back_id'] = $campaign->id;
                 $product['status'] = isset($product['status']) ?? 0;
                 $this->cashBackProductRepo->save($product);
@@ -65,6 +68,12 @@ class MyblCashBackService
         $this->cashBackProductRepo->deleteCampaignWiseProduct($id);
         if (isset($data['product-group'])) {
             foreach ($data['product-group'] as $product) {
+                if(isset($product['override_other_campaign'])) {
+                    $product['override_other_campaign'] = 1;
+                }
+                else {
+                    $product['override_other_campaign'] = 0;
+                }
                 $product['mybl_cash_back_id'] = $id;
                 $this->cashBackProductRepo->save($product);
             }
