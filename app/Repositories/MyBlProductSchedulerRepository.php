@@ -41,6 +41,6 @@ class MyBlProductSchedulerRepository extends BaseRepository
     public function getAllScheduleProducts() {
         $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
 
-        return $this->model::where('start_date', '<=' ,$currentTime)->where('end_date', '>=' ,$currentTime)->orWhere('change_state_status', 1)->get();
+        return $this->model::where('start_date', '<=' ,$currentTime)->where('end_date', '>=' ,$currentTime)->orWhere('change_state_status', 1)->orWhere('start_date', '>' ,$currentTime)->get();
     }
 }

@@ -776,6 +776,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('product-schedule-revert/{id}', 'CMS\MyblProductEntryController@getScheduleProductRevert');
 
+    Route::get('product-schedule-view/{id}', 'CMS\MyblProductEntryController@scheduleProductsView')->name('schedule-product.view');
+
     /*
      * Event Base bonus V2
      */

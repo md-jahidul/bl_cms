@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
 use App\Services\FreeProductPurchaseReportService;
@@ -35,7 +36,7 @@ class MyblProductEntryController extends Controller
     /**
      * @var ProductTagService
      */
-    private $productTagService;
+    private $productTagService, $myblProductRepository;
     private $baseMsisdnService;
     /**
      * @var FreeProductPurchaseReportService
@@ -54,7 +55,8 @@ class MyblProductEntryController extends Controller
         BaseMsisdnService $baseMsisdnService,
         FreeProductPurchaseReportService $freeProductPurchaseReportService,
         MyBlProductSchedulerRepository $myblProductScheduleRepository,
-        MyBlProductSchedulerService $myBlProductSchedulerService
+        MyBlProductSchedulerService $myBlProductSchedulerService,
+        MyBlProductRepository $myblProductRepository
     ) {
         $this->middleware('auth');
         $this->service = $service;
@@ -63,6 +65,7 @@ class MyblProductEntryController extends Controller
         $this->freeProductPurchaseReportService = $freeProductPurchaseReportService;
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
         $this->myBlProductSchedulerService = $myBlProductSchedulerService;
+        $this->myblProductRepository = $myblProductRepository;
     }
 
     /**
@@ -113,7 +116,12 @@ class MyblProductEntryController extends Controller
 
         if(!is_null($productSchedulerData)) {
             $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date)) {
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status)) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule will be start.";
+            }
+
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && $productSchedulerData->change_state_status)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule is running.";
             }
@@ -125,7 +133,7 @@ class MyblProductEntryController extends Controller
 
             if ($productSchedulerData->start_date > $currentTime && !$productScheduleRunning) {
                 $productScheduleRunning = true;
-                $warningText = "Already Scheduled. ";
+                $warningText = "Schedule will be start.";
             }
         }
 
@@ -283,15 +291,27 @@ class MyblProductEntryController extends Controller
         return view('admin.free-product-analytic.purchase-msisdn', compact('purchaseProduct'));
     }
 
-    public function getScheduleProduct() {
+    public function getScheduleProduct()
+    {
 
         $scheduleProducts = $this->myblProductScheduleRepository->getAllScheduleProducts();
 
         return view('admin.my-bl-products.schedule-products', compact('scheduleProducts'));
     }
 
-    public function getScheduleProductRevert($id) {
+    public function getScheduleProductRevert($id)
+    {
 
         return $this->myBlProductSchedulerService->cancelSchedule($id);
+    }
+
+    public function scheduleProductsView($id)
+    {
+        $scheduleProduct = $this->myblProductScheduleRepository->findOne($id);
+        $productCode = $scheduleProduct['product_code'];
+        $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
+        $product = $product->first();
+
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product'));
     }
 }

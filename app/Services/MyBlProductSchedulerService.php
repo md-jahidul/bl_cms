@@ -173,7 +173,8 @@ class MyBlProductSchedulerService
         }
     }
 
-    public function cancelSchedule($id) {
+    public function cancelSchedule($id)
+    {
         $productSchedule = $this->myblProductScheduleRepository->findOne($id);
         $product = ($this->myblProductRepository->findByProperties(['product_code' => $productSchedule->product_code], ['*']))->first();
 

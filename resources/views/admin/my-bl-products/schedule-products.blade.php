@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Campaign Modality Winner')
-@section('card_name', 'Campaign Modality Winner')
+@section('title', 'Scheduler Products')
+@section('card_name', 'Scheduler Products')
 @section('content')
     <section>
         <div class="card col-sm-12">
@@ -26,6 +26,10 @@
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
                                 <td>
+                                    <a href="{{ route('schedule-product.view', [$data->id]) }}" role="button"
+                                       class="btn-pancil btn btn-outline-warning">
+                                        <i class="la la-eye" disabled="disabled" aria-hidden="true"></i>
+                                    </a>
                                     <a href="#" remove="{{ url("product-schedule-revert/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Cancel Schedule">
                                         <i class="la la-trash"></i> Cancel Schedule
                                     </a>
