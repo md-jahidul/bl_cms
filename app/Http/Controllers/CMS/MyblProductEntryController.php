@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
 use App\Services\FreeProductPurchaseReportService;
+use App\Services\MyBlProductSchedulerService;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
 use Carbon\Carbon;
@@ -34,7 +36,7 @@ class MyblProductEntryController extends Controller
     /**
      * @var ProductTagService
      */
-    private $productTagService;
+    private $productTagService, $myblProductRepository;
     private $baseMsisdnService;
     /**
      * @var FreeProductPurchaseReportService
@@ -46,13 +48,15 @@ class MyblProductEntryController extends Controller
      * @param ProductCoreService $service
      * @param ProductTagService $productTagService
      */
-    private $myblProductScheduleRepository;
+    private $myblProductScheduleRepository, $myBlProductSchedulerService;
     public function __construct(
         ProductCoreService $service,
         ProductTagService $productTagService,
         BaseMsisdnService $baseMsisdnService,
         FreeProductPurchaseReportService $freeProductPurchaseReportService,
-        MyBlProductSchedulerRepository $myblProductScheduleRepository
+        MyBlProductSchedulerRepository $myblProductScheduleRepository,
+        MyBlProductSchedulerService $myBlProductSchedulerService,
+        MyBlProductRepository $myblProductRepository
     ) {
         $this->middleware('auth');
         $this->service = $service;
@@ -60,6 +64,8 @@ class MyblProductEntryController extends Controller
         $this->baseMsisdnService = $baseMsisdnService;
         $this->freeProductPurchaseReportService = $freeProductPurchaseReportService;
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
+        $this->myBlProductSchedulerService = $myBlProductSchedulerService;
+        $this->myblProductRepository = $myblProductRepository;
     }
 
     /**
@@ -105,10 +111,35 @@ class MyblProductEntryController extends Controller
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
         $productSchedulerData = $this->myblProductScheduleRepository->findScheduleDataByProductCode($product_code);
+        $productScheduleRunning = false;
+        $warningText = "";
+
+        if(!is_null($productSchedulerData)) {
+            $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status)) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule will be start.";
+            }
+
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && $productSchedulerData->change_state_status)) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule is running.";
+            }
+
+            if($productSchedulerData->change_state_status && !$productScheduleRunning) {
+                $productScheduleRunning = true;
+                $warningText = "It has not been reverted yet. ";
+            }
+
+            if ($productSchedulerData->start_date > $currentTime && !$productScheduleRunning) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule will be start.";
+            }
+        }
 
         return view(
             'admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData')
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText')
         );
     }
 
@@ -258,5 +289,29 @@ class MyblProductEntryController extends Controller
         }
         $purchaseProduct = $this->freeProductPurchaseReportService->findOne($purchaseProductId);
         return view('admin.free-product-analytic.purchase-msisdn', compact('purchaseProduct'));
+    }
+
+    public function getScheduleProduct()
+    {
+
+        $scheduleProducts = $this->myblProductScheduleRepository->getAllScheduleProducts();
+
+        return view('admin.my-bl-products.schedule-products', compact('scheduleProducts'));
+    }
+
+    public function getScheduleProductRevert($id)
+    {
+
+        return $this->myBlProductSchedulerService->cancelSchedule($id);
+    }
+
+    public function scheduleProductsView($id)
+    {
+        $scheduleProduct = $this->myblProductScheduleRepository->findOne($id);
+        $productCode = $scheduleProduct['product_code'];
+        $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
+        $product = $product->first();
+
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product'));
     }
 }
