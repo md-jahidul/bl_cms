@@ -158,7 +158,7 @@
             $('.report-repeater').repeater();
             let campaignStart = $('#start_date');
             let campaignEnd = $('#end_date');
-            let productStart = $('.product_start_date');
+            let productStart = $('.date_time');
             let productEnd = $('.product_end_date');
             function dateTime(element){
                 var date = new Date();
@@ -172,7 +172,7 @@
                 $(".product-list").select2()
                 var date = new Date();
                 date.setDate(date.getDate());
-                $('.product_start_date').datetimepicker({
+                $('.date_time').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
                 });
