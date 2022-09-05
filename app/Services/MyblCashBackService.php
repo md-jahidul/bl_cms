@@ -48,6 +48,9 @@ class MyblCashBackService
                 if(isset($product['override_other_campaign'])) {
                     $product['override_other_campaign'] = 1;
                 }
+
+                $product['start_date'] = ($product['start_date'] == null ? $data['start_date'] : $product['start_date']);
+                $product['end_date'] = ($product['end_date'] == null ? $data['end_date'] : $product['end_date']);
                 $product['mybl_cash_back_id'] = $campaign->id;
                 $this->cashBackProductRepo->save($product);
             }
@@ -73,6 +76,10 @@ class MyblCashBackService
                 else {
                     $product['override_other_campaign'] = 0;
                 }
+
+                $product['start_date'] = ($product['start_date'] == null ? $data['start_date'] : $product['start_date']);
+                $product['end_date'] = ($product['end_date'] == null ? $data['end_date'] : $product['end_date']);
+
                 $product['mybl_cash_back_id'] = $id;
                 $this->cashBackProductRepo->save($product);
             }
