@@ -15,7 +15,7 @@
                                 <th>Tag</th>
                                 <th>Is Visible</th>
                                 <th>Pin To Top</th>
-                                <th>Base Group Id</th>
+                                <th>Base Group Title</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,7 +26,7 @@
                                 <td>{{ $product->tag }}</td>
                                 <td>{{ $product->is_visible }}</td>
                                 <td> {{ $product->pin_to_top }}</td>
-                                <td> {{ $product->base_msisdn_group_id }}</td>
+                                <td> {{ $baseMsisdnTitleForProduct == null ? 'No Base' : $baseMsisdnTitleForProduct}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -40,17 +40,17 @@
                             <th>Tag</th>
                             <th>Is Visible</th>
                             <th>Pin To Top</th>
-                            <th>Base Group Id</th>
+                            <th>Base Group Title</th>
                         </tr>
                         </thead>
                         <tbody>
                             <td><img class="" src="{{ asset('storage'.'/'.$scheduleProduct->media) }}" alt="Media"
                                      height="100" width="200"/>
                             </td>
-                            <td>{{ isset($scheduleProduct->tag) ? "" : "No Tag" }}</td>
+                            <td>{{ $tagTitleForScheduler == null ? 'No Tag'  : $tagTitleForScheduler}}</td>
                             <td>{{ $scheduleProduct->is_visible }}</td>
                             <td> {{ $scheduleProduct->pin_to_top }}</td>
-                            <td> {{ $scheduleProduct->base_msisdn_group_id }}</td>
+                            <td> {{ $baseMsisdnTitleForSchedule == null ? 'No Base' : $baseMsisdnTitleForSchedule }}</td>
                         </tbody>
                     </table>
                 </div>

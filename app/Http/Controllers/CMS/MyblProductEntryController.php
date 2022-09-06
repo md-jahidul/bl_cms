@@ -312,6 +312,23 @@ class MyblProductEntryController extends Controller
         $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
         $product = $product->first();
 
-        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product'));
+        $tagTitleForScheduler = null;
+        $baseMsisdnTitleForSchedule = null;
+        $baseMsisdnTitleForProduct = null;
+        if(!is_null($scheduleProduct['tags'])) {
+            $tagIds = json_decode($scheduleProduct['tags']);
+            $tag = $this->myBlProductSchedulerService->getTag($tagIds[0]);
+            $tagTitleForScheduler = $tag->title;
+        }
+
+        if(!is_null($scheduleProduct['base_msisdn_group_id'])) {
+            $baseMsisdnTitleForSchedule = $this->baseMsisdnService->getMsisdnGroupTitle($scheduleProduct['base_msisdn_group_id']);
+        }
+
+        if(!is_null($product->base_msisdn_group_id)) {
+            $baseMsisdnTitleForProduct = $this->baseMsisdnService->getMsisdnGroupTitle($scheduleProduct['base_msisdn_group_id']);
+        }
+
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct'));
     }
 }
