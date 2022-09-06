@@ -239,4 +239,9 @@ class MyBlProductSchedulerService
             Log::info($e->getMessage());
         }
     }
+
+    public function getTag($tagId) {
+
+        return ProductTag::where('id', $tagId)->first();
+    }
 }
