@@ -965,7 +965,8 @@ class ProductCoreService
             $model->update($data);
 
             $productSchedule['product_code'] = $request->product_code;
-            $this->myblProductScheduleRepository->updateByProductCode($productSchedule);
+
+            $this->myblProductScheduleRepository->createProductSchedule($productSchedule);
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
@@ -1049,6 +1050,7 @@ class ProductCoreService
 
             DB::commit();
         } catch (Exception $e) {
+
             DB::rollback();
             throw new Exception($e->getMessage());
         }
