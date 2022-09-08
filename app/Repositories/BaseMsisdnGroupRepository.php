@@ -17,7 +17,8 @@ class BaseMsisdnGroupRepository extends BaseRepository
 
     public  function getMsisdnGroupTitle($id)
     {
-        $data = $this->model->where('id', $id)->select('title')->first();
+
+        $data = $this->model::where('id', $id)->first();
 
         return $data->title;
     }

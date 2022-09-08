@@ -20,7 +20,7 @@
                         </thead>
                         <tbody>
                         @foreach ($scheduleProducts as $key => $data)
-                            <tr>
+                            <tr class= {{ $currentTime > $data->end_date || $data->is_cancel == 1  ? "tr-bg" : "" }}>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $data->product_code }}</td>
                                 <td>{{ $data->start_date }}</td>
@@ -30,9 +30,12 @@
                                        class="btn-pancil btn btn-outline-warning">
                                         <i class="la la-eye" disabled="disabled" aria-hidden="true"></i>
                                     </a>
-                                    <a href="#" remove="{{ url("product-schedule-revert/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Cancel Schedule">
-                                        <i class="la la-trash"></i> Cancel Schedule
-                                    </a>
+
+                                    @if($currentTime <= $data->end_date && $data->is_cancel == 0)
+                                        <a href="#" remove="{{ url("product-schedule-revert/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Cancel Schedule">
+                                            <i class="la la-trash"></i> Cancel Schedule
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -45,6 +48,18 @@
 @endsection
 
 @push('style')
+    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+    <style>
+        table.dataTable tbody td {
+            max-height: 40px;
+        }
+
+        .tr-bg{
+            background-color: rgba(225, 227, 219, 0.96) !important;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{ asset('js/custom-js/deep-link.js') }}" type="text/javascript"></script>

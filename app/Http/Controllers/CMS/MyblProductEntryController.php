@@ -110,28 +110,30 @@ class MyblProductEntryController extends Controller
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
-        $productSchedulerData = $this->myblProductScheduleRepository->findScheduleDataByProductCode($product_code);
+        $productSchedulerData = $this->myblProductScheduleRepository->findActiveScheduleDataByProductCode($product_code);
+
         $productScheduleRunning = false;
         $warningText = "";
 
         if(!is_null($productSchedulerData)) {
             $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status)) {
+//            dd($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel);
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel == 0)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule will be start.";
             }
 
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && $productSchedulerData->change_state_status)) {
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && $productSchedulerData->change_state_status && $productSchedulerData->is_cancel == 0)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule is running.";
             }
 
-            if($productSchedulerData->change_state_status && !$productScheduleRunning) {
+            if($productSchedulerData->change_state_status && !$productScheduleRunning && $productSchedulerData->is_cancel == 0) {
                 $productScheduleRunning = true;
                 $warningText = "It has not been reverted yet. ";
             }
 
-            if ($productSchedulerData->start_date > $currentTime && !$productScheduleRunning) {
+            if ($productSchedulerData->start_date > $currentTime && !$productScheduleRunning && $productSchedulerData->is_cancel == 0) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule will be start.";
             }
@@ -293,10 +295,10 @@ class MyblProductEntryController extends Controller
 
     public function getScheduleProduct()
     {
-
+        $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
         $scheduleProducts = $this->myblProductScheduleRepository->getAllScheduleProducts();
 
-        return view('admin.my-bl-products.schedule-products', compact('scheduleProducts'));
+        return view('admin.my-bl-products.schedule-products', compact('scheduleProducts', 'currentTime'));
     }
 
     public function getScheduleProductRevert($id)
@@ -308,6 +310,7 @@ class MyblProductEntryController extends Controller
     public function scheduleProductsView($id)
     {
         $scheduleProduct = $this->myblProductScheduleRepository->findOne($id);
+
         $productCode = $scheduleProduct['product_code'];
         $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
         $product = $product->first();
@@ -315,6 +318,7 @@ class MyblProductEntryController extends Controller
         $tagTitleForScheduler = null;
         $baseMsisdnTitleForSchedule = null;
         $baseMsisdnTitleForProduct = null;
+
         if(!is_null($scheduleProduct['tags'])) {
             $tagIds = json_decode($scheduleProduct['tags']);
             $tag = $this->myBlProductSchedulerService->getTag($tagIds[0]);
@@ -325,10 +329,19 @@ class MyblProductEntryController extends Controller
             $baseMsisdnTitleForSchedule = $this->baseMsisdnService->getMsisdnGroupTitle($scheduleProduct['base_msisdn_group_id']);
         }
 
-        if(!is_null($product->base_msisdn_group_id)) {
-            $baseMsisdnTitleForProduct = $this->baseMsisdnService->getMsisdnGroupTitle($scheduleProduct['base_msisdn_group_id']);
+
+        if(!is_null($product['base_msisdn_group_id'])) {
+
+            $baseMsisdnTitleForProduct = $this->baseMsisdnService->getMsisdnGroupTitle($product['base_msisdn_group_id']);
         }
 
-        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct'));
+        $productScheduleRunning = false;
+
+        $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+        if (($currentTime >= $scheduleProduct->start_date && $currentTime <= $scheduleProduct->end_date && $scheduleProduct->change_state_status)) {
+            $productScheduleRunning = true;
+        }
+
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning'));
     }
 }

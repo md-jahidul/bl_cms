@@ -22,6 +22,7 @@ class CreateMyBlProductSchedulersTable extends Migration
             $table->boolean('pin_to_top')->nullable();
             $table->integer('base_msisdn_group_id')->nullable();
             $table->boolean('change_state_status')->default(0);
+            $table->boolean('is_cancel')->default(0);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->timestamps();
