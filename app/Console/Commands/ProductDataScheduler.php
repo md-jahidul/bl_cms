@@ -47,7 +47,7 @@ class ProductDataScheduler extends Command
             $myblProductScheduleService->productSchedule();
             Log::info("Product Schedule Successfully Processed");
         } catch (\Exception $e) {
-            Log::info("Error: ", $e->getMessage());
+            Log::info("Error: " . $e->getMessage());
         }
     }
 
