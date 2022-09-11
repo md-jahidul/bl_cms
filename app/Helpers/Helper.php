@@ -119,7 +119,8 @@ class Helper
             "STOP_ALL_VAS"            => "Stop All VAS",
             "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
-            "EVENT_BASED_BONUS"       => "Event Based Bonus"
+            "EVENT_BASED_BONUS"       => "Event Based Bonus",
+            "MYBL_CAMPAIGN"           => "MyBl Campaign Modality"
         ];
     }
 
@@ -240,7 +241,32 @@ class Helper
         ];
     }
 
-    
+    public static function campaignType()
+    {
+        return [
+            'recharge' => 'Recharge',
+            'pack_purchase' => 'Pack Purchase',
+        ];
+    }
+
+    public static function productCategories()
+    {
+        return [
+            'data' => 'DATA',
+            'mix' => 'MIX BUNDLES',
+            'voice' => 'VOICE BUNDLES',
+            'sms' => 'SMS BUNDLES',
+            'scr' => 'SPECIAL CALL RATE',
+            'recharge_offer' => 'RECHARGE OFFER',
+            'ma loan' => 'MA LOAN',
+            'data loan' => 'DATA LOAN',
+            'gift' => 'GIFT',
+            'volume request' => 'VOLUME REQUEST',
+            'volume transfer' => 'VOLUME TRANSFER'
+        ];
+    }
+
+
     public static function productType()
     {
         return [
