@@ -11,6 +11,7 @@ use App\Services\FeedCategoryService;
 use App\Services\MyblAppMenuService;
 use App\Services\MyBlInternetOffersCategoryService;
 use App\Services\MyblManageService;
+use App\Services\NewCampaignModality\MyBlCampaignSectionService;
 use App\Services\StoreCategoryService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -33,6 +34,7 @@ class DynamicDeeplinkController extends Controller
     protected const STORE = 'store';
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
+    protected const MyBlCampaignSection = 'mybl_campaign';
     protected const OTHER = 'others';
     /**
      * @var MyBlInternetOffersCategoryService
@@ -54,7 +56,10 @@ class DynamicDeeplinkController extends Controller
      * @var MyblManageItemRepository
      */
     private $manageItemRepository;
-
+    /**
+     * @var MyBlCampaignSectionService
+     */
+    private $myBlCampaignSectionService;
     /**
      * DynamicDeeplinkService constructor.
      * @param DynamicDeeplinkService $dynamicDeeplinkService
@@ -65,7 +70,8 @@ class DynamicDeeplinkController extends Controller
         FeedCategoryService $feedCategoryService,
         StoreCategoryService $storeCategoryService,
         MyblAppMenuService $appMenuService,
-        MyblManageItemRepository $manageItemRepository
+        MyblManageItemRepository $manageItemRepository,
+        MyBlCampaignSectionService $myBlCampaignSectionService
     ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->internetOffersCategoryService = $internetOffersCategoryService;
@@ -73,6 +79,7 @@ class DynamicDeeplinkController extends Controller
         $this->storeCategoryService = $storeCategoryService;
         $this->appMenuService = $appMenuService;
         $this->manageItemRepository = $manageItemRepository;
+        $this->myBlCampaignSectionService = $myBlCampaignSectionService;
         $this->middleware('auth');
     }
 
@@ -131,5 +138,12 @@ class DynamicDeeplinkController extends Controller
     {
         $manage = $this->manageItemRepository->findOne($request->id);
         return $this->dynamicDeeplinkService->generateDeeplink(self::OTHER, $manage, $request);
+    }
+
+    public  function  myblCampaignSectionDeepLinkCreate(Request $request)
+    {
+        $section = $this->myBlCampaignSectionService->findOne($request->id);
+
+        return $this->dynamicDeeplinkService->generateDeeplink(self::MyBlCampaignSection, $section, $request);
     }
 }
