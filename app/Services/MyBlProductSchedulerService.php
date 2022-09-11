@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * Class BannerService
@@ -40,6 +41,20 @@ class MyBlProductSchedulerService
         $this->myblProductTagRepository = $myBlProductTagRepository;
     }
 
+    protected function removeRedisKeyByBaseGroupId()
+    {
+        if (isset($productSchedule) && !empty($productSchedule->base_msisdn_group_id)) {
+            $redisKeys = Redis::keys('*my_key*');
+
+            if ( !empty( $redisKeys ) ){
+                $redisKeys = array_map(function ($redisKeys){
+                    return str_replace(env('REDIS_PREFIX') . '_database_', '', $redisKeys);
+                }, $redisKeys);
+                Redis::del($redisKeys);
+            }
+        }
+    }
+
     public function productSchedule()
     {
         $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
@@ -48,6 +63,8 @@ class MyBlProductSchedulerService
         foreach ($products as $product) {
 
             $productSchedule = $this->myblProductScheduleRepository->findScheduleDataByProductCodeV2($product['product_code']);
+
+            $this->removeRedisKeyByBaseGroupId($productSchedule);
 
             if(is_null($productSchedule)) {
                 continue;
