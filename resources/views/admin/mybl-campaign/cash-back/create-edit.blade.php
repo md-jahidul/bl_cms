@@ -164,7 +164,7 @@
                 var date = new Date();
                 date.setDate(date.getDate());
                 element.datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
+                    format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
                 });
             }
@@ -173,11 +173,11 @@
                 var date = new Date();
                 date.setDate(date.getDate());
                 $('.date_time').datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
+                    format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
                 });
                 $('.product_end_date').datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
+                    format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
                 });
             })

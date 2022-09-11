@@ -120,7 +120,9 @@ class Helper
             "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
-            "MYBL_CAMPAIGN"           => "MyBl Campaign Modality"
+            "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
+            "HELP_AND_TUTORIAL" => "Help & Tutorial",
+            "TERMS_AND_CONDITIONS" => "Terms & Conditions",
         ];
     }
 
@@ -169,7 +171,12 @@ class Helper
             "sms_packs"                  => "SMS Pack",
             "voice_packs"                => "Voice Bundle",
             "orange_club"                => "Orange Club",
-            "4g_usim_eligibility"        => "4G USIM Eligibility"
+            "4g_usim_eligibility"        => "4G USIM Eligibility",
+            "recharge"                   => "Recharge",
+            "help_and_tutorial"          => "Help & Tutorial",
+            "terms_and_conditions"       => "Terms & Conditions",
+            "check_for_updates"          => "Check For Updates"
+
         ];
     }
 
