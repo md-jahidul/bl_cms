@@ -387,7 +387,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="form-group col-md-4 mb-2" id="cta_action">
+                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
+                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
+                                            class="browser-default custom-select">
+                                        <option value="">No Base Msisdn Group Selected</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}" {{ $value->id == $details->base_msisdn_group_id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="col-md-2">
                                     <label>Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
@@ -423,7 +436,7 @@
                                         @endif
                                     </fieldset>
                                 </div>
-                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer"
@@ -432,17 +445,12 @@
                                     </fieldset>
                                 </div>
 
-                                <div class="form-group col-md-8 mb-2" id="cta_action">
-                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
-                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
-                                            class="browser-default custom-select">
-                                        <option value="">No Base Msisdn Group Selected</option>
-                                        @foreach ($baseMsisdnGroups as $key => $value)
-                                            <option value="{{ $value->id }}" {{ $value->id == $details->base_msisdn_group_id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
-                                    <div class="help-block"></div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack"
+                                               @if($details->is_popular_pack) checked @endif>
+                                        <label for="is_popular_pack">Is Popular Pack</label>
+                                    </fieldset>
                                 </div>
 
                                 {{--                                <div class="col-md-4">--}}

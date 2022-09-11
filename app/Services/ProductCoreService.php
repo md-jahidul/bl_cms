@@ -884,6 +884,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['is_popular_pack'] = $request->is_popular_pack;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
@@ -1013,6 +1014,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['is_popular_pack'] = $request->is_popular_pack;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
