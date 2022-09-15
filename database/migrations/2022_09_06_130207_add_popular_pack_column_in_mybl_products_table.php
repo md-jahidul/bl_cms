@@ -14,7 +14,7 @@ class AddPopularPackColumnInMyblProductsTable extends Migration
     public function up()
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
-            $table->string('is_popular_pack')->default(0)->after('base_msisdn_group_id');
+            $table->integer('is_popular_pack')->default(0)->after('base_msisdn_group_id');
         });
     }
 

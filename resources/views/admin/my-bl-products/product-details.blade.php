@@ -39,9 +39,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="sim_type">Connection Type</label>
-                                        <input class="form-control"
-                                               value="@if($details->details->sim_type == 1) PREPAID @else POSTPAID @endif"
-                                               disabled>
+                                        <input class="form-control" value="@if($details->details->sim_type == 1) PREPAID @else POSTPAID @endif" disabled>
+                                        <input type="hidden" class="form-control" name="pack_type"
+                                               value="@if($details->details->sim_type == 1) PREPAID @else POSTPAID @endif">
                                     </div>
                                 </div>
 
