@@ -1027,7 +1027,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
-        $data['is_popular_pack'] = $request->is_popular_pack;
+        $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
@@ -1041,6 +1041,13 @@ class ProductCoreService
 
         try {
             DB::beginTransaction();
+
+            if (isset($request->is_popular_pack)) {
+                $prepaidRedisKey = "prepaid_popular_pack";
+                $postpaidRedisKey = "postpaid_popular_pack";
+                ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
+            }
+
             $this->myBlProductRepository->save($data);
 
             if ($request->has('tags')) {
