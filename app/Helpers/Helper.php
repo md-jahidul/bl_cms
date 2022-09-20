@@ -122,6 +122,7 @@ class Helper
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "HELP_AND_TUTORIAL" => "Help & Tutorial",
             "TERMS_AND_CONDITIONS" => "Terms & Conditions",
+            "CALL_CENTER" => "Call Center"
         ];
     }
 
