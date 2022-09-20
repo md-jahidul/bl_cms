@@ -744,6 +744,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
 
+    //Commerce Component
+    Route::get('mybl-commerce-components', 'CMS\MyblCommerceComponentController@index')->name('mybl.commerce.components');
+    Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyblCommerceComponentController@edit')
+        ->name('mybl.commerce.components.edit');
+    Route::post('mybl-commerce-components/store', 'CMS\MyblCommerceComponentController@store')
+        ->name('mybl.commerce.components.store');
+    Route::post('mybl-commerce-components/update', 'CMS\MyblCommerceComponentController@update')
+        ->name('mybl.commerce.components.update');
+    Route::get('mybl-commerce-components-sort', 'CMS\MyblCommerceComponentController@componentSort');
+    Route::get('commerce-components-status-update/{id}', 'CMS\MyblCommerceComponentController@componentStatusUpdate')
+        ->name('commerce-components.status.update');
+    Route::get('mybl-commerce-components/destroy/{id}', 'CMS\MyblCommerceComponentController@destroy')
+        ->name('mybl.commerce.components.destroy');
+
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
     Route::get('flash-hour-campaign-duplicate/{id}', 'CMS\MyBlFlashHourController@duplicateFlashHours')->name('flash-hour-campaign.duplicate');

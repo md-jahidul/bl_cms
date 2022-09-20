@@ -72,7 +72,12 @@
                         <i class="la la-puzzle-piece"></i>Home Components</a>
                 </li>
             </ul>
-
+            <ul class="menu-content">
+                <li class="{{ is_active_url('mybl-commerce-components') }}">
+                    <a class="menu-item" href="{{ route('mybl.commerce.components') }}">
+                        <i class="la la-puzzle-piece"></i>Commerce Components</a>
+                </li>
+            </ul>
             <ul class="menu-content">
                 <li class=" {{is_active_url(route('health-hub.index'))}}">
                     <a class="menu-item" href="{{ route('health-hub.index') }} "
