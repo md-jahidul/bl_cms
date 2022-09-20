@@ -123,6 +123,7 @@ class Helper
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
             "HELP_AND_TUTORIAL" => "Help & Tutorial",
             "TERMS_AND_CONDITIONS" => "Terms & Conditions",
+            "CALL_CENTER" => "Call Center"
         ];
     }
 
