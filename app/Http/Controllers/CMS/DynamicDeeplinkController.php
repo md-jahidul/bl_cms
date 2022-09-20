@@ -6,6 +6,8 @@ use App\Models\AgentList;
 use App\Models\AgentDeeplinkDetail;
 use App\Models\MyBlInternetOffersCategory;
 use App\Repositories\MyblManageItemRepository;
+use App\Services\CommerceBillCategoryService;
+use App\Services\CommerceBillUtilityService;
 use App\Services\DynamicDeeplinkService;
 use App\Services\FeedCategoryService;
 use App\Services\MyblAppMenuService;
@@ -35,6 +37,8 @@ class DynamicDeeplinkController extends Controller
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
     protected const MyBlCampaignSection = 'mybl_campaign';
+    protected const CommerceBillCategory = 'bill_category';
+    protected const CommerceBillUtility = 'bill_utility';
     protected const OTHER = 'others';
     /**
      * @var MyBlInternetOffersCategoryService
@@ -59,7 +63,7 @@ class DynamicDeeplinkController extends Controller
     /**
      * @var MyBlCampaignSectionService
      */
-    private $myBlCampaignSectionService;
+    private $myBlCampaignSectionService, $commerceBillCategoryService, $commerceBillUtilityService;
     /**
      * DynamicDeeplinkService constructor.
      * @param DynamicDeeplinkService $dynamicDeeplinkService
@@ -71,7 +75,9 @@ class DynamicDeeplinkController extends Controller
         StoreCategoryService $storeCategoryService,
         MyblAppMenuService $appMenuService,
         MyblManageItemRepository $manageItemRepository,
-        MyBlCampaignSectionService $myBlCampaignSectionService
+        MyBlCampaignSectionService $myBlCampaignSectionService,
+        CommerceBillCategoryService $commerceBillCategoryService,
+        CommerceBillUtilityService $commerceBillUtilityService
     ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->internetOffersCategoryService = $internetOffersCategoryService;
@@ -80,6 +86,8 @@ class DynamicDeeplinkController extends Controller
         $this->appMenuService = $appMenuService;
         $this->manageItemRepository = $manageItemRepository;
         $this->myBlCampaignSectionService = $myBlCampaignSectionService;
+        $this->commerceBillCategoryService = $commerceBillCategoryService;
+        $this->commerceBillUtilityService = $commerceBillUtilityService;
         $this->middleware('auth');
     }
 
@@ -140,10 +148,24 @@ class DynamicDeeplinkController extends Controller
         return $this->dynamicDeeplinkService->generateDeeplink(self::OTHER, $manage, $request);
     }
 
-    public  function  myblCampaignSectionDeepLinkCreate(Request $request)
+    public  function myblCampaignSectionDeepLinkCreate(Request $request)
     {
         $section = $this->myBlCampaignSectionService->findOne($request->id);
 
         return $this->dynamicDeeplinkService->generateDeeplink(self::MyBlCampaignSection, $section, $request);
+    }
+
+    public  function commerceBillCategoryDeepLinkCreate(Request $request)
+    {
+        $billCategory = $this->commerceBillCategoryService->findOne($request->id);
+
+        return $this->dynamicDeeplinkService->generateDeeplink(self::CommerceBillCategory, $billCategory, $request);
+    }
+
+    public  function commerceBillUtilityDeepLinkCreate(Request $request)
+    {
+        $billUtility = $this->commerceBillUtilityService->findOne($request->id);
+
+        return $this->dynamicDeeplinkService->generateDeeplink(self::CommerceBillUtility, $billUtility, $request);
     }
 }

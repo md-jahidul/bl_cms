@@ -838,6 +838,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('mybl-campaign-section-deeplink/create', 'CMS\DynamicDeeplinkController@myblCampaignSectionDeepLinkCreate');
+    Route::get('commerce-bill-category-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillCategoryDeepLinkCreate');
+    Route::get('commerce-bill-utility-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
@@ -1100,6 +1102,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('ad-tech', 'CMS\MyblAdTechController');
     Route::delete('ad-tech/{id}/delete', 'CMS\MyblAdTechController@destroy')->name('orange-club.destroy');
     Route::get('ad-tech/addImage/update-position', 'CMS\MyblAdTechController@updatePosition');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('commerce-bill-category', 'CMS\CommerceBillCategoryController')->except(['show', 'destroy']);
+    Route::get('commerce-bill-category/destroy/{id}', 'CMS\CommerceBillCategoryController@destroy')->name('commerce-bill-category.destroy');
+    Route::get('commerce-bill-category/sort-auto-save', 'CMS\CommerceBillCategoryController@categorySortable');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('commerce-bill-utility', 'CMS\CommerceBillUtilityController')->except(['show', 'destroy']);
+    Route::get('commerce-bill-utility/destroy/{id}', 'CMS\CommerceBillUtilityController@destroy')->name('commerce-bill-utility.destroy');
+    Route::get('commerce-bill-utility/sort-auto-save', 'CMS\CommerceBillUtilityController@categorySortable');
 });
 
 // 4G Map View Route
