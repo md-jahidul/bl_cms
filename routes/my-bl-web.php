@@ -11,6 +11,8 @@
 |
  */
 
+use App\Jobs\TestJob;
+
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
     //------ shortcuts -----------//
@@ -845,3 +847,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+Route::get('test-queue', function() {
+    for($i = 1; $i < 10; $i++) {
+        TestJob::dispatch();
+        TestJob::dispatch()->onQueue('notification');
+        TestJob::dispatch()->onQueue('lead_data_send');
+    }
+    return 'true';
+});

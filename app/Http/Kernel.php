@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'authorize' => Middleware\CheckAuthorization::class,
         'CheckFistLogin' => Middleware\CheckFistLogin::class,
         'debugEntryCheck' => Middleware\ApiDebugEntryCheck::class,
+        'horizonBasicAuth' => \App\Http\Middleware\HorizonBasicAuthMiddleware::class,
     ];
 
     /**

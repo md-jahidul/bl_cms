@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => ['web', 'horizonBasicAuth'],
 
     /*
     |--------------------------------------------------------------------------
@@ -140,25 +140,81 @@ return [
     |
     */
 
-    'environments' => [
-        'production' => [
-            'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 1,
-            ],
+    $settings = [
+        'supervisor-1' => [
+            'connection' => 'redis',
+            'queue' => ['notification'],
+            'balance' => 'auto',
+            'maxProcesses' => 10,
+            'balanceMaxShift' => 3,
+            'balanceCooldown' => 1,
+            'memory' => 128,
+            'nice' => 0,
+            'backoff' => 300,
+            'timeout' => 230,
+            'tries' => 1,
+        ],            
+        'supervisor-2' => [
+            'connection' => 'redis',
+            'queue' => ['lead_data_send'],
+            'balance' => 'auto',
+            'maxProcesses' => 30,
+            'balanceMaxShift' => 5,
+            'balanceCooldown' => 2,
+            'memory' => 512,
+            'nice' => 0,
+            'backoff' => 300,
+            'timeout' => 230,
+            'tries' => 1,
         ],
-
-        'local' => [
-            'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'simple',
-                'processes' => 3,
-                'tries' => 1,
-            ],
+        'supervisor-3' => [
+            'connection' => 'redis',
+            'queue' => ['default'],
+            'balance' => 'auto',
+            'maxProcesses' => 30,
+            'balanceMaxShift' => 5,
+            'balanceCooldown' => 2,
+            'memory' => 512,
+            'nice' => 0,
+            'backoff' => 300,
+            'timeout' => 230,
+            'tries' => 1,
         ],
     ],
+
+    'environments' => [
+        'production' => $settings,
+        'local'      => $settings, 
+    ],
+
+    'basic_auth' => [
+        'username' => env('HORIZON_BASIC_AUTH_USERNAME'),
+        'password' => env('HORIZON_BASIC_AUTH_PASSWORD'),
+    ],
+
+    // Factory Settings
+
+    // 'environments' => [
+    //     'production' => [
+    //         'supervisor-1' => [
+    //             'connection' => 'redis',
+    //             'queue' => ['default'],
+    //             'balance' => 'simple',
+    //             'processes' => 10,
+    //             'tries' => 1,
+    //         ],
+    //     ],
+
+    //     'local' => [
+    //         'supervisor-1' => [
+    //             'connection' => 'redis',
+    //             'queue' => ['default'],
+    //             'balance' => 'simple',
+    //             'processes' => 3,
+    //             'tries' => 1,
+    //         ],
+    //     ],
+    // ],
+
+
 ];
