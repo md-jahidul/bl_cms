@@ -22,7 +22,7 @@ class MyblCommerceComponentService
      */
     private $sliderRepository;
 
-    protected const REDIS_KEY = "mybl_home_component";
+    protected const REDIS_KEY = "mybl_commerce_component";
 
     public function __construct(
         MyblCommerceComponentRepository $componentRepository,
