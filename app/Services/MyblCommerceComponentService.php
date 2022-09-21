@@ -38,7 +38,7 @@ class MyblCommerceComponentService
         $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
         $commerceSortableComponents = $this->findBy(['is_fixed_position' => false], null, $orderBy)->toArray();
 
-        $homeSecondarySliderCom = $this->sliderRepository->findByProperties(['component_id' => 19], [
+        $homeSecondarySliderCom = $this->sliderRepository->findByProperties(['component_for' => 'commerce'], [
             'id', 'component_id', 'title as title_en', 'short_code', 'position as display_order'
         ])->toArray();
 
