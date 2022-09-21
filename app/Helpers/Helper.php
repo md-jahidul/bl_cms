@@ -121,7 +121,6 @@ class Helper
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "HELP_AND_TUTORIAL" => "Help & Tutorial",
-            "TERMS_AND_CONDITIONS" => "Terms & Conditions",
             "CALL_CENTER" => "Call Center"
         ];
     }
@@ -174,7 +173,6 @@ class Helper
             "4g_usim_eligibility" => "4G USIM Eligibility",
             "recharge" => "Recharge",
             "help_and_tutorial" => "Help & Tutorial",
-            "terms_and_conditions" => "Terms & Conditions",
             "check_for_updates"       => "Check For Updates"
 
         ];
