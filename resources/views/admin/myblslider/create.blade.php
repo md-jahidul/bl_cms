@@ -90,6 +90,9 @@
                                         <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
                                         <label for="campaignStatusActive" class="mr-3">Commerce</label>
+                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
+                                        <label for="campaignStatusActive" class="mr-3">Content</label>
                                         <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}
                                             {{ isset($single_slider->component_for) ? '' : 'checked' }}>
@@ -99,6 +102,7 @@
                                         @endif
                                     </div>
                                 </div>
+
                                 {{-- Position Field--}}
                                 <slot class="position">
                                     @if(isset($single_slider->component_id) && $single_slider->component_id == 18)
