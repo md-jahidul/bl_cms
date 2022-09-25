@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Repositories\EventBasedBonusCampaign\EventBasedCampaignRepository;
+use App\Traits\CrudTrait;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseBonusV2CampaignService
 {
+    use CrudTrait;
     /**
      * @var ApiService
      */
@@ -17,13 +20,17 @@ class EventBaseBonusV2CampaignService
      */
     private $host;
 
+    protected $eventBasedCampaignRepository;
+
     /**
      * @param ApiService $apiService
      */
-    public function __construct(ApiService $apiService)
+    public function __construct(ApiService $apiService, EventBasedCampaignRepository $eventBasedCampaignRepository)
     {
         $this->apiService = $apiService;
         $this->host = env('EVENT_BASE_API_HOST_V2');
+        $this->eventBasedCampaignRepository = $eventBasedCampaignRepository;
+
     }
 
     /**
@@ -76,6 +83,8 @@ class EventBaseBonusV2CampaignService
 
             $url = $this->host . "/api/v1/campaigns";
 
+            $this->eventBasedCampaignRepository->save($data);
+
             return $this->apiService->CallAPI("POST", $url, $data);
         } catch (\Exception $exception) {
             Log::channel('event-based-bonus-v2')->error($exception->getMessage());
@@ -100,6 +109,9 @@ class EventBaseBonusV2CampaignService
             unset($data['icon_image_old']);
             $data['created_by']                   = auth()->user()->email;
 
+            $ebbCampaign = $this->eventBasedCampaignRepository->findOne($id);
+            $this->eventBasedCampaignRepository->update($ebbCampaign, $data);
+
             $url = $this->host . "/api/v1/campaigns/" . $id;
 
             return $this->apiService->CallAPI("PUT", $url, $data);
@@ -118,6 +130,9 @@ class EventBaseBonusV2CampaignService
     {
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
+
+            $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);
+            $this->eventBasedCampaignRepository->delete($ebbCampaign);
 
             return $this->apiService->CallAPI("DELETE", $url, []);
         } catch (\Exception $exception) {
