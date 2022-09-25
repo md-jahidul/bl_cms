@@ -3,14 +3,12 @@
 namespace App\Services;
 
 use App\Repositories\EventBasedBonusCampaign\EventBasedCampaignRepository;
-use App\Traits\CrudTrait;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseBonusV2CampaignService
 {
-    use CrudTrait;
     /**
      * @var ApiService
      */
