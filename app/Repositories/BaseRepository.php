@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class BaseRepository implements BaseRepositoryContract
 {
@@ -209,8 +210,8 @@ class BaseRepository implements BaseRepositoryContract
      * @return Model
      */
     public function save(array $data)
-    {
-        return $this->model->create($data);
+    {   
+        $result = $this->model->create($data);
     }
 
     /**

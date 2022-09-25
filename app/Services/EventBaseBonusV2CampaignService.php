@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\EventBasedBonusCampaign\EventBasedCampaignRepository;
+use Exception;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -41,6 +42,10 @@ class EventBaseBonusV2CampaignService
             $url = $this->host . "/api/v1/campaigns";
             $response = $this->apiService->CallAPI('GET', $url, []);
 
+            if(!isset($response['data'])) {
+                throw new \Exception('Unable To Fetch Event Based Campaign Data');
+            }
+
             return $response['data'];
         } catch (\Exception $exception) {
             Log::channel('event-based-bonus-v2')->error($exception->getMessage());
@@ -58,6 +63,10 @@ class EventBaseBonusV2CampaignService
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
             $response = $this->apiService->CallAPI('GET', $url, []);
+
+            if(!isset($response['data'])) {
+                throw new \Exception('Unable To Fetch Event Based Campaign Data');
+            }
 
             return $response['data'];
         } catch (\Exception $exception) {
@@ -80,10 +89,14 @@ class EventBaseBonusV2CampaignService
             $data['created_by']                   = auth()->user()->email;
 
             $url = $this->host . "/api/v1/campaigns";
+            $response = $this->apiService->CallAPI("POST", $url, $data);
+            
+            if(isset($response['data']) && isset($response['data']['id']) && !is_null(isset($response['data']['id']))) {
+                $data['id'] = $response['data']['id'];
+                $this->eventBasedCampaignRepository->save($data);
+            }
 
-            $this->eventBasedCampaignRepository->save($data);
-
-            return $this->apiService->CallAPI("POST", $url, $data);
+            return $response;
         } catch (\Exception $exception) {
             Log::channel('event-based-bonus-v2')->error($exception->getMessage());
             Session::flash("message", $exception->getMessage());

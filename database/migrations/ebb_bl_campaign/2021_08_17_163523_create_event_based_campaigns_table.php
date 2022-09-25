@@ -14,11 +14,12 @@ class CreateEventBasedCampaignsTable extends Migration
     public function up()
     {
         Schema::create('event_based_campaigns', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigInteger('id');
             $table->string('title');
             $table->string('description');
             $table->string('description_bn');
             $table->integer('base_msisdn_id')->nullable();
+            $table->string('campaign_user_type')->nullable();
             $table->string('icon_image');
             $table->string('reward_product_code_prepaid', 30)->nullable();
             $table->string('reward_product_code_postpaid', 30)->nullable();

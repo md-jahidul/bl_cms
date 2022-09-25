@@ -10,6 +10,7 @@ class EventBasedCampaign extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'id',
         'title',
         'description',
         'description_bn',
