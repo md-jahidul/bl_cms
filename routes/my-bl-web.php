@@ -744,6 +744,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
 
+    //Slider Component Types
+    Route::resource('slider-component-types', 'CMS\SliderComponentTypeController')->except(['show', 'destroy']);
+
     //Commerce Component
     Route::get('mybl-commerce-components', 'CMS\MyblCommerceComponentController@index')->name('mybl.commerce.components');
     Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyblCommerceComponentController@edit')
