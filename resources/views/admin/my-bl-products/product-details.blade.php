@@ -543,12 +543,12 @@
                                         <label class="required">Schedule Visibility (show/hide in app)</label>
                                         <ul class="list-inline">
                                             <li class="list-inline-item">
-                                                <input type="radio" name="schedule_visibility" value="1" id="show" >
-                                                <label for="show">Show</label>
+                                                <input type="radio" name="schedule_visibility" value="1" id="show1" >
+                                                <label for="show1">Show</label>
                                             </li>
                                             <li class="list-inline-item">
-                                                <input type="radio" name="schedule_visibility" value="0" id="hide" >
-                                                <label for="hide">Hide</label>
+                                                <input type="radio" name="schedule_visibility" value="0" id="hide1" >
+                                                <label for="hide1">Hide</label>
                                             </li>
                                         </ul>
                                     </div>
