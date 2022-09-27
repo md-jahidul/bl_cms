@@ -129,6 +129,10 @@
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
                 </li>
+                <li class="{{ is_active_match(route('product.schedule'))}}">
+                    <a class="menu-item" href="{{ route('product.schedule') }}">
+                        <i class="la la-history"></i>Schedule Products</a>
+                </li>
             </ul>
         </li>
     @endif
