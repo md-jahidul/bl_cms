@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Repositories\EventBasedBonusCampaign\EventBasedCampaignRepository;
-use Exception;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -19,17 +17,13 @@ class EventBaseBonusV2CampaignService
      */
     private $host;
 
-    protected $eventBasedCampaignRepository;
-
     /**
      * @param ApiService $apiService
      */
-    public function __construct(ApiService $apiService, EventBasedCampaignRepository $eventBasedCampaignRepository)
+    public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
         $this->host = env('EVENT_BASE_API_HOST_V2');
-        $this->eventBasedCampaignRepository = $eventBasedCampaignRepository;
-
     }
 
     /**
@@ -41,10 +35,6 @@ class EventBaseBonusV2CampaignService
             Session::forget('message');
             $url = $this->host . "/api/v1/campaigns";
             $response = $this->apiService->CallAPI('GET', $url, []);
-
-            if(!isset($response['data'])) {
-                throw new \Exception('Unable To Fetch Event Based Campaign Data');
-            }
 
             return $response['data'];
         } catch (\Exception $exception) {
@@ -63,10 +53,6 @@ class EventBaseBonusV2CampaignService
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
             $response = $this->apiService->CallAPI('GET', $url, []);
-
-            if(!isset($response['data'])) {
-                throw new \Exception('Unable To Fetch Event Based Campaign Data');
-            }
 
             return $response['data'];
         } catch (\Exception $exception) {
@@ -89,14 +75,8 @@ class EventBaseBonusV2CampaignService
             $data['created_by']                   = auth()->user()->email;
 
             $url = $this->host . "/api/v1/campaigns";
-            $response = $this->apiService->CallAPI("POST", $url, $data);
-            
-            if(isset($response['data']) && isset($response['data']['id']) && !is_null(isset($response['data']['id']))) {
-                $data['id'] = $response['data']['id'];
-                $this->eventBasedCampaignRepository->save($data);
-            }
 
-            return $response;
+            return $this->apiService->CallAPI("POST", $url, $data);
         } catch (\Exception $exception) {
             Log::channel('event-based-bonus-v2')->error($exception->getMessage());
             Session::flash("message", $exception->getMessage());
@@ -120,9 +100,6 @@ class EventBaseBonusV2CampaignService
             unset($data['icon_image_old']);
             $data['created_by']                   = auth()->user()->email;
 
-            $ebbCampaign = $this->eventBasedCampaignRepository->findOne($id);
-            $this->eventBasedCampaignRepository->update($ebbCampaign, $data);
-
             $url = $this->host . "/api/v1/campaigns/" . $id;
 
             return $this->apiService->CallAPI("PUT", $url, $data);
@@ -141,9 +118,6 @@ class EventBaseBonusV2CampaignService
     {
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
-
-            $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);
-            $this->eventBasedCampaignRepository->delete($ebbCampaign);
 
             return $this->apiService->CallAPI("DELETE", $url, []);
         } catch (\Exception $exception) {

@@ -31,7 +31,7 @@ class StoreEventBasedCampaignRequest extends FormRequest
             'end_date'                     => 'required|max:50',
             'challenge_ids'                => 'required',
             'status'                       => 'required|boolean',
-            'campaign_user_type'           => 'required',
+            'campaign_user_type'            => 'required',
         ];
     }
 }
