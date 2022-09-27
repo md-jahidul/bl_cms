@@ -324,6 +324,20 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-4 mb-2" id="cta_action">
+                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
+                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
+                                            class="browser-default custom-select">
+                                        <option value="">No Base Msisdn Group Selected</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="show_in_home" value="1" name="show_in_app">
@@ -354,18 +368,11 @@
                                     </fieldset>
                                 </div>
 
-                                <div class="form-group col-md-6 mb-2" id="cta_action">
-                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
-                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
-                                            class="browser-default custom-select">
-                                        <option value="">No Base Msisdn Group Selected</option>
-                                        @foreach ($baseMsisdnGroups as $key => $value)
-                                            <option value="{{ $value->id }}"
-                                                {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
-                                    <div class="help-block"></div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack">
+                                        <label for="is_popular_pack">Is Popular Pack</label>
+                                    </fieldset>
                                 </div>
                                 <div class="col-md-12 pl-0"><h5><strong>Product Schedule Settings</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>

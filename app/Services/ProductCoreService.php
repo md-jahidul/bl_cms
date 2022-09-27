@@ -465,6 +465,8 @@ class ProductCoreService
                         $q->whereNotNull('call_rate');
                     } elseif ($request->content_type == 'free_products') {
                         $q->where('mrp_price', null);
+                    } elseif ($request->content_type == 'is_popular_pack') {
+                        $q->where('is_popular_pack', 1);
                     } else {
                         $q->where('content_type', $request->content_type);
                     }
@@ -472,10 +474,13 @@ class ProductCoreService
             }
         )->with('details');
 
+        if ($request->content_type == 'is_popular_pack') {
+            $builder =  $builder->where('is_popular_pack', 1);
+        }
+
         if ($request->content_type == 'recharge_offer') {
             $builder->where('show_recharge_offer', 1);
         }
-
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
@@ -888,6 +893,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['is_banner_schedule'] = isset($request->is_banner_schedule) ? true : false;
         $data['is_tags_schedule'] = isset($request->is_tags_schedule) ? true : false;
@@ -953,6 +959,12 @@ class ProductCoreService
             DB::beginTransaction();
 
             $model = MyBlProduct::where('product_code', $product_code);
+
+            // Remove redis key if you have any changes in is_popular_pack
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->pack_type == "PREPAID") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
+
             $model->update($data);
 
             $productSchedule['product_code'] = $request->product_code;
@@ -1080,6 +1092,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['is_banner_schedule'] = isset($request->is_banner_schedule) ? true : false;
         $data['is_tags_schedule'] = isset($request->is_tags_schedule) ? true : false;
@@ -1138,6 +1151,11 @@ class ProductCoreService
 
         try {
             DB::beginTransaction();
+
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
+
             $this->myBlProductRepository->save($data);
 
             if ($isProductSchedule == true) {
