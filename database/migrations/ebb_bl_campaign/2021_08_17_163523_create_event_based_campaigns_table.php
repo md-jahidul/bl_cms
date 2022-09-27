@@ -19,7 +19,6 @@ class CreateEventBasedCampaignsTable extends Migration
             $table->string('description');
             $table->string('description_bn');
             $table->integer('base_msisdn_id')->nullable();
-            $table->string('campaign_user_type')->nullable();
             $table->string('icon_image');
             $table->string('reward_product_code_prepaid', 30)->nullable();
             $table->string('reward_product_code_postpaid', 30)->nullable();
@@ -27,9 +26,9 @@ class CreateEventBasedCampaignsTable extends Migration
             $table->dateTime('end_date')->nullable();
             $table->boolean('status')->default(true);
             $table->string('created_by');
-            $table->softDeletes();
             $table->timestamps();
-
+            $table->softDeletes();
+            $table->string('campaign_user_type')->nullable();
         });
     }
 
