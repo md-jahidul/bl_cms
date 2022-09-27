@@ -41,37 +41,21 @@ class MyBlProductSchedulerService
         $this->myblProductTagRepository = $myBlProductTagRepository;
     }
 
-    protected function removeRedisKeyByBaseGroupId()
-    {
-        if (isset($productSchedule) && !empty($productSchedule->base_msisdn_group_id)) {
-            $redisKeys = Redis::keys('*my_key*');
-
-            if ( !empty( $redisKeys ) ){
-                $redisKeys = array_map(function ($redisKeys){
-                    return str_replace(env('REDIS_PREFIX') . '_database_', '', $redisKeys);
-                }, $redisKeys);
-                Redis::del($redisKeys);
-            }
-        }
-    }
-
     public function productSchedule()
     {
         $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
         $products = $this->myblProductRepository->findScheduleProductList();
 
         foreach ($products as $product) {
+            $productSchedule = $this->myblProductScheduleRepository->findScheduleDataByProductCodeV2(
+                $product['product_code']
+            );
 
-            $productSchedule = $this->myblProductScheduleRepository->findScheduleDataByProductCodeV2($product['product_code']);
-
-            $this->removeRedisKeyByBaseGroupId($productSchedule);
-
-            if(is_null($productSchedule)) {
+            if (is_null($productSchedule)) {
                 continue;
             }
 
             if ($currentTime >= $productSchedule['start_date'] && $currentTime <= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
-
                 $productData = [];
                 $productScheduleData = [];
                 if ($product->is_banner_schedule) {
@@ -84,7 +68,7 @@ class MyBlProductSchedulerService
 
                     $productScheduleData['tags'] = null;
                     $productData['tag'] = null;
-                    if(!$productTags->isEmpty()) {
+                    if (!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
                     }
                     if ($productScheduleData['tags'] != null) {
@@ -94,7 +78,6 @@ class MyBlProductSchedulerService
                         $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
-
                             $data['product_code'] = $product['product_code'];
                             $data['product_tag_id'] = $productScheduleTag;
 
@@ -121,7 +104,6 @@ class MyBlProductSchedulerService
                 $productScheduleData['change_state_status'] = 1;
 
                 try {
-
                     DB::beginTransaction();
 
                     $this->myblProductRepository->updateDataById($product['id'], $productData);
@@ -129,12 +111,10 @@ class MyBlProductSchedulerService
 
                     DB::commit();
                 } catch (\Exception $e) {
-
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
             } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
-
                 $productData = [];
                 $productScheduleData = [];
                 if ($product->is_banner_schedule) {
@@ -148,7 +128,7 @@ class MyBlProductSchedulerService
 
                     $productScheduleData['tags'] = null;
                     $productData['tag'] = null;
-                    if(!$productTags->isEmpty()) {
+                    if (!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
                     }
                     if ($productScheduleData['tags'] != null) {
@@ -158,7 +138,6 @@ class MyBlProductSchedulerService
                         $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
-
                             $data['product_code'] = $product['product_code'];
                             $data['product_tag_id'] = $productScheduleTag;
 
@@ -196,7 +175,6 @@ class MyBlProductSchedulerService
 
                     DB::commit();
                 } catch (\Exception $e) {
-
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
@@ -207,7 +185,8 @@ class MyBlProductSchedulerService
     public function cancelSchedule($id)
     {
         $productSchedule = $this->myblProductScheduleRepository->findOne($id);
-        $product = ($this->myblProductRepository->findByProperties(['product_code' => $productSchedule->product_code], ['*']))->first();
+        $product = ($this->myblProductRepository->findByProperties(['product_code' => $productSchedule->product_code],
+                                                                   ['*']))->first();
 
         $productData = [];
         $productScheduleData = [];
@@ -222,7 +201,7 @@ class MyBlProductSchedulerService
 
             $productScheduleData['tags'] = null;
             $productData['tag'] = null;
-            if(!$productTags->isEmpty()) {
+            if (!$productTags->isEmpty()) {
                 $productScheduleData['tags'] = $productTags;
             }
             if ($productScheduleData['tags'] != null) {
@@ -232,7 +211,6 @@ class MyBlProductSchedulerService
                 $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                 $tags = [];
                 foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
-
                     $data['product_code'] = $product['product_code'];
                     $data['product_tag_id'] = $productScheduleTag;
 
@@ -240,7 +218,6 @@ class MyBlProductSchedulerService
                 }
                 $this->myblProductTagRepository->insert($tags);
             }
-
         }
 
         if ($product->is_visible_schedule && $productSchedule->change_state_status) {
@@ -274,14 +251,13 @@ class MyBlProductSchedulerService
 
             DB::commit();
         } catch (\Exception $e) {
-
             DB::rollback();
             Log::info($e->getMessage());
         }
     }
 
-    public function getTag($tagId) {
-
+    public function getTag($tagId)
+    {
         return ProductTag::where('id', $tagId)->first();
     }
 }
