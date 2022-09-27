@@ -899,11 +899,9 @@ class ProductCoreService
             $model = MyBlProduct::where('product_code', $product_code);
 
             // Remove redis key if you have any changes in is_popular_pack
-            if ($model->first()->is_popular_pack != $request->is_popular_pack) {
-                $prepaidRedisKey = "prepaid_popular_pack";
-                $postpaidRedisKey = "postpaid_popular_pack";
-                ($request->pack_type == "PREPAID") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
-            }
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->pack_type == "PREPAID") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
 
             $model->update($data);
 
@@ -1042,11 +1040,9 @@ class ProductCoreService
         try {
             DB::beginTransaction();
 
-            if (isset($request->is_popular_pack)) {
-                $prepaidRedisKey = "prepaid_popular_pack";
-                $postpaidRedisKey = "postpaid_popular_pack";
-                ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
-            }
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
 
             $this->myBlProductRepository->save($data);
 
