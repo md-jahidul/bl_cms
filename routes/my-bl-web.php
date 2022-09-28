@@ -1,5 +1,26 @@
 <?php
 
+//$serve = "mysql-5";
+//$user = "root";
+//$password = "root";
+//$db = "bl_cms";
+//try {
+//    $con = mysqli_connect($serve, $user, $password, $db);
+//
+//    $query = ' Select id, referrer from cs_selfcare_referrers where code_type = "retailer" AND is_active = 1';
+//    $result = $con->query($query);
+//
+//    foreach ($result as $value) {
+//        $msisdn = substr($value->referrer->msisdn, -9);
+//        $newCode = decoct($msisdn);
+//        $updateQuery = "update cs_selfcare_referrers set referral_code = '$newCode' where id = value->id";
+//        $con->query($updateQuery);
+//    }
+//}catch (PDOException $e){
+//
+//    echo $sql . "<br>" . $e->getMessage();
+//}
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes for MY BL
@@ -10,6 +31,9 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+use App\Services\NewCampaignModality\MyBlCampaignWinnerSelectionService;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
@@ -687,6 +711,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('mybl-campaign-section-deeplink/create', 'CMS\DynamicDeeplinkController@myblCampaignSectionDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
@@ -841,7 +866,28 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('sms-languages/store', 'CMS\SmsLanguageController@store')->name('sms-languages.store');
     Route::put('sms-languages/update/{id}', 'CMS\SmsLanguageController@update')->name('sms-languages.update');
 
+    /**
+     * New Campaign Modality
+     */
+    Route::resource('new-campaign-modality', 'CMS\MyBlNewCampaignModalityController')->except(['show', 'destroy']);
+    Route::get('new-campaign-modality/destroy/{id}', 'CMS\MyBlNewCampaignModalityController@destroy');
+    Route::get('new-campaign-analytic/{campaign_id}', 'CMS\MyBlNewCampaignModalityController@analyticReport')
+        ->name('new-campaign-analytic.report');
+    Route::get('new-campaign-purchase-msisdn-list/{campaignId}/{purchaseID}', 'CMS\MyBlNewCampaignModalityController@purchaseMsisdnList')
+        ->name('new-campaign.purchase-msisdn.list');
+
+    Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign-section/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignSectionController@destroy')->name('mybl-campaign-section.destroy');
+    Route::get('mybl-campaign-section/sort-auto-save', 'CMS\NewCampaignModality\MyBlCampaignSectionController@categorySortable');
+
+    Route::resource('mybl-campaign-winners', 'CMS\NewCampaignModality\MyBlCampaignWinnerController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign-winners/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignWinnerController@destroy')->name('mybl-campaign-winner.destroy');
 });
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+Route::get( 'winner-test', function() {
+    $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
+    return $myBlCampaignWinnerSelectionService->processCampaignWinner();
+  });
