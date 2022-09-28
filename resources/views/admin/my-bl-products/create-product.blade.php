@@ -360,7 +360,7 @@
                                     </fieldset>
                                 </div>
 
-                                <div class="col-md-3 icheck_minimal skin mt-2">
+                                <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer">
