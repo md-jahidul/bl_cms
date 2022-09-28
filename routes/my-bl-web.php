@@ -889,6 +889,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('mybl-campaign-winners', 'CMS\NewCampaignModality\MyBlCampaignWinnerController')->except(['show', 'destroy']);
     Route::get('mybl-campaign-winners/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignWinnerController@destroy')->name('mybl-campaign-winner.destroy');
+    /**
+     * Home Navigation Rail
+     */
+    Route::resource('heme-navigation-rail', 'CMS\HomeNavigationRailController');
+    Route::get('heme-navigation-rail-sortable', 'CMS\HomeNavigationRailController@navigationMenuSortable')
+        ->name('navigation-rail.sort');
+    Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
+        ->name('heme-navigation-rail.destroy');
 });
 
 // 4G Map View Route
