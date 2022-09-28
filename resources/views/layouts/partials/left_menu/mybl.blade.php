@@ -81,6 +81,13 @@
                     </a>
                 </li>
             </ul>
+            <ul class="menu-content">
+                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Home Navigation Rail
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -128,6 +135,10 @@
                 <li class="{{ is_active_match(route('product-tags.index'))}}">
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
+                </li>
+                <li class="{{ is_active_match(route('product.schedule'))}}">
+                    <a class="menu-item" href="{{ route('product.schedule') }}">
+                        <i class="la la-history"></i>Schedule Products</a>
                 </li>
             </ul>
         </li>
