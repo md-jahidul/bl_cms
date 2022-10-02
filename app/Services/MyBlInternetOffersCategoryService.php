@@ -34,7 +34,7 @@ class MyBlInternetOffersCategoryService
      * @param [type] $data
      * @return Response
      */
-    public function storeInternetOffersCategory($data): Response
+    public function storeInternetOffersCategory($data)
     {
         try{
             $this->internetOffersCategoryRepository->save($data);
@@ -86,7 +86,7 @@ class MyBlInternetOffersCategoryService
         try{
             $nearByOffer = $this->findOne($id);
             $nearByOffer->update($request);
-        
+
             return [
                 "status" => 200,
                 "message" => 'MyBl Internet Offers Category has been successfully updated'
