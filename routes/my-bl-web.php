@@ -945,6 +945,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
         ->name('free-product-purchase-msisdn.list');
 
+    Route::get('product-schedule', 'CMS\MyblProductEntryController@getScheduleProduct')
+        ->name('product.schedule');
+
+    Route::get('product-schedule-revert/{id}', 'CMS\MyblProductEntryController@getScheduleProductRevert');
+
+    Route::get('product-schedule-view/{id}', 'CMS\MyblProductEntryController@scheduleProductsView')->name('schedule-product.view');
+
     /*
      * Event Base bonus V2
      */
@@ -1069,6 +1076,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
     Route::get('mybl-campaign-section/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignSectionController@destroy')->name('mybl-campaign-section.destroy');
     Route::get('mybl-campaign-section/sort-auto-save', 'CMS\NewCampaignModality\MyBlCampaignSectionController@categorySortable');
+
+    Route::resource('mybl-campaign-winners', 'CMS\NewCampaignModality\MyBlCampaignWinnerController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign-winners/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignWinnerController@destroy')->name('mybl-campaign-winner.destroy');
     /**
      * Home Navigation Rail
      */
@@ -1093,10 +1103,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('ad-tech', 'CMS\MyblAdTechController');
     Route::delete('ad-tech/{id}/delete', 'CMS\MyblAdTechController@destroy')->name('orange-club.destroy');
     Route::get('ad-tech/addImage/update-position', 'CMS\MyblAdTechController@updatePosition');
+
 });
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+Route::get( 'winner-test', function() {
+    $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
+    return $myBlCampaignWinnerSelectionService->processCampaignWinner();
+  });
 
 
 Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {

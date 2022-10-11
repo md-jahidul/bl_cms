@@ -11,7 +11,9 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Models\ProductTag;
+use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyBlProductRepository;
+use App\Repositories\MyBlProductSchedulerRepository;
 use App\Repositories\MyBlProductTagRepository;
 use App\Repositories\ProductActivityRepository;
 use App\Repositories\ProductCoreRepository;
@@ -76,7 +78,7 @@ class ProductCoreService
      * @var ProductActivityRepository
      */
     private $productActivityRepository;
-
+    private $myblProductScheduleRepository;
     /**
      * ProductCoreService constructor.
      * @param ProductCoreRepository $productCoreRepository
@@ -94,7 +96,8 @@ class ProductCoreService
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
-        MyBlProductTagRepository $myBlProductTagRepository
+        MyBlProductTagRepository $myBlProductTagRepository,
+        MyBlProductSchedulerRepository $myblProductScheduleRepository
     ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->myBlProductRepository = $myBlProductRepository;
@@ -104,6 +107,7 @@ class ProductCoreService
         $this->productDeepLinkRepository = $productDeepLinkRepository;
         $this->setActionRepository($productCoreRepository);
         $this->myBlProductTagRepository = $myBlProductTagRepository;
+        $this->myblProductScheduleRepository = $myblProductScheduleRepository;
     }
 
     /**
@@ -469,6 +473,8 @@ class ProductCoreService
                         $q->whereNotNull('call_rate');
                     } elseif ($request->content_type == 'free_products') {
                         $q->where('mrp_price', null);
+                    } elseif ($request->content_type == 'is_popular_pack') {
+                        $q->where('is_popular_pack', 1);
                     } else {
                         $q->where('content_type', $request->content_type);
                     }
@@ -476,10 +482,13 @@ class ProductCoreService
             }
         )->with('details');
 
+        if ($request->content_type == 'is_popular_pack') {
+            $builder =  $builder->where('is_popular_pack', 1);
+        }
+
         if ($request->content_type == 'recharge_offer') {
             $builder->where('show_recharge_offer', 1);
         }
-
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
@@ -893,14 +902,83 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
+        $data['is_banner_schedule'] = isset($request->is_banner_schedule) ? true : false;
+        $data['is_tags_schedule'] = isset($request->is_tags_schedule) ? true : false;
+        $data['is_visible_schedule'] = isset($request->is_visible_schedule) ? true : false;
+        $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
+        $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $productSchedule = [];
+        $isProductSchedule = false;
+
+        if($data['is_banner_schedule'] == true) {
+            if ($request->file('schedule_media')) {
+                $file = $request->schedule_media;
+                $path = $file->storeAs(
+                    'products/images',
+                    $request->product_code . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                    'public'
+                );
+                $productSchedule['media'] = $path;
+            }
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['media'] = null;
+        }
+
+        if ($data['is_tags_schedule'] == true) {
+            $productSchedule['tags'] = json_encode($request->schedule_tags);
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['tags'] = null;
+        }
+
+        if ($data['is_visible_schedule'] == true) {
+            $productSchedule['is_visible'] = $request->schedule_visibility;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['is_visible'] = 0;
+        }
+
+        if ($data['is_pin_to_top_schedule'] == true) {
+            $productSchedule['pin_to_top'] = $request->schedule_pin_to_top;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['pin_to_top'] = 0;
+        }
+
+        if ($data['is_base_msisdn_group_id_schedule'] == true) {
+            $productSchedule['base_msisdn_group_id'] = $request->schedule_base_msisdn_groups_id;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['base_msisdn_group_id'] = null;
+        }
+
+        if($isProductSchedule == true) {
+            $productSchedule['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d H:i:s');
+            $productSchedule['end_date'] = Carbon::parse($request->end_date)->format('Y-m-d H:i:s');
+        } else {
+            $productSchedule['start_date'] = null;
+            $productSchedule['end_date'] = null;
+        }
 
         try {
             DB::beginTransaction();
 
             $model = MyBlProduct::where('product_code', $product_code);
+
+            // Remove redis key if you have any changes in is_popular_pack
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->pack_type == "PREPAID") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
+
             $model->update($data);
+
+            $productSchedule['product_code'] = $request->product_code;
+
+            $this->myblProductScheduleRepository->createProductSchedule($productSchedule);
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
@@ -984,6 +1062,7 @@ class ProductCoreService
 
             DB::commit();
         } catch (Exception $e) {
+
             DB::rollback();
             throw new Exception($e->getMessage());
         }
@@ -1023,9 +1102,55 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
+        $data['is_banner_schedule'] = isset($request->is_banner_schedule) ? true : false;
+        $data['is_tags_schedule'] = isset($request->is_tags_schedule) ? true : false;
+        $data['is_visible_schedule'] = isset($request->is_visible_schedule) ? true : false;
+        $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
+        $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
 
+        $productSchedule = [];
+        $isProductSchedule = false;
+
+        if($data['is_banner_schedule'] == true) {
+            if ($request->file('schedule_media')) {
+                $file = $request->schedule_media;
+                $path = $file->storeAs(
+                    'products/images',
+                    $data['product_code'] . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                    'public'
+                );
+                $productSchedule['media'] = $path;
+            }
+            $isProductSchedule = true;
+        }
+
+        if ($data['is_tags_schedule'] == true) {
+            $productSchedule['tags'] = json_encode($request->schedule_tags);
+            $isProductSchedule = true;
+        }
+
+        if ($data['is_visible_schedule'] == true) {
+            $productSchedule['is_visible'] = $request->schedule_visibility;
+            $isProductSchedule = true;
+        }
+
+        if ($data['is_pin_to_top_schedule'] == true) {
+            $productSchedule['pin_to_top'] = $request->schedule_pin_to_top;
+            $isProductSchedule = true;
+        }
+
+        if ($data['is_base_msisdn_group_id_schedule'] == true) {
+            $productSchedule['base_msisdn_group_id'] = $request->schedule_base_msisdn_groups_id;
+            $isProductSchedule = true;
+        }
+
+        if($isProductSchedule == true) {
+            $productSchedule['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d H:i:s');
+            $productSchedule['end_date'] = Carbon::parse($request->end_date)->format('Y-m-d H:i:s');
+        }
         if ($request->content_type == "data") {
             if (isset($request->offer_section_slug)) {
                 $firstTab = MyBlInternetOffersCategory::findOrFail($request->offer_section_slug[0]);
@@ -1036,7 +1161,17 @@ class ProductCoreService
 
         try {
             DB::beginTransaction();
+
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
+
             $this->myBlProductRepository->save($data);
+
+            if ($isProductSchedule == true) {
+                $productSchedule['product_code'] = $data['product_code'];
+                $this->myblProductScheduleRepository->save($productSchedule);
+            }
 
             if ($request->has('tags')) {
                 $this->syncProductTags($data['product_code'], $request->tags);

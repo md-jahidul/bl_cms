@@ -242,4 +242,9 @@ class BaseMsisdnService
         }
     }
 
+    public function getMsisdnGroupTitle($baseGroupId) {
+
+        return $this->baseMsisdnGroupRepository->getMsisdnGroupTitle($baseGroupId);
+    }
+
 }

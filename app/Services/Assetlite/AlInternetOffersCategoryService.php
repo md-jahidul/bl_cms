@@ -20,8 +20,7 @@ class AlInternetOffersCategoryService
     protected $internetOffersCategoryRepository;
 
     /**
-     * DigitalServicesService constructor.
-     * @param InternetOffersCategoryRepository $internetOffersCategoryRepository
+     * @param MyBlInternetOffersCategoryRepository $internetOffersCategoryRepository
      */
 
     public function __construct(MyBlInternetOffersCategoryRepository $internetOffersCategoryRepository)
