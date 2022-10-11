@@ -1145,6 +1145,23 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('commerce-bill-utility', 'CMS\CommerceBillUtilityController')->except(['show', 'destroy']);
     Route::get('commerce-bill-utility/destroy/{id}', 'CMS\CommerceBillUtilityController@destroy')->name('commerce-bill-utility.destroy');
     Route::get('commerce-bill-utility/sort-auto-save', 'CMS\CommerceBillUtilityController@categorySortable');
+    /**
+     * Home Navigation Rail
+     */
+    Route::resource('heme-navigation-rail', 'CMS\HomeNavigationRailController');
+    Route::get('heme-navigation-rail-sortable', 'CMS\HomeNavigationRailController@navigationMenuSortable')
+        ->name('navigation-rail.sort');
+    Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
+        ->name('heme-navigation-rail.destroy');
+
+    /**
+     * Content Navigation Rail
+     */
+    Route::resource('content-navigation-rail', 'CMS\ContentNavigationRailController');
+    Route::get('content-navigation-rail-sortable', 'CMS\ContentNavigationRailController@navigationMenuSortable')
+        ->name('content-navigation-rail.sort');
+    Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
+        ->name('content-navigation-rail.destroy');
 });
 
 // 4G Map View Route

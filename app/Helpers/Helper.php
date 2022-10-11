@@ -122,7 +122,12 @@ class Helper
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
             "HELP_AND_TUTORIAL" => "Help & Tutorial",
-            "CALL_CENTER" => "Call Center"
+            "CALL_CENTER" => "Call Center",
+            "GAME"                    => "Game",
+            "MUSIC"                   => "Music",
+            "VIDEO"                   => "Video",
+            "STORIES"                 => "Stories",
+            "SHOP"                    => "Shop"
         ];
     }
 
@@ -174,7 +179,12 @@ class Helper
             "4g_usim_eligibility"        => "4G USIM Eligibility",
             "recharge"                   => "Recharge",
             "help_and_tutorial"          => "Help & Tutorial",
-            "check_for_updates"          => "Check For Updates"
+            "check_for_updates"          => "Check For Updates",
+            "game"                       => "Game",
+            "music"                      => "Music",
+            "video"                      => "Video",
+            "stories"                    => "Stories",
+            "shop"                       => "Shop"
 
         ];
     }
