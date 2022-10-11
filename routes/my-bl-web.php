@@ -897,6 +897,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('navigation-rail.sort');
     Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
         ->name('heme-navigation-rail.destroy');
+
+    /**
+     * Content Navigation Rail
+     */
+    Route::resource('content-navigation-rail', 'CMS\ContentNavigationRailController');
+    Route::get('content-navigation-rail-sortable', 'CMS\ContentNavigationRailController@navigationMenuSortable')
+        ->name('content-navigation-rail.sort');
+    Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
+        ->name('content-navigation-rail.destroy');
 });
 
 // 4G Map View Route
