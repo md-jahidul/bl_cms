@@ -211,7 +211,7 @@ class BaseRepository implements BaseRepositoryContract
      */
     public function save(array $data)
     {   
-        $result = $this->model->create($data);
+        return $this->model->create($data);
     }
 
     /**
