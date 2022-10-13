@@ -97,13 +97,6 @@
                 </li>
             </ul>
             <ul class="menu-content">
-                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
-                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
-                        <i class="la la-paper-plane"></i>Home Navigation Rail
-                    </a>
-                </li>
-            </ul>
-            <ul class="menu-content">
                 <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
                     <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
                         <i class="la la-paper-plane"></i>Content Navigation Rail
