@@ -91,10 +91,10 @@ class EventBaseBonusV2CampaignService
             $url = $this->host . "/api/v1/campaigns";
             $response = $this->apiService->CallAPI("POST", $url, $data);
             
-            if(isset($response['data']) && isset($response['data']['id']) && !is_null(isset($response['data']['id']))) {
-                $data['id'] = $response['data']['id'];
-                $this->eventBasedCampaignRepository->save($data);
-            }
+            // if(isset($response['data']) && isset($response['data']['id']) && !is_null(isset($response['data']['id']))) {
+            //     $data['id'] = $response['data']['id'];
+            //     $this->eventBasedCampaignRepository->save($data);
+            // }
 
             return $response;
         } catch (\Exception $exception) {
@@ -120,8 +120,8 @@ class EventBaseBonusV2CampaignService
             unset($data['icon_image_old']);
             $data['created_by']                   = auth()->user()->email;
 
-            $ebbCampaign = $this->eventBasedCampaignRepository->findOne($id);
-            $this->eventBasedCampaignRepository->update($ebbCampaign, $data);
+            // $ebbCampaign = $this->eventBasedCampaignRepository->findOne($id);
+            // $this->eventBasedCampaignRepository->update($ebbCampaign, $data);
 
             $url = $this->host . "/api/v1/campaigns/" . $id;
 
@@ -142,8 +142,8 @@ class EventBaseBonusV2CampaignService
         try {
             $url = $this->host . "/api/v1/campaigns/" . $id;
 
-            $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);
-            $this->eventBasedCampaignRepository->delete($ebbCampaign);
+            // $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);
+            // $this->eventBasedCampaignRepository->delete($ebbCampaign);
 
             return $this->apiService->CallAPI("DELETE", $url, []);
         } catch (\Exception $exception) {
