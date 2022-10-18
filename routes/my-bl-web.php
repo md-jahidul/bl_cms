@@ -844,7 +844,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
-
+    Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
     Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
@@ -1153,6 +1153,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('navigation-rail.sort');
     Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
         ->name('heme-navigation-rail.destroy');
+
+    /**
+     * Content Deeplink
+     */
+    Route::get('content-deeplink', 'CMS\ContentDeeplinkController@index')->name('content-deeplink.index');
+    Route::post('content-deeplink', 'CMS\ContentDeeplinkController@store')->name('content-deeplink.store');
+    Route::get('content-deeplink/destroy/{id}', 'CMS\ContentDeeplinkController@destroy')
+        ->name('content-deeplink.destroy');
 
     /**
      * Content Navigation Rail

@@ -584,7 +584,10 @@
             </li>
         </ul>
     </li>
-
+    <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
+                class="la la-fighter-jet"></i>
+            <span class="menu-title" data-i18n="nav.dash.main">Content Deeplink</span></a>
+    </li>
     @if( auth()->user()->can_view('HelpCenter') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Offers</span></a>
