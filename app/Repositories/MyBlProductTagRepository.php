@@ -12,4 +12,14 @@ class MyBlProductTagRepository extends BaseRepository
     {
         return $this->model->where('product_code', $productCode)->delete();
     }
+
+    public function findTagIdByProductCode($productCode)
+    {
+        return $this->model->where('product_code', $productCode)->pluck('product_tag_id');
+    }
+
+    public function insert($tags) {
+
+        return $this->model::insert($tags);
+    }
 }

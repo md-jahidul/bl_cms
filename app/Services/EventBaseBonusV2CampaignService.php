@@ -152,7 +152,7 @@ class EventBaseBonusV2CampaignService
     {
         try {
             self::deleteEbbCampaignCache();
-            
+
             $url = $this->host . "/api/v1/campaigns/" . $id;
 
             $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);

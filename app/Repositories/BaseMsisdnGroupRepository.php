@@ -14,4 +14,12 @@ use App\Models\BaseMsisdnGroup;
 class BaseMsisdnGroupRepository extends BaseRepository
 {
     public $modelName = BaseMsisdnGroup::class;
+
+    public  function getMsisdnGroupTitle($id)
+    {
+
+        $data = $this->model::where('id', $id)->first();
+
+        return $data->title;
+    }
 }
