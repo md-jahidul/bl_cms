@@ -237,23 +237,23 @@ class PushNotificationController extends Controller
         if(!$flag){
             $user_phone = [];
             $notification_id = $id;
-           
+
             try {
                 $reader = ReaderFactory::createFromType(Type::XLSX);
                 $path = $request->file('customer_file')->getRealPath();
                 $reader->open($path);
-    
+
                 foreach ($reader->getSheetIterator() as $sheet) {
                     if ($sheet->getIndex() > 0) {
                         break;
                     }
-    
+
                     foreach ($sheet->getRowIterator() as $row) {
                         $cells = $row->getCells();
                         $number = $cells[0]->getValue();
                         $user_phone[] = $number;
                         // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
-    
+
                         if (count($user_phone) == 300) {
                             $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                             $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
@@ -271,9 +271,9 @@ class PushNotificationController extends Controller
                     // $notification = $this->getNotificationArray($request, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                         ->onQueue('notification');
-    
+
                 }
-    
+
                 Log::info('Success: Notification sending from excel');
                 return [
                     'success' => true,
@@ -393,7 +393,8 @@ class PushNotificationController extends Controller
             if ($request->filled('user_phone')) {
 
                 $phone_list = explode(",", $request->input('user_phone'));
-                $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
+//                $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
+                $user_phone = $phone_list;
 
                 $notification = [
                     'title' => $request->input('title'),
