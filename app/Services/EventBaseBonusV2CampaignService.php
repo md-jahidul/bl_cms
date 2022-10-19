@@ -6,6 +6,7 @@ use App\Repositories\EventBasedBonusCampaign\EventBasedCampaignRepository;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 
 class EventBaseBonusV2CampaignService
@@ -30,6 +31,12 @@ class EventBaseBonusV2CampaignService
         $this->host = env('EVENT_BASE_API_HOST_V2');
         $this->eventBasedCampaignRepository = $eventBasedCampaignRepository;
 
+    }
+
+    public static function deleteEbbCampaignCache()
+    {
+        $key = 'ebb_active_campaigns_data';
+        return Redis::del($key);
     }
 
     /**
@@ -83,10 +90,12 @@ class EventBaseBonusV2CampaignService
     public function store($data)
     {
         try {
+            self::deleteEbbCampaignCache();
+
             if (!empty($data['icon_image'])) {
                 $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             }
-            $data['created_by']                   = auth()->user()->email;
+            $data['created_by'] = auth()->user()->email;
 
             $url = $this->host . "/api/v1/campaigns";
             $response = $this->apiService->CallAPI("POST", $url, $data);
@@ -112,6 +121,8 @@ class EventBaseBonusV2CampaignService
     public function update($data, $id)
     {
         try {
+            self::deleteEbbCampaignCache();
+
             if (!empty($data['icon_image'])) {
                 $data['icon_image'] = 'storage/' . $data['icon_image']->storeAs('event-base-bonus', $data['icon_image']->getClientOriginalName());
             } else {
@@ -140,6 +151,8 @@ class EventBaseBonusV2CampaignService
     public function delete($id)
     {
         try {
+            self::deleteEbbCampaignCache();
+            
             $url = $this->host . "/api/v1/campaigns/" . $id;
 
             $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);
