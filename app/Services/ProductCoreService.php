@@ -319,7 +319,7 @@ class ProductCoreService
                                         $mybl_data['offer_section_slug'] = str_replace(' ', '_',
                                             strtolower($titleArr[0]));
 
-                                        if (strtolower($core_data['content_type']) === 'data') {
+                                        if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
@@ -441,6 +441,10 @@ class ProductCoreService
           } */
         if ($request->show_in_home != null) {
             $builder = $builder->where('show_in_home', $request->show_in_home);
+        }
+
+        if ($request->pinned_products != "") {
+            $builder = $builder->where('pin_to_top', $request->pinned_products);
         }
 
         $bundles = ['mix', 'voice', 'sms'];
