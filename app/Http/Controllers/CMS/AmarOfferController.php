@@ -8,6 +8,7 @@ use App\Http\Requests\AmarOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\AmarOfferService;
 use App\Models\AmarOffer;
+use Illuminate\Support\Facades\Redis;
 
 class AmarOfferController extends Controller
 {
@@ -46,8 +47,9 @@ class AmarOfferController extends Controller
     public function index()
     {
         $amarOffers = $this->amarOfferService->findAll();
+        $amarOfferIncident = Redis::get('amar-offer-incident') == null ? 0 : Redis::get('amar-offer-incident');
 
-        return view('admin.offer-Amar.index')->with('amarOffers', $amarOffers);
+        return view('admin.offer-Amar.index', compact('amarOffers', 'amarOfferIncident'));
     }
 
     /**
@@ -125,5 +127,23 @@ class AmarOfferController extends Controller
         $response = $this->amarOfferService->deleteAmarOffer($id);
         Session()->flash('error', $response->content());
         return url('amarOffer');
+    }
+
+    public function statusUpdate()
+    {
+        if (Redis::get("amar-offer-incident") == null) {
+            Redis::set("amar-offer-incident", 1);
+        } else {
+            $flag = Redis::get("amar-offer-incident");
+
+            if ($flag == 1) {
+                Redis::set("amar-offer-incident", 0);
+            } else {
+                Redis::set("amar-offer-incident", 1);
+            }
+        }
+
+        Session()->flash("Amar Offer Incident Status Update Successfully");
+        return redirect(route('amarOffer.index'));
     }
 }
