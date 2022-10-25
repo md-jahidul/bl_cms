@@ -123,8 +123,8 @@ class Helper
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
             "HELP_AND_TUTORIAL" => "Help & Tutorial",
             "CALL_CENTER" => "Call Center",
-            "GAME"                    => "Game",
-            "MUSIC"                   => "Music",
+            "GAMES"                    => "Games",
+            "MUSICS"                   => "Musics",
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop"
@@ -180,8 +180,8 @@ class Helper
             "recharge"                   => "Recharge",
             "help_and_tutorial"          => "Help & Tutorial",
             "check_for_updates"          => "Check For Updates",
-            "game"                       => "Game",
-            "music"                      => "Music",
+            "games"                      => "Games",
+            "musics"                     => "Musics",
             "video"                      => "Video",
             "stories"                    => "Stories",
             "shop"                       => "Shop"
