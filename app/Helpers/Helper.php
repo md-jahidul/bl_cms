@@ -121,8 +121,8 @@ class Helper
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
-            "GAME"                    => "Game",
-            "MUSIC"                   => "Music",
+            "GAMES"                    => "Games",
+            "MUSICS"                   => "Musics",
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop"
@@ -175,8 +175,8 @@ class Helper
             "voice_packs" => "Voice Bundle",
             "orange_club" => "Orange Club",
             "4g_usim_eligibility" => "4G USIM Eligibility",
-            "game" => "Game",
-            "music" => "Music",
+            "games" => "Games",
+            "musics" => "Musics",
             "video" => "Video",
             "stories" => "Stories",
             "shop" => "Shop"
