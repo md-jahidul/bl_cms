@@ -100,7 +100,7 @@ class EventBaseBonusV2CampaignService
             $url = $this->host . "/api/v1/campaigns";
             $response = $this->apiService->CallAPI("POST", $url, $data);
             
-            if(isset($response['data']) && isset($response['data']['id']) && !is_null(isset($response['data']['id']))) {
+            if(isset($response['data']) && isset($response['data']['id'])) {
                 $data['id'] = $response['data']['id'];
                 $this->eventBasedCampaignRepository->save($data);
             }
@@ -153,11 +153,10 @@ class EventBaseBonusV2CampaignService
         try {
             self::deleteEbbCampaignCache();
 
-            $url = $this->host . "/api/v1/campaigns/" . $id;
-
             $ebbCampaign = $this->eventBasedCampaignRepository->findOrFail($id);
             $this->eventBasedCampaignRepository->delete($ebbCampaign);
 
+            $url = $this->host . "/api/v1/campaigns/" . $id;
             return $this->apiService->CallAPI("DELETE", $url, []);
         } catch (\Exception $exception) {
             Log::channel('event-based-bonus-v2')->error($exception->getMessage());
