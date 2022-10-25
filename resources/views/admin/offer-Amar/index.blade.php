@@ -20,6 +20,22 @@
                     </div>
                 </div>
             </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr width="100%">
+                    <th width="25%" class="text-center">Amar Offer Incident</th>
+                    <td class="action">
+                        @if(!$amarOfferIncident)
+                            <a href="{{ route("amar-offer-incident.status.update") }}" data-value="enable  {{ "Amar Offer Incident" }}"
+                               class="btn btn-danger border-0 change_status" title="Click to enable">Disabled</a>
+                        @else
+                            <a href="{{ route("amar-offer-incident.status.update") }}" data-value="disable {{ "Amar Offer Incident" }}"
+                               class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
+                        @endif
+                    </td>
+                </tr>
+                </thead>
+            </table>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
@@ -86,9 +102,6 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-
-
-
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
@@ -123,7 +136,36 @@
                 })
             })
         })
+        $('.change_status').click(function (event) {
+            event.preventDefault()
+            let status = $(this).attr('data-value');
+            let url = $(this).attr('href');
+            var confirmPopupParams = {
+                title: 'Are you sure?',
+                text: "You want to " + status,
+                type: 'warning',
+                // html: jQuery().html(),
+                showCancelButton: true,
+                confirmButtonColor: '#77ba6a',
+                cancelButtonColor: '#a9afa9',
+                confirmButtonText: 'Yes'
+            };
 
+            var successPopupParams = {
+                title: 'Updated!',
+                text: 'Amar Offer Incident Status Changed Successfully',
+                type: 'success'
+            }
+
+            Swal.fire(confirmPopupParams).then((result) => {
+                if (result.value) {
+                    Swal.fire(successPopupParams);
+                    setTimeout(function(){
+                        window.location.replace(url)
+                    }, 2000)
+                }
+            })
+        });
         $(document).ready(function () {
             $('#Example1').DataTable({
                 //dom: 'Bfrtip',
@@ -135,6 +177,5 @@
                 "order": [[ 0, "desc" ]]
             });
         });
-
     </script>
 @endpush
