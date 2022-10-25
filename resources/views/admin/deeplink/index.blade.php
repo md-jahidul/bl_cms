@@ -68,7 +68,7 @@
                             <th>Category Name</th>
                             <th>ID</th>
                             <th>Slug</th>
-                            <th>Deep Link</th>
+                            <th>Dynamic Link</th>
                             <th>Action</th>
                         </tr>
                         </thead>
