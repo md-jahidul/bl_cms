@@ -177,6 +177,11 @@ class DynamicDeeplinkController extends Controller
     {
         $contentData = $this->contentDeeplinkRepository->findOne($request->id);
 
-        return $this->dynamicDeeplinkService->generateDeeplink(self::Content, $contentData, $request);
+        $sectionType = self::Content;
+        if ($contentData->category_name == 'courses') {
+            $sectionType = 'course';
+        }
+
+        return $this->dynamicDeeplinkService->generateDeeplink($sectionType, $contentData, $request);
     }
 }
