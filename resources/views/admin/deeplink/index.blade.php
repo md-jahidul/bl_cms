@@ -2,7 +2,7 @@
 @section('title', 'Content Deeplink List')
 @section('card_name', 'Content Deeplink')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Content Deeplink List</li>
+    <li class="breadcrumb-item active">Content & Course Deeplink List</li>
 @endsection
 
 @section('content_header')
@@ -34,6 +34,7 @@
                             <select name="category_name" class="form-control">
                                 <option value="games" >Games</option>
                                 <option value="musics">Musics</option>
+                                <option value="courses">Courses</option>
                             </select>
                         </div>
 {{--                        <div class="form-group">--}}
