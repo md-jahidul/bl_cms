@@ -30,12 +30,20 @@
                     </h4>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="category_name" class="required">Category Name:</label>
-                            <input required
-                                   type="text" name="category_name" class="form-control @error('title_en') is-invalid @enderror"
-                                   id="category_name" placeholder="Enter Category Name">
-                            <small class="text-danger"> @error('category_name') {{ $message }} @enderror </small>
+                            <label for="eventInput3">Category</label>
+                            <select name="category_name" class="form-control">
+                                <option value="games" >Games</option>
+                                <option value="musics">Musics</option>
+                                <option value="courses">Courses</option>
+                            </select>
                         </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label for="category_name" class="required">Category Name:</label>--}}
+{{--                            <input required--}}
+{{--                                   type="text" name="category_name" class="form-control @error('title_en') is-invalid @enderror"--}}
+{{--                                   id="category_name" placeholder="Enter Category Name">--}}
+{{--                            <small class="text-danger"> @error('category_name') {{ $message }} @enderror </small>--}}
+{{--                        </div>--}}
                     </div>
 
                     <div class="col-md-4">
