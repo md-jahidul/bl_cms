@@ -127,7 +127,8 @@ class Helper
             "MUSICS"                   => "Musics",
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
-            "SHOP"                    => "Shop"
+            "SHOP"                    => "Shop",
+            "COURSES"                 => "Courses"
         ];
     }
 
@@ -184,8 +185,8 @@ class Helper
             "musics"                     => "Musics",
             "video"                      => "Video",
             "stories"                    => "Stories",
-            "shop"                       => "Shop"
-
+            "shop"                       => "Shop",
+            "courses"                    => "Courses"
         ];
     }
 
