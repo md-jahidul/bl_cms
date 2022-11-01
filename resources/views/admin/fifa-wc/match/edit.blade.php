@@ -2,7 +2,6 @@
 @section('title', 'Edit Team')
 @section('card_name', 'Edit Team')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Edit Team/li>
 @endsection
 @section('content')
     <section>
