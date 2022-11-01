@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'FIFA Team Section')
-@section('card_name', 'FIFA Team Section')
+@section('title', 'FIFA WC Team')
+@section('card_name', 'FIFA WC Team')
 
 @section('action')
     <a href="{{route('teams.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
