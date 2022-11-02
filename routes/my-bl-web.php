@@ -1176,6 +1176,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
         ->name('content-navigation-rail.destroy');
 
+
+    /**
+     * FIFA WC
+     */
+    Route::resource('teams', 'CMS\FIFA\TeamController');
+    Route::get('teams/destroy/{id}', 'CMS\FIFA\TeamController@destroy')
+        ->name('teams.destroy');
+
+    Route::resource('matches', 'CMS\FIFA\MatchController');
+    Route::get('matches/destroy/{id}', 'CMS\FIFA\MatchController@destroy')
+        ->name('matches.destroy');
 });
 
 // 4G Map View Route
