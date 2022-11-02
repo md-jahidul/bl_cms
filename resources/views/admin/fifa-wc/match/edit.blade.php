@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Edit Team')
-@section('card_name', 'Edit Team')
+@section('title', 'Edit Match')
+@section('card_name', 'Edit Match')
 @section('breadcrumb')
 @endsection
 @section('content')
@@ -86,7 +86,6 @@
                                            id="signed_cookie"
                                            placeholder="Enter Signed Cookie"
                                            value="{{ $match->signed_cookie }}"
-                                           required
                                            readonly
                                     >
                                     @if($errors->has('signed_cookie'))
@@ -156,34 +155,37 @@
 @stop
 
 @push('page-css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
-    <link rel="stylesheet" href="{{ asset('app-assets/css/weekday-picker.css') }}">
-    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
 @push('page-js')
-    <script src="{{ asset('app-assets/js/recurring-schedule/recurring.js')}}"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
-    {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $('.dropify_image').dropify({
-                messages: {
-                    'default': 'Browse for an Logo to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct Logo'
-                },
-                error: {
-                    'imageFormat': 'The logo must be valid format'
-                }
-            });
+            $(".product-list").select2()
+            $('.report-repeater').repeater();
+
+            let startTime = $('#start_time');
+
+            function dateTime(element){
+                var date = new Date();
+                date.setDate(date.getDate());
+                element.datetimepicker({
+                    format : 'YYYY-MM-DD HH:mm:ss',
+                    showClose: true,
+                });
+            }
+
+            dateTime(startTime)
         });
     </script>
 @endpush
