@@ -86,7 +86,9 @@
                                            id="signed_cookie"
                                            placeholder="Enter Signed Cookie"
                                            value="{{ $match->signed_cookie }}"
-                                           required>
+                                           required
+                                           readonly
+                                    >
                                     @if($errors->has('signed_cookie'))
                                         <p class="text-left">
                                             <small class="danger text-muted">{{ $errors->first('signed_cookie') }}</small>

@@ -79,19 +79,6 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="signed_cookie" class="required">Signed Cookie</label>
-                                    <input class="form-control"
-                                           name="signed_cookie"
-                                           id="signed_cookie"
-                                           placeholder="Enter Signed Cookie"
-                                           required>
-                                    @if($errors->has('signed_cookie'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('signed_cookie') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-4">
                                     <label for="url" class="required">URL</label>
                                     <input class="form-control"
                                            name="url"
