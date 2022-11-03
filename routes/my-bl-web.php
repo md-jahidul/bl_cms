@@ -908,6 +908,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('matches', 'CMS\FIFA\MatchController');
     Route::get('matches/destroy/{id}', 'CMS\FIFA\MatchController@destroy')
         ->name('matches.destroy');
+
+    Route::get('signed-cookie', 'CMS\FIFA\MatchController@signedCookie')->name('signed-cookie');
+    Route::get('generate-cookie/{id}', 'CMS\FIFA\MatchController@generateCookie')
+        ->name('generate-cookie');
+
 });
 
 // 4G Map View Route

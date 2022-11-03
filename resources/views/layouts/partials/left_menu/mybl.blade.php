@@ -339,6 +339,12 @@
                     <i class="la la-bullhorn"></i> Match
                 </a>
             </li>
+            <li class=" {{is_active_url('signed-cookie')}}">
+                <a class="menu-item" href="{{ route('signed-cookie') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Generate Signed Cookie
+                </a>
+            </li>
         </ul>
     </li>
     <!-- Loyalty Partner Menu -->

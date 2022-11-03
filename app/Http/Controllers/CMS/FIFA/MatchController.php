@@ -103,4 +103,23 @@ class MatchController extends Controller
 
         return $data;
     }
+
+    public function signedCookie()
+    {
+        $matches = $this->matchRepository->findAll();
+
+        return view('admin.fifa-wc.match.signed-cookie', compact('matches'));
+    }
+
+    public function generateCookie($matchId)
+    {
+        //TODO : Python script valid path will be added.
+        $result = shell_exec("python " . app_path(). "\http\controllers\ORB\orb.py " . $matchId);
+
+        if ($result) {
+            return ['success' => true];
+        } else {
+            return ['success' => false];
+        }
+    }
 }
