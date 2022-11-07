@@ -19,7 +19,7 @@ class CreateMatchesTable extends Migration
             $table->unsignedBigInteger('away_team_id');
             $table->dateTime('start_time');
             $table->integer('ticketing_time');
-            $table->string('signed_cookie')->nullable();
+            $table->longText('signed_cookie')->nullable();
             $table->string('url');
             $table->boolean('status')->default(0);
             $table->boolean('is_hidden')->default(0);

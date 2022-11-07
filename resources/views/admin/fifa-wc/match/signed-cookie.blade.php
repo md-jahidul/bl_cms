@@ -13,17 +13,17 @@
                     >
                         <thead>
                         <tr>
-                            <th>Match ID</th>
-                            <th>Signed Cookie</th>
-                            <th>Action</th>
+                            <th width="20%">Match ID</th>
+                            <th width="60%">Signed Cookie</th>
+                            <th width="20%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($matches as $key=>$match)
                             <tr>
-                                <td>{{ $match->id }}</td>
-                                <td>{{ $match->signed_cookie ?? "" }}</td>
-                                <td>
+                                <td width="20%">{{ $match->id }}</td>
+                                <td width="60%">{{ $match->signed_cookie ?? "" }}</td>
+                                <td width="20%">
                                     @if(!$match->signed_cookie)
                                         <a href="#"
                                            class="border-0 btn btn-outline-success cookie cookie-generate" data-id="{{ $match->id }}" title="Generate Signed Cookie">
