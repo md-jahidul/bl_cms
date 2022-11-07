@@ -913,6 +913,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generate-cookie/{id}', 'CMS\FIFA\MatchController@generateCookie')
         ->name('generate-cookie');
 
+    Route::get('fifa-content', 'CMS\FIFA\FifaContentController@createOrEdit')->name('fifa-content');
+
+    Route::post('fifa-content', 'CMS\FIFA\FifaContentController@store')
+        ->name('fifa-content.update');
 });
 
 // 4G Map View Route
