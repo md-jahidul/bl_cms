@@ -113,8 +113,11 @@ class MatchController extends Controller
 
     public function generateCookie($matchId)
     {
-        //TODO : Python script valid path will be added.
-        $result = shell_exec("python " . app_path(). "\http\controllers\ORB\orb.py " . $matchId);
+        $result = trim(shell_exec("/app/mybl/opt/python3.11/bin/python3 /app/mybl/www/generate_signed_cookie/signed_cookies.py {$matchId} 2>&1"));
+
+        $match = $this->matchRepository->findOne($matchId);
+        $data['signed_cookie'] = $result;
+        $match->update($data);
 
         if ($result) {
             return ['success' => true];
