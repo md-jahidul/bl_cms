@@ -467,6 +467,12 @@
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
             <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
         <ul class="menu-content">
+            <li class=" {{is_active_url('fifa-content')}}">
+                <a class="menu-item" href="{{ route('fifa-content') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Fifa Content
+                </a>
+            </li>
             <li class=" {{is_active_url('teams')}}">
                 <a class="menu-item" href="{{ route('teams.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
