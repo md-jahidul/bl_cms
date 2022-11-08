@@ -847,6 +847,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
     Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
+    Route::get('fifa-deeplink/create', 'CMS\DynamicDeeplinkController@fifaDeepLinkCreate');
+
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
     Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
@@ -1196,6 +1198,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::post('fifa-content', 'CMS\FIFA\FifaContentController@store')
         ->name('fifa-content.update');
+
+    /**
+     * Fifa Deeplink
+     */
+    Route::get('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@index')->name('fifa-deeplink');
+    Route::post('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@store')->name('fifa-deeplink.store');
+    Route::get('fifa-deeplink/destroy/{id}', 'CMS\FIFA\FifaDeeplinkController@destroy')
+        ->name('fifa-deeplink.destroy');
 });
 
 // 4G Map View Route

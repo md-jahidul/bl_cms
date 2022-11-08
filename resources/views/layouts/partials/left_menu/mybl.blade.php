@@ -491,6 +491,12 @@
                     <i class="la la-bullhorn"></i> Generate Signed Cookie
                 </a>
             </li>
+            <li class=" {{is_active_url('fifa-deeplink')}}">
+                <a class="menu-item" href="{{ route('fifa-deeplink') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Deeplink
+                </a>
+            </li>
         </ul>
     </li>
     <!-- Loyalty Partner Menu -->
