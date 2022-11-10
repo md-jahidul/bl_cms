@@ -716,7 +716,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
-
+    Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
     Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
@@ -743,6 +743,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
+
+    //Content Component
+    Route::get('content-components', 'CMS\ContentComponentController@index')->name('content-components');
+    Route::get('content-components/edit/{id}', 'CMS\ContentComponentController@edit')
+        ->name('content-components.edit');
+    Route::post('content-components/store', 'CMS\ContentComponentController@store')
+        ->name('content-components.store');
+    Route::post('content-components/update', 'CMS\ContentComponentController@update')
+        ->name('content-components.update');
+    Route::get('content-components-sort', 'CMS\ContentComponentController@componentSort');
+    Route::get('content-components-status-update/{id}', 'CMS\ContentComponentController@componentStatusUpdate')
+        ->name('content-components.status.update');
+    Route::get('content-components/destroy/{id}', 'CMS\ContentComponentController@destroy')
+        ->name('content-components.destroy');
+
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
@@ -897,6 +912,23 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('navigation-rail.sort');
     Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
         ->name('heme-navigation-rail.destroy');
+
+    /**
+     * Content Deeplink
+     */
+    Route::get('content-deeplink', 'CMS\ContentDeeplinkController@index')->name('content-deeplink.index');
+    Route::post('content-deeplink', 'CMS\ContentDeeplinkController@store')->name('content-deeplink.store');
+    Route::get('content-deeplink/destroy/{id}', 'CMS\ContentDeeplinkController@destroy')
+        ->name('content-deeplink.destroy');
+
+    /**
+     * Content Navigation Rail
+     */
+    Route::resource('content-navigation-rail', 'CMS\ContentNavigationRailController');
+    Route::get('content-navigation-rail-sortable', 'CMS\ContentNavigationRailController@navigationMenuSortable')
+        ->name('content-navigation-rail.sort');
+    Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
+        ->name('content-navigation-rail.destroy');
 });
 
 // 4G Map View Route
