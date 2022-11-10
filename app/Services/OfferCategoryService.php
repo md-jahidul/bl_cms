@@ -101,23 +101,31 @@ class OfferCategoryService
             // Prepaid
             if (isset($data['banner_image_url'])) {
                 $data['banner_image_url'] = $this->upload($data['banner_image_url'], $dirPath);
-                $this->deleteFile($offerCategory->banner_image_url);
+                if (file_exists($offerCategory->banner_image_url)) {
+                    $this->deleteFile($offerCategory->banner_image_url);
+                }
             }
 
             if (!empty($data['banner_image_mobile'])) {
                 $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], $dirPath);
-                $this->deleteFile($offerCategory->banner_image_mobile);
+                if (file_exists($offerCategory->banner_image_mobile)) {
+                    $this->deleteFile($offerCategory->banner_image_mobile);
+                }
             }
 
             // Postpaid
             if (!empty($data['postpaid_banner_image_url'])) {
                 $data['postpaid_banner_image_url'] = $this->upload($data['postpaid_banner_image_url'], $dirPath);
-                $this->deleteFile($offerCategory->postpaid_banner_image_url);
+                if (file_exists($offerCategory->postpaid_banner_image_url)) {
+                    $this->deleteFile($offerCategory->postpaid_banner_image_url);
+                }
             }
 
             if (!empty($data['postpaid_banner_image_mobile'])) {
                 $data['postpaid_banner_image_mobile'] = $this->upload($data['postpaid_banner_image_mobile'], $dirPath);
-                $this->deleteFile($offerCategory->postpaid_banner_image_mobile);
+                if (file_exists($offerCategory->postpaid_banner_image_mobile)) {
+                    $this->deleteFile($offerCategory->postpaid_banner_image_mobile);
+                }
             }
 
             if ($offerCategory) {

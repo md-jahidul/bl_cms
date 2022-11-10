@@ -32,8 +32,8 @@ class OfferCategoryRequest extends FormRequest
         return [
             'url_slug' => 'required|regex:/^\S*$/u|unique:offer_categories,url_slug,' . $id,
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,url_slug_bn,' . $id,
-            'banner_name' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name,' . $id,
-            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name_bn,' . $id,
+//            'banner_name' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name,' . $id,
+//            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name_bn,' . $id,
             'banner_image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
         ];
     }

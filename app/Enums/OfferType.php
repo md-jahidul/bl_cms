@@ -31,4 +31,5 @@ final class OfferType extends Enum
     const MFS_OFFERS = 18;
     const CALL_RATE = 19;
     const PROPAID_PLANS = 20;
+    const NEW_SIM_OFFER = 23;
 }
