@@ -7,7 +7,7 @@
  * Time: 4:31 PM
  */
 
-namespace App\Services\Assetlite;
+namespace App\Services;
 
 use App\Repositories\AppServiceTabRepository;
 use App\Traits\CrudTrait;
