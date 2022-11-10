@@ -319,7 +319,7 @@ class ProductCoreService
                                         $mybl_data['offer_section_slug'] = str_replace(' ', '_',
                                             strtolower($titleArr[0]));
 
-                                        if (strtolower($core_data['content_type']) === 'data') {
+                                        if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
@@ -441,6 +441,10 @@ class ProductCoreService
           } */
         if ($request->show_in_home != null) {
             $builder = $builder->where('show_in_home', $request->show_in_home);
+        }
+
+        if ($request->pinned_products != "") {
+            $builder = $builder->where('pin_to_top', $request->pinned_products);
         }
 
         $bundles = ['mix', 'voice', 'sms'];
@@ -960,11 +964,6 @@ class ProductCoreService
 
             $model = MyBlProduct::where('product_code', $product_code);
 
-            // Remove redis key if you have any changes in is_popular_pack
-            $prepaidRedisKey = "prepaid_popular_pack";
-            $postpaidRedisKey = "postpaid_popular_pack";
-            ($request->pack_type == "PREPAID") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
-
             $model->update($data);
 
             $productSchedule['product_code'] = $request->product_code;
@@ -1052,6 +1051,11 @@ class ProductCoreService
             $this->syncSearch();
 
             DB::commit();
+
+            // Remove redis key if you have any changes in is_popular_pack
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->pack_type == "PREPAID") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
         } catch (Exception $e) {
 
             DB::rollback();
@@ -1152,10 +1156,6 @@ class ProductCoreService
         try {
             DB::beginTransaction();
 
-            $prepaidRedisKey = "prepaid_popular_pack";
-            $postpaidRedisKey = "postpaid_popular_pack";
-            ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
-
             $this->myBlProductRepository->save($data);
 
             if ($isProductSchedule == true) {
@@ -1216,6 +1216,10 @@ class ProductCoreService
             $this->syncSearch();
 
             DB::commit();
+
+            $prepaidRedisKey = "prepaid_popular_pack";
+            $postpaidRedisKey = "postpaid_popular_pack";
+            ($request->sim_type == "1") ? Redis::del($prepaidRedisKey) : Redis::del($postpaidRedisKey);
         } catch (Exception $e) {
             DB::rollback();
             throw new Exception($e->getMessage());
