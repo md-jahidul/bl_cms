@@ -76,6 +76,7 @@ class NotificationSend implements ShouldQueue
                             $this->user_phone);
                     }
                 }
+                return "success";
             }
         }
     }
