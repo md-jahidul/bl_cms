@@ -477,8 +477,10 @@ class PushNotificationController extends Controller
             Log::info($response);
             $notify = json_decode($response);
             if ($notify->status == "SUCCESS") {
-                if ($request->filled('user_phone')) {
-                    $this->notificationService->attachNotificationToUser($notify->notification_id, $user_phone);
+                if ($notify->notification_id != "-1") {
+                    if ($request->filled('user_phone')) {
+                        $this->notificationService->attachNotificationToUser($notify->notification_id, $user_phone);
+                    }
                 }
                 return ['success' => true, 'message' => 'Notification Sent'];
             }
