@@ -35,6 +35,8 @@
 use App\Services\NewCampaignModality\MyBlCampaignWinnerSelectionService;
 use Illuminate\Support\Facades\Route;
 use App\Jobs\TestJob;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
@@ -938,11 +940,17 @@ Route::view('/4g-map', '4g-map.view');
 Route::get( 'winner-test', function() {
     $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
     return $myBlCampaignWinnerSelectionService->processCampaignWinner();
-  });
+});
 
 
 use Illuminate\Http\Request;
 
 Route::get('/test-job', function (Request $request) {
-    TestJob::dispatch()->onConnection('redis')->onQueue('notification');
+    try{
+        TestJob::dispatch()->onConnection('redis')->onQueue('notification')->delay(now()->addMinutes(3));
+    } catch (\Exception $e) {
+        dd($e->getMessage());
+        Log::info($e->getMessage());
+    }
+
 });

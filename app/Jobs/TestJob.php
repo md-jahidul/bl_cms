@@ -26,6 +26,6 @@ class TestJob implements ShouldQueue
 
     public function handle()
     {
-        Log::info("This job ran");
+        Log::info("This job ran:" . $this->job->getConnectionName() . $this->job->getQueue());
     }
 }
