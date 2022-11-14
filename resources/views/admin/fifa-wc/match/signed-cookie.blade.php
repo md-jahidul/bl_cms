@@ -24,12 +24,10 @@
                                 <td>{{ $match->id }}</td>
                                 <td>{{ isset($match->signed_cookie) ? "Signed Cookie Already Created" : "" }}</td>
                                 <td>
-                                    @if(!$match->signed_cookie)
-                                        <a href="#"
-                                           class="border-0 btn btn-outline-success cookie cookie-generate" data-id="{{ $match->id }}" title="Generate Signed Cookie">
-                                            <i class="la la-link"></i>
-                                        </a>
-                                    @endif
+                                    <a href="#"
+                                       class="border-0 btn btn-outline-success cookie cookie-generate" data-id="{{ $match->id }}" title="Generate Signed Cookie">
+                                        <i class="la la-link">Generate Cookie</i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
