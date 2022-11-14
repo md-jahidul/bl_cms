@@ -125,7 +125,7 @@ class NotificationScheduler extends Command
 
                     NotificationSend::dispatch($notification, $notification_id, array_values($userPhoneChunk),
                         $notificationService, $activeSchedule)
-                        ->onQueue('notification');
+                        ->onConnection('redis') ->onQueue('notification');
                 }
 
                 // Setting the task status to 'completed' to avoid duplicity from dispatching the same job

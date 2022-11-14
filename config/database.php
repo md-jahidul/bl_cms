@@ -140,15 +140,15 @@ return [
             'database' => env('REDIS_CACHE_DB', 1),
         ],
 
-        'redis_queue' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD'),
+        'queue' => [
+            # 'url' => env('REDIS_URL'),
+            'host' => env('QUEUE_REDIS_HOST', '172.16.8.165'),
+            'password' => env('QUEUE_REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
             //database set to 0 since only database 0 is supported in redis cluster
             'database' => '0',
             //redis key prefix for this connection
-            'prefix' => 'q:'.env('QUEUE_PREFIX_VERSION', ''),
+            //'prefix' => 'q:'.env('QUEUE_PREFIX_VERSION', ''),
         ],
 
     ],

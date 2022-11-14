@@ -59,12 +59,25 @@ return [
         ],
 
         'redis' => [
+            //selects the 'redis' driver in config/database.php
             'driver' => 'redis',
-            'connection' => 'default',
-            'queue' => env('REDIS_QUEUE', 'default'),
+            //selects the connection 'queue' of the redis driver in config/database.php
+            'connection' => 'queue',
+            //default queue for this 'redis' queue connection. By setting the redis key prefix.
+            'queue' => 'default',
             'retry_after' => 90,
             'block_for' => null,
         ],
+
+        /*'redis' => [
+            'driver' => 'redis',
+            //connection default will connect to DB as per config of this file (QUEUE_CONNECTION)
+            'connection' => 'default',
+            'queue' => 'default',
+            'retry_after' => 90,
+            'block_for' => null,
+        ],*/
+
 
     ],
 
