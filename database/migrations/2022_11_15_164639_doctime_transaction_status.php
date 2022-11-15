@@ -20,6 +20,7 @@ class DoctimeTransactionStatus extends Migration
             $table->enum('service', ['consultation', 'subscription_purchase', 'diagnostic_order','medicine_order']);
             $table->unsignedBigInteger('service_id');
             $table->float('amount',15,2);
+            $table->string('payment_status');
             $table->timestamp('transaction_time');
             $table->string('transaction_id');
             $table->text('remarks')->nullable();
