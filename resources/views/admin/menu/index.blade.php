@@ -107,7 +107,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamic">
                                     <label for="url">Redirect URL</label>
-                                    <input type="text" name="redirect_url_en" class="form-control slug-convert" placeholder="Enter URL"
+                                    <input type="text" name="redirect_url_en" class="form-control" placeholder="Enter URL"
                                            value="{{ isset($adTech) ? $adTech->redirect_url_en : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
