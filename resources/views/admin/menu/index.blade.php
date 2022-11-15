@@ -117,7 +117,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 1) ? '' : 'd-none' }}" id="externalLink">
                                     <label for="url">External URL</label>
-                                    <input type="text" name="external_url" class="form-control slug-convert" placeholder="Enter URL"
+                                    <input type="text" name="external_url" class="form-control" placeholder="Enter URL"
                                            value="{{ isset($adTech) ? $adTech->external_url : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
