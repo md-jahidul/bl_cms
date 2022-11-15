@@ -72,7 +72,8 @@ MenuController extends Controller
         }
         $menu_items = $this->menuItems;
         $adTech = $this->adTechService->getAdTechByRefType('header-menu');
-        return view('admin.menu.index', compact('menus', 'parent_id', 'menu_items', 'adTech'));
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
+        return view('admin.menu.index', compact('menus', 'parent_id', 'menu_items', 'adTech', 'dynamicRoutes'));
     }
 
     /**

@@ -91,7 +91,50 @@
                                 {{--     @endif--}}
                                 {{-- </div>--}}
 
-                                <div class="col-md-4">
+{{--                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }} {{ ($menu->external_site == 1) ? 'd-none' : '' }}" id="pageDynamic">--}}
+{{--                                    <label for="code">Page URL</label>--}}
+{{--                                    <select class="select2 form-control" name="code">--}}
+{{--                                        <option value="">---Select Page---</option>--}}
+{{--                                        @foreach($dynamicRoutes as $route)--}}
+{{--                                            <option value="{{ $route->key }}" {{ ($route->key == $menu->code) ? 'selected' : '' }}>{{ $route->url }}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('key'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('key') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamic">
+                                    <label for="url">Redirect URL</label>
+                                    <input type="text" name="redirect_url_en" class="form-control slug-convert" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->redirect_url_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 1) ? '' : 'd-none' }}" id="externalLink">
+                                    <label for="url">External URL</label>
+                                    <input type="text" name="external_url" class="form-control slug-convert" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->external_url : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="external_link">Is External Menu:</label>
+                                        <input type="checkbox" name="is_external_url" value="1" id="external_link" {{ old("is_external_url") ? 'checked' : '' }}
+                                            {{ (isset($adTech) && $adTech->is_external_url == 1) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-3">
 {{--                                    {{ dd($adTech->status) }}--}}
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
@@ -130,6 +173,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         var auto_save_url = "{{ url('menu-auto-save') }}";
+
+        var externalLink = $('#externalLink');
+        var pageDynamic = $('#pageDynamic');
+
+        $('#external_link').click(function () {
+            if($(this).prop("checked") == true){
+                externalLink.removeClass('d-none');
+                pageDynamic.addClass('d-none');
+            }else{
+                pageDynamic.removeClass('d-none')
+                externalLink.addClass('d-none')
+            }
+        })
+
         // Image Dropify
         $(function () {
             $('.dropify').dropify({
