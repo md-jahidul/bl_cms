@@ -141,7 +141,7 @@ class AboutUsController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(CorpCaseStudyComponentRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'url_slug' => 'required|unique:about_us_banglalink,url_slug',
@@ -172,7 +172,7 @@ class AboutUsController extends Controller
      * @param AboutUsBanglalink $aboutUs
      * @return Response
      */
-    public function update(CorpCaseStudyComponentRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $aboutUs = $this->aboutUsService->findOne($id);
         $request->validate([
