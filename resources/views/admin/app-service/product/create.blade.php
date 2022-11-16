@@ -102,7 +102,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }}" id="detailsImg">
+                            <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }} d-none" id="detailsImg">
                                 <label for="mobileImg">Details Image</label>
                                 <div class="custom-file">
                                     <input type="file" name="details_image_url" data-height="90" class="dropify"
@@ -114,7 +114,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }} d-none" id="detailsVideo">
+                            <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}" id="detailsVideo">
                                 <label for="details_video_url" class="required">Details Video URL</label>
                                 <input type="text" name="details_video_url" class="form-control slug-convert" placeholder="Enter URL"
                                        value="{{ old("details_video_url") ? old("details_video_url") : '' }}">
@@ -291,11 +291,11 @@ $(function () {
 
     $('#is_images').click(function () {
         if($(this).prop("checked") == true){
-            detailsVideo.removeClass('d-none');
-            detailsImage.addClass('d-none');
+            detailsVideo.addClass('d-none');
+            detailsImage.removeClass('d-none');
         }else{
-            detailsImage.removeClass('d-none')
-            detailsVideo.addClass('d-none')
+            detailsImage.addClass('d-none')
+            detailsVideo.removeClass('d-none')
         }
     })
 
