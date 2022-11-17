@@ -141,7 +141,7 @@ function matchRelatedProduct($id, $relatedProductIds)
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Banner And Related Product</strong></h4>
+                    <h4 class="menu-title"><strong>Banner</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
@@ -177,7 +177,6 @@ function matchRelatedProduct($id, $relatedProductIds)
                                              style="display: none">
                                     @endif
                                 </div>
-
 
                                 <div class="form-group col-md-4 {{ $errors->has('image_mobile') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Mobile)</label>
@@ -228,8 +227,54 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title En</label>
+                                    <input type="text" name="banner_title_en" id="banner_title_en" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_title_en']) ? $fixedSectionData['banner_title_en'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">{{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
 
-                                @if($tab_type == "app" || $tab_type == "vas")
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn">Banner Title Bn</label>
+                                    <input type="text" name="banner_title_bn" id="banner_title_bn" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_title_bn']) ? $fixedSectionData['banner_title_bn'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label for="banner_desc_en">Banner Description En</label>
+                                    <textarea rows="5" name="banner_desc_en" id="banner_desc_en" class="form-control"
+                                              placeholder="Enter offer name in English">{{ isset($fixedSectionData['banner_desc_en']) ? $fixedSectionData['banner_desc_en'] : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_desc_en'))
+                                        <div class="help-block">{{ $errors->first('banner_desc_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label for="banner_desc_bn">Banner Description Bn</label>
+                                    <textarea rows="5" name="banner_desc_bn" id="banner_desc_bn" class="form-control"
+                                              placeholder="Enter offer name in English">{{ isset($fixedSectionData['banner_desc_bn']) ? $fixedSectionData['banner_desc_bn'] : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_desc_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_desc_bn') }}</div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <h5 class="menu-title"><strong>Related Product</strong></h5>
+                            <hr>
+
+                            <div class="row">
+{{--                                @if($tab_type == "app" || $tab_type == "vas")--}}
                                     <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
                                         <label for="title_en">Title (English)</label>
                                         <input type="text" name="title_en" id="title_en" class="form-control"
@@ -252,8 +297,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                         @endif
                                     </div>
 
-                                    <div
-                                        class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
+                                    <div class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
                                         <label for="role_id">Related Product</label>
                                         <div class="role-select">
                                             <select class="select2 form-control" multiple="multiple"
@@ -270,7 +314,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                             <div class="help-block">  {{ $errors->first('role_id') }}</div>
                                         @endif
                                     </div>
-                                @endif
+{{--                                @endif--}}
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -279,7 +323,6 @@ function matchRelatedProduct($id, $relatedProductIds)
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
                     </div>
