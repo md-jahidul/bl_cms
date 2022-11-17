@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'component_id',
         'title',
@@ -19,7 +19,8 @@ class Slider extends Model
         'platform',
         'slider',
         'other_attributes',
-        'position'
+        'position',
+        'component_for'
     ];
 
     protected $casts = [
