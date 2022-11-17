@@ -716,6 +716,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
+    Route::get('fifa-deeplink/create', 'CMS\DynamicDeeplinkController@fifaDeepLinkCreate');
+
     Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
@@ -929,6 +931,34 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('content-navigation-rail.sort');
     Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
         ->name('content-navigation-rail.destroy');
+
+    /**
+     * FIFA WC
+     */
+    Route::resource('teams', 'CMS\FIFA\TeamController');
+    Route::get('teams/destroy/{id}', 'CMS\FIFA\TeamController@destroy')
+        ->name('teams.destroy');
+
+    Route::resource('matches', 'CMS\FIFA\MatchController');
+    Route::get('matches/destroy/{id}', 'CMS\FIFA\MatchController@destroy')
+        ->name('matches.destroy');
+
+    Route::get('signed-cookie', 'CMS\FIFA\MatchController@signedCookie')->name('signed-cookie');
+    Route::get('generate-cookie/{id}', 'CMS\FIFA\MatchController@generateCookie')
+        ->name('generate-cookie');
+
+    Route::get('fifa-content', 'CMS\FIFA\FifaContentController@createOrEdit')->name('fifa-content');
+
+    Route::post('fifa-content', 'CMS\FIFA\FifaContentController@store')
+        ->name('fifa-content.update');
+
+    /**
+     * Fifa Deeplink
+     */
+    Route::get('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@index')->name('fifa-deeplink');
+    Route::post('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@store')->name('fifa-deeplink.store');
+    Route::get('fifa-deeplink/destroy/{id}', 'CMS\FIFA\FifaDeeplinkController@destroy')
+        ->name('fifa-deeplink.destroy');
 });
 
 // 4G Map View Route
