@@ -335,7 +335,42 @@
             </li>
         </ul>
     </li>
-
+    <!-- FIFA WC -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('fifa-content')}}">
+                <a class="menu-item" href="{{ route('fifa-content') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Fifa Content
+                </a>
+            </li>
+            <li class=" {{is_active_url('teams')}}">
+                <a class="menu-item" href="{{ route('teams.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Team
+                </a>
+            </li>
+            <li class=" {{is_active_url('matches')}}">
+                <a class="menu-item" href="{{ route('matches.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Match
+                </a>
+            </li>
+            <li class=" {{is_active_url('signed-cookie')}}">
+                <a class="menu-item" href="{{ route('signed-cookie') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Generate Signed Cookie
+                </a>
+            </li>
+            <li class=" {{is_active_url('fifa-deeplink')}}">
+                <a class="menu-item" href="{{ route('fifa-deeplink') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Deeplink
+                </a>
+            </li>
+        </ul>
+    </li>
     <!-- Loyalty Partner Menu -->
     @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
