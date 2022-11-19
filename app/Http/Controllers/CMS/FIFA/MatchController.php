@@ -113,11 +113,11 @@ class MatchController extends Controller
 
     public function generateCookie($matchId)
     {
-        $result = trim(shell_exec("/app/mybl/opt/python3.11/bin/python3 /app/mybl/www/generate_signed_cookie/signed_cookies.py {$matchId} 2>&1"));
-
-        $match = $this->matchRepository->findOne($matchId);
-        $data['signed_cookie'] = $result;
-        $match->update($data);
+//        $result = trim(shell_exec("/app/mybl/opt/python3.11/bin/python3 /app/mybl/www/generate_signed_cookie/signed_cookies.py {$matchId} 2>&1"));
+        $result = trim(shell_exec("/usr/bin/python3 /app/blcms/www/generate_signed_cookie/signed_cookies.py {$matchId} 2>&1"));
+//        $match = $this->matchRepository->findOne($matchId);
+//        $data['signed_cookie'] = $result;
+//        $match->update($data);
 
         if ($result) {
             return ['success' => true];
