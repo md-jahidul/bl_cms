@@ -60,6 +60,44 @@
                                 <div class="help-block"></div>
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('prepaid_banner_title_en') ? ' error' : '' }}">
+                                <label for="prepaid_banner_title_en">Banner Title EN</label>
+                                <input type="text" name="prepaid_banner_title_en"  class="form-control" placeholder="Enter banner title in English"
+                                       value="{{ $offer->prepaid_banner_title_en }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('prepaid_banner_title_en'))
+                                    <div class="help-block">  {{ $errors->first('prepaid_banner_title_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('prepaid_banner_title_bn_bn') ? ' error' : '' }}">
+                                <label for="prepaid_banner_title_bn_bn">Banner Title BN</label>
+                                <input type="text" name="prepaid_banner_title_bn"  class="form-control" placeholder="Enter banner title in Bangla"
+                                       value="{{ $offer->prepaid_banner_title_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('prepaid_banner_title_bn_bn'))
+                                    <div class="help-block">  {{ $errors->first('prepaid_banner_title_bn_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('prepaid_banner_desc_en') ? ' error' : '' }}">
+                                <label>Banner Description EN</label>
+                                <textarea class="form-control" rows="3" name="prepaid_banner_desc_en"
+                                placeholder="Enter Banner short description in English">{{$offer->prepaid_banner_desc_en}}</textarea>
+                                <small class="text-info">
+{{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('prepaid_banner_desc_bn') ? ' error' : '' }}">
+                                <label>Banner Description BN</label>
+                                <textarea class="form-control" rows="3" name="prepaid_banner_desc_bn"
+                                          placeholder="Enter Banner short description in Bangla">{{$offer->prepaid_banner_desc_bn}}</textarea>
+                                <small class="text-info">
+{{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                </small>
+                            </div>
+
                             <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label> URL English<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control slug-convert" value="{{$offer->url_slug}}" required name="url_slug"
@@ -105,32 +143,32 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
-                                <label>Banner Name En <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" required name="banner_name" value="{{$offer->banner_name}}"
-                                       placeholder="Enter English Web Banner Name" id="banner_name_en">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-                                @if ($errors->has('banner_name'))
-                                    <div class="help-block">  {{ $errors->first('banner_name') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">--}}
+{{--                                <label>Banner Name En <span class="text-danger">*</span></label>--}}
+{{--                                <input type="text" class="form-control slug-convert" required name="banner_name" value="{{$offer->banner_name}}"--}}
+{{--                                       placeholder="Enter English Web Banner Name" id="banner_name_en">--}}
+{{--                                <small class="text-info">--}}
+{{--                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>--}}
+{{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                </small>--}}
+{{--                                @if ($errors->has('banner_name'))--}}
+{{--                                    <div class="help-block">  {{ $errors->first('banner_name') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div class="form-group col-md-6 {{ $errors->has('banner_name_web_bn') ? ' error' : '' }}">
-                                <label>Banner Name Bn<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" name="banner_name_web_bn"
-                                       value="{{$offer->banner_name_web_bn}}" required
-                                       placeholder="Enter Bangeli Web Banner Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-                                @if ($errors->has('banner_name_web_bn'))
-                                    <div class="help-block">  {{ $errors->first('banner_name_web_bn') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="form-group col-md-6 {{ $errors->has('banner_name_web_bn') ? ' error' : '' }}">--}}
+{{--                                <label>Banner Name Bn<span class="text-danger">*</span></label>--}}
+{{--                                <input type="text" class="form-control slug-convert" name="banner_name_web_bn"--}}
+{{--                                       value="{{$offer->banner_name_web_bn}}" required--}}
+{{--                                       placeholder="Enter Bangeli Web Banner Name">--}}
+{{--                                <small class="text-info">--}}
+{{--                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>--}}
+{{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                </small>--}}
+{{--                                @if ($errors->has('banner_name_web_bn'))--}}
+{{--                                    <div class="help-block">  {{ $errors->first('banner_name_web_bn') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
@@ -179,6 +217,44 @@
                                        data-default-file="{{ config('filesystems.file_base_url') . $offer->postpaid_banner_image_mobile }}">
                                 <span class="text-primary">Please given file type (.png, .jpg)</span>
                                 <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_title_en') ? ' error' : '' }}">
+                                <label for="postpaid_banner_title_en">Banner Title EN</label>
+                                <input type="text" name="postpaid_banner_title_en"  class="form-control" placeholder="Enter banner title in English"
+                                       value="{{ $offer->postpaid_banner_title_en }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('postpaid_banner_title_en'))
+                                    <div class="help-block">  {{ $errors->first('postpaid_banner_title_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_title_bn_bn') ? ' error' : '' }}">
+                                <label for="postpaid_banner_title_bn_bn">Banner Title BN</label>
+                                <input type="text" name="postpaid_banner_title_bn"  class="form-control" placeholder="Enter banner title in Bangla"
+                                       value="{{ $offer->postpaid_banner_title_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('postpaid_banner_title_bn_bn'))
+                                    <div class="help-block">  {{ $errors->first('postpaid_banner_title_bn_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_desc_en') ? ' error' : '' }}">
+                                <label>Banner Description EN</label>
+                                <textarea class="form-control" rows="3" name="postpaid_banner_desc_en"
+                                          placeholder="Enter Banner short description in English">{{$offer->postpaid_banner_desc_en}}</textarea>
+                                <small class="text-info">
+                                    {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_desc_bn') ? ' error' : '' }}">
+                                <label>Banner Description BN</label>
+                                <textarea class="form-control" rows="3" name="postpaid_banner_desc_bn"
+                                          placeholder="Enter Banner short description in Bangla">{{$offer->postpaid_banner_desc_bn}}</textarea>
+                                <small class="text-info">
+                                    {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                </small>
                             </div>
 
                             <div class="form-group col-md-3 {{ $errors->has('postpaid_url_slug') ? ' error' : '' }}">
@@ -279,7 +355,6 @@
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
                             </div>
-
 
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
