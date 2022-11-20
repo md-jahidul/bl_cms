@@ -180,6 +180,18 @@
 
                                 @include('layouts.partials.products.common-field.search-related-field')
 
+                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
+                                    <label for="mobileImg">Product Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="product_image" data-height="90" class="dropify">
+                                        {{--<!-- data-default-file="{{ config('filesystems.file_base_url') . $menu->icon }}"-->>--}}
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('icon'))
+                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <label>For:</label>
                                     <div class="form-group" id="show_in_home">
@@ -243,6 +255,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
@@ -252,11 +265,20 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {
             $('#product_core').selectize({
                 create: true,
+            });
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
             });
 
             $('.validity_unit').change(function () {
