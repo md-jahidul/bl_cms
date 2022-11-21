@@ -173,16 +173,11 @@
 
                             <div class="form-group row">
 
-
                                 <div class="col-md-6 col-xs-12">
-
                                     <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
-
                                     <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
-
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
                                     <p class="text-center">
                                         @if($package->banner_photo != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" width="100%" />
@@ -192,26 +187,58 @@
 
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
-
                                     <input type="hidden" name="old_banner_mob" value="{{$package->banner_image_mobile}}">
-
                                     <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
                                     <p class="text-center">
                                         @if($package->banner_image_mobile != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->banner_image_mobile }}" alt="Banner Photo" width="100%" />
                                         @endif
                                     </p>
+                                </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title EN</label>
+                                    <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                           value="{{ $package->banner_title_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn_bn">Banner Title BN</label>
+                                    <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                           value="{{ $package->banner_title_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label>Banner Description EN</label>
+                                    <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                              placeholder="Enter Banner short description in English">{{ $package->banner_desc_en }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label>Banner Description BN</label>
+                                    <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                              placeholder="Enter Banner short description in Bangla">{{ $package->banner_desc_bn }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
                                     <input type="hidden" name="old_banner_name" value="{{$package->banner_name}}">
-
                                     <input type="text" class="form-control banner_name" required name="banner_name" value="{{ $package->banner_name }}" placeholder="Photo Name">
-
                                     <small class="text-info">
                                         <strong>i.e:</strong> package-banner (no spaces)<br>
                                     </small>
