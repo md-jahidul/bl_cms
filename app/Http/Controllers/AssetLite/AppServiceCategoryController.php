@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Repositories\AppServiceTabRepository;
-use App\Services\AppServiceCategoryService;
+use App\Services\Assetlite\AppServiceCategoryService;
 use App\Services\AppServiceTabService;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -33,7 +33,7 @@ class AppServiceCategoryController extends Controller
      * @param AppServiceTabRepository $appServiceTabRepository
      */
     public function __construct(
-         $appServiceCategory,
+        AppServiceCategoryService $appServiceCategory,
         AppServiceTabRepository $appServiceTabRepository
     ) {
         $this->appServiceCategory = $appServiceCategory;
