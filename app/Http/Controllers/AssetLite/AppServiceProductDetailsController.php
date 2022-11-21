@@ -4,7 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\AppServiceDetailsFixedSectionRequest;
 use App\Models\AppServiceProduct;
-use App\Services\Assetlite\AppServiceProductService;
+use App\Services\AppServiceProductService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;

@@ -196,7 +196,6 @@
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"
                 var fullUrl = "{{ asset('app-assets/images/app_services') }}/" + componentType;
-                console.log('eeeeeeeeeeee',fullUrl);
                 $("#componentImg").attr('src', fullUrl)
             })
 
