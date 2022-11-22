@@ -7,14 +7,9 @@
 @endsection
 @section('content')
 <section>
-
-
-
     <form method="POST" action="{{ url('roaming/save-other-offer') }}" class="form" enctype="multipart/form-data">
         @csrf
-
-               <input type="hidden" name="offer_id" value="{{$offer->id}}">
-
+        <input type="hidden" name="offer_id" value="{{$offer->id}}">
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -58,14 +53,14 @@
                             </div>
                             <div class="form-group row">
 
-                                <div class="col-md-3 col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <label> Short Text (EN)</label>
                                     <textarea rows="4" class="form-control" name="short_text_en">{{$offer->short_text_en}}</textarea>
                                     <small class="text-info">
                                         <strong>Note:</strong> It'll show in details page after name
                                     </small>
                                 </div>
-                                <div class="col-md-3 col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <label>Short Text (BN)</label>
                                     <textarea rows="4" class="form-control" name="short_text_bn">{{$offer->short_text_bn}}</textarea>
                                     <small class="text-info">
@@ -73,22 +68,24 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-3 col-xs-12">
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Card Image</label>
+                                    <input type="file" class="dropify" name="card_image" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'
+                                           data-default-file="{{ config('filesystems.file_base_url') . $offer->card_image }}">
+                                </div>
+
+                                <div class="col-md-4 col-xs-12">
                                     <label>Banner (Web)</label>
                                     <input type="file" class="dropify" name="banner_web" data-height="70"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    @if($offer->banner_web != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $offer->banner_web }}" width="100%">
-                                    @endif
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'
+                                           data-default-file="{{ config('filesystems.file_base_url') . $offer->banner_web }}">
                                 </div>
-                                <div class="col-md-3 col-xs-12">
+                                <div class="col-md-4 col-xs-12">
                                     <label>Banner (Mobile)</label>
                                     <input type="file" class="dropify" name="banner_mobile" data-height="70"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
-                                    @if($offer->banner_mobile != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $offer->banner_mobile }}" width="100%">
-                                    @endif
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'
+                                           data-default-file="{{ config('filesystems.file_base_url') . $offer->banner_mobile }}">
                                 </div>
 
                             </div>
@@ -181,11 +178,6 @@
 
         <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
     </form>
-
-
-
-
-
 </section>
 
 @stop

@@ -89,53 +89,53 @@
                                 </small>
                             </div>
 
-                            <div class="col-md-3 col-xs-12">
-                                <label>Banner Name Web EN<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name slug-convert" required name="banner_name" placeholder="Enter Web English Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-                                @if($errors->has('banner_name'))
-                                    <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="col-md-3 col-xs-12">--}}
+{{--                                <label>Banner Name Web EN<span class="text-danger">*</span></label>--}}
+{{--                                <input type="text" class="form-control banner_name slug-convert" required name="banner_name" placeholder="Enter Web English Name">--}}
+{{--                                <small class="text-info">--}}
+{{--                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>--}}
+{{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                </small>--}}
+{{--                                @if($errors->has('banner_name'))--}}
+{{--                                    <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-3 col-xs-12">
-                                <label>Banner Name Web BN<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name_web_bn slug-convert" required name="banner_name_web_bn" placeholder="Enter Web Bengali Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-                                @if($errors->has('banner_name_web_bn'))
-                                    <div class="help-block text-danger">{{ $errors->first('banner_name_web_bn') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="col-md-3 col-xs-12">--}}
+{{--                                <label>Banner Name Web BN<span class="text-danger">*</span></label>--}}
+{{--                                <input type="text" class="form-control banner_name_web_bn slug-convert" required name="banner_name_web_bn" placeholder="Enter Web Bengali Name">--}}
+{{--                                <small class="text-info">--}}
+{{--                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>--}}
+{{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                </small>--}}
+{{--                                @if($errors->has('banner_name_web_bn'))--}}
+{{--                                    <div class="help-block text-danger">{{ $errors->first('banner_name_web_bn') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-3 col-xs-12">
-                                <label>Banner Name Mobile EN<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name_mobile_en slug-convert" required name="banner_name_mobile_en" placeholder="Enter Mobile English Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-                                @if($errors->has('banner_name_mobile_en'))
-                                    <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_en') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="col-md-3 col-xs-12">--}}
+{{--                                <label>Banner Name Mobile EN<span class="text-danger">*</span></label>--}}
+{{--                                <input type="text" class="form-control banner_name_mobile_en slug-convert" required name="banner_name_mobile_en" placeholder="Enter Mobile English Name">--}}
+{{--                                <small class="text-info">--}}
+{{--                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>--}}
+{{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                </small>--}}
+{{--                                @if($errors->has('banner_name_mobile_en'))--}}
+{{--                                    <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_en') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-3 col-xs-12">
-                                <label>Banner Name Mobile BN<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name_mobile_bn slug-convert" required name="banner_name_mobile_bn" placeholder="Enter Mobile Bengali Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-                                @if($errors->has('banner_name_mobile_bn'))
-                                    <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_bn') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="col-md-3 col-xs-12">--}}
+{{--                                <label>Banner Name Mobile BN<span class="text-danger">*</span></label>--}}
+{{--                                <input type="text" class="form-control banner_name_mobile_bn slug-convert" required name="banner_name_mobile_bn" placeholder="Enter Mobile Bengali Name">--}}
+{{--                                <small class="text-info">--}}
+{{--                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>--}}
+{{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                </small>--}}
+{{--                                @if($errors->has('banner_name_mobile_bn'))--}}
+{{--                                    <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_bn') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
                         </div>
 
@@ -165,6 +165,44 @@
                             <div class="col-md-3 col-xs-12">
                                 <label>Alt Text BN</label>
                                 <input type="text" class="form-control alt_text_bn" name="alt_text_bn" placeholder="Alt Text BN">
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                <label for="banner_title_en">Banner Title EN</label>
+                                <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                       value="">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_en'))
+                                    <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                <label for="banner_title_bn_bn">Banner Title BN</label>
+                                <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                       value="">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_bn_bn'))
+                                    <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                <label>Banner Description EN</label>
+                                <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                          placeholder="Enter Banner short description in English"></textarea>
+                                <small class="text-info">
+                                    {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                <label>Banner Description BN</label>
+                                <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                          placeholder="Enter Banner short description in Bangla"></textarea>
+                                <small class="text-info">
+                                    {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                </small>
                             </div>
 
 
@@ -282,6 +320,10 @@
                 cache: false,
                 success: function (result) {
 
+                    $('.banner_title_en').val(result.banner_title_en);
+                    $('.banner_title_bn').val(result.banner_title_bn);
+                    $('.banner_desc_en').val(result.banner_desc_en);
+                    $('.banner_desc_bn').val(result.banner_desc_bn);
                     $('.name_en').val(result.name_en);
                     $('.name_bn').val(result.name_bn);
                     $('.alt_text').val(result.alt_text);

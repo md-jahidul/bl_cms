@@ -7,9 +7,6 @@
 @endsection
 @section('content')
     <section>
-
-
-
         <form method="POST" action="{{ url('roaming/save-other-offer') }}" class="form" enctype="multipart/form-data">
             @csrf
 
@@ -58,18 +55,17 @@
                                             <strong>Note:</strong> It'll show in card list (in accordion list)
                                         </small>
                                     </div>
-
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
                                         <label> Short Text (EN)</label>
                                         <textarea rows="4" class="form-control" name="short_text_en"></textarea>
                                         <small class="text-info">
                                             <strong>Note:</strong> It'll show in details page after name
                                         </small>
                                     </div>
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
                                         <label>Short Text (BN)</label>
                                         <textarea rows="4" class="form-control" name="short_text_bn"></textarea>
                                         <small class="text-info">
@@ -77,12 +73,18 @@
                                         </small>
                                     </div>
 
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-4 col-xs-12">
+                                        <label>Card Image</label>
+                                        <input type="file" class="dropify" name="card_image" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+
+                                    <div class="col-md-4 col-xs-12">
                                         <label>Banner (Web)</label>
                                         <input type="file" class="dropify" name="banner_web" data-height="70"
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-4 col-xs-12">
                                         <label>Banner (Mobile)</label>
                                         <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
@@ -151,30 +153,22 @@
                                         <label class="mr-1">
                                             <input type="radio" checked name="status" value="1" class="status_active"> Active
                                         </label>
-    
+
                                         <label><input type="radio" name="status" value="0" class="status_inactive">
                                             Inactive</label>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
 
                 </div>
             </div>
-            </div>
 
             <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
         </form>
-
-
-
-
-
     </section>
-
 @stop
 
 @push('style')
