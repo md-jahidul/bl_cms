@@ -90,9 +90,8 @@ class RoamingOfferRepository extends BaseRepository {
         return $response;
     }
 
-    public function saveOffer($webPath, $mobilePath, $request) {
+    public function saveOffer($webPath, $mobilePath, $cardImagePath, $request) {
         try {
-
             if ($request->offer_id == "") {
                 $offer = $this->model;
                 $offer->created_by = Auth::id();
@@ -106,6 +105,7 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->name_bn = $request->name_bn;
             $offer->card_text_en = $request->card_text_en;
             $offer->card_text_bn = $request->card_text_bn;
+            $offer->card_image = $cardImagePath;
             $offer->short_text_en = $request->short_text_en;
             $offer->short_text_bn = $request->short_text_bn;
             $offer->banner_name = $request->banner_name;

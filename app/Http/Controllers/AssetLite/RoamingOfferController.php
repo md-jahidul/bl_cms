@@ -115,8 +115,23 @@ class RoamingOfferController extends Controller {
      * @return Factory|View
      * @Bulbul Mahmud Nito || 24/03/2020
      */
-    public function saveOffer(RoamingOfferRequest $request)
-    {
+    public function saveOffer(Request $request) {
+
+        $validator =  Validator::make($request->all(), [
+            'name_en' => 'required',
+            'name_bn' => 'required',
+            'card_text_en' => 'required',
+            'card_text_bn' => 'required',
+//            'banner_name' => 'required|regex:/^\S*$/u',
+            'url_slug' => 'required|regex:/^\S*$/u|unique:roaming_other_offer,url_slug,' . $request->offer_id,
+            'url_slug_bn' => 'required|regex:/^\S*$/u|unique:roaming_other_offer,url_slug_bn,' . $request->offer_id,
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back();
+        }
+
         if ($request->offer_id == "") {
             $response = $this->offerService->saveOffer($request);
         } else {
