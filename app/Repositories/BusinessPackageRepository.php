@@ -119,10 +119,13 @@ class BusinessPackageRepository extends BaseRepository
         $package->banner_photo = $bannerWeb;
         $package->banner_image_mobile = $bannerMob;
         $package->alt_text = $request->alt_text;
-        $package->alt_text_bn = $request->alt_text_bn;
-        $package->banner_name = $request->banner_name;
-        $package->banner_name_bn = $request->banner_name_bn;
 
+        $package->banner_title_en = $request->banner_title_en;
+        $package->banner_title_bn = $request->banner_title_bn;
+        $package->banner_desc_en = $request->banner_desc_en;
+        $package->banner_desc_bn = $request->banner_desc_bn;
+
+        $package->banner_name = $request->banner_name;
         $package->url_slug = $request->url_slug;
         $package->url_slug_bn = $request->url_slug_bn;
         $package->schema_markup = $request->schema_markup;
@@ -149,8 +152,7 @@ class BusinessPackageRepository extends BaseRepository
 
     public function getPackageById($packageId)
     {
-        $packages = $this->model->findOrFail($packageId);
-        return $packages;
+        return $this->model->findOrFail($packageId);
     }
 
     public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
@@ -182,6 +184,12 @@ class BusinessPackageRepository extends BaseRepository
         $package->alt_text = $request->alt_text;
         $package->alt_text_bn = $request->alt_text_bn;
         $package->banner_name = $request->banner_name;
+
+        $package->banner_title_en = $request->banner_title_en;
+        $package->banner_title_bn = $request->banner_title_bn;
+        $package->banner_desc_en = $request->banner_desc_en;
+        $package->banner_desc_bn = $request->banner_desc_bn;
+
         $package->banner_name_bn = $request->banner_name_bn;
 
         $package->url_slug = $request->url_slug;
@@ -202,7 +210,6 @@ class BusinessPackageRepository extends BaseRepository
         $package->offer_details = $request->offer_details_en;
         $package->offer_details_bn = $request->offer_details_bn;
         $package->updated_by = Auth::id();
-
         return $package->save();
     }
 
