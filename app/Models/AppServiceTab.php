@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class AppServiceTab extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'name_en',
         'name_bn',
@@ -19,6 +19,10 @@ class AppServiceTab extends Model
         'banner_image_mobile',
         'banner_name',
         'banner_name_bn',
+        'banner_title_en',
+        'banner_title_bn',
+        'banner_desc_en',
+        'banner_desc_bn',
         'url_slug',
         'url_slug_bn',
         'schema_markup',

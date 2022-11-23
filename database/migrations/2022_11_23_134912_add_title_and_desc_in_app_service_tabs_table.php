@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTitleAndDescInRoamingCagegoriesTable extends Migration
+class AddTitleAndDescInAppServiceTabsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddTitleAndDescInRoamingCagegoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('roaming_cagegories', function (Blueprint $table) {
+        Schema::table('app_service_tabs', function (Blueprint $table) {
             $table->string('banner_title_en')->nullable()->after('banner_name_bn');
             $table->string('banner_title_bn')->nullable()->after('banner_title_en');
             $table->text('banner_desc_en')->nullable()->after('banner_title_bn');
@@ -28,7 +28,7 @@ class AddTitleAndDescInRoamingCagegoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('roaming_cagegories', function (Blueprint $table) {
+        Schema::table('app_service_tabs', function (Blueprint $table) {
             $table->dropColumn('banner_title_en');
             $table->dropColumn('banner_title_bn');
             $table->dropColumn('banner_desc_en');
