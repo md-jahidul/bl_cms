@@ -46,7 +46,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="menu-title">Fifa Deeplink List</h4>
-                    <table class="table table-striped table-bordered" id="Example1"
+                    <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info">
                         <thead>
                         <tr>
