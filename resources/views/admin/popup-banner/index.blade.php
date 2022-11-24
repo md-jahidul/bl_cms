@@ -29,25 +29,18 @@
                             @foreach ($banners as $banner)
                                 <tr data-index="{{ $banner->id }}" data-position="{{ $banner->display_order }}">
                                     <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
-                                    <td><img src="{{$banner->banner}}" alt="Girl in a jacket" width="150" height="40"></td>
+                                    <td><img src="{{ url('storage/' . $banner->banner) }}" alt="Girl in a jacket" width="150" height="40"></td>
                                     <td>{{ $banner->status ? 'Active':'Inactive' }}</td>
-                                    <td class="deep-link-section-{{ $banner->id }}">
-                                        @if(isset($section->deeplink))
-                                            <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
-                                                    data-toggle="tooltip" data-placement="button"
-                                                    data-value="{{ $banner->deeplink }}"
-                                                    title="Copy to Clipboard">Copy</button>
-                                        @else
-                                            <button class="btn-sm btn-outline-success cursor-pointer create_deep_link"
-                                                    data-value="{{ $banner->deeplink }}"
-                                                    data-id="{{ $banner->id }}"
-                                                    title="Click for deep link">
-                                                <i class="la icon-link"></i>
-                                            </button>
-                                        @endif
+                                    <td>
+                                        <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                            data-toggle="tooltip" data-placement="button"
+                                            data-value="{{ $banner->deeplink }}"
+                                            title="Copy to Clipboard" target="_blank"><i class="la icon-link"></i>
+                                            Copy
+                                        </button>
                                     </td>
                                     <td>
-                                        <a href="{{ route('mybl-campaign-section.edit', $banner->id) }}" role="button"
+                                        <a href="{{ route('popup-banner.edit', $banner->id) }}" role="button"
                                            class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#"
                                            class="border-0 btn btn-outline-danger delete delete_btn" data-id="{{ $banner->id }}" title="Delete the section">
@@ -90,7 +83,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('mybl-campaign-section/destroy') }}/"+id,
+                            url: "{{url('popup-banner/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -100,7 +93,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('mybl-campaign-section') }}"
+                                    window.location.href = "{{ url('popup-banner') }}"
                                 }
                             }
                         })

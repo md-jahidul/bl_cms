@@ -56,7 +56,7 @@ class PopupBannerController extends Controller
     public function create()
     {
         //
-        return view('admin.popup-banner.create');
+        return view('admin.popup-banner.create')->with('page','create');
     }
 
     /**
@@ -67,7 +67,15 @@ class PopupBannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //return $request->all();
+        $response =  $this->popupBannerService->createBanner($request);
+
+        if ($response) {
+            session()->flash('success', "Created successfully");
+            return redirect(route('popup-banner.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
 
     /**
@@ -90,6 +98,8 @@ class PopupBannerController extends Controller
     public function edit($id)
     {
         //
+        $banner = $this->popupBannerService->findBanner($id);
+        return view('admin.popup-banner.edit')->with('page','edit')->with('banner',$banner);
     }
 
     /**
@@ -102,6 +112,13 @@ class PopupBannerController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $response =  $this->popupBannerService->updateBanner($request, $id);
+        if ($response) {
+            session()->flash('success', "Updated successfully");
+            return redirect(route('popup-banner.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
 
     /**
@@ -113,5 +130,15 @@ class PopupBannerController extends Controller
     public function destroy($id)
     {
         //
+        $response = $this->popupBannerService->deleteBanner($id);
+
+        if ($response) {
+            session()->flash('error', "Deleted successfully");
+            return redirect(route('popup-banner.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
+
+        return $id;
     }
 }

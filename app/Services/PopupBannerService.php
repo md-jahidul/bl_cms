@@ -41,10 +41,71 @@ class PopupBannerService
         return $this->popupBannerRepository->findAll(null, null,  $orderBy);
     }
 
+    /**
+     * @return mixed
+     */
+    public function createBanner($request)
+    {
+        if (isset($request->banner_data)) {
+            // upload the Banner image
+            $file = $request->banner_data;
+            $path = $file->storeAs(
+                'app-banner-popup',
+                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+            $data['banner'] = $path;
+            $data['deeplink'] = $request->deeplink;
+            $data['status'] = $request->status;
+        }
+        return $this->popupBannerRepository->save($data);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function updateBanner($request,$id)
+    {
+        if (isset($request->banner_data)) {
+            // upload the Banner image
+            $file = $request->banner_data;
+            $path = $file->storeAs(
+                'app-banner-popup',
+                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+            $data['banner'] = $path;
+            $data['deeplink'] = $request->deeplink;
+            $data['status'] = $request->status;
+        }
+        $banner = $this->findOne($id);
+        return $banner->update($data);
+
+        //return $this->popupBannerRepository->update($data);
+    }
+
+
+
     public function tableSort($data)
     {
         $this->popupBannerRepository->manageTableSort($data);
         return new Response('Sorted successfully');
     }
+
+    public function findBanner($id)
+    {
+        return $this->popupBannerRepository->findOne($id);
+    }
+
+    public function deleteBanner($id)
+    {
+        $banner = $this->popupBannerRepository->findOne($id);
+        return $banner->delete();
+
+    }
+
+
+
+
 
 }

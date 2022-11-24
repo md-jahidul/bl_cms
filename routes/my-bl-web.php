@@ -963,6 +963,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //Mybl Popup Banner
     Route::resource('popup-banner', 'CMS\PopupBannerController');
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
+    Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
 
 });
 

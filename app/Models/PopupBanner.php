@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class PopupBanner extends Model
 {
     //
+
+    protected $fillable = ['banner','deeplink','status'];
 }
