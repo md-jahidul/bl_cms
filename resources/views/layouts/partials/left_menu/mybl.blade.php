@@ -374,6 +374,12 @@
                     <i class="la la-bullhorn"></i> Campaign Winner
                 </a>
             </li>
+            <li class="{{is_active_url('mybl-campaign-winners')}}">
+                <a class="menu-item" href="{{ route('popup-banner.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Popup Banner
+                </a>
+            </li>
         </ul>
     </li>
         <!-- Campaign Menu -->
