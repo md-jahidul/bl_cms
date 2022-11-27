@@ -9,6 +9,7 @@ use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 
 class PopupBannerService
 {
@@ -57,8 +58,21 @@ class PopupBannerService
             $data['banner'] = $path;
             $data['deeplink'] = $request->deeplink;
             $data['status'] = $request->status;
+            $data['is_priority'] = $request->is_priority;
+
+            //update all data for priority
+            $this->popupBannerRepository->priorityUpdate($request);
+
         }
-        return $this->popupBannerRepository->save($data);
+        $result = $this->popupBannerRepository->save($data);
+        // Set Radis Data
+        // if($request->banner_data == 1){
+        //     $result_data = $result->getOriginal();
+        //     $redis_key = 'popup_banner_'.$result_data['id'];
+        //     $ttl = 3000;
+        //     Redis::setex($redis_key, $ttl, json_encode($result_data));
+        // }
+        return $result;
     }
 
     /**
@@ -75,13 +89,17 @@ class PopupBannerService
                 'public'
             );
             $data['banner'] = $path;
-            $data['deeplink'] = $request->deeplink;
-            $data['status'] = $request->status;
         }
+        $data['deeplink'] = $request->deeplink;
+        $data['status'] = $request->status;
+        $data['is_priority'] = $request->is_priority;
         $banner = $this->findOne($id);
-        return $banner->update($data);
+        $result = $banner->update($data);
 
-        //return $this->popupBannerRepository->update($data);
+        //update all data for priority
+        $this->popupBannerRepository->priorityUpdate($request);
+
+        return $result;
     }
 
 

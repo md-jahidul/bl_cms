@@ -8,5 +8,5 @@ class PopupBanner extends Model
 {
     //
 
-    protected $fillable = ['banner','deeplink','status'];
+    protected $fillable = ['banner','deeplink','status','is_priority'];
 }

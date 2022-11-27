@@ -41,4 +41,11 @@ class PopupBannerRepository extends BaseRepository
         return "success";
     }
 
+    public function priorityUpdate($request)
+    {
+        PopupBanner::query()->update(['is_priority' => $request->is_priority ?? 0]);
+    }
+
+
+
 }

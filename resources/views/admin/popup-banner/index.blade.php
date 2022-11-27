@@ -21,6 +21,7 @@
                             <th><i class="icon-cursor-move icons"></i></th>
                             <th>Banner</th>
                             <th>Status</th>
+                            <th>Is Priority</th>
                             <th>Deep Link</th>
                             <th>Action</th>
                         </tr>
@@ -31,6 +32,7 @@
                                     <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td><img src="{{ url('storage/' . $banner->banner) }}" alt="Girl in a jacket" width="150" height="40"></td>
                                     <td>{{ $banner->status ? 'Active':'Inactive' }}</td>
+                                    <td>{{ $banner->is_priority ? 'Yes':'No' }}</td>
                                     <td>
                                         <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
                                             data-toggle="tooltip" data-placement="button"

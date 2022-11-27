@@ -19,8 +19,9 @@ class CreatePopupBannersTable extends Migration
             $table->string('deeplink', 300);
             $table->integer('display_order')->default(0);
             $table->boolean('status')->default(1);
+            $table->boolean('is_priority')->default(0);
             $table->timestamps();
-            
+
         });
     }
 

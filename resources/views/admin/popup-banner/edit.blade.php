@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Popup Banner Edit')
-@section('card_name', 'Popup Banner Edit')
+@section('title', 'MyBl Popup Banner')
+@section('card_name', 'MyBl Popup Banner')
 @section('breadcrumb')
 
     <li class="breadcrumb-item active"><a href="{{ route('popup-banner.index') }}">Popup Banner List</a></li>
@@ -59,6 +59,21 @@
 
                                         @if ($errors->has('status'))
                                             <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group {{ $errors->has('is_priority') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Is Priority ?:</label>
+
+                                        <input type="radio" name="is_priority" value="1" id="input-radio-17" @if($banner->is_priority == 1) checked @endif>
+                                        <label for="input-radio-17" class="mr-1">Yes</label>
+
+                                        <input type="radio" name="is_priority" value="0" id="input-radio-18" @if($banner->is_priority == 0) checked @endif>
+                                        <label for="input-radio-18">No</label>
+
+                                        @if ($errors->has('is_priority'))
+                                            <div class="help-block">  {{ $errors->first('is_priority') }}</div>
                                         @endif
                                     </div>
                                 </div>
