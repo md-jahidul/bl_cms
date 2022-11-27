@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Services\BaseMsisdnService;
 use Illuminate\Http\Request;
 use App\Http\Requests\AmarOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\AmarOfferService;
 use App\Models\AmarOffer;
+use Illuminate\Support\Facades\Redis;
 
 class AmarOfferController extends Controller
 {
@@ -14,7 +16,7 @@ class AmarOfferController extends Controller
     /**
      * @var AmarOfferService
      */
-    private $amarOfferService;
+    private $amarOfferService, $baseMsisdnService;
 
     /**
      * @var bool
@@ -25,9 +27,14 @@ class AmarOfferController extends Controller
      * BannerController constructor.
      * @param AmarOfferService $amarOfferService
      */
-    public function __construct(AmarOfferService $amarOfferService)
-    {
+    public function __construct
+    (
+        AmarOfferService $amarOfferService,
+        BaseMsisdnService $baseMsisdnService
+    ){
+
         $this->amarOfferService = $amarOfferService;
+        $this->baseMsisdnService = $baseMsisdnService;
         $this->middleware('auth');
     }
 
@@ -39,10 +46,10 @@ class AmarOfferController extends Controller
      */
     public function index()
     {
-        $orderBy = ['column' => "id", 'direction' => 'desc'];
-        $amarOffers = $this->amarOfferService->findAll('', '', $orderBy);
+        $amarOffers = $this->amarOfferService->findAll();
+        $amarOfferIncident = Redis::get('amar-offer-incident') == null ? 0 : Redis::get('amar-offer-incident');
 
-        return view('admin.offer-Amar.index')->with('amarOffers', $amarOffers);
+        return view('admin.offer-Amar.index', compact('amarOffers', 'amarOfferIncident'));
     }
 
     /**
@@ -52,7 +59,9 @@ class AmarOfferController extends Controller
      */
     public function create()
     {
-        return view('admin.offer-Amar.create');
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+
+        return view('admin.offer-Amar.create', compact('baseMsisdnGroups'));
     }
 
     /**
@@ -61,7 +70,7 @@ class AmarOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AmarOfferRequest $request)
+    public function store(Request $request)
     {
         $response = $this->amarOfferService->storeAmarOffer($request->all());
         Session()->flash('message', $response->content());
@@ -85,9 +94,12 @@ class AmarOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(AmarOffer $amarOffer)
+    public function edit($amarOfferId)
     {
-        return view('admin.offer-Amar.edit')->with('amarOffer', $amarOffer);
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+        $amarOffer = $this->amarOfferService->findOne($amarOfferId);
+
+        return view('admin.offer-Amar.edit', compact('amarOffer', 'baseMsisdnGroups'));
     }
 
     /**
@@ -97,7 +109,7 @@ class AmarOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AmarOfferRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $response = $this->amarOfferService->updateAmarOffer($request->all(), $id);
         Session()->flash('success', $response->content());
@@ -115,5 +127,23 @@ class AmarOfferController extends Controller
         $response = $this->amarOfferService->deleteAmarOffer($id);
         Session()->flash('error', $response->content());
         return url('amarOffer');
+    }
+
+    public function statusUpdate()
+    {
+        if (Redis::get("amar-offer-incident") == null) {
+            Redis::set("amar-offer-incident", 1);
+        } else {
+            $flag = Redis::get("amar-offer-incident");
+
+            if ($flag == 1) {
+                Redis::set("amar-offer-incident", 0);
+            } else {
+                Redis::set("amar-offer-incident", 1);
+            }
+        }
+
+        Session()->flash("Amar Offer Incident Status Update Successfully");
+        return redirect(route('amarOffer.index'));
     }
 }
