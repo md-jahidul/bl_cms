@@ -1206,6 +1206,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@store')->name('fifa-deeplink.store');
     Route::get('fifa-deeplink/destroy/{id}', 'CMS\FIFA\FifaDeeplinkController@destroy')
         ->name('fifa-deeplink.destroy');
+
+    //Mybl Popup Banner
+    Route::resource('popup-banner', 'CMS\PopupBannerController');
+    Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
+    Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+
 });
 
 // 4G Map View Route
