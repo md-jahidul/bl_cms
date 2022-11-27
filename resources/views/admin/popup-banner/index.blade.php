@@ -22,7 +22,6 @@
                             <th>Banner</th>
                             <th>Status</th>
                             <th>Is Priority</th>
-                            <th>Deep Link</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -33,14 +32,6 @@
                                     <td><img src="{{ url('storage/' . $banner->banner) }}" alt="Girl in a jacket" width="150" height="40"></td>
                                     <td>{{ $banner->status ? 'Active':'Inactive' }}</td>
                                     <td>{{ $banner->is_priority ? 'Yes':'No' }}</td>
-                                    <td>
-                                        <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
-                                            data-toggle="tooltip" data-placement="button"
-                                            data-value="{{ $banner->deeplink }}"
-                                            title="Copy to Clipboard" target="_blank"><i class="la icon-link"></i>
-                                            Copy
-                                        </button>
-                                    </td>
                                     <td>
                                         <a href="{{ route('popup-banner.edit', $banner->id) }}" role="button"
                                            class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
