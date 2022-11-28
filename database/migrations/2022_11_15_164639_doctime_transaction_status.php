@@ -14,15 +14,15 @@ class DoctimeTransactionStatus extends Migration
     public function up()
     {
         //
-        Schema::create('post-transaction-status', function (Blueprint $table) {
+        Schema::create('transaction_status_doctime', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('contact_no')->index();
-            $table->enum('service', ['consultation', 'subscription_purchase', 'diagnostic_order','medicine_order']);
+            $table->string('transaction_id');
+            $table->string('contact_no')->index();
+            $table->string('service');
             $table->unsignedBigInteger('service_id');
-            $table->float('amount',15,2);
+            $table->float('amount',8,2);
             $table->string('payment_status');
             $table->timestamp('transaction_time');
-            $table->string('transaction_id');
             $table->text('remarks')->nullable();
             $table->timestamps();
         });
