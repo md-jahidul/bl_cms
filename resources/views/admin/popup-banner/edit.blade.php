@@ -33,7 +33,7 @@
                                             data-max-file-size="2M"
                                             {{-- data-allowed-formats="portrait square" --}}
                                             data-allowed-file-extensions="jpeg png jpg"
-                                            data-default-file="{{ url('storage/' . $banner->banner) }}"
+                                            data-default-file="{{ url($banner->banner) }}"
                                             class="dropify"/>
                                 </div>
 
