@@ -47,31 +47,18 @@ class PopupBannerService
      */
     public function createBanner($request)
     {
+        $path = '';
         if (isset($request->banner_data)) {
-            // upload the Banner image
-            $file = $request->banner_data;
-            $path = $file->storeAs(
-                'app-banner-popup',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-            $data['banner'] = $path;
-            $data['deeplink'] = $request->deeplink;
-            $data['status'] = $request->status;
-            $data['is_priority'] = $request->is_priority;
-
-            //update all data for priority
-            $this->popupBannerRepository->priorityUpdate($request);
-
+            $path = $data['banner'] = 'storage/' . $request->banner_data->store('app_banner_popup'); 
         }
+        $data['banner'] = $path;
+        $data['deeplink'] = $request->deeplink;
+        $data['status'] = $request->status;
+        $data['is_priority'] = $request->is_priority;
         $result = $this->popupBannerRepository->save($data);
-        // Set Radis Data
-        // if($request->banner_data == 1){
-        //     $result_data = $result->getOriginal();
-        //     $redis_key = 'popup_banner_'.$result_data['id'];
-        //     $ttl = 3000;
-        //     Redis::setex($redis_key, $ttl, json_encode($result_data));
-        // }
+        //update all data for priority
+        $this->popupBannerRepository->priorityUpdate($request);
+
         return $result;
     }
 
@@ -81,14 +68,7 @@ class PopupBannerService
     public function updateBanner($request,$id)
     {
         if (isset($request->banner_data)) {
-            // upload the Banner image
-            $file = $request->banner_data;
-            $path = $file->storeAs(
-                'app-banner-popup',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-            $data['banner'] = $path;
+            $data['banner'] = 'storage/' . $request->banner_data->store('app_banner_popup');
         }
         $data['deeplink'] = $request->deeplink;
         $data['status'] = $request->status;

@@ -29,7 +29,7 @@
                             @foreach ($banners as $banner)
                                 <tr data-index="{{ $banner->id }}" data-position="{{ $banner->display_order }}">
                                     <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
-                                    <td><img src="{{ url('storage/' . $banner->banner) }}" alt="Girl in a jacket" width="150" height="40"></td>
+                                    <td><img src="{{ url($banner->banner) }}" alt="Girl in a jacket" width="150" height="40"></td>
                                     <td>{{ $banner->status ? 'Active':'Inactive' }}</td>
                                     <td>{{ $banner->is_priority ? 'Yes':'No' }}</td>
                                     <td>
