@@ -64,9 +64,9 @@
                                 <td width="10%">{{$amarOffer->status == 1 ? "Active" : "Inactive"}}</td>
                                 <td width="20%">
                                     <div class="btn-group" role="group">
-{{--                                        <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">--}}
-{{--                                            <i class="la la-info"></i>--}}
-{{--                                        </a>--}}
+                                        {{--                                        <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">--}}
+                                        {{--                                            <i class="la la-info"></i>--}}
+                                        {{--                                        </a>--}}
                                         <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
                                             <i class="la la-pencil"></i>
                                         </a>

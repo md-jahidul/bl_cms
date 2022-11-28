@@ -16,7 +16,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                   <form novalidate class="form" action="{{route('amarOffer.update',$amarOffer->id)}}" method="POST">
+                    <form novalidate class="form" action="{{route('amarOffer.update',$amarOffer->id)}}" method="POST">
                         @csrf
                         @method('put')
                         <input type="hidden" name="id" value="{{$amarOffer->id}}">
@@ -223,7 +223,7 @@
                        </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Update
+                                <i class="la la-check-square-o"></i> Update
                             </button>
                         </div>
                     </form>

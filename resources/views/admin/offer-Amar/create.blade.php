@@ -16,7 +16,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                   <form novalidate class="form" action="{{route('amarOffer.store')}}" method="POST">
+                    <form novalidate class="form" action="{{route('amarOffer.store')}}" method="POST">
                         @csrf
                         @method('post')
 
@@ -82,7 +82,7 @@
                                         </div>
 
                                         @error('title')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
@@ -107,16 +107,16 @@
                                     <div class="form-group">
                                         <label for="internet" class="required">Internet:</label>
                                         <input
-                                        required
-                                        maxlength="50000"
-                                        data-validation-maxlength-message = "Internet Volume can not be more then 50000 digits"
-                                        data-validation-required-message="Internet Volume is required"
-                                        type="number" min="0" value="@if(old('internet')){{old('internet')}}@endif" id="internet" class="form-control @error('internet') is-invalid @enderror" placeholder="Enter volume...." name="internet">
+                                            required
+                                            maxlength="50000"
+                                            data-validation-maxlength-message = "Internet Volume can not be more then 50000 digits"
+                                            data-validation-required-message="Internet Volume is required"
+                                            type="number" min="0" value="@if(old('internet')){{old('internet')}}@endif" id="internet" class="form-control @error('internet') is-invalid @enderror" placeholder="Enter volume...." name="internet">
                                         <div class="help-block">
                                             <small id="internet" class="form-text text-info">Enter volume in MB.</small>
                                         </div>
                                         @error('internet')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
@@ -127,16 +127,16 @@
                                     <div class="form-group">
                                         <label for="minutes" class="required">Minutes:</label>
                                         <input
-                                        required
-                                        maxlength="50000"
-                                        data-validation-maxlength-message = "Minutes Volume can not be more then 50000 digits"
-                                        data-validation-required-message="Minutes Volume is required"
-                                        type="number" min="0" value="@if(old('minutes')){{old('minutes')}}@endif" id="minutes" class="form-control @error('minutes') is-invalid @enderror" placeholder="Enter volume...." name="minutes">
+                                            required
+                                            maxlength="50000"
+                                            data-validation-maxlength-message = "Minutes Volume can not be more then 50000 digits"
+                                            data-validation-required-message="Minutes Volume is required"
+                                            type="number" min="0" value="@if(old('minutes')){{old('minutes')}}@endif" id="minutes" class="form-control @error('minutes') is-invalid @enderror" placeholder="Enter volume...." name="minutes">
                                         <div class="help-block">
                                             <small id="minutes" class="form-text text-info">Enter volume in minutes.</small>
                                         </div>
                                         @error('minutes')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
@@ -146,16 +146,16 @@
                                     <div class="form-group">
                                         <label for="sms" class="required">SMS:</label>
                                         <input
-                                        required
-                                        maxlength="50000"
-                                        data-validation-maxlength-message = "SMS Volume can not be more then 50000 digits"
-                                        data-validation-required-message="SMS Volume is required"
-                                        type="number" min="0" value="@if(old('sms')){{old('sms')}}@endif" id="sms" class="form-control @error('sms') is-invalid @enderror" placeholder="Enter volume...." name="sms">
+                                            required
+                                            maxlength="50000"
+                                            data-validation-maxlength-message = "SMS Volume can not be more then 50000 digits"
+                                            data-validation-required-message="SMS Volume is required"
+                                            type="number" min="0" value="@if(old('sms')){{old('sms')}}@endif" id="sms" class="form-control @error('sms') is-invalid @enderror" placeholder="Enter volume...." name="sms">
                                         <div class="help-block">
                                             <small id="sms" class="form-text text-info">Enter volume in amount of sms.</small>
                                         </div>
                                         @error('sms')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
@@ -166,17 +166,17 @@
                                     <div class="form-group">
                                         <label for="price" class="required">Price:</label>
                                         <input
-                                        required
-                                        maxlength="50"
-                                        data-validation-maxlength-message = "Price can not be more then 50 digits"
-                                        data-validation-required-message="Price is required"
-                                        type="number" min="0" value="@if(old('price')){{old('price')}}@endif" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
+                                            required
+                                            maxlength="50"
+                                            data-validation-maxlength-message = "Price can not be more then 50 digits"
+                                            data-validation-required-message="Price is required"
+                                            type="number" min="0" value="@if(old('price')){{old('price')}}@endif" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
 
                                         <div class="help-block">
                                             <small id="price" class="form-text text-info">Enter price in BDT.</small>
                                         </div>
                                         @error('price')
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
@@ -225,7 +225,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Save
+                                <i class="la la-check-square-o"></i> Save
                             </button>
                         </div>
                     </form>
