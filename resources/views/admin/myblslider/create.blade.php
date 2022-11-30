@@ -84,6 +84,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-6 mb-2">
+                                    <label for="status_input">Component For: </label>
+                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
+                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
+                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>
+                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
+                                        <label for="campaignStatusActive" class="mr-3">Content</label>
+                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}
+                                            {{ isset($single_slider->component_for) ? '' : 'checked' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Home</label>
+                                        @if ($errors->has('component_for'))
+                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 {{-- Position Field--}}
                                 <slot class="position">
                                     @if(isset($single_slider->component_id) && $single_slider->component_id == 18)

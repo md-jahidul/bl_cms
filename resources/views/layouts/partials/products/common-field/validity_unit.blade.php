@@ -4,6 +4,10 @@
         'hours' => 'Hours',
         'day'   => 'Day',
         'days'  => 'Days',
+        'month'  => 'Month',
+        'months'  => 'Months',
+        'year'  => 'Year',
+        'years'  => 'Years',
         'free_text' => 'Free Text'
     ];
 

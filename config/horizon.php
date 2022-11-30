@@ -153,8 +153,8 @@ return [
             'backoff' => 300,
             'timeout' => 230,
             'tries' => 1,
-        ],            
-        'supervisor-2' => [
+        ],
+        /*'supervisor-2' => [
             'connection' => 'redis',
             'queue' => ['lead_data_send'],
             'balance' => 'auto',
@@ -166,8 +166,8 @@ return [
             'backoff' => 300,
             'timeout' => 230,
             'tries' => 1,
-        ],
-        'supervisor-3' => [
+        ],*/
+        'supervisor-2' => [
             'connection' => 'redis',
             'queue' => ['default'],
             'balance' => 'auto',
@@ -184,7 +184,7 @@ return [
 
     'environments' => [
         'production' => $settings,
-        'local'      => $settings, 
+        'local'      => $settings,
     ],
 
     'basic_auth' => [
