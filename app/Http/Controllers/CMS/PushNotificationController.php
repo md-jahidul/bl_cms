@@ -138,7 +138,7 @@ class PushNotificationController extends Controller
 
                 NotificationSend::dispatch($notification, $notification_id, $customer,
                     $this->notificationService)
-                    ->onQueue('notification');
+                    ->onConnection('redis')->onQueue('notification');
             }
 
             Log::info('Success: Notification sending from excel');
@@ -188,7 +188,7 @@ class PushNotificationController extends Controller
                         $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                         NotificationSend::dispatch($notification, $notification_id, $user_phone,
                             $this->notificationService)
-                            ->onQueue('notification');
+                            ->onConnection('redis') ->onQueue('notification');
                         $user_phone = [];
                     }
                 }
@@ -200,7 +200,7 @@ class PushNotificationController extends Controller
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
-                    ->onQueue('notification');
+                    ->onConnection('redis') ->onQueue('notification');
 
 
             }
@@ -259,7 +259,7 @@ class PushNotificationController extends Controller
                             $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                             NotificationSend::dispatch($notification, $notification_id, $user_phone,
                                 $this->notificationService)
-                                ->onQueue('notification');
+                                ->onConnection('redis') ->onQueue('notification');
                             $user_phone = [];
                         }
                     }
@@ -270,7 +270,7 @@ class PushNotificationController extends Controller
                     $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                     // $notification = $this->getNotificationArray($request, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
-                        ->onQueue('notification');
+                        ->onConnection('redis') ->onQueue('notification');
 
                 }
 
@@ -444,7 +444,7 @@ class PushNotificationController extends Controller
             }
 
             /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
-               ->onQueue('notification');
+               ->onConnection('redis') ->onQueue('notification');
 
             session()->flash('success', "Notification has been sent successfully");
 
