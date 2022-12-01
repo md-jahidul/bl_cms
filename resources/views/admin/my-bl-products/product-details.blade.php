@@ -592,6 +592,17 @@
                                         </div>
                                     </div>
                                 @endif
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="status" value="1" name="status" 
+                                        @if($details->details->status == 1)
+                                            checked
+                                        @endif
+                                        >
+                                        <label for="status">Active</label>
+                                    </fieldset>
+                                </div>
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
