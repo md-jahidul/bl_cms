@@ -1046,7 +1046,7 @@ class ProductCoreService
                 'activity_type' => self::UPDATE,
                 'platform' => self::PLATFORM
             ];
-
+            $data_request['status'] = $request->status ?? 0;
             $this->productActivityRepository->storeProductActivity($data_request, $others, $model);
             $model->update($data_request);
             /**
@@ -1213,6 +1213,7 @@ class ProductCoreService
                 'platform' => self::PLATFORM
             ];
             $this->productActivityRepository->storeProductActivity($data_request, $others);
+            $data_request['status'] = $request->status ?? 0;
             $this->save($data_request);
 
             /**

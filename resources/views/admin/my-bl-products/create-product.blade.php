@@ -345,6 +345,12 @@
                                         <label for="show_in_home">Show in Home</label>
                                     </fieldset>
                                 </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="status" value="1" name="status" checked>
+                                        <label for="status">Active</label>
+                                    </fieldset>
+                                </div>
 
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
@@ -443,6 +449,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-4 schedule_visibility d-none">
                                     <label class="required">Schedule Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
@@ -498,6 +505,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
