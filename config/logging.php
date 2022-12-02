@@ -96,7 +96,7 @@ return [
         ],
 
         'notificationinfolog' => [
-            'driver' => 'notificationinfolog',
+            'driver' => 'daily',
             'path' => storage_path('logs/notificationLogs/laravel.log'),
             'days' => 14
         ],
