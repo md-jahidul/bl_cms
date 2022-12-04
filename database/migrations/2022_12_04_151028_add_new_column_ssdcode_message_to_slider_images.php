@@ -29,6 +29,8 @@ class AddNewColumnSsdcodeMessageToSliderImages extends Migration
     {
         Schema::table('slider_images', function (Blueprint $table) {
             //
+            $table->dropColumn('ussd_code');
+            $table->dropColumn('message');
         });
     }
 }

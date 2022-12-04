@@ -443,6 +443,8 @@
                                     </select>
                                     <div class="help-block"></div>
                                 </div>`;
+                var code = (parse_data.ussd_code != null) ? parse_data.ussd_code : ''; 
+                var message = (parse_data.message != null) ? parse_data.message : '';                
                 ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
                                 <label for="ussd_code" class="required">USSD Code:</label>
                                 <input
@@ -450,7 +452,7 @@
                                     data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                     data-validation-required-message="USSD Code is required"
                                     data-validation-maxlength-message="USSD code can not be more then 16 Characters"
-                                    value="${parse_data.ussd_code}" required id="ussd_code"
+                                    value="${code}" required id="ussd_code"
                                     type="text" class="form-control @error('ussd_code') is-invalid @enderror"
                                     placeholder="USSD Code" name="ussd_code">
                                 <small class="text-danger"> @error('ussd_code') {{ $message }} @enderror </small>
@@ -465,7 +467,7 @@
                                     data-validation-required-message="Message is required"
                                     data-validation-regex-message="Message must start with alphabets"
                                     data-validation-maxlength-message="Message can not be more then 250 Characters"
-                                    value="${parse_data.message}" required id="message"
+                                    value="${message}" required id="message"
                                     type="text" class="form-control @error('message') is-invalid @enderror"
                                     placeholder="Message" name="message">
                                 <small class="text-danger"> @error('message') {{ $message }} @enderror </small>
