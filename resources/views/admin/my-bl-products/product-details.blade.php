@@ -424,8 +424,8 @@
                                 </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
-                                        <input type="checkbox" id="status" value="1" name="status" 
-                                        @if($details->details->status == 1)
+                                        <input type="checkbox" id="status" value="1" name="status"
+                                        @if($details->status == 1)
                                             checked
                                         @endif
                                         >
@@ -542,7 +542,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
+
 
                                     <div class="col-md-4 schedule_visibility {{ isset($details->is_visible_schedule) && $details->is_visible_schedule == true ? "": 'd-none'}}">
                                         <label class="required">Schedule Visibility (show/hide in app)</label>
@@ -604,7 +604,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">

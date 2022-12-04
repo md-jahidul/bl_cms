@@ -897,6 +897,7 @@ class ProductCoreService
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
+        $data['status'] = $request->status ?? 0;
         $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['is_banner_schedule'] = isset($request->is_banner_schedule) ? true : false;
@@ -1041,7 +1042,7 @@ class ProductCoreService
                 'activity_type' => self::UPDATE,
                 'platform' => self::PLATFORM
             ];
-            $data_request['status'] = $request->status ?? 0;
+
             $this->productActivityRepository->storeProductActivity($data_request, $others, $model);
             $model->update($data_request);
             /**
@@ -1097,6 +1098,7 @@ class ProductCoreService
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
         $data['is_popular_pack'] = $request->is_popular_pack ?? 0;
+        $data['status'] = $request->status ?? 0;
         $data['pin_to_top'] = isset($request->pin_to_top) ? true : false;
         $data['is_banner_schedule'] = isset($request->is_banner_schedule) ? true : false;
         $data['is_tags_schedule'] = isset($request->is_tags_schedule) ? true : false;
@@ -1207,7 +1209,7 @@ class ProductCoreService
                 'platform' => self::PLATFORM
             ];
             $this->productActivityRepository->storeProductActivity($data_request, $others);
-            $data_request['status'] = $request->status ?? 0;
+
             $this->save($data_request);
 
             /**
