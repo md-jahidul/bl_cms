@@ -68,7 +68,7 @@ class NotificationScheduler extends Command
                 ->first();
 
             if (!is_null($activeSchedule)) {
-                $notification_id = $activeSchedule->notification_id;
+                $notification_id = $activeSchedule->notification_draft_id;
                 $category = $activeSchedule->notificationCategory;
                 $notificationDraft = $activeSchedule->notificationDraft;
                 $checkCustomer = false;
