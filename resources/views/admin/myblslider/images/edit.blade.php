@@ -403,18 +403,21 @@
 
 
             if (js_data) {
-                parse_data = JSON.parse(js_data);
+                parse_data = JSON.parse(js_data); 
                 other_attributes = parse_data.other_attributes;
                 if (other_attributes) {
                     let type = other_attributes.type;
                     if(type == 'dial'){
                         dial_content = other_attributes.content;
+                    }else if(type == 'USSD_CODE'){
+                        redirect_content = other_attributes.content;
                     }else if(type == 'url'){
                         redirect_content = other_attributes.content;
                     }else{
                         purchase_content = other_attributes.content;
                     }
                 }
+
             }
 
             //alert(content);
@@ -446,6 +449,40 @@
                                     </select>
                                     <div class="help-block"></div>
                                 </div>`;
+                var code = (parse_data.ussd_code != null) ? parse_data.ussd_code : ''; 
+                var message = (parse_data.message != null) ? parse_data.message : '';                
+                ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
+                                <label for="ussd_code" class="required">USSD Code:</label>
+                                <input
+                                    maxlength="16"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="USSD Code is required"
+                                    data-validation-maxlength-message="USSD code can not be more then 16 Characters"
+                                    value="${code}" required id="ussd_code"
+                                    type="text" class="form-control @error('ussd_code') is-invalid @enderror"
+                                    placeholder="USSD Code" name="ussd_code">
+                                <small class="text-danger"> @error('ussd_code') {{ $message }} @enderror </small>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group col-md-12 mb-2 other-info-div">
+                                <label for="message" class="required">Message:</label>
+                                <input
+                                    maxlength="250"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Message is required"
+                                    data-validation-regex-message="Message must start with alphabets"
+                                    data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                    value="${message}" required id="message"
+                                    type="text" class="form-control @error('message') is-invalid @enderror"
+                                    placeholder="Message" name="message">
+                                <small class="text-danger"> @error('message') {{ $message }} @enderror </small>
+                                <div class="help-block"></div>
+                            </div> `; 
+                            
+                if(parse_data.redirect_url == 'USSD_CODE'){
+                    $("#append_div").html(ussd_code);
+                }                
 
 
             $('#navigate_action').on('change', function () {
@@ -453,6 +490,8 @@
                 //console.log(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
+                }else if (action == 'USSD_CODE') {
+                        $("#append_div").html(ussd_code);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);
                 } else if (action === 'FEED_CATEGORY') {
