@@ -234,6 +234,8 @@
                                         </table>
                                     </div>
 
+                                    
+
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
                                                 class="btn btn-success round px-2">
@@ -342,6 +344,36 @@
                                 </div>`;
 
 
+                ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="ussd_code" class="required">USSD Code:</label>
+                                        <input
+                                            maxlength="16"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="USSD Code is required"
+                                            data-validation-maxlength-message="USSD code can not be more then 16 Characters"
+                                            value="@if(old('ussd_code')) {{old('ussd_code')}} @endif" required id="ussd_code"
+                                            type="text" class="form-control @error('ussd_code') is-invalid @enderror"
+                                            placeholder="USSD Code" name="ussd_code">
+                                        <small class="text-danger"> @error('ussd_code') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message" class="required">Message:</label>
+                                        <input
+                                            maxlength="16"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message is required"
+                                            data-validation-regex-message="Message must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 16 Characters"
+                                            value="@if(old('message')) {{old('message')}} @endif" required id="message"
+                                            type="text" class="form-control @error('message') is-invalid @enderror"
+                                            placeholder="Message" name="message">
+                                        <small class="text-danger"> @error('message') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div> `;
+
+
                 $('#navigate_action').on('change', function () {
                     let action = $(this).val();
                     console.log(action);
@@ -349,6 +381,8 @@
                         $("#append_div").html(dial_html);
                     } else if (action == 'URL') {
                         $("#append_div").html(url_html);
+                    } else if (action == 'USSD_CODE') {
+                        $("#append_div").html(ussd_code);
                     } else if (action === 'FEED_CATEGORY') {
                         $("#append_div").html(feed_category);
                         $.ajax({
