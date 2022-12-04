@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\NotificationSend;
+use App\Models\NotificationDraft;
 use App\Models\NotificationSchedule;
 use App\Repositories\UserMuteNotificationCategoryRepository;
 use App\Services\CustomerService;
@@ -13,6 +14,7 @@ use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class NotificationScheduler extends Command
@@ -87,7 +89,7 @@ class NotificationScheduler extends Command
                     'image_url' => $notificationDraft->image
                 ];
 
-                $muteUsersPhone = $userMuteNotificationCategoryRepository->getUsersPhoneByCategory($category->id);
+                // $muteUsersPhone = $userMuteNotificationCategoryRepository->getUsersPhoneByCategory($category->id);
 
                 /*
                  * Reading and parsing users from the uploaded spreadsheet
@@ -106,8 +108,8 @@ class NotificationScheduler extends Command
                 /*
                  * Preparing chunks after removing users with notification off for this notification category
                  */
-                $filteredUserPhones = array_diff($userPhones, $muteUsersPhone);
-                $filteredUserPhoneChunks = array_chunk($filteredUserPhones, 150);
+                // $filteredUserPhones = array_diff($userPhones, $muteUsersPhone);
+                $filteredUserPhoneChunks = array_chunk($userPhones, 200);
 
                 /*
                  * Dispatching chunks of users to notification send job
@@ -115,20 +117,42 @@ class NotificationScheduler extends Command
 
                 $iteration = 1;
 
+                $notificationInfo = NotificationDraft::find($notification_id);
+
                 foreach ($filteredUserPhoneChunks as $userPhoneChunk) {
+
+                    $userPhoneChunkFiltered = [];
+
                     if ($checkCustomer) {
-                        $userPhoneChunk = $customerService->getCustomerList([], $userPhoneChunk, $notification_id);
+
+                        // $userPhoneChunk = $customerService->getCustomerList([], $userPhoneChunk, $notification_id);
+
+                        if (!empty($notificationInfo->customer_type) && $notificationInfo->customer_type !== 'all') {
+                            $userPhoneChunkFiltered = DB::connection('mysql_slave')
+                                ->table('customers')
+                                ->whereIn('phone', $userPhoneChunk)
+                                ->where('number_type', $notificationInfo->customer_type)
+                                ->pluck('phone')->toArray();
+                        }
+
+                        if (!empty($notificationInfo->device_type) && $notificationInfo->device_type !== 'all') {
+                            $userPhoneChunkFiltered = DB::connection('mysql_slave')
+                                ->table('customers')
+                                ->whereIn('phone', $userPhoneChunk)
+                                ->where('device_type', $notificationInfo->device_type)
+                                ->pluck('phone')->toArray();
+                        }
                     }
 
                     $notification = $pushNotificationSendService->getNotificationArray(
                         $notificationData,
-                        $userPhoneChunk,
+                        $userPhoneChunkFiltered,
                         $notificationDraft
                     );
 
-                    $delaySeconds = $iteration * 3;
+                    $delaySeconds = $iteration * 1;
 
-                    NotificationSend::dispatch($notification, $notification_id, array_values($userPhoneChunk),
+                    NotificationSend::dispatch($notification, $notification_id, array_values($userPhoneChunkFiltered),
                         $notificationService, $activeSchedule)
                         ->onQueue('notification')->delay(Carbon::now()->addSeconds($delaySeconds));
                     $iteration++;
