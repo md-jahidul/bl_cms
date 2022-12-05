@@ -367,17 +367,31 @@
                                     </div>
 
                                     <div class="form-group col-md-12 mb-2 other-info-div">
-                                        <label for="message" class="required">Message:</label>
-                                        <input
-                                            maxlength="16"
+                                        <label for="message_en" class="required">Message En:</label>
+                                        <textarea 
+                                            maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                            data-validation-required-message="Message is required"
-                                            data-validation-regex-message="Message must start with alphabets"
-                                            data-validation-maxlength-message="Message can not be more then 16 Characters"
-                                            value="@if(old('message')) {{old('message')}} @endif" required id="message"
+                                            data-validation-required-message="Message En is required"
+                                            data-validation-regex-message="Message En must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_en')) {{old('message_en')}} @endif" required id="message_en"
                                             type="text" class="form-control @error('message') is-invalid @enderror"
-                                            placeholder="Message" name="message">
-                                        <small class="text-danger"> @error('message') {{ $message }} @enderror </small>
+                                            placeholder="Message En" name="message_en"> </textarea>
+                                        <small class="text-danger"> @error('message_en') {{ $message_en }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_bn" class="required">Message Bn:</label>
+                                        <textarea 
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message Bn is required"
+                                            data-validation-regex-message="Message Bn must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_bn')) {{old('message_bn')}} @endif" required id="message_bn"
+                                            type="text" class="form-control @error('message_bn') is-invalid @enderror"
+                                            placeholder="Message Bn" name="message_bn"> </textarea>
+                                        <small class="text-danger"> @error('message_bn') {{ $message_bn }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div> `;
 

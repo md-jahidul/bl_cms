@@ -16,7 +16,8 @@ class AddNewColumnSsdcodeMessageToSliderImages extends Migration
         Schema::table('slider_images', function (Blueprint $table) {
             //
             $table->string('ussd_code',20)->nullable()->after('display_type');
-            $table->string('message',250)->nullable()->after('ussd_code');
+            $table->string('message_en',250)->nullable()->after('ussd_code');
+            $table->string('message_bn',250)->nullable()->after('message_en');
         });
     }
 
@@ -30,7 +31,8 @@ class AddNewColumnSsdcodeMessageToSliderImages extends Migration
         Schema::table('slider_images', function (Blueprint $table) {
             //
             $table->dropColumn('ussd_code');
-            $table->dropColumn('message');
+            $table->dropColumn('message_en');
+            $table->dropColumn('message_bn');
         });
     }
 }
