@@ -27,7 +27,8 @@ class SliderImage extends Model
             'display_type',
             'web_deep_link',
             'ussd_code',
-            'message'
+            'message_en',
+            'message_bn'
     ];
 
     protected $casts = [
