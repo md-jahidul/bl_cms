@@ -128,6 +128,7 @@ class PushNotificationController extends Controller
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
+
             /*
              * Reading and parsing users from the uploaded spreadsheet
              */
@@ -153,7 +154,6 @@ class PushNotificationController extends Controller
              * Dispatching chunks of users to notification send job
              */
             foreach ($filteredUserPhoneChunks as $userPhoneChunk) {
-
                 list($customer, $notification) = $this->checkTargetWise($request, $notificationInfo,
                     $userPhoneChunk, $notification_id, $notification_data);
 
