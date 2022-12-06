@@ -409,8 +409,6 @@
                     let type = other_attributes.type;
                     if(type == 'dial'){
                         dial_content = other_attributes.content;
-                    }else if(type == 'USSD_CODE'){
-                        redirect_content = other_attributes.content;
                     }else if(type == 'url'){
                         redirect_content = other_attributes.content;
                     }else{
@@ -495,7 +493,7 @@
                                         <div class="help-block"></div>
                                     </div> `; 
                             
-                if(parse_data.redirect_url == 'USSD_CODE'){
+                if(parse_data.redirect_url == 'USSD'){
                     $("#append_div").html(ussd_code);
                 }                
 
@@ -505,7 +503,7 @@
                 //console.log(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
-                }else if (action == 'USSD_CODE') {
+                }else if (action == 'USSD') {
                         $("#append_div").html(ussd_code);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);

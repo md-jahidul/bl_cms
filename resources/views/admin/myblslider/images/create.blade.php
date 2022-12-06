@@ -403,7 +403,7 @@
                         $("#append_div").html(dial_html);
                     } else if (action == 'URL') {
                         $("#append_div").html(url_html);
-                    } else if (action == 'USSD_CODE') {
+                    } else if (action == 'USSD') {
                         $("#append_div").html(ussd_code);
                     } else if (action === 'FEED_CATEGORY') {
                         $("#append_div").html(feed_category);
