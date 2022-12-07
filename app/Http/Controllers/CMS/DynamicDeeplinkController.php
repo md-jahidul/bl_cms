@@ -181,10 +181,13 @@ class DynamicDeeplinkController extends Controller
     public function contentDeepLinkCreate(Request  $request)
     {
         $contentData = $this->contentDeeplinkRepository->findOne($request->id);
-
+        
         $sectionType = self::Content;
         if ($contentData->category_name == 'courses') {
             $sectionType = 'course';
+        }
+        if ($contentData->category_name == 'cares') {
+            $sectionType = 'cares';
         }
 
         return $this->dynamicDeeplinkService->generateDeeplink($sectionType, $contentData, $request);
