@@ -185,9 +185,10 @@ class DynamicDeeplinkController extends Controller
         $sectionType = self::Content;
         if ($contentData->category_name == 'courses') {
             $sectionType = 'course';
-        }
-        if ($contentData->category_name == 'cares') {
+        }else if ($contentData->category_name == 'cares') {
             $sectionType = 'care';
+        }else if($contentData->category_name == 'content'){
+            $sectionType = 'all';
         }
 
         return $this->dynamicDeeplinkService->generateDeeplink($sectionType, $contentData, $request);
