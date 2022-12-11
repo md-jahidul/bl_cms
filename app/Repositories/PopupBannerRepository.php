@@ -16,16 +16,6 @@ class PopupBannerRepository extends BaseRepository
 {
     public $modelName = PopupBanner::class;
 
-    /**
-     * @param null $from
-     * @param null $to
-     * @param null $purchaseId
-     * @return mixed
-     */
-    public function getPopupBanner($from = null, $to = null, $purchaseId = null)
-    {
-        return "A";
-    }
 
     public function manageTableSort($request)
     {
