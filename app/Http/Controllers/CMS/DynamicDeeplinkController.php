@@ -134,7 +134,9 @@ class DynamicDeeplinkController extends Controller
     public function internetPackDeepLinkCreate(Request $request)
     {
         $internetCat = $this->internetOffersCategoryService->findOne($request->id);
-        return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $internetCat, $request);
+        $type = $internetCat->product_type ?? self::INTERNET_PACK;
+
+        return $this->dynamicDeeplinkService->generateDeeplink($type, $internetCat, $request);
     }
 
     /**
