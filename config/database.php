@@ -63,6 +63,28 @@ return [
             ]) : [],
         ],
 
+        'mysql_slave' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_SLAVE', '127.0.0.1'),
+            'port' => env('DB_PORT_SLAVE', '3306'),
+            'database' => env('DB_DATABASE_SLAVE', 'forge'),
+            'username' => env('DB_USERNAME_SLAVE', 'forge'),
+            'password' => env('DB_PASSWORD_SLAVE', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::ATTR_TIMEOUT => 60,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
