@@ -20,8 +20,8 @@ class PgwGatewayService
 
 
     /**
-     * SettingService constructor.
-     * @param PgwGatewayRepository $settingRepository
+     * PgwGatewayService constructor.
+     * @param PgwGatewayRepository $PgwGatewayRepository
      */
     public function __construct(PgwGatewayRepository $pgwGatewayRepository)
     {
@@ -39,7 +39,7 @@ class PgwGatewayService
             $data['gateway_id'] =  $request['gateway_id'];
             $data['gateway_name'] =  ($request['gateway_id'] == 201) ? 'bKash' : 'Visa/Master';
             $data['type'] =  ($request['gateway_id'] == 201) ? 'Mobile' : 'Card';
-            $data['status'] =  $request['status'] ?? 0;
+            $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             $data['logo_web'] =  $request['logo_web'];
             $data['logo_mobile'] =  $request['logo_mobile'];
@@ -59,12 +59,12 @@ class PgwGatewayService
      * @return Response
      */
     public function updatePgwGateway($request, $id)
-    {
+    { //dd($request['status']);
         try {
             $data['gateway_id'] =  $request['gateway_id'];
             $data['gateway_name'] =  ($request['gateway_id'] == 201) ? 'bKash' : 'Visa/Master';
             $data['type'] =  ($request['gateway_id'] == 201) ? 'Mobile' : 'Card';
-            $data['status'] =  $request['status'] ?? 0;
+            $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             $data['logo_web'] =  $request['logo_web'];
             $data['logo_mobile'] =  $request['logo_mobile'];
@@ -89,8 +89,8 @@ class PgwGatewayService
      */
     public function destroyPgwGateway($id)
     {
-        $setting = $this->findOne($id);
-        $setting->delete();
+        $pgw = $this->findOne($id);
+        $pgw->delete();
         return Response('PGW gateway has been successfully deleted');
     }
 }
