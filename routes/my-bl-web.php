@@ -962,6 +962,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@store')->name('fifa-deeplink.store');
     Route::get('fifa-deeplink/destroy/{id}', 'CMS\FIFA\FifaDeeplinkController@destroy')
         ->name('fifa-deeplink.destroy');
+
+    //PGW Routes
+    Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
+    Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 });
 
 // 4G Map View Route
