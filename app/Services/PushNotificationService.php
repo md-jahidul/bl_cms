@@ -36,6 +36,13 @@ class PushNotificationService
         return $res;
     }
 
+    public static function sendPersistentNotification($data)
+    {
+        $res = static::post('/api/v1/push/persistent-notification', $data);
+
+        return $res;
+    }
+
     /**
      * Make the header array with authentication.
      *
