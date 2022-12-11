@@ -5,7 +5,6 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PgwGatewayService;
-use App\Models\SettingKey;
 use DB;
 
 class PgwGatewayController extends Controller
@@ -18,7 +17,7 @@ class PgwGatewayController extends Controller
 
 
     /**
-     * SettingController constructor.
+     * PgwGatewayController constructor.
      * @param pgwGatewayService $pgwGatewayService
      */
     public function __construct(PgwGatewayService $pgwGatewayService)
@@ -34,9 +33,8 @@ class PgwGatewayController extends Controller
      */
     public function index()
     {
-        $keys=SettingKey::get();
         $pgwGateways = $this->pgwGatewayService->findAll(); 
-        return view('admin.pgw-gateway.index',compact('keys','pgwGateways'));
+        return view('admin.pgw-gateway.index',compact('pgwGateways'));
     }
 
 
@@ -62,7 +60,6 @@ class PgwGatewayController extends Controller
     public function edit($id)
     {
             return view('admin.pgw-gateway.index')
-                ->with('keys', DB::table('setting_keys')->get())
                 ->with('pgwGateways', $this->pgwGatewayService->findAll())
                 ->with('pgwGateways_info', $this->pgwGatewayService->findOne($id));
     }

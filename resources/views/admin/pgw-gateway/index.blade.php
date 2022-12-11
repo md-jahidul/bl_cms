@@ -68,12 +68,26 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <div class="form-group">
                                 <label class="required">Payment Gateway Status :
                                 </label>
                                 <div class="controls">
                                     <input type="checkbox" name="status" value="1" id="status" @if(isset($pgwGateways_info) && $pgwGateways_info->status == 1) checked @endif >
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="required">Payment Gateway Status :
+                                </label>
+                                <div class="controls">
+                                    <select name="status" id="select" required class="form-control">
+                                    <option value="1" 
+                                    @if(isset($pgwGateways_info) && $pgwGateways_info->status == 1) selected @endif
+                                    >Active</option>
+                                    <option value="0" @if(isset($pgwGateways_info) && $pgwGateways_info->status == 0) selected @endif>Inactive</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
