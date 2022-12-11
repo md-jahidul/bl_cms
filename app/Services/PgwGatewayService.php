@@ -45,7 +45,7 @@ class PgwGatewayService
             $data['logo_mobile'] =  $request['logo_mobile'];
             $this->save($data);
             // Delete Redis Data
-            Redis::del('PaymentGatewayList');
+            Redis::connection('secondary_redis')->del('PaymentGatewayList');
             return new Response("PGW gateway has been successfully created");
         } catch (\Exception $e) {
             return response()->json([
@@ -73,7 +73,7 @@ class PgwGatewayService
             $pgw = $this->findOne($id);
             $pgw->update($data);
             // Delete Redis Data
-            Redis::del('PaymentGatewayList');
+            Redis::connection('secondary_redis')->del('PaymentGatewayList');
 
             return new Response("PGW gateway has been successfully updated");
         } catch (\Exception $e) {
@@ -94,7 +94,7 @@ class PgwGatewayService
         $pgw = $this->findOne($id);
         $pgw->delete();
         // Delete Redis Data
-        Redis::del('PaymentGatewayList');
+        Redis::connection('secondary_redis')->del('PaymentGatewayList');
         return Response('PGW gateway has been successfully deleted');
     }
 }
