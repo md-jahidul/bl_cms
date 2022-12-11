@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\pgwGatewayService;
+use App\Services\PgwGatewayService;
 use App\Models\SettingKey;
 use DB;
 

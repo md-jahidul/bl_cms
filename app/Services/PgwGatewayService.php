@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\pgwGatewayRepository ;
+use App\Repositories\PgwGatewayRepository ;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
