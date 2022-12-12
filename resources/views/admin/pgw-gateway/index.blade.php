@@ -36,12 +36,23 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label class="required">Payment Gateway Type :
+                                </label>
+                                <div class="controls">
+                                <input type='text' class="form-control" name="type" id="type" 
+                                    value="@if(isset($pgwGateways_info)){{$pgwGateways_info->type}}@endif" 
+                                    placeholder="Please Enter Payment Gateway Type" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label class="required">Currency :
                                 </label>
                                 <div class="controls">
                                 <input type='text' class="form-control" name="currency" id="currency"
                                     value="@if(isset($pgwGateways_info)){{$pgwGateways_info->currency}}@else BDT @endif" 
-                                    placeholder="Please Enter Currency" />
+                                    placeholder="Please Enter Currency" required />
                                 </div>
                             </div>
                         </div>
@@ -52,7 +63,7 @@
                                 <div class="controls">
                                 <input type='text' class="form-control" name="logo_web" id="logo_web"
                                     value="@if(isset($pgwGateways_info)){{$pgwGateways_info->logo_web}}@endif" 
-                                     placeholder="Please Enter Web Logo URL" />
+                                     placeholder="Please Enter Web Logo URL"  required />
                                 </div>
                             </div>
                         </div>
@@ -63,7 +74,7 @@
                                 <div class="controls">
                                 <input type='text' class="form-control" name="logo_mobile" id="logo_mobile" 
                                     value="@if(isset($pgwGateways_info)){{$pgwGateways_info->logo_mobile}}@endif" 
-                                    placeholder="Please Enter Mobile Logo URL" />
+                                    placeholder="Please Enter Mobile Logo URL" required />
                                 </div>
                             </div>
                         </div>
@@ -91,7 +102,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2 " style="float: right;">
                             <div class="form-group" style="margin-top:26px">
                                 <button style="width:100%;height:100%" class="btn btn-outline-success my-2 my-sm-0" style="padding:7px 10px;width:100%" type="submit"> @if(isset($pgwGateways_info)) Update @else Submit @endif </button>
                             </div>
