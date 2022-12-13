@@ -123,13 +123,16 @@ class Helper
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
             "HELP_AND_TUTORIAL" => "Help & Tutorial",
             "CALL_CENTER" => "Call Center",
-            "GAMES"                    => "Games",
-            "MUSICS"                   => "Musics",
+            "GAMES"                   => "Games",
+            "MUSICS"                  => "Musics",
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop",
             "COURSES"                 => "Courses",
-            "USSD_CODE"               => "USSD code",
+            "USSD"               => "USSD Code",
+            "COURSES"                 => "Courses",
+            "GIFT_PACKS"              => "Gift Packs",
+            "ROAMING_PACKS"           => "Roaming Packs"
         ];
     }
 
@@ -289,8 +292,10 @@ class Helper
     {
         return [
             'internet_pack' => 'DATA',
-            'voice' => 'VOICE BUNDLES',
-            'bundle' => 'MIX BUNDLES'
+            'voice' => 'VOICE',
+            'mixed_bundle' => 'MIX BUNDLES',
+            'gift_packs' => "GIFT PACKS",
+            'roaming' => "ROAMING"
         ];
     }
 

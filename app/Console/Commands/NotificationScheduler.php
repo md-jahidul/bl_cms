@@ -121,27 +121,33 @@ class NotificationScheduler extends Command
 
                 foreach ($filteredUserPhoneChunks as $userPhoneChunk) {
 
-                    $userPhoneChunkFiltered = [];
+                    $userPhoneChunkFiltered = $userPhoneChunk;
 
                     if ($checkCustomer) {
 
                         // $userPhoneChunk = $customerService->getCustomerList([], $userPhoneChunk, $notification_id);
 
+                        $sql = DB::connection('mysql_slave')
+                            ->table('customers')
+                            ->whereIn('phone', $userPhoneChunk);
+
                         if (!empty($notificationInfo->customer_type) && $notificationInfo->customer_type !== 'all') {
-                            $userPhoneChunkFiltered = DB::connection('mysql_slave')
-                                ->table('customers')
-                                ->whereIn('phone', $userPhoneChunk)
-                                ->where('number_type', $notificationInfo->customer_type)
-                                ->pluck('phone')->toArray();
+                            $sql = $sql->where('number_type', $notificationInfo->customer_type);
+                            /*->pluck('phone')->toArray();*/
                         }
 
                         if (!empty($notificationInfo->device_type) && $notificationInfo->device_type !== 'all') {
-                            $userPhoneChunkFiltered = DB::connection('mysql_slave')
+
+                            $sql = $sql->where('device_type', $notificationInfo->device_type);
+
+                            /*$userPhoneChunkFiltered = DB::connection('mysql_slave')
                                 ->table('customers')
                                 ->whereIn('phone', $userPhoneChunk)
                                 ->where('device_type', $notificationInfo->device_type)
-                                ->pluck('phone')->toArray();
+                                ->pluck('phone')->toArray();*/
                         }
+
+                        $userPhoneChunkFiltered = $sql->pluck('phone')->toArray();
                     }
 
                     $notification = $pushNotificationSendService->getNotificationArray(
