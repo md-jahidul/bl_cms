@@ -73,6 +73,11 @@
                                         @include('admin.components.partial.single_image')
                                     </slot>
 
+                                    <!--Box Content-->
+                                    <slot id="box_content" data-offer-type="box_content" class="d-none">
+                                        @include('admin.components.partial.editor_only')
+                                    </slot>
+
 {{--                                    --}}{{--Text with image right--}}
 {{--                                    <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="d-none">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.text_with_image_right')--}}

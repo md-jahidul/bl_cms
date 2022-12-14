@@ -20,6 +20,7 @@ class ComponentHelper
             'table_component' => 'Table Component',
             'accordion_section' => 'Accordion',
             'text_editor' => 'Text Editor',
+            'box_content' => 'Box Content',
 //            'text_with_image_right' => 'Text with image right',
 //            'text_with_image_bottom' => 'Text with image bottom',
 //            'slider_text_with_image_right' => 'Slider text with image right',
