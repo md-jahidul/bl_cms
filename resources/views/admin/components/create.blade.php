@@ -40,11 +40,13 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-md-8 pb-2">
-                                        <label>Component Sample Picture</label>
-                                        <img class="img-thumbnail" id="componentImg" width="100%">
-                                    </div>
 
+                                    <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+                                        <label>Component Sample Picture</label>
+                                        <img class="img-thumbnail" id="componentImg" width="90%">
+                                        <div class="col-md-8">
+                                        </div>
+                                    </div>
 
                                     {{--Title With Text Editor--}}
                                     <slot id="title_text_editor" data-offer-type="title_text_editor" class="d-none">
@@ -64,6 +66,11 @@
                                     <!--Text Editor-->
                                     <slot id="text_editor" data-offer-type="text_editor" class="d-none">
                                         @include('admin.components.partial.editor_only')
+                                    </slot>
+
+                                    <!--Single Image-->
+                                    <slot id="single_image" data-offer-type="single_image" class="d-none">
+                                        @include('admin.components.partial.single_image')
                                     </slot>
 
 {{--                                    --}}{{--Text with image right--}}
