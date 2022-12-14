@@ -144,12 +144,13 @@ class ComponentService
         }
 
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
-        $countComponents = $this->componentRepository->list($sectionId, self::PAGE_TYPE['product_details']);
+
+        $countComponents = $this->componentRepository->list($sectionId, $pageType);
+
         $data['component_order'] = count($countComponents) + 1;
 
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
-//        dd($data);
         $component = $this->save($data);
 
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
