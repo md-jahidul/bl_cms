@@ -128,7 +128,8 @@ class Helper
             "SHOP"                    => "Shop",
             "COURSES"                 => "Courses",
             "GIFT_PACKS"              => "Gift Packs",
-            "ROAMING_PACKS"           => "Roaming Packs"
+            "ROAMING_PACKS"           => "Roaming Packs",
+            "ROAMING_DETAILS"         => "Roaming Details"
         ];
     }
 
