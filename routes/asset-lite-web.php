@@ -327,6 +327,19 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('about-page/{slug}', 'AssetLite\LmsAboutPageController@index')->name('about-page');
     Route::put('about-page/update', 'AssetLite\LmsAboutPageController@aboutPageUpdate')->name('about-page.update');
 
+    Route::get('about-page/component/create', 'AssetLite\LmsAboutPageController@componentCreate')
+        ->name('about-page.component.create');
+    Route::post('about-page/component/store', 'AssetLite\LmsAboutPageController@componentStore')
+        ->name('about-page.component.store');
+    Route::get('about-page/component/edit/{comId}', 'AssetLite\LmsAboutPageController@componentEdit')
+        ->name('about-page.component.edit');
+    Route::get('about-page/component/update/{comId}', 'AssetLite\LmsAboutPageController@componentUpdate')
+        ->name('about-page.component.update');
+    Route::get('about-page/component/destroy/{comId}', 'AssetLite\LmsAboutPageController@componentDestroy')
+        ->name('about-page.component.destroy');
+
+
+
     // LMS About Pages Banner Image ================================
     Route::get('lms-about-page/banner-image', 'AssetLite\LmsAboutBannerController@viewBannerImage');
     Route::post('about-page/banner-image/upload', 'AssetLite\LmsAboutBannerController@bannerUpload');

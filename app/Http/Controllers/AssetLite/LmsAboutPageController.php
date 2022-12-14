@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Helpers\ComponentHelper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\AboutPageService;
+use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
 use App\Services\LmsBenefitService;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,8 +16,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Session;
 
 class LmsAboutPageController extends Controller
 {
@@ -26,6 +29,12 @@ class LmsAboutPageController extends Controller
      * @var LmsBenefitService
      */
     private $lmsBenefitService;
+    /**
+     * @var ComponentService
+     */
+    private $componentService;
+
+    protected const PAGE_TYPE = "about_loyalty";
 
     /**
      * EthicsController constructor.
@@ -34,10 +43,12 @@ class LmsAboutPageController extends Controller
      */
     public function __construct(
         AboutPageService $aboutPageService,
-        LmsBenefitService $lmsBenefitService
+        LmsBenefitService $lmsBenefitService,
+        ComponentService $componentService
     ) {
         $this->aboutPageService = $aboutPageService;
         $this->lmsBenefitService = $lmsBenefitService;
+        $this->componentService = $componentService;
     }
 
     /**
@@ -50,7 +61,36 @@ class LmsAboutPageController extends Controller
     {
         $details = $this->aboutPageService->findAboutDetail($slug);
         $benefits = $this->lmsBenefitService->getBenefit($slug);
-        return view('admin.loyalty.about-pages.index', compact('benefits', 'details', 'slug'));
+
+        $components = $this->componentService->findBy(['page_type' => 'about_loyalty']);
+//        dd($components);
+//        dd($this->info);
+//        $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
+//        $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
+//        $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
+
+        return view('admin.loyalty.about-pages.index', compact('components'));
+    }
+
+    public function componentCreate()
+    {
+        $componentList = ComponentHelper::components();
+        return view('admin.components.create', compact('componentList'));
+    }
+
+    public function componentStore(Request $request)
+    {
+        $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
+    }
+
+
+    public function componentEdit(Request $request)
+    {
+        $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
     }
 
     /**
@@ -77,7 +117,7 @@ class LmsAboutPageController extends Controller
         ]);
 
         $response = $this->aboutPageService->updateAboutPage($request->all());
-        \Illuminate\Support\Facades\Session::flash('message', $response->getContent());
+        Session::flash('message', $response->getContent());
         return redirect(route('about-page', $request->slug));
     }
 
