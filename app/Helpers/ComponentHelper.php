@@ -15,6 +15,7 @@ class ComponentHelper
     public static function components(): array
     {
         return [
+            'single_image' => 'Single Image',
             'title_text_editor' => 'Title with text editor',
             'table_component' => 'Table Component',
             'accordion_section' => 'Accordion',
