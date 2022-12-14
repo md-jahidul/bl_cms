@@ -161,7 +161,16 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
         ],
-
+        'secondary_redis' => [
+            # 'url' => env('REDIS_URL'),
+            'host' => env('QUEUE_REDIS_HOST', '172.16.11.164'),
+            'password' => env('QUEUE_REDIS_PASSWORD'),
+            'port' => env('QUEUE_REDIS_PORT', '6379'),
+            //database set to 0 since only database 0 is supported in redis cluster
+            'database' => '0',
+            //redis key prefix for this connection
+            //'prefix' => 'q:'.env('QUEUE_PREFIX_VERSION', ''),
+        ],
     ],
 
 ];
