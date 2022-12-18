@@ -37,6 +37,11 @@ class LmsAboutBannerService
             ->findOneByProperties(['module_type' => $moduleType]);
     }
 
+    public function getBannerImgByPageType($pageType)
+    {
+        return $this->lmsAboutBannerRepository->findOneByProperties(['page_type' => $pageType]);
+    }
+
     /**
      * @param $data
      * @return Application|ResponseFactory|Response
@@ -59,21 +64,21 @@ class LmsAboutBannerService
         $moduleWiseData['about_loyalty']['alt_text_en'] = $data['alt_text_en'];
         $moduleWiseData['about_loyalty']['page_type'] = 'about_loyalty';
 
-        if (request()->has('reward_banner_image_url')) {
-            $moduleWiseData['about_reward']['banner_image_url'] = $this->upload($data['reward_banner_image_url'], $dirPath);
-            if ($data['reward_web_banner_old'] && $data['reward_banner_image_url']) {
-                $this->deleteFile($data['reward_web_banner_old']);
-            }
-        }
-        if (request()->has('reward_banner_mobile_view')) {
-            $moduleWiseData['about_reward']['banner_mobile_view'] = $this->upload($data['reward_banner_mobile_view'], $dirPath);
-            if ($data['reward_mobile_banner_old'] && $data['reward_banner_mobile_view']) {
-                $this->deleteFile($data['reward_mobile_banner_old']);
-            }
-        }
-        $moduleWiseData['about_reward']['alt_text_en'] = $data['reward_alt_text_en'];
-        $moduleWiseData['about_reward']['page_type'] = 'about_reward';
-
+//        if (request()->has('reward_banner_image_url')) {
+//            $moduleWiseData['about_reward']['banner_image_url'] = $this->upload($data['reward_banner_image_url'], $dirPath);
+//            if ($data['reward_web_banner_old'] && $data['reward_banner_image_url']) {
+//                $this->deleteFile($data['reward_web_banner_old']);
+//            }
+//        }
+//        if (request()->has('reward_banner_mobile_view')) {
+//            $moduleWiseData['about_reward']['banner_mobile_view'] = $this->upload($data['reward_banner_mobile_view'], $dirPath);
+//            if ($data['reward_mobile_banner_old'] && $data['reward_banner_mobile_view']) {
+//                $this->deleteFile($data['reward_mobile_banner_old']);
+//            }
+////        }
+//        $moduleWiseData['about_reward']['alt_text_en'] = $data['reward_alt_text_en'];
+//        $moduleWiseData['about_reward']['page_type'] = 'about_reward';
+//        dd($moduleWiseData);
         foreach ($moduleWiseData as $data) {
             $this->lmsAboutBannerRepository->bannerUpload($data);
         }

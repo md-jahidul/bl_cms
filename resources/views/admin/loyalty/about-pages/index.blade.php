@@ -18,6 +18,71 @@
         ];
     @endphp
     @include('admin.components.index', $action)
+
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Loyalty Banner Image</strong></h4>
+                    <hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form"
+                              action="{{ url('about-page/banner-image/upload') }}"
+                              method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Desktop)</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" name="loyalty_web_banner_old" value="{{ isset($aboutLoyaltyBanner->banner_image_url) ? $aboutLoyaltyBanner->banner_image_url : '' }}">
+                                        <input type="file" name="banner_image_url" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($aboutLoyaltyBanner->banner_image_url) ? config('filesystems.file_base_url') . $aboutLoyaltyBanner->banner_image_url : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image_url'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Mobile)</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" name="loyalty_mobile_banner_old" value="{{ isset($aboutLoyaltyBanner->banner_mobile_view) ? $aboutLoyaltyBanner->banner_mobile_view : '' }}">
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
+                                               data-default-file="{{ isset($aboutLoyaltyBanner->banner_mobile_view) ? config('filesystems.file_base_url') . $aboutLoyaltyBanner->banner_mobile_view : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_mobile_view'))
+                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text</label>
+                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($aboutLoyaltyBanner->alt_text_en) ? $aboutLoyaltyBanner->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @stop
 
 @push('page-css')

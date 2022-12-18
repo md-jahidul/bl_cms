@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AboutPageService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
+use App\Services\LmsAboutBannerService;
 use App\Services\LmsBenefitService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -35,6 +36,10 @@ class LmsAboutPageController extends Controller
     private $componentService;
 
     protected const PAGE_TYPE = "about_loyalty";
+    /**
+     * @var LmsAboutBannerService
+     */
+    private $lmsAboutBannerService;
 
     /**
      * EthicsController constructor.
@@ -44,11 +49,13 @@ class LmsAboutPageController extends Controller
     public function __construct(
         AboutPageService $aboutPageService,
         LmsBenefitService $lmsBenefitService,
-        ComponentService $componentService
+        ComponentService $componentService,
+        LmsAboutBannerService $lmsAboutBannerService
     ) {
         $this->aboutPageService = $aboutPageService;
         $this->lmsBenefitService = $lmsBenefitService;
         $this->componentService = $componentService;
+        $this->lmsAboutBannerService = $lmsAboutBannerService;
     }
 
     /**
@@ -59,17 +66,11 @@ class LmsAboutPageController extends Controller
      */
     public function index($slug)
     {
-        $details = $this->aboutPageService->findAboutDetail($slug);
-        $benefits = $this->lmsBenefitService->getBenefit($slug);
-
+//        $details = $this->aboutPageService->findAboutDetail($slug);
+//        $benefits = $this->lmsBenefitService->getBenefit($slug);
+        $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
         $components = $this->componentService->findBy(['page_type' => 'about_loyalty']);
-//        dd($components);
-//        dd($this->info);
-//        $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
-//        $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
-//        $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
-
-        return view('admin.loyalty.about-pages.index', compact('components'));
+        return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
     }
 
     public function componentCreate()
@@ -189,7 +190,6 @@ class LmsAboutPageController extends Controller
         return $this->lmsBenefitService->findOne($id);
     }
 
-
     /**
      * file delete.
      *
@@ -206,5 +206,12 @@ class LmsAboutPageController extends Controller
             Session::flash('error', 'File deleting process failed!');
         }
         return redirect("/about-page/$slug");
+    }
+
+    public function bannerUpload(Request $request)
+    {
+        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
     }
 }
