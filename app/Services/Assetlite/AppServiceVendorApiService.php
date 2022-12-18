@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\AssetLite;
 
 use App\Repositories\AppServiceCategoryRepository;
 
