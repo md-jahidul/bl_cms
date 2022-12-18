@@ -152,7 +152,7 @@
                 <li class="{{is_active_url('excel.upload')}}">
                     <a class="menu-item" href="{{ route('excel.upload') }} "
                        data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i>Category sync with Product 
+                        <i class="la la-align-center"></i>Category sync with Product
                     </a>
                 </li>
                 <li class="{{ is_active_url('product-price/slabs') }}">

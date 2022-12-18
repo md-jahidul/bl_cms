@@ -342,7 +342,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // LMS About Pages Banner Image ================================
     Route::get('lms-about-page/banner-image', 'AssetLite\LmsAboutBannerController@viewBannerImage');
-    Route::post('about-page/banner-image/upload', 'AssetLite\LmsAboutBannerController@bannerUpload');
+//    Route::post('about-page/banner-image/upload', 'AssetLite\LmsAboutBannerController@bannerUpload');
+
+    Route::post('about-page/banner-image/upload', 'AssetLite\LmsAboutPageController@bannerUpload');
 
 //    Route::get('ethics-compliance', 'AssetLite\LmsAboutPageController@index');
 //    Route::post('ethics/update-page-info', 'AssetLite\LmsAboutPageController@updatePageInfo');
