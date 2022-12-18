@@ -21,6 +21,7 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th>Component Type</th>
+                            <th>Title</th>
 {{--                            <th>Component Status</th>--}}
                             <th class="text-right">Action</th>
                         </tr>
@@ -37,7 +38,9 @@
 {{--                                            <span class="badge badge-danger badge-pill">Disabled</span>--}}
 {{--                                        @endif--}}
 {{--                                    </td>--}}
+                                    <td>{{$shortCode->title_en}}</td>
                                     <td class="action" width="8%">
+                                        <a href="{{route('fixed-page-components-edit',[ $shortCode->page_id,$shortCode->id ])}}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         @if($shortCode->is_active == 0)
                                             <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
                                                class="btn btn-success border-0" title="Click to enable"> Enable</a>
@@ -47,6 +50,7 @@
                                         @endif
                                     </td>
                                 </tr>
+
                             @endforeach
                         </tbody>
                     </table>

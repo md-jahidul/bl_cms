@@ -387,6 +387,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('fixed-pages/delete/{id}', 'AssetLite\FixedPageController@deleteFixedPage');
 
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
+    Route::get('fixed-page/{id}/components/{short_code}/edit', 'AssetLite\FixedPageController@editComponents')->name('fixed-page-components-edit');
+    Route::patch('fixed-page/{id}/components/{short_code}/update', 'AssetLite\FixedPageController@updateComponents')->name('fixed-page-components-update');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
