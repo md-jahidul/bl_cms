@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Services\AboutUsEcareerItemService;
+use App\Services\AssetLite\AboutUsEcareerItemService;
 use App\Services\AboutUsEcareerService;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
