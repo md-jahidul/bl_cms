@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Models\AppServiceProduct;
-use App\Services\AssetLite\AppServiceProductService;
+use App\Services\Assetlite\AppServiceProductService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
