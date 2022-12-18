@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\AssetLite;
+namespace App\Services\Assetlite;
 
 use App\Http\Helpers;
 use App\Repositories\AboutUsEcareerItemRepository;

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Services\AssetLite\AboutUsEcareerItemService;
-use App\Services\AboutUsEcareerService;
+use App\Services\Assetlite\AboutUsEcareerItemService;
+use App\Services\Assetlite\AboutUsEcareerService;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
