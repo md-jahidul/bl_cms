@@ -18,6 +18,9 @@
     @endif
 </div>
 
+@include('layouts.partials.slider_types.text_area')
+@include('layouts.partials.slider_types.app_links')
+
 
 <div class="col-md-4">
     <label></label>

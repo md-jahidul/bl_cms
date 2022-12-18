@@ -134,4 +134,19 @@ class FixedPageController extends Controller
         }
         return "Sorting Success";
     }
+
+    public function editComponents($pageId,$shortCodes){
+        $shortCodes = ShortCode::findOrFail($shortCodes);
+        if($shortCodes){
+            $other_attributes = $shortCodes->other_attributes;
+        }
+        return view('admin.pages.fixed.edit', compact('shortCodes','pageId','other_attributes'));
+    }
+
+    public function updateComponents($pageId,ShortCode $shortCode, Request $request){
+        //dd($request->all());
+        $shortCodes = $shortCode->update($request->all());
+        // ->where(['id'=>$id,'page_id'=>$pageId]);
+        //return view('admin.pages.fixed.edit', compact('shortCodes'));
+    }
 }
