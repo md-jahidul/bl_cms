@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Jobs\LeadDataSend;
 use App\Models\LeadCategory;
-use App\Services\Banglalink\LeadRequestService;
+use App\Services\Assetlite\LeadRequestService;
 use App\Services\LeadProductPermissionService;
 use App\Services\UserService;
 use Illuminate\Contracts\Foundation\Application;
