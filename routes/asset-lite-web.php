@@ -35,6 +35,18 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('explore-c', 'AssetLite\ExploreCController');
     Route::get('explore-c/destroy/{id}', 'AssetLite\ExploreCController@destroy');
 
+    Route::get('explore-c/component/create', 'AssetLite\ExploreCDetailsController@componentCreate')
+        ->name('explore-c.component.create');
+    Route::post('explore-c/component/store', 'AssetLite\ExploreCDetailsController@componentStore')
+        ->name('explore-c.component.store');
+    Route::get('explore-c/component/edit/{comId}', 'AssetLite\ExploreCDetailsController@componentEdit')
+        ->name('explore-c.component.edit');
+    // Route::post('explore-c/component/update/{comId}', 'AssetLite\ExploreCDetailsController@componentUpdate')
+    //     ->name('explore-c.component.update');
+    // Route::get('explore-c/component/destroy/{comId}', 'AssetLite\ExploreCDetailsController@componentDestroy')
+    //     ->name('explore-c.component.destroy');
+    // Route::get('explore-c/component-sortable', 'AssetLite\ExploreCDetailsController@componentSortable');
+
 
     //Place all your routes here
     Route::resource('authorize/users', 'AssetLite\UserController')->except(['show']);
