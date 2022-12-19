@@ -20,7 +20,7 @@
                             <td>{{ $list->title_en  }}</td>
                             <td class="text-right">
                                 <a href="{{ url("$edit/$list->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                <a href="#" remove="{{ "$destroy/$list->id" }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                <a href="#" remove="{{ url("$destroy/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                     <i class="la la-trash"></i>
                                 </a>
                             </td>
@@ -45,7 +45,7 @@
 
 @push('page-js')
 <script type="text/javascript">
-    var auto_save_url = "{{ url('component-sortable') }}";
+    var auto_save_url = "{{ url($componentSort) }}";
     // jQuery(document).ready(function($){
     //     $('input.section_name').on('keyup', function(){
     //         var sectionName = $('#product_details_form').find('.section_name').val();

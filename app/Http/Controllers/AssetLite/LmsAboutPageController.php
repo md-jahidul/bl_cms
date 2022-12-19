@@ -69,7 +69,8 @@ class LmsAboutPageController extends Controller
 //        $details = $this->aboutPageService->findAboutDetail($slug);
 //        $benefits = $this->lmsBenefitService->getBenefit($slug);
         $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
-        $components = $this->componentService->findBy(['page_type' => 'about_loyalty']);
+        $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+        $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
         return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
     }
 
@@ -82,16 +83,33 @@ class LmsAboutPageController extends Controller
     public function componentStore(Request $request)
     {
         $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
+        Session::flash('success', $response->getContent());
+        return redirect('about-page/priyojon');
+    }
+
+    public function componentEdit(Request $request, $id)
+    {
+        $component = $this->componentService->findOne($id);
+        $componentList = ComponentHelper::components();
+        return view('admin.components.create', compact('component', 'componentList'));
+    }
+
+    public function componentUpdate(Request $request, $id)
+    {
+        $response = $this->componentService->componentUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('about-page/priyojon');
     }
 
-
-    public function componentEdit(Request $request)
+    public function componentSortable(Request $request): Response
     {
-        $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
-        Session::flash('message', $response->getContent());
-        return redirect('about-page/priyojon');
+        return $this->componentService->tableSortable($request->all());
+    }
+
+    public function componentDestroy($id)
+    {
+        $this->componentService->deleteComponent($id);
+        return url('about-page/priyojon');
     }
 
     /**
