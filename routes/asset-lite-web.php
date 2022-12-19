@@ -26,6 +26,16 @@ Route::get('/users/change-password', 'AssetLite\UserController@changePasswordFor
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 //Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
+
+
+    // Route::get('test', function (){
+    //     echo 'hello';
+    // });
+    // Explore C's =========================================================
+    Route::resource('explore-c', 'AssetLite\ExploreCController');
+    Route::get('explore-c/destroy/{id}', 'AssetLite\ExploreCController@destroy');
+
+
     //Place all your routes here
     Route::resource('authorize/users', 'AssetLite\UserController')->except(['show']);
 
