@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Helpers\ComponentHelper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\AboutPageService;
+use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
+use App\Services\LmsAboutBannerService;
 use App\Services\LmsBenefitService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -13,8 +17,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Session;
 
 class LmsAboutPageController extends Controller
 {
@@ -26,6 +30,16 @@ class LmsAboutPageController extends Controller
      * @var LmsBenefitService
      */
     private $lmsBenefitService;
+    /**
+     * @var ComponentService
+     */
+    private $componentService;
+
+    protected const PAGE_TYPE = "about_loyalty";
+    /**
+     * @var LmsAboutBannerService
+     */
+    private $lmsAboutBannerService;
 
     /**
      * EthicsController constructor.
@@ -34,10 +48,14 @@ class LmsAboutPageController extends Controller
      */
     public function __construct(
         AboutPageService $aboutPageService,
-        LmsBenefitService $lmsBenefitService
+        LmsBenefitService $lmsBenefitService,
+        ComponentService $componentService,
+        LmsAboutBannerService $lmsAboutBannerService
     ) {
         $this->aboutPageService = $aboutPageService;
         $this->lmsBenefitService = $lmsBenefitService;
+        $this->componentService = $componentService;
+        $this->lmsAboutBannerService = $lmsAboutBannerService;
     }
 
     /**
@@ -48,9 +66,32 @@ class LmsAboutPageController extends Controller
      */
     public function index($slug)
     {
-        $details = $this->aboutPageService->findAboutDetail($slug);
-        $benefits = $this->lmsBenefitService->getBenefit($slug);
-        return view('admin.loyalty.about-pages.index', compact('benefits', 'details', 'slug'));
+//        $details = $this->aboutPageService->findAboutDetail($slug);
+//        $benefits = $this->lmsBenefitService->getBenefit($slug);
+        $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
+        $components = $this->componentService->findBy(['page_type' => 'about_loyalty']);
+        return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
+    }
+
+    public function componentCreate()
+    {
+        $componentList = ComponentHelper::components();
+        return view('admin.components.create', compact('componentList'));
+    }
+
+    public function componentStore(Request $request)
+    {
+        $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
+    }
+
+
+    public function componentEdit(Request $request)
+    {
+        $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
     }
 
     /**
@@ -70,7 +111,7 @@ class LmsAboutPageController extends Controller
     public function aboutPageUpdate(Request $request)
     {
         $response = $this->aboutPageService->updateAboutPage($request->all());
-        \Illuminate\Support\Facades\Session::flash('message', $response->getContent());
+        Session::flash('message', $response->getContent());
         return redirect(route('about-page', $request->slug));
     }
 
@@ -149,7 +190,6 @@ class LmsAboutPageController extends Controller
         return $this->lmsBenefitService->findOne($id);
     }
 
-
     /**
      * file delete.
      *
@@ -166,5 +206,12 @@ class LmsAboutPageController extends Controller
             Session::flash('error', 'File deleting process failed!');
         }
         return redirect("/about-page/$slug");
+    }
+
+    public function bannerUpload(Request $request)
+    {
+        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
     }
 }
