@@ -333,10 +333,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('about-page.component.store');
     Route::get('about-page/component/edit/{comId}', 'AssetLite\LmsAboutPageController@componentEdit')
         ->name('about-page.component.edit');
-    Route::get('about-page/component/update/{comId}', 'AssetLite\LmsAboutPageController@componentUpdate')
+    Route::post('about-page/component/update/{comId}', 'AssetLite\LmsAboutPageController@componentUpdate')
         ->name('about-page.component.update');
     Route::get('about-page/component/destroy/{comId}', 'AssetLite\LmsAboutPageController@componentDestroy')
         ->name('about-page.component.destroy');
+    Route::get('about-page-component-sort', 'AssetLite\LmsAboutPageController@componentSortable');
 
 
 

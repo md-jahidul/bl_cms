@@ -5,7 +5,7 @@
 @section('breadcrumb')
     {{--<li class="breadcrumb-item"><a href="--}}{{--{{ route('product.list', ) }}--}}{{--"> List</a></li>--}}
     {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
-    <li class="breadcrumb-item active">About Priyojon Details</li>
+    <li class="breadcrumb-item active">Component List</li>
 @endsection
 @section('action')
     <a href="{{ route('about-page.component.create')}}" class="btn btn-primary btn-glow px-2"><i class="la la-list"></i> Add Component </a>
@@ -14,7 +14,8 @@
     @php
         $action = [
             'edit' => 'about-page/component/edit',
-            'destroy' => 'about-page/component/destroy/'
+            'destroy' => 'about-page/component/destroy',
+            'componentSort' => 'about-page-component-sort'
         ];
     @endphp
     @include('admin.components.index', $action)
