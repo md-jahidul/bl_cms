@@ -8,12 +8,13 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="menu-title">Match List</h4>
-                    <table table class="table table-striped table-bordered" id="Example1"
+                    <table table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info"
                     >
                         <thead>
                         <tr>
                             <th>Match ID</th>
+                            <th>Match Title</th>
                             <th>Signed Cookie</th>
                             <th>Action</th>
                         </tr>
@@ -22,6 +23,7 @@
                         @foreach ($matches as $key=>$match)
                             <tr>
                                 <td>{{ $match->id }}</td>
+                                <td>{{ $match->homeTeam->team_name ." vs ". $match->awayTeam->team_name}}</td>
                                 <td>{{ isset($match->signed_cookie) ? "Signed Cookie Already Created" : "" }}</td>
                                 <td>
                                     <a href="#"

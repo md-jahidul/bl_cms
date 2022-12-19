@@ -173,6 +173,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Amar Offer
     Route::resource('amarOffer', 'CMS\AmarOfferController');
     Route::get('amarOffer/destroy/{id}', 'CMS\AmarOfferController@destroy');
+    Route::get('amar-offer-incident-status-update', 'CMS\AmarOfferController@statusUpdate')
+        ->name('amar-offer-incident.status.update');
+
 
     // mybl internet offer category
     Route::get('mybl-internet-offer-category', 'CMS\MyBlInternetOffersCategoryController@index')->name('mybl-internet-offer-category');
@@ -959,6 +962,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@store')->name('fifa-deeplink.store');
     Route::get('fifa-deeplink/destroy/{id}', 'CMS\FIFA\FifaDeeplinkController@destroy')
         ->name('fifa-deeplink.destroy');
+
+    //Mybl Popup Banner
+    Route::resource('popup-banner', 'CMS\PopupBannerController');
+    Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
+    Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+
+
+    //PGW Routes
+    Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
+    Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 });
 
 // 4G Map View Route

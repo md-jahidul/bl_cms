@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\Banglalink\LeadRequestService;
+use App\Services\Assetlite\LeadRequestService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
