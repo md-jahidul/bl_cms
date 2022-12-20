@@ -147,8 +147,16 @@ class FixedPageController extends Controller
     }
 
     public function updateComponents($pageId,ShortCode $shortCode, Request $request){
-        //dd($request->all());
-        $shortCodes = $shortCode->update($request->all());
+        $data = $request->all();
+        if($data['other_attributes']){
+            foreach ($data['other_attributes'] as $key => $val){
+                if(is_null($val)){
+                    unset($data['other_attributes'][$key]);
+                }
+            }
+        }
+
+        $shortCodes = $shortCode->update($data);
         // ->where(['id'=>$id,'page_id'=>$pageId]);
         //return view('admin.pages.fixed.edit', compact('shortCodes'));
         return redirect()->route('fixed-page-components',$pageId);
