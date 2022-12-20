@@ -69,6 +69,7 @@ class LmsAboutPageController extends Controller
 //        $details = $this->aboutPageService->findAboutDetail($slug);
 //        $benefits = $this->lmsBenefitService->getBenefit($slug);
         $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
+//        dd($aboutLoyaltyBanner);
         $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
         $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
         return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));

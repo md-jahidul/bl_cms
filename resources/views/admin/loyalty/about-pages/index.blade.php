@@ -60,13 +60,46 @@
                                         <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($aboutLoyaltyBanner->alt_text_en) ? $aboutLoyaltyBanner->alt_text_en : '' }}">
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Title En</label>
+                                    <input type="text" name="title_en" id="alt_text" class="form-control"
+                                           placeholder="Enter title en" value="{{ isset($aboutLoyaltyBanner->title_en) ? $aboutLoyaltyBanner->title_en : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="alt_text">Title Bn</label>
+                                    <input type="text" name="title_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter title bn" value="{{ isset($aboutLoyaltyBanner->title_bn) ? $aboutLoyaltyBanner->title_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Short Description En</label>
+                                    <textarea name="desc_en" id="desc_en" class="form-control" rows="4"
+                                           placeholder="Enter description en"
+                                    >{{ isset($aboutLoyaltyBanner->desc_en) ? $aboutLoyaltyBanner->desc_en : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_en'))
+                                        <div class="help-block">{{ $errors->first('desc_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">
+                                    <label for="alt_text">Short Description Bn</label>
+                                    <textarea type="text" name="desc_bn" id="alt_text" class="form-control" rows="4"
+                                              placeholder="Enter description bn">{{ isset($aboutLoyaltyBanner->desc_bn) ? $aboutLoyaltyBanner->desc_bn : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_bn'))
+                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
                                     @endif
                                 </div>
 
