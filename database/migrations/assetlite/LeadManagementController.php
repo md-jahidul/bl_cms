@@ -29,7 +29,7 @@ class LeadManagementController extends Controller
      */
     private $userService;
 
-//    const lead_super_Admin = 9;
+    const lead_super_Admin = 9;
     /**
      * @var LeadProductPermissionService
      */
@@ -125,7 +125,7 @@ class LeadManagementController extends Controller
     public function permittedUsersList()
     {
         $permittedUsers = $this->productPermissionService->getPermittedUsers();
-        $leadSuperAdmin = self::LEAD_SUPER_ADMIN;
+        $leadSuperAdmin = self::lead_super_Admin;
         return view('admin.lead-management.product-permission.permitted-user-list', compact('permittedUsers', 'leadSuperAdmin'));
     }
 

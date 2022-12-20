@@ -5,7 +5,7 @@
 @section('breadcrumb')
     {{--<li class="breadcrumb-item"><a href="--}}{{--{{ route('product.list', ) }}--}}{{--"> List</a></li>--}}
     {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
-    <li class="breadcrumb-item active">About Priyojon Details</li>
+    <li class="breadcrumb-item active">Component List</li>
 @endsection
 @section('action')
     <a href="{{ route('about-page.component.create')}}" class="btn btn-primary btn-glow px-2"><i class="la la-list"></i> Add Component </a>
@@ -14,10 +14,109 @@
     @php
         $action = [
             'edit' => 'about-page/component/edit',
-            'destroy' => 'about-page/component/destroy/'
+            'destroy' => 'about-page/component/destroy',
+            'componentSort' => 'about-page-component-sort'
         ];
     @endphp
     @include('admin.components.index', $action)
+
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Loyalty Banner Image</strong></h4>
+                    <hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form"
+                              action="{{ url('about-page/banner-image/upload') }}"
+                              method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Desktop)</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" name="loyalty_web_banner_old" value="{{ isset($aboutLoyaltyBanner->banner_image_url) ? $aboutLoyaltyBanner->banner_image_url : '' }}">
+                                        <input type="file" name="banner_image_url" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($aboutLoyaltyBanner->banner_image_url) ? config('filesystems.file_base_url') . $aboutLoyaltyBanner->banner_image_url : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image_url'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Mobile)</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" name="loyalty_mobile_banner_old" value="{{ isset($aboutLoyaltyBanner->banner_mobile_view) ? $aboutLoyaltyBanner->banner_mobile_view : '' }}">
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
+                                               data-default-file="{{ isset($aboutLoyaltyBanner->banner_mobile_view) ? config('filesystems.file_base_url') . $aboutLoyaltyBanner->banner_mobile_view : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_mobile_view'))
+                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Title En</label>
+                                    <input type="text" name="title_en" id="alt_text" class="form-control"
+                                           placeholder="Enter title en" value="{{ isset($aboutLoyaltyBanner->title_en) ? $aboutLoyaltyBanner->title_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="alt_text">Title Bn</label>
+                                    <input type="text" name="title_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter title bn" value="{{ isset($aboutLoyaltyBanner->title_bn) ? $aboutLoyaltyBanner->title_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">
+                                    <label for="alt_text">Short Description En</label>
+                                    <textarea name="desc_en" id="desc_en" class="form-control" rows="4"
+                                           placeholder="Enter description en"
+                                    >{{ isset($aboutLoyaltyBanner->desc_en) ? $aboutLoyaltyBanner->desc_en : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_en'))
+                                        <div class="help-block">{{ $errors->first('desc_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">
+                                    <label for="alt_text">Short Description Bn</label>
+                                    <textarea type="text" name="desc_bn" id="alt_text" class="form-control" rows="4"
+                                              placeholder="Enter description bn">{{ isset($aboutLoyaltyBanner->desc_bn) ? $aboutLoyaltyBanner->desc_bn : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_bn'))
+                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @stop
 
 @push('page-css')

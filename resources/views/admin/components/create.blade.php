@@ -2,12 +2,11 @@
 @section('title', 'Component Create')
 @section('card_name', 'Component Create')
 @section('breadcrumb')
-{{--    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId, $sectionId]) }}"> Section List</a></li>--}}
-{{--    <li class="breadcrumb-item active"> <a href="{{ route('component-list', [$simType, $productDetailsId, $sectionId]) }}"> Component List</a></li>--}}
-{{--    <li class="breadcrumb-item active"> Component Create</li>--}}
+    <li class="breadcrumb-item active"> <a href="{{ route('about-page', 'priyojon') }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{ route('about-page', 'priyojon') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -15,23 +14,19 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('about-page.component.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" method="POST" novalidate enctype="multipart/form-data"
+                              action="{{ isset($component) ? route('about-page.component.update', $component->id) : route('about-page.component.store') }}">
                             @csrf
                             <div class="content-body">
                                 <div class="row">
-{{--                                    {{ Form::hidden('sections[section_name]', 'Title with Text Editor' ) }}--}}
-{{--                                    {{ Form::hidden('sections[section_type]', 'title_text_editor' ) }}--}}
-{{--                                    {{ Form::hidden('sections[tab_type]', $tab_type ) }}--}}
-{{--                                    {{ Form::hidden('sections[category]', 'component_sections' ) }}--}}
-{{--                                    {{ Form::hidden('component[0][component_type]', 'title_text_editor' ) }}--}}
-
                                     <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
                                         <select name="component_type" class="form-control required" id="component_type"
                                                 required data-validation-required-message="Please select component type">
                                             <option value="">--Select Data Type--</option>
                                             @foreach($componentList as $key => $data)
-                                                <option data-alias="{{ $key }}" value="{{ $key }}">{{ $data }}</option>
+                                                <option data-alias="{{ $key }}" value="{{ $key }}"
+                                                        {{ (isset($component) && $component->component_type == $key) ? "selected" : "" }}>{{ $data }}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -40,76 +35,82 @@
                                         @endif
                                     </div>
 
-
                                     <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                                         <label>Component Sample Picture</label>
-                                        <img class="img-thumbnail" id="componentImg" width="90%">
+                                        <img class="img-thumbnail" id="componentImg" width="90%"
+                                             src="{{ isset($component) ? asset('app-assets/images/app_services/'. $component->component_type . ".png") : '' }}">
                                         <div class="col-md-8">
                                         </div>
                                     </div>
 
                                     {{--Title With Text Editor--}}
-                                    <slot id="title_text_editor" data-offer-type="title_text_editor" class="d-none">
-                                        @include('admin.components.partial.title_text_editor')
+                                    <slot id="title_text_editor" data-offer-type="title_text_editor"
+                                          class="{{ isset($component) && $component->component_type == "title_text_editor" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.title_text_editor', $component ?? [])
                                     </slot>
 
                                     <!--Table Component-->
-                                    <slot id="table_component" data-offer-type="table_component" class="d-none">
+                                    <slot id="table_component" data-offer-type="table_component"
+                                          class="{{ isset($component) && $component->component_type == "table_component" ? "" : "d-none" }}">
                                         @include('admin.components.partial.title_text_editor')
                                     </slot>
 
                                     <!--Accordion-->
-                                    <slot id="accordion_section" data-offer-type="accordion_section" class="d-none">
+                                    <slot id="accordion_section" data-offer-type="accordion_section"
+                                          class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">
                                         @include('admin.components.partial.title_text_editor')
                                     </slot>
 
                                     <!--Text Editor-->
-                                    <slot id="text_editor" data-offer-type="text_editor" class="d-none">
+                                    <slot id="text_editor" data-offer-type="text_editor"
+                                          class="{{ isset($component) && $component->component_type == "text_editor" ? "" : "d-none" }}">
                                         @include('admin.components.partial.editor_only')
                                     </slot>
 
                                     <!--Single Image-->
-                                    <slot id="single_image" data-offer-type="single_image" class="d-none">
+                                    <slot id="single_image" data-offer-type="single_image"
+                                          class="{{ isset($component) && $component->component_type == "single_image" ? "" : "d-none" }}">
                                         @include('admin.components.partial.single_image')
                                     </slot>
 
                                     <!--Box Content-->
-                                    <slot id="box_content" data-offer-type="box_content" class="d-none">
+                                    <slot id="box_content" data-offer-type="box_content"
+                                          class="{{ isset($component) && $component->component_type == "box_content" ? "" : "d-none" }}">
                                         @include('admin.components.partial.editor_only')
                                     </slot>
 
 {{--                                    --}}{{--Text with image right--}}
-{{--                                    <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="d-none">--}}
+{{--                                    <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.text_with_image_right')--}}
 {{--                                    </slot>--}}
 
 {{--                                    --}}{{--Text with image bottom--}}
-{{--                                    <slot id="text_with_image_bottom" data-offer-type="text_with_image_bottom" class="d-none">--}}
+{{--                                    <slot id="text_with_image_bottom" data-offer-type="text_with_image_bottom" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.text_with_image_bottom')--}}
 {{--                                    </slot>--}}
 
 {{--                                    --}}{{--Slider text with image right--}}
-{{--                                    <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="d-none">--}}
+{{--                                    <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')--}}
 {{--                                    </slot>--}}
 
 {{--                                    --}}{{--Video with text right--}}
-{{--                                    <slot id="video_with_text_right" data-offer-type="video_with_text_right" class="d-none">--}}
+{{--                                    <slot id="video_with_text_right" data-offer-type="video_with_text_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.video_with_text_right')--}}
 {{--                                    </slot>--}}
 
 {{--                                    --}}{{--Multiple image banner--}}
-{{--                                    <slot id="multiple_image_banner" data-offer-type="multiple_image_banner" class="d-none">--}}
+{{--                                    <slot id="multiple_image_banner" data-offer-type="multiple_image_banner" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_image_banner')--}}
 {{--                                    </slot>--}}
 
 {{--                                    --}}{{--Pricing Multiple table--}}
-{{--                                    <slot id="pricing_sections" data-offer-type="pricing_sections" class="d-none">--}}
+{{--                                    <slot id="pricing_sections" data-offer-type="pricing_sections" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.pricing_sections_create')--}}
 {{--                                    </slot>--}}
 
 {{--                                    --}}{{--static_easy_payment_card--}}
-{{--                                    <slot id="static_easy_payment_card" data-offer-type="static_easy_payment_card" class="d-none">--}}
+{{--                                    <slot id="static_easy_payment_card" data-offer-type="static_easy_payment_card" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
 {{--                                        @include('admin.app-service.details.section.component_modal.static_easy_payment_card')--}}
 {{--                                    </slot>--}}
 

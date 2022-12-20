@@ -67,7 +67,7 @@ class ComponentRepository extends BaseRepository
 
     public function componentTableSort($request)
     {
-        $positions = $request->position;
+        $positions = $request['position'];
         foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];

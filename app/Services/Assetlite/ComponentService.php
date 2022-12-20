@@ -144,11 +144,8 @@ class ComponentService
         }
 
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
-
         $countComponents = $this->componentRepository->list($sectionId, $pageType);
-
         $data['component_order'] = count($countComponents) + 1;
-
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
         $component = $this->save($data);
@@ -192,7 +189,6 @@ class ComponentService
         ]);
 
         $component = $this->findOne($id);
-
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             $this->deleteFile($component->image);
@@ -216,7 +212,7 @@ class ComponentService
         }
 
         // get original data
-        $new_multiple_attributes = isset($component->multiple_attributes) ? $component->multiple_attributes : null;
+        $new_multiple_attributes = $component->multiple_attributes ?? null;
 
 //         contains all the inputs from the form as an array
         $input_multiple_attributes = isset($results) ? array_values($results) : null;
@@ -412,7 +408,6 @@ class ComponentService
 
     public function conponentMultiAttrItemDestroy($data)
     {
-
         $component_id = $data['component_id'];
         $item_id = $data['item_id'];
 
@@ -420,40 +415,25 @@ class ComponentService
             return false;
         }
 
-
         $component = $this->findOne($component_id);
-
         // get original data
         $multiple_attributes = !empty($component->multiple_attributes) ? json_decode($component->multiple_attributes, true) : null;
 
         // loop over the product array
         if (!empty($multiple_attributes)) {
-
             $multi_attr = array_map(function($value) use ($item_id){
-
                 if( $value['id'] == $item_id ){
                     return false;
                 }
-
                 return $value;
-
-
             }, $multiple_attributes);
 
             $reults['multiple_attributes'] = !empty($multi_attr) ? json_encode(array_filter($multi_attr)) : null;
             $component->update($reults);
             return response("Component deleted!!");
-
-
         }
         else{
-
             return false;
         }
-
-
-
-
     }
-
 }

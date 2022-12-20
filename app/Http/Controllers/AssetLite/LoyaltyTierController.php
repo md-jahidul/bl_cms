@@ -5,7 +5,6 @@ namespace App\Http\Controllers\AssetLite;
 use App\Repositories\AppServiceTabRepository;
 use App\Services\Assetlite\AppServiceCategoryService;
 use App\Services\Assetlite\AppServiceTabService;
-use App\Services\Assetlite\AppServiceVendorApiService;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
@@ -17,21 +16,28 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class AppServiceVendorApiController extends Controller
+class LoyaltyTierController extends Controller
 {
     /**
-     * @var AppServiceVendorApiService
+     * @var AppServiceCategoryService
      */
-    private $appServiceVendorApiService;
+    private $appServiceCategory;
+    /**
+     * @var AppServiceTabService
+     */
+    private $appServiceTabRepository;
 
     /**
      * AppServiceCategoryController constructor.
-     * @param AppServiceVendorApiService $appServiceVendorApiService
+     * @param AppServiceCategoryService $appServiceCategory
+     * @param AppServiceTabRepository $appServiceTabRepository
      */
     public function __construct(
-        AppServiceVendorApiService $appServiceVendorApiService
+        AppServiceCategoryService $appServiceCategory,
+        AppServiceTabRepository $appServiceTabRepository
     ) {
-        $this->appServiceVendorApiService = $appServiceVendorApiService;
+        $this->appServiceCategory = $appServiceCategory;
+        $this->appServiceTabRepository = $appServiceTabRepository;
     }
 
     /**
@@ -41,11 +47,11 @@ class AppServiceVendorApiController extends Controller
      */
     public function index()
     {
-        $appServiceVendorApi = $this->appServiceVendorApiService->findAll('', [], [
+        $appServiceCat = $this->appServiceCategory->findAll('', ['appServiceTab'], [
                 'column' => 'created_at',
                 'direction' => 'DESC'
             ]);
-        return view('admin.app-service.vendor-api.index', compact('appServiceVendorApi'));
+        return view('admin.app-service.product-category.index', compact('appServiceCat'));
     }
 
     /**
@@ -55,7 +61,8 @@ class AppServiceVendorApiController extends Controller
      */
     public function create()
     {
-        return view('admin.app-service.vendor-api.create');
+        $appServiceTabs = $this->appServiceTabRepository->findByProperties([], ['id', 'name_en', 'alias']);
+        return view('admin.app-service.product-category.create', compact('appServiceTabs'));
     }
 
     /**
@@ -66,9 +73,9 @@ class AppServiceVendorApiController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->appServiceVendorApiService->storeAppServiceVendorApi($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect('app-service/vendor-api');
+        $this->appServiceCategory->storeAppServiceCat($request->all());
+        Session::flash('message', 'App Service Category Add successfully!');
+        return redirect('app-service/category');
     }
 
 
@@ -78,8 +85,10 @@ class AppServiceVendorApiController extends Controller
      */
     public function edit($id)
     {
-        $appServiceVendorApi = $this->appServiceVendorApiService->findOne($id);
-        return view('admin.app-service.vendor-api.edit', compact('appServiceVendorApi'));
+        $appServiceTabs = $this->appServiceTabRepository->findByProperties([], ['id', 'name_en', 'alias']);
+        $appServiceCat = $this->appServiceCategory->findOne($id);
+//        return $appServiceCat;
+        return view('admin.app-service.product-category.edit', compact('appServiceCat', 'appServiceTabs'));
     }
 
     /**
@@ -91,9 +100,9 @@ class AppServiceVendorApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->appServiceVendorApiService->updateAppServiceVendorApi($request->all(), $id);
+        $this->appServiceCategory->updateAppServiceCat($request->all(), $id);
         Session::flash('message', 'App Service Category Update successfully!');
-        return redirect('app-service/vendor-api');
+        return redirect('app-service/category');
     }
 
     /**
@@ -105,7 +114,7 @@ class AppServiceVendorApiController extends Controller
      */
     public function destroy($id)
     {
-        $this->appServiceVendorApiService->deleteAppServiceVendorApi($id);
-        return url('app-service/vendor-api');
+        $this->appServiceCategory->deleteAppServiceCat($id);
+        return url('app-service/category');
     }
 }

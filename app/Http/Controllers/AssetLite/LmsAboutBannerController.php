@@ -32,25 +32,18 @@ class LmsAboutBannerController extends Controller
         $this->lmsAboutBannerService = $lmsAboutBannerService;
     }
 
-    public function viewBannerImage()
-    {
-        $images = $this->lmsAboutBannerService->findAll();
-        $aboutLoyalty = isset($images[0]) ? $images[0] : null;
-        $aboutReward = isset($images[1]) ? $images[1] : null;
-        return view('admin.loyalty.banner-image.index', compact('aboutLoyalty', 'aboutReward'));
-    }
-
-    public function bannerUpload(Request $request)
-    {
-        $request->validate([
-           'banner_name' => 'unique:lms_about_banner_images,banner_name,' . $request->loyality_id,
-           'banner_name_bn' => 'unique:lms_about_banner_images,banner_name_bn,' . $request->loyality_id,
-           'reward_banner_name' => 'unique:lms_about_banner_images,banner_name,' . $request->reward_id,
-           'reward_banner_name_bn' => 'unique:lms_about_banner_images,banner_name_bn,' . $request->reward_id,
-        ]);
-
-        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect('lms-about-page/banner-image');
-    }
+//    public function viewBannerImage()
+//    {
+//        $images = $this->lmsAboutBannerService->findAll();
+//        $aboutLoyalty = isset($images[0]) ? $images[0] : null;
+//        $aboutReward = isset($images[1]) ? $images[1] : null;
+//        return view('admin.loyalty.banner-image.index', compact('aboutLoyalty', 'aboutReward'));
+//    }
+//
+//    public function bannerUpload(Request $request)
+//    {
+//        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
+//        Session::flash('message', $response->getContent());
+//        return redirect('lms-about-page/banner-image');
+//    }
 }
