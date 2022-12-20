@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class AlSliderComponentType extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'name',
         'slug'
@@ -19,4 +19,5 @@ class AlSliderComponentType extends Model
     {
         return $this->hasMany(AlSlider::class);
     }
+
 }

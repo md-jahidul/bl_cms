@@ -107,7 +107,10 @@ class FixedPageController extends Controller
      */
     public function components($id)
     {
-        $shortCodes = ShortCode::where('page_id', $id)->orderBy('sequence', 'ASC')->get();
+        $shortCodes = ShortCode::where('page_id', $id)->with(['slider'=>function($q){
+            return $q->with('componentTypes');
+        }])->orderBy('sequence', 'ASC')->get();
+        //dd($shortCodes->toArray());
         $page =  Page::find($id)->title;
         return view('admin.pages.fixed.components', compact('shortCodes', 'page'));
     }
@@ -133,5 +136,21 @@ class FixedPageController extends Controller
             $update_menu->update();
         }
         return "Sorting Success";
+    }
+
+    public function editComponents($pageId,$shortCodes){
+        $shortCodes = ShortCode::findOrFail($shortCodes);
+        if($shortCodes){
+            $other_attributes = $shortCodes->other_attributes;
+        }
+        return view('admin.pages.fixed.edit', compact('shortCodes','pageId','other_attributes'));
+    }
+
+    public function updateComponents($pageId,ShortCode $shortCode, Request $request){
+        //dd($request->all());
+        $shortCodes = $shortCode->update($request->all());
+        // ->where(['id'=>$id,'page_id'=>$pageId]);
+        //return view('admin.pages.fixed.edit', compact('shortCodes'));
+        return redirect()->route('fixed-page-components',$pageId);
     }
 }
