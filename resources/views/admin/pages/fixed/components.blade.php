@@ -43,7 +43,9 @@
                                     <td class="action">
                                         <div>
                                             @if($shortCode->slider)
-                                                <a href="{{route('slider_images',[ $shortCode->slider->component_id,strtolower($shortCode->slider->short_code) ?? null ])}}" role="button" class="btn btn-outline-success border-0">slider</a>
+                                                <a href="{{route('slider_images',[ $shortCode->slider->component_id,strtolower($shortCode->slider->short_code) ?? '' ])}}" role="button" class="btn btn-outline-success border-1">Component</a>
+                                            @else
+                                            <a href="{{url('/'.$shortCode->component_type)}}" role="button" class="btn btn-outline-success border-1">Component</a>
                                             @endif
                                             <a href="{{route('fixed-page-components-edit',[ $shortCode->page_id,$shortCode->id ])}}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                             @if($shortCode->is_active == 0)
