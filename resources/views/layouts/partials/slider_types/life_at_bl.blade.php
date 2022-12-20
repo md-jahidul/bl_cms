@@ -1,22 +1,3 @@
-<div class="form-group col-md-4 {{ $errors->has('redirect_url') ? ' error' : '' }}">
-    <label for="redirect_url">URL English</label>
-    <input type="text" name="other_attributes[redirect_url]"  class="form-control" placeholder="Enter redirect redirect_url"
-           value="{{ (!empty($other_attributes['redirect_url'])) ? $other_attributes['redirect_url'] : old("other_attributes.redirect_url") ?? '' }}">
-    <div class="help-block"></div>
-    @if ($errors->has('redirect_url'))
-        <div class="help-block">  {{ $errors->first('redirect_url') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-4 {{ $errors->has('redirect_url_bn') ? ' error' : '' }}">
-    <label for="redirect_url_bn">URL Bangla</label>
-    <input type="text" name="other_attributes[redirect_url_bn]"  class="form-control" placeholder="Enter redirect redirect_url_bn"
-           value="{{ (!empty($other_attributes['redirect_url_bn'])) ? $other_attributes['redirect_url_bn'] : old("other_attributes.redirect_url_bn") ?? '' }}">
-    <div class="help-block"></div>
-    @if ($errors->has('redirect_url_bn'))
-        <div class="help-block">  {{ $errors->first('redirect_url_bn') }}</div>
-    @endif
-</div>
 
 @include('layouts.partials.slider_types.text_area')
 @include('layouts.partials.common_types.label_with_url')
