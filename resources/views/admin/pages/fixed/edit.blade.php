@@ -24,9 +24,9 @@
                         <div class="row">
                             <input type="hidden" name="shortCodes_type" value="{{ $shortCodes->shortCodes_type }}">
                             <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                <label for="title_en" class="required">Title (English)</label>
+                                <label for="title_en" class="">Title (English)</label>
                                 <input type="text" name="title_en"  class="form-control" placeholder="Enter title (english)"
-                                       value="{{ $shortCodes->title_en }}" required data-validation-required-message="Enter shortCodes title (english)">
+                                       value="{{ $shortCodes->title_en }}"  >
                                 <div class="help-block"></div>
                                 @if ($errors->has('title_en'))
                                     <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -34,59 +34,22 @@
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                <label for="title_bn" class="required">Title (Bangla)</label>
+                                <label for="title_bn" class="">Title (Bangla)</label>
                                 <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (english)"
-                                       value="{{ $shortCodes->title_bn }}" required data-validation-required-message="Enter shortCodes title (english)">
+                                       value="{{ $shortCodes->title_bn }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('title_bn'))
                                     <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                 @endif
                             </div>
 
-
-
                             @include('layouts.partials.slider_types.text_area')
 
-                            <div class="form-group col-md-6 {{ $errors->has('label_en') ? ' error' : '' }}">
-                                <label for="label_en">Label (English)</label>
-                                <input type="text" name="other_attributes[label_en]" rows="5" id="details"
-                                          class="form-control" placeholder="Enter description" value="{{ (!empty($other_attributes['label_en'])) ? $other_attributes['label_en'] : old("other_attributes.label_en") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('label_en'))
-                                <div class="help-block">  {{ $errors->first('label_en') }}</div>
-                                @endif
-                            </div>
+                            @include('layouts.partials.common_types.label_with_url')
 
-                            <div class="form-group col-md-6 {{ $errors->has('label_bn') ? ' error' : '' }}">
-                                <label for="label_bn">Label (bangla)</label>
-                                <input type="text" name="other_attributes[label_bn]" rows="5" id="details"
-                                          class="form-control" placeholder="Enter label (bangla)" value="{{ (!empty($other_attributes['label_bn'])) ? $other_attributes['label_bn'] : old("other_attributes.label_bn") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('label_bn'))
-                                <div class="help-block">  {{ $errors->first('label_bn') }}</div>
-                                @endif
-                            </div>
-                            <div class="form-group col-md-6 {{ $errors->has('label_url') ? ' error' : '' }}">
-                                <label for="label_url">Label url(English)</label>
-                                <input type="text" name="other_attributes[label_url]" rows="5" id="details"
-                                          class="form-control" placeholder="Enter label url" value="{{ (!empty($other_attributes['label_url'])) ? $other_attributes['label_url'] : old("other_attributes.label_url") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('label_url'))
-                                <div class="help-block">  {{ $errors->first('label_url') }}</div>
-                                @endif
-                            </div>
+                            @include('layouts.partials.common_types.label_with_url',['count'=> 1])
 
-                            <div class="form-group col-md-6 {{ $errors->has('label_url_bn') ? ' error' : '' }}">
-                                <label for="label_url_bn">Label url (bangla)</label>
-                                <input type="text" name="other_attributes[label_url_bn]" rows="5" id="details"
-                                          class="form-control" placeholder="Enter label url (bangla)" value="{{ (!empty($other_attributes['label_url_bn'])) ? $other_attributes['label_url_bn'] : old("other_attributes.label_url_bn") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('label_url_bn'))
-                                <div class="help-block">  {{ $errors->first('label_url_bn') }}</div>
-                                @endif
-                            </div>
-
-
+                            @include('layouts.partials.slider_types.app_links')
 
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">

@@ -28,6 +28,7 @@
                         </thead>
                         <tbody id="sortable">
                             @foreach($shortCodes as $index=>$shortCode)
+
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td>{{ $shortCode->component_title }}{!! $shortCode->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
@@ -39,15 +40,20 @@
 {{--                                        @endif--}}
 {{--                                    </td>--}}
                                     <td>{{$shortCode->title_en}}</td>
-                                    <td class="action" width="8%">
-                                        <a href="{{route('fixed-page-components-edit',[ $shortCode->page_id,$shortCode->id ])}}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        @if($shortCode->is_active == 0)
-                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
-                                               class="btn btn-success border-0" title="Click to enable"> Enable</a>
-                                        @else
-                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
-                                               role="button" class="btn btn-danger border-0" title="Click to disable"> Disable</a>
-                                        @endif
+                                    <td class="action">
+                                        <div>
+                                            @if($shortCode->slider)
+                                                <a href="{{route('slider_images',[ $shortCode->slider->component_id,strtolower($shortCode->slider->short_code) ?? null ])}}" role="button" class="btn btn-outline-success border-0">slider</a>
+                                            @endif
+                                            <a href="{{route('fixed-page-components-edit',[ $shortCode->page_id,$shortCode->id ])}}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            @if($shortCode->is_active == 0)
+                                                <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
+                                                class="btn btn-success border-0" title="Click to enable"> Enable</a>
+                                            @else
+                                                <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
+                                                role="button" class="btn btn-danger border-0" title="Click to disable"> Disable</a>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -66,6 +72,10 @@
         #sortable tr td{
             padding-top: 5px !important;
             padding-bottom: 5px !important;
+        }
+        #sortable tr td.action div{
+            display: flex;
+            justify-content: end;
         }
     </style>
 @endpush

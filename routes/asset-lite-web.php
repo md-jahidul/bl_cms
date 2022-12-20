@@ -378,7 +378,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Fixed  ====================================
-    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent');
+    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent')->name('home_page.components');
     Route::get('fixed-pages', 'AssetLite\FixedPageController@fixedPageList');
     Route::get('fixed-pages/create', 'AssetLite\FixedPageController@fixedPageCreate');
     Route::post('fixed-pages/store', 'AssetLite\FixedPageController@fixedPageStore');

@@ -32,4 +32,8 @@ class AlSlider extends Model
     {
         return $this->hasMany(AlSliderImage::class)->orderBy('sequence', 'asc');
     }
+
+    public function componentTypes(){
+        return $this->belongsTo(AlSliderComponentType::class,'component_id');
+    }
 }

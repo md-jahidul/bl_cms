@@ -21,4 +21,9 @@ class ShortCode extends Model
     {
         return $this->belongsTo(Page::class);
     }
+
+    public function slider()
+    {
+        return $this->belongsTo(AlSlider::class,'component_id');
+    }
 }
