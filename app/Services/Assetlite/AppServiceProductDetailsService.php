@@ -166,6 +166,7 @@ class AppServiceProductDetailsService
                         $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
                     }
 
+                    
                     # Image With Content Component ====
                     if(isset($value['image_with_content_item'])){
                         $request_multi = $value['image_with_content_item'];
@@ -220,7 +221,7 @@ class AppServiceProductDetailsService
      * @return void [type]              [description]
      */
     public function updateAppServiceDetailsComponent($data, $compoent_id, $key = null)
-    {
+    {  
         $component = $this->componentRepository->findOne($compoent_id);
 
         if (isset($data['image_url']) && !empty($data['image_url'])) {
@@ -281,7 +282,35 @@ class AppServiceProductDetailsService
             }
 
             $data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
+        }
 
+        # Image With Content Component ====
+        if(isset($data['image_with_content_item'])){
+            
+            $request_multi = $data['image_with_content_item'];
+            if (!isset($request_multi['status-1'])) {
+                $request_multi['status-1'] = "1";
+            }
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            $results = [];
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($request_multi as $m_key => $m_value) {
+                    $sub_data = [];
+                    $check_index = explode('-', $m_key);
+                    if ($check_index[1] == $i) {
+                        if (isset($request_multi['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                            $m_value = $this->upload($data['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
+                        }
+                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+
+                        if(!isset($request_multi['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
+                            $results[$i]['image_url'] = $data['image_with_content_item']['prev_image_url-'.$i];
+                        }
+                    }
+                    //$results[$i][$check_index[0]] = $data['image_with_content_item']['display_order-'.$i];
+                }
+            }
+            $data['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
         }
 
         # get video url

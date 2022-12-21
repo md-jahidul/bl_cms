@@ -39,6 +39,7 @@ class AppServiceProductDetailsController extends Controller
         'video_with_text_right' => 'Video with text right',
         'multiple_image_banner' => 'Multiple image banner',
         'pricing_sections' => 'Pricing Multiple table',
+        'image_with_content' => 'Image With Content',
     ];
 
     /**
@@ -85,7 +86,7 @@ class AppServiceProductDetailsController extends Controller
     public function store(Request $request, $tab_type, $product_id)
     {
         $data = $request->all();
-
+        
         // Create new sections
         if( $request->has('save') ) {
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
@@ -150,7 +151,6 @@ class AppServiceProductDetailsController extends Controller
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
-
         if ($section['sections']->section_type == 'slider_text_with_image_right' ||
             $section['sections']->section_type == 'multiple_image_banner' ||
             $section['sections']->section_type == 'pricing_sections'
@@ -172,6 +172,7 @@ class AppServiceProductDetailsController extends Controller
 
         $componentTypes = $this->componentTypes;
         $component = $section['component'][0];
+        //dd($component);
         return view('admin.app-service.details.components.edit', compact(
             'tab_type',
             'product_id',
