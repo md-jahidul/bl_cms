@@ -47,11 +47,11 @@
 
                             @include('layouts.partials.common_types.label_with_url')
 
-                            @include('layouts.partials.common_types.label_with_url',['count'=> 'for_career'])
+                            @include('layouts.partials.common_types.label_with_url',['count'=> 1])
 
                             @include('layouts.partials.slider_types.app_links')
 
-                            @include('layouts.partials.common_types.label_with_url',['count'=> 'view_all'])
+                            @include('layouts.partials.common_types.label_with_url',['count'=> 'more'])
 
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
