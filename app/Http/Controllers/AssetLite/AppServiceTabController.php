@@ -79,7 +79,7 @@ class AppServiceTabController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Redirector
      */
-    public function update(AppServiceTabRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $response = $this->appServiceTabService->updateTabs($request->all(), $id);
         Session::flash('message', $response->getContent());

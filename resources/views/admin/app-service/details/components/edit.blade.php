@@ -106,6 +106,10 @@
                                     <slot id="static_easy_payment_card" data-offer-type="static_easy_payment_card" class="{{ ($section['sections']->section_type ==  "static_easy_payment_card"  ) ? '' : "d-none" }}">
                                         @include('admin.app-service.details.section.component_modal.static_easy_payment_card')
                                     </slot>
+                                    {{--image_with_content--}}
+                                    <slot id="image_with_content" data-offer-type="image_with_content" class="{{ ($section['sections']->section_type ==  "image_with_content"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.image_with_content')
+                                    </slot>
 
 
                                     <div class="col-md-12 mt-2">
