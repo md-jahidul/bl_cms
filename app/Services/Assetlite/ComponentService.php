@@ -139,7 +139,7 @@ class ComponentService
     }
 
 
-    public function componentUpdate($data, $id)
+    public function componentUpdate($data, $id, $pageType)
     {
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
