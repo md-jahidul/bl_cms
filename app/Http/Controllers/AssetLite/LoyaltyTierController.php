@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Repositories\AppServiceTabRepository;
 use App\Services\Assetlite\AppServiceCategoryService;
 use App\Services\Assetlite\AppServiceTabService;
+use App\Services\LmsTierService;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
@@ -19,25 +20,18 @@ use Illuminate\View\View;
 class LoyaltyTierController extends Controller
 {
     /**
-     * @var AppServiceCategoryService
+     * @var LmsTierService
      */
-    private $appServiceCategory;
-    /**
-     * @var AppServiceTabService
-     */
-    private $appServiceTabRepository;
+    private $lmsTierService;
 
     /**
-     * AppServiceCategoryController constructor.
-     * @param AppServiceCategoryService $appServiceCategory
-     * @param AppServiceTabRepository $appServiceTabRepository
+     * LoyaltyTierController constructor.
+     * @param LmsTierService $lmsTierService
      */
     public function __construct(
-        AppServiceCategoryService $appServiceCategory,
-        AppServiceTabRepository $appServiceTabRepository
+        LmsTierService $lmsTierService
     ) {
-        $this->appServiceCategory = $appServiceCategory;
-        $this->appServiceTabRepository = $appServiceTabRepository;
+        $this->lmsTierService = $lmsTierService;
     }
 
     /**
@@ -47,11 +41,11 @@ class LoyaltyTierController extends Controller
      */
     public function index()
     {
-        $appServiceCat = $this->appServiceCategory->findAll('', ['appServiceTab'], [
-                'column' => 'created_at',
-                'direction' => 'DESC'
+        $lmsTires = $this->lmsTierService->findAll('', '', [
+                'column' => 'display_order',
+                'direction' => 'ASC'
             ]);
-        return view('admin.app-service.product-category.index', compact('appServiceCat'));
+        return view('admin.loyalty.lms-tier.index', compact('lmsTires'));
     }
 
     /**
@@ -61,8 +55,7 @@ class LoyaltyTierController extends Controller
      */
     public function create()
     {
-        $appServiceTabs = $this->appServiceTabRepository->findByProperties([], ['id', 'name_en', 'alias']);
-        return view('admin.app-service.product-category.create', compact('appServiceTabs'));
+        return view('admin.loyalty.lms-tier.create');
     }
 
     /**
@@ -73,9 +66,9 @@ class LoyaltyTierController extends Controller
      */
     public function store(Request $request)
     {
-        $this->appServiceCategory->storeAppServiceCat($request->all());
+        $this->lmsTierService->storeLmsTier($request->all());
         Session::flash('message', 'App Service Category Add successfully!');
-        return redirect('app-service/category');
+        return redirect('loyalty/tier');
     }
 
 
@@ -85,10 +78,8 @@ class LoyaltyTierController extends Controller
      */
     public function edit($id)
     {
-        $appServiceTabs = $this->appServiceTabRepository->findByProperties([], ['id', 'name_en', 'alias']);
-        $appServiceCat = $this->appServiceCategory->findOne($id);
-//        return $appServiceCat;
-        return view('admin.app-service.product-category.edit', compact('appServiceCat', 'appServiceTabs'));
+        $lmsTier = $this->lmsTierService->findOne($id);
+        return view('admin.loyalty.lms-tier.edit', compact('lmsTier'));
     }
 
     /**
@@ -100,9 +91,18 @@ class LoyaltyTierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->appServiceCategory->updateAppServiceCat($request->all(), $id);
+        $this->lmsTierService->updateLmsTier($request->all(), $id);
         Session::flash('message', 'App Service Category Update successfully!');
-        return redirect('app-service/category');
+        return redirect('loyalty/tier');
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tierSort(Request $request)
+    {
+       return $this->lmsTierService->tableSortable($request->position);
     }
 
     /**
@@ -114,7 +114,7 @@ class LoyaltyTierController extends Controller
      */
     public function destroy($id)
     {
-        $this->appServiceCategory->deleteAppServiceCat($id);
-        return url('app-service/category');
+        $this->lmsTierService->deleteLmsTier($id);
+        return url('loyalty/tier');
     }
 }
