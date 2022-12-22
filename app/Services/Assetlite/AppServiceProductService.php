@@ -66,8 +66,15 @@ class AppServiceProductService
         if (request()->hasFile('product_img_url')) {
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
         }
+
+        if (request()->hasFile('details_image_url')) {
+            $data['details_image_url'] = $this->upload($data['details_image_url'], 'assetlite/images/app-service/product');
+        }
+
         $data['created_by'] = Auth::id();
+        $data['is_images'] = isset($data['is_images']) ? 1 : 0;
         unset($data['referral']);
+
         $app = $this->save($data);
 
         // Referral Info Store
@@ -91,6 +98,12 @@ class AppServiceProductService
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
             $this->deleteFile($appServiceProduct->product_img_url);
         }
+
+        if (request()->hasFile('details_image_url')) {
+            $data['details_image_url'] = $this->upload($data['details_image_url'], 'assetlite/images/app-service/product');
+            $this->deleteFile($appServiceProduct->details_image_url);
+        }
+        $data['is_images'] = isset($data['is_images']) ? 1 : 0;
         $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
         $data['show_in_vas'] = (isset($data['show_in_vas']) ? 1 : 0);
         $data['show_ussd'] = (isset($data['show_ussd']) ? 1 : 0);

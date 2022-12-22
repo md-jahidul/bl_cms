@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Helpers\Helper;
 use App\Http\Controllers\AssetLite\ConfigController;
+use Illuminate\Http\Request;
 
 class StoreSliderImageRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class StoreSliderImageRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         $image_upload_size = ConfigController::adminImageUploadSize();
         $image_upload_type = ConfigController::adminImageUploadType();
@@ -31,6 +32,8 @@ class StoreSliderImageRequest extends FormRequest
         return [
             'title_en' => 'required',
             'image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size,
+            'image_name' => 'required|unique:al_slider_images,image_name,' . $request->id,
+            'image_name_bn' => 'required|unique:al_slider_images,image_name_bn,' . $request->id,
             'alt_text' => 'required',
             'is_active' => 'required',
         ];

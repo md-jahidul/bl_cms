@@ -74,13 +74,11 @@ class DynamicPageController extends Controller
     public function savePage(DynamicPageStoreRequest $request)
     {
         $response = $this->pageService->savePage($request->all());
-
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'Page is saved!');
+            Session::flash('success', $response['message']);
         } else {
             Session::flash('error', $response['message']);
         }
-
         return redirect('/dynamic-pages');
     }
 
@@ -107,7 +105,7 @@ class DynamicPageController extends Controller
     public function componentEditForm($pageId, $id)
     {
         $componentTypes = $this->componentTypes;
-        $component = $this->componentService->findOne($id);
+        $component = $this->componentService->findOne($id, ['componentMultiData']);
         $multipleImage = $component['multiple_attributes'];
         return view('admin.dynamic-pages.components.edit', compact('component', 'multipleImage', 'componentTypes', 'pageId'));
     }
@@ -120,7 +118,7 @@ class DynamicPageController extends Controller
      */
     public function componentUpdate(Request $request, $pageId, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id);
+        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('other-components', [$pageId]));
     }

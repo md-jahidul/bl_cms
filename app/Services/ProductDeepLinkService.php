@@ -20,7 +20,6 @@ class ProductDeepLinkService
 {
 
     use CrudTrait;
-
     /**
      * @var \App\Services\FirebaseDeepLinkService
      */

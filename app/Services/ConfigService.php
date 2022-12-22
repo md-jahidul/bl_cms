@@ -33,12 +33,17 @@ class ConfigService
         if (request()->hasFile('site_logo')) {
             $imageUrl = $this->upload($request['site_logo'], 'assetlite/images/logo');
         }
+        if (request()->hasFile('login_page_banner')) {
+            $LoginBanner = $this->upload($request['login_page_banner'], 'assetlite/images/banner');
+        }
         $items = request()->except(['_token','_method']);
         foreach ($items as $key => $value) {
             $config = $this->configRepository->updateConfig($key);
             $config->value = $value;
             if ($key == "site_logo") {
                 $config->value = $imageUrl;
+            }elseif($key == "login_page_banner"){
+                $config->value = $LoginBanner;
             }
             $config->save();
         }

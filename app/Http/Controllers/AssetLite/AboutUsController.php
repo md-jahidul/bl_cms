@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\CorpCaseStudyComponentRequest;
 use App\Http\Requests\StoreSliderImageRequest;
 use App\Models\AboutUsBanglalink;
 use App\Services\AboutUsService;
@@ -92,7 +93,7 @@ class AboutUsController extends Controller
      * @param $type
      * @return RedirectResponse|Redirector
      */
-    public function storeSliderImage(Request $request, $sliderId, $type)
+    public function storeSliderImage(StoreSliderImageRequest $request, $sliderId, $type)
     {
         $response = $this->alSliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());

@@ -71,6 +71,12 @@ class MediaPressNewsEventController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+           'thumbnail_image_name_en' => 'unique:media_press_news_events,thumbnail_image_name_en',
+           'thumbnail_image_name_bn' => 'unique:media_press_news_events,thumbnail_image_name_bn',
+           'details_image_name_en' => 'unique:media_press_news_events,details_image_name_en',
+           'details_image_name_bn' => 'unique:media_press_news_events,details_image_name_bn',
+        ]);
         $response = $this->mediaPNE->storePNE($request->all());
         Session::flash('success', $response->getContent());
         return redirect('press-news-event');
@@ -97,6 +103,12 @@ class MediaPressNewsEventController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'thumbnail_image_name_en' => 'unique:media_press_news_events,thumbnail_image_name_en,' . $id,
+            'thumbnail_image_name_bn' => 'unique:media_press_news_events,thumbnail_image_name_bn,' . $id,
+            'details_image_name_en' => 'unique:media_press_news_events,details_image_name_en,' . $id,
+            'details_image_name_bn' => 'unique:media_press_news_events,details_image_name_bn,' . $id,
+        ]);
         $response = $this->mediaPNE->updatePNE($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('press-news-event');
@@ -104,6 +116,12 @@ class MediaPressNewsEventController extends Controller
 
     public function bannerUpload(Request $request)
     {
+        $request->validate([
+           'banner_name_en' => 'unique:media_banner_images,banner_name_en,' . $request->press_release_id,
+           'banner_name_bn' => 'unique:media_banner_images,banner_name_bn,' . $request->press_release_id,
+           'news_banner_name_en' => 'unique:media_banner_images,banner_name_en,' . $request->news_event_id,
+           'news_banner_name_bn' => 'unique:media_banner_images,banner_name_bn,' . $request->news_event_id,
+        ]);
         $response = $this->mediaBannerImageService->bannerImageUpload($request->all());
         Session::flash('message', $response->getContent());
         return redirect('press-news-event');

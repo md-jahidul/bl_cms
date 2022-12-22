@@ -50,6 +50,11 @@ class FourGCampaignController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+           'image_name_en' => 'unique:four_g_campaigns,image_name_en',
+           'image_name_bn' => 'unique:four_g_campaigns,image_name_bn',
+        ]);
+
         $response = $this->fourGCampaignService->storeCampaign($request->all());
 
         if ($response['success'] == 1) {
@@ -63,6 +68,11 @@ class FourGCampaignController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'image_name_en' => 'unique:four_g_campaigns,image_name_en,' . $request->id,
+            'image_name_bn' => 'unique:four_g_campaigns,image_name_bn,' . $request->id,
+        ]);
+
         $response = $this->fourGCampaignService->updateCampaign($request->all());
         if ($response['success'] == 1) {
             Session::flash('sussess', '4G campaign update successfully!');

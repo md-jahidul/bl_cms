@@ -37,8 +37,6 @@ class MyblFlashHourService
      */
     private $productCoreRepository;
 
-    protected const FLASH_HOUR_REDIS_KEY = "base_msisdn_";
-
 
     /**
      * MyblFlashHourService constructor.
@@ -66,13 +64,6 @@ class MyblFlashHourService
     public function getReferEarnCampaignList()
     {
         return $this->flashHourRepository->getMigratePlanListList();
-    }
-
-    public function addRedisKey($baseGroupId, $endDate)
-    {
-        $dayDiff = Carbon::now()->diffInDays($endDate) ?: 1;
-        $ttl = 60 * 60 * 24 * $dayDiff;
-        return BaseMsisdnHelper::baseMsisdnAddInRedis($baseGroupId, $ttl);
     }
 
     /**
@@ -135,6 +126,7 @@ class MyblFlashHourService
                     $product['status']          = $product['status'] ?? 0;
                     $product['start_date']      = null;
                     $product['end_date']        = null;
+                    $product['status']          = 0;
                     unset($product['id']);
                     $this->flashHourProductRepository->save($product);
                 }
