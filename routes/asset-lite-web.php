@@ -279,6 +279,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
+    //business
+    Route::get('business-home', 'AssetLite\ProductController@trendingOfferHome')->name('business-home');
     //amar offer details......
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
     Route::post('amaroffer/banner-image/upload', 'AssetLite\AmarOfferController@bannerImageUpload')
