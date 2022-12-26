@@ -365,7 +365,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('about-page.component.destroy');
     Route::get('about-page-component-sort', 'AssetLite\LmsAboutPageController@componentSortable');
 
-
+    // LMS Tier
+    Route::resource('loyalty/tier', 'AssetLite\LoyaltyTierController')->except(['show', 'destroy']);
+    Route::get('loyalty-tier-sort', 'AssetLite\LoyaltyTierController@tierSort');
+    Route::get('loyalty/tier/destroy/{id}', 'AssetLite\LoyaltyTierController@destroy');
 
     // LMS About Pages Banner Image ================================
     Route::get('lms-about-page/banner-image', 'AssetLite\LmsAboutBannerController@viewBannerImage');

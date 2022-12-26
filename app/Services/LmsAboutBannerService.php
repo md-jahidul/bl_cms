@@ -61,7 +61,10 @@ class LmsAboutBannerService
                 $this->deleteFile($data['loyalty_mobile_banner_old']);
             }
         }
-        $moduleWiseData['about_loyalty']['alt_text_en'] = $data['alt_text_en'];
+        $moduleWiseData['about_loyalty']['title_en'] = $data['title_en'];
+        $moduleWiseData['about_loyalty']['title_bn'] = $data['title_bn'];
+        $moduleWiseData['about_loyalty']['desc_en'] = $data['desc_en'];
+        $moduleWiseData['about_loyalty']['desc_bn'] = $data['desc_bn'];
         $moduleWiseData['about_loyalty']['page_type'] = 'about_loyalty';
 
 //        if (request()->has('reward_banner_image_url')) {
