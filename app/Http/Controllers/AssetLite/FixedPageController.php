@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\MetaTag;
 use App\Models\ShortCode;
+use App\Services\Assetlite\ShortCodeService;
 use Illuminate\Support\Facades\Session;
 
 class FixedPageController extends Controller
@@ -23,13 +24,19 @@ class FixedPageController extends Controller
      * @var DynamicRouteService
      */
     private $dynamicRouteService;
+    /**
+     * @var ShortCodeService
+     */
+    private $shortCodeService;
 
     public function __construct(
         MetaTagService $metaTagService,
-        DynamicRouteService $dynamicRouteService
+        DynamicRouteService $dynamicRouteService,
+        ShortCodeService $shortCodeService
     ) {
         $this->metaTagService = $metaTagService;
         $this->dynamicRouteService = $dynamicRouteService;
+        $this->shortCodeService = $shortCodeService;
         $this->middleware('auth');
     }
 
@@ -107,10 +114,7 @@ class FixedPageController extends Controller
      */
     public function components($id)
     {
-        $shortCodes = ShortCode::where('page_id', $id)->with(['slider'=>function($q){
-            return $q->with('componentTypes');
-        }])->orderBy('sequence', 'ASC')->get();
-        //dd($shortCodes->toArray());
+        $shortCodes = $this->shortCodeService->findBy(['page_id'=> $id],'slider',['column' => 'sequence','direction'=>'ASC']);
         $page =  Page::find($id)->title;
         return view('admin.pages.fixed.components', compact('shortCodes', 'page'));
     }
@@ -118,7 +122,7 @@ class FixedPageController extends Controller
 
     public function fixedPageStatusUpdate($pageId, $componentId)
     {
-        $component = ShortCode::find($componentId);
+        $component = $this->shortCodeService->findOrFail($componentId);
         $component->is_active = $component->is_active ? 0 : 1;
         $component->save();
 
@@ -131,7 +135,7 @@ class FixedPageController extends Controller
         foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
-            $update_menu = ShortCode::findOrFail($menu_id);
+            $update_menu = $this->shortCodeService->findOrFail($menu_id);
             $update_menu['sequence'] = $new_position;
             $update_menu->update();
         }
@@ -139,7 +143,8 @@ class FixedPageController extends Controller
     }
 
     public function editComponents($pageId,$shortCodes){
-        $shortCodes = ShortCode::findOrFail($shortCodes);
+        //$shortCodes = ShortCode::findOrFail($shortCodes);
+        $shortCodes = $this->shortCodeService->findOrFail($shortCodes);
         if($shortCodes){
             $other_attributes = $shortCodes->other_attributes;
         }
