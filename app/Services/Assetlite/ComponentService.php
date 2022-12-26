@@ -155,7 +155,7 @@ class ComponentService
 
     public function componentUpdate($data, $id)
     {
-        return $component = $this->findOne($id);
+        $component = $this->findOne($id);
         if (request()->hasFile('image')) {
 
             if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
