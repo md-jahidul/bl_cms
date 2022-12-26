@@ -24,7 +24,7 @@ class AlBannerService
 
     public function findBanner($section_type , $section_id)
     {
-        return $banner = $this->alBannerRepository->findFirstBanner(['section_type' => $section_type, 'section_id' => $section_id]);
+        $banner = $this->alBannerRepository->findFirstBanner(['section_type' => $section_type, 'section_id' => $section_id]);
 
         if ($banner) {
             $banner['other_attributes'] = json_decode($banner['other_attributes']);
