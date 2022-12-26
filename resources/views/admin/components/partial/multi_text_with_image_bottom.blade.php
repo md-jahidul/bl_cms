@@ -1,13 +1,3 @@
-{{-- <div class="form-group col-md-6 {{ $errors->has('alt_links') ? ' error' : '' }}">
-   <label for="alt_links" class="required1">Links</label>
-   <input type="url" name="alt_links"  class="form-control section_name" placeholder="Links"
-          value="{{ !empty($ecarrer_item->alt_links) ? $ecarrer_item->alt_links : '' }}" required data-validation-required-message="Please enter text">
-   <div class="help-block"></div>
-   @if ($errors->has('alt_links'))
-       <div class="help-block">  {{ $errors->first('alt_links') }}</div>
-   @endif
-</div> --}}
-
 
 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
     <label for="title_en" class="required1">
@@ -34,6 +24,7 @@
      @endif
  </div>
 
+
  <div class="col-md-6">
      <div class="form-group">
          <label for="exampleInputPassword1">Description (English)</label>
@@ -49,7 +40,6 @@
                    placeholder="Enter description">{{ old('description_bn') ? old('description_bn') : $component->description_bn ?? null }}</textarea>
      </div>
  </div>
-
 
 <div class="form-group col-md-5 {{ $errors->has('image') ? ' error' : '' }}">
     <label for="alt_text" class="">Image (optional)</label>
@@ -78,3 +68,11 @@
         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
     @endif
 </div>
+{{-- @php
+    echo '<pre>';
+    print_r(count($component->multiple_attributes));
+@endphp --}}
+
+<slot id="" data-offer-type="" class="">
+    @include('admin.components.partial.multi_text_section', $component->multiple_attributes ?? [])
+</slot>

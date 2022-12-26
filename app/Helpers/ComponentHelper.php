@@ -21,11 +21,14 @@ class ComponentHelper
             'accordion_section' => 'Accordion',
             'text_editor' => 'Text Editor',
             'box_content' => 'Box Content',
-//            'text_with_image_right' => 'Text with image right',
-//            'text_with_image_bottom' => 'Text with image bottom',
+            'text_with_image_left_box' => 'Text with image left (Box)',
+            'text_with_image_left' => 'Text with image left',
+            'text_with_image_right' => 'Text with image right',
+            'text_with_image_bottom' => 'Text with image bottom',
+            'multi_text_with_image_bottom' => 'Multi Text with image bottom',
 //            'slider_text_with_image_right' => 'Slider text with image right',
 //            'video_with_text_right' => 'Video with text right',
-///            'multiple_image_banner' => 'Multiple image banner',
+//            'multiple_image_banner' => 'Multiple image banner',
 //            'pricing_sections' => 'Pricing Multiple table',
         ];
     }
