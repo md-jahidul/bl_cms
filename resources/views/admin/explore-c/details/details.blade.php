@@ -12,7 +12,7 @@
 @section('content')
 
     @php
-
+    
         $action = [
             'edit' => 'explore-c-component/edit',
             'destroy' => 'explore-c-component/destroy',
@@ -118,7 +118,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('button_label_en') ? ' error' : '' }}">
                                     <label for="button_label_en">Button Label (English)</label>
                                     <input type="text" name="other_attributes[button_label_en]" id="button_label_en" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ (!empty($banner->other_attributes['button_label_en'])) ? $banner->other_attributes['button_label_en'] : old("other_attr.button_label_en") ?? '' }}">
+                                        value="{{ (!empty($banner->other_attributes['button_label_en'])) ? $banner->other_attributes['button_label_en'] : old("other_attributes.button_label_en") ?? '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('button_label_en'))
                                     <div class="help-block">{{ $errors->first('button_label_en') }}</div>
@@ -128,7 +128,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('button_label_bn') ? ' error' : '' }}">
                                     <label for="button_label_bn">Button Label (Bangla)</label>
                                     <input type="text" name="other_attributes[button_label_bn]" id="button_label_bn" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ (!empty($banner->other_attributes['button_label_bn'])) ? $banner->other_attributes['button_label_bn'] : old("other_attr.button_label_bn") ?? '' }}">
+                                        value="{{ (!empty($banner->other_attributes['button_label_bn'])) ? $banner->other_attributes['button_label_bn'] : old("other_attributes.button_label_bn") ?? '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('button_label_bn'))
                                     <div class="help-block">{{ $errors->first('button_label_bn') }}</div>
@@ -137,7 +137,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('button_url') ? ' error' : '' }}">
                                     <label for="button_url">Button Url</label>
                                     <input type="text" name="other_attributes[button_url]" id="button_url" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ (!empty($banner->other_attributes['button_url'])) ? $banner->other_attributes['button_url'] : old("other_attr.button_url") ?? '' }}">
+                                        value="{{ (!empty($banner->other_attributes['button_url'])) ? $banner->other_attributes['button_url'] : old("other_attributes.button_url") ?? '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('button_url'))
                                     <div class="help-block">{{ $errors->first('button_url') }}</div>
