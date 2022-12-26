@@ -155,10 +155,10 @@ class ComponentService
 
     public function componentUpdate($data, $id)
     {
-        $component = $this->findOne($id);
+        return $component = $this->findOne($id);
         if (request()->hasFile('image')) {
 
-            if ($data['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
+            if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
 
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
@@ -198,7 +198,7 @@ class ComponentService
         $input_multiple_attributes = isset($results) ? array_values($results) : null;
         // return $data['multi_item'];
 
-        if ($data['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
+        if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
 
             $data['multiple_attributes'] = $input_multiple_attributes;
 
