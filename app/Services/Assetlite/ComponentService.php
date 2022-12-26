@@ -188,7 +188,7 @@ class ComponentService
     }
 
 
-    public function componentUpdate($data, $id, $pageType)
+    public function componentUpdate($data, $id)
     {
         if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
