@@ -97,7 +97,7 @@ class LmsAboutPageController extends Controller
 
     public function componentUpdate(Request $request, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
+        $response = $this->componentService->componentUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('about-page/priyojon');
     }
