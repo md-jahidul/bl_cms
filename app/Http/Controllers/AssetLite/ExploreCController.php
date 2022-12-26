@@ -6,6 +6,8 @@ use App\Enums\ExplorCStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExploreCRequest;
 use App\Services\ExploreCService;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ExploreCController extends Controller
 {
@@ -23,6 +25,7 @@ class ExploreCController extends Controller
      */
     public function index()
     {
+        
         $exploreCs = $this->exploreCService->exploreCList();
 
         return view('admin.explore-c.index', compact('exploreCs'));
@@ -60,6 +63,7 @@ class ExploreCController extends Controller
         // }
         // $data = $request->all();
         // $data['img'] = $img;
+        // return $this->exploreCService->store($request->all());
         session()->flash('message', $this->exploreCService->store($request->all())->getContent());
         return redirect(route('explore-c.index'));
 
@@ -99,6 +103,9 @@ class ExploreCController extends Controller
      */
     public function update(ExploreCRequest $request, $id)
     {
+        // return $request->route()->parameters();
+        // return $request->all();
+        // return $this->exploreCService->store($request->all());
         session()->flash('message', $this->exploreCService->updateExploreC($request->all(), $id)->getContent());
         return redirect(route('explore-c.index'));
     }
@@ -112,7 +119,13 @@ class ExploreCController extends Controller
     public function destroy($id)
     {
         session()->flash('message', $this->exploreCService->destroy($id)->getContent());
-        return redirect(route('test-teams.index'));
+        return redirect(route('explore-c.index'));
+        
+    }
+
+    public function exploreCSortable(Request $request)/*: Response*/
+    {
+        return $this->exploreCService->tableSortable($request->all());
         
     }
 

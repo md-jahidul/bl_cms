@@ -13,9 +13,10 @@ class ExploreC extends Model
         'short_desc_bn',
         'button_lable_en',
         'button_lable_bn',
-        'button_url_en',
-        'button_url_bn',
-        'img',
+        // 'button_url_en',
+        // 'button_url_bn',
+        'image',
+        'image_mobile',
         'img_alt_en',
         'img_alt_bn',
         'img_name_en',
@@ -24,6 +25,9 @@ class ExploreC extends Model
         'end_date',
         'status',
         'display_order',
+        'color',
+        'slug_en',
+        'slug_bn',
     ];
 
     public const EXPLORE_C_STATUS_ENUM = [0 => 'Inactive', 1 => 'Active'];

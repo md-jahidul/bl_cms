@@ -18,25 +18,28 @@
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
-                            <td width="3%">#</td>
+                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="25%">Title En</th>
-                            <th width="25%">Display Order</th>
                             <th width="25%">Start Date</th>
                             <th width="25%">End Date</th>
                             <th width="25%">Status</th>
+                            <th width="25%">Details</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                             @foreach($exploreCs as $exploreC)
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $exploreC->id }}" data-position="{{ $exploreC->display_order }}">
-                                    <td width="3%">{{ $loop->iteration }}</td>
+                                    {{-- <td width="3%">{{ $loop->iteration }}</td> --}}
+                                    <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td >{{ $exploreC->title_en }}</td>
-                                    <td >{{ $exploreC->display_order }}</td>
                                     <td >{{ $exploreC->start_date }}</td>
                                     <td >{{ $exploreC->end_date }}</td>
                                     <td >{{ \App\Models\ExploreC::EXPLORE_C_STATUS_ENUM[$exploreC->status]  }}</td>
+                                    <td class="text-center">
+                                             <a href="{{ route( "explore-c-component.list", ['id' => $exploreC->id] ) }}" class="btn-sm btn-outline-warning border">Details</a>
+                                        </td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("explore-c/$exploreC->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("explore-c/destroy/$exploreC->id") }}" class="border-0 btn-sm btn-outline-danger delete delete_btn" data-id="{{ $exploreC->id }}" title="Delete">
@@ -56,7 +59,7 @@
 @stop
 
 @push('page-css')
-    {{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
             padding-top: 5px !important;
@@ -66,6 +69,9 @@
 @endpush
 
 @push('page-js')
+    <script type="text/javascript">
+        var auto_save_url = "{{ url('explore-c-sort') }}";
+    </script>
     <script>
     $(function () {
             $('.delete').click(function () {

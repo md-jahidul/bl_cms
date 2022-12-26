@@ -28,24 +28,28 @@ Route::post('/users/password-update', 'AssetLite\UserController@changePassword')
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
-    // Route::get('test', function (){
-    //     echo 'hello';
-    // });
+    // Explore C's =========================================================
+    Route::resource('al-banner', 'AssetLite\AlBannerController')->except('index','create','edit','show', 'destroy');
+
     // Explore C's =========================================================
     Route::resource('explore-c', 'AssetLite\ExploreCController');
     Route::get('explore-c/destroy/{id}', 'AssetLite\ExploreCController@destroy');
+    Route::get('explore-c-sort', 'AssetLite\ExploreCController@exploreCSortable');
 
-    Route::get('explore-c/component/create', 'AssetLite\ExploreCDetailsController@componentCreate')
-        ->name('explore-c.component.create');
-    Route::post('explore-c/component/store', 'AssetLite\ExploreCDetailsController@componentStore')
-        ->name('explore-c.component.store');
-    Route::get('explore-c/component/edit/{comId}', 'AssetLite\ExploreCDetailsController@componentEdit')
-        ->name('explore-c.component.edit');
-    // Route::post('explore-c/component/update/{comId}', 'AssetLite\ExploreCDetailsController@componentUpdate')
-    //     ->name('explore-c.component.update');
-    // Route::get('explore-c/component/destroy/{comId}', 'AssetLite\ExploreCDetailsController@componentDestroy')
-    //     ->name('explore-c.component.destroy');
-    // Route::get('explore-c/component-sortable', 'AssetLite\ExploreCDetailsController@componentSortable');
+
+    Route::get('explore-c-component/{explore_c_id}/list', 'AssetLite\ExploreCDetailsController@index')
+        ->name('explore-c-component.list');
+    Route::get('explore-c-component/create', 'AssetLite\ExploreCDetailsController@componentCreate')
+        ->name('explore-c-component.create');
+    Route::post('explore-c-component/store', 'AssetLite\ExploreCDetailsController@componentStore')
+        ->name('explore-c-component.store');
+    Route::get('explore-c-component/edit/{comId}', 'AssetLite\ExploreCDetailsController@componentEdit')
+        ->name('explore-c-component.edit');
+    Route::post('explore-c-component/update/{comId}', 'AssetLite\ExploreCDetailsController@componentUpdate')
+        ->name('explore-c-component.update');
+    Route::get('explore-c-component/destroy/{comId}', 'AssetLite\ExploreCDetailsController@componentDestroy')
+        ->name('explore-c-component.destroy');
+    Route::get('explore-c-component-sort', 'AssetLite\ExploreCDetailsController@componentSortable');
 
 
     //Place all your routes here

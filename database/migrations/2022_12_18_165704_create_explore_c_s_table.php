@@ -23,7 +23,8 @@ class CreateExploreCSTable extends Migration
             $table->string('button_lable_bn')->nullable();
             $table->string('button_url_en')->nullable();
             $table->string('button_url_bn')->nullable();
-            $table->string('img')->nullable();
+            $table->string('image')->nullable();
+            $table->string('image_mobile')->nullable();
             $table->string('img_alt_en')->nullable();
             $table->string('img_alt_bn')->nullable();
             $table->string('img_name_en')->nullable();
@@ -32,6 +33,9 @@ class CreateExploreCSTable extends Migration
             $table->dateTime('end_date')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->integer('display_order')->nullable();
+            $table->string('color')->nullable();
+            $table->string('slug_en')->nullable();
+            $table->string('slug_bn')->nullable();
 
             $table->timestamps();
         });

@@ -21,8 +21,8 @@
                         <div class="row">
 
                             <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                <label for="title_en">Title (English)</label>
-                                <input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter explore name in English"
+                                <label for="title_en" class="required">Title (English)</label>
+                                <input type="text" name="title_en" id="title_en" class="form-control required" placeholder="Enter explore name in English"
                                        value="{{ old("title_en") ? old("title_en") : $exploreC->title_en }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('title_en'))
@@ -31,8 +31,8 @@
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                <label for="title_bn">Title (Bangla)</label>
-                                <input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter explore name in Bangla"
+                                <label for="title_bn" class="required">Title (Bangla)</label>
+                                <input type="text" name="title_bn" id="title_bn" class="form-control required" placeholder="Enter explore name in Bangla"
                                        value="{{ old("title_bn") ? old("title_bn") : $exploreC->title_bn }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('title_bn'))
@@ -79,22 +79,22 @@
                             </div>
 
 
-                            <div class="form-group col-md-6 {{ $errors->has('button_url_en') ? ' error' : '' }}">
-                                <label> Button URL EN</label>
-                                <input type="text" class="form-control slug-convert" name="button_url_en" value="{{ old("button_url_en") ? old("button_url_en") : $exploreC->button_url_en }}" placeholder="URL EN" id="button_url_en">
-                                @if ($errors->has('button_url_en'))
+                            <div class="form-group col-md-6 {{ $errors->has('slug_en') ? ' error' : '' }}">
+                                <label class="required"> Button URL EN</label>
+                                <input type="text" class="form-control slug-convert required" name="slug_en" value="{{ old("slug_en") ? old("slug_en") : $exploreC->slug_en }}" placeholder="URL EN" id="slug_en">
+                                @if ($errors->has('slug_en'))
                                     <div class="help-block text-danger">
-                                        {{ $errors->first('button_url_en') }}
+                                        {{ $errors->first('slug_en') }}
                                     </div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('button_url_bn') ? ' error' : '' }}">
-                                <label> Button URL BN </label>
-                                <input type="text" class="form-control slug-convert" name="button_url_bn" value="{{ old("button_url_bn") ? old("button_url_bn") : $exploreC->button_url_en }}"placeholder="URL BN">
-                                @if ($errors->has('button_url_bn'))
+                            <div class="form-group col-md-6 {{ $errors->has('slug_bn') ? ' error' : '' }}">
+                                <label class="required"> Button URL BN </label>
+                                <input type="text" class="form-control slug-convert required" name="slug_bn" value="{{ old("slug_bn") ? old("slug_bn") : $exploreC->slug_en }}"placeholder="URL BN">
+                                @if ($errors->has('slug_bn'))
                                     <div class="help-block text-danger">
-                                        {{ $errors->first('button_url_bn') }}
+                                        {{ $errors->first('slug_bn') }}
                                     </div>
                                 @endif
                             </div>
@@ -141,16 +141,33 @@
                                 <label for="img">Image</label>
                                 <input type="file"
                                     id="img"
-                                    name="img"
+                                    name="image"
                                     class="dropify_image"
                                     data-allowed-file-extensions="png jpg gif"
-                                    data-default-file="{{ asset($exploreC->img) }}"/>
-                                @if($errors->has('img'))
-                                    <div class="help-block">  {{ $errors->first('img') }}</div>
+                                    data-default-file="{{ asset($exploreC->image) }}"/>
+                                @if($errors->has('image'))
+                                    <div class="help-block">  {{ $errors->first('image') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="img">Image (Mobile)</label>
+                                <input type="file"
+                                    id="img"
+                                    name="image_mobile"
+                                    class="dropify_image"
+                                    data-allowed-file-extensions="png jpg gif"
+                                    data-default-file="{{ asset($exploreC->image_mobile) }}"/>
+                                @if($errors->has('image_mobile'))
+                                    <div class="help-block">  {{ $errors->first('image_mobile') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('display_order') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('color') ? ' error' : '' }}">
+                                <label for="color">Color</label>
+                                <input type="color" name="color"  class="form-control" value="{{ $exploreC->color }}">
+                            </div>
+
+                            {{-- <div class="form-group col-md-6 {{ $errors->has('display_order') ? ' error' : '' }}">
                                 <label for="display_order">Display Order</label>
                                 <input type="number" min="0" name="display_order" id="display_order" class="form-control" placeholder="Enter explore c's order"
                                        value="{{ old("display_order") ? old("display_order") : $exploreC->display_order }}">
@@ -158,7 +175,7 @@
                                 @if ($errors->has('display_order'))
                                 <div class="help-block">{{ $errors->first('display_order') }}</div>
                                 @endif
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-6">
                                 <label></label>

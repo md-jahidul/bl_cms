@@ -23,10 +23,26 @@ class ExploreCRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title_en' => 'required',
-            'img'    => 'mimes:jpeg,jpg,png'
-        ];
+        if ($this->method() == "PUT") {
+            $id = $this->route()->parameters();
+            
+            return [
+                'title_en' => 'required',
+                'title_bn' => 'required',
+                'slug_en' => 'required|unique:explore_c_s,slug_en,' . $id['explore_c'],
+                'slug_bn' => 'required|unique:explore_c_s,slug_bn,' . $id['explore_c'],
+                'image'    => 'mimes:jpeg,jpg,png'
+            ];
+        } else {
+            return [
+                'title_en' => 'required',
+                'title_bn' => 'required',
+                'slug_en' => 'required|unique:explore_c_s,slug_en',
+                'slug_bn' => 'required|unique:explore_c_s,slug_bn',
+                'image'    => 'mimes:jpeg,jpg,png'
+            ];
+        }
+        
     }
 
     public function messages()
