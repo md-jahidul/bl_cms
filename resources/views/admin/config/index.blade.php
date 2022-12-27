@@ -154,6 +154,19 @@
                                             </div>
                                         </div>
 
+                                    @elseif($config->key == "purchased_pack_expire_volume")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">purchased_pack_expire_volume</label>
+                                            <div class="col-md-9">
+                                                <input type="number" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required
+                                                       data-validation-required-message="Enter {{$title}}"
+                                                       placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small class="text-danger">Note: Please enter a value in percentage (%) ex: 10</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @else
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
@@ -166,24 +179,20 @@
                                             </div>
                                         </div>
                                     @endif
-
                                 @endforeach
-
-
-
                             </div>
                             <hr>
-                                <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="eventRegInput5"></label>
-                                    <div class="col-md-9 pt-0 pb-0">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save Changes
-                                        </button>
-                                        <a href="{{ url('/home') }}" class="btn btn-warning">
-                                            <i class="la la-arrow-circle-left"></i> Cancel
-                                        </a>
-                                    </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="eventRegInput5"></label>
+                                <div class="col-md-9 pt-0 pb-0">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> Save Changes
+                                    </button>
+                                    <a href="{{ url('/home') }}" class="btn btn-warning">
+                                        <i class="la la-arrow-circle-left"></i> Cancel
+                                    </a>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
