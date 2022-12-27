@@ -474,6 +474,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')
         ->name('popular.search.update');
 
+    Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
+
 
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange');
