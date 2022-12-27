@@ -11,6 +11,7 @@ class Menu extends Model
 
     protected $fillable = [
         'parent_id', 'en_label_text', 'bn_label_text',
+        'description_en', 'description_bn', 'icon',
         'external_site', 'code', 'url', 'url_bn',
         'status', 'display_order'
     ];
