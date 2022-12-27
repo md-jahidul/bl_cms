@@ -179,7 +179,7 @@ class ComponentService
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
-                            if ($data['page_type'] != ExploreCDetailsController::PAGE_TYPE) {
+                            if ($component['page_type'] != ExploreCDetailsController::PAGE_TYPE) {
 
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
