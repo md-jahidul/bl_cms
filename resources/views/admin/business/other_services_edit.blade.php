@@ -248,6 +248,25 @@
 
                             </div>
 
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" name="details_card_web" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="hidden" name="old_details_card_web" value="{{$service->details_card_web}}">
+                                @if($service->details_card_web != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $service->details_card_web }}" width="100%">
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" name="details_card_mob" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="hidden" name="old_details_card_mob" value="{{$service->details_card_mob}}">       
+                                @if($service->details_card_mob != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $service->details_card_mob }}" width="100%">
+                                @endif
+                            </div>
+
 
 
                         </div>
