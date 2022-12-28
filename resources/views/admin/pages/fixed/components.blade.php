@@ -21,8 +21,8 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th>Component Type</th>
-                            <th>Title</th>
-{{--                            <th>Component Status</th>--}}
+                            <th>Title En</th>
+                            <th>Title Bn</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -40,12 +40,13 @@
 {{--                                        @endif--}}
 {{--                                    </td>--}}
                                     <td>{{$shortCode->title_en}}</td>
+                                    <td>{{$shortCode->title_bn}}</td>
                                     <td class="action">
                                         <div>
                                             @if($shortCode->slider)
-                                                <a href="{{route('slider_images',[ $shortCode->slider->component_id,strtolower($shortCode->slider->short_code) ?? '' ])}}" role="button" class="btn btn-outline-success border-1">Component</a>
+                                                <a href="{{route('slider_images',[ $shortCode->slider->component_id,strtolower($shortCode->slider->short_code) ?? '' ])}}" role="button" class="btn btn-outline-success border-1">Child Item</a>
                                             @elseif ($shortCode->component_url)
-                                            <a href="{{url('/'.$shortCode->component_url)}}" role="button" class="btn btn-outline-success border-1">Component</a>
+                                            <a href="{{url('/'.$shortCode->component_url)}}" role="button" class="btn btn-outline-success border-1">Child Item</a>
                                             @else
 
                                             @endif

@@ -51,7 +51,7 @@
 
                             @include('layouts.partials.slider_types.app_links')
 
-                            @include('layouts.partials.common_types.label_with_url',['count'=> 'more'])
+                            @include('layouts.partials.common_types.label_with_url',['count'=> 'more','type'=>'view more'])
 
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
