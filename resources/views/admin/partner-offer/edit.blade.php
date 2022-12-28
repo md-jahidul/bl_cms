@@ -52,6 +52,37 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('partner_category_id') ? ' error' : '' }}">
+                                <label for="offer_unit" class="required">Categories</label>
+                                <select class="form-control required" name="partner_category_id"
+                                        required data-validation-required-message="Please select area">
+                                    <option value="">---Select Categories---</option>
+                                    @foreach($categories as $val)
+                                        <option {{$partnerOffer->partner_category_id == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->name_en}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="help-block"></div>
+                                @if ($errors->has('partner_category_id'))
+                                    <div class="help-block">{{ $errors->first('partner_category_id') }}</div>
+                                @endif
+                            </div>
+
+
+                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('loyalty_tier_id') ? ' error' : '' }}">
+                                <label for="offer_unit" class="required">Tier</label>
+                                <select class="form-control required" name="loyalty_tier_id"
+                                        required data-validation-required-message="Please select area">
+                                    <option value="">---Select Tier---</option>
+                                    @foreach($tiers as $val)
+                                        <option {{$partnerOffer->loyalty_tier_id == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->title_en}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="help-block"></div>
+                                @if ($errors->has('loyalty_tier_id'))
+                                    <div class="help-block">{{ $errors->first('loyalty_tier_id') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                 <label for="validity_en" class="required">Offer Validity (English)</label>
                                 <input type="text" name="validity_en" class="form-control"
