@@ -14,6 +14,8 @@ class AddTitleColumnProductDetailsTable extends Migration
     public function up()
     {
         Schema::table('product_details', function (Blueprint $table) {
+            $table->string('banner_name_bn')->nullable()->after('banner_name');
+            $table->string('banner_alt_text_bn')->nullable()->after('banner_alt_text');
             $table->string('banner_title_en')->nullable()->after('banner_name');
             $table->string('banner_title_bn')->nullable()->after('banner_name');
         });
@@ -27,6 +29,8 @@ class AddTitleColumnProductDetailsTable extends Migration
     public function down()
     {
         Schema::table('product_details', function (Blueprint $table) {
+            $table->dropColumn('banner_name_bn');
+            $table->dropColumn('banner_alt_text_bn');
             $table->dropColumn('banner_title_en');
             $table->dropColumn('banner_title_bn');
         });
