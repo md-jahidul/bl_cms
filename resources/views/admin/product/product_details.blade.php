@@ -133,7 +133,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
                                 <label>Banner Photo Name BN</label>
                                 <input type="text" class="form-control" name="banner_name_bn" value="{{optional($productDetail->product_details)->banner_name_bn}}" placeholder="Photo Name BN">
                                 <small class="text-info">
@@ -141,6 +141,25 @@
                                 </small>
                                 @if ($errors->has('banner_name_bn'))
                                     <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                <label for="banner_title_en">Banner Title EN</label>
+                                <input type="text" name="banner_title_en"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_title_en}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_en'))
+                                <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-4 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                <label for="banner_title_bn">Banner Title BN</label>
+                                <input type="text" name="banner_title_bn"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_title_bn}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_bn'))
+                                <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
                                 @endif
                             </div>
 
