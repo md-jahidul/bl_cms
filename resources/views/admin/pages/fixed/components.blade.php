@@ -43,7 +43,7 @@
                                     <td>{{$shortCode->title_bn}}</td>
                                     <td class="action">
                                         <div>
-                                            @if($shortCode->slider)
+                                            @if($shortCode->slider && $shortCode->component_type === 'slider_single')
                                                 <a href="{{route('slider_images',[ $shortCode->slider->component_id,strtolower($shortCode->slider->short_code) ?? '' ])}}" role="button" class="btn btn-outline-success border-1">Child Item</a>
                                             @elseif ($shortCode->component_url)
                                             <a href="{{url('/'.$shortCode->component_url)}}" role="button" class="btn btn-outline-success border-1">Child Item</a>
