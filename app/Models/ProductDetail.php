@@ -23,6 +23,8 @@ class ProductDetail extends Model
             'banner_image_mobile',
             'banner_name',
             'banner_alt_text',
+            'banner_desc_en',
+            'banner_desc_bn',
             'url_slug',
             'schema_markup',
             'page_header',
