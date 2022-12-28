@@ -31,7 +31,6 @@
     <div class="help-block">  {{ $errors->first('link_url_en_'.$count) }}</div>
     @endif
 </div>
-
 <div class="form-group col-md-6 {{ $errors->has('link_url_bn_'.$count) ? ' error' : '' }}">
     <label for="link_url_bn_".$count>Label {{$type}} url (bangla)</label>
     <input type="text" name="other_attributes[link_url_bn_{{$count}}]" rows="5" id="details"

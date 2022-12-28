@@ -1279,4 +1279,24 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
+
+    Route::get('component-multiple-data/{imgName}', "AssetLite\ComponentMultiDataController@findSingleData");
+
+    // Ad Tech banner Store
+    Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // Business Types
+    Route::resource('business-types', 'AssetLite\BusinessTypesController')->except(['show', 'destroy']);
+    Route::get('business-types-sort', 'AssetLite\BusinessTypesController@typeSort');
+    Route::get('business-types/destroy/{id}', 'AssetLite\BusinessTypesController@destroy');
+
+    // Business Types Items
+    Route::get('business-types-items-sort', 'AssetLite\BusinessTypesDatasController@typeSort');
+    Route::get('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@index');
+    Route::get('business-types-items/{id}/create', 'AssetLite\BusinessTypesDatasController@create');
+    Route::post('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@store')->name('business-types-datas.store');
+    Route::get('business-types-items/{business_type_id}/{id}/edit', 'AssetLite\BusinessTypesDatasController@edit')->name('business-types-datas.edit');
+    Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
+    Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
+
 });
