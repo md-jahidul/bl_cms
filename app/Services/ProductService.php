@@ -98,6 +98,13 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+
+        #Image store
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+        }
+        
         $product = $this->save($data);
         //save Search Data
         $this->_saveSearchData($product);
@@ -128,6 +135,9 @@ class ProductService
     {
         $productId = $product->id;
         $name = $product->name_en;
+        
+        #Product Code
+        $productCode = $product->product_code;
 
         $url = "";
         if ($product->sim_category_id == 1) {
@@ -171,7 +181,7 @@ class ProductService
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
 
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode);
     }
 
     public function tableSortable($data)
@@ -236,6 +246,13 @@ class ProductService
             $data['validity_postpaid'] = null;
         }
 
+        #Image Update
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+            $this->deleteFile($product->image);
+        }
+        
         $product->update($data);
 
         //save Search Data

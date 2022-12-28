@@ -474,6 +474,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')
         ->name('popular.search.update');
 
+    Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
+
 
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange');
@@ -1329,4 +1331,19 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // Business Types
+    Route::resource('business-types', 'AssetLite\BusinessTypesController')->except(['show', 'destroy']);
+    Route::get('business-types-sort', 'AssetLite\BusinessTypesController@typeSort');
+    Route::get('business-types/destroy/{id}', 'AssetLite\BusinessTypesController@destroy');
+
+    // Business Types Items
+    Route::get('business-types-items-sort', 'AssetLite\BusinessTypesDatasController@typeSort');
+    Route::get('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@index');
+    Route::get('business-types-items/{id}/create', 'AssetLite\BusinessTypesDatasController@create');
+    Route::post('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@store')->name('business-types-datas.store');
+    Route::get('business-types-items/{business_type_id}/{id}/edit', 'AssetLite\BusinessTypesDatasController@edit')->name('business-types-datas.edit');
+    Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
+    Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
+
 });

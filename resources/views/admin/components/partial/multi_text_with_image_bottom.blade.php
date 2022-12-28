@@ -44,7 +44,7 @@
 <div class="form-group col-md-5 {{ $errors->has('image') ? ' error' : '' }}">
     <label for="alt_text" class="">Image (optional)</label>
     <div class="custom-file">
-        <input type="file" name="image" class="dropify" id="image">
+        <input type="file" name="image" class="dropify" id="" data-default-file="{{ isset($component->image) ? config('filesystems.file_base_url') . $component->image : '' }}">
         {{-- <label class="custom-file-label" for="inputGroupFile01">Choose file</label> --}}
     </div>
     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>

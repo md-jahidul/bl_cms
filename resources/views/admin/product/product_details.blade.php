@@ -121,7 +121,7 @@
                                 @include('layouts.partials.product-details.other-details.4g_offer')
                             @endif
 
-                            <div class="form-group col-md-4 ml-2 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                 <label>Banner Photo Name EN</label>
                                 <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
                                 <input type="text" class="form-control" name="banner_name" value="{{optional($productDetail->product_details)->banner_name}}" placeholder="Photo Name EN">
@@ -133,7 +133,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
                                 <label>Banner Photo Name BN</label>
                                 <input type="text" class="form-control" name="banner_name_bn" value="{{optional($productDetail->product_details)->banner_name_bn}}" placeholder="Photo Name BN">
                                 <small class="text-info">
@@ -141,6 +141,25 @@
                                 </small>
                                 @if ($errors->has('banner_name_bn'))
                                     <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                <label for="banner_title_en">Banner Title EN</label>
+                                <input type="text" name="banner_title_en"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_title_en}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_en'))
+                                <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-4 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                <label for="banner_title_bn">Banner Title BN</label>
+                                <input type="text" name="banner_title_bn"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_title_bn}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_bn'))
+                                <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
                                 @endif
                             </div>
 
@@ -194,9 +213,28 @@
                                 <span class="text-primary">Please given file type (.png, .jpg)</span>
 
                                 @if( !empty($productDetail->product_details->banner_image_url) )
-                                    <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_mobile }}" style="width:100%;margin-top:10px;">
+                                <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_mobile }}" style="width:100%;margin-top:10px;">
                                 @endif
 
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                <label for="banner_desc_en">Banner Description (English)</label>
+                                <textarea type="text" name="banner_desc_en"  class="form-control summernote_editor" placeholder="Enter short details in English" rows="5"
+                                >{{ $productDetail->product_details->banner_desc_en }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_desc_en'))
+                                    <div class="help-block">{{ $errors->first('banner_desc_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                <label for="banner_desc_bn">Banner Description (Bangla)</label>
+                                <textarea type="text" name="banner_desc_bn"  class="form-control summernote_editor" placeholder="Enter short details in English" rows="5">{{ $productDetail->product_details->banner_desc_bn }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_desc_bn'))
+                                    <div class="help-block">{{ $errors->first('banner_desc_bn') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-actions col-md-12">
