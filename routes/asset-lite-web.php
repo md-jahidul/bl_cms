@@ -1275,4 +1275,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
+
+    // Blogs
+    Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
+    Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
+
+    // Blog Landing Page
+    Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
+    Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
+    Route::get('blog/media-item-find/{type}', 'AssetLite\BlogLandingPageController@itemsFind');
+    Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
 });

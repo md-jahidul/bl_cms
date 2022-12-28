@@ -42,7 +42,7 @@ class MediaPressNewsEventService
      * @param $data
      * @return Response
      */
-    public function storePNE($data)
+    public function storePNE($data, $referenceType = null)
     {
         // $originalDate = "2010-03-21";
         // $newDate = date("d-m-Y", strtotime($originalDate));
@@ -58,8 +58,9 @@ class MediaPressNewsEventService
         }
         unset($data['file']);
         $data['created_by'] = Auth::id();
+        $data['reference_type'] = $referenceType;
         $this->save($data);
-        return new Response("Banner has been successfully created");
+        return new Response("Item has been successfully created");
     }
 
     /**
@@ -83,7 +84,12 @@ class MediaPressNewsEventService
         unset($data['files']);
         $data['updated_by'] = Auth::id();
         $mediaPNE->update($data);
-        return Response('Faq has been successfully updated');
+        return Response('Update successfully!');
+    }
+
+    public function findByReferenceType($referenceType)
+    {
+        return $this->mediaPNERepository->findByProperties(['reference_type' => $referenceType]);
     }
 
     /**
