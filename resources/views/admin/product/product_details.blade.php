@@ -121,7 +121,7 @@
                                 @include('layouts.partials.product-details.other-details.4g_offer')
                             @endif
 
-                            <div class="form-group col-md-4 ml-2 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                 <label>Banner Photo Name EN</label>
                                 <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
                                 <input type="text" class="form-control" name="banner_name" value="{{optional($productDetail->product_details)->banner_name}}" placeholder="Photo Name EN">
@@ -161,16 +161,6 @@
                                 <div class="help-block"></div>
                                 @if ($errors->has('banner_alt_text_bn'))
                                     <div class="help-block">  {{ $errors->first('banner_alt_text_bn') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                <label for="banner_alt_text">Alt Text</label>
-                                <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ optional($productDetail->product_details)->banner_alt_text}}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_alt_text'))
-                                <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
                                 @endif
                             </div>
 
@@ -226,17 +216,6 @@
                                 @if ($errors->has('banner_desc_bn'))
                                     <div class="help-block">{{ $errors->first('banner_desc_bn') }}</div>
                                 @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name</label>
-                                <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
-                                <input type="text" class="form-control" name="banner_name" value="{{optional($productDetail->product_details)->banner_name}}" placeholder="Photo Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-
                             </div>
 
                             <div class="form-actions col-md-12">
