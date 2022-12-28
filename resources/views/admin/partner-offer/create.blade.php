@@ -248,6 +248,16 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('card_img') ? ' error' : '' }}">
+                                <label for="card_img">Card Image</label>
+                                <input type="file" id="card_img" name="card_img" class="dropify_image"
+                                       data-allowed-file-extensions="png jpg gif"/>
+                                <div class="help-block"></div>
+                                @if ($errors->has('card_img'))
+                                    <div class="help-block">  {{ $errors->first('card_img') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{ isset($product->page_header) ? $product->page_header : null }}</textarea>
@@ -298,14 +308,14 @@
                                 @endif
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="show_in_home" class="display-block">For:</label>
-                                    <input type="checkbox" name="silver" value="1"> Silver <br>
-                                    <input type="checkbox" name="gold" value="1"> Gold <br>
-                                    <input type="checkbox" name="platium" value="1"> Platinum
-                                </div>
-                            </div>
+{{--                            <div class="col-md-4">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="show_in_home" class="display-block">For:</label>--}}
+{{--                                    <input type="checkbox" name="silver" value="1"> Silver <br>--}}
+{{--                                    <input type="checkbox" name="gold" value="1"> Gold <br>--}}
+{{--                                    <input type="checkbox" name="platium" value="1"> Platinum--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="col-md-4 pr-0 pt-1">
                                 <div class="form-group">
@@ -399,6 +409,19 @@
                 $('#free_text_value_bn').addClass('hidden')
             }
         })
+
+        $('.dropify_image').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct Image file'
+            },
+            error: {
+                'imageFormat': 'The image must be valid format'
+            },
+            height: 100
+        });
     })
 </script>
 

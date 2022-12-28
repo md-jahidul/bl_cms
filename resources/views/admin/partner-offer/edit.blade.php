@@ -277,6 +277,16 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('card_img') ? ' error' : '' }}">
+                                <label for="card_img">Card Image</label>
+                                <input type="file" id="card_img" name="card_img" class="dropify_image"
+                                       data-default-file="{{ isset($partnerOffer->card_img) ?  config('filesystems.file_base_url') . $partnerOffer->card_img : null }}"/>
+                                <div class="help-block"></div>
+                                @if ($errors->has('card_img'))
+                                    <div class="help-block">  {{ $errors->first('card_img') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{ isset($partnerOffer->page_header) ? $partnerOffer->page_header : null }}</textarea>
@@ -441,6 +451,19 @@
                 $('#free_text_value_bn').addClass('hidden')
             }
         })
+
+        $('.dropify_image').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct Image file'
+            },
+            error: {
+                'imageFormat': 'The image must be valid format'
+            },
+            height: 100
+        });
     });
 </script>
 @endpush
