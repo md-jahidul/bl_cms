@@ -98,6 +98,13 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+
+        #Image store
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+        }
+        
         $product = $this->save($data);
         //save Search Data
         $this->_saveSearchData($product);
@@ -239,6 +246,13 @@ class ProductService
             $data['validity_postpaid'] = null;
         }
 
+        #Image Update
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+            $this->deleteFile($product->image);
+        }
+        
         $product->update($data);
 
         //save Search Data

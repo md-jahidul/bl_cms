@@ -25,6 +25,8 @@ class ProductDetail extends Model
             'banner_name_bn',
             'banner_alt_text',
             'banner_alt_text_bn',
+            'banner_desc_en',
+            'banner_desc_bn',
             'url_slug',
             'schema_markup',
             'page_header',
