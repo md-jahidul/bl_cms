@@ -1283,6 +1283,5 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Blog Landing Page
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
     Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
-    Route::get('blog/media-item-find/{type}', 'AssetLite\BlogLandingPageController@itemsFind');
     Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
 });

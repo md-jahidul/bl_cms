@@ -16,11 +16,11 @@
 @section('title_en', 'Landing Page Component')
 @section('card_name', 'Landing Page Component')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('landing-page-component') }}">Component List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url('blog/landing-page-component') }}">Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('landing-page-component') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('blog/landing-page-component') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
