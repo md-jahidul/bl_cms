@@ -160,8 +160,9 @@ class AboutUsController extends Controller
      */
     public function edit($id)
     {
-        $aboutUs = $this->aboutUsService->findOne($id);
-        return view('admin.about-us.create')->with('about', $aboutUs);
+        $about = $this->aboutUsService->findOne($id);
+        $other_attributes = $about->other_attributes;
+        return view('admin.about-us.create',compact('about','other_attributes'));
     }
 
     /**
