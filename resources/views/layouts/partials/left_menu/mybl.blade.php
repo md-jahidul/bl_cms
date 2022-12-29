@@ -791,8 +791,6 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Migrate Plan List</a>
                 </li>
-
-
             </ul>
         </li>
     @endif

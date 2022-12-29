@@ -16,6 +16,9 @@ class AboutUsBanglalink extends Model
      */
     protected $table = 'about_us_banglalink';
 
+    protected $casts = [
+        'other_attributes' => 'array'
+    ];
 
     protected $guarded = ['id'];
 
