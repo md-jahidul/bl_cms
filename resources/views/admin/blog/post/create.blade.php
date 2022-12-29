@@ -103,52 +103,13 @@
                                     @endif
                                 </div>
 
-{{--                                <slot id="press_release" data-offer-type="press_release" style="display: none">--}}
-{{--                                    <h5><strong>Pop Up Section</strong></h5>--}}
-{{--                                    <div class="form-actions col-md-12 mt-0"></div>--}}
-
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('details_image') ? ' error' : '' }}">--}}
-{{--                                        <label for="details_image" class="required">Pop Up Banner Image</label>--}}
-{{--                                        <input type="file" name="details_image" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"--}}
-{{--                                               value="{{ old("details_image") ? old("details_image") : '' }}"--}}
-{{--                                               required data-validation-required-message="Enter details_image">--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('details_image'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('details_image') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('details_alt_text_en') ? ' error' : '' }}">--}}
-{{--                                        <label for="details_alt_text_en" class="">Alt Text</label>--}}
-{{--                                        <input type="text" id="details_alt_text_en" name="details_alt_text_en" class="form-control" placeholder="Enter alt text"--}}
-{{--                                               value="{{ old("details_alt_text_en") ? old("details_alt_text_en") : '' }}"--}}
-{{--                                               required data-validation-required-message="Enter alt text">--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('details_alt_text_en'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('details_alt_text_en') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">--}}
-{{--                                        <label for="long_details_bn" class="required">Long Description En</label>--}}
-{{--                                        <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required--}}
-{{--                                                  data-validation-required-message="Enter long description in English">{{ old("long_details_bn") ? old("long_details_bn") : '' }}</textarea>--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('long_details_bn'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">--}}
-{{--                                        <label for="long_details_bn" class="required">Long Description BN</label>--}}
-{{--                                        <textarea type="text" name="long_details_bn"  class="form-control summernote_editor" placeholder="Enter long description in Bangla" required--}}
-{{--                                                  data-validation-required-message="Enter long description in Bangla">{{ old("long_details_bn") ? old("long_details_bn") : '' }}</textarea>--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('long_details_bn'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                </slot>--}}
+                                <div class="col-md-6">
+                                    <div class="form-group" id="show_in_home">
+                                        <label for="trending"></label><br>
+                                        <input type="checkbox" name="show_in_home" value="1" id="trending">
+                                        <label for="trending" class="ml-1">Show In Home</label>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6">
                                     <label></label>

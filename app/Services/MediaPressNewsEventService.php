@@ -82,6 +82,7 @@ class MediaPressNewsEventService
         }
 
         unset($data['files']);
+        $data['show_in_home'] = (isset($data['show_in_home'])) ? 1 : 0;
         $data['updated_by'] = Auth::id();
         $mediaPNE->update($data);
         return Response('Update successfully!');
