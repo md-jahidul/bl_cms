@@ -31,7 +31,8 @@ class StoreSliderImageRequest extends FormRequest
 
         return [
             'title_en' => 'required',
-            'image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size,
+            //'image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size,
+            'image_url' => 'mimes:png,jpg,svg|max:' . $image_upload_size,
             'image_name' => 'required|unique:al_slider_images,image_name,' . $request->id,
             'image_name_bn' => 'required|unique:al_slider_images,image_name_bn,' . $request->id,
             'alt_text' => 'required',
