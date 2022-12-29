@@ -1299,4 +1299,13 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
     Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
 
+
+    // Blogs
+    Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
+    Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
+
+    // Blog Landing Page
+    Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
+    Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
+    Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
 });

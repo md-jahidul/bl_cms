@@ -317,6 +317,7 @@
 
 
 
+
         <!-- Campaign V2 Menu -->
 
             <li class="nav-item"><a href="#"><i class="la la-users"></i>
@@ -464,6 +465,17 @@
             </li>
         </ul>
     </li>
+
+    <!-- PGW -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">PGW</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('pgw-gateway')}}">
+                <a class="menu-item" href="{{ url('pgw-gateway') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> PGW List</a>
+            </li>
+        </ul>
+    </li>
+
     <!-- FIFA WC -->
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
             <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
@@ -779,8 +791,6 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Migrate Plan List</a>
                 </li>
-
-
             </ul>
         </li>
     @endif
