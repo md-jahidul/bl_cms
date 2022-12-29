@@ -79,7 +79,7 @@
                                         <input type="file" name="image_url" class="custom-file-input dropify" data-height="80"
                                                data-default-file="{{ config('filesystems.file_base_url') . $sliderImage->image_url }}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_url'))
@@ -93,7 +93,7 @@
                                         <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80"
                                                data-default-file="{{ config('filesystems.file_base_url') . $sliderImage->mobile_view_img}}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('mobile_view_img'))

@@ -79,9 +79,9 @@
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input dropify"
-                                               required data-validation-required-message="Slider image field is required" data-height="80">
+                                               required data-validation-required-message="Slider image field is required" data-height="80" data-allowed-file-extensions="jpg png svg">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_url'))
@@ -94,7 +94,7 @@
                                     <div class="custom-file">
                                         <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('mobile_view_img'))
