@@ -358,7 +358,7 @@
                                         <strong>Note: </strong> JSON-LD (Recommended by Google)
                                     </small>
                                 </div>
-
+                                @include('layouts.partials.common_types.label_with_url')
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" id="submitForm" style="width:100%"
