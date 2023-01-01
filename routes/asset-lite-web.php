@@ -1280,6 +1280,22 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
 
+    # Blogs Components
+    Route::get('blog-component/{blog_id}/list', 'AssetLite\BlogDetailsController@index')
+        ->name('blog-component.list');
+    Route::get('blog-component/create', 'AssetLite\BlogDetailsController@componentCreate')
+        ->name('blog-component.create');
+    Route::post('blog-component/store', 'AssetLite\BlogDetailsController@componentStore')
+        ->name('blog-component.store');
+    Route::get('blog-component/edit/{comId}', 'AssetLite\BlogDetailsController@componentEdit')
+        ->name('blog-component.edit');
+    Route::post('blog-component/update/{comId}', 'AssetLite\BlogDetailsController@componentUpdate')
+        ->name('blog-component.update');
+    Route::get('blog-component/destroy/{comId}', 'AssetLite\BlogDetailsController@componentDestroy')
+        ->name('blog-component.destroy');
+    Route::get('blog-component-sort', 'AssetLite\BlogDetailsController@componentSortable');
+
+
     // Blog Landing Page
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
     Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Repositories\AppServiceTabRepository;
 use App\Services\AppServiceCategoryService;
 use App\Services\AppServiceTabService;
-use App\Services\AppServiceVendorApiService;
+use App\Services\Assetlite\AppServiceVendorApiService;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
