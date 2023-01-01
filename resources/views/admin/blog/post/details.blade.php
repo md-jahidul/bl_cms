@@ -3,14 +3,12 @@
 @section('title', "Blog's Content")
 @section('card_name', "Blog's Content")
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('blog-post') }}"> Explore C List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('blog-post') }}"> Blog List</a></li>
     <li class="breadcrumb-item active">Blog's Details</li>
 @endsection
-@php
-    print_r(request()->all());
-@endphp
+
 @section('action')
-    <a href="{{ route('blog-component.create', ['section_id' => 1])}}" class="btn btn-primary btn-glow px-2"><i class="la la-list"></i> Add Component </a>
+    <a href="{{ route('blog-component.create', ['section_id' => request()->blog_id])}}" class="btn btn-primary btn-glow px-2"><i class="la la-list"></i> Add Component </a>
 @endsection
 @section('content')
 
@@ -20,7 +18,7 @@
             'edit' => 'blog-component/edit',
             'destroy' => 'blog-component/destroy',
             'componentSort' => 'blog-component-sort',
-            'section_id' => 1
+            'section_id' => request()->blog_id
         ];
 
     @endphp

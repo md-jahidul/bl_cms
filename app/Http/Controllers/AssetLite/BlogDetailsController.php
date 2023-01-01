@@ -40,6 +40,10 @@ class BlogDetailsController extends Controller
 
         $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
         $components = $this->componentService->findBy(['page_type' => self::REFERENCE_TYPE, 'section_details_id' => $blog_id], '', $orderBy);
+        // $blogPost = $this->mediaPNE->findOne($id);
+
+        // return request()->blog_id;
+
 
         return view('admin.blog.post.details', compact('components'));
     }
@@ -47,37 +51,38 @@ class BlogDetailsController extends Controller
     public function componentCreate()
     {
         $componentList = ComponentHelper::components();
-        $storeAction = 'explore-c-component.store';
-        $pageType = self::PAGE_TYPE;
-        return view('admin.components.create', compact('componentList', 'storeAction', 'pageType'));
+        $storeAction = 'blog-component.store';
+        $listAction = 'blog-component.list';
+        $pageType = self::REFERENCE_TYPE;
+        return view('admin.components.create', compact('componentList', 'storeAction', 'listAction', 'pageType'));
     }
 
     public function componentStore(Request $request)
     {
         // return $request->all();
-        $explore_c_id = $request->sections['id'];
-        $response = $this->componentService->componentStore($request->all(), $explore_c_id , self::PAGE_TYPE);
+        $blog_id = $request->sections['id'];
+        $response = $this->componentService->componentStore($request->all(), $blog_id , self::REFERENCE_TYPE);
         Session::flash('message', $response->getContent());
-        return redirect('explore-c-component/'.$explore_c_id.'/list');
+        return redirect('blog-component/'.$blog_id.'/list');
     }
 
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
         $componentList = ComponentHelper::components();
-        $updateAction = 'explore-c-component.update';
+        $updateAction = 'blog-component.update';
         return view('admin.components.create', compact('component', 'componentList', 'updateAction'));
     }
 
     public function componentUpdate(Request $request, $id)
     {
         // return $request->all();
-        $request['page_type'] = self::PAGE_TYPE;
-        $explore_c_id = $request->sections['id'];
+        $request['page_type'] = self::REFERENCE_TYPE;
+        $blog_id = $request->sections['id'];
 
         $response = $this->componentService->componentUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('explore-c-component/'.$explore_c_id.'/list');
+        return redirect('blog-component/'.$blog_id.'/list');
     }
 
 
@@ -89,7 +94,7 @@ class BlogDetailsController extends Controller
     public function componentDestroy($id)
     {
         $this->componentService->deleteComponent($id);
-        // return url('explore-c-component/'.$explore_c_id.'/list');
+        // return url('blog-component/'.$blog_id.'/list');
         return url()->previous();
     }
 
