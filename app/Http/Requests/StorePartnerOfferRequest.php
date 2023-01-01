@@ -28,7 +28,7 @@ class StorePartnerOfferRequest extends FormRequest
 //            'product_code' => 'required|unique:partner_offers,product_code,' . $this->user,
             'validity_en' => 'required',
             'validity_bn' => 'required',
-            'offer_scale' => 'required',
+//            'offer_scale' => 'required',
 //            'offer_value' => 'required',
 //            'offer_unit' => 'required',
             'get_offer_msg_en' => 'required',
