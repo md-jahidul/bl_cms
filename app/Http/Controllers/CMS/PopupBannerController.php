@@ -67,15 +67,14 @@ class PopupBannerController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
         $response =  $this->popupBannerService->createBanner($request);
 
         if ($response) {
             session()->flash('success', "Created successfully");
-            return redirect(route('popup-banner.index'));
+        }else{
+            session()->flash('message', "Failed! Please try again");
         }
-
-        session()->flash('message', "Failed! Please try again");
+        return redirect(route('popup-banner.index'));  
     }
 
     /**
@@ -115,10 +114,10 @@ class PopupBannerController extends Controller
         $response =  $this->popupBannerService->updateBanner($request, $id);
         if ($response) {
             session()->flash('success', "Updated successfully");
-            return redirect(route('popup-banner.index'));
+        }else{
+            session()->flash('message', "Failed! Please try again");
         }
-
-        session()->flash('message', "Failed! Please try again");
+        return redirect(route('popup-banner.index')); 
     }
 
     /**
@@ -134,11 +133,9 @@ class PopupBannerController extends Controller
 
         if ($response) {
             session()->flash('error', "Deleted successfully");
-            return redirect(route('popup-banner.index'));
+        }else{
+            session()->flash('message', "Failed! Please try again");
         }
-
-        session()->flash('message', "Failed! Please try again");
-
-        return $id;
+        return redirect(route('popup-banner.index'));
     }
 }
