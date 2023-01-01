@@ -19,6 +19,28 @@
                     <form role="form" action="{{ route('partner_offer_store', [$parentId, $partnerName]) }}" method="POST" novalidate enctype="multipart/form-data">
                         @csrf
                         <div class="row">
+                            <div id="free_text_value_en" class="form-group col-md-4 col-xs-12 {{ $errors->has('free_text_value') ? ' error' : '' }}">
+                                <label for="offer_unit" class="required">Offer Title EN</label>
+                                <input type="text" name="other_attributes[free_text_value_en]" class="form-control" placeholder="Enter offer title in English"
+                                       value="{{ old("free_text_value") ? old("free_text_value") : '' }}">
+                                <small>Ex: Upto 30% off</small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('free_text_value'))
+                                    <div class="help-block">{{ $errors->first('free_text_value') }}</div>
+                                @endif
+                            </div>
+
+                            <div id="free_text_value_bn" class="form-group col-md-4 col-xs-12 {{ $errors->has('free_text_value_bn') ? ' error' : '' }}">
+                                <label for="offer_unit" class="required">Offer Title BN</label>
+                                <input type="text" name="other_attributes[free_text_value_bn]" class="form-control" placeholder="Enter offer title in Bangla"
+                                       value="{{ old("free_text_value_bn") ? old("free_text_value_bn") : '' }}">
+                                <small>Ex: 30% পর্যন্ত ছাড়</small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('free_text_value_bn'))
+                                    <div class="help-block">{{ $errors->first('free_text_value_bn') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('product_code') ? ' error' : '' }}">
                                 <label for="product_code" class="">Product Code</label>
                                 <input type="text" name="product_code"  class="form-control" placeholder="Enter unique product code"
@@ -119,64 +141,44 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_scale') ? ' error' : '' }}">
-                                <label for="offer_scale" class="required">Offer Scale</label>
-                                <select class="form-control required" name="offer_scale" id="offer_scale"
-                                        required data-validation-required-message="Please select offer scale">
-                                    <option data-alias="" value="">---Select Offer Type---</option>
-                                    <option value="Upto">Upto</option>
-                                    <option value="Minimum">Minimum</option>
-                                    <option value="Fixed">Fixed</option>
-                                    <option value="free_text">Free Text</option>
-                                </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('offer_scale'))
-                                <div class="help-block">{{ $errors->first('offer_scale') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_scale') ? ' error' : '' }}">--}}
+{{--                                <label for="offer_scale" class="required">Offer Scale</label>--}}
+{{--                                <select class="form-control required" name="offer_scale" id="offer_scale"--}}
+{{--                                        required data-validation-required-message="Please select offer scale">--}}
+{{--                                    <option data-alias="" value="">---Select Offer Type---</option>--}}
+{{--                                    <option value="Upto">Upto</option>--}}
+{{--                                    <option value="Minimum">Minimum</option>--}}
+{{--                                    <option value="Fixed">Fixed</option>--}}
+{{--                                    <option value="free_text">Free Text</option>--}}
+{{--                                </select>--}}
+{{--                                <div class="help-block"></div>--}}
+{{--                                @if ($errors->has('offer_scale'))--}}
+{{--                                <div class="help-block">{{ $errors->first('offer_scale') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div id="offer_value" class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_value') ? ' error' : '' }}">
-                                <label for="offer_value" class="required">Offer Value</label>
-                                <input type="number" name="offer_value"  class="form-control" placeholder="Enter offer discount value"
-                                       value="{{ old("offer_value") ? old("offer_value") : '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('offer_value'))
-                                <div class="help-block">  {{ $errors->first('offer_value') }}</div>
-                                @endif
-                            </div>
+{{--                            <div id="offer_value" class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_value') ? ' error' : '' }}">--}}
+{{--                                <label for="offer_value" class="required">Offer Value</label>--}}
+{{--                                <input type="number" name="offer_value"  class="form-control" placeholder="Enter offer discount value"--}}
+{{--                                       value="{{ old("offer_value") ? old("offer_value") : '' }}">--}}
+{{--                                <div class="help-block"></div>--}}
+{{--                                @if ($errors->has('offer_value'))--}}
+{{--                                <div class="help-block">  {{ $errors->first('offer_value') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div id="offer_unit" class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_unit') ? ' error' : '' }}">
-                                <label for="offer_unit" class="required">Offer Unit</label>
-                                <select class="form-control required" name="offer_unit" id="offer_unit">
-                                    <option data-alias="" value="">---Select Offer Unit---</option>
-                                    <option value="Percentage">Percentage</option>
-                                    <option value="Taka">Taka</option>
-                                </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('offer_unit'))
-                                <div class="help-block">{{ $errors->first('offer_unit') }}</div>
-                                @endif
-                            </div>
-
-                            <div id="free_text_value_en" class="form-group col-md-4 col-xs-12 {{ $errors->has('free_text_value') ? ' error' : '' }} hidden">
-                                <label for="offer_unit" class="required">Free Text Value EN</label>
-                                <input type="text" name="other_attributes[free_text_value_en]" class="form-control" placeholder="Enter any number of text"
-                                       value="{{ old("free_text_value") ? old("free_text_value") : '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('free_text_value'))
-                                    <div class="help-block">{{ $errors->first('free_text_value') }}</div>
-                                @endif
-                            </div>
-
-                            <div id="free_text_value_bn" class="form-group col-md-4 col-xs-12 {{ $errors->has('free_text_value') ? ' error' : '' }} hidden">
-                                <label for="offer_unit" class="required">Free Text Value BN</label>
-                                <input type="text" name="other_attributes[free_text_value_bn]" class="form-control" placeholder="Enter any number of text"
-                                       value="{{ old("free_text_value") ? old("free_text_value") : '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('free_text_value'))
-                                    <div class="help-block">{{ $errors->first('free_text_value') }}</div>
-                                @endif
-                            </div>
+{{--                            <div id="offer_unit" class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_unit') ? ' error' : '' }}">--}}
+{{--                                <label for="offer_unit" class="required">Offer Unit</label>--}}
+{{--                                <select class="form-control required" name="offer_unit" id="offer_unit">--}}
+{{--                                    <option data-alias="" value="">---Select Offer Unit---</option>--}}
+{{--                                    <option value="Percentage">Percentage</option>--}}
+{{--                                    <option value="Taka">Taka</option>--}}
+{{--                                </select>--}}
+{{--                                <div class="help-block"></div>--}}
+{{--                                @if ($errors->has('offer_unit'))--}}
+{{--                                <div class="help-block">{{ $errors->first('offer_unit') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('get_offer_msg_en') ? ' error' : '' }}">
                                 <label for="get_offer_msg_en" class="required">Subscription SMS Info (English)</label>
@@ -338,27 +340,27 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2 pr-0">
-                                <div class="form-group">
-                                    <label for="is_campaign" class="mr-1">Is Campaign:</label>
-                                    <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
-                                </div>
-                            </div>
+{{--                            <div class="col-md-2 pr-0">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="is_campaign" class="mr-1">Is Campaign:</label>--}}
+{{--                                    <input type="checkbox" name="is_campaign" value="1" id="is_campaign">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="form-group col-md-4">
-                                <label for="campaign_img"></label>
-                                <div class="custom-file d-none">
-                                    <input type="file" name="campaign_img" class="custom-file-input" id="image">
-                                    <label class="custom-file-label" for="inputGroupFile01">Please Choose Campaign Image</label>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                </div>
-                                <div class="help-block">
-                                    <ul role="alert" class="d-none text-danger" id="imgRequired"><li>Please Choose Campaign Image</li></ul>
-                                </div>
-                                @if ($errors->has('campaign_img'))
-                                <div class="help-block">  {{ $errors->first('campaign_img') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="form-group col-md-4">--}}
+{{--                                <label for="campaign_img"></label>--}}
+{{--                                <div class="custom-file d-none">--}}
+{{--                                    <input type="file" name="campaign_img" class="custom-file-input" id="image">--}}
+{{--                                    <label class="custom-file-label" for="inputGroupFile01">Please Choose Campaign Image</label>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                </div>--}}
+{{--                                <div class="help-block">--}}
+{{--                                    <ul role="alert" class="d-none text-danger" id="imgRequired"><li>Please Choose Campaign Image</li></ul>--}}
+{{--                                </div>--}}
+{{--                                @if ($errors->has('campaign_img'))--}}
+{{--                                <div class="help-block">  {{ $errors->first('campaign_img') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
 
                             <div class="form-group col-md-1 mb-0 d-none" id="showImg">
@@ -395,20 +397,20 @@
 <script src="{{ asset('js/custom-js/offer.js') }}" type="text/javascript"></script>
 <script>
     $(function () {
-        $("#offer_scale").change(function () {
-            let offerScale = $(this).val();
-            if (offerScale === "free_text") {
-                $('#offer_unit').addClass('hidden')
-                $('#offer_value').addClass('hidden')
-                $('#free_text_value_en').removeClass('hidden')
-                $('#free_text_value_bn').removeClass('hidden')
-            } else {
-                $('#offer_unit').removeClass('hidden')
-                $('#offer_value').removeClass('hidden')
-                $('#free_text_value_en').addClass('hidden')
-                $('#free_text_value_bn').addClass('hidden')
-            }
-        })
+        // $("#offer_scale").change(function () {
+        //     let offerScale = $(this).val();
+        //     if (offerScale === "free_text") {
+        //         $('#offer_unit').addClass('hidden')
+        //         $('#offer_value').addClass('hidden')
+        //         $('#free_text_value_en').removeClass('hidden')
+        //         $('#free_text_value_bn').removeClass('hidden')
+        //     } else {
+        //         $('#offer_unit').removeClass('hidden')
+        //         $('#offer_value').removeClass('hidden')
+        //         $('#free_text_value_en').addClass('hidden')
+        //         $('#free_text_value_bn').addClass('hidden')
+        //     }
+        // })
 
         $('.dropify_image').dropify({
             messages: {
