@@ -40,3 +40,12 @@
     <div class="help-block">  {{ $errors->first('link_url_bn_'.$count) }}</div>
     @endif
 </div>
+
+<div class="col-md-12">
+    <label></label>
+    <div class="form-group mt-1">
+        <label for="is_external_link_".$count class="mr-1">Is External Link:</label>
+        <input type="checkbox" name="other_attributes[is_external_link_{{$count}}]" value="1" id="is_external_link" {{ (!empty($other_attributes['is_external_link_'.$count])) ? 'checked' : null }}>
+    </div>
+</div>
+<br/>
