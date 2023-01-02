@@ -64,16 +64,12 @@
 
                                 <div class="form-group col-md-6">
                                     <label>Short Description En</label>
-                                    <textarea name="short_desc_en" class="form-control" rows="4">
-                                        {{ old("short_desc_en") ? old("short_desc_en") : '' }}
-                                    </textarea>
+                                    <textarea name="short_desc_en" class="form-control" rows="4">{{ old("short_desc_en") ? old("short_desc_en") : '' }}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label>Short Description En</label>
-                                    <textarea name="short_desc_bn" class="form-control" rows="4">
-                                        {{ old("short_desc_bn") ? old("short_desc_bn") : '' }}
-                                    </textarea>
+                                    <textarea name="short_desc_bn" class="form-control" rows="4">{{ old("short_desc_bn") ? old("short_desc_bn") : '' }}</textarea>
                                 </div>
 
                                 <div class="form-group select-role col-md-6 {{ $errors->has('role_id') ? ' error' : '' }} slider-section">
