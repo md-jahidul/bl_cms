@@ -66,6 +66,13 @@
         <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
     @endif
 </div>
+<div class="col-md-4">
+    <label></label>
+    <div class="form-group mt-1">
+        <label for="is_icon" class="mr-1">Is Icon:</label>
+        <input type="checkbox" name="other_attributes[is_icon]" value="1" id="is_icon" {{ (!empty($other_attributes['is_icon'])) ? 'checked' : null }}>
+    </div>
+</div>
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
