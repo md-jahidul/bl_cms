@@ -119,7 +119,7 @@ class AppServiceProductDetailsService
      * @return Response
      */
     public function storeAppServiceProductDetails($data, $tab_type, $product_id)
-    {
+    { 
         # Save sections data
         $sections_data = $data['sections'];
 
@@ -132,7 +132,7 @@ class AppServiceProductDetailsService
         }
 
         $sections_saved_data = $this->save($sections_data);
-
+        
         if (isset($sections_saved_data->id) && !empty($sections_saved_data->id)) {
             # Save Component data
             $component_data = $data['component'];
@@ -202,6 +202,33 @@ class AppServiceProductDetailsService
                             }
                         }
                         $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
+                    }
+                    
+                    # Multi Tab With Image Component ====
+                    if(isset($value['multi_tab_item'])){
+                        $tabData = [];
+                        $request_multi = $value['multi_tab_item'];
+                        foreach($request_multi as $k => $tab){
+                            $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+                            $results = [];
+                            for ($i = 1; $i <= $item_count; $i++) {
+                                foreach ($tab as $m_key => $m_value) {
+                                    $sub_data = [];
+                                    $check_index = explode('-', $m_key);
+                                    if (isset($check_index[1]) && $check_index[1] == $i) {
+                                        if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                                            $m_value = $this->upload($data['component'][$key]['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+                                        }
+                                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+
+                                    }else{
+                                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+                                    }
+                                }
+                            } 
+                            $tabData[$k] = $results;
+                        }
+                        $value['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
                     }
 
                     # other attributes to save
@@ -505,11 +532,14 @@ class AppServiceProductDetailsService
         if (!empty($section_list_component->sectionComponent) && count($section_list_component->sectionComponent) > 0) {
             foreach ($section_list_component->sectionComponent as $key => $value) {
                 $results['component'][] = $value;
+                //dd(json_decode($value->multiple_attributes));
                 if (isset($value->multiple_attributes) && !empty($value->multiple_attributes)) {
                     $res = json_decode($value->multiple_attributes, true);
 
                     usort($res, function ($a, $b) {
-                        return strcmp($a["display_order"], $b["display_order"]);
+                        if(isset($a["display_order"]) && isset($b["display_order"])){
+                            return strcmp($a["display_order"], $b["display_order"]);
+                        }  
                     });
 
                     $results['component'][$key]['multiple_attributes'] = json_encode($res);

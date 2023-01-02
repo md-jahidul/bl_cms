@@ -41,7 +41,8 @@ class AppServiceProductDetailsController extends Controller
         'multiple_image_banner' => 'Multiple image banner',
         'pricing_sections' => 'Pricing Multiple table',
         'static_easy_payment_card' => 'Static Component - Easy payment card',
-        'image_with_content' => 'Image With Content'
+        'image_with_content' => 'Image With Content',
+        'multiple_tab_image' => 'Multiple Tab With Image'
     ];
 
     /**
