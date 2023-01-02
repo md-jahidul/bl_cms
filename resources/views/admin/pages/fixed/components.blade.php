@@ -28,6 +28,11 @@
                         </thead>
                         <tbody id="sortable">
                             @foreach($shortCodes as $index=>$shortCode)
+                            @php
+                                if($shortCode->id === 19){
+                                    continue;
+                                }
+                            @endphp
 
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%"><i class="icon-cursor-move icons"></i></td>
