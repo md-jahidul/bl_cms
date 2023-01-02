@@ -48,4 +48,3 @@
         <input type="checkbox" name="other_attributes[is_external_link_{{$count}}]" value="1" id="is_external_link" {{ (!empty($other_attributes['is_external_link_'.$count])) ? 'checked' : null }}>
     </div>
 </div>
-<br/>

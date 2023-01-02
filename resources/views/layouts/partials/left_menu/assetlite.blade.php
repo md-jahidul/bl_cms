@@ -73,6 +73,10 @@
                                     class="la la-futbol-o"></i>
                                 <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
                         </li>
+                        <li class="{{ is_active_url('/sub-footer') }} nav-item"><a href="{{ url('sub-footer') }}"><i
+                                    class="la la-futbol-o"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Sub Footer</span></a>
+                        </li>
                     @endif
 
                     @if( auth()->user()->can_view('QuickLaunch') )
