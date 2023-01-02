@@ -81,6 +81,10 @@
                                     <slot id="image_with_content" data-offer-type="image_with_content" class="{{ ($section['sections']->section_type ==  "image_with_content"  ) ? '' : "d-none" }}">
                                         @include('admin.app-service.details.section.component_modal.multi_banner.image_with_content')
                                     </slot>
+                                    {{--multiple_tab_image--}}
+                                    <slot id="multiple_tab_image" data-offer-type="multiple_tab_image" class="{{ ($section['sections']->section_type ==  "multiple_tab_image"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_tab_image')
+                                    </slot>
 
 
                                     <div class="col-md-12 mt-2">
