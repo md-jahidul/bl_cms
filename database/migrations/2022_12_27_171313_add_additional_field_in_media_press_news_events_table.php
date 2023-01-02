@@ -17,6 +17,7 @@ class AddAdditionalFieldInMediaPressNewsEventsTable extends Migration
             $table->string('reference_type')->nullable()->after('id');
             $table->integer('reference_id')->nullable()->after('reference_type');
             $table->tinyInteger('show_in_home')->default(0)->after('status');
+            $table->integer('read_time')->default(0)->after('date');
         });
     }
 
@@ -31,6 +32,7 @@ class AddAdditionalFieldInMediaPressNewsEventsTable extends Migration
             $table->dropColumn('reference_type');
             $table->dropColumn('reference_id');
             $table->dropColumn('show_in_home');
+            $table->dropColumn('read_time');
         });
     }
 }
