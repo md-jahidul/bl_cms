@@ -150,6 +150,15 @@
 {{--                                    </div>--}}
 {{--                                </slot>--}}
 
+                                <div class="col-md-6">
+                                    <div class="form-group" id="show_in_home">
+                                        <label for="trending"></label><br>
+                                        <input type="checkbox" name="show_in_home" id="showInHome"
+                                               value="1" {{ $blogPost->show_in_home == 1 ? 'checked' : '' }}>
+                                        <label for="showInHome" class="ml-1">Show In Home</label>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6 mt-1">
                                     <label></label>
                                     <div class="form-group">
