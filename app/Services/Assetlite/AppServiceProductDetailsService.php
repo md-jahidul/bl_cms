@@ -283,7 +283,7 @@ class AppServiceProductDetailsService
      * @return void [type]              [description]
      */
     public function updateAppServiceDetailsComponent($data, $compoent_id, $request, $key = null)
-    {
+    { 
         $component = $this->componentRepository->findOne($compoent_id);
         if (isset($data['image_url']) && !empty($data['image_url'])) {
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product-details');
@@ -371,6 +371,36 @@ class AppServiceProductDetailsService
             $data['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
         }
 
+        # Multi Tab With Image Component ====
+        if(isset($data['multi_tab_item'])){
+            $tabData = [];
+            $request_multi = $data['multi_tab_item'];
+            foreach($request_multi as $k => $tab){
+                $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+                $results = [];
+                for ($i = 1; $i <= $item_count; $i++) {
+                    foreach ($tab as $m_key => $m_value) {
+                        $sub_data = [];
+                        $check_index = explode('-', $m_key);
+                        if (isset($check_index[1]) && $check_index[1] == $i) {
+                            if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                                $m_value = $this->upload($data['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+                            }
+                            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+
+                            if(!isset($tab['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
+                                $results[$i]['image_url'] = $data['multi_tab_item'][$k]['prev_image_url-'.$i];
+                            }
+
+                        }else{
+                            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+                        }
+                    }
+                } 
+                $tabData[$k] = $results;
+            }
+            $data['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
+        }
         # get video url
         if (isset($data['video_url']) && is_object($data['video_url'])) {
             $data['video'] = $this->upload($data['video_url'], 'assetlite/images/app-service/product/details');
