@@ -103,6 +103,46 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-3 {{ $errors->has('details_btn_en') ? ' error' : '' }}">
+                                    <label for="details_btn_en" class="required">Details Button En</label>
+                                    <input type="text" name="details_btn_en"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ old("details_btn_en") ? old("details_btn_en") : '' }}" required data-validation-required-message="Enter title in English">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_btn_en'))
+                                        <div class="help-block">  {{ $errors->first('details_btn_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('details_btn_bn') ? ' error' : '' }}">
+                                    <label for="details_btn_bn" class="required">Details Button Bn</label>
+                                    <input type="text" name="details_btn_bn"  class="form-control" placeholder="Enter title in Bangla"
+                                           value="{{ old("details_btn_bn") ? old("details_btn_bn") : '' }}" required data-validation-required-message="Enter title in Bangla">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_btn_bn'))
+                                        <div class="help-block">  {{ $errors->first('details_btn_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('tag_en') ? ' error' : '' }}">
+                                    <label for="tag_en" class="required">Tag En</label>
+                                    <input type="text" name="tag_en"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ old("tag_en") ? old("tag_en") : '' }}" required data-validation-required-message="Enter title in English">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('tag_en'))
+                                        <div class="help-block">  {{ $errors->first('tag_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('tag_bn') ? ' error' : '' }}">
+                                    <label for="tag_bn" class="required">Tag Bn</label>
+                                    <input type="text" name="tag_bn"  class="form-control" placeholder="Enter title in Bangla"
+                                           value="{{ old("tag_bn") ? old("tag_bn") : '' }}" required data-validation-required-message="Enter title in Bangla">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('tag_bn'))
+                                        <div class="help-block">  {{ $errors->first('tag_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group" id="show_in_home">
                                         <label for="trending"></label><br>

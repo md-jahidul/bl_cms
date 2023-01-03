@@ -116,10 +116,10 @@ class ComponentService
 
 //        dd($data);
 //        if ($data['component_type'] == "title_with_text_and_right_image") {
-            request()->validate([
-                'image_name_en' => 'unique:components,image_name_en',
-                'image_name_bn' => 'unique:components,image_name_bn',
-            ]);
+//            request()->validate([
+//                'image_name_en' => 'unique:components,image_name_en',
+//                'image_name_bn' => 'unique:components,image_name_bn',
+//            ]);
 //        }
 
         if (request()->hasFile('image')) {
@@ -128,7 +128,7 @@ class ComponentService
 
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-                
+
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
         }
@@ -147,7 +147,7 @@ class ComponentService
 
                                 $value = $this->upload($value, 'assetlite/images/explore_c_details');
                             }else {
-                                
+
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
                         }
@@ -162,6 +162,11 @@ class ComponentService
         $data['component_order'] = count($countComponents) + 1;
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
+
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
+        }
         $component = $this->save($data);
 
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
@@ -184,6 +189,7 @@ class ComponentService
                 $this->comMultiDataRepository->save($imgData);
             }
         }
+        $this->save($data);
         return response('Component create successfully!');
     }
 
@@ -260,7 +266,7 @@ class ComponentService
                     }
                 }
             }
-    
+
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
@@ -268,6 +274,12 @@ class ComponentService
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
         }
+
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
+        }
+
         $component->update($data);
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
             $this->comMultiDataRepository->deleteAllById($id);
