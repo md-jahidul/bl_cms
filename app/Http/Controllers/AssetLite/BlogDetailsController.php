@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Helpers\ComponentHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\AdTechService;
 use App\Services\AlBannerService;
 use App\Services\Assetlite\ComponentService;
 use Illuminate\Http\Response;
@@ -16,11 +17,13 @@ class BlogDetailsController extends Controller
     protected const REFERENCE_TYPE = "blog";
 
     protected $componentService;
+    protected $adTechService;
     protected $exploreCDetailsService;
 
-    public function __construct(ComponentService $componentService)
+    public function __construct(ComponentService $componentService, AdTechService $adTechService)
     {
         $this->componentService = $componentService;
+        $this->adTechService = $adTechService;
     }
 
 
@@ -40,12 +43,12 @@ class BlogDetailsController extends Controller
 
         $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
         $components = $this->componentService->findBy(['page_type' => self::REFERENCE_TYPE, 'section_details_id' => $blog_id], '', $orderBy);
-        // $blogPost = $this->mediaPNE->findOne($id);
+        $adTech = $this->adTechService->getAdTechByRefType(self::REFERENCE_TYPE, $blog_id);
 
         // return request()->blog_id;
 
 
-        return view('admin.blog.post.details', compact('components'));
+        return view('admin.blog.post.details', compact('components', 'adTech'));
     }
 
     public function componentCreate()
@@ -71,7 +74,8 @@ class BlogDetailsController extends Controller
         $component = $this->componentService->findOne($id);
         $componentList = ComponentHelper::components();
         $updateAction = 'blog-component.update';
-        return view('admin.components.create', compact('component', 'componentList', 'updateAction'));
+        $listAction = 'blog-component.list';
+        return view('admin.components.create', compact('component', 'componentList', 'updateAction', 'listAction'));
     }
 
     public function componentUpdate(Request $request, $id)
@@ -96,6 +100,19 @@ class BlogDetailsController extends Controller
         $this->componentService->deleteComponent($id);
         // return url('blog-component/'.$blog_id.'/list');
         return url()->previous();
+    }
+
+    public function adTechStore(Request $request)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $blog_id = $request->reference_id;
+        
+        $response = $this->adTechService->storeAdTech($request->all(), self::REFERENCE_TYPE, $blog_id);
+        Session::flash('message', $response->getContent());
+        return redirect('blog-component/'.$blog_id.'/list');
     }
 
 

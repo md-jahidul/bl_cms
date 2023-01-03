@@ -148,6 +148,11 @@ class ComponentService
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
 
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
+        }
+
         $this->save($data);
         return response('Component create successfully!');
     }
@@ -220,6 +225,11 @@ class ComponentService
         if ($data['component_type'] == 'table_component') {
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
+        }
+
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
         }
 
         $component->update($data);

@@ -26,10 +26,16 @@ class ComponentHelper
             'text_with_image_right' => 'Text with image right',
             'text_with_image_bottom' => 'Text with image bottom',
             'multi_text_with_image_bottom' => 'Multi Text with image bottom',
-//            'slider_text_with_image_right' => 'Slider text with image right',
-//            'video_with_text_right' => 'Video with text right',
-//            'multiple_image_banner' => 'Multiple image banner',
-//            'pricing_sections' => 'Pricing Multiple table',
+
+            'top_image_with_desc' => 'Top image with Desc',
+            'left_image_with_title_desc_btn' => 'Left Image with Title, Desc, btn',
+            'masonry' => 'Masonry',
+            'multi_col_with_title_desc' => 'Multi Column With title and desc',
+            'multi_col_with_title_desc_image' => 'Multi Column With title, desc and Image',
+            // 'slider_text_with_image_right' => 'Slider text with image right',
+            // 'video_with_text_right' => 'Video with text right',
+            // 'multiple_image_banner' => 'Multiple image banner',
+            // 'pricing_sections' => 'Pricing Multiple table',
         ];
     }
 }

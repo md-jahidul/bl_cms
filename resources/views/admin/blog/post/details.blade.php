@@ -23,142 +23,116 @@
 
     @endphp
     @include('admin.components.index', $action)
-
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Fixed Section</strong></h4>
+                    <h4 class="menu-title"><strong>Ad Tech</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
-                        <form role="form"
-                              action="{{ isset($banner) ? route('al-banner.update', $banner->id) : route('al-banner.store') }}"
+                        <form role="form" action="{{ route('blog.adtech.store') }}"
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
-                            @if (isset($banner))
-                                
-                                {{method_field('PUT')}}
-                            @else
-                                
-                                {{method_field('POST')}}
-                            @endif
-                            {{ Form::hidden('section_id', $action['section_id'] ) }}
-                            {{ Form::hidden('section_type', 'explore_c' ) }}
+                            {{method_field('POST')}}
+
+                            {{-- {{ Form::hidden('reference_type', isset($adTech) ? $adTech->reference_id : '', ['class' => 'reference_type'] ) }} --}}
+                            {{ Form::hidden('reference_id', isset($adTech) ? $adTech->reference_id : request()->blog_id, ['class' => 'reference_id'] ) }}
+
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en">Title (English)</label>
-                                    <input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter explore name in English"
-                                        value="{{ old("title_en") ? old("title_en") : (isset($banner) ? $banner->title_en : '') }}">
+                                <div class="form-group col-md-12 {{ $errors->has('img_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Ad Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="img_url" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($adTech->img_url) ? config('filesystems.file_base_url') . $adTech->img_url : '' }}">
+                                    </div>
+                                    {{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title_en'))
-                                    <div class="help-block">{{ $errors->first('title_en') }}</div>
+                                    @if ($errors->has('img_url'))
+                                        <div class="help-block">  {{ $errors->first('img_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn">Title (Bangla)</label>
-                                    <input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter explore name in Bangla"
-                                        value="{{ old("title_bn") ? old("title_bn") : (isset($banner) ? $banner->title_bn : '') }}">
+                                <div class="form-group col-md-6 {{ $errors->has('img_name_en') ? ' error' : '' }}" >
+                                    <label for="img_name_en">Image Name (English)</label>
+                                    <input type="text" name="img_name_en" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->img_name_en : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title_bn'))
-                                    <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 ">
-                                    <label for="desc_en">Description (English)</label>
-                                    <textarea type="text" name="desc_en" id="" class="form-control summernote_editor" placeholder="Enter description in English"
-                                            >{{ (isset($banner) ? $banner->desc_en : null) }}</textarea>
+                                <div class="form-group col-md-6 {{ $errors->has('img_name_bn') ? ' error' : '' }}" >
+                                    <label for="img_name_bn">Image Name (Bangla)</label>
+                                    <input type="text" name="img_name_bn" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->img_name_bn : '' }}">
                                     <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('img_name_bn') }}</div>
+                                    @endif
                                 </div>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="desc_bn">Description (Bangla)</label>
-                                    <textarea type="text" name="desc_bn" id="" class="form-control summernote_editor" placeholder="Enter description in Bangla"
-                                            >{{ $banner->desc_bn ?? null }}</textarea>
-                                    <div class="help-block"></div>
-                                </div>
-                                
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text (English)</label>
-                                    <input type="text" name="alt_text_en" id="alt_text_en" class="form-control"
-                                           placeholder="Enter alt text" value="{{ old("alt_text_en") ? old("alt_text_en") : (isset($banner) ? $banner->alt_text_en : '') }}">
+                                    <label for="alt_text_en">Alt Text (English)</label>
+                                    <input type="text" name="alt_text_en" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->alt_text_en : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text_en'))
-                                        <div class="help-block">{{ $errors->first('alt_text_en') }}</div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
                                     <label for="alt_text_bn">Alt Text (Bangla)</label>
-                                    <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
-                                           placeholder="Enter alt text" value="{{ old("alt_text_bn") ? old("alt_text_bn") : (isset($banner) ? $banner->alt_text_bn : '') }}">
+                                    <input type="text" name="alt_text_bn" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->alt_text_bn : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text_bn'))
-                                        <div class="help-block">{{ $errors->first('alt_text_bn') }}</div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image_name_en') ? ' error' : '' }}">
-                                    <label for="image_name_en">Image Name(English)</label>
-                                    <input type="text" name="image_name_en" id="image_name_en" class="form-control" placeholder="Enter Image name in English"
-                                        value="{{ old("image_name_en") ? old("image_name_en") : (isset($banner) ? $banner->image_name_en : '') }}">
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamic">
+                                    <label for="url">Redirect URL</label>
+                                    <input type="text" name="redirect_url_en" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->redirect_url_en : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('image_name_en'))
-                                    <div class="help-block">{{ $errors->first('image_name_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
-                                    <label for="image_name_bn">Image Name (Bangla)</label>
-                                    <input type="text" name="image_name_bn" id="image_name_bn" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ old("image_name_bn") ? old("image_name_bn") : (isset($banner) ? $banner->image_name_bn : '') }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_name_bn'))
-                                    <div class="help-block">{{ $errors->first('image_name_bn') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6 {{ $errors->has('button_label_en') ? ' error' : '' }}">
-                                    <label for="button_label_en">Button Label (English)</label>
-                                    <input type="text" name="other_attributes[button_label_en]" id="button_label_en" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ (!empty($banner->other_attributes['button_label_en'])) ? $banner->other_attributes['button_label_en'] : old("other_attributes.button_label_en") ?? '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('button_label_en'))
-                                    <div class="help-block">{{ $errors->first('button_label_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('button_label_bn') ? ' error' : '' }}">
-                                    <label for="button_label_bn">Button Label (Bangla)</label>
-                                    <input type="text" name="other_attributes[button_label_bn]" id="button_label_bn" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ (!empty($banner->other_attributes['button_label_bn'])) ? $banner->other_attributes['button_label_bn'] : old("other_attributes.button_label_bn") ?? '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('button_label_bn'))
-                                    <div class="help-block">{{ $errors->first('button_label_bn') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6 {{ $errors->has('button_url') ? ' error' : '' }}">
-                                    <label for="button_url">Button Url</label>
-                                    <input type="text" name="other_attributes[button_url]" id="button_url" class="form-control" placeholder="Enter Image name in Bangla"
-                                        value="{{ (!empty($banner->other_attributes['button_url'])) ? $banner->other_attributes['button_url'] : old("other_attributes.button_url") ?? '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('button_url'))
-                                    <div class="help-block">{{ $errors->first('button_url') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image</label>
-                                    <div class="custom-file">
-                                        <input type="hidden" name="image" value="{{ isset($banner) ? $banner->image : '' }}">
-                                        <input type="file" name="image" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($banner) ? config('filesystems.file_base_url') . $banner->image : '' }}">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image'))
-                                        <div class="help-block">  {{ $errors->first('image') }}</div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
                                 
+
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 1) ? '' : 'd-none' }}" id="externalLink">
+                                    <label for="url">External URL</label>
+                                    <input type="text" name="external_url" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->external_url : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+                                <div class="col-md-6 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="external_link">Is External Link:</label>
+                                        <input type="checkbox" name="is_external_url" value="1" id="external_link" {{ old("is_external_url") ? 'checked' : '' }}
+                                            {{ (isset($adTech) && $adTech->is_external_url == 1) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                                
+
+
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Status:</label>
+                                        <input type="radio" id="active" name="status" value="1" {{ isset($adTech->status) && $adTech->status == 1 ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" id="inactive" name="status" value="0" {{ isset($adTech->status) && $adTech->status == 0 ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
+                                        <div class="help-block"></div>
+                                            @if ($errors->has('status'))
+                                            <div class="help-block">{{ $errors->first('status') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -167,6 +141,7 @@
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                         </form>
                     </div>
@@ -174,6 +149,7 @@
             </div>
         </div>
     </section>
+
 @stop
 
 @push('page-css')
@@ -336,6 +312,17 @@
                 return false;
             });
             */
+
+            //External Link
+            $('#external_link').click(function () {
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                    pageDynamic.addClass('d-none');
+                }else{
+                    pageDynamic.removeClass('d-none')
+                    externalLink.addClass('d-none')
+                }
+            });
             //show dropify for  photo
             $('.dropify').dropify({
                 messages: {

@@ -1342,6 +1342,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('blog-component.destroy');
     Route::get('blog-component-sort', 'AssetLite\BlogDetailsController@componentSortable');
 
+    Route::post('blog-ad-tech/store', 'AssetLite\BlogDetailsController@adTechStore')->name('blog.adtech.store');
+
 
     // Blog Landing Page
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);

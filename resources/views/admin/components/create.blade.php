@@ -16,8 +16,8 @@
         $list =  route('about-page', 'priyojon');
 
     }else{
-        
-        $list = route($action['list'], [$pageType.'_id' => isset($component) ? $component->section_details_id : request()->section_id]);
+
+        $list = route($action['list'], [isset($component) ? $component->page_type : $pageType.'_id' => isset($component) ? $component->section_details_id : request()->section_id]);
     }
 
 @endphp
@@ -43,7 +43,7 @@
                             <div class="content-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
-                                        <label for="editor_en" class="required">Component Type</label>
+                                        <label for="component_type" class="required">Component Type</label>
                                         <select name="component_type" class="form-control required" id="component_type"
                                                 required data-validation-required-message="Please select component type">
                                             <option value="">--Select Data Type--</option>
@@ -63,6 +63,17 @@
                                         <img class="img-thumbnail" id="componentImg" width="90%"
                                              src="{{ isset($component) ? asset('app-assets/images/app_services/'. $component->component_type . ".png") : '' }}">
                                         <div class="col-md-8">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mt-2">
+                                        <div class="form-group">
+                                            <label for="title" class="mr-1">Status:</label>
+                                            <input type="radio" name="status" value="1" id="active" {{ isset($component) && $component->status == 1 ? 'checked' : '' }}>
+                                            <label for="active" class="mr-1">Active</label>
+
+                                            <input type="radio" name="status" value="0" id="inactive" {{ isset($component) && $component->status == 0 ? 'checked' : '' }}>
+                                            <label for="inactive">Inactive</label>
                                         </div>
                                     </div>
 
@@ -106,10 +117,12 @@
                                     <slot id="text_with_image_left_box" data-offer-type="text_with_image_left_box" class="{{ isset($component) && $component->component_type == "text_with_image_left_box" ? "" : "d-none" }}">
                                         @include('admin.components.partial.text_with_image_left_box', $component ?? [])
                                     </slot>
+
                                     <!--Text with image left-->
                                     <slot id="text_with_image_left" data-offer-type="text_with_image_left" class="{{ isset($component) && $component->component_type == "text_with_image_left" ? "" : "d-none" }}">
                                         @include('admin.components.partial.text_with_image_left', $component ?? [])
                                     </slot>
+
                                     <!--Text with image right-->
                                     <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="{{ isset($component) && $component->component_type == "text_with_image_right" ? "" : "d-none" }}">
                                         @include('admin.components.partial.text_with_image_right', $component ?? [])
@@ -119,9 +132,35 @@
                                     <slot id="text_with_image_bottom" data-offer-type="text_with_image_bottom" class="{{ isset($component) && $component->component_type == "text_with_image_bottom" ? "" : "d-none" }}">
                                         @include('admin.components.partial.text_with_image_bottom', $component ?? [])
                                     </slot>
+
                                     <!--Multiple Text with image bottom-->
                                     <slot id="multi_text_with_image_bottom" data-offer-type="multi_text_with_image_bottom" class="{{ isset($component) && $component->component_type == "multi_text_with_image_bottom" ? "" : "d-none" }}">
                                         @include('admin.components.partial.multi_text_with_image_bottom', $component ?? [])
+                                    </slot>
+
+                                    <!--Top image with Desc-->
+                                    <slot id="top_image_with_desc" data-offer-type="top_image_with_desc" class="{{ isset($component) && $component->component_type == "top_image_with_desc" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.top_image_with_desc', $component ?? [])
+                                    </slot>
+
+                                    <!--Left Image with Title, Desc, btn-->
+                                    <slot id="left_image_with_title_desc_btn" data-offer-type="left_image_with_title_desc_btn" class="{{ isset($component) && $component->component_type == "left_image_with_title_desc_btn" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.left_image_with_title_desc_btn', $component ?? [])
+                                    </slot>
+
+                                    <!--Masonry-->
+                                    <slot id="masonry" data-offer-type="masonry" class="{{ isset($component) && $component->component_type == "masonry" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.masonry', $component ?? [])
+                                    </slot>
+
+                                    <!--Multi Column With title and desc-->
+                                    <slot id="multi_col_with_title_desc" data-offer-type="multi_col_with_title_desc" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_with_title_desc', $component ?? [])
+                                    </slot>
+
+                                    <!--Multi Column With title, desc and Image -->
+                                    <slot id="multi_col_with_title_desc_image" data-offer-type="multi_col_with_title_desc_image" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_image" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_with_title_desc_image', $component ?? [])
                                     </slot>
 
 {{--                                    --}}{{--Slider text with image right--}}
@@ -150,16 +189,7 @@
 {{--                                    </slot>--}}
 
 
-                                    <div class="col-md-12 mt-2">
-                                        <div class="form-group">
-                                            <label for="title" class="mr-1">Status:</label>
-                                            <input type="radio" name="status" value="1" id="active" {{ isset($component) && $component->status == 1 ? 'checked' : '' }}>
-                                            <label for="active" class="mr-1">Active</label>
 
-                                            <input type="radio" name="status" value="0" id="inactive" {{ isset($component) && $component->status == 0 ? 'checked' : '' }}>
-                                            <label for="inactive">Inactive</label>
-                                        </div>
-                                    </div>
 
                                     {{ Form::hidden('sections[id]', isset($component) ? $component->section_details_id : request()->section_id ?? null, ['class' => 'section_id'] ) }}
                                     {{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
