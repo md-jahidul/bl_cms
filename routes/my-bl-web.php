@@ -972,6 +972,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    Route::resource('generic-slider', 'CMS\GenericSliderController');
+//    Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
 });
 
 // 4G Map View Route
