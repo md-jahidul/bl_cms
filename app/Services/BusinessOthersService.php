@@ -85,7 +85,6 @@ class BusinessOthersService {
      */
     public function saveService($request) {
         try {
-
             //file upload in storege
 
             $directoryPath = 'assetlite/images/business-images';
@@ -128,10 +127,27 @@ class BusinessOthersService {
                 $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
             }
 
+            // details Card photo
+            $cardNameWeb = $request['details_banner_name'] .'-card_web';
+            $cardNameMob = $request['details_banner_name'] .'-card_mob';
+            $cardWeb = "";
+            $cardMob = "";
+            $cardData = [];
+            if (!empty($request['details_card_web'])) {
+
+                $cardWeb = $this->upload($request['details_card_web'], $directoryPath, $cardNameWeb);
+            }
+
+            if (!empty($request['details_card_mob'])) {
+
+                $cardMob = $this->upload($request['details_card_mob'], $directoryPath, $cardNameMob);
+            }
+            $cardData['cardWeb'] = $cardWeb;
+            $cardData['cardMob'] = $cardMob;
 
 
             //save data in database
-            $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
+            $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
 
@@ -858,6 +874,24 @@ class BusinessOthersService {
                 $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
             }
 
+            // details Card photo
+            $cardNameWeb = $request['details_banner_name'] .'-card_web';
+            $cardNameMob = $request['details_banner_name'] .'-card_mob';
+            $cardWeb = "";
+            $cardMob = "";
+            $cardData = [];
+            if (!empty($request['details_card_web'])) {
+                $request['old_details_card_web'] != "" ? $this->deleteFile($request['old_details_card_web']) : "";
+                $cardWeb = $this->upload($request['details_card_web'], $directoryPath, $cardNameWeb);
+            }
+
+            if (!empty($request['details_card_mob'])) {
+                $request['old_details_card_mob'] != "" ? $this->deleteFile($request['old_details_card_mob']) : "";
+                $cardMob = $this->upload($request['details_card_mob'], $directoryPath, $cardNameMob);
+            }
+            $cardData['cardWeb'] = $cardWeb;
+            $cardData['cardMob'] = $cardMob;
+
             //details banner rename
             if ($request['old_details_banner_name'] != $request['details_banner_name']) {
 
@@ -871,7 +905,7 @@ class BusinessOthersService {
             }
 
             //save data in database
-            $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
+            $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             
