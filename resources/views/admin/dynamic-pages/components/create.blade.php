@@ -79,6 +79,22 @@
                                         @include('layouts.partials.product-details.component.common-field.multiple-image')
                                     </slot>
 
+                                    {{--Customer Complains--}}
+                                    <slot id="customer_complains" data-offer-type="customer_complains" class="d-none">
+                                        @include('layouts.partials.product-details.component.common-field.other-attributes',
+                                                [
+                                                    'other_attributes' => [
+                                                        'compl_cld_no' => 'Complaint Closed No (%)',
+                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',
+                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',
+                                                        'unreached_cust_no' => 'Unreached Customer No (%)',
+                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',
+                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',
+                                                    ],
+                                                ])
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>

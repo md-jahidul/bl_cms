@@ -167,6 +167,7 @@ class ComponentService
         if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
             $data['other_attributes'] = $data['other_attr'];
         }
+
         $component = $this->save($data);
 
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
@@ -281,6 +282,7 @@ class ComponentService
         }
 
         $component->update($data);
+        
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
             $this->comMultiDataRepository->deleteAllById($id);
             foreach ($data['base_image'] as $key => $img) {
