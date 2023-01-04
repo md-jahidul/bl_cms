@@ -234,6 +234,8 @@
                                         </table>
                                     </div>
 
+                                    
+
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
                                                 class="btn btn-success round px-2">
@@ -342,6 +344,50 @@
                                 </div>`;
 
 
+                ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="ussd_code" class="required">USSD Code:</label>
+                                        <input
+                                            maxlength="16"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="USSD Code is required"
+                                            data-validation-maxlength-message="USSD code can not be more then 16 Characters"
+                                            value="@if(old('ussd_code')) {{old('ussd_code')}} @endif" required id="ussd_code"
+                                            type="text" class="form-control @error('ussd_code') is-invalid @enderror"
+                                            placeholder="USSD Code" name="ussd_code">
+                                        <small class="text-danger"> @error('ussd_code') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_en" class="required">Message En:</label>
+                                        <textarea 
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message En is required"
+                                            data-validation-regex-message="Message En must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_en')) {{old('message_en')}} @endif" required id="message_en"
+                                            type="text" class="form-control @error('message') is-invalid @enderror"
+                                            placeholder="Message En" name="message_en"> </textarea>
+                                        <small class="text-danger"> @error('message_en') {{ $message_en }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_bn" class="required">Message Bn:</label>
+                                        <textarea 
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message Bn is required"
+                                            data-validation-regex-message="Message Bn must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_bn')) {{old('message_bn')}} @endif" required id="message_bn"
+                                            type="text" class="form-control @error('message_bn') is-invalid @enderror"
+                                            placeholder="Message Bn" name="message_bn"> </textarea>
+                                        <small class="text-danger"> @error('message_bn') {{ $message_bn }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div> `;
+
+
                 $('#navigate_action').on('change', function () {
                     let action = $(this).val();
                     console.log(action);
@@ -349,6 +395,8 @@
                         $("#append_div").html(dial_html);
                     } else if (action == 'URL') {
                         $("#append_div").html(url_html);
+                    } else if (action == 'USSD_CODE') {
+                        $("#append_div").html(ussd_code);
                     } else if (action === 'FEED_CATEGORY') {
                         $("#append_div").html(feed_category);
                         $.ajax({
