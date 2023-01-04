@@ -134,6 +134,11 @@ class ComponentService
 
         $data['component_order'] = count($countComponents) + 1;
 
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
+        }
+
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
         $this->save($data);
@@ -188,6 +193,11 @@ class ComponentService
         if ($data['component_type'] == 'table_component') {
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
+        }
+
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
         }
 
         $component->update($data);
