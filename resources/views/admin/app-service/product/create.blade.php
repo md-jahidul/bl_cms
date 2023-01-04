@@ -116,7 +116,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}" id="detailsVideo">
                                 <label for="details_video_url" class="required">Details Video URL</label>
-                                <input type="text" name="details_video_url" class="form-control slug-convert" placeholder="Enter URL"
+                                <input type="text" name="details_video_url" class="form-control" placeholder="Enter URL"
                                        value="{{ old("details_video_url") ? old("details_video_url") : '' }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('details_video_url'))

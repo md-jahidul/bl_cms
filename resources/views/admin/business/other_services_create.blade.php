@@ -245,6 +245,17 @@
 
                             </div>
 
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
+                                <input type="file" required class="dropify_package" name="details_card_web" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                            </div>
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
+                                <input type="file" required class="dropify_package" name="details_card_mob" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                            </div>
+
                         </div>
 
                     </div>

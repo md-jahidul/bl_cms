@@ -122,7 +122,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}
                                 {{ $appServiceProduct->is_images == 1 ? 'd-none' : '' }}" id="detailsVideo">
                                 <label for="details_video_url" class="required">Details Video URL</label>
-                                <input type="text" name="details_video_url" class="form-control slug-convert" placeholder="Enter URL"
+                                <input type="text" name="details_video_url" class="form-control" placeholder="Enter URL"
                                        value="{{ $appServiceProduct->details_video_url }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('details_video_url'))
