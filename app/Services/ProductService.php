@@ -111,7 +111,7 @@ class ProductService
     private function _saveSearchData($product)
     {
         $productId = $product->id;
-        $name = $product->name_en;
+        $name = $product->name_en.' '.$product->name_bn;
         
         #Product Code
         $productCode = $product->product_code;
