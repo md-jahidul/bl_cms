@@ -126,7 +126,8 @@ class Helper
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop",
-            "COURSES"                 => "Courses"
+            "COURSES"                 => "Courses",
+            "USSD_CODE"               => "USSD code",
         ];
     }
 
