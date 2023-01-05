@@ -157,7 +157,8 @@
 	$(document).ready(function () {
 
 	   // Add multiple item
-	   $('.add_more_multi_col_with_image_item').on('click', function(){
+	   $('.add_more_multi_col_with_image_item').on('click', function(event){
+        event.preventDefault();
 
 	   	$parentSelector = $('#multi_col_with_title_desc_image');
 
