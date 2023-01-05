@@ -315,6 +315,8 @@
 
             //External Link
             $('#external_link').click(function () {
+                let externalLink = $('#externalLink');
+                let pageDynamic = $('#pageDynamic');
                 if($(this).prop("checked") == true){
                     externalLink.removeClass('d-none');
                     pageDynamic.addClass('d-none');
@@ -335,3 +337,4 @@
         });
     </script>
 @endpush
+

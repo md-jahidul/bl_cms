@@ -29,7 +29,8 @@ class ComponentHelper
 
             'top_image_with_desc' => 'Top image with Desc',
             'left_image_with_title_desc_btn' => 'Left Image with Title, Desc, btn',
-            'masonry' => 'Masonry',
+            'masonry_1_2_image_layout_col' => 'Masonry 1-2',
+            'masonry_3_2_image_layout_row' => 'Masonry 3-2',
             'multi_col_with_title_desc' => 'Multi Column With title and desc',
             'multi_col_with_title_desc_image' => 'Multi Column With title, desc and Image',
             // 'slider_text_with_image_right' => 'Slider text with image right',

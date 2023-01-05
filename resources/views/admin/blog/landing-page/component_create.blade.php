@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title_en', 'Landing Page Component')
-@section('card_name', 'Landing Page Component')
+@section('title_en', 'Blog Landing Page')
+@section('card_name', 'Blog Landing Page')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('landing-page-component') }}">Component List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url('blog/landing-page-component') }}">Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('landing-page-component') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('blog/landing-page-component') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -16,7 +16,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('landing-page-component.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('type') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('type') ? ' error' : '' }}">
                                     <label for="type" class="required">Component Type</label>
                                     <select class="form-control" name="component_type" id="type"
                                             required data-validation-required-message="Please select type">
@@ -31,18 +31,18 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
-                                    <label for="sliding_speed" class="">Sliding Speed</label>
-                                    <input type="number" id="sliding_speed" name="sliding_speed" class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("sliding_speed") ? old("sliding_speed") : '' }}">
-                                    <span>Default 10 second</span>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('sliding_speed'))
-                                        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">--}}
+{{--                                    <label for="sliding_speed" class="">Sliding Speed</label>--}}
+{{--                                    <input type="number" id="sliding_speed" name="sliding_speed" class="form-control" placeholder="Enter alt text"--}}
+{{--                                           value="{{ old("sliding_speed") ? old("sliding_speed") : '' }}">--}}
+{{--                                    <span>Default 10 second</span>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('sliding_speed'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
                                     <input type="text" name="title_en"  class="form-control" placeholder="Enter title in English"
                                            value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter title in English">
@@ -52,7 +52,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Title Bangla</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in Bangla"
                                            value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter title in Bangla">

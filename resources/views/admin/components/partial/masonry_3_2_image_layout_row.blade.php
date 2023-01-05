@@ -1,17 +1,5 @@
-{{ Form::hidden('component_type', 'masonry' ) }}
+{{ Form::hidden('component_type', 'masonry_3_2_image_layout_row' ) }}
 
-<div class="form-group col-md-4 {{ $errors->has('masonry_type') ? ' error' : '' }}">
-    <label for="masonry_type" class="required">Masonry Type</label>
-    <select name="other_attr[masonry_type]" class="form-control required" id="masonry_type" required data-validation-required-message="Please select masonry type">
-        <option value="">--Select Data Type--</option>
-        <option data-alias="" value="1_2_image_layout_col" {{ isset ($other_attributes['masonry_type'])  && $other_attributes['masonry_type'] == '1_2_image_layout_col' ? 'selected' : '' }}>1-2-image-layout-col</option>
-        <option data-alias="" value="3_2_image_layout_row" {{ isset ($other_attributes['masonry_type'])  && $other_attributes['masonry_type'] == '3_2_image_layout_row' ? 'selected' : '' }}>3-2-image-layout-row</option>
-    </select>
-    <div class="help-block"></div>
-    @if ($errors->has('component_type'))
-        <div class="help-block">{{ $errors->first('component_type') }}</div>
-    @endif
-</div>
 
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">
@@ -147,10 +135,11 @@
 	$(document).ready(function () {
         //itemCheck();
 	   // Add multiple item
-	   $('.add_more_masonry_item').on('click', function(){
+	   $('.add_more_masonry_item').on('click', function(event){
 
+        event.preventDefault();
         
-	   	$parentSelector = $('#masonry');
+	   	$parentSelector = $('#masonry_3_2_image_layout_row');
 
 	     var i = parseInt($parentSelector.find('#multi_item_count').val(), 10);
 	     // $('#masonry_content_section').empty();
@@ -175,7 +164,7 @@
 
 	     $parentSelector.find('#multi_item_count').val(i);
 
-         itemCheck();
+         //itemCheck();
 	   });
 
 
@@ -186,15 +175,15 @@
 	     $(this).parents('.row.single_masonry_content').remove();
 
 
-        let parentSelector = $('#masonry');
+        let parentSelector = $('#masonry_3_2_image_layout_row');
         let count =  parentSelector.find('#multi_item_count').val();
 
         parentSelector.find('#multi_item_count').val(count-1);
-        itemCheck();
+        //itemCheck();
 
 	   });
 
-
+/*
         $('#masonry_type').on('change', function () {
             var componentType = ''
 
@@ -215,6 +204,10 @@
             var fullUrl = "{{ asset('app-assets/images/app_services') }}/" + componentType;
             $("#componentImg").attr('src', fullUrl)
         })
+
+
+*/
+
 
 
 

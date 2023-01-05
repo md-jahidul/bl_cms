@@ -148,9 +148,13 @@
                                         @include('admin.components.partial.left_image_with_title_desc_btn', $component ?? [])
                                     </slot>
 
-                                    <!--Masonry-->
-                                    <slot id="masonry" data-offer-type="masonry" class="{{ isset($component) && $component->component_type == "masonry" ? "" : "d-none" }}">
-                                        @include('admin.components.partial.masonry', $component ?? [])
+                                    <!--masonry_1_2_image_layout_col-->
+                                    <slot id="masonry_1_2_image_layout_col" data-offer-type="masonry_1_2_image_layout_col" class="{{ isset($component) && $component->component_type == "masonry_1_2_image_layout_col" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.masonry_1_2_image_layout_col', $component ?? [])
+                                    </slot>
+
+                                    <slot id="masonry_3_2_image_layout_row" data-offer-type="masonry_3_2_image_layout_row" class="{{ isset($component) && $component->component_type == "masonry_3_2_image_layout_row" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.masonry_3_2_image_layout_row', $component ?? [])
                                     </slot>
 
                                     <!--Multi Column With title and desc-->
