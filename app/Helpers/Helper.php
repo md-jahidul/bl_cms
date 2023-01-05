@@ -121,15 +121,16 @@ class Helper
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
-            "GAMES"                   => "Games",
-            "MUSICS"                  => "Musics",
+            "GAMES"                    => "Games",
+            "MUSICS"                   => "Musics",
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop",
             "COURSES"                 => "Courses",
             "GIFT_PACKS"              => "Gift Packs",
             "ROAMING_PACKS"           => "Roaming Packs",
-            "ROAMING_DETAILS"         => "Roaming Details"
+            "ROAMING_DETAILS"         => "Roaming Details",
+            "USSD_CODE"               => "USSD code",
         ];
     }
 
