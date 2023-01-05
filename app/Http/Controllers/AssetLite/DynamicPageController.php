@@ -52,7 +52,7 @@ class DynamicPageController extends Controller
         'bullet_text' => 'Bullet Text',
         'accordion_text' => 'Accordion Text',
         'multiple_image' => 'Multiple Image',
-        'customer_complains' => 'Customer Complains',
+        'customer_complaint' => 'Customer Complaint',
     ];
 
 

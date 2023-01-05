@@ -95,7 +95,7 @@
                                     </slot>
 
                                     {{--Customer Complains--}}
-                                    <slot id="customer_complains" data-offer-type="customer_complains" class="{{ ($component->component_type ==  "customer_complains"  ) ? '' : "d-none" }}">
+                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ ($component->component_type ==  "customer_complaint"  ) ? '' : "d-none" }}">
                                         @include('layouts.partials.product-details.component.common-field.other-attributes',
                                                 [
                                                     'other_attributes' => [
