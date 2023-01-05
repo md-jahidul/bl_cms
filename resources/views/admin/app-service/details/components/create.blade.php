@@ -7,7 +7,7 @@
 {{--    <li class="breadcrumb-item active"> Component Create</li>--}}
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

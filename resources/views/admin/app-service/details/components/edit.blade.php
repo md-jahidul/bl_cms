@@ -6,7 +6,7 @@
 {{--    <li class="breadcrumb-item active"> Component Edit</li>--}}
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+   <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -159,6 +159,11 @@
                 },
                 height: 100
             });
+            $('#component_type').on('change', function () {
+                var componentType = this.value + ".png"
+                var fullUrl = "{{ asset('app-assets/images/app_services') }}/" + componentType;
+                $("#componentImg").attr('src', fullUrl)
+            })
         })
 
 
