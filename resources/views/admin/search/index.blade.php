@@ -133,15 +133,63 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamic">
-                                    <label for="url">Redirect URL</label>
+                                <div class="form-group col-md-6 {{ $errors->has('img_name_en') ? ' error' : '' }}">
+                                    <label for="img_name_en">Image Name EN</label>
+                                    <input type="text" name="img_name_en" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->img_name_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('img_name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('img_name_bn') ? ' error' : '' }}">
+                                    <label for="img_name_bn">Image Name BN</label>
+                                    <input type="text" name="img_name_bn" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->img_name_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('img_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('img_name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en">Alt Text EN</label>
+                                    <input type="text" name="alt_text_en" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->alt_text_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('redirect_url_en') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamicEn">
+                                    <label for="redirect_url_en">Redirect URL EN</label>
                                     <input type="text" name="redirect_url_en" class="form-control" placeholder="Enter URL"
                                            value="{{ isset($adTech) ? $adTech->redirect_url_en : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
-                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                        <div class="help-block">  {{ $errors->first('redirect_url_en') }}</div>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-6 {{ $errors->has('redirect_url_bn') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamicBn">
+                                    <label for="redirect_url_bn">Redirect URL BN</label>
+                                    <input type="text" name="redirect_url_bn" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->redirect_url_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirect_url_bn'))
+                                        <div class="help-block">  {{ $errors->first('redirect_url_bn') }}</div>
+                                    @endif
+                                </div>
+
+
 
                                 <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 1) ? '' : 'd-none' }}" id="externalLink">
                                     <label for="url">External URL</label>
@@ -151,6 +199,15 @@
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="col-md-6 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="external_link">Is External Link:</label>
+                                        <input type="checkbox" name="is_external_url" value="1" id="external_link" {{ old("is_external_url") ? 'checked' : '' }}
+                                            {{ (isset($adTech) && $adTech->is_external_url == 1) ? 'checked' : '' }}>
+                                    </div>
                                 </div>
 
 
@@ -402,6 +459,23 @@ if (Session::has('error')) {
                     'error': 'Choose correct file format'
                 },
             });
+        });
+
+        //External Link
+        $('#external_link').click(function () {
+            var externalLink = $('#externalLink');
+            var pageDynamicEn = $('#pageDynamicEn');
+            var pageDynamicBn = $('#pageDynamicBn');
+
+            if($(this).prop("checked") == true){
+                externalLink.removeClass('d-none');
+                pageDynamicEn.addClass('d-none');
+                pageDynamicBn.addClass('d-none');
+            }else{
+                pageDynamicEn.removeClass('d-none');
+                pageDynamicBn.removeClass('d-none');
+                externalLink.addClass('d-none');
+            }
         });
 
 
