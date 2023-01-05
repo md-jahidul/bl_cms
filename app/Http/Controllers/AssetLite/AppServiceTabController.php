@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Services\AppServiceTabService;
+use App\Services\Assetlite\AppServiceTabService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
