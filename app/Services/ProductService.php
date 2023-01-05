@@ -101,8 +101,19 @@ class ProductService
         }
         
         $product = $this->save($data);
-        //save Search Data
-        $this->_saveSearchData($product);
+
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+         $internate_voice_bundles = [1,2,3];
+
+         if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+ 
+             $this->_saveSearchData($product);
+         }
+
         $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
         return new Response('Product added successfully');
     }
@@ -115,6 +126,9 @@ class ProductService
         
         #Product Code
         $productCode = $product->product_code;
+
+        #Search Table Status
+        $status = $product->status;
 
         $url = "";
         if ($product->sim_category_id == 1) {
@@ -157,7 +171,7 @@ class ProductService
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
 
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode);
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
     }
 
     public function tableSortable($data)
@@ -226,8 +240,19 @@ class ProductService
         
         $product->update($data);
 
-        //save Search Data
-        $this->_saveSearchData($product);
+        
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+        $internate_voice_bundles = [1,2,3];
+
+        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+            $this->_saveSearchData($product);
+        }
+
         return Response('Product update successfully !');
     }
 
@@ -408,6 +433,23 @@ class ProductService
         }
 
         return $product->internet_volume_mb;
+    }
+
+    public function updateSearchData($product){
+        
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+        $internate_voice_bundles = [1,2,3];
+        $response = '';
+
+        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+            $response = $this->_saveSearchData($product);
+        }
+        return $response;
     }
 
 }
