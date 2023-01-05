@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\BlogPostRequest;
 use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
 use App\Services\MediaPressNewsEventService;
@@ -67,10 +68,10 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param BlogPostRequest $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(BlogPostRequest $request)
     {
         $response = $this->mediaPNE->storePNE($request->all(), self::REFERENCE_TYPE);
         Session::flash('success', $response->getContent());
@@ -96,7 +97,7 @@ class BlogController extends Controller
      * @param  int  $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(BlogPostRequest $request, $id)
     {
         $request['read_time'] = Bookworm::estimate($request->short_details_bn, '');
         $response = $this->mediaPNE->updatePNE($request->all(), $id);

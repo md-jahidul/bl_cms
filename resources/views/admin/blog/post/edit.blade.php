@@ -16,6 +16,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('blog-post.update', $blogPost->id) }}" method="POST" novalidate enctype="multipart/form-data">
                             @method('PUT')
+                            <input type="hidden" name="id" value="{{ $blogPost->id }}">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
@@ -36,20 +37,6 @@
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('type') ? ' error' : '' }}">--}}
-{{--                                    <label for="type" class="required">Type</label>--}}
-{{--                                    <select class="form-control" name="type" id="offer_type"--}}
-{{--                                            required data-validation-required-message="Please select type">--}}
-{{--                                        <option value="">---Select Type---</option>--}}
-{{--                                        <option data-alias="press_release" value="press_release" {{ $blogPost->type == "press_release" ? 'selected' : '' }}>Press Release</option>--}}
-{{--                                        <option data-alias="news_events" value="news_events" {{ $blogPost->type == "news_events" ? 'selected' : '' }}>News and Events</option>--}}
-{{--                                    </select>--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('type'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('type') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('date') ? ' error' : '' }}">
                                     <label for="date" class="required">Date</label>
@@ -73,21 +60,10 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">--}}
-{{--                                    <label for="alt_text_en" class="">Alt Text</label>--}}
-{{--                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"--}}
-{{--                                           value="{{ $blogPost->alt_text_en }}"--}}
-{{--                                           required data-validation-required-message="Enter alt text">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('alt_text_en'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
-                                    <label for="short_details_en" class="required">Short Description En</label>
-                                    <textarea type="text" name="short_details_en"  class="form-control" placeholder="Enter short description in English" required rows="3"
-                                              data-validation-required-message="Enter short description in English">{{ $blogPost->short_details_en }}</textarea>
+                                    <label for="short_details_en">Short Description En</label>
+                                    <textarea type="text" name="short_details_en"  class="form-control summernote_editor"
+                                              placeholder="Enter short description in English" required rows="3">{{ $blogPost->short_details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_en'))
                                         <div class="help-block">  {{ $errors->first('short_details_en') }}</div>
@@ -95,60 +71,84 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_bn') ? ' error' : '' }}">
-                                    <label for="short_details_bn" class="required">Short Description BN</label>
-                                    <textarea type="text" name="short_details_bn"  class="form-control" placeholder="Enter short description in Bangla" required rows="3"
-                                              data-validation-required-message="Enter short description in Bangla">{{ $blogPost->short_details_bn }}</textarea>
+                                    <label for="short_details_bn">Short Description BN</label>
+                                    <textarea type="text" name="short_details_bn"  class="form-control summernote_editor"
+                                              placeholder="Enter short description in Bangla" required rows="3">{{ $blogPost->short_details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_bn'))
                                         <div class="help-block">  {{ $errors->first('short_details_bn') }}</div>
                                     @endif
                                 </div>
 
-{{--                                <slot id="press_release" data-offer-type="press_release" class="{{ $blogPost->type == "press_release" ? '' : 'd-none' }}">--}}
-{{--                                    <h5><strong>Pop Up Section</strong></h5>--}}
-{{--                                    <div class="form-actions col-md-12 mt-0"></div>--}}
+                                <div class="form-group col-md-3 {{ $errors->has('details_btn_en') ? ' error' : '' }}">
+                                    <label for="details_btn_en">Details Button En</label>
+                                    <input type="text" name="details_btn_en"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ $blogPost->details_btn_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_btn_en'))
+                                        <div class="help-block">  {{ $errors->first('details_btn_en') }}</div>
+                                    @endif
+                                </div>
 
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('details_image') ? ' error' : '' }}">--}}
-{{--                                        <label for="details_image" class="required">Pop Up Banner Image</label>--}}
-{{--                                        <input type="file" name="details_image" class="form-control dropify" data-height="90"--}}
-{{--                                               data-default-file="{{ config('filesystems.file_base_url') . $blogPost->details_image }}"--}}
-{{--                                               value="{{ old("details_image") ? old("details_image") : '' }}">--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('details_image'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('details_image') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
+                                <div class="form-group col-md-3 {{ $errors->has('details_btn_bn') ? ' error' : '' }}">
+                                    <label for="details_btn_bn">Details Button Bn</label>
+                                    <input type="text" name="details_btn_bn"  class="form-control" placeholder="Enter button label in Bangla"
+                                           value="{{ $blogPost->details_btn_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_btn_bn'))
+                                        <div class="help-block">  {{ $errors->first('details_btn_bn') }}</div>
+                                    @endif
+                                </div>
 
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('details_alt_text_en') ? ' error' : '' }}">--}}
-{{--                                        <label for="details_alt_text_en" class="">Alt Text</label>--}}
-{{--                                        <input type="text" id="details_alt_text_en" name="details_alt_text_en" class="form-control" placeholder="Enter alt text"--}}
-{{--                                               value="{{ $blogPost->details_alt_text_en }}">--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('details_alt_text_en'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('details_alt_text_en') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
+                                <div class="form-group col-md-3 {{ $errors->has('tag_en') ? ' error' : '' }}">
+                                    <label for="tag_en">Tag En</label>
+                                    <input type="text" name="tag_en"  class="form-control" placeholder="Enter tag in English"
+                                           value="{{ $blogPost->tag_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('tag_en'))
+                                        <div class="help-block">  {{ $errors->first('tag_en') }}</div>
+                                    @endif
+                                </div>
 
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">--}}
-{{--                                        <label for="long_details_bn" class="required">Long Description En</label>--}}
-{{--                                        <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required--}}
-{{--                                                  data-validation-required-message="Enter long description in English">{{ $blogPost->long_details_en }}</textarea>--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('long_details_bn'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
+                                <div class="form-group col-md-3 {{ $errors->has('tag_bn') ? ' error' : '' }}">
+                                    <label for="tag_bn">Tag Bn</label>
+                                    <input type="text" name="tag_bn"  class="form-control" placeholder="Enter tag in Bangla"
+                                           value="{{ $blogPost->tag_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('tag_bn'))
+                                        <div class="help-block">  {{ $errors->first('tag_bn') }}</div>
+                                    @endif
+                                </div>
 
-{{--                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">--}}
-{{--                                        <label for="long_details_bn" class="required">Long Description BN</label>--}}
-{{--                                        <textarea type="text" name="long_details_bn"  class="form-control summernote_editor" placeholder="Enter long description in Bangla" required--}}
-{{--                                                  data-validation-required-message="Enter long description in Bangla">{{ $blogPost->long_details_bn }}</textarea>--}}
-{{--                                        <div class="help-block"></div>--}}
-{{--                                        @if ($errors->has('long_details_bn'))--}}
-{{--                                            <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                </slot>--}}
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                                    <label> URL EN</label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_en"
+                                           placeholder="URL EN" id="url_slug_en" value="{{ $blogPost->url_slug_en }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> najat-app (no spaces and slash)<br>
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_en'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_en') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label> URL BN </label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_bn"
+                                           placeholder="URL BN" value="{{ $blogPost->url_slug_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
+                                    @endif
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group" id="show_in_home">
