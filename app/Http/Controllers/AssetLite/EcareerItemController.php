@@ -144,7 +144,6 @@ class EcareerItemController extends Controller
             Session::flash('error', $validator->messages()->first());
             return redirect("ecarrer-items/$parent_id/list");
         }
-
         $this->ecarrerItemService->updateEcarrerItem($request->all(), $id);
 
         Session::flash('message', 'Item updated successfully!');

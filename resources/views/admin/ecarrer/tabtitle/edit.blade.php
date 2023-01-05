@@ -52,7 +52,7 @@
                                 @endif
                             </div>
 
-
+                            @include('layouts.partials.common_types.text_area_plane',['component'=>$sections])
 
 
 

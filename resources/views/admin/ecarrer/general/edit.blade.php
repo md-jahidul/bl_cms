@@ -60,6 +60,24 @@
                                         </select>
                                 </div>
 
+                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text" class="">Banner Image (optional)</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <img src="{{ config('filesystems.file_base_url') . $sections->image}}"style="height:70px;width:70px;display:none" id="imgDisplay">
+                                </div>
+                                @include('layouts.partials.common_types.text_area_plane',['component'=>$sections])
 
                                 @if( !empty($sections->additional_info) )
                                     @php $additional_info = json_decode($sections->additional_info); @endphp
@@ -89,7 +107,7 @@
                                     </div>
                                 </div>
 
-
+                                @include('admin.ecarrer-items.additional.call_to_actions')
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -112,7 +130,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -127,7 +145,50 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+            $('.remove_photo').on('click', function (e) {
+            e.preventDefault();
+            var cnfrm = confirm("Do you want to delete this photo?");
+            if (cnfrm) {
+                var itemId = $(this).attr('href');
+
+                var thisObj = $(this);
+
+                $.ajax({
+                    url: '{{ url("ecarrer-items/photo-delete")}}/' + itemId,
+                    cache: false,
+                    type: "GET",
+                    success: function (result) {
+                        if (result.success == 1) {
+                            swal.fire({
+                                title: result.message,
+                                type: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            $(thisObj).parents('.form-group').html("");
+
+                        } else {
+                            swal.close();
+                            swal.fire({
+                                title: result.message,
+                                timer: 2000,
+                                type: 'error',
+                            });
+                        }
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Status change process failed!',
+                            type: 'error',
+                        });
+                    }
+                });
+            }
+
+
+        });
 
         });
     </script>
