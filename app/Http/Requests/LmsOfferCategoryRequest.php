@@ -22,7 +22,7 @@ class LmsOfferCategoryRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {   dd($this->id);
         return [
             'url_slug_en' => 'required|unique:partner_categories,url_slug_en,' . $this->id,
             'url_slug_bn' => 'required|unique:partner_categories,url_slug_bn,' . $this->id,

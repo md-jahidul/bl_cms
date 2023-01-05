@@ -22,6 +22,8 @@ class AddAdditionalFieldInMediaPressNewsEventsTable extends Migration
             $table->string('details_btn_bn')->nullable()->after('details_btn_en');
             $table->string('tag_en')->nullable()->after('alt_text_bn');
             $table->string('tag_bn')->nullable()->after('tag_en');
+            $table->string('url_slug_en')->nullable()->after('read_time');
+            $table->string('url_slug_bn')->nullable()->after('url_slug_en');
         });
     }
 
@@ -41,6 +43,8 @@ class AddAdditionalFieldInMediaPressNewsEventsTable extends Migration
             $table->dropColumn('details_btn_bn');
             $table->dropColumn('tag_en');
             $table->dropColumn('tag_bn');
+            $table->dropColumn('url_slug_en');
+            $table->dropColumn('url_slug_bn');
         });
     }
 }

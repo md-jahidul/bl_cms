@@ -16,6 +16,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('blog-post.update', $blogPost->id) }}" method="POST" novalidate enctype="multipart/form-data">
                             @method('PUT')
+                            <input type="hidden" name="id" value="{{ $blogPost->id }}">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
@@ -61,7 +62,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
                                     <label for="short_details_en">Short Description En</label>
-                                    <textarea type="text" name="short_details_en"  class="form-control"
+                                    <textarea type="text" name="short_details_en"  class="form-control summernote_editor"
                                               placeholder="Enter short description in English" required rows="3">{{ $blogPost->short_details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_en'))
@@ -71,7 +72,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_bn') ? ' error' : '' }}">
                                     <label for="short_details_bn">Short Description BN</label>
-                                    <textarea type="text" name="short_details_bn"  class="form-control"
+                                    <textarea type="text" name="short_details_bn"  class="form-control summernote_editor"
                                               placeholder="Enter short description in Bangla" required rows="3">{{ $blogPost->short_details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_bn'))
@@ -116,6 +117,36 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('tag_bn'))
                                         <div class="help-block">  {{ $errors->first('tag_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                                    <label> URL EN</label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_en"
+                                           placeholder="URL EN" id="url_slug_en" value="{{ $blogPost->url_slug_en }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> najat-app (no spaces and slash)<br>
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_en'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_en') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label> URL BN </label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_bn"
+                                           placeholder="URL BN" value="{{ $blogPost->url_slug_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
                                     @endif
                                 </div>
 

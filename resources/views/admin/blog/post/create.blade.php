@@ -130,6 +130,34 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                                    <label> URL EN</label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_en" placeholder="URL EN" id="url_slug_en">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> najat-app (no spaces and slash)<br>
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_en'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_en') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label> URL BN </label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
+                                    </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group" id="show_in_home">
                                         <label for="trending"></label><br>
