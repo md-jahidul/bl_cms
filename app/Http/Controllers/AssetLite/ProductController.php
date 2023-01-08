@@ -377,4 +377,34 @@ class ProductController extends Controller
         }
     }
 
+
+    /**
+     * User: BS(Shuvo)
+     * This function is only for bulk keyword update for the search_data Table.
+     * 
+     */
+
+    public function updateSearchDataTable(){
+        // return $product = $this->productService->findProduct($type, '100MINS100TAKA');
+        $products = $this->productService->findBy();
+
+        foreach ($products as $key => $product) {
+            try {
+                
+                $this->productService->updateSearchData($product);
+
+            } catch (\Throwable $th) {
+                $response = [
+                    'success' => 'FAILED',
+                    'errors' => $th->getMessage()
+                ];
+                return response()->json($response, 500);
+            }
+
+
+        }
+        
+        return response()->json(['success' => 'Success'], 200);
+    }
+
 }
