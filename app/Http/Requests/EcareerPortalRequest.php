@@ -30,10 +30,10 @@ class EcareerPortalRequest extends FormRequest
         $image_upload_type = ConfigController::adminImageUploadType();
 
         return [
-            'banner_name' => 'required|regex:/^\S*$/u|unique:ecareer_portals,banner_name,' . $request->id,
-            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:ecareer_portals,banner_name_bn,' . $request->id,
-            'route_slug' => 'required|regex:/^\S*$/u|unique:ecareer_portals,route_slug,' . $request->id,
-            'route_slug_bn' => 'required|regex:/^\S*$/u|unique:ecareer_portals,route_slug_bn,' . $request->id,
+            'banner_name' => 'nullable|regex:/^\S*$/u|unique:ecareer_portals,banner_name,' . $request->id,
+            'banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:ecareer_portals,banner_name_bn,' . $request->id,
+            'route_slug' => 'nullable|regex:/^\S*$/u|unique:ecareer_portals,route_slug,' . $request->id,
+            'route_slug_bn' => 'nullable|regex:/^\S*$/u|unique:ecareer_portals,route_slug_bn,' . $request->id,
             'image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
         ];
     }
