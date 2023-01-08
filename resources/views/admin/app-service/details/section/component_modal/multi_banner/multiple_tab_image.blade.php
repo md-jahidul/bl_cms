@@ -233,7 +233,7 @@
 
 
 @push('page-css')
-    {{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <style>
         .modal-xl.modal_xl_custom {
             max-width: 80%;
@@ -251,7 +251,7 @@
 
 
 @push('page-js')
-    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -369,7 +369,7 @@
 
                 $('#multiple_tab_image').append(html);
 
-                $('.dropify-multiple').dropify({
+                $('.dropify').dropify({
                     messages: {
                         'default': 'Browse for an Image File to upload',
                         'replace': 'Click to replace',
@@ -400,89 +400,99 @@
         }); // doc ready
 
 
-            // Add More Item ======
-            function addMoreItem(item){ 
-                    var id = '#add-more-item-' + item;
-                    //i = item+1;
-                    var count = $('#sub_item_count_' + item).val();
-                    i = parseInt(count) + 1; 
-                    var html = '';
-                    html += `<div class="card-body multi_image_item" style="border-top: 2px solid steelblue" >
-                            <div class="col-sm-12">
-                                <div class="multiple_tab_image" data-count="1">
-                                    <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
-                                    <input type="hidden" name="component[0][multi_tab_item][${item}][id-${i}]" value="${i}">
-                                    <input type="hidden" name="component[0][multi_tab_item][${item}][display_order-${i}]" value="${i}">
+        // Add More Item ======
+        function addMoreItem(item){ 
+                var id = '#add-more-item-' + item;
+                //i = item+1;
+                var count = $('#sub_item_count_' + item).val();
+                i = parseInt(count) + 1; 
+                var html = '';
+                html += `<div class="card-body multi_image_item" style="border-top: 2px solid steelblue" >
+                        <div class="col-sm-12">
+                            <div class="multiple_tab_image" data-count="1">
+                                <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
+                                <input type="hidden" name="component[0][multi_tab_item][${item}][id-${i}]" value="${i}">
+                                <input type="hidden" name="component[0][multi_tab_item][${item}][display_order-${i}]" value="${i}">
 
 
-                                    <div class="row">
-                                        <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                            <label for="title_en" class="required1"> Title (English)</label>
-                                            <input type="text" name="component[0][multi_tab_item][${item}][title_en-${i}]"  class="form-control"
-                                                value="{{ !empty($ecarrer_item->title_en) ? $ecarrer_item->title_en : '' }}" >
-                                            <div class="help-block"></div>
-                                            @if ($errors->has('title_en'))
-                                                <div class="help-block">  {{ $errors->first('title_en') }}</div>
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                            <label for="title_bn" class="required1"> Title (Bangla)</label>
-                                            <input type="text" name="component[0][multi_tab_item][${item}][title_bn-${i}]"  class="form-control"
-                                                value="{{ !empty($ecarrer_item->title_bn) ? $ecarrer_item->title_bn : '' }}" >
-                                            <div class="help-block"></div>
-                                            @if ($errors->has('title_bn'))
-                                                <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                            <label for="alt_text" class="">Image (optional)</label>
-                                            <div class="custom-file">
-                                                <input type="file" name="component[0][multi_tab_item][${item}][image_url-${i}]" class="dropify">
-                                            </div>
-                                            <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-
-                                            <div class="help-block"></div>
-                                            @if ($errors->has('image_url'))
-                                                <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                            <label for="alt_text" class="required1">Alt Text</label>
-                                            <input type="text" name="component[0][multi_tab_item][${item}][alt_text-${i}]"  class="form-control"
-                                                value="{{ !empty($ecarrer_item->alt_text) ? $ecarrer_item->alt_text : '' }}" >
-                                            <div class="help-block"></div>
-                                            @if ($errors->has('alt_text'))
-                                                <div class="help-block">  {{ $errors->first('alt_text') }}</div>
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group col-md-2">
-                                            <label for="status">Status</label>
-                                            <select class="form-control" name="component[0][multi_tab_item][${item}][status-${i}]" aria-invalid="false">
-                                                <option value="1" selected>Active</option>
-                                                <option value="0">Inactive</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group col-md-1">
-                                            <button class="btn btn-info  btn-glow px-1 add_more_item" onclick="addMoreItem(${item})" style="margin-top: 15px;">+</button>
-                                        </div>
-                                        <div class="form-group col-md-1">
-                                            <button class="btn btn-danger multi_image_item" style="margin-top: 15px;">x</button>
-                                        </div>
-
+                                <div class="row">
+                                    <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                        <label for="title_en" class="required1"> Title (English)</label>
+                                        <input type="text" name="component[0][multi_tab_item][${item}][title_en-${i}]"  class="form-control"
+                                            value="{{ !empty($ecarrer_item->title_en) ? $ecarrer_item->title_en : '' }}" >
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('title_en'))
+                                            <div class="help-block">  {{ $errors->first('title_en') }}</div>
+                                        @endif
                                     </div>
-                                </div>
-                                </div>
-                            </div>`;
 
-                    //$(id).append(html);
-                    $(id).append(html)
-                    $('#sub_item_count_'+item).val(i);
-            }
+                                    <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1"> Title (Bangla)</label>
+                                        <input type="text" name="component[0][multi_tab_item][${item}][title_bn-${i}]"  class="form-control"
+                                            value="{{ !empty($ecarrer_item->title_bn) ? $ecarrer_item->title_bn : '' }}" >
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('title_bn'))
+                                            <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                        <label for="alt_text" class="">Image (optional)</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="component[0][multi_tab_item][${item}][image_url-${i}]" class="dropify">
+                                        </div>
+                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('image_url'))
+                                            <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                        <label for="alt_text" class="required1">Alt Text</label>
+                                        <input type="text" name="component[0][multi_tab_item][${item}][alt_text-${i}]"  class="form-control"
+                                            value="{{ !empty($ecarrer_item->alt_text) ? $ecarrer_item->alt_text : '' }}" >
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('alt_text'))
+                                            <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="status">Status</label>
+                                        <select class="form-control" name="component[0][multi_tab_item][${item}][status-${i}]" aria-invalid="false">
+                                            <option value="1" selected>Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-1">
+                                        <button class="btn btn-info  btn-glow px-1 add_more_item" onclick="addMoreItem(${item})" style="margin-top: 15px;">+</button>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <button class="btn btn-danger multi_image_item" style="margin-top: 15px;">x</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>`;
+
+                //$(id).append(html);
+                $(id).append(html)
+                $('#sub_item_count_'+item).val(i);
+
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'Browse for an Image File to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct file format'
+                    },
+                    height: 100
+                });
+        }
 
         
 
