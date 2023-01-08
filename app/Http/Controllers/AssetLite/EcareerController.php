@@ -108,9 +108,7 @@ class EcareerController extends Controller {
      * @return [type]     [description]
      */
     public function generalEdit($id) {
-
         $sections = $this->ecarrerService->generalSectionById($id);
-
         return view('admin.ecarrer.general.edit', compact('sections'));
     }
 

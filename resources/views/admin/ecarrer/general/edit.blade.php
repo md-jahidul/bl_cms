@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
 
-                                @include('admin.ecarrer-items.additional.call_to_actions')
+                                @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$sections])
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
