@@ -79,6 +79,9 @@ class AppServiceProductService
 
         // Referral Info Store
         if ($referralInfo) {
+            if (isset($referralInfo['referral_image'])) {
+                $referralInfo['referral_image'] = $this->upload($referralInfo['referral_image'], 'assetlite/images/app-service/product');
+            }
             $referralInfo['app_id'] = $app->id;
             $this->alReferralInfoRepository->save($referralInfo);
         }
@@ -114,6 +117,11 @@ class AppServiceProductService
 
         if ($referralData) {
             $referralInfo = $this->alReferralInfoRepository->findOneByProperties(['app_id' => $id]);
+
+            if (isset($referralData['referral_image'])) {
+                $referralData['referral_image'] = $this->upload($referralData['referral_image'], 'assetlite/images/app-service/product');
+            }
+            
             if ($referralInfo) {
                 $referralInfo->update($referralData);
             } else {
