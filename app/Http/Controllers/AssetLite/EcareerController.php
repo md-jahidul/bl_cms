@@ -96,7 +96,6 @@ class EcareerController extends Controller {
         if (!empty($additional_info)) {
             $data_types['additional_info'] = json_encode($additional_info);
         }
-
         $this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
         Session::flash('message', 'Section created successfully!');
@@ -109,9 +108,7 @@ class EcareerController extends Controller {
      * @return [type]     [description]
      */
     public function generalEdit($id) {
-
         $sections = $this->ecarrerService->generalSectionById($id);
-
         return view('admin.ecarrer.general.edit', compact('sections'));
     }
 
@@ -1605,7 +1602,6 @@ class EcareerController extends Controller {
      * @return [type]           [description]
      */
     public function tabTitleUpdate(EcareerPortalRequest $request, $id) {
-
         $this->ecarrerService->updateSubSection($request->except(['slug']), $id);
 
         Session::flash('message', 'Banner updated successfully!');

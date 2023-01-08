@@ -56,7 +56,7 @@
                                     @endif
                                 </div>
 
-                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
@@ -74,15 +74,15 @@
                                     <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div>
 
-                                
-                                <div class="col-md-12">
+
+                                {{--<div class="col-md-12">
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Description (Optional)</label>
                                         <textarea name="description" class="form-control" rows="5"
                                                   placeholder="Enter description"></textarea>
                                     </div>
                                 </div> --}}
-
+                                @include('layouts.partials.common_types.text_area_plane')
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select section type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
@@ -104,7 +104,7 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.call_to_actions')
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -131,7 +131,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -146,7 +146,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>
