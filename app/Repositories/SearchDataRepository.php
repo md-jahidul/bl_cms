@@ -13,7 +13,7 @@ class SearchDataRepository extends BaseRepository {
 
     public $modelName = SearchData::class;
 
-    public function saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode) {
+    public function saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status) {
         $previous = $this->model->where('keyword_id', $productId);
         if ($previous->count() > 0) {
            $save = $previous->update(
@@ -24,6 +24,7 @@ class SearchDataRepository extends BaseRepository {
                         'type' => $type,
                         'tag' => $tag,
                         'product_code' => $productCode,
+                        'status' => $status,
                     )
             );
         } else {
@@ -36,6 +37,7 @@ class SearchDataRepository extends BaseRepository {
                         'type' => $type,
                         'tag' => $tag,
                         'product_code' => $productCode,
+                        'status' => $status,
                     )
             );
         }
