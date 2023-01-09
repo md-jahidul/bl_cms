@@ -376,11 +376,11 @@
                 <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
             <ul class="menu-content">
 
-                <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('life.at.banglalink.topbanner') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-cogs"></i> Sections</a>
-                </li>
+                </li> --}}
 
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
@@ -415,15 +415,15 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-car"></i> Programs</a>
                     <ul class="menu-content">
-                        <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
+                        {{-- <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.tab.title') }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Tab Title</a>
-                        </li>
+                        </li> --}}
                         <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-safari"></i> News section</a>
+                                    class="la la-safari"></i> Hero section</a>
                         </li>
                         <li class="{{ request()->is('programs/progeneral/steps*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'steps']) }}"

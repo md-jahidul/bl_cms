@@ -36,7 +36,7 @@
                                     @endif
                                 </div>
 
-                                
+
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required1">Title (Bangla)</label>
@@ -56,7 +56,7 @@
                                             <option value="aip">Advanced Internship Program</option>
                                         </select>
                                 </div>
-                                
+
                                 @if( $sections_type == 'news_section' )
                                     {!! Form::hidden('programs_sections', 'programs_news_section') !!}
                                 @elseif( $sections_type == 'steps' )
@@ -76,7 +76,7 @@
                                             <option value="programs_testimonial">Programs testimonial section</option>
                                         </select>
                                 </div> --}}
-                                
+
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -90,7 +90,7 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description')
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -132,7 +132,7 @@
             // console.log(sectionNameRemoveSpace);
         });
 
-        
+
 
     });
 </script>
