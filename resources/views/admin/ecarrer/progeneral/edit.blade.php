@@ -99,6 +99,7 @@
 
 
                                 @include('admin.ecarrer-items.additional.description',['ecarrer_item'=> $sections])
+                                @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$sections])
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
