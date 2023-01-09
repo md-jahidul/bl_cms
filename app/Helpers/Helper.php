@@ -128,12 +128,13 @@ class Helper
             "VIDEO"                   => "Video",
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop",
-            "COURSES"                 => "Courses",
             "USSD"               => "USSD Code",
             "COURSES"                 => "Courses",
             "GIFT_PACKS"              => "Gift Packs",
             "ROAMING_PACKS"           => "Roaming Packs",
-            "ROAMING_DETAILS"         => "Roaming Details"
+            "ROAMING_DETAILS"         => "Roaming Details",
+            "USSD_CODE"               => "USSD code",
+            "CARE"                    => "Care",
         ];
     }
 
