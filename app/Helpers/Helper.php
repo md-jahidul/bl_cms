@@ -128,6 +128,7 @@ class Helper
             "SHOP"                    => "Shop",
             "COURSES"                 => "Courses",
             "USSD_CODE"               => "USSD code",
+            "CARE"                    => "Care",
         ];
     }
 
