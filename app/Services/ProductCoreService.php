@@ -288,6 +288,9 @@ class ProductCoreService
                                     if ($data_volume == '') {
                                         $data_volume = 0;
                                     }
+                                    elseif (strtolower($data_volume) == 'unlimited' || $data_volume == -1) {
+                                        $data_volume = -1;
+                                    }
                                     $core_data [$field] = $data_volume;
                                     break;
                                 case "sms_volume":
@@ -295,6 +298,9 @@ class ProductCoreService
                                     $volume = $cells [$index]->getValue();
                                     if ($volume == '') {
                                         $volume = 0;
+                                    }
+                                    elseif (strtolower($volume) == 'unlimited' || $volume == -1) {
+                                        $volume = -1;
                                     }
                                     $core_data [$field] = $volume;
                                     break;
