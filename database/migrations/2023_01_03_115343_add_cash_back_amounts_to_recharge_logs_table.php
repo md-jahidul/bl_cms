@@ -14,7 +14,7 @@ class AddCashBackAmountsToRechargeLogsTable extends Migration
     public function up()
     {
         Schema::table('recharge_logs', function (Blueprint $table) {
-            $table->string('cash_back_amounts')->after('recharge_amounts');
+            $table->string('cash_back_amounts')->nullable()->after('recharge_amounts');
         });
     }
 
