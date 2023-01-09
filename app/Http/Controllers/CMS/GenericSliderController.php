@@ -19,7 +19,6 @@ class GenericSliderController extends Controller
     public function index()
     {
         $sliders = $this->genericSliderService->getSlider();
-        dd($sliders->sliderImage);
         return view('admin.generic-slider.index', compact('sliders'));
     }
 
@@ -33,7 +32,8 @@ class GenericSliderController extends Controller
     public function store(Request $request)
     {
         $flag = $this->genericSliderService->storeSlider($request->all());
-        dd($flag);
+
+        return redirect('generic-slider');
     }
 
 
@@ -55,8 +55,10 @@ class GenericSliderController extends Controller
     }
 
 
-    public function destroy(GenericSlider $genericSlider)
+    public function destroy($genericSliderId)
     {
-        //
+        $this->genericSliderService->deleteComponent($genericSliderId);
+
+        return url('generic-slider');
     }
 }

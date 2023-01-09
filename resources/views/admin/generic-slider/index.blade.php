@@ -32,20 +32,17 @@
                                 @endphp
                                 <tr>
                                     <td width="10%">{{$slider->id}}</td>
-                                    <td width="40%">
-                                        <span class="badge badge-default badge-pill bg-primary float-right">{{$slider->getSliderImage->count()}}</span>
-
-                                    </td>
-                                    <td width="20%">{{$slider->SliderComponentTypes->name}}</td>
+                                    <td width="20%">{{$slider->title_en}}</td>
+                                    <td width="20%">{{$slider->component_for}}</td>
                                     <td width="30%">
                                         <div class="row justify-content-md-center no-gutters">
+{{--                                            <div class="col-md-3">--}}
+{{--                                                <a role="button" title="Edit" href="{{route('generic-slider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >--}}
+{{--                                                    <i class="la la-pencil"></i>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
                                             <div class="col-md-3">
-                                                <a role="button" title="Edit" href="{{route('generic-slider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
-                                                    <i class="la la-pencil"></i>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <a role="button" title="View Images" href="{{route('generic-slider.images.index',$slider->id)}}"
+                                                <a role="button" title="View Images" href=""
                                                    class=" btn btn-outline-success">
                                                     <i class="la la-picture-o"></i>
                                                 </a>
@@ -101,7 +98,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('generic-slider/') }}"
+                                    window.location.href = "{{ url('generic-slider') }}"
                                 }
                             }
                         })

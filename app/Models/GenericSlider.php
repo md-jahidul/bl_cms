@@ -8,7 +8,7 @@ class GenericSlider extends Model
 {
     protected $fillable= ['title_en', 'title_bn', 'component_for'];
 
-    public function images()
+    public function images(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(GenericSliderImage::class, 'generic_slider_id', 'id');
     }

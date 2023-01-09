@@ -974,7 +974,27 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 
     Route::resource('generic-slider', 'CMS\GenericSliderController');
-//    Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
+    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+    Route::get('generic-slider/{slider_id}/images', 'CMS\MyblSliderImageController@index')->name('myblslider.images.index');
+//    Route::get(
+//        'myblslider/{slider_id}/images/create',
+//        'CMS\MyblSliderImageController@create'
+//    )->name('myblslider.images.create');
+//    Route::post('myblslider/images/store', 'CMS\MyblSliderImageController@store')->name('myblslider.images.store');
+//    Route::get('myblslider/images/{id}/edit', 'CMS\MyblSliderImageController@edit')->name('myblslider.images.edit');
+//    Route::put(
+//        'myblslider/images/{id}/update',
+//        'CMS\MyblSliderImageController@update'
+//    )->name('myblslider.images.update');
+//    Route::put(
+//        'myblslider/images/{id}/update',
+//        'CMS\MyblSliderImageController@update'
+//    )->name('myblslider.images.update');
+//    Route::delete(
+//        'myblslider/images/{id}/delete',
+//        'CMS\MyblSliderImageController@destroy'
+//    )->name('myblslider.images.destroy');
+//
 });
 
 // 4G Map View Route

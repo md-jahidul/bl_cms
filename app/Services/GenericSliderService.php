@@ -9,12 +9,14 @@
 
 namespace App\Services;
 
+use App\Repositories\ContentComponentRepository;
 use App\Repositories\GenericSliderRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class GenericSliderService
 {
@@ -23,14 +25,20 @@ class GenericSliderService
     protected $genericSliderRepository;
     protected $myblHomeComponentService;
     protected  $sliderRepository;
+    protected $contentComponentRepository;
+    protected $contentComponentService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
+        ContentComponentRepository $contentComponentRepository,
+        ContentComponentService $contentComponentService,
         SliderRepository $sliderRepository
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
         $this->sliderRepository = $sliderRepository;
+        $this->contentComponentRepository = $contentComponentRepository;
+        $this->contentComponentService = $contentComponentService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -39,16 +47,22 @@ class GenericSliderService
     {
         try {
             DB::beginTransaction();
-
-            $homeComponentCount = $this->findAll()->count();
-            $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
-            $homeComponentData['component_key'] = "GENERIC" . str_replace(' ', '_', strtolower($data['title_en']));
-            $homeComponentData['display_order'] = $homeComponentCount + $homeSecondarySliderCount + 1;
+            $data['status'] = 1;
             $homeComponentData['title_en'] = $data['title_en'];
             $homeComponentData['title_bn'] = $data['title_en'];
+            $homeComponentData['display_order'] = $this->displayOrder($data['component_for']);
+            $genericSlider = $this->save($data);
+            $homeComponentData['component_key'] = "generic-" . $genericSlider->id;
+            $homeComponentData['is_api_call_enable'] = 1;
 
-            $this->myblHomeComponentService->save($homeComponentData);
-            $this->genericSliderRepository->save($data);
+            if ($data['component_for'] == 'home') {
+                Redis::del('mybl_home_component');
+                $this->myblHomeComponentService->save($homeComponentData);
+            }
+            elseif ($data['component_for'] == 'content') {
+                Redis::del('content_component');
+                $this->contentComponentRepository->save($homeComponentData);
+            }
 
             DB::commit();
 
@@ -78,5 +92,54 @@ class GenericSliderService
         $slider = $this->findOne($id);
         $slider->delete();
         return Response('Slider has been successfully deleted');
+    }
+
+    public function displayOrder($type)
+    {
+        if ($type == 'home')
+        {
+            $homeComponentCount = $this->myblHomeComponentService->findAll()->count();
+            $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+
+            return $homeComponentCount + $homeSecondarySliderCount + 1;
+        }
+
+        elseif ($type == 'content')
+        {
+            $contentComponentCount = $this->contentComponentRepository->findAll()->count();
+            $contentSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+
+            return $contentSecondarySliderCount + $contentComponentCount + 1;
+        }
+
+        return 1;
+    }
+
+    public function deleteComponent($id)
+    {
+        try {
+            $slider = $this->findOne($id);
+            $componentFor = $slider['component_for'];
+
+            if ($componentFor == 'home') {
+                $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $this->myblHomeComponentService->deleteComponent($homeComponent->id);
+            }
+            else if ($componentFor == 'content') {
+                $contentComponent = $this->contentComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $this->contentComponentService->deleteComponent($contentComponent->id);
+            }
+            $slider->delete();
+
+            return [
+                'message' => 'Slider delete successfully',
+            ];
+        } catch (\Exception $e)
+        {
+            return [
+                'message' => 'Slider delete failed',
+            ];
+        }
+
     }
 }
