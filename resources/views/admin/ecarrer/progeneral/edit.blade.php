@@ -61,17 +61,17 @@
                                             <option value="aip" @if($sections->category_type == 'aip') selected @endif>Advanced Internship Program</option>
                                         </select>
                                 </div>
-                                
+
                                 {{-- {{ dd($sections->additional_info) }} --}}
-                                
+
                                 @if( !empty($sections->additional_info) )
                                     @php $additional_info = json_decode($sections->additional_info); @endphp
                                 @endif
-                                
+
                                 @if( isset($additional_info->additional_type) )
                                     {!! Form::hidden('programs_sections', $additional_info->additional_type) !!}
                                 @endif
-                                
+
                                 {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Specify section type</label>
                                     <select class="form-control" name="programs_sections" aria-invalid="false">
@@ -98,7 +98,8 @@
                                 </div>
 
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=> $sections])
+                                @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$sections])
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -135,7 +136,7 @@
             // console.log(sectionNameRemoveSpace);
         });
 
-        
+
 
     });
 </script>
