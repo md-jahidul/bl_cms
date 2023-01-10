@@ -157,12 +157,12 @@ else{
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.call_to_actions')
                                 <!-- Include additional field layout for individual section requirement -->
                                 {{-- {{ dd($parent_data->check_type) }} --}}
-                                @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
+                                {{-- @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
                                     @include('admin.ecarrer-items.additional.call_to_actions')
-                                @endif
+                                @endif --}}
 
 
                                 @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )

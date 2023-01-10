@@ -165,11 +165,11 @@ $hide_title = false;
                                 </div>
                             </div>
 
-
+                            @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$ecarrer_item])
                             <!-- Include additional field layout for individual section requirement -->
-                            @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
+                            {{-- @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
                             @include('admin.ecarrer-items.additional.call_to_actions')
-                            @endif
+                            @endif --}}
 
                             <!-- Include additional field layout for individual section requirement -->
                             @if( $ecarrer_section_slug == 'life_at_bl_contact' )
