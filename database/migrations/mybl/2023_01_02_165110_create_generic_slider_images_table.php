@@ -24,7 +24,7 @@ class CreateGenericSliderImagesTable extends Migration
             $table->string('url_btn_label')->nullable();
             $table->string('redirect_url')->nullable();
             $table->string('web_deep_link')->nullable();
-            $table->string('sequence')->nullable();
+            $table->integer('sequence')->nullable();
             $table->boolean('status')->default(1);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();

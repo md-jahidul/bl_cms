@@ -5,10 +5,10 @@
     <li class="breadcrumb-item active">Add Image</li>
 @endsection
 @section('action')
-    <a href="{{route('myblslider.images.index',$slider_information->id)}}" class="btn btn-info btn-glow px-2">
+    <a href="{{route('generic-slider.images.index',$slider_information->id)}}" class="btn btn-info btn-glow px-2">
         Image list
     </a>
-    <a href="{{route('myblslider.index')}}" class="btn btn-primary btn-glow px-2">
+    <a href="{{route('generic-slider.index')}}" class="btn btn-primary btn-glow px-2">
         Slider list
     </a>
 @endsection
@@ -25,7 +25,7 @@
                 <div class="card-body">
 
                     <div class="card-body">
-                        <form novalidate class="form row" action="{{route('myblslider.images.store')}}"
+                        <form novalidate class="form row" action="{{route('generic-slider.images.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('post')

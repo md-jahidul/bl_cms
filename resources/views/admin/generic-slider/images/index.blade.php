@@ -1,14 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Slider')
-@section('card_name', $slider->title." Slider")
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Edit Image Info</li>
-@endsection
+@section('card_name', $slider->title_en." Slider")
 @section('action')
-    <a href="{{route('myblslider.images.create',$slider->id)}}" class="btn btn-info btn-glow px-2">
+    <a href="{{route('generic-slider.images.create',$slider->id)}}" class="btn btn-info btn-glow px-2">
         Add Image
     </a>
-    <a href="{{route('myblslider.index')}}" class="btn btn-primary btn-glow px-2">
+    <a href="{{route('generic-slider.index')}}" class="btn btn-primary btn-glow px-2">
         Slider list
     </a>
 @endsection
@@ -53,12 +50,12 @@
                                     @endif
                                 </td>
                                 <td class="action">
-                                    <form action="{{route('myblslider.images.destroy',$slider_image->id)}}"
+                                    <form action="{{route('generic-slider.images.destroy',$slider_image->id)}}"
                                           id="del_form_{{$slider_image->id}}"
                                           method="post">
                                         @csrf
                                         @method('delete')
-                                        <a href="{{route('myblslider.images.edit', $slider_image->id )}}"
+                                        <a href="{{route('generic-slider.images.edit', $slider_image->id )}}"
                                            role="button" class="btn btn-outline-info border-0"><i class="la la-pencil"
                                                                                                   aria-hidden="true"></i></a>
                                         <a href="#" data-id="{{ $slider_image->id }}"

@@ -975,12 +975,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('generic-slider', 'CMS\GenericSliderController');
     Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
-    Route::get('generic-slider/{slider_id}/images', 'CMS\MyblSliderImageController@index')->name('myblslider.images.index');
-//    Route::get(
-//        'myblslider/{slider_id}/images/create',
-//        'CMS\MyblSliderImageController@create'
-//    )->name('myblslider.images.create');
-//    Route::post('myblslider/images/store', 'CMS\MyblSliderImageController@store')->name('myblslider.images.store');
+    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+    Route::get(
+        'generic-slider/{slider_id}/images/create',
+        'CMS\GenericSliderImageController@create'
+    )->name('generic-slider.images.create');
+    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
 //    Route::get('myblslider/images/{id}/edit', 'CMS\MyblSliderImageController@edit')->name('myblslider.images.edit');
 //    Route::put(
 //        'myblslider/images/{id}/update',
