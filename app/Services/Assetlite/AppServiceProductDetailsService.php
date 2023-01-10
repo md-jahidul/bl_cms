@@ -382,6 +382,7 @@ class AppServiceProductDetailsService
                     foreach ($tab as $m_key => $m_value) {
                         $sub_data = [];
                         $check_index = explode('-', $m_key);
+                        //$results[$i][$check_index[0]] = $tab;
                         if (isset($check_index[1]) && $check_index[1] == $i) {
                             if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
                                 $m_value = $this->upload($data['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
@@ -391,11 +392,9 @@ class AppServiceProductDetailsService
                             if(!isset($tab['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
                                 $results[$i]['image_url'] = $data['multi_tab_item'][$k]['prev_image_url-'.$i];
                             }
-
-                        }else{
-                            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
                         }
                     }
+                    
                 } 
                 $tabData[$k] = $results;
             }
