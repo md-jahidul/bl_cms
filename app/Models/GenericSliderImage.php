@@ -34,9 +34,12 @@ class GenericSliderImage extends Model
 
     public function slider()
     {
-        return $this->belongsTo(GenericSlider::class, 'generic_slider_id', 'generic_slider_id');
+        return $this->belongsTo(GenericSlider::class, 'generic_slider_id', 'id');
     }
-
+    public function baseImageCats()
+    {
+        return $this->hasMany(BaseImageCta::class, 'banner_id', 'id');
+    }
     public function scopeStartEndDate($query)
     {
         $bdTimeZone = Carbon::now('Asia/Dhaka');
@@ -59,8 +62,8 @@ class GenericSliderImage extends Model
 
         $startDate = $this->start_date;
         $endDate = $this->end_date;
-
-        if ($this->is_active == 1) {
+//        dd($startDate, $endDate, $this->status);
+        if ($this->status == 1) {
             if (isset($startDate) && !($currentTime >= $startDate) || isset($endDate) && !($currentTime <= $endDate)) {
                 return false;
             }

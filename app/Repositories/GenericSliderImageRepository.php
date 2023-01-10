@@ -16,15 +16,14 @@ class GenericSliderImageRepository extends BaseRepository
 
     public function is_sequence_exist($sequence, $slider_id)
     {
-        $image_sequence = DB::table('slider_images')
-                    ->where('generic_slider_id', $slider_id)
+        $image_sequence = $this->model::where('generic_slider_id', $slider_id)
                     ->where('sequence', $sequence)->get();
         return empty($image_sequence->all());
     }
 
     public function sliderImage($slider_id)
     {
-        return DB::table('slider_images')->where('generic_slider_id', $slider_id)->orderBy('sequence', 'desc')->first();
+        return $this->model::where('generic_slider_id', $slider_id)->orderBy('sequence', 'desc')->first();
     }
 
     public function sliderImageTableSort($request)

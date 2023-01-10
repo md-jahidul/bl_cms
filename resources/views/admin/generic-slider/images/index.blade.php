@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Slider')
-@section('card_name', $slider->title_en." Slider")
+@section('card_name', $slider->title." Slider")
+
 @section('action')
     <a href="{{route('generic-slider.images.create',$slider->id)}}" class="btn btn-info btn-glow px-2">
         Add Image
@@ -73,7 +74,6 @@
         </div>
 
     </section>
-
 @stop
 
 @push('page-css')
@@ -89,7 +89,7 @@
 @push('page-js')
     <script>
 
-        let auto_save_url = "{{ url('myblsliderImage/addImage/update-position') }}";
+        let auto_save_url = "{{ url('generic-slider/addImage/update-position') }}";
 
         $(document).ready(function () {
             $(document).on('click', '.del', function (e) {

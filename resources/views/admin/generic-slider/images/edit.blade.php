@@ -3,7 +3,7 @@
 @section('card_name', 'Edit Image Info')
 
 @section('action')
-    <a href="{{route('myblslider.images.index',$imageInfo->slider_id)}}" class="btn btn-info btn-glow px-2">
+    <a href="{{route('generic-slider.images.index',$imageInfo->slider->id)}}" class="btn btn-info btn-glow px-2">
         Back
     </a>
 @endsection
@@ -14,7 +14,7 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form novalidate class="form row"
-                              action="{{ route("myblslider.images.update",$imageInfo->id) }}"
+                              action="{{ route("generic-slider.images.update",$imageInfo->id) }}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('put')
@@ -41,19 +41,19 @@
 
                             <div class="form-group col-md-6">
                                 <label for="title">Title: <small
-                                            class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <input
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Title is required"
-                                        data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                        value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
-                                        type="text"
-                                        class="form-control @error('title') is-invalid @enderror"
-                                        placeholder="Title" name="title">
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Title is required"
+                                    data-validation-regex-message="Title must start with alphabets"
+                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                    value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
+                                    type="text"
+                                    class="form-control @error('title') is-invalid @enderror"
+                                    placeholder="Title" name="title">
                                 <small
-                                        class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
@@ -67,7 +67,7 @@
                                         class="form-control @error('alt_text') is-invalid @enderror"
                                         placeholder="Alt text" name="alt_text">
                                 <small
-                                        class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
@@ -98,10 +98,10 @@
 
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="is_active">Active Status:</label>
-                                    <select value="{{$imageInfo->is_active}}"
-                                            class="form-control" id="is_active"
-                                            name="is_active">
+                                    <label for="status">Active Status:</label>
+                                    <select value="{{$imageInfo->status}}"
+                                            class="form-control" id="status"
+                                            name="status">
                                         <option value="1"
                                                 @if($imageInfo->is_active == "1") selected @endif>
                                             Active
@@ -155,7 +155,7 @@
                                         Shortcut icon should be in
                                         16:9 aspect ratio</small><br>
                                     <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
                                 </div>
                             </div>
@@ -176,14 +176,14 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control select2" required>
-                                                        <option value="">Select a Product</option>
-                                                        @foreach ($products as $value)
-                                                            <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
-                                                                {{ $value['text'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select name="other_attributes" class="form-control select2" required>
+                                                    <option value="">Select a Product</option>
+                                                    @foreach ($products as $value)
+                                                        <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
+                                                            {{ $value['text'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             @endif
                                             @if($imageInfo->redirect_url == "FEED_CATEGORY")
                                                 <div class="form-group other-info-div">
@@ -223,7 +223,7 @@
                                         <th>Base Msisdn</th>
                                         <th>Segment Action</th>
                                         <th>CTA Action</th>
-{{--                                        <th>Status</th>--}}
+                                        {{--                                        <th>Status</th>--}}
                                         <th class="text-center" style="width: 2%">
                                             <i data-repeater-create
                                                class="la la-plus-circle text-info cursor-pointer"
@@ -233,37 +233,37 @@
                                     </tr>
                                     </thead>
                                     <tbody data-repeater-list="segment_wise_cta" id="cta_table">
-{{--                                    {{ dd(!empty($imageInfo->baseImageCats)) }}--}}
+                                    {{--                                    {{ dd(!empty($imageInfo->baseImageCats)) }}--}}
                                     @if(!$imageInfo->baseImageCats->isEmpty())
                                         @foreach($imageInfo->baseImageCats as $data)
-                                        <tr data-repeater-item>
-                                            <td>
-                                                <select class="form-control" id="segment_action" name="group_id">
-                                                    <option value="">Select Group</option>
-                                                    @foreach($baseGroups as $group)
-                                                        <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control" id="segment_action" name="action_name">
-                                                    <option value="">Select Action</option>
-                                                    @foreach ($actionList as $key => $value)
-                                                        <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
-                                                            {{ $value }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
-                                            </td>
-                                            <td class="text-center align-middle">
-                                                <i data-repeater-delete
-                                                   class="la la-trash-o text-danger cursor-pointer"></i>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            <tr data-repeater-item>
+                                                <td>
+                                                    <select class="form-control" id="segment_action" name="group_id">
+                                                        <option value="">Select Group</option>
+                                                        @foreach($baseGroups as $group)
+                                                            <option value="{{$group->id}}" {{ ($group->id == $data->group_id) ? 'selected' : '' }}>{{$group->title}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="segment_action" name="action_name">
+                                                        <option value="">Select Action</option>
+                                                        @foreach ($actionList as $key => $value)
+                                                            <option value="{{ $key }}" {{ ($key == $data->action_name) ? 'selected' : '' }}>
+                                                                {{ $value }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" name="action_url_or_code" value="{{ $data->action_url_or_code }}" type="text">
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <i data-repeater-delete
+                                                       class="la la-trash-o text-danger cursor-pointer"></i>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     @else
                                         <tr data-repeater-item>
                                             <td>
@@ -403,12 +403,15 @@
                     let type = other_attributes.type;
                     if(type == 'dial'){
                         dial_content = other_attributes.content;
+                    }else if(type == 'USSD_CODE'){
+                        redirect_content = other_attributes.content;
                     }else if(type == 'url'){
                         redirect_content = other_attributes.content;
                     }else{
                         purchase_content = other_attributes.content;
                     }
                 }
+
             }
 
             //alert(content);
@@ -440,6 +443,55 @@
                                     </select>
                                     <div class="help-block"></div>
                                 </div>`;
+            var code = (parse_data.ussd_code != null) ? parse_data.ussd_code : '';
+            var message_en = (parse_data.message_en != null) ? parse_data.message_en : '';
+            var message_bn = (parse_data.message_bn != null) ? parse_data.message_bn : '';
+            ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="ussd_code" class="required">USSD Code:</label>
+                                        <input
+                                            maxlength="16"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="USSD Code is required"
+                                            data-validation-maxlength-message="USSD code can not be more then 16 Characters"
+                                            value="${code}" required id="ussd_code"
+                                            type="text" class="form-control @error('ussd_code') is-invalid @enderror"
+                                            placeholder="USSD Code" name="ussd_code">
+                                        <small class="text-danger"> @error('ussd_code') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_en" class="required">Message En:</label>
+                                        <textarea
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message En is required"
+                                            data-validation-regex-message="Message En must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_en')) {{old('message_en')}} @endif" required id="message_en"
+                                            type="text" class="form-control @error('message') is-invalid @enderror"
+                                            placeholder="Message En" name="message_en"> ${message_en} </textarea>
+                                        <small class="text-danger"> @error('message_en') {{ $message_en }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_bn" class="required">Message Bn:</label>
+                                        <textarea
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message Bn is required"
+                                            data-validation-regex-message="Message Bn must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_bn')) {{old('message_bn')}} @endif" required id="message_bn"
+                                            type="text" class="form-control @error('message_bn') is-invalid @enderror"
+                                            placeholder="Message Bn" name="message_bn"> ${message_bn} </textarea>
+                                        <small class="text-danger"> @error('message_bn') {{ $message_bn }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div> `;
+
+            if(parse_data.redirect_url == 'USSD_CODE'){
+                $("#append_div").html(ussd_code);
+            }
 
 
             $('#navigate_action').on('change', function () {
@@ -447,6 +499,8 @@
                 //console.log(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
+                }else if (action == 'USSD_CODE') {
+                    $("#append_div").html(ussd_code);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);
                 } else if (action === 'FEED_CATEGORY') {

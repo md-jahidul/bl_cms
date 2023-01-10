@@ -981,19 +981,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'CMS\GenericSliderImageController@create'
     )->name('generic-slider.images.create');
     Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
-//    Route::get('myblslider/images/{id}/edit', 'CMS\MyblSliderImageController@edit')->name('myblslider.images.edit');
-//    Route::put(
-//        'myblslider/images/{id}/update',
-//        'CMS\MyblSliderImageController@update'
-//    )->name('myblslider.images.update');
-//    Route::put(
-//        'myblslider/images/{id}/update',
-//        'CMS\MyblSliderImageController@update'
-//    )->name('myblslider.images.update');
-//    Route::delete(
-//        'myblslider/images/{id}/delete',
-//        'CMS\MyblSliderImageController@destroy'
-//    )->name('myblslider.images.destroy');
+    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::delete(
+        'generic-slider/images/{id}/delete',
+        'CMS\GenericSliderImageController@destroy'
+    )->name('generic-slider.images.destroy');
+    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
 //
 });
 

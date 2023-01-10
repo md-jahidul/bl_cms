@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\BaseImageCta;
 use App\Models\MyBlProduct;
+use App\Repositories\GenericSliderImageRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
@@ -19,7 +20,7 @@ class GenericSliderImageService
 
     protected $sliderImageRepository;
 
-    public function __construct(SliderImageRepository $sliderImageRepository)
+    public function __construct(GenericSliderImageRepository $sliderImageRepository)
     {
         $this->sliderImageRepository = $sliderImageRepository;
         $this->setActionRepository($sliderImageRepository);
@@ -47,6 +48,7 @@ class GenericSliderImageService
 
     public function storeSliderImage($image)
     {
+
         try {
             DB::transaction(function () use ($image) {
                 $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
@@ -55,8 +57,9 @@ class GenericSliderImageService
                 } else {
                     $i = $image_data->sequence + 1;
                 }
-                $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
+                $image['image_url'] = 'storage/' . $image['image_url']->store('generic-slider');
                 $image['sequence'] = $i;
+                $image['generic_slider_id'] = $image['slider_id'];
                 if (isset($image['other_attributes'])) {
                     if ($image['redirect_url'] == "FEED_CATEGORY") {
                         $other_attributes = $image['other_attributes'];
@@ -69,7 +72,7 @@ class GenericSliderImageService
                     // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
                     $image['other_attributes'] = $other_attributes;
                 }
-                dd($image);
+
                 $sliderImg = $this->save($image);
                 if (!empty($image['segment_wise_cta'][0]['group_id']) &&
                     !empty($image['segment_wise_cta'][0]['action_name'])
@@ -88,10 +91,11 @@ class GenericSliderImageService
                 }
             });
 
-            return new Response("Image has been successfully added");
+            return true;
         } catch (\Exception $e) {
+
             Log::error('Slider Image store failed' . $e->getMessage());
-            return $e->getMessage();
+            return false;
         }
     }
 
@@ -131,7 +135,7 @@ class GenericSliderImageService
             $sliderImage = $this->findOne($id);
             DB::transaction(function () use ($data, $id, $sliderImage) {
                 if (isset($data['image_url'])) {
-                    $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
+                    $data['image_url'] = 'storage/' . $data['image_url']->store('generic-slider');
                     $this->deleteFile($sliderImage->image_url);
                 }
                 if (isset($data['other_attributes'])) {
@@ -173,10 +177,10 @@ class GenericSliderImageService
             if ($sliderImage->user_type === 'segment_wise_banner') {
                 $this->delSliderRedisCache();
             }
-            return response("Image has has been successfully updated");
+            return true;
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
-            return \response($e->getMessage(), 500);
+            return false;
         }
     }
 
