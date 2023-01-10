@@ -38,7 +38,7 @@ class PgwGatewayService
         try {
             $data['gateway_id'] =  $request['gateway_id'];
             $data['gateway_name'] =  ($request['gateway_id'] == 201) ? 'bKash' : 'Visa/Master';
-            $data['type'] =  ($request['gateway_id'] == 201) ? 'Mobile' : 'Card';
+            $data['type'] =  $request['type'];
             $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             $data['logo_web'] =  $request['logo_web'];
@@ -65,7 +65,7 @@ class PgwGatewayService
         try {
             $data['gateway_id'] =  $request['gateway_id'];
             $data['gateway_name'] =  ($request['gateway_id'] == 201) ? 'bKash' : 'Visa/Master';
-            $data['type'] =  ($request['gateway_id'] == 201) ? 'Mobile' : 'Card';
+            $data['type'] =  $request['type'];
             $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             $data['logo_web'] =  $request['logo_web'];

@@ -35,6 +35,8 @@
                                 <option value="games" >Games</option>
                                 <option value="musics">Musics</option>
                                 <option value="courses">Courses</option>
+                                <option value="cares">Cares</option>
+                                <option value="content">Content</option>
                             </select>
                         </div>
 {{--                        <div class="form-group">--}}
