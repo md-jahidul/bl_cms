@@ -10,7 +10,6 @@ function matchRelatedProduct($id, $relatedProductIds)
     }
     return false;
 }
-
 ?>
 
 @extends('layouts.admin')
@@ -100,8 +99,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 <td>
                                     @if($list->section_type == "slider_text_with_image_right" ||
-                                        $list->section_type == "multiple_image_banner" ||
-                                        $list->section_type == "pricing_sections"
+                                        $list->section_type == "multiple_image_banner" 
                                         )
 
                                         <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}"

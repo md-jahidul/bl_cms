@@ -139,7 +139,7 @@ class AppServiceProductDetailsService
 
             if (!empty($component_data) && count($component_data) > 0) {
                 foreach ($component_data as $key => $value) {
-
+                    
                     $value['section_details_id'] = $sections_saved_data->id;
                     $value['page_type'] = self::PAGE_TYPE;
 
@@ -236,11 +236,22 @@ class AppServiceProductDetailsService
                         $value['other_attributes'] = json_encode($value['other_attr']);
                     }
 
-                    $tableComponent = $this->bindTableComponent();
-                    if (isset($tableComponent)) {
-                        $value['editor_en'] = $tableComponent['editor_en'];
-                        $value['editor_bn'] = $tableComponent['editor_bn'];
+                    
+                    # Image With Content Component ====
+
+                    // $tableComponent = $this->bindTableComponent();
+                    // if (isset($tableComponent)) {
+                    //     $value['editor_en'] = $tableComponent['editor_en'];
+                    //     $value['editor_bn'] = $tableComponent['editor_bn'];
+                    // }
+
+                    if(isset($value['component_type']) && $value['component_type'] = 'pricing_mutiple_table'){
+                        $value['description_en'] = $value['left_editor_en'];
+                        $value['description_bn'] = $value['left_editor_bn'];
+                        $value['editor_en'] = $value['right_editor_en'];
+                        $value['editor_bn'] = $value['right_editor_bn'];
                     }
+
                     $component = $this->componentRepository->save($value);
 
                     if ($value['component_type'] == "multiple_image_banner" || $value['component_type'] == "slider_text_with_image_right" && isset($data['base_image'])) {
@@ -408,11 +419,18 @@ class AppServiceProductDetailsService
         }
 
 
-        $tableComponent = $this->bindTableComponent();
-        if (isset($tableComponent)) {
-            $data['editor_en'] = $tableComponent['editor_en'];
-            $data['editor_bn'] = $tableComponent['editor_bn'];
+        // $tableComponent = $this->bindTableComponent();
+        // if (isset($tableComponent)) {
+        //     $data['editor_en'] = $tableComponent['editor_en'];
+        //     $data['editor_bn'] = $tableComponent['editor_bn'];
+        // }
+        if(isset($data['component_type']) && $data['component_type'] = 'pricing_mutiple_table'){
+            $data['description_en'] = $data['left_editor_en'];
+            $data['description_bn'] = $data['left_editor_bn'];
+            $data['editor_en'] = $data['right_editor_en'];
+            $data['editor_bn'] = $data['right_editor_bn'];
         }
+
         $component->update($data);
         if ($request['component_type'] == "multiple_image_banner" || $request['component_type'] == "slider_text_with_image_right") {
             $this->comMultiDataRepository->deleteAllById($compoent_id);
@@ -555,13 +573,13 @@ class AppServiceProductDetailsService
         $results = [];
 
         $section_list_component = $this->appServiceProductDetailsRepository->findSectionEdit($section_id);
-
+        
         $results['sections'] = $section_list_component;
 
         if (!empty($section_list_component->sectionComponent) && count($section_list_component->sectionComponent) > 0) {
             foreach ($section_list_component->sectionComponent as $key => $value) {
                 $results['component'][] = $value;
-                //dd(json_decode($value->multiple_attributes));
+                
                 if (isset($value->multiple_attributes) && !empty($value->multiple_attributes)) {
                     $res = json_decode($value->multiple_attributes, true);
 

@@ -85,6 +85,10 @@
                                     <slot id="multiple_tab_image" data-offer-type="multiple_tab_image" class="{{ ($section['sections']->section_type ==  "multiple_tab_image"  ) ? '' : "d-none" }}">
                                         @include('admin.app-service.details.section.component_modal.multi_banner.multiple_tab_image')
                                     </slot>
+                                    {{--Pricing Multiple table--}}
+                                    <slot id="pricing_sections" data-offer-type="pricing_sections" class="{{ ($section['sections']->section_type ==  "pricing_sections"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.section.component_modal.pricing_sections_create')
+                                    </slot>
 
 
                                     <div class="col-md-12 mt-2">
