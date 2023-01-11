@@ -56,12 +56,12 @@ class GenericSliderService
             $homeComponentData['is_api_call_enable'] = 1;
 
             if ($data['component_for'] == 'home') {
-                Redis::del('mybl_home_component');
                 $this->myblHomeComponentService->save($homeComponentData);
+                Redis::del('mybl_home_component');
             }
             elseif ($data['component_for'] == 'content') {
-                Redis::del('content_component');
                 $this->contentComponentRepository->save($homeComponentData);
+                Redis::del('content_component');
             }
 
             DB::commit();
