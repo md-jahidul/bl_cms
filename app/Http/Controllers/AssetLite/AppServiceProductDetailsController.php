@@ -151,29 +151,28 @@ class AppServiceProductDetailsController extends Controller
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
-        if (
-//            $section['sections']->section_type == 'slider_text_with_image_right' ||
-//            $section['sections']->section_type == 'multiple_image_banner' ||
-            $section['sections']->section_type == 'pricing_sections'
-        ) {
-            if (!empty($section) && count($section) > 0) {
-                return response()->json([
-                    'status' => 'SUCCESS',
-                    'message' => 'Data found',
-                    'data' => $section
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => 'FAILED',
-                    'message' => 'Data not found',
-                    'data' => []
-                ], 404);
-            }
-        }
+        //  if (
+        //  $section['sections']->section_type == 'slider_text_with_image_right' ||
+        //  $section['sections']->section_type == 'multiple_image_banner' ||
+        //   $section['sections']->section_type == 'pricing_sections'
+        // ) {
+        //     if (!empty($section) && count($section) > 0) {
+        //         return response()->json([
+        //             'status' => 'SUCCESS',
+        //             'message' => 'Data found',
+        //             'data' => $section
+        //         ], 200);
+        //     } else {
+        //         return response()->json([
+        //             'status' => 'FAILED',
+        //             'message' => 'Data not found',
+        //             'data' => []
+        //         ], 404);
+        //     }
+        // }
 
         $componentTypes = $this->componentTypes;
         $component = $section['component'][0];
-        //dd($component);
         return view('admin.app-service.details.components.edit', compact(
             'tab_type',
             'product_id',
