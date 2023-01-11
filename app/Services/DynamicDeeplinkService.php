@@ -80,7 +80,9 @@ class DynamicDeeplinkService
         $subCategory = $request->sub_category;
         if ($sectionType == "others") {
             $endPointURL = $category;
-        } elseif ($category && $subCategory) {
+        }elseif ($request->category == "content") {
+            $endPointURL = "$category/$sectionType";
+        }elseif ($category && $subCategory) {
             $endPointURL = "$sectionType/$category/$subCategory";
         } else {
             $endPointURL = "$sectionType/$category";
