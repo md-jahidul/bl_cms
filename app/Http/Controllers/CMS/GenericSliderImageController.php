@@ -10,6 +10,7 @@ use App\Services\FeedCategoryService;
 use App\Services\GenericSliderImageService;
 use App\Services\GenericSliderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class GenericSliderImageController extends Controller
 {
@@ -64,6 +65,8 @@ class GenericSliderImageController extends Controller
         foreach ($request->position as $position) {
             $image = GenericSliderImage::FindorFail($position[0]);
             $image->update(['sequence' => $position[1]]);
+            Redis::del('mybl_home_component');
+            Redis::del('content_component');
         }
         return "success";
     }

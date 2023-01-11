@@ -83,14 +83,9 @@ class GenericSliderImageService
                     }
                 }
 
-                /**
-                 * Removing redis cache for segment banner to impact the change
-                 */
-                if ($sliderImg->user_type === 'segment_wise_banner') {
-                    $this->delSliderRedisCache();
-                }
             });
-
+            Redis::del('mybl_home_component');
+            Redis::del('content_component');
             return true;
         } catch (\Exception $e) {
 
@@ -171,12 +166,8 @@ class GenericSliderImageService
                     BaseImageCta::where('banner_id', $id)->delete();
                 }
             });
-            /**
-             * Removing redis cache for segment banner to impact the change
-             */
-            if ($sliderImage->user_type === 'segment_wise_banner') {
-                $this->delSliderRedisCache();
-            }
+            Redis::del('mybl_home_component');
+            Redis::del('content_component');
             return true;
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
