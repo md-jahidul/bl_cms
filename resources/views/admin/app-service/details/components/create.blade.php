@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -39,6 +39,8 @@
                                             <option data-alias="pricing_sections" value="pricing_sections">Pricing Multiple table</option>
                                             <option data-alias="static_easy_payment_card" value="static_easy_payment_card">Static Component - Easy payment card</option>
                                             <option data-alias="image_with_content" value="image_with_content">Image With Content</option>
+                                            <option data-alias="multiple_tab_image" value="multiple_tab_image">Multiple Tab With Image</option>
+                                            
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('component_type'))
@@ -123,6 +125,10 @@
                                     {{--image_with_content--}}
                                     <slot id="image_with_content" data-offer-type="image_with_content" class="d-none">
                                         @include('admin.app-service.details.section.component_modal.multi_banner.image_with_content')
+                                    </slot>
+                                    {{--multiple_tab_image--}}
+                                    <slot id="multiple_tab_image" data-offer-type="multiple_tab_image" class="d-none">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_tab_image')
                                     </slot>
 
 

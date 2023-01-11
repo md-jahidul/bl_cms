@@ -142,7 +142,7 @@ class EcareerItemController extends Controller
         $validator = Validator::make($request->all(), [
 //		    'title_en' => 'required',
             'image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size, // 2M
-        'image_name' => 'unique:ecareer_portal_items,image_name,' . $id, // 2M
+            'image_name' => 'unique:ecareer_portal_items,image_name,' . $id, // 2M
 		    'image_name_bn' => 'unique:ecareer_portal_items,image_name_bn,' . $id // 2M
         ]);
         if ($validator->fails()) {

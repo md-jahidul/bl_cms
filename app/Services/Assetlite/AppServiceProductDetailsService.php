@@ -204,16 +204,54 @@ class AppServiceProductDetailsService
                         $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
                     }
 
+                    # Multi Tab With Image Component ====
+                    if(isset($value['multi_tab_item'])){
+                        $tabData = [];
+                        $request_multi = $value['multi_tab_item'];
+                        foreach($request_multi as $k => $tab){
+                            $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+                            $results = [];
+                            for ($i = 1; $i <= $item_count; $i++) {
+                                foreach ($tab as $m_key => $m_value) {
+                                    $sub_data = [];
+                                    $check_index = explode('-', $m_key);
+                                    if (isset($check_index[1]) && $check_index[1] == $i) {
+                                        if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                                            $m_value = $this->upload($data['component'][$key]['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+                                        }
+                                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+
+                                    }else{
+                                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+                                    }
+                                }
+                            }
+                            $tabData[$k] = $results;
+                        }
+                        $value['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
+                    }
+
                     # other attributes to save
                     if (!empty($value['other_attr']) && count($value['other_attr']) > 0) {
                         $value['other_attributes'] = json_encode($value['other_attr']);
                     }
 
-                    $tableComponent = $this->bindTableComponent();
-                    if (isset($tableComponent)) {
-                        $value['editor_en'] = $tableComponent['editor_en'];
-                        $value['editor_bn'] = $tableComponent['editor_bn'];
+
+                    # Image With Content Component ====
+
+                    // $tableComponent = $this->bindTableComponent();
+                    // if (isset($tableComponent)) {
+                    //     $value['editor_en'] = $tableComponent['editor_en'];
+                    //     $value['editor_bn'] = $tableComponent['editor_bn'];
+                    // }
+
+                    if(isset($value['component_type']) && $value['component_type'] = 'pricing_mutiple_table'){
+                        $value['description_en'] = $value['left_editor_en'];
+                        $value['description_bn'] = $value['left_editor_bn'];
+                        $value['editor_en'] = $value['right_editor_en'];
+                        $value['editor_bn'] = $value['right_editor_bn'];
                     }
+
                     $component = $this->componentRepository->save($value);
 
                     if ($value['component_type'] == "multiple_image_banner" || $value['component_type'] == "slider_text_with_image_right" && isset($data['base_image'])) {
@@ -344,6 +382,35 @@ class AppServiceProductDetailsService
             $data['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
         }
 
+        # Multi Tab With Image Component ====
+        if(isset($data['multi_tab_item'])){
+            $tabData = [];
+            $request_multi = $data['multi_tab_item'];
+            foreach($request_multi as $k => $tab){
+                $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+                $results = [];
+                for ($i = 1; $i <= $item_count; $i++) {
+                    foreach ($tab as $m_key => $m_value) {
+                        $sub_data = [];
+                        $check_index = explode('-', $m_key);
+                        //$results[$i][$check_index[0]] = $tab;
+                        if (isset($check_index[1]) && $check_index[1] == $i) {
+                            if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                                $m_value = $this->upload($data['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+                            }
+                            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+
+                            if(!isset($tab['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
+                                $results[$i]['image_url'] = $data['multi_tab_item'][$k]['prev_image_url-'.$i];
+                            }
+                        }
+                    }
+
+                }
+                $tabData[$k] = $results;
+            }
+            $data['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
+        }
         # get video url
         if (isset($data['video_url']) && is_object($data['video_url'])) {
             $data['video'] = $this->upload($data['video_url'], 'assetlite/images/app-service/product/details');
@@ -352,11 +419,18 @@ class AppServiceProductDetailsService
         }
 
 
-        $tableComponent = $this->bindTableComponent();
-        if (isset($tableComponent)) {
-            $data['editor_en'] = $tableComponent['editor_en'];
-            $data['editor_bn'] = $tableComponent['editor_bn'];
+        // $tableComponent = $this->bindTableComponent();
+        // if (isset($tableComponent)) {
+        //     $data['editor_en'] = $tableComponent['editor_en'];
+        //     $data['editor_bn'] = $tableComponent['editor_bn'];
+        // }
+        if(isset($data['component_type']) && $data['component_type'] = 'pricing_mutiple_table'){
+            $data['description_en'] = $data['left_editor_en'];
+            $data['description_bn'] = $data['left_editor_bn'];
+            $data['editor_en'] = $data['right_editor_en'];
+            $data['editor_bn'] = $data['right_editor_bn'];
         }
+
         $component->update($data);
         if ($request['component_type'] == "multiple_image_banner" || $request['component_type'] == "slider_text_with_image_right") {
             $this->comMultiDataRepository->deleteAllById($compoent_id);
@@ -505,11 +579,14 @@ class AppServiceProductDetailsService
         if (!empty($section_list_component->sectionComponent) && count($section_list_component->sectionComponent) > 0) {
             foreach ($section_list_component->sectionComponent as $key => $value) {
                 $results['component'][] = $value;
+
                 if (isset($value->multiple_attributes) && !empty($value->multiple_attributes)) {
                     $res = json_decode($value->multiple_attributes, true);
 
                     usort($res, function ($a, $b) {
-                        return strcmp($a["display_order"], $b["display_order"]);
+                        if(isset($a["display_order"]) && isset($b["display_order"])){
+                            return strcmp($a["display_order"], $b["display_order"]);
+                        }
                     });
 
                     $results['component'][$key]['multiple_attributes'] = json_encode($res);

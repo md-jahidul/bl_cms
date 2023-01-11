@@ -184,7 +184,7 @@ class SearchController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
-        
+
         $response = $this->adTechService->storeAdTech($request->all(), 'search_modal');
         Session::flash('message', $response->getContent());
         return redirect('popular-search');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetail extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable =
         [
             'product_id',

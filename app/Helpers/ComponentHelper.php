@@ -37,6 +37,12 @@ class ComponentHelper
             // 'video_with_text_right' => 'Video with text right',
             // 'multiple_image_banner' => 'Multiple image banner',
             // 'pricing_sections' => 'Pricing Multiple table',
+//            'text_with_image_right' => 'Text with image right',
+//            'text_with_image_bottom' => 'Text with image bottom',
+//            'slider_text_with_image_right' => 'Slider text with image right',
+//            'video_with_text_right' => 'Video with text right',
+///            'multiple_image_banner' => 'Multiple image banner',
+//            'pricing_sections' => 'Pricing Multiple table',
         ];
     }
 }

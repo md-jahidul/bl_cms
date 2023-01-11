@@ -190,12 +190,33 @@ class ComponentService
                 $this->comMultiDataRepository->save($imgData);
             }
         }
-        $this->save($data);
+        $component = $this->save($data);
+
+        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
+            foreach ($data['base_image'] as $key => $img) {
+                if (!empty($img)) {
+                    $baseImgUrl = $this->upload($img, 'assetlite/images/component');
+                }
+                $imgData = [
+                    'component_id' => $component->id,
+                    'page_type' => $pageType,
+                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : '',
+                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : '',
+                    'alt_text_en' => $data['multi_alt_text_en'][$key],
+                    'alt_text_bn' => $data['multi_alt_text_bn'][$key],
+                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
+                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
+                    'base_image' => $baseImgUrl,
+                    'created_by' => Auth::id(),
+                ];
+                $this->comMultiDataRepository->save($imgData);
+            }
+        }
         return response('Component create successfully!');
     }
 
 
-    public function componentUpdate($data, $id)
+    public function componentUpdate($data, $id, $pageType)
     {
         if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
@@ -211,7 +232,6 @@ class ComponentService
 
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
-
             if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
 
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
@@ -228,7 +248,6 @@ class ComponentService
             $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
-                    // print_r($value);
                     $sub_data = [];
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
@@ -257,7 +276,6 @@ class ComponentService
             $data['multiple_attributes'] = $input_multiple_attributes;
 
         }else{
-
             //loop over the product array
             if ($input_multiple_attributes) {
                 foreach ($input_multiple_attributes as $data_id => $inputData) {
@@ -267,7 +285,6 @@ class ComponentService
                     }
                 }
             }
-
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
@@ -282,7 +299,7 @@ class ComponentService
         }
 
         $component->update($data);
-        
+
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
             $this->comMultiDataRepository->deleteAllById($id);
             foreach ($data['base_image'] as $key => $img) {
