@@ -43,7 +43,8 @@ class MyBlInternetOffersCategoryController extends Controller
         $offerCategory=$this->myBlInternetOffersCategoryService->findAll(null,null, [
             'column' => 'sort',
             'direction' => 'ASC'
-        ]);
+        ])->where('platform', 'mybl');
+
         return view('admin.data-bundle.index',compact('offerCategory'));
     }
 
@@ -111,7 +112,7 @@ class MyBlInternetOffersCategoryController extends Controller
  * @return void
  */
     public function update(MyBlInternetOffersCategoryRequest $request, $id){
-        
+
         $response = $this->myBlInternetOffersCategoryService->updateInternetOffersCategory($request->all(),$id);
 
         if($response['status'] == 200){
