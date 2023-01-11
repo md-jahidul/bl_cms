@@ -131,6 +131,7 @@ class Helper
             "ROAMING_PACKS"           => "Roaming Packs",
             "ROAMING_DETAILS"         => "Roaming Details",
             "USSD_CODE"               => "USSD code",
+            "CARE"                    => "Care",
         ];
     }
 
