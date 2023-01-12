@@ -42,9 +42,9 @@
                                             <label for="input-radio-16" class="mr-3">Prepaid</label>
                                             <input type="radio" name="user_type" value="postpaid" id="input-radio-17">
                                             <label for="input-radio-17" class="mr-3">Postpaid</label>
-                                            <input type="radio" name="user_type" value="segment_wise_banner"
-                                                   id="segment_wise_banner">
-                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>
+{{--                                            <input type="radio" name="user_type" value="segment_wise_banner"--}}
+{{--                                                   id="segment_wise_banner">--}}
+{{--                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
 
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>

@@ -32,9 +32,9 @@
                                     <input type="radio" name="user_type" value="postpaid"
                                            id="postpaid" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
                                     <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
-                                    <input type="radio" name="user_type" value="segment_wise_banner"
-                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>
-                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>
+{{--                                    <input type="radio" name="user_type" value="segment_wise_banner"--}}
+{{--                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>--}}
+{{--                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>--}}
                                 </div>
                             </div>
 
