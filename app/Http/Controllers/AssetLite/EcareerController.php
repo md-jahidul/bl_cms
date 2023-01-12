@@ -54,6 +54,20 @@ class EcareerController extends Controller {
     }
 
     /**
+     * [generalIndex description]
+     * @return [type] [description]
+     */
+    public function generalChildIndex($id) {
+
+        $sections = $this->ecarrerService->ecarrerSectionsChildList($id);
+        // $categoryTypes = 'life_at_bl_general';
+
+        // $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+
+        return view('admin.ecarrer.general.children.index', compact('sections'));
+    }
+
+    /**
      * [generalCreate create general section]
      * @return [type] [description]
      */
@@ -162,6 +176,16 @@ class EcareerController extends Controller {
         Session::flash('message', $response->getContent());
         return redirect("life-at-banglalink/general");
     }
+
+    /**
+     * [generalDestroy description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function generalSort(Request $request) {
+        return $this->ecarrerService->tableSortable($request->position);
+    }
+
 
     /**
      * Life at banglalink teams section list

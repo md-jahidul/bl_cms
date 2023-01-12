@@ -22,7 +22,23 @@ class EcareerPortalRepository extends BaseRepository
      * @return [type]           [description]
      */
     public function getSectionsByCategory($category){
-    		return $this->model::with('portalItems')->where('category', '=', $category)->whereNull('deleted_at')->get();
+    		return $this->model::with('portalItems')
+            ->where('category', '=', $category)
+            ->whereNull('parent_id')
+            ->whereNull('deleted_at')
+            ->orderBy('display_order','asc')->get();
+    }
+
+    /**
+     * [getSectionsByCategory description]
+     * @param  [type] $category [description]
+     * @return [type]           [description]
+     */
+    public function getSectionsByChildCategory($id){
+    		return $this->model::with('portalItems')
+                ->where('parent_id', '=', $id)
+                ->whereNull('deleted_at')
+                ->orderBy('display_order','asc')->get();
     }
 
     /**
@@ -42,12 +58,12 @@ class EcareerPortalRepository extends BaseRepository
     public function getSectionDataByID($id){
         return $this->model::where('id', $id)->whereNull('deleted_at')->first();
     }
-    
+
     //update category and sub category
     public function updateMainSection($data, $id){
         return $this->model::where('id', $id)->update($data);
     }
-    
+
 
 
 

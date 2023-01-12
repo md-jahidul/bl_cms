@@ -88,6 +88,8 @@ class EcareerService {
     //     return Response('Section updated successfully');
     // }
 
+
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
@@ -110,6 +112,15 @@ class EcareerService {
     public function ecarrerSectionsList($categoryTypes) {
 
         return $this->ecarrerPortalRepository->getSectionsByCategory($categoryTypes);
+    }
+
+    /**
+     * Life at bl teams sections
+     * @return [type] [description]
+     */
+    public function ecarrerSectionsChildList($id) {
+
+        return $this->ecarrerPortalRepository->getSectionsByChildCategory($id);
     }
 
     /**
@@ -408,6 +419,16 @@ class EcareerService {
         } else {
             return null;
         }
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($position)
+    {
+        $this->ecarrerPortalRepository->sortData($position);
+        return new Response('update successfully');
     }
 
 }
