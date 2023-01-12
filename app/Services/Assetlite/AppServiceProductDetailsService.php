@@ -245,7 +245,7 @@ class AppServiceProductDetailsService
                     //     $value['editor_bn'] = $tableComponent['editor_bn'];
                     // }
 
-                    if(isset($value['component_type']) && $value['component_type'] = 'pricing_mutiple_table'){
+                    if(isset($value['component_type']) && $value['component_type'] == 'pricing_mutiple_table'){
                         $value['description_en'] = $value['left_editor_en'];
                         $value['description_bn'] = $value['left_editor_bn'];
                         $value['editor_en'] = $value['right_editor_en'];
