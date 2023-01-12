@@ -82,38 +82,51 @@ return [
         'columns' => [
             'sim_type'             => 0,
             'content_type'         => 1,
-//            'family_name'          => 2,
             'product_code'         => 2,
-            'recharge_product_code' => 3,
+            'recharge_product_code'=> 3,
             'renew_product_code'   => 4,
-            'name'                 => 5,
-            'commercial_name_en'   => 6,
-            'commercial_name_bn'   => 7,
-            'short_description'    => 8,
-            'activation_ussd'      => 9,
-            'balance_check_ussd'   => 10,
-//            'offer_id'             => 12,
-            'sms_volume'           => 11,
-            'minute_volume'        => 12,
-            'data_volume'          => 13,
-            'internet_volume_mb'   => 13,
+            'commercial_name_en'   => 5,
+            'commercial_name_bn'   => 6,
+            'activation_ussd'      => 7,
+            'balance_check_ussd'   => 8,
+            'mrp_price'            => 9,
+            'price'                => 10,
+            'vat'                  => 11,
+            'validity'             => 12,
+            'validity_unit'        => 13,
             'data_volume_unit'     => 14,
-            'validity'             => 15,
-            'validity_in_days'     => 15,
-            'validity_unit'        => 16,
-            'mrp_price'            => 17,
-            'price'                => 18,
-            'vat'                  => 19,
-            'is_amar_offer'        => 20,
-//            'is_auto_renewable'    => 23,
-//            'is_recharge_offer'    => 24,
-//            'is_gift_offer'        => 25,
-            'rate_cutter_offer'    => 21,
-            'rate_cutter_unit'     => 22,
-            'assetlite_offer_type' => 23,
-            'short_text'           => 24,
-            'sms_rate_unit'        => 25,
-//            'validity_in_days'     => 31,
-        ]
+            'data_volume'          => 15,
+            'internet_volume_mb'   => 16,
+            'sms_volume'           => 17,
+            'call_rate'            => 18,
+            'call_rate_unit'       => 19,
+
+            'minute_volume'        => 20,
+            'validity_in_days'     => 21,
+            'special_product'      => 22,#p
+            'rate_cutter_offer'    => 23,#p
+            'is_four_g_offer'      => 24,#p
+            'sd_vat_tax_en'        => 25,
+            'sd_vat_tax_bn'        => 26,
+            'show_in_home'         => 27,
+            'short_description'    => 28,
+            'tag'                  => 29,
+            'family_group'         => 30,
+
+            'name'                 => 31,
+            'url_slug'             => 32,#p
+            'url_slug_bn'          => 33,#p
+            'start_date'           => 34,#p
+            'end_date'             => 35,#p
+
+            // 'assetlite_offer_type' => 23,
+            // 'is_gift_offer'        => 25,
+            // 'is_recharge_offer'    => 24,
+            // 'is_auto_renewable'    => 23,
+            // 'is_amar_offer'        => 22,
+            // 'offer_id'             => 12,
+            // 'family_name'          => 2,
+            // 'status'     => 31,
+            ]
     ]
 ];

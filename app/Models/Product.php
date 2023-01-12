@@ -97,6 +97,11 @@ class Product extends Model
         return $this->belongsTo(OfferCategory::class);
     }
 
+    public function tag_category()
+    {
+        return $this->belongsTo(TagCategory::class);
+    }
+
     public function scopeCategory($query, $type)
     {
         return $query->whereHas('sim_category', function ($q) use ($type) {
@@ -117,6 +122,21 @@ class Product extends Model
     public function other_related_product()
     {
         return $this->hasMany(OtherRelatedProduct::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function detailTabs()
+    {
+        return $this->hasManyThrough(
+            MyBlInternetOffersCategory::class,
+            MyBlProductTab::class,
+            'product_code',
+            'id',
+            'product_code',
+            'my_bl_internet_offers_category_id'
+        );
     }
 
 

@@ -192,6 +192,13 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Product Offers  ======================================
+    Route::get('offers-products', 'AssetLite\ProductController@offersProducts')->name('offers.product.index');
+
+    Route::post('offers-products/download', 'AssetLite\ProductController@downloadOffersProducts')->name('offers.product.download');
+    Route::post('offers-products', 'AssetLite\ProductController@uploadProductByExcel')->name('offers.product.save');
+    Route::get('offers-products-list', 'AssetLite\ProductController@getOffersProducts')->name('offers.product.list');
+
+
     Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
     Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
     Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');

@@ -68,6 +68,75 @@ class ProductController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return array
+     */
+    public function getOffersProducts(Request $request)
+    {
+        return $this->productService->getOffersProducts($request);
+    }
+
+    /**
+     * @return Factory|View
+     */
+    public function offersProducts()
+    {
+        $this->info['simCategories'] = SimCategory::select('id', 'name', 'alias')->whereNotIn('alias', ['propaid'])->get()->toArray();
+        $this->info['offers'] = $this->offerCategoryService->findBy(['parent_id' => 0]);
+
+        return view('admin.product.offer_product_entry', $this->info);
+    }
+
+    /**
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
+    public function downloadOffersProducts()
+    {
+        return $this->productService->downloadOffersProducts();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function uploadProductByExcel(Request $request)
+    {
+        try {
+            $file = $request->file('product_file');
+            $path = $file->storeAs(
+                'products/' . strtotime(now() . '/'),
+                "products" . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $path = Storage::disk('public')->path($path);
+
+            $this->productService->mapOffersProduct($path);
+
+            // reset product keys from redis
+            /**
+             * Commenting reset redis key code according to BL requirement on 24 June 2021
+             */
+            //$this->service->resetProductRedisKeys();
+
+            #shuvo: Need to Work Here
+            // $this->service->syncSearch();
+
+            $response = [
+                'success' => 'SUCCESS'
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param $type

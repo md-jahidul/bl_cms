@@ -176,6 +176,8 @@ class AlCoreProductService
             $data['product_code'] = strtoupper($data['product_code']);
             $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
             $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
+            $data['content_type'] = $this->getType($data['offer_category_id']);
+
             
             if(isset($data['validity_unit'])){
 
