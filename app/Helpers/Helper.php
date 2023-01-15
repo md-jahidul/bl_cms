@@ -127,7 +127,11 @@ class Helper
             "STORIES"                 => "Stories",
             "SHOP"                    => "Shop",
             "COURSES"                 => "Courses",
+            "GIFT_PACKS"              => "Gift Packs",
+            "ROAMING_PACKS"           => "Roaming Packs",
+            "ROAMING_DETAILS"         => "Roaming Details",
             "USSD_CODE"               => "USSD code",
+            "CARE"                    => "Care",
         ];
     }
 
@@ -284,8 +288,10 @@ class Helper
     {
         return [
             'internet_pack' => 'DATA',
-            'voice' => 'VOICE BUNDLES',
-            'bundle' => 'MIX BUNDLES'
+            'voice' => 'VOICE',
+            'mixed_bundle' => 'MIX BUNDLES',
+            'gift_packs' => "GIFT PACKS",
+            'roaming' => "ROAMING"
         ];
     }
 
