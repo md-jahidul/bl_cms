@@ -36,11 +36,11 @@
                                     <td width="20%">{{$slider->component_for}}</td>
                                     <td width="30%">
                                         <div class="row justify-content-md-center no-gutters">
-{{--                                            <div class="col-md-3">--}}
-{{--                                                <a role="button" title="Edit" href="{{route('generic-slider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >--}}
-{{--                                                    <i class="la la-pencil"></i>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
+                                            <div class="col-md-3">
+                                                <a role="button" title="Edit" href="{{route('generic-slider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
+                                                    <i class="la la-pencil"></i>
+                                                </a>
+                                            </div>
                                             <div class="col-md-3">
                                                 <a role="button" title="View Images" href="{{route('generic-slider.images.index',$slider->id)}}"
                                                    class=" btn btn-outline-success">

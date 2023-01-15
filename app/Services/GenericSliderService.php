@@ -65,14 +65,14 @@ class GenericSliderService
             }
 
             DB::commit();
-
+            return true;
         } catch (\Exception $e) {
 
             DB::rollback();
             Log::info($e->getMessage());
+            return false;
         }
 
-        return true;
     }
 
     public function getSlider()
@@ -81,10 +81,31 @@ class GenericSliderService
     }
 
 
-    public function updateSlider($request, $slider)
+    public function updateSlider($data, $id)
     {
-        $slider->update($request->all());
-        return Response('Slider has been successfully updated');
+        try {
+            DB::beginTransaction();
+            $slider = $this->genericSliderRepository->findOne($id);
+            $homeComponentData['title_en'] = $data['title_en'];
+            $homeComponentData['title_bn'] = $data['title_bn'];
+            if ($slider['component_for'] == 'home') {
+                $homeComponent = $this->myblHomeComponentService->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $homeComponent->update($homeComponentData);
+                Redis::del('mybl_home_component');
+            }
+            elseif ($slider['component_for'] == 'content') {
+                $contentComponent = $this->contentComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $contentComponent->update($homeComponentData);
+                Redis::del('content_component');
+            }
+            $slider->update($data);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::info($e->getMessage());
+            return false;
+        }
     }
 
     public function deleteSlider($id)
