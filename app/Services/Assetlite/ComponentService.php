@@ -216,7 +216,7 @@ class ComponentService
     }
 
 
-    public function componentUpdate($data, $id, $pageType)
+    public function componentUpdate($data, $id)
     {
         if ($data['component_type'] == "title_with_text_and_right_image") {
             request()->validate([
@@ -311,7 +311,7 @@ class ComponentService
                 }
                 $imgData = [
                     'component_id' => $component->id,
-                    'page_type' => $pageType,
+                    'page_type' => $component->page_type,
                     'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : null,
                     'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : null,
                     'alt_text_en' => $data['multi_alt_text_en'][$key],
