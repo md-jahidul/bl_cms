@@ -424,7 +424,7 @@ class AppServiceProductDetailsService
         //     $data['editor_en'] = $tableComponent['editor_en'];
         //     $data['editor_bn'] = $tableComponent['editor_bn'];
         // }
-        if(isset($data['component_type']) && $data['component_type'] = 'pricing_mutiple_table'){
+        if(isset($data['component_type']) && $data['component_type'] == 'pricing_mutiple_table'){
             $data['description_en'] = $data['left_editor_en'];
             $data['description_bn'] = $data['left_editor_bn'];
             $data['editor_en'] = $data['right_editor_en'];
