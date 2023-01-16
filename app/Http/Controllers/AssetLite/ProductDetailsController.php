@@ -121,6 +121,11 @@ class ProductDetailsController extends Controller
      */
     public function storeSection(Request $request, $simType, $id)
     {
+        $request->validate([
+            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name' : '',
+            'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name_bn' : '',
+        ]);
+
         $response = $this->productDetailsSectionService->sectionStore($request->all());
         Session::flash('success', $response->content());
         return redirect(route('section-list', [$simType, $id]));
@@ -134,6 +139,11 @@ class ProductDetailsController extends Controller
 
     public function updateSection(Request $request, $simType, $productDetailsId, $id)
     {
+        $request->validate([
+            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name,' . $id : '',
+            'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name_bn,' . $id : '',
+        ]);
+
         $response = $this->productDetailsSectionService->sectionUpdate($request->all(), $id);
         Session::flash('message', $response->content());
         return redirect(route('section-list', [$simType, $productDetailsId]));
@@ -177,7 +187,7 @@ class ProductDetailsController extends Controller
     public function componentEdit($simType, $productDetailsId, $sectionId, $id)
     {
         $dataTypes = $this->dataTypes;
-        $component = $this->componentService->findOne($id);
+        $component = $this->componentService->findOne($id, ['componentMultiData']);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
         return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'simType', 'productDetailsId'));
@@ -194,13 +204,18 @@ class ProductDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $simType, $productDetailsId, $sectionId, $id)
     {
-        $this->componentService->componentUpdate($request->all(), $id);
+        $response = $this->componentService->componentUpdate($request->all(), $id);
+        Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionId]));
     }
 
 
     public function bannerImgRelatedPro(Request $request, $simType, $productId)
     {
+        $request->validate([
+           'banner_name' => !empty($request->banner_name) ? 'unique:banner_img_related_products,banner_name,' . $request->banner_related_id : '',
+           'banner_name_bn' => !empty($request->banner_name) ? 'unique:banner_img_related_products,banner_name_bn,' . $request->banner_related_id : '',
+        ]);
         $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
         Session::flash('success', $response->content());
         return redirect(route('section-list', [$simType, $productId]));
