@@ -65,6 +65,13 @@
                                     {!! Form::hidden('programs_sections', 'programs_events') !!}
                                 @elseif( $sections_type == 'testimonial' )
                                     {!! Form::hidden('programs_sections', 'programs_testimonial') !!}
+                                @elseif( $sections_type == 'video' )
+                                    {!! Form::hidden('programs_sections', 'programs_video') !!}
+                                    <div class="form-group col-md-6">
+                                        <label for="embed">Video Embed Code</label>
+                                        <textarea name="video" class="form-control" aria-invalid="false"></textarea>
+                                        <small class="text-info">If you have banner type component then it'll work</small>
+                                    </div>
                                 @endif
 
                                 {{-- <div class="form-group col-md-6">

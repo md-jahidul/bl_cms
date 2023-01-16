@@ -55,7 +55,7 @@
                                     <label for="category_type">Select section type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="news_on_top" @if($sections->category_type == 'news_on_top') selected @endif>Life at banglalink section</option>
-                                            <option value="programs_progeneral" @if($sections->category_type == 'programs_progeneral') selected @endif>Program section</option>
+                                            <option value="program_section" @if($sections->category_type == 'program_section') selected @endif>Program section</option>
                                         </select>
                                 </div>
 

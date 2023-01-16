@@ -53,6 +53,7 @@ class EcareerController extends Controller {
         return view('admin.ecarrer.general.index', compact('sections'));
     }
 
+
     /**
      * [generalCreate create general section]
      * @return [type] [description]
@@ -162,6 +163,16 @@ class EcareerController extends Controller {
         Session::flash('message', $response->getContent());
         return redirect("life-at-banglalink/general");
     }
+
+    /**
+     * [generalDestroy description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function generalSort(Request $request) {
+        return $this->ecarrerService->tableSortable($request->position);
+    }
+
 
     /**
      * Life at banglalink teams section list
@@ -912,11 +923,9 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function progeneralIndex($sections_type) {
-
         $categoryTypes = 'programs_progeneral';
 
         $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-
         return view('admin.ecarrer.progeneral.index', compact('sections', 'sections_type'));
     }
 
@@ -925,7 +934,8 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function progeneralCreate($sections_type) {
-
+        $categoryTypes = 'programs_progeneral';
+        $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
         return view('admin.ecarrer.progeneral.create', compact('sections_type'));
     }
 
