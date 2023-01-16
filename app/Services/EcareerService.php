@@ -422,4 +422,8 @@ class EcareerService {
         return new Response('update successfully');
     }
 
+    public function findProgramId(){
+        return $this->ecarrerPortalRepository->findProgramId();
+    }
+
 }
