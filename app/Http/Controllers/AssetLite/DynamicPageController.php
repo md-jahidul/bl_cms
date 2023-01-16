@@ -120,7 +120,7 @@ class DynamicPageController extends Controller
      */
     public function componentUpdate(Request $request, $pageId, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
+        $response = $this->componentService->componentUpdate($request->all(), $id);
         Session::flash('success', $response->content());
         return redirect(route('other-components', [$pageId]));
     }

@@ -204,7 +204,7 @@ class ProductDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $simType, $productDetailsId, $sectionId, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
+        $response = $this->componentService->componentUpdate($request->all(), $id);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionId]));
     }
