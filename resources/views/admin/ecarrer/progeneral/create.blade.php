@@ -51,9 +51,9 @@
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs tab</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap">Strategic Assistant Program</option>
-                                            <option value="ennovators">Ennovators</option>
-                                            <option value="aip">Advanced Internship Program</option>
+                                            @foreach ($program_lists as $program)
+                                                <option value="{{$program->slug}}">{{$program->title_en}}</option>
+                                            @endforeach
                                         </select>
                                 </div>
 
