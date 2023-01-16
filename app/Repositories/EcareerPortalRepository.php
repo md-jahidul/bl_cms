@@ -55,6 +55,7 @@ class EcareerPortalRepository extends BaseRepository
 
     public function findProgramId(){
         return $this->model::where('is_program',1)->first();
+
     }
 
 

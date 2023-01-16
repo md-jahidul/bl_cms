@@ -936,8 +936,8 @@ class EcareerController extends Controller {
     public function progeneralCreate($sections_type) {
         $categoryTypes = 'programs_progeneral';
         $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-        $program_id = $this->ecarrerService->findProgramId();
-        return view('admin.ecarrer.progeneral.create', compact('sections_type'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.progeneral.create', compact('sections_type','program_lists'));
     }
 
     /**
@@ -990,7 +990,8 @@ class EcareerController extends Controller {
     public function progeneralEdit($id, $sections_type) {
 
         $sections = $this->ecarrerService->generalSectionById($id);
-        return view('admin.ecarrer.progeneral.edit', compact('sections', 'sections_type'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.progeneral.edit', compact('sections', 'sections_type','program_lists'));
     }
 
     /**

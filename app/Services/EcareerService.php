@@ -423,7 +423,11 @@ class EcareerService {
     }
 
     public function findProgramId(){
-        return $this->ecarrerPortalRepository->findProgramId();
+        //return
+        $programId = $this->ecarrerPortalRepository->findProgramId();
+        if(isset($programId)){
+            return $this->ecarrerPortalItemRepository->findProgramList($programId->id);
+        }
     }
 
 }
