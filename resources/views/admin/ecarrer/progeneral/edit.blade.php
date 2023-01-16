@@ -56,9 +56,9 @@
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs category</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap" @if($sections->category_type == 'sap') selected @endif>Strategic Assistant Program</option>
-                                            <option value="ennovators" @if($sections->category_type == 'ennovators') selected @endif>Ennovators</option>
-                                            <option value="aip" @if($sections->category_type == 'aip') selected @endif>Advanced Internship Program</option>
+                                        @foreach ($program_lists as $program)
+                                            <option value="{{$program->slug}}" @if($sections->category_type == $program->slug) selected @endif>{{$program->title_en}}</option>
+                                        @endforeach
                                         </select>
                                 </div>
 
@@ -69,6 +69,16 @@
                                 @endif
 
                                 @if( isset($additional_info->additional_type) )
+                                    @if ($additional_info->additional_type === 'programs_video')
+                                        <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
+                                            <label for="embed">Video Embed Code</label>
+                                            <textarea name="video" class="form-control">{{ $sections->video }}</textarea>
+                                            <small class="text-info">If you have banner type component then it'll work</small>
+                                            @if ($errors->has('video'))
+                                            <div class="help-block">  {{ $errors->first('video') }}</div>
+                                            @endif
+                                        </div>
+                                    @endif
                                     {!! Form::hidden('programs_sections', $additional_info->additional_type) !!}
                                 @endif
 

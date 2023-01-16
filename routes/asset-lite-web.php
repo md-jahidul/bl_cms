@@ -704,19 +704,19 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // eCarrer ============================================
-    Route::get('life-at-banglalink/general',
-        'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
-    Route::get('life-at-banglalink/general/create',
-        'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
-    Route::post('life-at-banglalink/general/store',
-        'AssetLite\EcareerController@generalStore')->name('life.at.banglalink.general.store');
-    Route::get('life-at-banglalink/general/{id}/edit',
-        'AssetLite\EcareerController@generalEdit')->name('life.at.banglalink.general.edit');
-    Route::post('life-at-banglalink/general/{id}/update',
-        'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
-    Route::get('life-at-banglalink/general/destroy/{id}',
-        'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
-
+    // Route::get('life-at-banglalink/general',
+    //     'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
+    // Route::get('life-at-banglalink/general/create',
+    //     'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
+    // Route::post('life-at-banglalink/general/store',
+    //     'AssetLite\EcareerController@generalStore')->name('life.at.banglalink.general.store');
+    // Route::get('life-at-banglalink/general/{id}/edit',
+    //     'AssetLite\EcareerController@generalEdit')->name('life.at.banglalink.general.edit');
+    // Route::post('life-at-banglalink/general/{id}/update',
+    //     'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
+    // Route::get('life-at-banglalink/general/destroy/{id}',
+    //     'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
+    require __DIR__.'/asset-lite/eCareer/ecarrer_general.php';
     // University
     Route::get('university', 'AssetLite\UniversityController@index')
         ->name('university.index');
