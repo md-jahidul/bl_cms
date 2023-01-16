@@ -430,6 +430,11 @@
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Steps section</a>
                         </li>
+                        <li class="{{ request()->is('programs/progeneral/video*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'video']) }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Video section</a>
+                        </li>
                         {{-- <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i

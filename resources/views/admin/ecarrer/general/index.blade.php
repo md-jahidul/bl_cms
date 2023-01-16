@@ -41,11 +41,7 @@
                                     @if( $section->is_default != 1 )
                                         <a href="{{ url("life-at-banglalink/general/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a>
                                     @endif
-                                    @if ($section->has_child_page === 1)
-                                        <a href="{{ url("life-at-banglalink/general/$section->id/list") }}" class="btn btn-outline-warning"><i class="la la-edit"></i> Child <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
-                                    @else
-                                        <a href="{{ url("ecarrer-items/$section->id/list") }}" class="btn btn-outline-warning"><i class="la la-edit"></i> Section Items <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
-                                    @endif
+                                    <a href="{{ url("ecarrer-items/$section->id/list") }}" class="btn btn-outline-warning"><i class="la la-edit"></i> Section Items <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
                                 </td>
                             </tr>
                         @endforeach

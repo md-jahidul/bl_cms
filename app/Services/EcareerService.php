@@ -115,15 +115,6 @@ class EcareerService {
     }
 
     /**
-     * Life at bl teams sections
-     * @return [type] [description]
-     */
-    public function ecarrerSectionsChildList($id) {
-
-        return $this->ecarrerPortalRepository->getSectionsByChildCategory($id);
-    }
-
-    /**
      * store teams section on create
      * @param  [type] $request [description]
      * @return [type]          [description]

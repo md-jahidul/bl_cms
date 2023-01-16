@@ -87,7 +87,7 @@
                                     <label for="category_type">Select section type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="news_on_top">Life at banglalink section</option>
-                                            <option value="program_section">Program section</option>
+                                            <option value="programs_progeneral">Program section</option>
                                         </select>
                                 </div>
 

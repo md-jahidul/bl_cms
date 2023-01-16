@@ -53,19 +53,6 @@ class EcareerController extends Controller {
         return view('admin.ecarrer.general.index', compact('sections'));
     }
 
-    /**
-     * [generalIndex description]
-     * @return [type] [description]
-     */
-    public function generalChildIndex($id) {
-
-        $sections = $this->ecarrerService->ecarrerSectionsChildList($id);
-        // $categoryTypes = 'life_at_bl_general';
-
-        // $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-
-        return view('admin.ecarrer.general.children.index', compact('sections'));
-    }
 
     /**
      * [generalCreate create general section]
@@ -936,11 +923,9 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function progeneralIndex($sections_type) {
-
         $categoryTypes = 'programs_progeneral';
 
         $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-
         return view('admin.ecarrer.progeneral.index', compact('sections', 'sections_type'));
     }
 
@@ -949,7 +934,8 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function progeneralCreate($sections_type) {
-
+        $categoryTypes = 'programs_progeneral';
+        $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
         return view('admin.ecarrer.progeneral.create', compact('sections_type'));
     }
 
