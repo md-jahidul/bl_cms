@@ -1070,8 +1070,8 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function proiconboxCreate() {
-
-        return view('admin.ecarrer.proiconbox.create');
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.proiconbox.create',compact('program_lists'));
     }
 
     /**
@@ -1120,7 +1120,8 @@ class EcareerController extends Controller {
     public function proiconboxEdit($id) {
 
         $sections = $this->ecarrerService->generalSectionById($id);
-        return view('admin.ecarrer.proiconbox.edit', compact('sections'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.proiconbox.edit', compact('sections','program_lists'));
     }
 
     /**
@@ -1192,8 +1193,8 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function photogalleryCreate() {
-
-        return view('admin.ecarrer.photogallery.create');
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.photogallery.create',compact('program_lists'));
     }
 
     /**
@@ -1239,7 +1240,8 @@ class EcareerController extends Controller {
     public function photogalleryEdit($id) {
 
         $sections = $this->ecarrerService->generalSectionById($id);
-        return view('admin.ecarrer.photogallery.edit', compact('sections'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.photogallery.edit', compact('sections','program_lists'));
     }
 
     /**

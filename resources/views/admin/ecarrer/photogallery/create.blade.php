@@ -55,16 +55,16 @@
                                         <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs category</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap">Strategic Assistant Program</option>
-                                            <option value="ennovators">Ennovators</option>
-                                            <option value="aip">Advanced Internship Program</option>
-                                        </select>
+                                        @foreach ($program_lists as $program)
+                                            <option value="{{$program->slug}}">{{$program->title_en}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                
+
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -105,7 +105,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -120,7 +120,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>
