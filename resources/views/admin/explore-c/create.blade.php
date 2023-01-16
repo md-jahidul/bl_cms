@@ -79,8 +79,8 @@
 
 
                             <div class="form-group col-md-6 {{ $errors->has('slug_en') ? ' error' : '' }}">
-                                <label class="required"> Button URL EN</label>
-                                <input type="text" class="form-control slug-convert required" name="slug_en" placeholder="URL EN" id="slug_en">
+                                <label class="required"> Slug EN</label>
+                                <input type="text" class="form-control slug-convert required" name="slug_en" placeholder="Slug EN" id="slug_en" value="{{ old("slug_en") ? old("slug_en") : '' }}">
                                 @if ($errors->has('slug_en'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('slug_en') }}
@@ -89,8 +89,8 @@
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('slug_bn') ? ' error' : '' }}">
-                                <label class="required"> Button URL BN </label>
-                                <input type="text" class="form-control slug-convert" name="slug_bn" placeholder="URL BN">
+                                <label class="required"> Slug BN </label>
+                                <input type="text" class="form-control slug-convert" name="slug_bn" placeholder="Slug BN" value="{{ old("slug_bn") ? old("slug_bn") : '' }}">
                                 @if ($errors->has('slug_bn'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('slug_bn') }}
