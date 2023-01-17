@@ -40,12 +40,12 @@ class MyBlInternetOffersCategoryService
             $this->internetOffersCategoryRepository->save($data);
             return [
                 "status" => 200,
-                "message" => 'Internet Offer has been successfully created'
+                "message" => 'Product Category has been successfully created'
             ];
         }catch (\Exception $e){
             return [
                 "status" => 500,
-                "message" => 'Internet Offer has been Created Failed'
+                "message" => 'Product Category has been Created Failed'
             ];
         }
 
@@ -89,12 +89,12 @@ class MyBlInternetOffersCategoryService
 
             return [
                 "status" => 200,
-                "message" => 'MyBl Internet Offers Category has been successfully updated'
+                "message" => 'Product Category has been successfully updated'
             ];
         }catch (\Exception $e){
             return [
                 "status" => 500,
-                "message" => 'Internet Offer Update Failed'
+                "message" => 'Product Category Update Failed'
             ];
         }
 
