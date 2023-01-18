@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreQuickLaunch extends FormRequest
+class UpdateQuickLaunch extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,13 @@ class StoreQuickLaunch extends FormRequest
     public function rules()
     {
         return [
-            'title_en' => 'required',
-            'title_bn' => 'required',
-            'image_url' => 'required|mimes:png,jpeg,svg',
-            'alt_text' => 'required',
-            'link' => 'required',
-            'link_bn' => 'required',
-            'status' => 'required',
+            'title_en' => 'filled',
+            'title_bn' => 'filled',
+            'image_url' => 'filled|mimes:png,jpeg,svg',
+            'alt_text' => 'filled',
+            'link' => 'filled',
+            'link_bn' => 'filled',
+            'status' => 'filled',
         ];
     }
 
