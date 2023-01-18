@@ -59,7 +59,7 @@
                                         @foreach ($program_lists as $program)
                                             <option value="{{$program->slug}}" @if($sections->category_type == $program->slug) selected @endif>{{$program->title_en}}</option>
                                         @endforeach
-                                        </select>
+                                    </select>
                                 </div>
 
                                 {{-- {{ dd($sections->additional_info) }} --}}
