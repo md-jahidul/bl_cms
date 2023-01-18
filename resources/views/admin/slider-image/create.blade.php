@@ -77,11 +77,10 @@
                                 </div>
 
 
-                                <div class=" col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input dropify"
-                                               required data-validation-required-message="Slider image field is required" data-height="80">
+                                        <input type="file" name="image_url" class="custom-file-input dropify" data-height="80"  required data-validation-required-message="Slider Image (Desktop View) is required">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
@@ -94,7 +93,7 @@
                                 <div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
                                     <label for="mobileImg">Slider Image (Mobile View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80">
+                                        <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80" required data-validation-required-message="Slider Image (Mobile View) is required">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
