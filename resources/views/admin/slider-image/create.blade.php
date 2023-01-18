@@ -79,7 +79,7 @@
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input dropify"
-                                               required data-validation-required-message="Slider image field is required" data-height="80" data-allowed-file-extensions="jpg png svg">
+                                               required data-validation-required-message="Slider image field is required" data-height="80">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
