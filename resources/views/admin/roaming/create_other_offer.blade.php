@@ -90,6 +90,24 @@
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
 
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Title (EN)</label>
+                                        <input class="form-control" name="banner_title_en">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Title (BN)</label>
+                                        <input class="form-control" name="banner_title_bn">
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Short Text (EN)</label>
+                                        <textarea rows="4" class="form-control" name="banner_desc_en"></textarea>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Short Text (BN)</label>
+                                        <textarea rows="4" class="form-control" name="banner_desc_bn"></textarea>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group row">

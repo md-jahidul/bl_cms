@@ -111,6 +111,10 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->banner_name = $request->banner_name;
             $offer->banner_web = $webPath;
             $offer->banner_mobile = $mobilePath;
+            $offer->banner_title_en = $request->banner_title_en;
+            $offer->banner_title_bn = $request->banner_title_bn;
+            $offer->banner_desc_en = $request->banner_desc_en;
+            $offer->banner_desc_bn = $request->banner_desc_bn;
             $offer->alt_text = $request->alt_text;
             $offer->url_slug = $request->url_slug;
             $offer->url_slug_bn = $request->url_slug_bn;
