@@ -337,7 +337,20 @@
 
         </ul>
     </li>
-
+    <!-- LMS -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">LMS</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_url('lms-components') }}">
+                <a class="menu-item" href="{{ route('lms-components') }}">
+                    <i class="la la-puzzle-piece"></i>Home Components</a>
+            </li>
+            <li class="{{ is_active_url('shortcut-components') }}">
+                <a class="menu-item" href="{{ route('shortcut-components') }}">
+                    <i class="la la-puzzle-piece"></i>Shortcut</a>
+            </li>
+        </ul>
+    </li>
     <!-- PGW -->
     <li class="nav-item"><a href="#"><i class="la la-users"></i>
         <span class="menu-title" data-i18n="nav.templates.main">PGW</span></a>
