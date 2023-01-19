@@ -190,28 +190,7 @@ class ComponentService
                 $this->comMultiDataRepository->save($imgData);
             }
         }
-        $component = $this->save($data);
-
-        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
-            foreach ($data['base_image'] as $key => $img) {
-                if (!empty($img)) {
-                    $baseImgUrl = $this->upload($img, 'assetlite/images/component');
-                }
-                $imgData = [
-                    'component_id' => $component->id,
-                    'page_type' => $pageType,
-                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : '',
-                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : '',
-                    'alt_text_en' => $data['multi_alt_text_en'][$key],
-                    'alt_text_bn' => $data['multi_alt_text_bn'][$key],
-                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
-                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
-                    'base_image' => $baseImgUrl,
-                    'created_by' => Auth::id(),
-                ];
-                $this->comMultiDataRepository->save($imgData);
-            }
-        }
+        
         return response('Component create successfully!');
     }
 
@@ -468,7 +447,9 @@ class ComponentService
     public function deleteComponent($id)
     {
         $component = $this->findOne($id);
-        $component->delete();
+
+        if($component) $component->delete();
+        
         return Response('Component deleted successfully !');
     }
 
