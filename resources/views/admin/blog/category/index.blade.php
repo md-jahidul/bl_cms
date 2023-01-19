@@ -19,29 +19,17 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="20%">Title</th>
-                            <th width="20%">Date</th>
-                            <th width="20%">Blog Category</th>
-                            <th width="8%">Image</th>
-                            <th width="25%">Short Description</th>
-                            <th width="8%">Details</th>
+                            <th width="20%">Title En</th>
+                            <th width="20%">Title Bn</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($blogPosts as $data)
+                        @foreach($blogCategories as $data)
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> (Inactive)</strong></span>' : '' !!}
-                                    {!! $data->show_in_home == 1 ? '<span class="success pl-1"><strong> (Show In Home)</strong></span>' : '' !!}</td>
-{{--                                <td>{{ str_replace('_', ' ', ucfirst($data->type)) }}</td>--}}
-                                <td>{{ $data->date }}</td>
-                                <td>{{ $data->mediaNewsCategory->title_en }}</td>
-                                <td><img src="{{ config('filesystems.file_base_url') . $data->thumbnail_image }}" height="90" width="150"></td>
-                                <td>{{ $data->short_details_en }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route( "blog-component.list", ['id' => $data->id] ) }}" class="btn-sm btn-outline-warning border">Details</a>
-                                </td>
+                                <td>{{ $data->title_en }}</td>
+                                <td>{{ $data->title_bn }}</td>
 
                                 <td width="12%" class="text-center">
                                     <a href="{{ url("blog-post/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

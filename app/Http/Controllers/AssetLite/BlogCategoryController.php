@@ -18,21 +18,8 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class BlogController extends Controller
+class BlogCategoryController extends Controller
 {
-    /**
-     * @var AlFaqService
-     */
-    private $mediaPNE;
-
-    protected const LATEST_NEWS = "latest_news";
-    protected const FEATURED_TOPICS = "featured_topics";
-    protected const NEWS_ARCHIVE = "news_archive";
-    protected const REFERENCE_TYPE = "blog";
-    /**
-     * @var MediaBannerImageService
-     */
-    private $mediaBannerImageService;
     /**
      * @var MediaNewsCategoryService
      */
@@ -40,17 +27,11 @@ class BlogController extends Controller
 
     /**
      * RolesController constructor.
-     * @param MediaPressNewsEventService $mediaPressNewsEventService
-     * @param MediaBannerImageService $mediaBannerImageService
      * @param MediaNewsCategoryService $mediaNewsCategoryService
      */
     public function __construct(
-        MediaPressNewsEventService $mediaPressNewsEventService,
-        MediaBannerImageService $mediaBannerImageService,
         MediaNewsCategoryService $mediaNewsCategoryService
     ) {
-        $this->mediaPNE = $mediaPressNewsEventService;
-        $this->mediaBannerImageService = $mediaBannerImageService;
         $this->mediaNewsCategoryService = $mediaNewsCategoryService;
     }
 
@@ -59,8 +40,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-       $blogPosts = $this->mediaPNE->findByReferenceType(self::REFERENCE_TYPE);
-        return view('admin.blog.post.index', compact('blogPosts'));
+        $blogCategories = $this->mediaNewsCategoryService->findAll();
+        return view('admin.blog.category.index', compact('blogCategories'));
     }
 
     /**
