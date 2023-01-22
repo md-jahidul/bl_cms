@@ -643,6 +643,11 @@
             <li class="nav-item"><a href="#"><i class="la la-bold"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Blog</span></a>
                 <ul class="menu-content">
+                    <li class="{{ is_active_url('blog-categories') . is_active_url('blog-categories/create') }} }} nav-item">
+                        <a href="{{ url('blog-categories') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post Categories</span>
+                        </a>
+                    </li>
                     <li class="{{ is_active_url('blog-post') . is_active_url('blog-post/create') }} }} nav-item">
                         <a href="{{ url('blog-post') }}"><i class="la la-send"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">Post List</span>

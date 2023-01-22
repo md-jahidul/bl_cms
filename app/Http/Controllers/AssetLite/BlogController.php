@@ -6,6 +6,7 @@ use App\Http\Requests\BlogPostRequest;
 use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
 use App\Services\MediaPressNewsEventService;
+use App\Services\MediaNewsCategoryService;
 use Bookworm\Bookworm;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -32,18 +33,25 @@ class BlogController extends Controller
      * @var MediaBannerImageService
      */
     private $mediaBannerImageService;
+    /**
+     * @var MediaNewsCategoryService
+     */
+    protected $mediaNewsCategoryService;
 
     /**
      * RolesController constructor.
      * @param MediaPressNewsEventService $mediaPressNewsEventService
      * @param MediaBannerImageService $mediaBannerImageService
+     * @param MediaNewsCategoryService $mediaNewsCategoryService
      */
     public function __construct(
         MediaPressNewsEventService $mediaPressNewsEventService,
-        MediaBannerImageService $mediaBannerImageService
+        MediaBannerImageService $mediaBannerImageService,
+        MediaNewsCategoryService $mediaNewsCategoryService
     ) {
         $this->mediaPNE = $mediaPressNewsEventService;
         $this->mediaBannerImageService = $mediaBannerImageService;
+        $this->mediaNewsCategoryService = $mediaNewsCategoryService;
     }
 
     /**
@@ -51,7 +59,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogPosts = $this->mediaPNE->findByReferenceType(self::REFERENCE_TYPE);
+       $blogPosts = $this->mediaPNE->findByReferenceType(self::REFERENCE_TYPE);
         return view('admin.blog.post.index', compact('blogPosts'));
     }
 
@@ -62,7 +70,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('admin.blog.post.create');
+        $categories = $this->mediaNewsCategoryService->findAll('','mediaNewsCategory');
+        return view('admin.blog.post.create',compact('categories'));
     }
 
     /**
@@ -87,7 +96,8 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blogPost = $this->mediaPNE->findOne($id);
-        return view('admin.blog.post.edit', compact('blogPost'));
+        $categories = $this->mediaNewsCategoryService->findAll('','mediaNewsCategory');
+        return view('admin.blog.post.edit', compact('blogPost','categories'));
     }
 
     /**

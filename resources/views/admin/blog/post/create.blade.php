@@ -57,7 +57,19 @@
                                         <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
                                     @endif
                                 </div>
-
+                                <div class="form-group col-md-12 {{ $errors->has('media_news_category_id') ? ' error' : '' }}">
+                                    <label for="media_news_category_id" class="required">Select Blog Category</label>
+                                    <select class="form-control" name="media_news_category_id" aria-invalid="false" required data-validation-required-message="Enter Category">
+                                        <option value="">Select a blog category</option>
+                                        @foreach ( $categories as $category)
+                                            <option value="{{$category->id}}">{{$category->title_en}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('media_news_category_id'))
+                                        <div class="help-block">  {{ $errors->first('media_news_category_id') }}</div>
+                                    @endif
+                                </div>
 {{--                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">--}}
 {{--                                    <label for="alt_text_en" class="">Alt Text</label>--}}
 {{--                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"--}}

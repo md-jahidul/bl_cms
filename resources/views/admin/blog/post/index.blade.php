@@ -21,6 +21,7 @@
                             <td width="3%">#</td>
                             <th width="20%">Title</th>
                             <th width="20%">Date</th>
+                            <th width="20%">Blog Category</th>
                             <th width="8%">Image</th>
                             <th width="25%">Short Description</th>
                             <th width="8%">Details</th>
@@ -35,6 +36,7 @@
                                     {!! $data->show_in_home == 1 ? '<span class="success pl-1"><strong> (Show In Home)</strong></span>' : '' !!}</td>
 {{--                                <td>{{ str_replace('_', ' ', ucfirst($data->type)) }}</td>--}}
                                 <td>{{ $data->date }}</td>
+                                <td>{{ $data->mediaNewsCategory->title_en }}</td>
                                 <td><img src="{{ config('filesystems.file_base_url') . $data->thumbnail_image }}" height="90" width="150"></td>
                                 <td>{{ $data->short_details_en }}</td>
                                 <td class="text-center">
