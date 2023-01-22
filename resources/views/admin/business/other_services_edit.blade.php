@@ -124,29 +124,47 @@
 
                             <div class="form-group">
 
-
-                                <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$service->banner_name}}" required name="banner_name" placeholder="Photo Name">
-
+                                <label>Product Photo Name EN<span class="text-danger">*</span></label>
                                 <input type="hidden" value="{{$service->banner_name}}" name="old_banner_name">
+                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name EN"
+                                       value="{{ $service->banner_name }}">
 
                                 <small class="text-info">
-                                    <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
                                 </small>
 
+                                @if($errors->has('banner_name'))
+                                    <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                @endif
                                 <br>
-
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control" value="{{$service->alt_text}}" name="alt_text" placeholder="Alt Text">
 
                             </div>
 
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Product Photo Name BN<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control banner_name" required name="banner_name_bn" placeholder="Photo Name BN"
+                                    value="{{ $service->banner_name_bn }}">
 
+                            <small class="text-info">
+                                <strong>i.e:</strong> মোবাইল-রিপোর্টিং-সার্ভিস (no spaces)<br>
+                            </small>
+
+                            @if($errors->has('banner_name_bn'))
+                                <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="col-md-4 form-group">
+                            <label>Alt Text EN</label>
+                            <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text EN" value="{{ $service->alt_text }}">
+                        </div>
+
+                        <div class="col-md-4 form-group">
+                            <label>Alt Text BN</label>
+                            <input type="text" class="form-control"  name="alt_text_bn" placeholder="Alt Text BN" value="{{ $service->alt_text_bn }}">
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -234,28 +252,42 @@
                             <div class="form-group">
 
                                 <label>Banner Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name" required name="details_banner_name" value="{{$service->details_banner_name}}" placeholder="Banner Name">
                                 <input type="hidden" name="old_details_banner_name" value="{{$service->details_banner_name}}">
+                                <input type="text" class="form-control banner_name" required name="details_banner_name" placeholder="Banner Name"  value="{{$service->details_banner_name}}">
+
+                                @if($errors->has('details_banner_name'))
+                                    <div class="help-block text-danger">{{ $errors->first('details_banner_name') }}</div>
+                                @endif
 
                                 <small class="text-info">
                                     <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
                                 </small>
 
                                 <br>
+                                <label>Banner Name EN<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name" required name="details_banner_name_bn" placeholder="Banner Name BN"  value="{{$service->details_banner_name_bn}}">
+
+                                @if($errors->has('details_banner_name_bn'))
+                                    <div class="help-block text-danger">{{ $errors->first('details_banner_name_bn') }}</div>
+                                @endif
+
+                                <small class="text-info">
+                                    <strong>i.e:</strong> মোবাইল-রিপোর্টিং-সার্ভিস (no spaces)<br>
+                                </small>
+
+                                <br>
 
                                 <label>Banner Alt Text</label>
-                                <input type="text" class="form-control"  name="banner_alt_text" value="{{$service->details_alt_text}}" placeholder="Alt Text">
+                                <input type="text" class="form-control"  name="details_alt_text" placeholder="Alt Text EN"  value="{{ $service->details_alt_text }}">
+
+                                <br>
+                                <label>Banner Alt Text EN</label>
+                                <input type="text" class="form-control"  name="details_alt_text_bn" placeholder="Alt Text BN"  value="{{ $service->details_alt_text_bn }}">
 
                             </div>
 
-
-
                         </div>
-
-
                     </div>
-
-
                 </div>
             </div>
         </div>

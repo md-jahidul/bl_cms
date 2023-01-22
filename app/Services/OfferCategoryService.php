@@ -75,6 +75,24 @@ class OfferCategoryService
     public function updateOfferCategory($data, $id)
     {
         try {
+//<<<<<<< HEAD
+//            $status = true;
+//            $update = [];
+//
+//            $update['name_en'] = $data['name_en'];
+//            $update['name_bn'] = $data['name_bn'];
+//            $update['url_slug'] = $data['url_slug'];
+//            $update['url_slug_bn'] = $data['url_slug_bn'];
+//            $update['schema_markup'] = $data['schema_markup'];
+//            $update['page_header'] = $data['page_header'];
+//            $update['page_header_bn'] = $data['page_header_bn'];
+//            $update['banner_name'] = $data['banner_name'];
+//            $update['banner_name_bn'] = $data['banner_name_bn'];
+//            $update['banner_alt_text'] = $data['banner_alt_text'];
+//            $update['banner_alt_text_bn'] = $data['banner_alt_text_bn'];
+//            $update['updated_by'] = Auth::id();
+//=======
+//>>>>>>> seo_cms
             $offerCategory = $this->findOne($id);
             $data['updated_by'] = Auth::id();
 
@@ -83,23 +101,31 @@ class OfferCategoryService
             // Prepaid
             if (isset($data['banner_image_url'])) {
                 $data['banner_image_url'] = $this->upload($data['banner_image_url'], $dirPath);
-                $this->deleteFile($offerCategory->banner_image_url);
+                if (file_exists($offerCategory->banner_image_url)) {
+                    $this->deleteFile($offerCategory->banner_image_url);
+                }
             }
 
             if (!empty($data['banner_image_mobile'])) {
                 $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], $dirPath);
-                $this->deleteFile($offerCategory->banner_image_mobile);
+                if (file_exists($offerCategory->banner_image_mobile)) {
+                    $this->deleteFile($offerCategory->banner_image_mobile);
+                }
             }
 
             // Postpaid
             if (!empty($data['postpaid_banner_image_url'])) {
                 $data['postpaid_banner_image_url'] = $this->upload($data['postpaid_banner_image_url'], $dirPath);
-                $this->deleteFile($offerCategory->postpaid_banner_image_url);
+                if (file_exists($offerCategory->postpaid_banner_image_url)) {
+                    $this->deleteFile($offerCategory->postpaid_banner_image_url);
+                }
             }
 
             if (!empty($data['postpaid_banner_image_mobile'])) {
                 $data['postpaid_banner_image_mobile'] = $this->upload($data['postpaid_banner_image_mobile'], $dirPath);
-                $this->deleteFile($offerCategory->postpaid_banner_image_mobile);
+                if (file_exists($offerCategory->postpaid_banner_image_mobile)) {
+                    $this->deleteFile($offerCategory->postpaid_banner_image_mobile);
+                }
             }
 
             if ($offerCategory) {

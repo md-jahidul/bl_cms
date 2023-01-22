@@ -63,25 +63,26 @@
 
                                     <br>
 
-                                    <label for="alt_text" class="required">Alt Text</label>
-                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
-                                           required data-validation-required-message="Enter alt text"
-                                           value="{{ old("title") ? old("title") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
-                                    @endif
-                                </div>
+                                    <div class="form-group {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                        <label for="alt_text" class="required">Alt Text EN</label>
+                                        <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text en"
+                                               required data-validation-required-message="Enter alt text en"
+                                               value="{{ old("alt_text") ? old("alt_text") : '' }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('alt_text'))
+                                            <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                        @endif
+                                    </div>
 
+                                </div>
 
 
                                 <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input dropify"
-                                               required data-validation-required-message="Slider image field is required" data-height="80">
+                                        <input type="file" name="image_url" class="custom-file-input dropify" data-height="80"  required data-validation-required-message="Slider Image (Desktop View) is required">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_url'))
@@ -92,13 +93,46 @@
                                 <div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
                                     <label for="mobileImg">Slider Image (Mobile View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80">
+                                        <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80" required data-validation-required-message="Slider Image (Mobile View) is required">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('mobile_view_img'))
                                         <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label class="required">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Enter alt text bn"
+                                           required data-validation-required-message="Enter alt text bn"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('image_name') ? ' error' : '' }}">
+                                    <label class="required">Image Name EN</label>
+                                    <input type="text" name="image_name"  class="form-control" placeholder="Enter image name en"
+                                           required data-validation-required-message="Enter image name en"
+                                           value="{{ old("image_name") ? old("image_name") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name'))
+                                        <div class="help-block">  {{ $errors->first('image_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label class="required">Image Name BN</label>
+                                    <input type="text" name="image_name_bn"  class="form-control" placeholder="Enter image name en"
+                                           required data-validation-required-message="Enter image name en"
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
                                     @endif
                                 </div>
 

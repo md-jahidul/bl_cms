@@ -175,14 +175,40 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Name EN</label>
+                                    <input type="text" name="banner_name" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('banner_name') ? old('banner_name') : $priyojonLanding->banner_name }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Name BN</label>
+                                    <input type="text" name="banner_name_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('banner_name_bn') ? old('banner_name_bn') : $priyojonLanding->banner_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text EN</label>
                                     <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($priyojonLanding->alt_text_en) ? $priyojonLanding->alt_text_en : '' }}">
+                                           placeholder="Enter alt text" value="{{ old('alt_text_en') ? old('alt_text_en') : $priyojonLanding->alt_text_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('alt_text_bn') ? old('alt_text_bn') : $priyojonLanding->alt_text_bn }}">
                                 </div>
 
                                 <div class="form-actions col-md-12">

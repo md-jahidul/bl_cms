@@ -106,6 +106,38 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }}
+                                {{ $appServiceProduct->is_images == 1 ? '' : 'd-none' }}" id="detailsImg">
+                                <label for="mobileImg">Details Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="details_image_url" data-height="90" class="dropify"
+                                           data-default-file="{{ config('filesystems.file_base_url') . $appServiceProduct->details_image_url }}">
+                                </div>
+                                <div class="help-block"></div>
+                                @if ($errors->has('details_image_url'))
+                                    <div class="help-block">  {{ $errors->first('details_image_url') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}
+                                {{ $appServiceProduct->is_images == 1 ? 'd-none' : '' }}" id="detailsVideo">
+                                <label for="details_video_url" class="required">Details Video URL</label>
+                                <input type="text" name="details_video_url" class="form-control slug-convert" placeholder="Enter URL"
+                                       value="{{ $appServiceProduct->details_video_url }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('details_video_url'))
+                                    <div class="help-block">  {{ $errors->first('details_video_url') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-2 mt-1">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="is_images">Is Images:</label>
+                                    <input type="checkbox" name="is_images" value="1" id="is_images" {{ $appServiceProduct->is_images == 1 ? 'checked' : '' }}>
+                                </div>
+                            </div>
+
 
                             <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
                                 @include('layouts.partials.app-service.app')
@@ -204,6 +236,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
 <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
@@ -213,6 +246,7 @@
 <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script>
 $(function () {
     var date = new Date();
@@ -273,6 +307,31 @@ $(function () {
 
     var fields = $("#form-fields").find("input, textarea");
     fields.val('');
+
+    // Image Dropify
+    $(function () {
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            },
+        });
+    });
+
+    var detailsVideo = $('#detailsVideo');
+    var detailsImage = $('#detailsImg');
+
+    $('#is_images').click(function () {
+        if($(this).prop("checked") == true){
+            detailsVideo.addClass('d-none');
+            detailsImage.removeClass('d-none');
+        }else{
+            detailsImage.addClass('d-none')
+            detailsVideo.removeClass('d-none')
+        }
+    })
 });
 </script>
 @endpush

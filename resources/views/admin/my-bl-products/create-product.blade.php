@@ -60,6 +60,7 @@
                                         <option value="gift">GIFT</option>
                                         <option value="volume request">VOLUME REQUEST</option>
                                         <option value="volume transfer">VOLUME TRANSFER</option>
+                                        <option value="rom">ROAMING PRODUCT</option>
                                         {{--<option value="bonus">BONUS</option>--}}
                                     </select>
                                     <div class="help-block"></div>
@@ -243,11 +244,11 @@
                                 </div>
 
 {{--                                <div class="form-group col-md-4">--}}
-{{--                                    <label>Select Product Category</label>--}}
+{{--                                    <label>Select Data Section</label>--}}
 {{--                                    <select multiple--}}
 {{--                                            class="form-control data-section"--}}
 {{--                                            name="offer_section_slug[]" required>--}}
-{{--                                        <option value="">Please Selcet Product Category</option>--}}
+{{--                                        <option value="">Please Select Data Section</option>--}}
 {{--                                            @foreach ($internet_categories as $key => $category)--}}
 {{--                                                <option--}}
 {{--                                                    value="{{ $key }}">  {{$category}}--}}
@@ -373,7 +374,13 @@
                                         <label for="is_rate_cutter_offer">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_favorite" value="1"
+                                               name="is_favorite">
+                                        <label for="is_favorite">Is Favorite</label>
+                                    </fieldset>
+                                </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack">
@@ -687,7 +694,6 @@
             console.log(type)
             if (
                 type === 'data' ||
-                type === 'mix' ||
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||

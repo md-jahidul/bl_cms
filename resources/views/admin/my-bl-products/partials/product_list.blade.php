@@ -1,6 +1,6 @@
 <div class="col-md-12 mt-5" >
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <select name="sim_type" class="form-control filter" id="sim_type">
                 <option value=""> Connection Type</option>
                 <option value="1">PREPAID</option>
@@ -27,19 +27,26 @@
                 <option value="bonus">BONUS</option>
                 <option value="free_products">FREE PRODUCTS</option>
                 <option value="is_popular_pack">POPULAR PACKS</option>
+                <option value="rom">ROAMING PRODUCT</option>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <select name="show_in_home" class="form-control filter" id="show_in_home">
                 <option value=""> Show in Home</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
         </div>
+        <div class="col-md-2">
+            <select name="pinned_products" class="form-control filter" id="pinned_products">
+                <option value=""> Pinned Products ?</option>
+                <option value="1">Show Pinned</option>
+                <option value="0">Show Non Pinned</option>
+            </select>
+        </div>
     </div>
 </div>
 <div class="col-md-12 mt-3">
-
     <table class="table table-striped table-bordered dataTable"
            id="product_list" role="grid">
         <thead>
@@ -66,8 +73,8 @@
 @push('page-js')
     {{--    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript">
         </script>--}}
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
-        <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
+    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script>
         $(function () {
             new Clipboard('.copy-text');
@@ -94,6 +101,9 @@
                         },
                         show_in_home: function () {
                             return $("#show_in_home").val();
+                        },
+                        pinned_products: function () {
+                            return $("#pinned_products").val();
                         }
                     }
                 },
@@ -128,7 +138,6 @@
                             return row.recharge_product_code;
                         }
                     },
-
 
                     {
                         name: 'description',
@@ -194,7 +203,7 @@
                         render: function (data, type, row) {
                             // return row.deep_link;
                             if(row.deep_link==null){
-                             return `<div class="btn-group" role="group" aria-label="Basic example">
+                                return `<div class="btn-group" role="group" aria-label="Basic example">
                             <button class="btn btn-sm btn-icon btn-outline-success edit" onclick="deepLinkCreate('` + row.product_code + `');"><i class="la icon-link"></i></button>
                           </div>`
                             }else{
@@ -226,31 +235,31 @@
         });
 
         function deepLinkCreate(productCode){
-                    $.ajax({
-                            url: "{{ url('mybl-products-deep-link-create') }}/"+productCode,
-                            methods: "get",
-                            success: function (result) {
-                                console.log(result.status_code);
-                                if(result.status_code===200){
-                                Swal.fire(
-                                    'Generated!',
-                                    'Deep link generated successfully .<br><br> Link :  '+result.short_link,
-                                    'success',
-                                );
-                                }else{
-                                    Swal.fire(
-                                    'Oops!',
-                                    'Something went wrong please try again ',
-                                    'error',
-                                );
-                                }
-                                setTimeout(redirect, 2000)
-                                function redirect() {
-                                    $('#product_list').DataTable().ajax.reload();
-                                }
-                            }
-                        });
-            }
+            $.ajax({
+                url: "{{ url('mybl-products-deep-link-create') }}/"+productCode,
+                methods: "get",
+                success: function (result) {
+                    console.log(result.status_code);
+                    if(result.status_code===200){
+                        Swal.fire(
+                            'Generated!',
+                            'Deep link generated successfully .<br><br> Link :  '+result.short_link,
+                            'success',
+                        );
+                    }else{
+                        Swal.fire(
+                            'Oops!',
+                            'Something went wrong please try again ',
+                            'error',
+                        );
+                    }
+                    setTimeout(redirect, 2000)
+                    function redirect() {
+                        $('#product_list').DataTable().ajax.reload();
+                    }
+                }
+            });
+        }
 
         function copyDeepLinkCreate(deeplink){
             const str = document.getElementById(deeplink).id;

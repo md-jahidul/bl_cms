@@ -46,10 +46,10 @@ class ConfigController extends Controller
     {
         $image_upload_size = $this->adminImageUploadSize();
         $image_upload_type = $this->adminImageUploadType();
-        
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-            'site_logo' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+  # Check Image upload validation
+                $validator = Validator::make($request->all(), [
+            'site_logo' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size, // 2M
+            'login_page_banner' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());

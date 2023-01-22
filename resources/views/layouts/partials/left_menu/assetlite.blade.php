@@ -73,6 +73,10 @@
                                     class="la la-futbol-o"></i>
                                 <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
                         </li>
+                        <li class="{{ is_active_url('/sub-footer') }} nav-item"><a href="{{ url('sub-footer') }}"><i
+                                    class="la la-futbol-o"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Sub Footer</span></a>
+                        </li>
                     @endif
 
                     @if( auth()->user()->can_view('QuickLaunch') )
@@ -152,7 +156,7 @@
                 <li class="{{is_active_url('excel.upload')}}">
                     <a class="menu-item" href="{{ route('excel.upload') }} "
                        data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i>Category sync with Product 
+                        <i class="la la-align-center"></i>Category sync with Product
                     </a>
                 </li>
                 <li class="{{ is_active_url('product-price/slabs') }}">
@@ -620,6 +624,28 @@
 
                     <li class="{{ is_active_url('/landing-page-component') }} nav-item">
                         <a href="{{ url('/landing-page-component') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item"><a href="#"><i class="la la-bold"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Blog</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('blog-post') . is_active_url('blog-post/create') }} }} nav-item">
+                        <a href="{{ url('blog-post') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post List</span>
+                        </a>
+                    </li>
+{{--                    <li class="{{ is_active_url('/tvc-video') }} nav-item">--}}
+{{--                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>--}}
+{{--                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+
+                    <li class="{{ is_active_url('blog/landing-page-component') . is_active_url('blog/landing-page-component/create') }} nav-item">
+                        <a href="{{ url('blog/landing-page-component') }}"><i class="la la-futbol-o"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
                         </a>
                     </li>

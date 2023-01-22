@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\CorpCaseStudyComponentRequest;
 use App\Models\CorpCaseStudyReportSection;
 use App\Services\CorpCaseStudyComponentService;
 use Illuminate\Contracts\Foundation\Application;
@@ -70,7 +71,7 @@ class CorpCaseStudyComponentController extends Controller
      * @param Request $request
      * @return Application|RedirectResponse|Redirector|void
      */
-    public function store(Request $request, $sectionId)
+    public function store(CorpCaseStudyComponentRequest $request, $sectionId)
     {
         $response = $this->corpCaseStudyComponentService->storeComponent($request->all(), $sectionId);
         Session::flash('success', $response->getContent());
@@ -97,7 +98,7 @@ class CorpCaseStudyComponentController extends Controller
      * @param int $id
      * @return Application|RedirectResponse|Response|Redirector
      */
-    public function update(Request $request, $sectionId, $id)
+    public function update(CorpCaseStudyComponentRequest $request, $sectionId, $id)
     {
         $response = $this->corpCaseStudyComponentService->updateComponent($request->all(), $sectionId, $id);
         Session::flash('message', $response->getContent());

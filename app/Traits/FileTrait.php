@@ -39,6 +39,16 @@ trait FileTrait {
         return $path;
     }
 
+    protected function uploadOrgFileName($file, $directoryPath, $fileName)
+    {
+        $path = $file->storeAs(
+            $directoryPath,
+            $fileName,
+            $this->disk
+        );
+        return $path;
+    }
+
     /**
      * Rename after upload
      * @param file name

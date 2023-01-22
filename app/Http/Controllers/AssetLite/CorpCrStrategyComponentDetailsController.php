@@ -78,7 +78,7 @@ class CorpCrStrategyComponentDetailsController extends Controller
     public function componentEditForm($sectionComId, $id)
     {
         $componentTypes = $this->componentTypes;
-        $component = $this->componentService->findOne($id);
+        $component = $this->componentService->findOne($id, ['componentMultiData']);
         $multipleImage = $component['multiple_attributes'];
         return view('admin.corporate-responsibility.cr-strategy.details-components.edit', compact('component', 'multipleImage', 'componentTypes', 'sectionComId'));
     }
@@ -91,7 +91,7 @@ class CorpCrStrategyComponentDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $sectionComId, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id);
+        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('cr-strategy-details.index', [$sectionComId]));
     }

@@ -57,7 +57,7 @@ class RoamingGeneralService {
 
     /**
      * update roaming category
-     * @return Response
+     * @return array
      */
     public function updateCategory($request) {
         try {
@@ -84,15 +84,10 @@ class RoamingGeneralService {
             //save data in database
             $this->catRepo->updateCategory($webPath, $mobilePath, $request);
 
-
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "News Saved"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,

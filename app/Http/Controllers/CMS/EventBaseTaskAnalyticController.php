@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Services\TaskAnalyticService;
-use App\Http\Requests\TaskAnalyticRequest;
-use App\Http\Requests\TaskAnalyticUserDetailRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,6 +24,7 @@ class EventBaseTaskAnalyticController extends Controller
 
     public function analytics(Request $request)
     {
+        // event base analytics report generate
         return $this->taskAnalyticService->getAnalytics($request->all());
     }
 

@@ -6,6 +6,16 @@ return [
         'redeemed' => 'redeemed',
         'claimed' => 'claimed',
     ],
+
+    'redis-keys' => [
+        'available_products' => 'available_products'
+    ],
+
+    'status_bootstrap_classes' => [
+        'active' => 'success',
+        'inactive' => 'danger',
+        'completed' => 'info'
+    ],
     'cs_selfcare' => [
         'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y',
             env('CS_REFERRAL_END_DATE', '01/01/2022'))),
@@ -16,6 +26,30 @@ return [
         'cs_referral_product_code_postpaid' => env('CS_REFERRAL_PRODUCT_CODE_POSTPAID'),
         'rafm_report_mail' => env('CS_SELFCARE_RAFM_REPORT_MAIL'),
         'cs_report_send_at' => env('CS_REPORT_SEND_AT', '02:00')
+    ],
+
+    'test_msisdn_removal' => [
+        'msisdns' => ['01409900110', '01409900160'],
+
+        'features' => [
+            'customer' => [
+                'title' => 'Customers',
+                'model' => 'customer',
+                'key' => 'msisdn',
+            ],
+            'referAndEarn' => [
+                [
+                    'title' => 'Refer And Earn',
+                    'model' => 'referee',
+                    'key' => 'referee_msisdn',
+                ],
+                [
+                    'title' => 'Refer And Earn',
+                    'model' => 'referrer',
+                    'key' => 'msisdn',
+                ]
+            ]
+        ]
     ],
 
     'sms' => [
@@ -35,6 +69,8 @@ return [
 
     'validityUnits' => ['hours', 'days'],
 
+    'partnerChannelName' => ['bKash', 'Nagad', 'EBL'],
+    
     'terms_conditions_feature_names' => [
         'general' => 'General',
         'balance_transfer' => 'Balance Transfer'

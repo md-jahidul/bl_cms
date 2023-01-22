@@ -6,215 +6,215 @@
 @endsection
 
 @section('content')
-<div class="card mb-0 px-1" style="box-shadow:none;">
-    <div class="card-content">
-        <div class="card-body">
-            <form novalidate class="form" method="POST" action="{{route('notification.store')}}" enctype="multipart/form-data">
-                @csrf
-                @method('post')
+    <div class="card mb-0 px-1" style="box-shadow:none;">
+        <div class="card-content">
+            <div class="card-body">
+                <form novalidate class="form" method="POST" action="{{route('notification.store')}}" enctype="multipart/form-data">
+                    @csrf
+                    @method('post')
 
-                <div class="form-body">
-                    <h4 class="form-section"><i class="la la-key"></i>
-                        Create Notification
-                    </h4>
-                    <div class="row">
+                    <div class="form-body">
+                        <h4 class="form-section"><i class="la la-key"></i>
+                            Create Notification
+                        </h4>
+                        <div class="row">
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="title" class="required">Title :</label>
-                                <input
-                                name="title"
-                                required
-                                maxlength="100"
-                                data-validation-required-message="Title is required"
-                                data-validation-maxlength-message = "Title can not be more then 100 Characters"
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" class="required">Title :</label>
+                                    <input
+                                        name="title"
+                                        required
+                                        maxlength="100"
+                                        data-validation-required-message="Title is required"
+                                        data-validation-maxlength-message = "Title can not be more then 100 Characters"
 
-                                style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                        style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
 
-                                <div class="help-block">
-                                    <small class="text-info"> Title can not be more then 100 Characters</small><br>
-                                </div>
-                                <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="category_id" class="required">
-                                    Category :
-                                </label>
-                                <div class="controls">
-                                    <select name="category_id" id="category_id" required class="form-control @error('category_id') is-invalid @enderror">
-                                    <option value="">Select Category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
-                                    @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div>
-
-{{--                        <div class="col-md-4">--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label for="start_date" class="required">Time Period</label>--}}
-{{--                                <div class='input-group'>--}}
-{{--                                    <input type='text'--}}
-{{--                                           class="form-control datetime"--}}
-{{--                                           value="{{ old("display_period") ? old("display_period") : '' }}"--}}
-{{--                                           name="display_period"--}}
-{{--                                           id="display_period"/>--}}
-{{--                                    @if($errors->has('display_period'))--}}
-{{--                                        <p class="text-left">--}}
-{{--                                            <small class="danger text-muted">{{ $errors->first('display_period') }}</small>--}}
-{{--                                        </p>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-                        {{-- <div class="col-md-4">
-
-                            <div class="form-group">
-                                <label for="cta_name" class="required">
-                                    CTA Name:
-                                </label>
-                                <div class="controls">
-                                    <select name="cta_name" id="cta_name" required class="form-control">
-                                    <option value="">Select CTA name</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                    <option value="buy_now">Buy Now</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="cta_action" class="required">
-                                    CTA Action :
-                                </label>
-                                <div class="controls">
-                                    <select name="cta_action" id="cta_action" required class="form-control">
-                                    <option value="">Select CTA type</option>
-                                    <option value="direct_purchase">Direct purchase</option>
-                                    <option value="internal_link">Internal Link</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="category_id" class="required">
-                                    Notification type :
-                                </label>
-                                <div class="controls">
-                                    <select name="notification_type" id="notification_type" required class="form-control">
-                                    <option value="">Select notification type</option>
-                                    <option value="individual">Individual</option>
-                                    <option value="bulk">Bulk</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('notification_type') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="device_type" class="required">
-                                    Target OS :
-                                </label>
-                                <div class="controls">
-                                    <select name="device_type" id="device_type"  class="form-control" required>
-                                    {{-- <option value="">Select OS</option> --}}
-                                    <option value="all">All</option>
-                                    <option value="ios">IOS</option>
-                                    <option value="android">Android</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('device_type') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="customer_type" class="required">
-                                    Customer type :
-                                </label>
-                                <div class="controls">
-                                    <select name="customer_type" id="customer_type" required class="form-control">
-                                    {{-- <option value="">Select Customer Type</option> --}}
-                                    <option value="all">All</option>
-                                    <option value="prepaid">Prepaid</option>
-                                    <option value="postpaid">Postpaid</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('customer_type') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-                        </div>
-
-{{-- ================================================= --}}
-
-
-                        <div class="col-md-4" id="action_div">
-                            <div class="form-group">
-                                <label class="required">Navigate Action : </label>
-                                <select name="navigate_action" class="browser-default custom-select"
-                                        id="navigate_action" required>
-                                    <option value="">Select Action</option>
-                                    @foreach ($actionList as $key => $value)
-                                        <option
-                                            @if(isset($short_cut_info->component_identifier) && $short_cut_info->component_identifier == $key)
-                                            selected
-                                            @endif
-                                            value="{{ $key }}">
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="help-block"></div>
-                            </div>
-                        </div>
-                        <div id="append_div" class="col-md-4">
-                            @if(isset($short_cut_info))
-                                @if($info = json_decode($short_cut_info->other_info))
-                                    <div class="form-group other-info-div">
-                                        <label>@if($short_cut_info->component_identifier == "DIAL") Dial Number @else
-                                                Redirect
-                                                URL @endif </label>
-                                        <input type="text" name="external_url" class="form-control" required
-                                            value="@if($info) {{$info->content}} @endif">
-                                        <div class="help-block"></div>
+                                    <div class="help-block">
+                                        <small class="text-info"> Title can not be more then 100 Characters</small><br>
                                     </div>
-                                @endif
-                            @endif
-                        </div>
+                                    <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
-{{-- ========================================================= --}}
-                    </div>
-                    <div class="row">
-                        {{-- <div class="col-md-12 d-inline"> --}}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id" class="required">
+                                        Category :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="category_id" id="category_id" required class="form-control @error('category_id') is-invalid @enderror">
+                                            <option value="">Select Category</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{--                        <div class="col-md-4">--}}
+                            {{--                            <div class="form-group">--}}
+                            {{--                                <label for="start_date" class="required">Time Period</label>--}}
+                            {{--                                <div class='input-group'>--}}
+                            {{--                                    <input type='text'--}}
+                            {{--                                           class="form-control datetime"--}}
+                            {{--                                           value="{{ old("display_period") ? old("display_period") : '' }}"--}}
+                            {{--                                           name="display_period"--}}
+                            {{--                                           id="display_period"/>--}}
+                            {{--                                    @if($errors->has('display_period'))--}}
+                            {{--                                        <p class="text-left">--}}
+                            {{--                                            <small class="danger text-muted">{{ $errors->first('display_period') }}</small>--}}
+                            {{--                                        </p>--}}
+                            {{--                                    @endif--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
+                            {{--                        </div>--}}
+
+                            {{-- <div class="col-md-4">
+
+                                <div class="form-group">
+                                    <label for="cta_name" class="required">
+                                        CTA Name:
+                                    </label>
+                                    <div class="controls">
+                                        <select name="cta_name" id="cta_name" required class="form-control">
+                                        <option value="">Select CTA name</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="buy_now">Buy Now</option>
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div> --}}
+
+                            {{-- <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cta_action" class="required">
+                                        CTA Action :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="cta_action" id="cta_action" required class="form-control">
+                                        <option value="">Select CTA type</option>
+                                        <option value="direct_purchase">Direct purchase</option>
+                                        <option value="internal_link">Internal Link</option>
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div> --}}
+
+                            {{-- <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id" class="required">
+                                        Notification type :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="notification_type" id="notification_type" required class="form-control">
+                                        <option value="">Select notification type</option>
+                                        <option value="individual">Individual</option>
+                                        <option value="bulk">Bulk</option>
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('notification_type') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="device_type" class="required">
+                                        Target OS :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="device_type" id="device_type"  class="form-control" required>
+                                            {{-- <option value="">Select OS</option> --}}
+                                            <option value="all">All</option>
+                                            <option value="ios">IOS</option>
+                                            <option value="android">Android</option>
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('device_type') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="customer_type" class="required">
+                                        Customer type :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="customer_type" id="customer_type" required class="form-control">
+                                            {{-- <option value="">Select Customer Type</option> --}}
+                                            <option value="all">All</option>
+                                            <option value="prepaid">Prepaid</option>
+                                            <option value="postpaid">Postpaid</option>
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('customer_type') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- ================================================= --}}
+
+
+                            <div class="col-md-4" id="action_div">
+                                <div class="form-group">
+                                    <label class="required">Navigate Action : </label>
+                                    <select name="navigate_action" class="browser-default custom-select"
+                                            id="navigate_action" required>
+                                        <option value="">Select Action</option>
+                                        @foreach ($actionList as $key => $value)
+                                            <option
+                                                @if(isset($short_cut_info->component_identifier) && $short_cut_info->component_identifier == $key)
+                                                selected
+                                                @endif
+                                                value="{{ $key }}">
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                            <div id="append_div" class="col-md-4">
+                                @if(isset($short_cut_info))
+                                    @if($info = json_decode($short_cut_info->other_info))
+                                        <div class="form-group other-info-div">
+                                            <label>@if($short_cut_info->component_identifier == "DIAL") Dial Number @else
+                                                    Redirect
+                                                    URL @endif </label>
+                                            <input type="text" name="external_url" class="form-control" required
+                                                   value="@if($info) {{$info->content}} @endif">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
+
+                            {{-- ========================================================= --}}
+                        </div>
+                        <div class="row">
+                            {{-- <div class="col-md-12 d-inline"> --}}
 
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="image">Upload image :</label>
-                                        <input type="file"
-                                            id="icon"
-                                            name="image"
-                                            class="dropify"
-                                            {{-- data-allowed-formats="square" --}}
-                                            data-allowed-file-extensions="jpeg png jpg"
-                                            {{-- data-height="70" --}}
-                                            />
+                                    <input type="file"
+                                           id="icon"
+                                           name="image"
+                                           class="dropify"
+                                           {{-- data-allowed-formats="square" --}}
+                                           data-allowed-file-extensions="jpeg png jpg"
+                                        {{-- data-height="70" --}}
+                                    />
                                     <div class="help-block">
                                         <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
                                         {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}
@@ -224,31 +224,31 @@
                             </div>
 
                             <div class="col-md-7">
-                            <div class="form-group">
-                                <label for="body" class="required">Body :</label>
-                                <textarea
-                                required
-                                data-validation-required-message="Title is required"
-                                class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
-                                <div class="help-block"></div>
-                                <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
-                            </div>
+                                <div class="form-group">
+                                    <label for="body" class="required">Body :</label>
+                                    <textarea
+                                        required
+                                        data-validation-required-message="Title is required"
+                                        class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
+                                </div>
                             </div>
 
-                        {{-- </div> --}}
+                            {{-- </div> --}}
 
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-success round px-2">
-                                <i class="la la-check-square-o"></i> Submit
-                            </button>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-success round px-2">
+                                    <i class="la la-check-square-o"></i> Submit
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
@@ -285,10 +285,10 @@
                 }
             });
 
-           var feed_category = "";
-           var content = "";
-           var dial_content = "";
-           var purchase_content = "";
+            var feed_category = "";
+            var content = "";
+            var dial_content = "";
+            var purchase_content = "";
             var url_html;
             var parse_data;
             let dial_html, other_info = '';
@@ -381,19 +381,8 @@
                     $("#append_div").html(product_html);
                     $(".product-list").select2({
                         placeholder: "Select a product",
-                        minimumInputLength:3,
-                        allowClear: true,
-                        selectOnClose:true,
                         ajax: {
-                            url: "{{ route('notification.productlist.dropdown') }}",
-                            dataType: 'json',
-                            data: function (params) {
-                            var query = {
-                                productCode: params.term
-                            }
-                            // Query parameters will be ?search=[term]&type=public
-                            return query;
-                            },
+                            url: "{{ route('myblslider.active-products') }}",
                             processResults: function (data) {
                                 // Transforms the top-level key of the response object from 'items' to 'results'
                                 return {
@@ -407,7 +396,7 @@
                 }
             });
         });
-      $(function () {
+        $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 

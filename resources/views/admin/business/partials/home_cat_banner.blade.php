@@ -84,7 +84,6 @@
                             </div>
 
                             <div class="form-group row">
-
                                 <div class="col-md-4 col-xs-12">
                                     <label>Banner (Web)</label>
                                     <input type="file" class="" name="banner_web" data-height="70"
@@ -105,10 +104,51 @@
                                     <p class="banner_mobile"></p>
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title EN</label>
+                                    <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                           value="">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn_bn">Banner Title BN</label>
+                                    <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                           value="">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label>Banner Description EN</label>
+                                    <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                              placeholder="Enter Banner short description in English"></textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label>Banner Description BN</label>
+                                    <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                              placeholder="Enter Banner short description in Bangla"></textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-4 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
-
                                     <input type="hidden" class="old_banner_name" name="old_banner_name">
 
                                     <small class="text-info">
@@ -116,17 +156,25 @@
                                     </small>
                                 </div>
 
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Banner Photo Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name_bn" required name="banner_name_bn" placeholder="Photo Name">
+                                    <input type="hidden" class="old_banner_name" name="old_banner_name">
 
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+                                </div>
                             </div>
 
                             <div class="form-group row">
 
-                                <div class="col-md-4 col-xs-12">
-                                    <label>Alt Text</label>
-                                    <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
-                                </div>
+{{--                                <div class="col-md-6 col-xs-12">--}}
+{{--                                    <label>Alt Text</label>--}}
+{{--                                    <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-8 col-xs-12">
+                                <div class="col-md-4 col-xs-12">
                                     <label>Schema Markup</label>
                                     <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
                                     <small class="text-info">
@@ -134,7 +182,7 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
+                                <div class="col-md-4 col-xs-12">
                                     <label>Page Header (HTML)</label>
                                     <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
                                     <small class="text-info">
@@ -142,7 +190,7 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
+                                <div class="col-md-4 col-xs-12">
                                     <label>Page Header Bangla (HTML)</label>
                                     <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
                                     <small class="text-info">
@@ -210,6 +258,7 @@
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     @endif
                                     <input type="hidden" name="home_sort" value="{{$b->home_sort}}">
+                                    <input type="hidden" name="banner_id" value="{{$b->id}}">
                                     <input type="hidden" class="old_photo_{{$sort}}" name="old_photo" value="{{$b->image_name}}">
                                 </div>
 
@@ -232,8 +281,35 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label>Image Name EN</label>
+                                    <input type="text" class="form-control" value="{{ $b->image_name_en }}" name="image_name_en">
+                                    <small class="text-info">
+                                        <strong>note :</strong> please enter unique value<br>
+                                    </small>
+                                    @if ($errors->has('image_name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Image Name BN</label>
+                                    <input type="text" class="form-control" value="{{ $b->image_name_bn }}" name="image_name_bn">
+                                    <small class="text-info">
+                                        <strong>note :</strong> please enter unique value<br>
+                                    </small>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                     <label>Alt Text</label>
                                     <input type="text" class="form-control" value="{{ $b->alt_text }}" name="alt_text">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" class="form-control" value="{{ $b->alt_text_bn }}" name="alt_text_bn">
                                 </div>
 
                                 <div class="form-group text-center">
@@ -286,7 +362,6 @@
     </div>
 </div>
 
-
 @push('page-js')
 
 <script>
@@ -310,11 +385,19 @@
                     $('.name_en').val(result.name);
                     $('.name_bn').val(result.name_bn);
                     $('.alt_text').val(result.alt_text);
+
+                    $('.banner_title_en').val(result.banner_title_en);
+                    $('.banner_title_bn').val(result.banner_title_bn);
+                    $('.banner_desc_en').val(result.banner_desc_en);
+                    $('.banner_desc_bn').val(result.banner_desc_bn);
+
+                    // $('.alt_text_bn').val(result.alt_text_bn);
                     $('.old_web_img').val(result.banner_photo);
                     $('.old_mob_img').val(result.banner_image_mobile);
                     $('.page_url').val(result.url_slug);
                     $('.page_url_bn').val(result.url_slug_bn);
                     $('.banner_name').val(result.banner_name);
+                    $('.banner_name_bn').val(result.banner_name_bn);
                     $('.old_banner_name').val(result.banner_name);
                     $('.html_header').val(result.page_header);
                     $('.html_header_bn').val(result.page_header_bn);

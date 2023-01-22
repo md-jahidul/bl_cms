@@ -74,6 +74,10 @@ class EcareerItemService
                         $buttons['link'] = $data['call_to_action_url_'.$i];
                     }
 
+                    if( isset($data['call_to_action_url_bn_'.$i]) ){
+                        $buttons['link_bn'] = $data['call_to_action_url_bn_'.$i];
+                    }
+
                     if( !empty($buttons) ){
                         $call_to_action_buttons['button_'.$i] = $buttons;
                     }
@@ -175,6 +179,11 @@ class EcareerItemService
                     if( isset($data['call_to_action_url_'.$i]) ){
                         $buttons['link'] = $data['call_to_action_url_'.$i];
                         $buttons['external_site'] = strpos($data['call_to_action_url_'.$i], 'http') !== false ? 1 : 0;
+                    }
+
+                    if( isset($data['call_to_action_url_bn_'.$i]) ){
+                        $buttons['link_bn'] = $data['call_to_action_url_bn_'.$i];
+                        $buttons['external_site'] = strpos($data['call_to_action_url_bn_'.$i], 'http') !== false ? 1 : 0;
                     }
 
                     if( !empty($buttons) ){

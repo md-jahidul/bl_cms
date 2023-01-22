@@ -18,17 +18,17 @@ class PopularSearchRepository extends BaseRepository {
         return $response;
     }
 
-    public function saveKeyword($productId, $keyword, $url) {
-        $save = $this->model->insert(
-                array(
-                    'keyword' => $keyword,
-                    'url' => $url,
-                    'product_id' => $productId,
-                )
-        );
-        return $save;
-    }
-    
+//    public function saveKeyword($productId, $keyword, $url) {
+//        $save = $this->model->insert(
+//                array(
+//                    'keyword' => $keyword,
+//                    'url' => $url,
+//                    'product_id' => $productId,
+//                )
+//        );
+//        return $save;
+//    }
+
     public function getKeywordById($kwId){
         $response = $this->model->findOrFail($kwId);
         return $response;
@@ -37,7 +37,7 @@ class PopularSearchRepository extends BaseRepository {
         public function deleteKeyword($kwId){
         return $this->model->findOrFail($kwId)->delete();
     }
-    
+
     public function updateKeyword($keywordId, $keyword){
 
             $popular = $this->model->findOrFail($keywordId);
@@ -45,7 +45,7 @@ class PopularSearchRepository extends BaseRepository {
             $popular->keyword = $keyword;
             return $popular->save();
 
-          
+
     }
     public function changeStatus($kwId) {
         try {
@@ -69,7 +69,7 @@ class PopularSearchRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
+
     public function changeKeywordSorting($request) {
         try {
 
@@ -81,7 +81,7 @@ class PopularSearchRepository extends BaseRepository {
                 $update['sort'] = $new_position;
                 $update->update();
             }
-            
+
             $response = [
                 'success' => 1,
                 'message' => 'Success'
