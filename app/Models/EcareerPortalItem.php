@@ -23,5 +23,5 @@ class EcareerPortalItem extends Model
         'image', 'video', 'alt_text',
         'alt_links', 'call_to_action',
         'additional_info', 'is_active',
-        'deleted_at', 'image_name', 'image_name_bn', 'alt_text_bn'];
+        'deleted_at', 'image_name', 'image_name_bn', 'alt_text_bn','slug'];
 }

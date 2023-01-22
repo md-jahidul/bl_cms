@@ -90,8 +90,9 @@ class EcareerItemController extends Controller
             Session::flash('error', $validator->messages()->first());
             return redirect("ecarrer-items/$parent_id/create")->withInput();
         }
-
-        $this->ecarrerItemService->storeEcarrerItem($request->all(), $parent_id);
+        $data = $request->all();
+        $data['slug'] = !empty($request->title_en) ? str_replace(' ', '_', $request->title_en) : null;
+        $this->ecarrerItemService->storeEcarrerItem($data, $parent_id);
 
         Session::flash('message', 'Section created successfully!');
         return redirect("ecarrer-items/$parent_id/list");
@@ -149,6 +150,8 @@ class EcareerItemController extends Controller
             Session::flash('error', $validator->messages()->first());
             return redirect("ecarrer-items/$parent_id/$id/edit");
         }
+        // $data = $request->all();
+        // $data['slug'] = !empty($request->title_en) ? str_replace(' ', '_', $request->title_en) : null;
         $this->ecarrerItemService->updateEcarrerItem($request->all(), $id);
 
         Session::flash('message', 'Item updated successfully!');
