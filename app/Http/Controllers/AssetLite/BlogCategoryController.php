@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Http\Requests\BlogPostRequest;
-use App\Services\AlFaqService;
-use App\Services\MediaBannerImageService;
-use App\Services\MediaPressNewsEventService;
+use App\Http\Requests\BlogPostCategoryRequest;
 use App\Services\MediaNewsCategoryService;
-use Bookworm\Bookworm;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -51,21 +47,20 @@ class BlogCategoryController extends Controller
      */
     public function create()
     {
-        $categories = $this->mediaNewsCategoryService->findAll('','mediaNewsCategory');
-        return view('admin.blog.post.create',compact('categories'));
+        return view('admin.blog.category.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param BlogPostRequest $request
+     * @param BlogPostCategoryRequest $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(BlogPostRequest $request)
+    public function store(BlogPostCategoryRequest $request)
     {
-        $response = $this->mediaPNE->storePNE($request->all(), self::REFERENCE_TYPE);
+        $response = $this->mediaNewsCategoryService->storeCategory($request->all());
         Session::flash('success', $response->getContent());
-        return redirect('blog-post');
+        return redirect('blog-categories');
     }
 
     /**
@@ -76,9 +71,8 @@ class BlogCategoryController extends Controller
      */
     public function edit($id)
     {
-        $blogPost = $this->mediaPNE->findOne($id);
-        $categories = $this->mediaNewsCategoryService->findAll('','mediaNewsCategory');
-        return view('admin.blog.post.edit', compact('blogPost','categories'));
+        $category = $this->mediaNewsCategoryService->findOne($id);
+        return view('admin.blog.category.edit', compact('category'));
     }
 
     /**
@@ -88,20 +82,13 @@ class BlogCategoryController extends Controller
      * @param  int  $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(BlogPostRequest $request, $id)
+    public function update(BlogPostCategoryRequest $request, $id)
     {
-        $request['read_time'] = Bookworm::estimate($request->short_details_bn, '');
-        $response = $this->mediaPNE->updatePNE($request->all(), $id);
+        $response = $this->mediaNewsCategoryService->updateCategory($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('blog-post');
+        return redirect('blog-categories');
     }
 
-    public function bannerUpload(Request $request)
-    {
-        $response = $this->mediaBannerImageService->bannerImageUpload($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect('blog-post');
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -111,7 +98,7 @@ class BlogCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->mediaPNE->deletePNE($id);
-        return url('blog-post');
+        $this->mediaNewsCategoryService->deleteCategory($id);
+        return url('blog-categories');
     }
 }

@@ -5,7 +5,7 @@
     <li class="breadcrumb-item ">Blog Post List</li>
 @endsection
 @section('action')
-    <a href="{{ url("blog-post/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url("blog-categories/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New
     </a>
 @endsection
@@ -32,8 +32,8 @@
                                 <td>{{ $data->title_bn }}</td>
 
                                 <td width="12%" class="text-center">
-                                    <a href="{{ url("blog-post/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("blog-post/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
+                                    <a href="{{ url("blog-categories/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("blog-categories/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>

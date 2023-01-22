@@ -14,7 +14,7 @@
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form id="product_form" role="form" action="{{ route('blog-post.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="product_form" role="form" action="{{ route('blog-categories.store') }}" method="POST" novalidate >
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
@@ -35,113 +35,7 @@
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('date') ? ' error' : '' }}">
-                                    <label for="date" class="required">Date</label>
-                                    <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
-                                           value="{{ old("date") ? old("date") : '' }}"
-                                           required data-validation-required-message="Enter date">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('date'))
-                                        <div class="help-block">  {{ $errors->first('date') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
-                                    <label for="thumbnail_image" class="required">Thumbnail Image</label>
-                                    <input type="file" name="thumbnail_image" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-                                           value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}"
-                                           required data-validation-required-message="Enter thumbnail image">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('thumbnail_image'))
-                                        <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-12 {{ $errors->has('media_news_category_id') ? ' error' : '' }}">
-                                    <label for="media_news_category_id" class="required">Select Blog Category</label>
-                                    <select class="form-control" name="media_news_category_id" aria-invalid="false" required data-validation-required-message="Enter Category">
-                                        <option value="">Select a blog category</option>
-                                        @foreach ( $categories as $category)
-                                            <option value="{{$category->id}}">{{$category->title_en}}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('media_news_category_id'))
-                                        <div class="help-block">  {{ $errors->first('media_news_category_id') }}</div>
-                                    @endif
-                                </div>
-{{--                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">--}}
-{{--                                    <label for="alt_text_en" class="">Alt Text</label>--}}
-{{--                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"--}}
-{{--                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('alt_text_en'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-                                <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
-                                    <label for="short_details_en">Short Description En</label>
-                                    <textarea type="text" name="short_details_en"  class="form-control summernote_editor"
-                                              placeholder="Enter short description in English"
-                                              rows="3">{{ old("short_details_en") ? old("short_details_en") : '' }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('short_details_en'))
-                                        <div class="help-block">  {{ $errors->first('short_details_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('short_details_bn') ? ' error' : '' }}">
-                                    <label for="short_details_bn">Short Description BN</label>
-                                    <textarea type="text" name="short_details_bn"  class="form-control summernote_editor"
-                                              placeholder="Enter short description in Bangla" rows="3"
-                                              >{{ old("short_details_bn") ? old("short_details_bn") : '' }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('short_details_bn'))
-                                        <div class="help-block">  {{ $errors->first('short_details_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-3 {{ $errors->has('details_btn_en') ? ' error' : '' }}">
-                                    <label for="details_btn_en" class="required">Details Button En</label>
-                                    <input type="text" name="details_btn_en"  class="form-control" placeholder="Enter title in English"
-                                           value="{{ old("details_btn_en") ? old("details_btn_en") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('details_btn_en'))
-                                        <div class="help-block">  {{ $errors->first('details_btn_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-3 {{ $errors->has('details_btn_bn') ? ' error' : '' }}">
-                                    <label for="details_btn_bn" class="required">Details Button Bn</label>
-                                    <input type="text" name="details_btn_bn"  class="form-control" placeholder="Enter title in Bangla"
-                                           value="{{ old("details_btn_bn") ? old("details_btn_bn") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('details_btn_bn'))
-                                        <div class="help-block">  {{ $errors->first('details_btn_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-3 {{ $errors->has('tag_en') ? ' error' : '' }}">
-                                    <label for="tag_en">Tag En</label>
-                                    <input type="text" name="tag_en"  class="form-control" placeholder="Enter title in English"
-                                           value="{{ old("tag_en") ? old("tag_en") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('tag_en'))
-                                        <div class="help-block">  {{ $errors->first('tag_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-3 {{ $errors->has('tag_bn') ? ' error' : '' }}">
-                                    <label for="tag_bn">Tag Bn</label>
-                                    <input type="text" name="tag_bn"  class="form-control" placeholder="Enter title in Bangla"
-                                           value="{{ old("tag_bn") ? old("tag_bn") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('tag_bn'))
-                                        <div class="help-block">  {{ $errors->first('tag_bn') }}</div>
-                                    @endif
-                                </div>
-
+{{--
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
                                     <label> URL EN</label>
                                     <input type="text" class="form-control slug-convert" name="url_slug_en" placeholder="URL EN" id="url_slug_en">
@@ -168,15 +62,7 @@
                                             {{ $errors->first('url_slug_bn') }}
                                         </div>
                                     @endif
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group" id="show_in_home">
-                                        <label for="trending"></label><br>
-                                        <input type="checkbox" name="show_in_home" value="1" id="trending">
-                                        <label for="trending" class="ml-1">Show In Home</label>
-                                    </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label></label>

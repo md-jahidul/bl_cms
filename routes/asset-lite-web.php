@@ -1326,7 +1326,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Blogs
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
-
+    Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
+    Route::get('blog-categories/destroy/{id}', 'AssetLite\BlogCategoryController@destroy');
     # Blogs Components
     Route::get('blog-component/{blog_id}/list', 'AssetLite\BlogDetailsController@index')
         ->name('blog-component.list');
