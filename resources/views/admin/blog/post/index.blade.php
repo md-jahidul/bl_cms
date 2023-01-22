@@ -29,7 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($blogPosts as $data)\
+                        @foreach($blogPosts as $data)
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
                                 <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> (Inactive)</strong></span>' : '' !!}
