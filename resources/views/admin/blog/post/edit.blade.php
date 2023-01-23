@@ -21,7 +21,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
                                     <input type="text" name="title_en"  class="form-control" placeholder="Enter title in English"
-                                           value="{{ $blogPost->title_en }}" required data-validation-required-message="Enter title in English">
+                                           value="{{ old("title_en") ? old("title_en") : $blogPost->title_en }}" required data-validation-required-message="Enter title in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -31,7 +31,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Title Bangla</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in Bangla"
-                                           value="{{ $blogPost->title_bn }}" required data-validation-required-message="Enter title in Bangla">
+                                           value="{{ old("title_bn") ? old("title_bn") : $blogPost->title_bn }}" required data-validation-required-message="Enter title in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -41,7 +41,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('date') ? ' error' : '' }}">
                                     <label for="date" class="required">Date</label>
                                     <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
-                                           value="{{ $blogPost->date }}"
+                                           value="{{ old("date") ? old("date") : $blogPost->date }}"
                                            required data-validation-required-message="Enter date">
                                     <div class="help-block"></div>
                                     @if ($errors->has('date'))
@@ -77,7 +77,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
                                     <label for="short_details_en">Short Description En</label>
                                     <textarea type="text" name="short_details_en"  class="form-control summernote_editor"
-                                              placeholder="Enter short description in English" required rows="3">{{ $blogPost->short_details_en }}</textarea>
+                                              placeholder="Enter short description in English" required rows="3">{{ old("short_details_en") ? old("short_details_en") : $blogPost->short_details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_en'))
                                         <div class="help-block">  {{ $errors->first('short_details_en') }}</div>
@@ -87,7 +87,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_bn') ? ' error' : '' }}">
                                     <label for="short_details_bn">Short Description BN</label>
                                     <textarea type="text" name="short_details_bn"  class="form-control summernote_editor"
-                                              placeholder="Enter short description in Bangla" required rows="3">{{ $blogPost->short_details_bn }}</textarea>
+                                              placeholder="Enter short description in Bangla" required rows="3">{{ old("short_details_bn") ? old("short_details_bn") : $blogPost->short_details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_bn'))
                                         <div class="help-block">  {{ $errors->first('short_details_bn') }}</div>
@@ -97,7 +97,7 @@
                                 <div class="form-group col-md-3 {{ $errors->has('details_btn_en') ? ' error' : '' }}">
                                     <label for="details_btn_en">Details Button En</label>
                                     <input type="text" name="details_btn_en"  class="form-control" placeholder="Enter title in English"
-                                           value="{{ $blogPost->details_btn_en }}">
+                                           value="{{ old("details_btn_en") ? old("details_btn_en") : $blogPost->details_btn_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_btn_en'))
                                         <div class="help-block">  {{ $errors->first('details_btn_en') }}</div>
@@ -107,7 +107,7 @@
                                 <div class="form-group col-md-3 {{ $errors->has('details_btn_bn') ? ' error' : '' }}">
                                     <label for="details_btn_bn">Details Button Bn</label>
                                     <input type="text" name="details_btn_bn"  class="form-control" placeholder="Enter button label in Bangla"
-                                           value="{{ $blogPost->details_btn_bn }}">
+                                           value="{{ old("details_btn_bn") ? old("details_btn_bn") : $blogPost->details_btn_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_btn_bn'))
                                         <div class="help-block">  {{ $errors->first('details_btn_bn') }}</div>
@@ -117,7 +117,7 @@
                                 <div class="form-group col-md-3 {{ $errors->has('tag_en') ? ' error' : '' }}">
                                     <label for="tag_en">Tag En</label>
                                     <input type="text" name="tag_en"  class="form-control" placeholder="Enter tag in English"
-                                           value="{{ $blogPost->tag_en }}">
+                                           value="{{ old("tag_en") ? old("tag_en") : $blogPost->tag_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('tag_en'))
                                         <div class="help-block">  {{ $errors->first('tag_en') }}</div>
@@ -127,7 +127,7 @@
                                 <div class="form-group col-md-3 {{ $errors->has('tag_bn') ? ' error' : '' }}">
                                     <label for="tag_bn">Tag Bn</label>
                                     <input type="text" name="tag_bn"  class="form-control" placeholder="Enter tag in Bangla"
-                                           value="{{ $blogPost->tag_bn }}">
+                                           value="{{ old("tag_bn") ? old("tag_bn") : $blogPost->tag_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('tag_bn'))
                                         <div class="help-block">  {{ $errors->first('tag_bn') }}</div>
@@ -135,9 +135,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
-                                    <label> URL EN</label>
+                                    <label class="required"> URL EN</label>
                                     <input type="text" class="form-control slug-convert" name="url_slug_en"
-                                           placeholder="URL EN" id="url_slug_en" value="{{ $blogPost->url_slug_en }}">
+                                           placeholder="URL EN" id="url_slug_en" value="{{ old("url_slug_en") ? old("url_slug_en") : $blogPost->url_slug_en }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> najat-app (no spaces and slash)<br>
                                     </small>
@@ -150,9 +150,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL BN </label>
+                                    <label class="required"> URL BN </label>
                                     <input type="text" class="form-control slug-convert" name="url_slug_bn"
-                                           placeholder="URL BN" value="{{ $blogPost->url_slug_bn }}">
+                                           placeholder="URL BN" value="{{ old("url_slug_bn") ? old("url_slug_bn") : $blogPost->url_slug_bn }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
                                     </small>
@@ -209,6 +209,7 @@
 @endpush
 @push('page-js')
 {{--    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>--}}
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>

@@ -143,8 +143,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
-                                    <label> URL EN</label>
-                                    <input type="text" class="form-control slug-convert" name="url_slug_en" placeholder="URL EN" id="url_slug_en">
+                                    <label class="required"> URL EN</label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_en" placeholder="URL EN" id="url_slug_en" value="{{ old("url_slug_en") ? old("url_slug_en") : '' }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> najat-app (no spaces and slash)<br>
                                     </small>
@@ -157,8 +157,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL BN </label>
-                                    <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN">
+                                    <label class="required"> URL BN </label>
+                                    <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN" value="{{ old("url_slug_bn") ? old("url_slug_bn") : '' }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
                                     </small>
@@ -216,6 +216,7 @@
 @push('page-js')
 {{--    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">

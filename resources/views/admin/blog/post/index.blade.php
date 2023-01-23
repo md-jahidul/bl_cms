@@ -34,9 +34,9 @@
                                 <td width="3%">{{ $loop->iteration }}</td>
                                 <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> (Inactive)</strong></span>' : '' !!}
                                     {!! $data->show_in_home == 1 ? '<span class="success pl-1"><strong> (Show In Home)</strong></span>' : '' !!}</td>
-{{--                                <td>{{ str_replace('_', ' ', ucfirst($data->type)) }}</td>--}}
+                                {{-- <td>{{ str_replace('_', ' ', ucfirst($data->type)) }}</td> --}}
                                 <td>{{ $data->date }}</td>
-                                <td>{{ $data->mediaNewsCategory->title_en }}</td>
+                                <td>{{ optional($data->mediaNewsCategory)->title_en }}</td>
                                 <td><img src="{{ config('filesystems.file_base_url') . $data->thumbnail_image }}" height="90" width="150"></td>
                                 <td>{{ $data->short_details_en }}</td>
                                 <td class="text-center">
