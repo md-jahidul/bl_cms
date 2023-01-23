@@ -55,7 +55,7 @@
                                         <td>{{ $product->offer_category->name_en }} {{ $product->is_four_g_offer == 1 ? "(4G Offer)" : ''}}</td>
                                         <td class="text-center">
 {{--                                            // Other Details ==============================================--}}
-                                            @if(strtolower( $product->offer_category->name_en) == "others" || $type == 'postpaid' && $product->offer_category->name_en == 'Packages')
+                                            @if(strtolower( $product->offer_category->name_en) == "others" || $product->offer_category->name_en == 'Packages')
                                                 <a href="{{ route('section-list', [$type, $product->id]) }}"
                                                     class="btn-sm btn-outline-primary border">Details</a>
                                             @else
