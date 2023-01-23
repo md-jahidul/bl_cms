@@ -53,6 +53,7 @@ class DynamicPageController extends Controller
         'accordion_text' => 'Accordion Text',
         'multiple_image' => 'Multiple Image',
         'customer_complaint' => 'Customer Complaint',
+        'button_component' => 'Button Component',
     ];
 
 
