@@ -62,7 +62,6 @@ class EthicsController extends Controller {
      * @Dev Bulbul Mahmud Nito || 22/06/2020
      */
     public function saveFile(Request $request) {
-
         $response = $this->service->saveFile($request);
 
         if ($response['success'] == 1) {

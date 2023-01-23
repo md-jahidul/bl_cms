@@ -80,7 +80,7 @@ class EthicsService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->pageRepo->updatePageInfo($webPath, $mobilePath, $request);
 
 
@@ -117,14 +117,9 @@ class EthicsService {
     public function saveFile($request) {
         try {
 
-            $request->validate([
-                'file_name_en' => 'required',
-                'file_name_bn' => 'required',
-            ]);
-
             //file upload in storege
-
             $fileDir = 'assetlite/images/ethics/files';
+            $imageDir = 'assetlite/images/ethics/images';
 
             $filePath = $request['old_path'];
             if ($request['file_path'] != "") {
@@ -135,10 +130,26 @@ class EthicsService {
                     $this->deleteFile($request['old_path']);
                 }
             }
+            if ($request['image_url'] != "") {
+                $imgPath = $this->upload($request['image_url'], $imageDir);
+
+                //delete old web photo
+                if ($request['old_path_image_url']) {
+                    $this->deleteFile($request['old_path_image_url']);
+                }
+            }
+            if ($request['mobile_view_img'] != "") {
+                $mobImgPath = $this->upload($request['mobile_view_img'], $imageDir);
+
+                //delete old web photo
+                if ($request['old_path_mobile_view_img']) {
+                    $this->deleteFile($request['old_path_mobile_view_img']);
+                }
+            }
 
 
-            //save data in database 
-            $this->fileRepo->saveFileData($filePath, $request);
+            //save data in database
+            $this->fileRepo->saveFileData($filePath,$imgPath,$mobImgPath, $request);
 
 
 
@@ -197,7 +208,7 @@ class EthicsService {
             $this->fileRepo->deleteFile($fileId);
 
             if ($filePath != "") {
-               
+
                 $this->deleteFile($filePath);
             }
 
