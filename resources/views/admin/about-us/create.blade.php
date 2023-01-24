@@ -73,6 +73,29 @@
                                                     <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                                 @endif
                                             </div>
+                                            <div
+                                                class="form-group col-md-6 {{ $errors->has('sub_title') ? ' error' : '' }}">
+                                                <label for="sub_title">Sub Title (English)</label>
+                                                <input type="text" name="sub_title" class="form-control"
+                                                       placeholder="Enter Sub Title in English"
+                                                       value="@if(isset($about)){{$about->sub_title}} @elseif(old("sub_title")) {{old("sub_title")}} @endif">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('sub_title'))
+                                                    <div class="help-block">  {{ $errors->first('sub_title') }}</div>
+                                                @endif
+                                            </div>
+
+                                            <div
+                                                class="form-group col-md-6 {{ $errors->has('sub_title_bn') ? ' error' : '' }}">
+                                                <label for="sub_title_bn">Sub Title (Bangla)</label>
+                                                <input type="text" name="sub_title_bn" class="form-control"
+                                                       placeholder="Enter Sub Title in Bangla"
+                                                       value="@if(isset($about)){{$about->sub_title_bn}} @elseif(old("sub_title_bn")) {{old("sub_title_bn")}} @endif">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('title_bn'))
+                                                    <div class="help-block">  {{ $errors->first('sub_title_bn') }}</div>
+                                                @endif
+                                            </div>
 
                                             <div
                                                 class="form-group col-md-6 {{ $errors->has('banglalink_info') ? ' error' : '' }}">
