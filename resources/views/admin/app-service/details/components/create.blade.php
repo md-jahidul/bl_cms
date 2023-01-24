@@ -32,6 +32,7 @@
                                             <option value="">--Select Data Type--</option>
                                             <option data-alias="title_text_editor" value="title_text_editor">Title with text editor</option>
                                             <option data-alias="accordion_section" value="accordion_section">Accordion</option>
+                                            <option data-alias="table_component" value="table_component">Table Component</option>
                                             <option data-alias="text_with_image_right" value="text_with_image_right">Text with image right</option>
                                             <option data-alias="text_with_image_bottom" value="text_with_image_bottom">Text with image bottom</option>
                                             <option data-alias="slider_text_with_image_right" value="slider_text_with_image_right">Slider text with image right</option>
@@ -41,7 +42,7 @@
                                             <option data-alias="static_easy_payment_card" value="static_easy_payment_card">Static Component - Easy payment card</option>
                                             <option data-alias="image_with_content" value="image_with_content">Image With Content</option>
                                             <option data-alias="multiple_tab_image" value="multiple_tab_image">Multiple Tab With Image</option>
-                                            
+
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('component_type'))
@@ -63,6 +64,11 @@
                                     {{--Accordion--}}
                                     <slot id="accordion_section" data-offer-type="accordion_section" class="d-none">
                                         @include('admin.app-service.details.section.component_modal.accordion.accordion')
+                                    </slot>
+
+                                    {{--Table Component--}}
+                                    <slot id="table_component" data-offer-type="table_component" class="d-none">
+                                        @include('admin.app-service.details.components.partial.editor_only')
                                     </slot>
 
                                     {{--Text with image right--}}
