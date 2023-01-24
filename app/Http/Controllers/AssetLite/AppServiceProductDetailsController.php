@@ -34,6 +34,7 @@ class AppServiceProductDetailsController extends Controller
     protected $componentTypes = [
         'title_text_editor' => 'Title with text editor',
         'accordion_section' => 'Accordion',
+        'table_component' => 'Table Component',
         'text_with_image_right' => 'Text with image right',
         'text_with_image_bottom' => 'Text with image bottom',
         'slider_text_with_image_right' => 'Slider text with image right',

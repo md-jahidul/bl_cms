@@ -51,6 +51,11 @@
                                         @include('admin.app-service.details.section.component_modal.accordion.accordion')
                                     </slot>
 
+                                    {{--Table Component--}}
+                                    <slot id="table_component" data-offer-type="table_component" class="{{ ($section['sections']->section_type ==  "table_component"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.components.partial.editor_only')
+                                    </slot>
+
                                     {{--Text with image right--}}
                                     <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="{{ ($section['sections']->section_type ==  "text_with_image_right"  ) ? '' : "d-none" }}">
                                         @include('admin.app-service.details.section.component_modal.text_with_image_right')
