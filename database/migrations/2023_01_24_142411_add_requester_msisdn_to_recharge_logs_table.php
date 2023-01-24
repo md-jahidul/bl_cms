@@ -14,7 +14,7 @@ class AddRequesterMsisdnToRechargeLogsTable extends Migration
     public function up()
     {
         Schema::table('recharge_logs', function (Blueprint $table) {
-            $table->string('requester-msisdn')->after('trx_id')->nullable();
+            $table->string('requester_msisdn')->after('trx_id')->nullable();
         });
     }
 
