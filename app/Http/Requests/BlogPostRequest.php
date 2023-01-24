@@ -24,16 +24,31 @@ class BlogPostRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-//        $id = $this->route()->parameters()['offer_category'];
-//        $image_upload_size = ConfigController::adminImageUploadSize();
-//        $image_upload_type = ConfigController::adminImageUploadType();
+       
+
+        if ($this->method() == "PUT") {
+            // $id = $this->route()->parameters();
+            
+            return [
+                'title_en' => 'required',
+                'title_bn' => 'required',
+                'url_slug_en' => 'required|unique:media_press_news_events,url_slug_en,' . $this->id,
+                'url_slug_bn' => 'required|unique:media_press_news_events,url_slug_bn,' . $this->id,
+            ];
+        } else {
+            return [
+                'title_en' => 'required',
+                'title_bn' => 'required',
+                'url_slug_en' => 'required|unique:media_press_news_events,url_slug_en',
+                'url_slug_bn' => 'required|unique:media_press_news_events,url_slug_bn',
+            ];
+        }
+    }
+
+    public function messages()
+    {
         return [
-//            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-            'url_slug_en' => 'required|unique:media_press_news_events,url_slug_en,' . $this->id,
-            'url_slug_bn' => 'required|unique:media_press_news_events,url_slug_bn,' . $this->id,
-//            'banner_name' => 'required|regex:/^\S*$/u|unique:offer_categories,banner_name,' . $id,
-//            'banner_name_web_bn' => 'required|unique:offer_categories,banner_name_web_bn,' . $id,
-//            'banner_image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
+            'title_en.required' => "Enter blog's title",
         ];
     }
 }

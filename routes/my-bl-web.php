@@ -916,7 +916,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('lms-components/update', 'CMS\LMS\LmsController@update')
         ->name('lms-components.update');
     Route::get('lms-components-sort', 'CMS\LMS\LmsController@componentSort');
-    Route::get('components-status-update/{id}', 'CMS\LMS\LmsController@componentStatusUpdate')
+    Route::get('lms-components-status-update/{id}', 'CMS\LMS\LmsController@componentStatusUpdate')
         ->name('lms-components.status.update');
     Route::get('lms-components/destroy/{id}', 'CMS\LMS\LmsController@destroy')
         ->name('lms-components.destroy');

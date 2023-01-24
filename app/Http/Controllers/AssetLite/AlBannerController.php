@@ -49,7 +49,9 @@ class AlBannerController extends Controller
         // return $request->all();
         $response = $this->alBannerService->alBannerStore($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('explore-c-component/'.$request->section_id.'/list');
+
+        return redirect()->back();
+        // return redirect('explore-c-component/'.$request->section_id.'/list');
     }
 
     /**
@@ -87,7 +89,9 @@ class AlBannerController extends Controller
 
         $response = $this->alBannerService->alBannerUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('explore-c-component/'.$request->section_id.'/list');
+        
+        return redirect()->back();
+        // return redirect('explore-c-component/'.$request->section_id.'/list');
     }
 
     /**
