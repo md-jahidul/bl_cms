@@ -266,7 +266,6 @@ class ProductService
             $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
             $this->deleteFile($product->image);
         }
-
         $product->update($data);
 
 

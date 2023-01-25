@@ -27,7 +27,7 @@ class RoamingOfferService {
      * @param RoamingOfferRepository $offerRepo
      */
     public function __construct(
-    RoamingOfferRepository $offerRepo
+        RoamingOfferRepository $offerRepo
     ) {
         $this->offerRepo = $offerRepo;
     }
@@ -320,7 +320,7 @@ class RoamingOfferService {
         }
     }
 
-        /**
+    /**
      * Get Roaming offers
      * @return Response
      */
@@ -330,7 +330,7 @@ class RoamingOfferService {
     }
 
 
-     /**
+    /**
      * update roaming category
      * @return Response
      */
@@ -339,7 +339,7 @@ class RoamingOfferService {
 
 
             //save data in database
-        $this->offerRepo->saveComponents($request);
+            $this->offerRepo->saveComponents($request);
 
             $response = [
                 'success' => 1,
@@ -356,7 +356,7 @@ class RoamingOfferService {
         }
     }
 
-         /**
+    /**
      * Change component sorting
      * @return Response
      */
@@ -365,7 +365,7 @@ class RoamingOfferService {
         return $response;
     }
 
-         /**
+    /**
      * delete component
      * @return Response
      */

@@ -80,8 +80,8 @@ class RoamingOfferRepository extends BaseRepository {
 
     public function getOffers() {
         $response = $this->model->select('roaming_other_offer.*', 'c.name_en as category_name')
-                        ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
-                        ->orderBy('roaming_other_offer.id', 'desc')->get();
+            ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
+            ->orderBy('roaming_other_offer.id', 'desc')->get();
         return $response;
     }
 
@@ -174,13 +174,13 @@ class RoamingOfferRepository extends BaseRepository {
 
                 if (isset($request->head_en[$k])) {
 
-                     $tableArrayEn = array(
+                    $tableArrayEn = array(
                         'head_en' => $request->head_en[$k],
                         'rows_en' => $request->col_en[$k]
                     );
                     $tableJsonEn = json_encode($tableArrayEn);
 
-                     $tableArrayBn = array(
+                    $tableArrayBn = array(
                         'head_bn' => $request->head_bn[$k],
                         'rows_bn' => $request->col_bn[$k]
                     );
@@ -214,7 +214,7 @@ class RoamingOfferRepository extends BaseRepository {
                 }
 
 
-                  //accordion component
+                //accordion component
                 if (isset($request->accordion_headline_en[$k])) {
 
                     $arrayEn = array(
@@ -284,7 +284,7 @@ class RoamingOfferRepository extends BaseRepository {
         }
     }
 
-      public function componentDelete($comId) {
+    public function componentDelete($comId) {
 
         try {
             $component = RoamingOtherOfferComponents::findOrFail($comId);

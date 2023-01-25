@@ -212,20 +212,20 @@
                                     </div>
                                 </div>
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <label></label>--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="special_product" class="mr-1">Is Special Product:</label>--}}
-{{--                                        <input type="checkbox" name="special_product" value="1" id="special_product">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-md-6">--}}
+                                {{--                                    <label></label>--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="special_product" class="mr-1">Is Special Product:</label>--}}
+                                {{--                                        <input type="checkbox" name="special_product" value="1" id="special_product">--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>--}}
-{{--                                        <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-md-6">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>--}}
+                                {{--                                        <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter">--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -240,7 +240,7 @@
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> Save
+                                                class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
                                 </div>

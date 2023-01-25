@@ -167,7 +167,7 @@ class RoamingOfferController extends Controller {
     }
 
 
-      /**
+    /**
      * edit other offer components
      *
      * @param $offerId
@@ -179,7 +179,7 @@ class RoamingOfferController extends Controller {
         return view('admin.roaming.offer_components', compact('components', 'offerId'));
     }
 
-      /**
+    /**
      * Update other offer components
      *
      * @param Request $request
@@ -189,7 +189,7 @@ class RoamingOfferController extends Controller {
     public function updateComponent(Request $request) {
 //        dd($request->all());
 
-            $response = $this->offerService->updateComponents($request);
+        $response = $this->offerService->updateComponents($request);
 
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Offer is saved!');
@@ -200,7 +200,7 @@ class RoamingOfferController extends Controller {
         return redirect('roaming/edit-other-offer-component/'.$request->parent_id);
     }
 
-     /**
+    /**
      * Component Sorting Change.
      *
      * @param Request $request

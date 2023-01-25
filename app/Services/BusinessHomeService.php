@@ -234,9 +234,7 @@ class BusinessHomeService {
         try {
 
             $request->validate([
-                'home_sort' => 'required',
-                'image_name_en' => 'unique:business_home_banner,image_name_en,' . $request->banner_id,
-                'image_name_bn' => 'unique:business_home_banner,image_name_bn,' . $request->banner_id,
+                'home_sort' => 'required'
             ]);
 
             //file upload in storege

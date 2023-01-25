@@ -212,7 +212,7 @@
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> UPDATE
+                                                class="la la-check-square-o"></i> UPDATE
                                         </button>
 
                                     </div>
@@ -231,17 +231,3 @@
 @push('page-js')
     <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 @endpush
-
-
-
-
-
-
-
-
-
-
-
-
-
-

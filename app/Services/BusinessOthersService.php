@@ -55,7 +55,7 @@ class BusinessOthersService {
      * @param BusinessRelatedProductRepository $relatedProductRepo
      */
     public function __construct(
-    BusinessOthersRepository $otherRepo, BusinessComPhotoTextRepository $photoTextRepo, BusinessComPkOneRepository $pkOneRepo, BusinessComPkTwoRepository $pkTwoRepo, BusinessComFeaturesRepository $featureRepo, BusinessComPriceTableRepository $priceTableRepo, BusinessComVideoRepository $videoRepo, BusinessComPhotoRepository $photoRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo
+        BusinessOthersRepository $otherRepo, BusinessComPhotoTextRepository $photoTextRepo, BusinessComPkOneRepository $pkOneRepo, BusinessComPkTwoRepository $pkTwoRepo, BusinessComFeaturesRepository $featureRepo, BusinessComPriceTableRepository $priceTableRepo, BusinessComVideoRepository $videoRepo, BusinessComPhotoRepository $photoRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo
     ) {
         $this->otherRepo = $otherRepo;
         $this->photoTextRepo = $photoTextRepo;
@@ -908,9 +908,9 @@ class BusinessOthersService {
             $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
-            
+
             if(isset($types[$request->type])){
-            $parentTypes = $types[$request->type];
+                $parentTypes = $types[$request->type];
             }else{
                 $parentTypes = $request->type;
             }

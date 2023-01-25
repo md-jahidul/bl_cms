@@ -381,7 +381,7 @@ class ProductController extends Controller
     /**
      * User: BS(Shuvo)
      * This function is only for bulk keyword update for the search_data Table.
-     * 
+     *
      */
 
     public function updateSearchDataTable(){
@@ -390,7 +390,7 @@ class ProductController extends Controller
 
         foreach ($products as $key => $product) {
             try {
-                
+
                 $this->productService->updateSearchData($product);
 
             } catch (\Throwable $th) {
@@ -403,7 +403,7 @@ class ProductController extends Controller
 
 
         }
-        
+
         return response()->json(['success' => 'Success'], 200);
     }
 
