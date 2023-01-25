@@ -11,7 +11,7 @@
     </div>
 </div>
 @if($component == [])
-    <div id="multiple_tab_image">
+    <div id="multiple_tab_image_sec">
         <div class="card" style="border: 2px solid steelblue">
             <div  class="row col-md-12">
                 <div class="form-group col-md-6 {{ $errors->has('tab_title_en') ? ' error' : '' }}">
@@ -112,7 +112,7 @@
     </div>   
 @else
     @foreach ($component as $key => $tab)
-    <div id="multiple_tab_image">
+    <div id="multiple_tab_image_sec">
         <div class="card" style="border: 2px solid steelblue">
             <div  class="row col-md-12">
                 <div class="form-group col-md-6 {{ $errors->has('tab_title_en') ? ' error' : '' }}">
@@ -256,7 +256,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var $padrentSelector = $('#multiple_tab_image');
+            var $padrentSelector = $('#multiple_tab_image_sec');
             // Add multiple item
             $('.add_moreslider_item').on('click', function(event){
                 event.preventDefault();
@@ -265,7 +265,7 @@
                 // $('#slider_content_section').empty();
                 i = i+1;
                 var html = '';
-                html += `<div id="multiple_tab_image" class="single_slider_content">
+                html += `<div id="multiple_tab_image_sec" class="single_slider_content">
                             <div class="card" style="border: 2px solid steelblue">
                                 <div  class="row col-md-12">
                                     <div class="form-group col-md-5 {{ $errors->has('tab_title_en') ? ' error' : '' }}">
@@ -367,7 +367,7 @@
                         </div>`;
 
 
-                $('#multiple_tab_image').append(html);
+                $('#multiple_tab_image_sec').append(html);
 
                 $('.dropify').dropify({
                     messages: {
@@ -407,7 +407,7 @@
                 var count = $('#sub_item_count_' + item).val();
                 i = parseInt(count) + 1; 
                 var html = '';
-                html += `<div class="card-body" style="border-top: 2px solid steelblue" >
+                html += `<div class="card-body multi_image_item" style="border-top: 2px solid steelblue" >
                             <div class="col-sm-12">
                                 <div class="multiple_tab_image" data-count="1">
                                     <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
