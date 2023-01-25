@@ -29,7 +29,7 @@
                                     <textarea type="text" name="details_en" class="form-control summernote_editor"
                                               placeholder="Enter offer details in english"
                                               required
-                                              data-validation-required-message="Enter offer details in english">{{ $details->details_en }}</textarea>
+                                              data-validation-required-message="Enter offer details in english">{{ ($details) ? $details->details_en : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
                                         <div class="help-block">{{ $errors->first('details_en') }}</div>
@@ -41,7 +41,7 @@
                                     <textarea type="text" name="details_bn" class="form-control summernote_editor"
                                               placeholder="Enter offer details in english"
                                               required
-                                              data-validation-required-message="Enter offer details in english">{{ $details->details_bn }}</textarea>
+                                              data-validation-required-message="Enter offer details in english">{{ ($details) ? $details->details_bn : ''}}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
                                         <div class="help-block">{{ $errors->first('details_bn') }}</div>
@@ -53,7 +53,7 @@
                                         <label for="left_card_title_en" class="required">Left Card Title (English)</label>
                                         <input type="text" name="other_attributes[left_card_title_en]"
                                                class="form-control" placeholder="Enter title in English"
-                                               value="{{ $details->other_attributes['left_card_title_en'] }}" required
+                                               value="{{ ($details) ? $details->other_attributes['left_card_title_en'] : '' }}" required
                                                data-validation-required-message="Enter title in English">
                                         <div class="help-block"></div>
                                         @if ($errors->has('left_card_title_en'))
@@ -65,7 +65,7 @@
                                         <label for="right_card_title_en" class="required">Right Card Title (English)</label>
                                         <input type="text" name="other_attributes[right_card_title_en]"
                                                class="form-control" placeholder="Enter title in Eangla"
-                                               value="{{ $details->other_attributes['right_card_title_en'] }}" required
+                                               value="{{ ($details) ? $details->other_attributes['right_card_title_en'] : '' }}" required
                                                data-validation-required-message="Enter title in English">
                                         <div class="help-block"></div>
                                         @if ($errors->has('right_card_title_en'))
@@ -77,7 +77,7 @@
                                         <label for="left_card_title_bn" class="required">Left Card Title (Bangla)</label>
                                         <input type="text" name="other_attributes[left_card_title_bn]"
                                                class="form-control" placeholder="Enter title in Bangla"
-                                               value="{{ $details->other_attributes['left_card_title_bn'] }}" required
+                                               value="{{ ($details) ? $details->other_attributes['left_card_title_bn'] : ''}}" required
                                                data-validation-required-message="Enter title in Bangla">
                                         <div class="help-block"></div>
                                         @if ($errors->has('left_card_title_bn'))
@@ -90,7 +90,7 @@
                                         <label for="right_card_title_bn" class="required">Right Card Title (Bangla)</label>
                                         <input type="text" name="other_attributes[right_card_title_bn]"
                                                class="form-control" placeholder="Enter title in Bangla"
-                                               value="{{ $details->other_attributes['right_card_title_bn'] }}" required
+                                               value="{{ ($details) ? $details->other_attributes['right_card_title_bn'] : '' }}" required
                                                data-validation-required-message="Enter title in Bangla">
                                         <div class="help-block"></div>
                                         @if ($errors->has('right_card_title_bn'))
@@ -199,13 +199,13 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    @if($details->left_side_img)
+                                    @if(isset($details->left_side_img))
                                         <input type="checkbox" name="remove_img_left" id="remove_img_left" value="1">
                                         <label for="remove_img_left">Remove Left Side Image</label>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
-                                    @if($details->right_side_ing)
+                                    @if(isset($details->right_side_ing))
                                         <input type="checkbox" name="remove_img_right" id="remove_img_right" value="1">
                                         <label for="remove_img_right">Remove Right Side Image</label>
                                     @endif

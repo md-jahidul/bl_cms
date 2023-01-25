@@ -13,6 +13,8 @@ class Priyojon extends Model
         'parent_id',
         'title_en',
         'title_bn',
+        'desc_en',
+        'desc_bn',
         'banner_image_url',
         'banner_mobile_view',
         'alt_text_en',
