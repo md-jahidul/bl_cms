@@ -21,35 +21,35 @@
                         <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                        <div class="row">
-                            <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
-                            <input type="hidden" name="type" value="{{ $type }}">
-                            <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
-                                <label for="offer_category_id" class="required">Offer Type</label>
-                                <select class="form-control" name="offer_category_id" id="offer_type"
-                                        required data-validation-required-message="Please select offer">
-                                    <option value="">---Select Offer Type---</option>
-                                    @foreach($offersType as $offer)
-                                        <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('offer_category_id'))
-                                    <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
-                                @endif
-                            </div>
+                            <div class="row">
+                                <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
+                                <input type="hidden" name="type" value="{{ $type }}">
+                                <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+                                    <select class="form-control" name="offer_category_id" id="offer_type"
+                                            required data-validation-required-message="Please select offer">
+                                        <option value="">---Select Offer Type---</option>
+                                        @foreach($offersType as $offer)
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
+                                    @endif
+                                </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                <label for="product_code" class="required">Product Code</label>
-                                <input type="text" class="form-control" name="product_code" placeholder="Enter product code"
-                                       required data-validation-required-message="Enter product code"
-                                       value="{{ $product->product_code }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('product_code'))
-                                    <div class="help-block">{{ $errors->first('product_code') }}</div>
-                                @endif
-                            </div>
-                            <div class="col-md-4">
+                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <input type="text" class="form-control" name="product_code" placeholder="Enter product code"
+                                           required data-validation-required-message="Enter product code"
+                                           value="{{ $product->product_code }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Please Select Category</label>
                                         <select multiple
@@ -142,10 +142,10 @@
                                 <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
-                            @if(strtolower($type) == 'prepaid')
-                                <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
+                                @if(strtolower($type) == 'prepaid')
+                                    <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
                                         @include('layouts.partials.products.call_rate')
-                                </slot>
+                                    </slot>
                                 @endif
                                 <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
@@ -167,6 +167,18 @@
                                 </slot>
 
                                 @include('layouts.partials.products.common-field.search-related-field')
+
+                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
+                                    <label for="mobileImg">Product Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="product_image" data-height="90" class="dropify"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $product->product_image }}">
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('icon'))
+                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                    @endif
+                                </div>
 
 
                                 <div class="col-md-6">
@@ -204,7 +216,7 @@
                                         </button>
                                     </div>
                                 </div>
-                        </div>
+                            </div>
 
                         </form>
                     </div>
@@ -217,12 +229,14 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">
         $(function () {
             var date = new Date();
@@ -241,6 +255,15 @@
                 useCurrent: false, //Important! See issue #1075
                 showClose: true,
 
+            });
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
             });
 
             $('.duration_categories').change(function () {
