@@ -12,14 +12,14 @@
 </div>
 
 <div class="col-sm-12">
-    <div id="image_with_content" class="image_with_content" data-count="1">
+    <div id="image_with_content_sec" class="image_with_content" data-count="1">
     
         @if($component == [])
-        <input type="hidden" name="component[0][image_with_content_item][id-1]" value="1">
-        <input type="hidden" name="component[0][image_with_content_item][display_order-1]" value="1">
+        
         <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
         <div class="row single_slider_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
-
+            <input type="hidden" name="component[0][image_with_content_item][id-1]" value="1">
+            <input type="hidden" name="component[0][image_with_content_item][display_order-1]" value="1">
             <div class="form-group col-md-3 {{ $errors->has('title_en') ? ' error' : '' }}">
                 <label for="title_en" class="required1">Title En</label>
                 <input type="text" name="component[0][image_with_content_item][title_en-1]"  class="form-control"
@@ -165,9 +165,10 @@
             <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="{{count($component)}}">
 
             @foreach ($component as $key => $comp)
-            <input type="hidden" name="component[0][image_with_content_item][id-{{($key+1)}}]" value="{{($key+1)}}">
-            <input type="hidden" name="component[0][image_with_content_item][display_order-{{($key+1)}}]" value="{{($key+1)}}">
+            
             <div class="row single_slider_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
+                <input type="hidden" name="component[0][image_with_content_item][id-{{($key+1)}}]" value="{{($key+1)}}">
+                <input type="hidden" name="component[0][image_with_content_item][display_order-{{($key+1)}}]" value="{{($key+1)}}">
 
                 <div class="form-group col-md-3 {{ $errors->has('title_en') ? ' error' : '' }}">
                     <label for="title_en" class="required1">Title En</label>
@@ -352,9 +353,9 @@
 	     i = i+1;
 	     var html = '';
          html += `
-            <input type="hidden" name="component[0][image_with_content_item][id-${i}]" value="${i}">
-            <input type="hidden" name="component[0][image_with_content_item][display_order-${i}]" value="${i}">
             <div class="row single_slider_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
+                <input type="hidden" name="component[0][image_with_content_item][id-${i}]" value="${i}">
+                <input type="hidden" name="component[0][image_with_content_item][display_order-${i}]" value="${i}">
 
                 <div class="form-group col-md-3 {{ $errors->has('title_en') ? ' error' : '' }}">
                     <label for="title_en" class="required1">Title En</label>
@@ -502,7 +503,7 @@
 
 	     //html += '<div class="row single_slider_content"><div class="form-group col-md-4"> <label for="alt_text" class="">Image (optional)</label><div class="custom-file"> <input type="file" name="component[0][image_with_content_item][image_url-'+i+']" class="dropify" aria-invalid="false"></div> <span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div><div class="form-group col-md-4"> <label for="alt_text" class="required1">Alt Text</label> <input type="text" name="component[0][image_with_content_item][alt_text-'+i+']" class="form-control" value=""><div class="help-block"></div></div><div class="form-group col-md-3"> <label for="status">Status</label> <select class="form-control" name="component[0][image_with_content_item][status-'+i+']" aria-invalid="false"><option value="1">Active</option><option value="0">Inactive</option> </select></div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label><button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button></div></div>';
 
-	     $parentSelector.find('#image_with_content').append(html);
+	     $parentSelector.find('#image_with_content_sec').append(html);
 
          $('.dropify').dropify({
              messages: {
