@@ -43,6 +43,30 @@
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
+                                
+                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">
+                                    <label for="desc_en">Description (English)</label>
+                                    <textarea type="text" name="desc_en" rows="5"
+                                            class="form-control summernote_editor"
+                                            placeholder="Enter page description in English"
+                                    ></textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_bn'))
+                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">
+                                    <label for="desc_bn">Description (Bangla)</label>
+                                    <textarea type="text" name="desc_bn" rows="5"
+                                            class="form-control summernote_editor"
+                                            placeholder="Enter page description in Bangla"
+                                    ></textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_bn'))
+                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 @if($parent_id != 0)
 {{--                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
 {{--                                        <label for="url">Redirect Url</label>--}}
