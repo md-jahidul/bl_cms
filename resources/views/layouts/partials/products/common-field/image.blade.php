@@ -1,5 +1,5 @@
 <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }}">
-    <label for="tag_category_id">Image</label>
+    <label for="tag_category_id">Product Details Image</label>
 
     <div class="custom-file">
 
