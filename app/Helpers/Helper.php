@@ -321,5 +321,4 @@ class Helper
            'number_verification' => 'Number Verification'
         ];
     }
-
 }

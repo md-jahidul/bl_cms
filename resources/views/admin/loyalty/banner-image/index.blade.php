@@ -38,14 +38,20 @@
 {{--                                    @endif--}}
 {{--                                </div>--}}
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">--}}
-{{--                                    <label for="mobileImg">Banner Image (Mobile)</label>--}}
-{{--                                    <div class="custom-file">--}}
-{{--                                        <input type="hidden" name="loyalty_mobile_banner_old" value="{{ isset($aboutLoyalty->banner_mobile_view) ? $aboutLoyalty->banner_mobile_view : '' }}">--}}
-{{--                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="90"--}}
-{{--                                               data-default-file="{{ isset($aboutLoyalty->banner_mobile_view) ? config('filesystems.file_base_url') . $aboutLoyalty->banner_mobile_view : '' }}">--}}
-{{--                                    </div>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('banner_mobile_view'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
+{{--                                    <label for="alt_text">Alt Text</label>--}}
+{{--                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"--}}
+{{--                                           placeholder="Enter alt text" value="{{ isset($aboutLoyalty->alt_text_en) ? $aboutLoyalty->alt_text_en : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('alt_text'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
 {{--                                    <div class="help-block"></div>--}}
 {{--                                    @if ($errors->has('banner_mobile_view'))--}}

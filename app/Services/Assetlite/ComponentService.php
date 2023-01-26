@@ -170,9 +170,9 @@ class ComponentService
 
         /**
          * Creator: Shuvo-bs
-         * For Button Component 
+         * For Button Component
          * Genareted Html stored in editor_en & editor_bn column
-         * 
+         *
          */
         if ($data['component_type'] == 'button_component') {
             $check_external = '';
@@ -198,7 +198,7 @@ class ComponentService
 
             $data['editor_en'] = $btn_html_en;
             $data['editor_bn'] = $btn_html_bn;
-            
+
         }
 
 
@@ -224,7 +224,7 @@ class ComponentService
                 $this->comMultiDataRepository->save($imgData);
             }
         }
-        
+
         return response('Component create successfully!');
     }
 
@@ -313,9 +313,9 @@ class ComponentService
 
         /**
          * Creator: Shuvo-bs
-         * For Button Component 
+         * For Button Component
          * Genareted Html stored in editor_en & editor_bn column
-         * 
+         *
          */
         if ($data['component_type'] == 'button_component') {
             $check_external = '';
@@ -516,7 +516,7 @@ class ComponentService
         $component = $this->findOne($id);
 
         if($component) $component->delete();
-        
+
         return Response('Component deleted successfully !');
     }
 

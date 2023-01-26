@@ -197,6 +197,18 @@
 
 
                                     {{ Form::hidden('sections[id]', isset($component) ? $component->section_details_id : request()->section_id ?? null, ['class' => 'section_id'] ) }}
+                                    <div class="col-md-12 mt-2">
+                                        <div class="form-group">
+                                            <label for="title" class="mr-1">Status:</label>
+                                            <input type="radio" name="sections[status]" value="1" id="active" checked>
+                                            <label for="active" class="mr-1">Active</label>
+
+                                            <input type="radio" name="sections[status]" value="0" id="inactive">
+                                            <label for="inactive">Inactive</label>
+                                        </div>
+                                    </div>
+
+                                    {{ Form::hidden('sections[id]', null, ['class' => 'section_id'] ) }}
                                     {{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
 
                                     <div class="form-actions col-md-12">
