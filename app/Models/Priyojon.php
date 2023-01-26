@@ -16,6 +16,8 @@ class Priyojon extends Model
         'desc_en',
         'desc_bn',
         'banner_image_url',
+        'banner_video_url',
+        'is_images',
         'banner_mobile_view',
         'alt_text_en',
         'alias',
