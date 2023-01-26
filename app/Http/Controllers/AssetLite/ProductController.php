@@ -49,11 +49,11 @@ class ProductController extends Controller
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
-        ProductService $productService, 
-        AlCoreProductService $alCoreProductService, 
-        ProductDetailService $productDetailService, 
-        TagCategoryService $tagCategoryService, 
-        OfferCategoryService $offerCategoryService, 
+        ProductService $productService,
+        AlCoreProductService $alCoreProductService,
+        ProductDetailService $productDetailService,
+        TagCategoryService $tagCategoryService,
+        OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService,
         AlInternetOffersCategoryService $alInternetOffersCategoryService
     )
@@ -156,7 +156,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-        
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:products,url_slug_bn'
@@ -230,7 +229,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-        
+
         return view('admin.product.edit', $this->info);
     }
 
@@ -251,7 +250,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,' . $product->id,
             'product_code' => 'required|unique:products,product_code,'. $product->id
-            
+
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
@@ -286,12 +285,17 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+        $request->validate([
+           'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details,banner_name,' . $id : '',
+           'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details,banner_name_bn,' . $id : '',
         ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-        }
+
+//        $validator = Validator::make($request->all(), [
+//            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+//        ]);
+//        if ($validator->fails()) {
+//            Session::flash('error', $validator->messages()->first());
+//        }
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
@@ -363,7 +367,7 @@ class ProductController extends Controller
             $path = Storage::disk('public')->path($path);
 
             return $this->alCoreProductService->syncProductCategory($path);
-            
+
         } catch (\Exception $e) {
             $response = [
                 'success' => 'FAILED',
@@ -371,6 +375,36 @@ class ProductController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+
+
+    /**
+     * User: BS(Shuvo)
+     * This function is only for bulk keyword update for the search_data Table.
+     * 
+     */
+
+    public function updateSearchDataTable(){
+        // return $product = $this->productService->findProduct($type, '100MINS100TAKA');
+        $products = $this->productService->findBy();
+
+        foreach ($products as $key => $product) {
+            try {
+                
+                $this->productService->updateSearchData($product);
+
+            } catch (\Throwable $th) {
+                $response = [
+                    'success' => 'FAILED',
+                    'errors' => $th->getMessage()
+                ];
+                return response()->json($response, 500);
+            }
+
+
+        }
+        
+        return response()->json(['success' => 'Success'], 200);
     }
 
 }
