@@ -19,7 +19,8 @@ class LmsShortcutComponentService
 
     private $lmsShortcutComponentRepository;
 
-    protected const REDIS_KEY = "lms_component";
+    protected const REDIS_KEY_PREPAID = "lms_component_prepaid";
+    protected const REDIS_KEY_POSTPAID = "lms_component_postpaid";
 
     public function __construct(
         LmsShortcutComponentRepository $lmsShortcutComponentRepository
@@ -61,7 +62,8 @@ class LmsShortcutComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del(self::REDIS_KEY);
+            Redis::del(self::REDIS_KEY_PREPAID);
+            Redis::del(self::REDIS_KEY_POSTPAID);
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -84,7 +86,8 @@ class LmsShortcutComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del(self::REDIS_KEY);
+        Redis::del(self::REDIS_KEY_PREPAID);
+        Redis::del(self::REDIS_KEY_POSTPAID);
         return response("Successfully status changed");
     }
 
@@ -97,7 +100,8 @@ class LmsShortcutComponentService
         $data['display_order'] = $msComponentCount + 1;
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del(self::REDIS_KEY_PREPAID);
+        Redis::del(self::REDIS_KEY_POSTPAID);
         return response("Shortcut Component update successfully!");
     }
 
@@ -109,7 +113,8 @@ class LmsShortcutComponentService
 
         $component = $this->findOne($id);
         $component->update($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del(self::REDIS_KEY_PREPAID);
+        Redis::del(self::REDIS_KEY_POSTPAID);
         return response("Shortcut Component update successfully!");
     }
 
@@ -117,7 +122,8 @@ class LmsShortcutComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del(self::REDIS_KEY);
+        Redis::del(self::REDIS_KEY_PREPAID);
+        Redis::del(self::REDIS_KEY_POSTPAID);
         return [
             'message' => 'Component delete successfully',
         ];
