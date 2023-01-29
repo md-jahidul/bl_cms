@@ -6,6 +6,7 @@ use App\Helpers\ComponentHelper;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\AboutPageService;
+use App\Services\AlBannerService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
 use App\Services\LmsAboutBannerService;
@@ -41,6 +42,9 @@ class LmsAboutPageController extends Controller
      */
     private $lmsAboutBannerService;
 
+    protected $alBannerService;
+
+
     /**
      * EthicsController constructor.
      * @param AboutPageService $aboutPageService
@@ -50,12 +54,15 @@ class LmsAboutPageController extends Controller
         AboutPageService $aboutPageService,
         LmsBenefitService $lmsBenefitService,
         ComponentService $componentService,
-        LmsAboutBannerService $lmsAboutBannerService
+        LmsAboutBannerService $lmsAboutBannerService,
+        AlBannerService $alBannerService
     ) {
         $this->aboutPageService = $aboutPageService;
         $this->lmsBenefitService = $lmsBenefitService;
         $this->componentService = $componentService;
         $this->lmsAboutBannerService = $lmsAboutBannerService;
+        $this->alBannerService = $alBannerService;
+
     }
 
     /**
@@ -66,15 +73,21 @@ class LmsAboutPageController extends Controller
      */
     public function index($slug)
     {
+        
+        /**
+         * shuvo-bs
+         * We have Plan to merge all the banner in the al_banners table. For this reason we have store discount-privilege's banner in al_banner table
+         */
         if ($slug == 'discount-privilege') {
-            
+
             // $details = $this->aboutPageService->findAboutDetail($slug);
             // $benefits = $this->lmsBenefitService->getBenefit($slug);
-            $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
+            $banner = $this->alBannerService->findBanner('discount_privilege', 0)??null;
+
             // dd($aboutLoyaltyBanner);
-            $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
-            $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
-            return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
+            // $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+            // $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
+            return view('admin.loyalty.about-pages.discount-privilege', compact('banner'));
 
         } else {
             // $details = $this->aboutPageService->findAboutDetail($slug);
