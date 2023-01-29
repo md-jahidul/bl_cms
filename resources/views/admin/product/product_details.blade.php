@@ -115,101 +115,6 @@
                             @include('layouts.partials.product-details.other-details.4g_offer')
                             @endif
 
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
-                                <label for="banner_title_en">Banner Title EN</label>
-                                <input type="text" name="banner_title_en"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ optional($productDetail->product_details)->banner_title_en}}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_title_en'))
-                                <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
-                                @endif
-                            </div>
-                            <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
-                                <label for="banner_title_bn">Banner Title BN</label>
-                                <input type="text" name="banner_title_bn"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ optional($productDetail->product_details)->banner_title_bn}}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_title_bn'))
-                                <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                <label for="banner_alt_text">Alt Text</label>
-                                <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ optional($productDetail->product_details)->banner_alt_text}}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_alt_text'))
-                                <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <span>Banner image (Web)</span>
-
-                                <div class="custom-file">
-
-                                    <input type="hidden" name="old_web_img" value="{{ optional($productDetail->product_details)->banner_image_url }}">
-
-                                    <input type="file" name="banner_image_url" class="custom-file-input" id="image">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                </div>
-
-                                <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                @if( !empty($productDetail->product_details->banner_image_url) )
-                                <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_url }}" style="width:100%;margin-top:10px;">
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
-                                <span>Banner image (Mobile)</span>
-
-                                <div class="custom-file">
-                                    <input type="hidden" name="old_mob_img" value="{{ optional($productDetail->product_details)->banner_image_mobile }}">
-
-                                    <input type="file" name="banner_image_mobile" class="custom-file-input">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                </div>
-                                <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                @if( !empty($productDetail->product_details->banner_image_url) )
-                                <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_mobile }}" style="width:100%;margin-top:10px;">
-                                @endif
-
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
-                                <label for="banner_desc_en">Banner Description (English)</label>
-                                <textarea type="text" name="banner_desc_en"  class="form-control summernote_editor" placeholder="Enter short details in English" rows="5"
-                                >{{ $productDetail->product_details->banner_desc_en }}</textarea>
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_desc_en'))
-                                    <div class="help-block">{{ $errors->first('banner_desc_en') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
-                                <label for="banner_desc_bn">Banner Description (Bangla)</label>
-                                <textarea type="text" name="banner_desc_bn"  class="form-control summernote_editor" placeholder="Enter short details in English" rows="5">{{ $productDetail->product_details->banner_desc_bn }}</textarea>
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_desc_bn'))
-                                    <div class="help-block">{{ $errors->first('banner_desc_bn') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name</label>
-                                <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
-                                <input type="text" class="form-control" name="banner_name" value="{{optional($productDetail->product_details)->banner_name}}" placeholder="Photo Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-
-                            </div>
-
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" id="save" class="btn btn-primary"><i
@@ -224,6 +129,16 @@
         </div>
     </div>
 </section>
+
+    <!--Banner Section-->
+    @php
+        $action = [
+            'section_id' => $productDetail->id,
+            'section_type' => "product_details"
+        ];
+
+    @endphp
+    @include('admin.al-banner.section', $action)
 @stop
 
 

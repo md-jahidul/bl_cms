@@ -95,8 +95,7 @@ class ProductDetailsController extends Controller
         $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
-        $banner = $this->alBannerService->findBanner('product_details', $productDetailsId);
-
+        $banner = $this->alBannerService->findBanner('product_other_details', $productDetailsId);
         return view('admin.product.details.index', compact(
             'productSections',
             'simType',

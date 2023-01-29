@@ -74,7 +74,7 @@
     @php
         $action = [
             'section_id' => $productDetailsId,
-            'section_type' => "product_details"
+            'section_type' => "product_other_details"
         ];
     @endphp
     @include('admin.al-banner.section', $action)
