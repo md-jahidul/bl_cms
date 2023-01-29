@@ -1,12 +1,29 @@
+@php
+    /* $list_d = ['about-page', 'priyojon'];*/
+    $store_d = 'about-page.component.store';
+    $update_d = 'about-page.component.update';
+    $action = [
+        /* 'list' => isset($listAction) ? $listAction : $list_d,*/
+        'store' => isset($storeAction) ? $storeAction : $store_d,
+        'update' => isset($updateAction) ? $updateAction : $update_d,
+    ];
+    if(isset($component) && $component->page_type == 'explore_c' || isset($pageType) && $pageType == 'explore_c'){
+
+        $list = route('explore-c-component.list', ['explore_c_id' => isset($component) ? $component->section_details_id : request()->section_id]);
+    }else{
+
+        $list =  route('about-page', 'priyojon');
+    }
+@endphp
 @extends('layouts.admin')
 @section('title', 'Component Create')
 @section('card_name', 'Component Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ route('about-page', 'priyojon') }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ $list }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-    <a href="{{ route('about-page', 'priyojon') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ $list }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -15,7 +32,7 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" method="POST" novalidate enctype="multipart/form-data"
-                              action="{{ isset($component) ? route('about-page.component.update', $component->id) : route('about-page.component.store') }}">
+                              action="{{ isset($component) ? route($action['update'], $component->id) : route($action['store']) }}">
                             @csrf
                             <div class="content-body">
                                 <div class="row">
@@ -52,42 +69,54 @@
                                     <!--Table Component-->
                                     <slot id="table_component" data-offer-type="table_component"
                                           class="{{ isset($component) && $component->component_type == "table_component" ? "" : "d-none" }}">
-                                        @include('admin.components.partial.title_text_editor')
+                                        @include('admin.components.partial.title_text_editor', $component ?? [])
                                     </slot>
 
                                     <!--Accordion-->
                                     <slot id="accordion_section" data-offer-type="accordion_section"
                                           class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">
-                                        @include('admin.components.partial.title_text_editor')
+                                        @include('admin.components.partial.title_text_editor', $component ?? [])
                                     </slot>
 
                                     <!--Text Editor-->
                                     <slot id="text_editor" data-offer-type="text_editor"
                                           class="{{ isset($component) && $component->component_type == "text_editor" ? "" : "d-none" }}">
-                                        @include('admin.components.partial.editor_only')
+                                        @include('admin.components.partial.editor_only', $component ?? [])
                                     </slot>
 
                                     <!--Single Image-->
                                     <slot id="single_image" data-offer-type="single_image"
                                           class="{{ isset($component) && $component->component_type == "single_image" ? "" : "d-none" }}">
-                                        @include('admin.components.partial.single_image')
+                                        @include('admin.components.partial.single_image', $component ?? [])
                                     </slot>
 
                                     <!--Box Content-->
                                     <slot id="box_content" data-offer-type="box_content"
                                           class="{{ isset($component) && $component->component_type == "box_content" ? "" : "d-none" }}">
-                                        @include('admin.components.partial.editor_only')
+                                        @include('admin.components.partial.editor_only', $component ?? [])
                                     </slot>
 
-{{--                                    --}}{{--Text with image right--}}
-{{--                                    <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
-{{--                                        @include('admin.app-service.details.section.component_modal.text_with_image_right')--}}
-{{--                                    </slot>--}}
+                                    <!--Text with image left (Box)-->
+                                    <slot id="text_with_image_left_box" data-offer-type="text_with_image_left_box" class="{{ isset($component) && $component->component_type == "text_with_image_left_box" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.text_with_image_left_box', $component ?? [])
+                                    </slot>
+                                    <!--Text with image left-->
+                                    <slot id="text_with_image_left" data-offer-type="text_with_image_left" class="{{ isset($component) && $component->component_type == "text_with_image_left" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.text_with_image_left', $component ?? [])
+                                    </slot>
+                                    <!--Text with image right-->
+                                    <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="{{ isset($component) && $component->component_type == "text_with_image_right" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.text_with_image_right', $component ?? [])
+                                    </slot>
 
-{{--                                    --}}{{--Text with image bottom--}}
-{{--                                    <slot id="text_with_image_bottom" data-offer-type="text_with_image_bottom" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
-{{--                                        @include('admin.app-service.details.section.component_modal.text_with_image_bottom')--}}
-{{--                                    </slot>--}}
+                                    <!--Text with image bottom-->
+                                    <slot id="text_with_image_bottom" data-offer-type="text_with_image_bottom" class="{{ isset($component) && $component->component_type == "text_with_image_bottom" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.text_with_image_bottom', $component ?? [])
+                                    </slot>
+                                    <!--Multiple Text with image bottom-->
+                                    <slot id="multi_text_with_image_bottom" data-offer-type="multi_text_with_image_bottom" class="{{ isset($component) && $component->component_type == "multi_text_with_image_bottom" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_text_with_image_bottom', $component ?? [])
+                                    </slot>
 
 {{--                                    --}}{{--Slider text with image right--}}
 {{--                                    <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
@@ -118,15 +147,15 @@
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
-                                            <input type="radio" name="sections[status]" value="1" id="active" checked>
+                                            <input type="radio" name="status" value="1" id="active" {{ isset($component) && $component->status == 1 ? 'checked' : '' }}>
                                             <label for="active" class="mr-1">Active</label>
 
-                                            <input type="radio" name="sections[status]" value="0" id="inactive">
+                                            <input type="radio" name="status" value="0" id="inactive" {{ isset($component) && $component->status == 0 ? 'checked' : '' }}>
                                             <label for="inactive">Inactive</label>
                                         </div>
                                     </div>
 
-                                    {{ Form::hidden('sections[id]', null, ['class' => 'section_id'] ) }}
+                                    {{ Form::hidden('sections[id]', isset($component) ? $component->section_details_id : request()->section_id ?? null, ['class' => 'section_id'] ) }}
                                     {{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
 
                                     <div class="form-actions col-md-12">

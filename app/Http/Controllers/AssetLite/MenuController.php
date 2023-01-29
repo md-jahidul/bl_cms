@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\StoreMenuRequest;
 use App\Models\Menu;
+use App\Services\AdTechService;
 use App\Services\DynamicRouteService;
 use App\Services\MenuService;
 use Illuminate\Http\Request;
@@ -27,6 +28,10 @@ MenuController extends Controller
      * @var DynamicRouteService
      */
     private $dynamicRouteService;
+    /**
+     * @var AdTechService
+     */
+    private $adTechService;
 
     /**
      * MenuController constructor.
@@ -35,10 +40,12 @@ MenuController extends Controller
      */
     public function __construct(
         MenuService $menuService,
-        DynamicRouteService $dynamicRouteService
+        DynamicRouteService $dynamicRouteService,
+        AdTechService $adTechService
     ) {
         $this->menuService = $menuService;
         $this->dynamicRouteService = $dynamicRouteService;
+        $this->adTechService = $adTechService;
         $this->middleware('auth');
     }
 
@@ -64,7 +71,9 @@ MenuController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->menuItems;
-        return view('admin.menu.index', compact('menus', 'parent_id', 'menu_items'));
+        $adTech = $this->adTechService->getAdTechByRefType('header-menu');
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
+        return view('admin.menu.index', compact('menus', 'parent_id', 'menu_items', 'adTech', 'dynamicRoutes'));
     }
 
     /**
@@ -152,5 +161,12 @@ MenuController extends Controller
     {
         $response = $this->menuService->deleteMenu($id);
         return ($response['parent_id'] == 0) ? url('menu') : url("/menu/" . $response['parent_id'] . "/child-menu");
+    }
+
+    public function adTechStore(Request $request)
+    {
+        $response = $this->adTechService->storeAdTech($request->all(), 'header-menu');
+        Session::flash('message', $response->getContent());
+        return redirect('menu');
     }
 }

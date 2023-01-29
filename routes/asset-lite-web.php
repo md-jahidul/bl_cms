@@ -26,6 +26,32 @@ Route::get('/users/change-password', 'AssetLite\UserController@changePasswordFor
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 //Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
+
+
+    // Explore C's =========================================================
+    Route::resource('al-banner', 'AssetLite\AlBannerController')->except('index','create','edit','show', 'destroy');
+
+    // Explore C's =========================================================
+    Route::resource('explore-c', 'AssetLite\ExploreCController');
+    Route::get('explore-c/destroy/{id}', 'AssetLite\ExploreCController@destroy');
+    Route::get('explore-c-sort', 'AssetLite\ExploreCController@exploreCSortable');
+
+
+    Route::get('explore-c-component/{explore_c_id}/list', 'AssetLite\ExploreCDetailsController@index')
+        ->name('explore-c-component.list');
+    Route::get('explore-c-component/create', 'AssetLite\ExploreCDetailsController@componentCreate')
+        ->name('explore-c-component.create');
+    Route::post('explore-c-component/store', 'AssetLite\ExploreCDetailsController@componentStore')
+        ->name('explore-c-component.store');
+    Route::get('explore-c-component/edit/{comId}', 'AssetLite\ExploreCDetailsController@componentEdit')
+        ->name('explore-c-component.edit');
+    Route::post('explore-c-component/update/{comId}', 'AssetLite\ExploreCDetailsController@componentUpdate')
+        ->name('explore-c-component.update');
+    Route::get('explore-c-component/destroy/{comId}', 'AssetLite\ExploreCDetailsController@componentDestroy')
+        ->name('explore-c-component.destroy');
+    Route::get('explore-c-component-sort', 'AssetLite\ExploreCDetailsController@componentSortable');
+
+
     //Place all your routes here
     Route::resource('authorize/users', 'AssetLite\UserController')->except(['show']);
 
@@ -443,6 +469,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
     Route::post('popular-search-update',
         'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+
+    Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
 
 
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
@@ -1294,4 +1322,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Dynamic Routes
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
+
+    // Ad Tech banner Store
+    Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
 });
