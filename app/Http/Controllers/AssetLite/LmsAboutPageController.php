@@ -11,6 +11,7 @@ use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
 use App\Services\LmsAboutBannerService;
 use App\Services\LmsBenefitService;
+use App\Services\PriyojonService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +45,9 @@ class LmsAboutPageController extends Controller
 
     protected $alBannerService;
 
+    private $priyojonService;
+
+
 
     /**
      * EthicsController constructor.
@@ -55,6 +59,7 @@ class LmsAboutPageController extends Controller
         LmsBenefitService $lmsBenefitService,
         ComponentService $componentService,
         LmsAboutBannerService $lmsAboutBannerService,
+        PriyojonService $priyojonService,
         AlBannerService $alBannerService
     ) {
         $this->aboutPageService = $aboutPageService;
@@ -62,6 +67,7 @@ class LmsAboutPageController extends Controller
         $this->componentService = $componentService;
         $this->lmsAboutBannerService = $lmsAboutBannerService;
         $this->alBannerService = $alBannerService;
+        $this->priyojonService = $priyojonService;
 
     }
 
@@ -82,12 +88,13 @@ class LmsAboutPageController extends Controller
 
             // $details = $this->aboutPageService->findAboutDetail($slug);
             // $benefits = $this->lmsBenefitService->getBenefit($slug);
+            $priyojonLanding = $this->priyojonService->getPriyojonByType('discount_privilege');
             $banner = $this->alBannerService->findBanner('discount_privilege', 0)??null;
 
             // dd($aboutLoyaltyBanner);
             // $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
             // $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
-            return view('admin.loyalty.about-pages.discount-privilege', compact('banner'));
+            return view('admin.loyalty.about-pages.discount-privilege', compact('priyojonLanding','banner'));
 
         } else {
             // $details = $this->aboutPageService->findAboutDetail($slug);

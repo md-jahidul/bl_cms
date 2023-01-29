@@ -20,6 +20,76 @@
     @endphp
     @include('admin.components.index', $action) --}}
 
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ url("priyojon/ $priyojonLanding->id") }}" method="POST" novalidate>
+                            @csrf
+                            {{method_field('PUT')}}
+                            <div class="row">
+                                <input type="hidden" name="id" value="{{ $priyojonLanding->id }}">
+                                <input type="hidden" name="parent_id" value="{{ $priyojonLanding->parent_id }}">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter duration name in english"
+                                           value="{{ $priyojonLanding->title_en }}" required data-validation-required-message="Enter duration name in english">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter duration name in english"
+                                           value="{{ $priyojonLanding->title_bn }}" required data-validation-required-message="Enter duration name in english">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">
+                                    <label for="desc_en">Description (English)</label>
+                                    <textarea type="text" name="desc_en" rows="5"
+                                            class="form-control summernote_editor"
+                                            placeholder="Enter page description in English"
+                                    >{{ $priyojonLanding->desc_en }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_bn'))
+                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">
+                                    <label for="desc_bn">Description (Bangla)</label>
+                                    <textarea type="text" name="desc_bn" rows="5"
+                                            class="form-control summernote_editor"
+                                            placeholder="Enter page description in Bangla"
+                                    >{{ $priyojonLanding->desc_bn }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('desc_bn'))
+                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-actions col-md-12 ">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                    class="la la-check-square-o"></i> UPDATE
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     @php
         $action = [
                 'section_id' => 0,

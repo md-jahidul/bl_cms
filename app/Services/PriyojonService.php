@@ -107,4 +107,13 @@ class PriyojonService
         $priyojon->delete();
         return Response('Priyojon delete successfully');
     }
+
+    /**
+     * @param $parent_id
+     * @return mixed
+     */
+    public function getPriyojonByType($type)
+    {
+        return $this->priyojonRepository->findOneByProperties(['component_type' => $type, 'parent_id' => 0]);
+    }
 }
