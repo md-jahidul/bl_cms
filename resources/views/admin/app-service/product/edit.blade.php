@@ -120,95 +120,128 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }}
+                                {{ $appServiceProduct->is_images == 1 ? '' : 'd-none' }}" id="detailsImg">
+                                <label for="mobileImg">Details Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="details_image_url" data-height="90" class="dropify"
+                                           data-default-file="{{ config('filesystems.file_base_url') . $appServiceProduct->details_image_url }}">
+                                </div>
+                                <div class="help-block"></div>
+                                @if ($errors->has('details_image_url'))
+                                    <div class="help-block">  {{ $errors->first('details_image_url') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}
+                                {{ $appServiceProduct->is_images == 1 ? 'd-none' : '' }}" id="detailsVideo">
+                                <label for="details_video_url" class="required">Details Video URL</label>
+                                <input type="text" name="details_video_url" class="form-control" placeholder="Enter URL"
+                                       value="{{ $appServiceProduct->details_video_url }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('details_video_url'))
+                                    <div class="help-block">  {{ $errors->first('details_video_url') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-2 mt-1">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="is_images">Is Images:</label>
+                                    <input type="checkbox" name="is_images" value="1" id="is_images" {{ $appServiceProduct->is_images == 1 ? 'checked' : '' }}>
+                                </div>
+                            </div>
+
+
                             <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
                                 @include('layouts.partials.app-service.app')
                                 @include('layouts.partials.app-service.referral')
                             </slot>
 
-                                <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
-                                    @include('layouts.partials.app-service.vas')
-                                </slot>
+                            <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
+                                @include('layouts.partials.app-service.vas')
+                            </slot>
 
-                                <slot id="financial" data-offer-type="financial" class="{{ $appServiceProduct->appServiceTab->alias == 'financial' ? '' : 'd-none' }}">
-                                    @include('layouts.partials.app-service.financial')
-                                </slot>
+                            <slot id="financial" data-offer-type="financial" class="{{ $appServiceProduct->appServiceTab->alias == 'financial' ? '' : 'd-none' }}">
+                                @include('layouts.partials.app-service.financial')
+                            </slot>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label> URL (url slug)</label>
-                                    <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug}}" name="url_slug" placeholder="URL">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> najat-app (no spaces)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug') }}
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL BN</label>
-                                    <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug_bn}}" name="url_slug_bn" placeholder="URL BN">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug_bn'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug_bn') }}
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Page Header English (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header">{{$appServiceProduct->page_header}}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
-                                    <label>Page Header Bangla (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header_bn">{{$appServiceProduct->page_header_bn}}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Schema Markup</label>
-                                    <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceProduct->schema_markup}}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                    </small>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" {{ ($appServiceProduct->status == 1) ? 'checked' : '' }}>
-                                        <label for="active" class="mr-1">Active</label>
-
-                                        <input type="radio" name="status" value="0" id="inactive" {{ ($appServiceProduct->status == 0) ? 'checked' : '' }}>
-                                        <label for="inactive">Inactive</label>
+                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                <label> URL (url slug)</label>
+                                <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug}}" name="url_slug" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> najat-app (no spaces)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug') }}
                                     </div>
-                                </div>
+                                @endif
+                            </div>
 
-                                <div class="form-actions col-md-12">
-                                    <div class="pull-right">
-                                        <button id="save" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
-                                        </button>
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL BN</label>
+                                <input type="text" class="form-control slug-convert" value="{{$appServiceProduct->url_slug_bn}}" name="url_slug_bn" placeholder="URL BN">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug_bn') }}
                                     </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header English (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header">{{$appServiceProduct->page_header}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{$appServiceProduct->page_header_bn}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceProduct->schema_markup}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" {{ ($appServiceProduct->status == 1) ? 'checked' : '' }}>
+                                    <label for="active" class="mr-1">Active</label>
+
+                                    <input type="radio" name="status" value="0" id="inactive" {{ ($appServiceProduct->status == 0) ? 'checked' : '' }}>
+                                    <label for="inactive">Inactive</label>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="form-actions col-md-12">
+                                <div class="pull-right">
+                                    <button id="save" class="btn btn-primary"><i
+                                            class="la la-check-square-o"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @stop
 
 @push('page-css')
@@ -285,34 +318,32 @@ $(function () {
     });
 
 
-        var fields = $("#form-fields").find("input, textarea");
-        fields.val('');
+    var fields = $("#form-fields").find("input, textarea");
+    fields.val('');
 
-        // Image Dropify
-        $(function () {
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Image File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                },
-            });
-        });
-
-        var detailsVideo = $('#detailsVideo');
-        var detailsImage = $('#detailsImg');
-
-        $('#is_images').click(function () {
-            if($(this).prop("checked") == true){
-                detailsVideo.addClass('d-none');
-                detailsImage.removeClass('d-none');
-            }else{
-                detailsImage.addClass('d-none')
-                detailsVideo.removeClass('d-none')
-            }
-        })
+    // Image Dropify
+    $('.dropify').dropify({
+        messages: {
+            'default': 'Browse for an Image File to upload',
+            'replace': 'Click to replace',
+            'remove': 'Remove',
+            'error': 'Choose correct file format'
+        },
     });
+
+    var detailsVideo = $('#detailsVideo');
+    var detailsImage = $('#detailsImg');
+
+    $('#is_images').click(function () {
+        if($(this).prop("checked") == true){
+            detailsVideo.addClass('d-none');
+            detailsImage.removeClass('d-none');
+        }else{
+            detailsImage.addClass('d-none')
+            detailsVideo.removeClass('d-none')
+        }
+    })
+});
 </script>
 @endpush
 

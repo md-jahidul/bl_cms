@@ -116,6 +116,36 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }} d-none" id="detailsImg">
+                                <label for="mobileImg">Details Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="details_image_url" data-height="90" class="dropify"
+                                           data-default-file="{{ isset($adTech->details_image_url) ? config('filesystems.file_base_url') . $adTech->details_image_url : '' }}">
+                                </div>
+                                <div class="help-block"></div>
+                                @if ($errors->has('details_image_url'))
+                                    <div class="help-block">  {{ $errors->first('details_image_url') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}" id="detailsVideo">
+                                <label for="details_video_url" class="required">Details Video URL</label>
+                                <input type="text" name="details_video_url" class="form-control" placeholder="Enter URL"
+                                       value="{{ old("details_video_url") ? old("details_video_url") : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('details_video_url'))
+                                    <div class="help-block">  {{ $errors->first('details_video_url') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-2 mt-1">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="is_images">Is Images:</label>
+                                    <input type="checkbox" name="is_images" value="1" id="is_images">
+                                </div>
+                            </div>
+
                             <slot id="app" data-offer-type="app" style="display: none">
                                 @include('layouts.partials.app-service.app')
 
@@ -250,59 +280,43 @@ $(function () {
         });
     });
 
-            $(".app_review, .app_rating").on("keypress keyup blur", function (event) {
-                var max_chars = 10;
-                if($(this).val().length > max_chars){
-                    $(this).val($(this).val().substr(0, max_chars));
-                }
+    $(".app_review, .app_rating").on("keypress keyup blur", function (event) {
+        var max_chars = 10;
+        if($(this).val().length > max_chars){
+           $(this).val($(this).val().substr(0, max_chars));
+        }
 
-                $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
-                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-                    event.preventDefault();
-                }
-            });
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
 
-            // Image Dropify
-            $(function () {
-                $('.dropify').dropify({
-                    messages: {
-                        'default': 'Browse for an Image File to upload',
-                        'replace': 'Click to replace',
-                        'remove': 'Remove',
-                        'error': 'Choose correct file format'
-                    },
-                });
-            });
+    $('.dropify').dropify({
+        messages: {
+            'default': 'Browse for an Image File to upload',
+            'replace': 'Click to replace',
+            'remove': 'Remove',
+            'error': 'Choose correct file format'
+        },
+        height: 100
+    });
 
-            var detailsVideo = $('#detailsVideo');
-            var detailsImage = $('#detailsImg');
+    var detailsVideo = $('#detailsVideo');
+    var detailsImage = $('#detailsImg');
 
-            $('#is_images').click(function () {
-                if($(this).prop("checked") == true){
-                    detailsVideo.addClass('d-none');
-                    detailsImage.removeClass('d-none');
-                }else{
-                    detailsImage.addClass('d-none')
-                    detailsVideo.removeClass('d-none')
-                }
-            })
+    $('#is_images').click(function () {
+        if($(this).prop("checked") == true){
+            detailsVideo.addClass('d-none');
+            detailsImage.removeClass('d-none');
+        }else{
+            detailsImage.addClass('d-none')
+            detailsVideo.removeClass('d-none')
+        }
+    })
 
-
-//text editor for package details
-//     $("textarea.text_editor").summernote({
-//         toolbar: [
-//             ['style', ['bold', 'italic', 'underline', 'clear']],
-//             ['font', ['strikethrough', 'superscript', 'subscript']],
-//             ['fontsize', ['fontsize']],
-//             ['color', ['color']],
-//             // ['table', ['table']],
-//             ['para', ['ul', 'ol', 'paragraph']],
-//             ['view', ['codeview']]
-//         ],
-//         height: 200
-//     });
-        });
-    </script>
+});
+</script>
 @endpush
 
 
