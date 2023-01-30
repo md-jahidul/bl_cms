@@ -203,6 +203,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 @push('page-js')
 <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
@@ -214,7 +216,8 @@
 <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
 <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 <script>
 $(function () {
     $('#offer_type').change(function () {
@@ -245,19 +248,17 @@ $(function () {
         }
     });
 
-//text editor for package details
-//     $("textarea.text_editor").summernote({
-//         toolbar: [
-//             ['style', ['bold', 'italic', 'underline', 'clear']],
-//             ['font', ['strikethrough', 'superscript', 'subscript']],
-//             ['fontsize', ['fontsize']],
-//             ['color', ['color']],
-//             // ['table', ['table']],
-//             ['para', ['ul', 'ol', 'paragraph']],
-//             ['view', ['codeview']]
-//         ],
-//         height: 200
-//     });
+    $(function () {
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            },
+            height: 100
+        });
+    })
 });
 </script>
 @endpush
