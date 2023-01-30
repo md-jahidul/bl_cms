@@ -102,165 +102,153 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }} d-none" id="detailsImg">
-                                    <label for="mobileImg">Details Image</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="details_image_url" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($adTech->details_image_url) ? config('filesystems.file_base_url') . $adTech->details_image_url : '' }}">
+                            <div class="form-group col-md-12 {{ $errors->has('product_img_url') ? ' error' : '' }}">
+                                <label for="alt_text">Product Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="product_img_url" class="custom-file-input dropify"
+                                           data-default-file="{{ isset($appServiceProduct->product_img_url) ? config('filesystems.file_base_url') . $appServiceProduct->product_img_url : '' }}">
+                                </div>
+                                <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                <div class="help-block"></div>
+                                @if ($errors->has('product_img_url'))
+                                    <div class="help-block">  {{ $errors->first('product_img_url') }}</div>
+                                @endif
+                            </div>
+
+                            <slot id="app" data-offer-type="app" style="display: none">
+                                @include('layouts.partials.app-service.app')
+
+                                @include('layouts.partials.app-service.referral')
+                            </slot>
+
+                            <slot id="vas" data-offer-type="vas" style="display: none">
+                                @include('layouts.partials.app-service.vas')
+
+                            </slot>
+
+                            <slot id="financial" data-offer-type="financial" style="display: none">
+                                @include('layouts.partials.app-service.financial')
+                            </slot>
+
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL EN</label>
+                                <input type="text" class="form-control slug-convert" name="url_slug" placeholder="URL EN" id="url_slug">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> najat-app (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug') }}
                                     </div>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('details_image_url'))
-                                        <div class="help-block">  {{ $errors->first('details_image_url') }}</div>
-                                    @endif
-                                </div>
+                                @endif
+                            </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}" id="detailsVideo">
-                                    <label for="details_video_url" class="required">Details Video URL</label>
-                                    <input type="text" name="details_video_url" class="form-control" placeholder="Enter URL"
-                                           value="{{ old("details_video_url") ? old("details_video_url") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('details_video_url'))
-                                        <div class="help-block">  {{ $errors->first('details_video_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="col-md-2 mt-1">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="is_images">Is Images:</label>
-                                        <input type="checkbox" name="is_images" value="1" id="is_images">
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL BN </label>
+                                <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('url_slug_bn') }}
                                     </div>
-                                </div>
+                                @endif
+                            </div>
 
-                                <slot id="app" data-offer-type="app" style="display: none">
-                                    @include('layouts.partials.app-service.app')
-                                </slot>
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header English (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
 
-                                <slot id="vas" data-offer-type="vas" style="display: none">
-                                    @include('layouts.partials.app-service.vas')
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
 
-                                </slot>
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control" rows="7" name="schema_markup"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
 
-                                <slot id="financial" data-offer-type="financial" style="display: none">
-                                    @include('layouts.partials.app-service.financial')
-                                </slot>
+                            <div class="col-md-6">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" checked>
+                                    <label for="active" class="mr-1">Active</label>
 
-                                <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                    <label> URL EN</label>
-                                    <input type="text" class="form-control slug-convert" name="url_slug" placeholder="URL EN" id="url_slug">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> najat-app (no spaces and slash)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug') }}
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL BN </label>
-                                    <input type="text" class="form-control slug-convert" name="url_slug_bn" placeholder="URL BN">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> নাজাত-অ্যাপ (no spaces and slash)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug_bn'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug_bn') }}
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Page Header English (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header"></textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
-                                    <label>Page Header Bangla (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header_bn"></textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Schema Markup</label>
-                                    <textarea class="form-control" rows="7" name="schema_markup"></textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                    </small>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" checked>
-                                        <label for="active" class="mr-1">Active</label>
-
-                                        <input type="radio" name="status" value="0" id="inactive">
-                                        <label for="inactive">Inactive</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-actions col-md-12">
-                                    <div class="pull-right">
-                                        <button id="save" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
-                                        </button>
-                                    </div>
+                                    <input type="radio" name="status" value="0" id="inactive">
+                                    <label for="inactive">Inactive</label>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="form-actions col-md-12">
+                                <div class="pull-right">
+                                    <button id="save" class="btn btn-primary"><i
+                                            class="la la-check-square-o"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @stop
 
 @push('page-css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+<link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
-    <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script>
-        $(function () {
-            $('#offer_type').change(function () {
-                var typeId = $(this).find('option:selected').val()
-                var appServiceCat = $('#appServiceCat');
-                $.ajax({
-                    url: "{{ url('app-service/category-find') }}" + '/' + typeId,
-                    success: function (data) {
-                        appServiceCat.empty();
-                        var option = '<option value="">---Select Category---</option>';
-                        $.map(data, function (item) {
-                            option += '<option data-alias="' + item.alias + '" value="' + item.id + '">' + item.title_en + '</option>'
-                        })
-                        appServiceCat.append(option)
-                    },
-                });
-            });
+<script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+<script src="{{ asset('js/custom-js/image-show.js')}}"></script>
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+<script>
+$(function () {
+    $('#offer_type').change(function () {
+        var typeId = $(this).find('option:selected').val()
+        var appServiceCat = $('#appServiceCat');
+        $.ajax({
+            url: "{{ url('app-service/category-find') }}" + '/' + typeId,
+            success: function (data) {
+                appServiceCat.empty();
+                var option = '<option value="">---Select Category---</option>';
+                $.map(data, function (item) {
+                    option += '<option data-alias="' + item.alias + '" value="' + item.id + '">' + item.title_en + '</option>'
+                })
+                appServiceCat.append(option)
+            },
+        });
+    });
 
             $(".app_review, .app_rating").on("keypress keyup blur", function (event) {
                 var max_chars = 10;
@@ -316,3 +304,5 @@
         });
     </script>
 @endpush
+
+
