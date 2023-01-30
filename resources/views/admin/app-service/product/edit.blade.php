@@ -122,6 +122,7 @@
 
                             <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
                                 @include('layouts.partials.app-service.app')
+                                @include('layouts.partials.app-service.referral')
                             </slot>
 
                             <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
