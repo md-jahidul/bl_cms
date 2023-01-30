@@ -103,6 +103,9 @@ class ProductService
     {
         $productId = $product->id;
         $name = $product->name_en;
+        
+        #Product Code
+        $productCode = $product->product_code;
 
         $url = "";
         if ($product->sim_category_id == 1) {
@@ -145,7 +148,7 @@ class ProductService
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
 
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode);
     }
 
     public function tableSortable($data)
