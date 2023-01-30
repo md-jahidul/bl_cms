@@ -102,10 +102,24 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-12 {{ $errors->has('product_img_url') ? ' error' : '' }}">
+                                <label for="alt_text">Product Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="product_img_url" class="custom-file-input dropify"
+                                           data-default-file="{{ isset($appServiceProduct->product_img_url) ? config('filesystems.file_base_url') . $appServiceProduct->product_img_url : '' }}">
+                                </div>
+                                <span class="text-primary">Please given file type (.png, .jpg)</span>
 
+                                <div class="help-block"></div>
+                                @if ($errors->has('product_img_url'))
+                                    <div class="help-block">  {{ $errors->first('product_img_url') }}</div>
+                                @endif
+                            </div>
 
                             <slot id="app" data-offer-type="app" style="display: none">
                                 @include('layouts.partials.app-service.app')
+
+                                @include('layouts.partials.app-service.referral')
                             </slot>
 
                             <slot id="vas" data-offer-type="vas" style="display: none">
