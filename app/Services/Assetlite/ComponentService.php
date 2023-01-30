@@ -445,7 +445,9 @@ class ComponentService
     public function deleteComponent($id)
     {
         $component = $this->findOne($id);
-        $component->delete();
+
+        if($component) $component->delete();
+        
         return Response('Component deleted successfully !');
     }
 

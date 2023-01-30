@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\AlBannerService;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 
@@ -25,17 +26,21 @@ class DynamicPageController extends Controller
      */
     private $componentService;
 
+    protected $alBannerService;
     protected const PAGE_TYPE = "other_dynamic_page";
+
 
     /**
      * DynamicPageController constructor.
      * @param DynamicPageService $pageService
      * @param ComponentService $componentService
      */
-    public function __construct(DynamicPageService $pageService, ComponentService $componentService)
+    public function __construct(DynamicPageService $pageService, ComponentService $componentService, AlBannerService $alBannerService)
     {
         $this->pageService = $pageService;
         $this->componentService = $componentService;
+        $this->alBannerService = $alBannerService;
+
     }
 
     protected $componentTypes = [
@@ -91,7 +96,10 @@ class DynamicPageController extends Controller
     {
         $page = $this->pageService->findOne($pageId);
         $components = $this->pageService->getComponents($pageId);
-        return view('admin.dynamic-pages.components.index', compact('components', 'page'));
+        $banner = $this->alBannerService->findBanner(self::PAGE_TYPE, $pageId);
+        $pageType = self::PAGE_TYPE;
+
+        return view('admin.dynamic-pages.components.index', compact('components', 'page', 'banner', 'pageType'));
     }
 
     public function componentCreateForm($pageId)
