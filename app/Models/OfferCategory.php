@@ -23,7 +23,8 @@ class OfferCategory extends Model
         'postpaid_page_header',
         'postpaid_page_header_bn',
         'postpaid_url_slug',
-        'postpaid_url_slug_bn'
+        'postpaid_url_slug_bn',
+        'status', 'display_order'
     ];
 
 
