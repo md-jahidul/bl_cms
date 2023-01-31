@@ -142,7 +142,8 @@ class ComponentService
             }
         }
 
-        $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
+        // return count($results);
+        $data['multiple_attributes'] = (count($results) >= 1) ? array_values($results) : null;
         $countComponents = $this->componentRepository->list($sectionId, $pageType);
         $data['component_order'] = count($countComponents) + 1;
 
@@ -186,8 +187,6 @@ class ComponentService
             $data['editor_bn'] = $btn_html_bn;
             
         }
-
-        
 
         $this->save($data);
         return response('Component create successfully!');

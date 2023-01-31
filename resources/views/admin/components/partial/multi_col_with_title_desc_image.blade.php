@@ -19,8 +19,10 @@
         @if (isset($component->multiple_attributes))
             
             @foreach ( $component->multiple_attributes as $key => $single_attribute )
+                <h4>Column: {{ $key +1 }}</h4>
+                <hr class="hr">
 
-                <div class="row single_multi_col_with_image_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
+                <div class="row single_multi_col_with_image_content">
 
                     <input type="hidden" name="multi_item[id-{{ $key +1 }}]" value="{{ $key +1 }}">
                     <input type="hidden" name="multi_item[display_order-{{ $key +1 }}]" value="{{ $key +1 }}">
@@ -112,6 +114,10 @@
                         @endif
                     </div>
 
+                    {{-- Need to work For Multiple Button here --}}
+
+                    @include('admin.components.partial.button', $component ?? [])
+
 
                     <div class="form-group col-md-3">
                         <label for="status">Status</label>
@@ -173,7 +179,51 @@
 
         img_section = '<div class="form-group col-md-6"> <label for="alt_text_en" class="required1">Alt Text (English)</label> <input type="text" name="multi_item[alt_text_en-'+i+']"  class="form-control" value=""> <div class="help-block"></div> </div> <div class="form-group col-md-6"><label for="alt_text_bn" class="required1">Alt Text (Bangla)</label><input type="text" name="multi_item[alt_text_bn-'+i+']"  class="form-control" value="" ><div class="help-block"></div></div> <div class="form-group col-md-6"><label for="image_name_en" class="required1">Image Name (English)</label><input type="text" name="multi_item[image_name_en-'+i+']"  class="form-control" value="" ><div class="help-block"></div> </div> <div class="form-group col-md-6"> <label for="image_name_bn" class="required1">Image Name (Bangla)</label> <input type="text" name="multi_item[image_name_bn-'+i+']"  class="form-control" value="" ><div class="help-block"></div></div> <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}"><label for="image_url" class="">Image (optional)</label><div class="custom-file"><input type="file" name="multi_item[image_url-'+i+']" class="dropify"></div><span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div>';
 
-	    html += '<div class="row single_multi_col_with_image_content"><input type="hidden" name="multi_item[id-'+i+']" value="'+i+'"><input type="hidden" name="multi_item[display_order-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Title (Englist)</label> <input type="text" name="multi_item[title_en-'+i+']"  class="form-control" value="" > <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="title_bn" class="required1">Title (Bangla)</label> <input type="text" name="multi_item[title_bn-'+i+']"  class="form-control"  value="" >  <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_en" class="required1">Description (English)</label> <textarea name="multi_item[desc_en-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_bn" class="required1">Description (Bangla)</label> <textarea name="multi_item[desc_bn-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div></div>'+img_section+'<div class="form-group col-md-3"> <label for="status">Status</label> <select class="form-control" name="multi_item[status-'+i+']" aria-invalid="false"> <option value="1">Active</option> <option value="0">Inactive</option> </select> </div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button> </div> </div>';
+	    html += '<h4>Column: '+i+'</h4> <hr class="hr"><div class="row single_multi_col_with_image_content"><input type="hidden" name="multi_item[id-'+i+']" value="'+i+'"><input type="hidden" name="multi_item[display_order-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Title (Englist)</label> <input type="text" name="multi_item[title_en-'+i+']"  class="form-control" value="" > <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="title_bn" class="required1">Title (Bangla)</label> <input type="text" name="multi_item[title_bn-'+i+']"  class="form-control"  value="" >  <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_en" class="required1">Description (English)</label> <textarea name="multi_item[desc_en-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_bn" class="required1">Description (Bangla)</label> <textarea name="multi_item[desc_bn-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div></div>'+
+        img_section + 
+        '<div class="form-group col-md-4">'+
+            '<label for="learn_more_btn_label_en" class="required1">Learn More Btn Lable (English)</label>'+
+            '<input type="text" name="multi_item[learn_more_btn_label_en-'+i+']"  class="form-control section_name" placeholder="Enter title" value="">'+
+            '<div class="help-block"></div>'+
+            '<div class="help-block"></div>'+
+        '</div>'+
+
+
+        '<div class="form-group col-md-4">'+
+            '<label for="learn_more_btn_label_bn" class="required1">Learn More Btn Lable (Bangla)</label>'+
+            '<input type="text" name="multi_item[learn_more_btn_label_bn-'+i+']"  class="form-control section_name" placeholder="Enter title" value="">'+
+            '<div class="help-block"></div>'+
+            '<div class="help-block"></div>'+
+        '</div>'+
+        
+        '<div class="col-md-4">'+
+            '<div class="form-group">'+
+                '<label for="exampleInputPassword1">Button link</label>'+
+                '<input type="text" name="multi_item[learn_more_btn_link-'+i+']" class="form-control" rows="5" placeholder="Enter button link" value="">'+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group col-md-4">'+
+            '<label for="others_btn_label_en" class="required1">Learn More Btn Lable (English)</label>'+
+            '<input type="text" name="multi_item[others_btn_label_en-'+i+']"  class="form-control section_name" placeholder="Enter title" value="">'+
+            '<div class="help-block"></div>'+
+            '<div class="help-block"></div>'+
+        '</div>'+
+
+
+        '<div class="form-group col-md-4">'+
+            '<label for="learn_more_btn_label_bn" class="required1">Learn More Btn Lable (Bangla)</label>'+
+            '<input type="text" name="multi_item[learn_more_btn_label_bn-'+i+']"  class="form-control section_name" placeholder="Enter title" value="">'+
+            '<div class="help-block"></div>'+
+            '<div class="help-block"></div>'+
+        '</div>'+
+        
+        '<div class="col-md-4">'+
+            '<div class="form-group">'+
+                '<label for="exampleInputPassword1">Button link</label>'+
+                '<input type="text" name="multi_item[others_btn_link-'+i+']" class="form-control" rows="5" placeholder="Enter button link" value="">'+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group col-md-3"><label for="status">Status</label> <select class="form-control" name="multi_item[status-'+i+']" aria-invalid="false"> <option value="1">Active</option> <option value="0">Inactive</option> </select> </div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button> </div> </div>';
 
 	    $parentSelector.find('#multi_col_with_image_content_section').append(html);
 	    $parentSelector.find('.summernote_editor').summernote();

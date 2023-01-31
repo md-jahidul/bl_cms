@@ -7,44 +7,21 @@
 @endsection
 @section('action')
 
-<a href="{{ route("other_component_create", [$page->id]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
+<a href="{{ route("other-component-create", ['section_id' => $page->id]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
 
 @endsection
 @section('content')
-    <section>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ $page->page_name_en }} Components List</strong></h4>
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <th width="5%">Component Type</th>
-                                <th width="8%">Title</th>
-                                <th width="12%" class="text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sortable">
-                            @foreach($components as $list)
-                                <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
-                                    <td><i class="icon-cursor-move icons"></i></td>
-                                    <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                    <td>{{ $list->title_en  }}</td>
-                                    <td class="text-right">
-                                        <a href="{{ route("other_component_edit", [$page->id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ route('other_component_delete', [$page->id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
-                                            <i class="la la-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
+    @php
+    
+        $action = [
+            'edit' => 'dynamic-pages/component/edit',
+            'destroy' => 'dynamic-pages/component/delete',
+            'componentSort' => 'dynamic-pages/component-sortable',
+            'section_id' => $page->id
+        ];
+
+    @endphp
+    @include('admin.components.index', $action)
 
     @php
     
