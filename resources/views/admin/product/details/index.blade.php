@@ -135,11 +135,10 @@
                                 </div>
 
                                 @php
-                                    $arrayVal = [\App\Enums\OfferType::OTHERS, \App\Enums\OfferType::PACKAGES];
-
+                                    $arrayVal = ['others', 'packages', 'new_sim_offer', 'bondho_sim'];
                                 @endphp
                                 {{-- @if($productType !== \App\Enums\OfferType::OTHERS) --}}
-                                @if(!in_array($productType, $arrayVal))
+                                @if(!in_array($productType->alias, $arrayVal))
                                     <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
                                         <label for="component_title_en">Related Product Section Title (English)</label>
                                         <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
