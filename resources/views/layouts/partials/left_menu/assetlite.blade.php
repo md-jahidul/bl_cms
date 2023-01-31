@@ -668,6 +668,12 @@
                             <span class="menu-title" data-i18n="nav.templates.main">4G Landing Page</span>
                         </a>
                     </li>
+
+                    <li class="{{ is_active_url('/bl-4g-eligibility-msg') }} nav-item">
+                        <a href="{{ url('/bl-4g-eligibility-msg') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Eligibility Message</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
