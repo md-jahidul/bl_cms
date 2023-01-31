@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $products = Product::category($type)
             ->with(['offer_category' => function ($query) {
-                $query->select('id', 'name_en');
+                $query->select('id', 'alias', 'name_en');
             }, 'product_core'])
 //            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
             ->latest()
