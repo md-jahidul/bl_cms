@@ -159,6 +159,7 @@ class PushNotificationController extends Controller
 
                 NotificationSend::dispatch($notification, $notification_id, $customer,
                     $this->notificationService)
+                    ->onConnection('redis')
                     ->onQueue('notification');
             }
 
@@ -209,6 +210,7 @@ class PushNotificationController extends Controller
                         $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                         NotificationSend::dispatch($notification, $notification_id, $user_phone,
                             $this->notificationService)
+                            ->onConnection('redis')
                             ->onQueue('notification');
                         $user_phone = [];
                     }
@@ -221,6 +223,7 @@ class PushNotificationController extends Controller
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
+                    ->onConnection('redis')
                     ->onQueue('notification');
 
 
@@ -280,6 +283,7 @@ class PushNotificationController extends Controller
                             $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                             NotificationSend::dispatch($notification, $notification_id, $user_phone,
                                 $this->notificationService)
+                                ->onConnection('redis')
                                 ->onQueue('notification');
                             $user_phone = [];
                         }
@@ -291,6 +295,7 @@ class PushNotificationController extends Controller
                     $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                     // $notification = $this->getNotificationArray($request, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
+                        ->onConnection('redis')
                         ->onQueue('notification');
 
                 }
@@ -499,9 +504,9 @@ class PushNotificationController extends Controller
      */
     public function checkTargetWise(
         Request $request,
-        $notificationInfo,
+                $notificationInfo,
         array $user_phone,
-        $notification_id,
+                $notification_id,
         array $notification_data
     ): array {
         if ($notificationInfo->device_type != "all" || $notificationInfo->customer_type != "all") {
