@@ -160,7 +160,7 @@
                                 </slot>
                                 @if(strtolower($type) == 'prepaid')
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
-                                        @include('layouts.partials.products.call_rate')
+                                        @include('layouts.partials.products.bundle')
                                     </slot>
                                 @endif
 
