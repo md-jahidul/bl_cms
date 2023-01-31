@@ -355,7 +355,6 @@
                                         <strong>Note: </strong> JSON-LD (Recommended by Google)
                                     </small>
                                 </div>
-                            @endif
 
                             <div class="col-md-6">
                                 <label></label>
