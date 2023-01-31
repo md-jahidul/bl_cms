@@ -303,34 +303,34 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_name') ? ' error' : '' }}">
-                                    <label class="required">Banner Name En</label>
-                                    {{--                                <input type="hidden" name="old_postpaid_banner_name_en" value="{{$offer->postpaid_banner_name}}">--}}
-                                    <input type="text" class="form-control slug-convert" required name="postpaid_banner_name" value="{{$offer->postpaid_banner_name}}"
-                                           placeholder="Enter English Web Banner Name" id="postpaid_banner_name_en">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
-                                        <strong>Note: </strong> Don't need MIME type like jpg,png
-                                    </small>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('postpaid_banner_name'))
-                                        <div class="help-block">  {{ $errors->first('postpaid_banner_name') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_name') ? ' error' : '' }}">--}}
+{{--                                    <label class="required">Banner Name En</label>--}}
+{{--    --}}{{--                                <input type="hidden" name="old_postpaid_banner_name_en" value="{{$offer->postpaid_banner_name}}">--}}
+{{--                                    <input type="text" class="form-control slug-convert" required name="postpaid_banner_name" value="{{$offer->postpaid_banner_name}}"--}}
+{{--                                           placeholder="Enter English Web Banner Name" id="postpaid_banner_name_en">--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>--}}
+{{--                                        <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                    </small>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('postpaid_banner_name'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('postpaid_banner_name') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_name_bn') ? ' error' : '' }}">
-                                    <label class="required">Banner Name Bn</label>
-                                    <input type="text" class="form-control slug-convert" name="postpaid_banner_name_bn"
-                                           value="{{$offer->postpaid_banner_name_bn}}" required
-                                           placeholder="Enter Bangeli Web Banner Name">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
-                                        <strong>Note: </strong> Don't need MIME type like jpg,png
-                                    </small>
-                                    @if ($errors->has('postpaid_banner_name_bn'))
-                                        <div class="help-block">  {{ $errors->first('postpaid_banner_name_bn') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_name_bn') ? ' error' : '' }}">--}}
+{{--                                    <label class="required">Banner Name Bn</label>--}}
+{{--                                    <input type="text" class="form-control slug-convert" name="postpaid_banner_name_bn"--}}
+{{--                                           value="{{$offer->postpaid_banner_name_bn}}" required--}}
+{{--                                           placeholder="Enter Bangeli Web Banner Name">--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>--}}
+{{--                                        <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                    </small>--}}
+{{--                                    @if ($errors->has('postpaid_banner_name_bn'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('postpaid_banner_name_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 <div class="form-group col-md-4 {{ $errors->has('postpaid_page_header') ? ' error' : '' }}">
                                     <label>Page Header (HTML)</label>
@@ -355,6 +355,19 @@
                                         <strong>Note: </strong> JSON-LD (Recommended by Google)
                                     </small>
                                 </div>
+                            @endif
+
+                            <div class="col-md-6">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" {{ ($offer->status == 1) ? 'checked' : '' }}>
+                                    <label for="active" class="mr-1">Active</label>
+
+                                    <input type="radio" name="status" value="0" id="inactive" {{ ($offer->status == 0) ? 'checked' : '' }}>
+                                    <label for="inactive">Inactive</label>
+                                </div>
+                            </div>
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
