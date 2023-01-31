@@ -138,6 +138,15 @@
                                         @include('admin.components.partial.multi_text_with_image_bottom', $component ?? [])
                                     </slot>
 
+                                    <!--Top image with caption-->
+                                    <slot id="top_image_with_caption" data-offer-type="top_image_with_caption" class="{{ isset($component) && $component->component_type == "top_image_with_caption" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.top_image_with_caption', $component ?? [])
+                                    </slot>
+                                    <!--Top image with Title, caption and Desc-->
+                                    <slot id="top_image_with_title_caption_desc" data-offer-type="top_image_with_title_caption_desc" class="{{ isset($component) && $component->component_type == "top_image_with_title_caption_desc" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.top_image_with_title_caption_desc', $component ?? [])
+                                    </slot>
+
                                     <!--Top image with Desc-->
                                     <slot id="top_image_with_desc" data-offer-type="top_image_with_desc" class="{{ isset($component) && $component->component_type == "top_image_with_desc" ? "" : "d-none" }}">
                                         @include('admin.components.partial.top_image_with_desc', $component ?? [])
@@ -162,6 +171,15 @@
                                         @include('admin.components.partial.masonry_3_2_image_layout_row', $component ?? [])
                                     </slot>
 
+                                    <!--Multi Column For Video-->
+                                    <slot id="multi_col_for_video" data-offer-type="multi_col_for_video" class="{{ isset($component) && $component->component_type == "multi_col_for_video" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_for_video', $component ?? [])
+                                    </slot>
+                                    <!--Multi Column For Video middle-->
+                                    <slot id="multi_col_for_video_middle" data-offer-type="multi_col_for_video_middle" class="{{ isset($component) && $component->component_type == "multi_col_for_video_middle" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_for_video_middle', $component ?? [])
+                                    </slot>
+
                                     <!--Multi Column With title and desc-->
                                     <slot id="multi_col_with_title_desc" data-offer-type="multi_col_with_title_desc" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc" ? "" : "d-none" }}">
                                         @include('admin.components.partial.multi_col_with_title_desc', $component ?? [])
@@ -170,6 +188,14 @@
                                     <!--Multi Column With title, desc and Image -->
                                     <slot id="multi_col_with_title_desc_image" data-offer-type="multi_col_with_title_desc_image" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_image" ? "" : "d-none" }}">
                                         @include('admin.components.partial.multi_col_with_title_desc_image', $component ?? [])
+                                    </slot>
+                                    <!--Multi Column With title, desc and Icon -->
+                                    <slot id="multi_col_with_title_desc_icon" data-offer-type="multi_col_with_title_desc_icon" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_icon" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_with_title_desc_icon', $component ?? [])
+                                    </slot>
+                                    <!--Multi card With title, desc and Icon -->
+                                    <slot id="multi_card_with_title_desc_icon" data-offer-type="multi_card_with_title_desc_icon" class="{{ isset($component) && $component->component_type == "multi_card_with_title_desc_icon" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_card_with_title_desc_icon', $component ?? [])
                                     </slot>
                                     <!--Customer Complains-->
                                     <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ isset($component) && $component->component_type == "customer_complaint" ? "" : "d-none" }}">
