@@ -20,6 +20,7 @@
                         <tr>
                             <td width="3%">#</td>
                             <th width="15%">Title</th>
+                            <th width="15%">Name</th>
                             <th width="25%">Description</th>
                             <th class="">Action</th>
                         </tr>
@@ -29,6 +30,7 @@
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $category->title }}</td>
+                                    <td>{{ $category->name_en }}</td>
                                     <td>{{ $category->description_en }}</td>
                                     <td width="20%" class="text-center">
                                         <a href="{{ url("faq-category/$category->id/edit") }}" role="button" class="btn-sm btn-outline-cyan border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
