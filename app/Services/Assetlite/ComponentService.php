@@ -309,7 +309,7 @@ class ComponentService
         }
 
         # other attributes to save
-        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0 && $component->page_type == "blog") {
             $data['other_attributes'] = $data['other_attr'];
         }
 
