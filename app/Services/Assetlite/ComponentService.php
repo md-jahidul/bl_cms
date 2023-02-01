@@ -113,7 +113,7 @@ class ComponentService
 
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-                
+
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
         }
@@ -132,7 +132,7 @@ class ComponentService
 
                                 $value = $this->upload($value, 'assetlite/images/explore_c_details');
                             }else {
-                                
+
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
                         }
@@ -218,7 +218,7 @@ class ComponentService
                     }
                 }
             }
-    
+
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
@@ -228,7 +228,7 @@ class ComponentService
         }
 
         # other attributes to save
-        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0 && $component->page_type == "blog") {
             $data['other_attributes'] = $data['other_attr'];
         }
 
