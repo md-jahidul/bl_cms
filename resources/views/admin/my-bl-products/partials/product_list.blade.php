@@ -27,6 +27,7 @@
                 <option value="bonus">BONUS</option>
                 <option value="free_products">FREE PRODUCTS</option>
                 <option value="is_popular_pack">POPULAR PACKS</option>
+                <option value="roam">ROAMING PRODUCT</option>
             </select>
         </div>
         <div class="col-md-3">
