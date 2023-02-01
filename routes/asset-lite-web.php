@@ -395,18 +395,37 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
-    Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
+    
+    #Dynamic Page's Components
+    // Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
+    //     ->name('other-components');
+    // Route::get('dynamic-pages/{pageId}/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
+    //     ->name('other_component_create');
+    // Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
+    //     ->name('other_component_store');
+    // Route::get('dynamic-pages/{pageId}/component/{id}/edit', 'AssetLite\DynamicPageController@componentEditForm')
+    //     ->name('other_component_edit');
+    // Route::put('dynamic-pages/{pageId}/component/{id}/update', 'AssetLite\DynamicPageController@componentUpdate')
+    //     ->name('other_component_update');
+    // Route::get('dynamic-pages/{pageId}/component/{id}/delete', 'AssetLite\DynamicPageController@componentDestroy')
+    //     ->name('other_component_delete');
+    // Route::get('dynamic-pages/component-sortable', 'AssetLite\DynamicPageController@componentSortable');
+
+    Route::get('dynamic-pages/{other_dynamic_page_id}/components', 'AssetLite\DynamicPageController@componentList')
         ->name('other-components');
-    Route::get('dynamic-pages/{pageId}/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
-        ->name('other_component_create');
-    Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
-        ->name('other_component_store');
-    Route::get('dynamic-pages/{pageId}/component/{id}/edit', 'AssetLite\DynamicPageController@componentEditForm')
-        ->name('other_component_edit');
-    Route::put('dynamic-pages/{pageId}/component/{id}/update', 'AssetLite\DynamicPageController@componentUpdate')
-        ->name('other_component_update');
-    Route::get('dynamic-pages/{pageId}/component/{id}/delete', 'AssetLite\DynamicPageController@componentDestroy')
-        ->name('other_component_delete');
+    Route::get('dynamic-pages/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
+        ->name('other-component-create');
+    // Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
+    //     ->name('other_component_store');
+
+    Route::post('dynamic-pages/component/store', 'AssetLite\DynamicPageController@componentStore')
+        ->name('other-component-store');
+    Route::get('dynamic-pages/component/edit/{comId}', 'AssetLite\DynamicPageController@componentEditForm')
+        ->name('other-component-edit');
+    Route::post('dynamic-pages/component/update/{comId}', 'AssetLite\DynamicPageController@componentUpdate')
+        ->name('other-component-update');
+    Route::get('dynamic-pages/component/delete/{comId}', 'AssetLite\DynamicPageController@componentDestroy')
+        ->name('other-component-delete');
     Route::get('dynamic-pages/component-sortable', 'AssetLite\DynamicPageController@componentSortable');
 
 

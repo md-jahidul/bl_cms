@@ -1,28 +1,26 @@
-{{ Form::hidden('component_type', 'multi_col_with_title_desc_image' ) }}
+{{ Form::hidden('component_type', 'multi_card_with_title_desc_icon' ) }}
 
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">
-      <a href="#" class="btn btn-info  btn-glow px-1 add_more_multi_col_with_image_item">+ Add Column</a>
+      <a href="#" class="btn btn-info  btn-glow px-1 add_more_multi_card_with_icon_item">+ Add Column</a>
     </div>
 </div>
 
 <div class="col-sm-12">
         @php
-            $count = (isset($component->multiple_attributes))? count($component->multiple_attributes) : 1 ;
+            $count = (isset($component->multiple_attributes))? count($component->multiple_attributes) : 0 ;
         @endphp
 
-    <div id="multi_col_with_image_content_section" class="multi_col_with_image_content_section" data-count="1">
+    <div id="multi_card_with_icon_content_section" class="multi_card_with_icon_content_section" data-count="1">
         <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$count}}">
 
-        {{-- <input type="hidden" name="multi_item[id-1]" value="1">
-        <input type="hidden" name="multi_item[display_order-1]" value="0"> --}}
         @if (isset($component->multiple_attributes))
             
             @foreach ( $component->multiple_attributes as $key => $single_attribute )
                 <h4>Column: {{ $key +1 }}</h4>
                 <hr class="hr">
 
-                <div class="row single_multi_col_with_image_content">
+                <div class="row single_multi_card_with_icon_content">
 
                     <input type="hidden" name="multi_item[id-{{ $key +1 }}]" value="{{ $key +1 }}">
                     <input type="hidden" name="multi_item[display_order-{{ $key +1 }}]" value="{{ $key +1 }}">
@@ -84,7 +82,7 @@
                         @endif
                     </div>
                     <div class="form-group col-md-6 {{ $errors->has('image_name_en') ? ' error' : '' }}">
-                        <label for="image_name_en" class="required1">Image Name (English)</label>
+                        <label for="image_name_en" class="required1">Icon Name (English)</label>
                         <input type="text" name="multi_item[image_name_en-{{ $key +1 }}]"  class="form-control"
                             value="{{ $single_attribute['image_name_en'] ?? null}}" >
                         <div class="help-block"></div>
@@ -93,7 +91,7 @@
                         @endif
                     </div>
                     <div class="form-group col-md-6 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
-                        <label for="image_name_bn" class="required1">Image Name (Bangla)</label>
+                        <label for="image_name_bn" class="required1">Icon Name (Bangla)</label>
                         <input type="text" name="multi_item[image_name_bn-{{ $key +1 }}]"  class="form-control"
                             value="{{ $single_attribute['image_name_bn'] ?? null}}" >
                         <div class="help-block"></div>
@@ -102,7 +100,7 @@
                         @endif
                     </div>
                     <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
-                        <label for="image_url" class="">Image (optional)</label>
+                        <label for="image_url" class="">Icone (optional)</label>
                         <div class="custom-file">
                             <input type="file" name="multi_item[image_url-{{ $key +1 }}]" class="dropify" data-default-file="{{ isset($single_attribute['image_url']) ? config('filesystems.file_base_url') . $single_attribute['image_url'] : '' }}">
                         </div>
@@ -114,18 +112,13 @@
                         @endif
                     </div>
                     <div class="form-group col-md-6"></div>
+
                     {{-- Need to work For Multiple Button here --}}
 
                     @include('admin.components.partial.button', $component ?? [])
 
 
-                    <div class="form-group col-md-3">
-                        <label for="status">Status</label>
-                        <select class="form-control" name="multi_item[status-{{ $key +1 }}]" aria-invalid="false">
-                            <option value="1" {{ isset ($single_attribute['status'])  && $single_attribute['status'] == 1 ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ isset ($single_attribute['status'])  && $single_attribute['status'] == 0 ? 'selected' : '' }}>Inactive</option>
-                        </select>
-                    </div>
+
 
                     <div class="form-group">
                         <label for="status" style="padding-bottom: 43px;"> </label>
@@ -163,10 +156,10 @@
 	$(document).ready(function () {
 
 	   // Add multiple item
-	   $('.add_more_multi_col_with_image_item').on('click', function(event){
+	   $('.add_more_multi_card_with_icon_item').on('click', function(event){
         event.preventDefault();
 
-	   	$parentSelector = $('#multi_col_with_title_desc_image');
+	   	$parentSelector = $('#multi_card_with_title_desc_icon');
 
 	    var i = parseInt($parentSelector.find('#multi_item_count').val(), 10);
 	     // $('#multi_col_content_section').empty();
@@ -179,7 +172,7 @@
 
         img_section = '<div class="form-group col-md-6"> <label for="alt_text_en" class="required1">Alt Text (English)</label> <input type="text" name="multi_item[alt_text_en-'+i+']"  class="form-control" value=""> <div class="help-block"></div> </div> <div class="form-group col-md-6"><label for="alt_text_bn" class="required1">Alt Text (Bangla)</label><input type="text" name="multi_item[alt_text_bn-'+i+']"  class="form-control" value="" ><div class="help-block"></div></div> <div class="form-group col-md-6"><label for="image_name_en" class="required1">Image Name (English)</label><input type="text" name="multi_item[image_name_en-'+i+']"  class="form-control" value="" ><div class="help-block"></div> </div> <div class="form-group col-md-6"> <label for="image_name_bn" class="required1">Image Name (Bangla)</label> <input type="text" name="multi_item[image_name_bn-'+i+']"  class="form-control" value="" ><div class="help-block"></div></div> <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}"><label for="image_url" class="">Image (optional)</label><div class="custom-file"><input type="file" name="multi_item[image_url-'+i+']" class="dropify"></div><span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div>';
 
-	    html += '<h4>Column: '+i+'</h4> <hr class="hr"><div class="row single_multi_col_with_image_content"><input type="hidden" name="multi_item[id-'+i+']" value="'+i+'"><input type="hidden" name="multi_item[display_order-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Title (Englist)</label> <input type="text" name="multi_item[title_en-'+i+']"  class="form-control" value="" > <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="title_bn" class="required1">Title (Bangla)</label> <input type="text" name="multi_item[title_bn-'+i+']"  class="form-control"  value="" >  <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_en" class="required1">Description (English)</label> <textarea name="multi_item[desc_en-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_bn" class="required1">Description (Bangla)</label> <textarea name="multi_item[desc_bn-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div></div>'+
+	    html += '<h4>Column: '+i+'</h4> <hr class="hr"><div class="row single_multi_card_with_icon_content"><input type="hidden" name="multi_item[id-'+i+']" value="'+i+'"><input type="hidden" name="multi_item[display_order-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Title (Englist)</label> <input type="text" name="multi_item[title_en-'+i+']"  class="form-control" value="" > <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="title_bn" class="required1">Title (Bangla)</label> <input type="text" name="multi_item[title_bn-'+i+']"  class="form-control"  value="" >  <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_en" class="required1">Description (English)</label> <textarea name="multi_item[desc_en-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div> </div><div class="form-group col-md-6"> <label for="desc_bn" class="required1">Description (Bangla)</label> <textarea name="multi_item[desc_bn-'+i+']" class="form-control summernote_editor" rows="5" placeholder="Enter description"></textarea> <div class="help-block"></div></div>'+
         img_section + 
         '<div class="form-group col-md-6"></div><div class="form-group col-md-4">'+
             '<label for="learn_more_btn_label_en" class="required1">Learn More Btn Lable (English)</label>'+
@@ -223,9 +216,9 @@
                 '<input type="text" name="multi_item[others_btn_link-'+i+']" class="form-control" rows="5" placeholder="Enter button link" value="">'+
             '</div>'+
         '</div>'+
-        '<div class="form-group col-md-3"><label for="status">Status</label> <select class="form-control" name="multi_item[status-'+i+']" aria-invalid="false"> <option value="1">Active</option> <option value="0">Inactive</option> </select> </div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button> </div> </div>';
+        '<div class="form-group col-md-3"> <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button> </div> </div>';
 
-	    $parentSelector.find('#multi_col_with_image_content_section').append(html);
+	    $parentSelector.find('#multi_card_with_icon_content_section').append(html);
 	    $parentSelector.find('.summernote_editor').summernote();
 
          $('.dropify').dropify({
@@ -246,7 +239,7 @@
 
 	     e.preventDefault();
 
-	     $(this).parents('.row.single_multi_col_with_image_content').remove();
+	     $(this).parents('.row.single_multi_card_with_icon_content').remove();
 
 	   });
 

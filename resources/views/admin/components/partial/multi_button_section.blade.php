@@ -1,4 +1,4 @@
-{{ Form::hidden('component_type', 'left_image_with_title_desc_btn' ) }}
+{{-- {{ Form::hidden('component_type', 'left_image_with_title_desc_btn' ) }} --}}
 
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">

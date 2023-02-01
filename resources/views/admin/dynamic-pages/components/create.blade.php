@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <form role="form" id="product_form" action="{{ route('other_component_store', [$pageId]) }}" method="POST" novalidate enctype="multipart/form-data">
+                    <form role="form" id="product_form" action="{{ route('other-component-store', [$pageId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="content-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">

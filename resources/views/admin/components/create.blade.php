@@ -139,6 +139,15 @@
                                         @include('admin.components.partial.multi_text_with_image_bottom', $component ?? [])
                                     </slot>
 
+                                    <!--Top image with caption-->
+                                    <slot id="top_image_with_caption" data-offer-type="top_image_with_caption" class="{{ isset($component) && $component->component_type == "top_image_with_caption" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.top_image_with_caption', $component ?? [])
+                                    </slot>
+                                    <!--Top image with Title, caption and Desc-->
+                                    <slot id="top_image_with_title_caption_desc" data-offer-type="top_image_with_title_caption_desc" class="{{ isset($component) && $component->component_type == "top_image_with_title_caption_desc" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.top_image_with_title_caption_desc', $component ?? [])
+                                    </slot>
+
                                     <!--Top image with Desc-->
                                     <slot id="top_image_with_desc" data-offer-type="top_image_with_desc" class="{{ isset($component) && $component->component_type == "top_image_with_desc" ? "" : "d-none" }}">
                                         @include('admin.components.partial.top_image_with_desc', $component ?? [])
@@ -147,6 +156,11 @@
                                     <!--Left Image with Title, Desc, btn-->
                                     <slot id="left_image_with_title_desc_btn" data-offer-type="left_image_with_title_desc_btn" class="{{ isset($component) && $component->component_type == "left_image_with_title_desc_btn" ? "" : "d-none" }}">
                                         @include('admin.components.partial.left_image_with_title_desc_btn', $component ?? [])
+                                    </slot>
+
+                                    <!--Right Image with Title, Desc, btn-->
+                                    <slot id="right_image_with_title_desc_btn" data-offer-type="right_image_with_title_desc_btn" class="{{ isset($component) && $component->component_type == "right_image_with_title_desc_btn" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.right_image_with_title_desc_btn', $component ?? [])
                                     </slot>
 
                                     <!--masonry_1_2_image_layout_col-->
@@ -158,6 +172,15 @@
                                         @include('admin.components.partial.masonry_3_2_image_layout_row', $component ?? [])
                                     </slot>
 
+                                    <!--Multi Column For Video-->
+                                    <slot id="multi_col_for_video" data-offer-type="multi_col_for_video" class="{{ isset($component) && $component->component_type == "multi_col_for_video" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_for_video', $component ?? [])
+                                    </slot>
+                                    <!--Multi Column For Video middle-->
+                                    <slot id="multi_col_for_video_middle" data-offer-type="multi_col_for_video_middle" class="{{ isset($component) && $component->component_type == "multi_col_for_video_middle" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_for_video_middle', $component ?? [])
+                                    </slot>
+
                                     <!--Multi Column With title and desc-->
                                     <slot id="multi_col_with_title_desc" data-offer-type="multi_col_with_title_desc" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc" ? "" : "d-none" }}">
                                         @include('admin.components.partial.multi_col_with_title_desc', $component ?? [])
@@ -167,6 +190,106 @@
                                     <slot id="multi_col_with_title_desc_image" data-offer-type="multi_col_with_title_desc_image" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_image" ? "" : "d-none" }}">
                                         @include('admin.components.partial.multi_col_with_title_desc_image', $component ?? [])
                                     </slot>
+                                    <!--Multi Column With title, desc and Icon -->
+                                    <slot id="multi_col_with_title_desc_icon" data-offer-type="multi_col_with_title_desc_icon" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_icon" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_col_with_title_desc_icon', $component ?? [])
+                                    </slot>
+                                    <!--Multi card With title, desc and Icon -->
+                                    <slot id="multi_card_with_title_desc_icon" data-offer-type="multi_card_with_title_desc_icon" class="{{ isset($component) && $component->component_type == "multi_card_with_title_desc_icon" ? "" : "d-none" }}">
+                                        @include('admin.components.partial.multi_card_with_title_desc_icon', $component ?? [])
+                                    </slot>
+                                    <!--Customer Complains-->
+                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ isset($component) && $component->component_type == "customer_complaint" ? "" : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.other-attributes',
+                                                [
+                                                    'other_attributes' => [
+                                                        'compl_cld_no' => 'Complaint Closed No (%)',
+                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',
+                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',
+                                                        'unreached_cust_no' => 'Unreached Customer No (%)',
+                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',
+                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',
+                                                    ],
+                                                ])
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+                                    <!--button_component-->
+                                    <slot id="button_component" data-offer-type="button_component" class="{{ isset($component) && $component->component_type == "button_component" ? "" : "d-none" }}">
+
+                                        @include('layouts.partials.product-details.component.common-field.title')
+
+                                        @include('layouts.partials.product-details.component.common-field.other-attributes',
+                                                [
+                                                    'other_attributes' => [
+                                                        /*'url_en' => 'Url EN',
+                                                        'url_bn' => 'Url BN',*/
+                                                    ],
+                                                ])
+                                            
+                                            <div class="form-group col-md-6 {{ $errors->has('redirect_url_en') ? ' error' : '' }} {{ (isset($component) && optional($component->other_attributes)['is_external_url']  == 0) ? '' : (!isset($component) ? '' : 'd-none') }}" id="pageDynamicEn">
+                                                <label for="redirect_url_en">Redirect URL EN</label>
+                                                <input type="text" name="other_attr[redirect_url_en]" class="form-control" placeholder="Enter URL"
+                                                    value="{{ isset($component) ? optional($component->other_attributes)['redirect_url_en'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('redirect_url_en'))
+                                                    <div class="help-block">  {{ $errors->first('redirect_url_en') }}</div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-md-6 {{ $errors->has('redirect_url_bn') ? ' error' : '' }} {{ (isset($component) && optional($component->other_attributes)['is_external_url'] == 0) ? '' : (!isset($component) ? '' : 'd-none') }}" id="pageDynamicBn">
+                                                <label for="redirect_url_bn">Redirect URL BN</label>
+                                                <input type="text" name="other_attr[redirect_url_bn]" class="form-control" placeholder="Enter URL"
+                                                    value="{{ isset($component) ? optional($component->other_attributes)['redirect_url_bn'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('redirect_url_bn'))
+                                                    <div class="help-block">  {{ $errors->first('redirect_url_bn') }}</div>
+                                                @endif
+                                            </div>
+
+
+
+                                            <div class="form-group col-md-6 {{ $errors->has('external_url') ? ' error' : '' }} {{ (isset($component) && optional($component->other_attributes)['is_external_url'] == 1) ? '' : 'd-none' }}" id="externalLink">
+                                                <label for="external_url">External URL</label>
+                                                <input type="text" name="other_attr[external_url]" class="form-control" placeholder="Enter URL"
+                                                    value="{{ isset($component) ? optional($component->other_attributes)['external_url'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('external_url'))
+                                                    <div class="help-block">  {{ $errors->first('external_url') }}</div>
+                                                @endif
+                                            </div>
+
+                                            <div class="col-md-6 mt-1">
+                                                <label></label>
+                                                <div class="form-group">
+                                                    <label for="external_link">Is External Link:</label>
+                                                    <input type="checkbox" name="other_attr[is_external_url]" value="1" id="external_link"
+                                                        {{ (isset($component) && optional($component->other_attributes)['is_external_url']  == 1) ? 'checked' : (old("other_attr.is_external_url") ? 'checked' : '') }}>
+                                                </div>
+                                            </div>                                    
+
+
+                                    </slot>
+
+                                    <!--Multiple Image-->
+                                    <slot id="multiple_image" data-offer-type="multiple_image" class="{{ isset($component) && $component->component_type == "multiple_image" ? "" : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.extra-title')
+                                        @include('layouts.partials.product-details.component.common-field.title')
+
+                                        
+                                        @include('admin.components.partial.multiple_image', $component ?? [])
+                                    </slot>
+
+                                    <!--Video Component-->
+                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text" class="{{ isset($component) && $component->component_type == "title_with_video_and_text" ? "" : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.extra-title',
+                                                   [
+                                                    'title_en' => "Video Title EN",
+                                                    'title_bn' => "Video Title BN",
+                                                ])
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                        @include('layouts.partials.product-details.component.common-field.video')
+                                    </slot>
+                                    
 
 {{--                                    --}}{{--Slider text with image right--}}
 {{--                                    <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
@@ -245,7 +368,7 @@
 
     <script>
         $(function () {
-            $('.dropify').dropify({
+            /*$('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Image File to upload',
                     'replace': 'Click to replace',
@@ -254,13 +377,30 @@
                 },
                 height: 100
             });
-
+            */
 
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"
                 var fullUrl = "{{ asset('app-assets/images/app_services') }}/" + componentType;
                 $("#componentImg").attr('src', fullUrl)
-            })
+            });
+
+            //External Link
+            $('#external_link').click(function () {
+                var externalLink = $('#externalLink');
+                var pageDynamicEn = $('#pageDynamicEn');
+                var pageDynamicBn = $('#pageDynamicBn');
+
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                    pageDynamicEn.addClass('d-none');
+                    pageDynamicBn.addClass('d-none');
+                }else{
+                    pageDynamicEn.removeClass('d-none');
+                    pageDynamicBn.removeClass('d-none');
+                    externalLink.addClass('d-none');
+                }
+            });
 
         })
     </script>
