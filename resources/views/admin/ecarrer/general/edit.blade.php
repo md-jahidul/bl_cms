@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    <img src="{{ config('filesystems.file_base_url') . $sections->image}}"style="height:70px;width:70px;display:none" id="imgDisplay">
+                                    <img src="{{ config('filesystems.file_base_url') . $sections->image}}"style="height:70px;width:70px;" id="imgDisplay">
                                 </div>
                                 @include('layouts.partials.common_types.text_area_plane',['component'=>$sections])
 
@@ -134,15 +134,15 @@
         jQuery(document).ready(function($){
 
 
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#general_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+            // $('input.section_name').on('keyup', function(){
+            //     var sectionName = $('#general_section').find('.section_name').val();
+            //     var sectionNameLower = sectionName.toLowerCase();
+            //     var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-                $('#general_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+            //     $('#general_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
-                // console.log(sectionNameRemoveSpace);
-            });
+            //     // console.log(sectionNameRemoveSpace);
+            // });
 
             $('.remove_photo').on('click', function (e) {
             e.preventDefault();
