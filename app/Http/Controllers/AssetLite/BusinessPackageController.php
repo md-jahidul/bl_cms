@@ -53,7 +53,6 @@ class BusinessPackageController extends Controller {
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function store(BusinessPackageRequest $request) {
-
         $response = $this->packageService->savePackage($request);
 
         if($response['success'] == 1){
@@ -129,6 +128,7 @@ class BusinessPackageController extends Controller {
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function update(BusinessPackageRequest $request) {
+        //dd($request->all());
         $response = $this->packageService->updatePackage($request);
 
         if($response['success'] == 1){
