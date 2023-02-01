@@ -21,7 +21,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Display Categories, Banner, News and Features of Business.
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/02/2020
@@ -37,7 +37,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Home Banner Photo save
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 11/02/2020
@@ -49,7 +49,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Category data by id
-     * 
+     *
      * @param $catId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 06/04/2020
@@ -61,7 +61,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Category data update.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 06/04/2020
@@ -80,7 +80,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Category name Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -92,7 +92,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Category banner photo save
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 15/03/2020
@@ -104,7 +104,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Category Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -116,7 +116,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Category home show status Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -130,7 +130,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Save/update sliding speed
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 05/03/2020
@@ -142,13 +142,13 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Save or Update home news
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
      */
-    public function homeNewsSave(Request $request) {
-
+    public function homeNewsSave(BusinessNewsRequest $request)
+    {
         $response = $this->businessHomeService->saveNews($request);
 
         if ($response['success'] == 1) {
@@ -162,7 +162,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Get news by ID
-     * 
+     *
      * @param News ID $newsId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -175,7 +175,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * News Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/02/2020
@@ -187,7 +187,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * News status Change.
-     * 
+     *
      * @param $newsId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -200,7 +200,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * News delete.
-     * 
+     *
      * @param $newsId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -219,7 +219,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Features Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -231,7 +231,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Features status Change.
-     * 
+     *
      * @param $featureId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -244,7 +244,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Save or Update business feature
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -264,7 +264,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Get feature by ID
-     * 
+     *
      * @param News ID $featureId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -277,7 +277,7 @@ class BusinessGeneralController extends Controller {
 
     /**
      * Feature delete.
-     * 
+     *
      * @param $featureId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
