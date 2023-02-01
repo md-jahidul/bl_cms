@@ -180,7 +180,7 @@
                                 </slot>
 
                                 <slot id="bondho_sim" data-offer-type="bondho_sim" style="display: none">
-                                    @include('layouts.partials.products.packages')
+                                    {{-- @include('layouts.partials.products.packages') --}}
                                     @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.common-field.call_rate')
                                     @include('layouts.partials.products.common-field.call_rate_unit')
