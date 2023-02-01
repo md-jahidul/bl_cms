@@ -109,13 +109,11 @@ class NotificationScheduler extends Command
                  * Preparing chunks after removing users with notification off for this notification category
                  */
                 // $filteredUserPhones = array_diff($userPhones, $muteUsersPhone);
-                $filteredUserPhoneChunks = array_chunk($userPhones, 200);
+                $filteredUserPhoneChunks = array_chunk($userPhones, 100);
 
                 /*
                  * Dispatching chunks of users to notification send job
                  */
-
-                $iteration = 1;
 
                 $notificationInfo = NotificationDraft::find($notification_id);
 
@@ -156,12 +154,10 @@ class NotificationScheduler extends Command
                         $notificationDraft
                     );
 
-                    $delaySeconds = $iteration * 1;
-
                     NotificationSend::dispatch($notification, $notification_id, array_values($userPhoneChunkFiltered),
                         $notificationService, $activeSchedule)
-                        ->onQueue('notification')->delay(Carbon::now()->addSeconds($delaySeconds));
-                    $iteration++;
+                        ->onConnection('redis')
+                        ->onQueue('notification');
                 }
 
                 // Setting the task status to 'completed' to avoid duplicity from dispatching the same job
