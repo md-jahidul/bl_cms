@@ -17,7 +17,7 @@
     <select name="other_attributes[]" class="select2 form-control" id="data-type" multiple="multiple" >
         @foreach($products as  $product)
             <option value="{{ $product->id }}"
-                {{ match($product->id, $component->other_attributes) ? 'selected' : '' }}
+                {{ isset($component) ? (match($product->id, $component->other_attributes) ? 'selected' : '') : '' }}
             >{{ $product->name_en . '/ ' . $product->product_code }}</option>
         @endforeach
     </select>
