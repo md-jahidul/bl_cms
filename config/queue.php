@@ -58,13 +58,25 @@ return [
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
         ],
 
-        'redis' => [
+        /*'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
             'queue' => env('REDIS_QUEUE', 'default'),
             'retry_after' => 90,
             'block_for' => null,
+        ],*/
+
+        'redis' => [
+            //selects the 'redis' driver in config/database.php
+            'driver' => 'redis',
+            //selects the connection 'queue' of the redis driver in config/database.php
+            'connection' => 'secondary_redis',
+            //default queue for this 'redis' queue connection. By setting the redis key prefix.
+            'queue' => 'default',
+            'retry_after' => 90,
+            'block_for' => null,
         ],
+
 
     ],
 

@@ -425,6 +425,16 @@
                                 </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
+                                        <input type="checkbox" id="status" value="1" name="status"
+                                        @if($details->status == 1)
+                                            checked
+                                        @endif
+                                        >
+                                        <label for="status">Active</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
                                         <input type="checkbox" id="pin_to_top" value="1" name="pin_to_top"
                                                @if($details->pin_to_top) checked @endif
                                             {{$disablePinToTop ? 'disabled' : ''}}>
@@ -533,6 +543,8 @@
                                             </select>
                                         </div>
                                     </div>
+
+
                                     <div class="col-md-4 schedule_visibility {{ isset($details->is_visible_schedule) && $details->is_visible_schedule == true ? "": 'd-none'}}">
                                         <label class="required">Schedule Visibility (show/hide in app)</label>
                                         <ul class="list-inline">
@@ -593,6 +605,8 @@
                                         </div>
                                     </div>
                                 @endif
+
+
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
