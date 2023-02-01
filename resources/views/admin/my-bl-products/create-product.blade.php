@@ -60,6 +60,7 @@
                                         <option value="gift">GIFT</option>
                                         <option value="volume request">VOLUME REQUEST</option>
                                         <option value="volume transfer">VOLUME TRANSFER</option>
+                                        <option value="roam">ROAMING PRODUCT</option>
                                         {{--<option value="bonus">BONUS</option>--}}
                                     </select>
                                     <div class="help-block"></div>
