@@ -32,10 +32,10 @@ class BusinessPackageRequest extends FormRequest
             'short_details_bn' => 'required',
             'url_slug' => 'required|regex:/^\S*$/u|unique:business_packages,url_slug,' . $id,
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_packages,url_slug_bn,' . $id,
-            'banner_name' => 'required|regex:/^\S*$/u|unique:business_packages,banner_name,' . $id,
-            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:business_packages,banner_name_bn,' . $id,
-            'card_banner_name_en' => 'required|regex:/^\S*$/u|unique:business_packages,card_banner_name_en,' . $id,
-            'card_banner_name_bn' => 'required|regex:/^\S*$/u|unique:business_packages,card_banner_name_bn,' . $id,
+            'banner_name' => 'nullable|regex:/^\S*$/u|unique:business_packages,banner_name,' . $id,
+            'banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_packages,banner_name_bn,' . $id,
+            'card_banner_name_en' => 'nullable|regex:/^\S*$/u|unique:business_packages,card_banner_name_en,' . $id,
+            'card_banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_packages,card_banner_name_bn,' . $id,
         ];
     }
 }

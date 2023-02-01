@@ -149,7 +149,7 @@ class BusinessGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
      */
-    public function homeNewsSave(BusinessNewsRequest $request) 
+    public function homeNewsSave(BusinessNewsRequest $request)
     {
         $response = $this->businessHomeService->saveNews($request);
 
