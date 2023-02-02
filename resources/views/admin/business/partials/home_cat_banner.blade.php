@@ -14,6 +14,9 @@
                         </tr>
                         </thead>
                         <tbody class="category_sortable">
+                            @php
+                               // dd($categories);
+                            @endphp
                         @foreach($categories as $cat)
                             <tr data-index="{{ $cat->id }}" data-position="{{ $cat->home_sort }}">
 
@@ -24,6 +27,7 @@
                                 </td>
 
                                 <td class="banner_photo">
+                                    {{$cat->banner_photo}}
                                     <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
 
                                 </td>
@@ -86,8 +90,8 @@
                         <div class="form-group row">
                             <div class="col-md-4 col-xs-12">
                                 <label>Banner (Web)</label>
-                                <input type="file" class="" name="banner_web" data-height="70"
-                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="file" class="dropify_category" name="banner_web" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]' id="banner_web">
 
                                 <input type="hidden" class="old_web_img" name="old_web_img">
 
@@ -95,7 +99,7 @@
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <label>Banner (Mobile)</label>
-                                <input type="file" class="" name="banner_mobile" data-height="70"
+                                <input type="file" class="dropify_category" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                                 <input type="hidden" class="old_mob_img" name="old_mob_img">
@@ -363,8 +367,21 @@
 
                         $('.banner_web').html("");
                         if (result.banner_photo != null) {
+
                             var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "' width='100%'>";
-                            $('.banner_web').html(bannerWeb);
+                            //$('.banner_web').html(bannerWeb);
+                            //$('#banner_web').attr("data-default-file","{{ config('filesystems.file_base_url') }}" + result.banner_photo +"");
+                            $('#banner_web').dropify({
+                                defaultFile: "{{ config('filesystems.file_base_url') }}" + result.banner_photo +"" ,
+                            });
+                            console.log(drop.data('.dropify_category'));
+                            // drop = drop.data('dropify-category');
+                            // drop.resetPreview();
+                            // drop.clearElement();
+                            // drop.settings.defaultFile = "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "";
+                            // drop.destroy();
+                            // drop.init();
+
                         }
 
                         $('.banner_mobile').html("");
@@ -679,7 +696,7 @@
                 }
             });
 
-            $('.dropify_category').dropify({
+            let drop = $('.dropify_category').dropify({
                 messages: {
                     'default': 'Browse',
                     'replace': 'Click to replace',
