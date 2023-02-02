@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $products = Product::category($type)
             ->with(['offer_category' => function ($query) {
-                $query->select('id', 'name_en');
+                $query->select('id', 'alias', 'name_en');
             }, 'product_core'])
 //            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
             ->latest()
@@ -162,6 +162,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:products,url_slug_bn'

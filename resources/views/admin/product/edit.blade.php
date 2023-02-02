@@ -146,10 +146,10 @@
                                 <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
-                            @if(strtolower($type) == 'prepaid')
-                                <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
-                                        @include('layouts.partials.products.call_rate')
-                                </slot>
+                                @if(strtolower($type) == 'prepaid')
+                                    <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
+                                            @include('layouts.partials.products.call_rate')
+                                    </slot>
                                 @endif
                                 <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
@@ -159,6 +159,20 @@
                                     @include('layouts.partials.products.common-field.sms_volume')
                                     @include('layouts.partials.products.common-field.call_rate')
                                     @include('layouts.partials.products.common-field.call_rate_unit')
+                                    @include('layouts.partials.products.common-field.ussd_code')
+                                    @include('layouts.partials.products.common-field.validity_unit')
+                                    @include('layouts.partials.products.common-field.validity')
+                                    @include('layouts.partials.products.common-field.validity_free_text')
+                                    @include('layouts.partials.products.common-field.tag')
+                                </slot>
+                                <slot class="{{ $product->offer_category->alias == "bondho_sim" ? '' : 'd-none' }}" id="bondho_sim" data-offer-type="bondho_sim">
+                                    @include('layouts.partials.products.packages')
+                                    @include('layouts.partials.products.common-field.price_vat_mrp')
+                                    @include('layouts.partials.products.common-field.call_rate')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
+                                    @include('layouts.partials.products.common-field.minute_volume')
+                                    @include('layouts.partials.products.common-field.internet_volume')
+                                    @include('layouts.partials.products.common-field.sms_volume')
                                     @include('layouts.partials.products.common-field.ussd_code')
                                     @include('layouts.partials.products.common-field.validity_unit')
                                     @include('layouts.partials.products.common-field.validity')

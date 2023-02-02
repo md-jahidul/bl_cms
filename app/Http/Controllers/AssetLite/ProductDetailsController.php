@@ -91,7 +91,7 @@ class ProductDetailsController extends Controller
     public function sectionList($simType, $productDetailsId)
     {
         $productType = $this->productService->findOne($productDetailsId);
-        $productType = $productType->offer_category_id;
+        $productType = $productType->offer_category;
         $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
