@@ -14,7 +14,10 @@
                             </tr>
                         </thead>
                         <tbody class="category_sortable">
-                            @foreach($categories as $cat)
+                            @php
+                               // dd($categories);
+                            @endphp
+                        @foreach($categories as $cat)
                             <tr data-index="{{ $cat->id }}" data-position="{{ $cat->home_sort }}">
 
                                 <td class="category_name">
@@ -24,6 +27,7 @@
                                 </td>
 
                                 <td class="banner_photo">
+                                    {{$cat->banner_photo}}
                                     <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
 
                                 </td>
@@ -85,19 +89,36 @@
 
                             <div class="form-group row">
 
+<<<<<<< HEAD
                                 <div class="col-md-4 col-xs-12">
                                     <label>Banner (Web)</label>
                                     <input type="file" class="" name="banner_web" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+=======
+                        <div class="form-group row">
+                            <div class="col-md-4 col-xs-12">
+                                <label>Banner (Web)</label>
+                                <input type="file" class="dropify_category" name="banner_web" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]' id="banner_web">
+>>>>>>> 166a59b71 (on progress)
 
                                     <input type="hidden" class="old_web_img" name="old_web_img">
 
+<<<<<<< HEAD
                                     <p class="banner_web"></p>
                                 </div>
                                 <div class="col-md-4 col-xs-12">
                                     <label>Banner (Mobile)</label>
                                     <input type="file" class="" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+=======
+                                <p class="banner_web"></p>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <label>Banner (Mobile)</label>
+                                <input type="file" class="dropify_category" name="banner_mobile" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+>>>>>>> 166a59b71 (on progress)
 
                                     <input type="hidden" class="old_mob_img" name="old_mob_img">
 
@@ -320,10 +341,66 @@
                     $('.html_header_bn').val(result.page_header_bn);
                     $('.schema_markup').val(result.schema_markup);
 
+<<<<<<< HEAD
                     $('.banner_web').html("");
                     if (result.banner_photo != null) {
                         var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "' width='100%'>";
                         $('.banner_web').html(bannerWeb);
+=======
+                        $('.banner_title_en').val(result.banner_title_en);
+                        $('.banner_title_bn').val(result.banner_title_bn);
+                        $('.banner_desc_en').val(result.banner_desc_en);
+                        $('.banner_desc_bn').val(result.banner_desc_bn);
+
+                        $('.old_web_img').val(result.banner_photo);
+                        $('.old_mob_img').val(result.banner_image_mobile);
+                        $('.page_url').val(result.url_slug);
+                        $('.page_url_bn').val(result.url_slug_bn);
+                        $('.banner_name').val(result.banner_name);
+                        $('.old_banner_name').val(result.banner_name);
+                        $('.html_header').val(result.page_header);
+                        $('.html_header_bn').val(result.page_header_bn);
+                        $('.schema_markup').val(result.schema_markup);
+
+                        $('.banner_web').html("");
+                        if (result.banner_photo != null) {
+
+                            var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "' width='100%'>";
+                            //$('.banner_web').html(bannerWeb);
+                            //$('#banner_web').attr("data-default-file","{{ config('filesystems.file_base_url') }}" + result.banner_photo +"");
+                            $('#banner_web').dropify({
+                                defaultFile: "{{ config('filesystems.file_base_url') }}" + result.banner_photo +"" ,
+                            });
+                            console.log(drop.data('.dropify_category'));
+                            // drop = drop.data('dropify-category');
+                            // drop.resetPreview();
+                            // drop.clearElement();
+                            // drop.settings.defaultFile = "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "";
+                            // drop.destroy();
+                            // drop.init();
+
+                        }
+
+                        $('.banner_mobile').html("");
+                        if (result.banner_image_mobile != null) {
+                            var bannerMob = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_image_mobile + "' width='100%'>";
+                            $('.banner_mobile').html(bannerMob);
+                        }
+
+                        if (result.status == '1') {
+                            $(".status_active").attr('checked', 'checked');
+                        } else {
+                            $(".status_inactive").attr('checked', 'checked');
+                        }
+
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Failed',
+                            type: 'error',
+                        });
+>>>>>>> 166a59b71 (on progress)
                     }
 
                     $('.banner_mobile').html("");
@@ -345,6 +422,20 @@
                         title: 'Failed',
                         type: 'error',
                     });
+<<<<<<< HEAD
+=======
+                    var save_url = "{{ url('business-category-sort-change') }}";
+                    saveNewPositions(save_url);
+                }
+            });
+
+            let drop = $('.dropify_category').dropify({
+                messages: {
+                    'default': 'Browse',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+>>>>>>> 166a59b71 (on progress)
                 }
             });
         });
