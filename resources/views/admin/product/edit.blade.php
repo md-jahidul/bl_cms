@@ -27,7 +27,7 @@
                             <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                 <label for="offer_category_id" class="required">Offer Type</label>
                                 <select class="form-control" name="offer_category_id" id="offer_type"
-                                        required data-validation-required-message="Please select offer">
+                                        required data-validation-required-message="Please select offer" disabled>
                                     <option value="">---Select Offer Type---</option>
                                     @foreach($offersType as $offer)
                                         <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
