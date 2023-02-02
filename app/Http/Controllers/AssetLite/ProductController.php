@@ -162,6 +162,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:products,url_slug_bn'
