@@ -1,3 +1,8 @@
+<div class="col-md-12">
+    <span><h4><strong>SMS</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('sms_volume') ? ' error' : '' }}">
     <label for="sms_volume">SMS Volume</label>
     <input type="text" name="sms_volume" class="form-control sms_volume" placeholder="Enter SMS volume"

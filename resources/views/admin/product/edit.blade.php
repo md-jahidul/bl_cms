@@ -49,7 +49,7 @@
                                     <div class="help-block">{{ $errors->first('product_code') }}</div>
                                 @endif
                             </div>
-                            <div class="col-md-4">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Please Select Category</label>
                                         <select multiple
@@ -67,6 +67,11 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-12">
+                                    <span><h4><strong>Offer Info</strong></h4></span>
+                                    <div class="form-actions col-md-12 mt-0 type-line"></div>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en">Offer Name</label>
                                     <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english"
@@ -77,7 +82,6 @@
                                     @endif
                                 </div>
 
-
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn">Offer Name Bangla</label>
                                     <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
@@ -87,7 +91,8 @@
                                         <div class="help-block">{{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 {{ $errors->has('sd_vat_tax_en') ? ' error' : '' }}">
+
+                                <div class="form-group col-md-3 {{ $errors->has('sd_vat_tax_en') ? ' error' : '' }}">
                                     <label for="sd_vat_tax_en">Display SD VAT Tax (English)</label>
                                     <input type="text" name="sd_vat_tax_en" id="sd_vat_tax_en" class="form-control" placeholder="Enter SD Vat Tax in English"
                                            value="{{ optional($product->product_core)->sd_vat_tax_en }}">
@@ -97,7 +102,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('sd_vat_tax_bn') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('sd_vat_tax_bn') ? ' error' : '' }}">
                                     <label for="sd_vat_tax_bn">Display SD VAT Tax (Bangla)</label>
                                     <input type="text" name="sd_vat_tax_bn" id="sd_vat_tax_bn" class="form-control" placeholder="Enter SD Vat Tax in Bangla"
                                            value="{{ optional($product->product_core)->sd_vat_tax_bn }}">
@@ -107,7 +112,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
@@ -120,7 +125,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
@@ -163,10 +168,9 @@
                                     @include('layouts.partials.products.common-field.validity_unit')
                                     @include('layouts.partials.products.common-field.validity')
                                     @include('layouts.partials.products.common-field.validity_free_text')
-                                    @include('layouts.partials.products.common-field.tag')
+{{--                                    @include('layouts.partials.products.common-field.tag')--}}
                                 </slot>
                                 <slot class="{{ $product->offer_category->alias == "bondho_sim" ? '' : 'd-none' }}" id="bondho_sim" data-offer-type="bondho_sim">
-                                    @include('layouts.partials.products.packages')
                                     @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.common-field.call_rate')
                                     @include('layouts.partials.products.common-field.call_rate_unit')
@@ -177,12 +181,13 @@
                                     @include('layouts.partials.products.common-field.validity_unit')
                                     @include('layouts.partials.products.common-field.validity')
                                     @include('layouts.partials.products.common-field.validity_free_text')
-                                    @include('layouts.partials.products.common-field.tag')
                                 </slot>
 
                                 <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
+
+                                @include('layouts.partials.products.common-field.tag')
 
                                 @include('layouts.partials.products.common-field.search-related-field')
 
@@ -235,6 +240,12 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
+    <style>
+        .type-line {
+            border-top: 1px solid #0a0e45 !important;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
