@@ -1296,7 +1296,7 @@ class ProductCoreService
                 $insert_data[21] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
                 $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
                     ',',
-                    $product->detailTabs->pluck('name')->toArray()
+                    $product->detailTabs->pluck('name')->where('platform', 'mybl')->toArray()
                 ) ?: $product->offer_section_title);
                 $productTags = $product->tags;
                 $insert_data[23] = $productTags->count() ? implode(',',
