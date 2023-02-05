@@ -59,7 +59,7 @@
                                             <option value="batch_title" @if($sections->category_type == 'batch_title') selected @endif>Previus Batch Title</option>
                                         </select>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -97,7 +97,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -112,7 +112,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

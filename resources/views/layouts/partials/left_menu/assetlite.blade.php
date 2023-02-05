@@ -450,12 +450,12 @@
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Events section</a>
-                        </li>
+                        </li> --}}
                         <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Testimonial section</a>
-                        </li> --}}
+                        </li>
 
                         <li class="{{ request()->is('programs/proiconbox*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.proiconbox') }}"
