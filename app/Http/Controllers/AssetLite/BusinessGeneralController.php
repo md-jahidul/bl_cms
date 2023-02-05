@@ -66,7 +66,8 @@ class BusinessGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 06/04/2020
      */
-    public function updateCategory(Request $request) {
+    public function updateCategory(BusinessProductCategoriesRequest $request) {
+
         $response = $this->businessHomeService->updateCategory($request);
         if ($response['success'] == 1) {
             Session::flash('message', 'Category updated successfully!');
