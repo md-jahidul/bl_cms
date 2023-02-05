@@ -795,7 +795,6 @@ class BusinessOthersService {
      * @return Response
      */
     public function updateService($request) {
-        dd($request->all());
         try {
 
             //banner file replace in storege
@@ -814,12 +813,12 @@ class BusinessOthersService {
             }
 
             //product photo
-            $photoNameWeb = $request['banner_name'] . '-web';
+
             $photoNameMob = $request['banner_name'] . '-mobile';
             $photoWeb = "";
             $photoMob = "";
             if (!empty($request['banner_photo'])) {
-
+                $photoNameWeb = $request['banner_name'] . '-web.' .pathinfo($request->file('banner_photo')->getClientOriginalName(), PATHINFO_EXTENSION);;
                 $request['old_banner'] != "" ? $this->deleteFile($request['old_banner']) : "";
                 $photoWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
             }
