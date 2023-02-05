@@ -146,6 +146,16 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img">
+                                    <label for="tag_category_id">Product Details Image</label>
+                                    <div class="custom-file">
+                                        {{--        <input type="hidden" name="old_web_img" value="">--}}
+                                        {{--        <input type="hidden" name="old_web_img" value="{{ (!empty($product->image)) ? $product->image : ''}}">--}}
+                                        <input type="file" name="image" class="custom-file-input dropify" data-height="90">
+                                        {{--        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
+                                    </div>
+                                </div>
+
                                 <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')
                                 </slot>
@@ -201,21 +211,10 @@
 
                                 <slot id="others" data-offer-type="others" style="display: none">
                                     @include('layouts.partials.products.other')
+                                    @include('layouts.partials.products.common-field.product-image')
                                 </slot>
 
                                 @include('layouts.partials.products.common-field.search-related-field')
-
-                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
-                                    <label for="mobileImg">Product Image</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="product_image" data-height="90" class="dropify">
-                                        {{--<!-- data-default-file="{{ config('filesystems.file_base_url') . $menu->icon }}"-->>--}}
-                                    </div>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('icon'))
-                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
-                                    @endif
-                                </div>
 
                                 <div class="col-md-6">
                                     <label>For:</label>
@@ -299,6 +298,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {
+            let offerType = $('#offer_type');
+
+            offerType.change(function () {
+                let offerTypeVal = $('option:selected', this).attr('data-alias')
+                let productImg = $('.product_detals_img');
+                if(offerTypeVal == "internet" || offerTypeVal == "voice" || offerTypeVal == "bundles"){
+                    productImg.show()
+                } else {
+                    productImg.hide()
+                }
+            })
+
             $('#product_core').selectize({
                 create: true,
             });

@@ -136,6 +136,14 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ isset($product->image) ? '' : 'd-none' }}">
+                                    <label for="tag_category_id">Product Details Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image" class="custom-file-input dropify" data-height="90"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $product->image }}">
+                                    </div>
+                                </div>
+
                                 <slot class="{{ $product->offer_category_id == OfferType::INTERNET ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                     @include('layouts.partials.products.internet')
                                 </slot>
@@ -168,7 +176,6 @@
                                     @include('layouts.partials.products.common-field.validity_unit')
                                     @include('layouts.partials.products.common-field.validity')
                                     @include('layouts.partials.products.common-field.validity_free_text')
-{{--                                    @include('layouts.partials.products.common-field.tag')--}}
                                 </slot>
                                 <slot class="{{ $product->offer_category->alias == "bondho_sim" ? '' : 'd-none' }}" id="bondho_sim" data-offer-type="bondho_sim">
                                     @include('layouts.partials.products.common-field.price_vat_mrp')

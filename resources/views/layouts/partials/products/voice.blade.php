@@ -34,6 +34,6 @@
 
 @include('layouts.partials.products.common-field.tag')
 
-@include('layouts.partials.products.common-field.image')
+{{--@include('layouts.partials.products.common-field.image')--}}
 
 
