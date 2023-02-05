@@ -795,6 +795,7 @@ class BusinessOthersService {
      * @return Response
      */
     public function updateService($request) {
+        dd($request->all());
         try {
 
             //banner file replace in storege
