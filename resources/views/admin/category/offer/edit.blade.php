@@ -18,8 +18,6 @@
                         @csrf
                         {{method_field('PUT')}}
                         <div class="row">
-{{--                            @dd($errors->all())--}}
-{{--                            {{ $errors }}--}}
                             <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                 <label for="name_en" class="required">Name (English)</label>
                                 <input type="text" name="name_en"  class="form-control" placeholder="Enter duration name in english"
@@ -39,6 +37,31 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL English<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{$offer->url_slug}}" required name="url_slug"
+                                       id="url_en" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> bundles (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL Bangla<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{ isset($offer->url_slug_bn) ? $offer->url_slug_bn : '' }}"
+                                       id="url_bn" required name="url_slug_bn" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>
+                                </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                @endif
+                            </div>
+
                             <h4><strong>For Prepaid</strong></h4>
                             <div class="form-actions col-md-12 mt-0"></div>
 
@@ -53,38 +76,13 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
-                                <label>Banner image (Mobile)</label>
-                                <input type="file" name="banner_image_mobile" class="custom-file-input dropify" data-height="90"
-                                       data-default-file="{{ config('filesystems.file_base_url') . $offer->banner_image_mobile }}">
-                                <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                <div class="help-block"></div>
-                            </div>
-
-                            <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                <label> URL English<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" value="{{$offer->url_slug}}" required name="url_slug"
-                                       id="url_en" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> bundles (no spaces and slash)<br>
-                                </small>
-                                @if ($errors->has('url_slug'))
-                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                <label> URL Bangla<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" value="{{ isset($offer->url_slug_bn) ? $offer->url_slug_bn : '' }}"
-                                       id="url_bn" required name="url_slug_bn" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>
-                                </small>
-                                @if ($errors->has('url_slug_bn'))
-                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
-                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">--}}
+{{--                                <label>Banner image (Mobile)</label>--}}
+{{--                                <input type="file" name="banner_image_mobile" class="custom-file-input dropify" data-height="90"--}}
+{{--                                       data-default-file="{{ config('filesystems.file_base_url') . $offer->banner_image_mobile }}">--}}
+{{--                                <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                <div class="help-block"></div>--}}
+{{--                            </div>--}}
 
                             <div class="form-group col-md-3 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
                                 <label for="banner_alt_text">Alt Text English</label>
@@ -178,40 +176,40 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_image_mobile') ? ' error' : '' }}">
-                                    <label>Banner image (Mobile)</label>
-                                    <input type="hidden" name="old_mob_img" value="{{ $offer->postpaid_banner_image_mobile }}">
-                                    <input type="file" name="postpaid_banner_image_mobile" class="custom-file-input dropify" data-height="90"
-                                           data-default-file="{{ config('filesystems.file_base_url') . $offer->postpaid_banner_image_mobile }}">
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                    <div class="help-block"></div>
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('postpaid_banner_image_mobile') ? ' error' : '' }}">--}}
+{{--                                    <label>Banner image (Mobile)</label>--}}
+{{--                                    <input type="hidden" name="old_mob_img" value="{{ $offer->postpaid_banner_image_mobile }}">--}}
+{{--                                    <input type="file" name="postpaid_banner_image_mobile" class="custom-file-input dropify" data-height="90"--}}
+{{--                                           data-default-file="{{ config('filesystems.file_base_url') . $offer->postpaid_banner_image_mobile }}">--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-3 {{ $errors->has('postpaid_url_slug') ? ' error' : '' }}">
-                                    <label> URL English<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" value="{{$offer->postpaid_url_slug}}" required name="postpaid_url_slug"
-                                           id="url_en" placeholder="URL">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> bundles (no spaces and slash)<br>
-                                    </small>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('postpaid_url_slug'))
-                                        <div class="help-block">  {{ $errors->first('postpaid_url_slug') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-3 {{ $errors->has('postpaid_url_slug') ? ' error' : '' }}">--}}
+{{--                                    <label> URL English<span class="text-danger">*</span></label>--}}
+{{--                                    <input type="text" class="form-control slug-convert" value="{{$offer->postpaid_url_slug}}" required name="postpaid_url_slug"--}}
+{{--                                           id="url_en" placeholder="URL">--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> bundles (no spaces and slash)<br>--}}
+{{--                                    </small>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('postpaid_url_slug'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('postpaid_url_slug') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-3 {{ $errors->has('postpaid_url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL Bangla<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" value="{{ isset($offer->postpaid_url_slug_bn) ? $offer->postpaid_url_slug_bn : '' }}"
-                                           id="url_bn" required name="postpaid_url_slug_bn" placeholder="URL">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>
-                                    </small>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('postpaid_url_slug_bn'))
-                                        <div class="help-block">  {{ $errors->first('postpaid_url_slug_bn') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-3 {{ $errors->has('postpaid_url_slug_bn') ? ' error' : '' }}">--}}
+{{--                                    <label> URL Bangla<span class="text-danger">*</span></label>--}}
+{{--                                    <input type="text" class="form-control slug-convert" value="{{ isset($offer->postpaid_url_slug_bn) ? $offer->postpaid_url_slug_bn : '' }}"--}}
+{{--                                           id="url_bn" required name="postpaid_url_slug_bn" placeholder="URL">--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>--}}
+{{--                                    </small>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('postpaid_url_slug_bn'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('postpaid_url_slug_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 <div class="form-group col-md-3 {{ $errors->has('postpaid_alt_text') ? ' error' : '' }}">
                                     <label for="postpaid_alt_text">Alt Text English</label>
