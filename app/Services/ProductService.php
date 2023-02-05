@@ -266,21 +266,12 @@ class ProductService
             $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
             $this->deleteFile($product->image);
         }
+
         $product->update($data);
 
 
-        /**
-         * save Search Data
-         * If product is in offer category: internet, voice, bundles
-         */
-
-        $internate_voice_bundles = [1,2,3];
-
-        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
-
-            $this->_saveSearchData($product);
-        }
-
+        //save Search Data
+        $this->_saveSearchData($product);
         return Response('Product update successfully !');
     }
 
