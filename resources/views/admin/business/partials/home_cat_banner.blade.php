@@ -27,7 +27,6 @@
                                 </td>
 
                                 <td class="banner_photo">
-                                    {{$cat->banner_photo}}
                                     <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
 
                                 </td>
@@ -345,7 +344,7 @@
                     type: 'GET',
                     cache: false,
                     success: function (result) {
-
+                        console.log(result);
                         $('.name_en').val(result.name);
                         $('.name_bn').val(result.name_bn);
                         $('.alt_text').val(result.alt_text);
@@ -369,18 +368,7 @@
                         if (result.banner_photo != null) {
 
                             var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "' width='100%'>";
-                            //$('.banner_web').html(bannerWeb);
-                            //$('#banner_web').attr("data-default-file","{{ config('filesystems.file_base_url') }}" + result.banner_photo +"");
-                            $('#banner_web').dropify({
-                                defaultFile: "{{ config('filesystems.file_base_url') }}" + result.banner_photo +"" ,
-                            });
-                            console.log(drop.data('.dropify_category'));
-                            // drop = drop.data('dropify-category');
-                            // drop.resetPreview();
-                            // drop.clearElement();
-                            // drop.settings.defaultFile = "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "";
-                            // drop.destroy();
-                            // drop.init();
+                            $('.banner_web').html(bannerWeb);
 
                         }
 
