@@ -134,15 +134,15 @@
         jQuery(document).ready(function($){
 
 
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#general_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+            // $('input.section_name').on('keyup', function(){
+            //     var sectionName = $('#general_section').find('.section_name').val();
+            //     var sectionNameLower = sectionName.toLowerCase();
+            //     var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-                $('#general_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+            //     $('#general_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
-                // console.log(sectionNameRemoveSpace);
-            });
+            //     // console.log(sectionNameRemoveSpace);
+            // });
 
             $('.remove_photo').on('click', function (e) {
             e.preventDefault();
