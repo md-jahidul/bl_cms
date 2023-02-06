@@ -136,7 +136,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ isset($product->image) ? '' : 'd-none' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ $product->offer_category_id != OfferType::OTHERS ? '' : 'd-none' }}">
                                     <label for="tag_category_id">Product Details Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="image" class="custom-file-input dropify" data-height="90"
