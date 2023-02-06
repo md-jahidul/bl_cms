@@ -174,6 +174,37 @@
                                 <div class="form-group row">
 
                                     <div class="col-md-6 col-xs-12">
+                                        <label for="Banner Photo">Icon<span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_package" name="icon" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                        <input type="hidden" name="old_icon" value="{{$package->icon}}">
+
+                                        <p class="text-center">
+                                            @if($package->icon != "")
+                                                <img src="{{ config('filesystems.file_base_url') . $package->icon }}" alt="Banner Photo" width="100%" />
+                                            @endif
+                                        </p>
+
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Banner Photo">Details Image <span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_package" name="detail_image" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                        <input type="hidden" name="old_detail_image" value="{{$package->detail_image}}">
+
+                                        <p class="text-center">
+                                            @if($package->detail_image != "")
+                                                <img src="{{ config('filesystems.file_base_url') . $package->detail_image }}" alt="Banner Photo" width="100%" />
+                                            @endif
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row">
+
+                                    <div class="col-md-6 col-xs-12">
                                         <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
                                         <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
                                         <input type="file" class="dropify_package" name="banner_photo" data-height="70"
