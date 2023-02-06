@@ -164,7 +164,7 @@
                                             @include('layouts.partials.products.call_rate')
                                     </slot>
 
-                                    <slot class="{{ $product->offer_category_id == OfferType::RECHARGE_OFFER ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
+                                    <slot class="{{ $product->offer_category_id == OfferType::RECHARGE_OFFER ? '' : 'd-none' }}" id="recharge_offer" data-offer-type="recharge_offer">
                                         @include('layouts.partials.products.bundle')
                                     </slot>
                                 @endif
