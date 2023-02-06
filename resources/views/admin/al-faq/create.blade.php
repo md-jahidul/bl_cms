@@ -18,6 +18,22 @@
                         <form role="form" action="{{ url("faq/$slug/store") }}" method="POST" novalidate>
                             @csrf
                             <div class="row">
+                                @if (!empty($for))
+                                    <div class="form-group col-md-6 {{ $errors->has('model_id') ? ' error' : '' }}">
+                                        <label for="model_id" class="required"> For</label>
+                                        <select class="form-control required" name="model_id" id="offer_type"
+                                                required data-validation-required-message="Please select offer">
+                                            <option data-alias="" value="">---Select cat Type---</option>
+                                            @foreach($for as $model)
+                                                <option data-alias="{{ $model->id }}" value="{{ $model->id }}">{{ $model->title_en }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('model_id'))
+                                            <div class="help-block">{{ $errors->first('model_id') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
                                 <div class="form-group col-md-6 {{ $errors->has('question_en') ? ' error' : '' }}">
                                     <label for="question_en" class="">Question (English)</label>
                                     <textarea type="text" name="question_en" class="form-control" placeholder="Enter question in English" required rows="5"

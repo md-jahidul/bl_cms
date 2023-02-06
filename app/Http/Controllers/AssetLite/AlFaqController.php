@@ -77,7 +77,15 @@ class AlFaqController extends Controller
      */
     public function create($slug)
     {
-        return view('admin.al-faq.create', compact('slug'));
+        $category = $this->alFaqCategoryService->getFaqsCategory(['slug' => $slug]);
+
+        $for = null;
+
+        if ($category->model != null) {
+            $for = $category->model::All();
+        }
+
+        return view('admin.al-faq.create', compact('slug', 'for'));
     }
 
     /**
@@ -104,8 +112,16 @@ class AlFaqController extends Controller
      */
     public function edit($slug, $id)
     {
+        $category = $this->alFaqCategoryService->getFaqsCategory(['slug' => $slug]);
+
+        $for = null;
+
+        if ($category->model != null) {
+            $for = $category->model::All();
+        }
+
         $faq = $this->faq->findOne($id);
-        return view('admin.al-faq.edit', compact('faq', 'slug'));
+        return view('admin.al-faq.edit', compact('faq', 'slug', 'for'));
     }
 
     /**
