@@ -202,20 +202,20 @@
 
                                 @include('layouts.partials.products.common-field.search-related-field')
 
-                            <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }} {{ in_array($product->offer_category_id, [OfferType::OTHERS, OfferType::NEW_SIM_OFFER]) ? '' : 'd-none' }}">
-                                <label for="mobileImg">Product Image</label>
-                                <div class="custom-file">
-                                    <input type="file" name="product_image" data-height="90" class="dropify"
-                                    data-default-file="{{ config('filesystems.file_base_url') . $product->product_image }}">
+                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }} {{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}">
+                                    <label for="mobileImg">Product Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="product_image" data-height="90" class="dropify"
+                                        data-default-file="{{ config('filesystems.file_base_url') . $product->product_image }}">
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('icon'))
+                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                    @endif
                                 </div>
-                                <div class="help-block"></div>
-                                @if ($errors->has('icon'))
-                                    <div class="help-block">  {{ $errors->first('icon') }}</div>
-                                @endif
-                            </div>
 
 
-                            <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label>For:</label>
                                     <div class="form-group" id="show_in_home">
                                         <label for="trending"></label><br>
