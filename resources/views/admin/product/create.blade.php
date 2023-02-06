@@ -146,7 +146,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img">
+                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_details_img">
                                     <label for="tag_category_id">Product Details Image</label>
                                     <div class="custom-file">
                                         {{--        <input type="hidden" name="old_web_img" value="">--}}
@@ -163,7 +163,6 @@
                                 <slot id="bundles" data-offer-type="bundles" style="display: none">
                                     @include('layouts.partials.products.bundle')
                                 </slot>
-
 
                                 <slot id="new_sim_offer" data-offer-type="new_sim_offer" style="display: none">
                                     @include('layouts.partials.products.bundle')
@@ -302,8 +301,8 @@
 
             offerType.change(function () {
                 let offerTypeVal = $('option:selected', this).attr('data-alias')
-                let productImg = $('.product_detals_img');
-                if(offerTypeVal == "internet" || offerTypeVal == "voice" || offerTypeVal == "bundles"){
+                let productImg = $('.product_details_img');
+                if(offerTypeVal == "internet" || offerTypeVal == "voice" || offerTypeVal == "bundles" || offerTypeVal == "call_rate"){
                     productImg.show()
                 } else {
                     productImg.hide()
