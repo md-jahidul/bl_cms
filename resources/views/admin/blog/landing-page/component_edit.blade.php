@@ -17,7 +17,7 @@
 @section('card_name', 'Landing Page Component')
 @section('breadcrumb')
     <li class="breadcrumb-item active"><a href="{{ url('blog/landing-page-component') }}">Component List</a></li>
-    <li class="breadcrumb-item active"> Component Create</li>
+    <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
     <a href="{{ url('blog/landing-page-component') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -77,6 +77,16 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label>Short Description En</label>
+                                    <textarea name="short_desc_en" class="form-control" rows="4">{{ $component->short_desc_en }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Short Description En</label>
+                                    <textarea name="short_desc_bn" class="form-control" rows="4">{{ $component->short_desc_bn }}</textarea>
+                                </div>
+
                                 <div class="form-group select-role col-md-6 {{ $errors->has('role_id') ? ' error' : '' }} slider-section {{ $component->component_type == "news_archive" ? 'd-none' : '' }}">
                                     <label for="role_id">Select Post For Sliding</label>
                                     <div class="role-select">
@@ -123,17 +133,6 @@
 {{--                                    @endif--}}
 {{--                                </div>--}}
 
-                                <div class="col-md-6 mt-1">
-                                    <label></label>
-                                    <div class="form-group mt-1">
-                                        <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" {{ $component->status == 1 ? 'checked' : '' }}>
-                                        <label for="active" class="mr-1">Active</label>
-                                        <input type="radio" name="status" value="0" id="inactive" {{ $component->status == 0 ? 'checked' : '' }}>
-                                        <label for="inactive">Inactive</label>
-                                    </div>
-                                </div>
-
                                 <div class="form-group col-md-4">
                                     <label>Page Header</label>
                                     <textarea name="page_header" class="form-control" rows="4">{{ $component->page_header }}</textarea>
@@ -147,6 +146,17 @@
                                 <div class="form-group col-md-4">
                                     <label>Schema Markup</label>
                                     <textarea name="schema_markup" class="form-control" rows="4">{{ $component->schema_markup }}</textarea>
+                                </div>
+
+                                <div class="col-md-6 mt-1">
+                                    <label></label>
+                                    <div class="form-group mt-1">
+                                        <label for="title" class="mr-1">Status:</label>
+                                        <input type="radio" name="status" value="1" id="active" {{ $component->status == 1 ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" name="status" value="0" id="inactive" {{ $component->status == 0 ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-actions col-md-12 ">
