@@ -108,6 +108,81 @@
 
 
 </section>
+<section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Ad Tech</strong></h4>
+                    <hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ route('search.adtech.store') }}"
+                              method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                <div class="form-group col-md-12 {{ $errors->has('img_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Ad Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="img_url" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($adTech->img_url) ? config('filesystems.file_base_url') . $adTech->img_url : '' }}">
+                                    </div>
+                                    {{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('img_url'))
+                                        <div class="help-block">  {{ $errors->first('img_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 0) ? '' : (!isset($adTech) ? '' : 'd-none') }}" id="pageDynamic">
+                                    <label for="url">Redirect URL</label>
+                                    <input type="text" name="redirect_url_en" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->redirect_url_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} {{ (isset($adTech) && $adTech->is_external_url == 1) ? '' : 'd-none' }}" id="externalLink">
+                                    <label for="url">External URL</label>
+                                    <input type="text" name="external_url" class="form-control" placeholder="Enter URL"
+                                           value="{{ isset($adTech) ? $adTech->external_url : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Status:</label>
+                                        <input type="radio" id="active" name="status" value="1" {{ isset($adTech->status) && $adTech->status == 1 ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" id="inactive" name="status" value="0" {{ isset($adTech->status) && $adTech->status == 0 ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
+                                        <div class="help-block"></div>
+                                            @if ($errors->has('status'))
+                                            <div class="help-block">{{ $errors->first('status') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 @stop
 
@@ -315,6 +390,18 @@ if (Session::has('error')) {
                 return true;
             }
             return false;
+        });
+
+        // Image Dropify
+        $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
+            });
         });
 
 
