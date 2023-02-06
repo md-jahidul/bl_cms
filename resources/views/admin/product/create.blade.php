@@ -171,6 +171,7 @@
                                 <slot id="voice" data-offer-type="voice" style="display: none">
                                     @include('layouts.partials.products.voice')
                                 </slot>
+
                                 @if(strtolower($type) == 'prepaid')
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
                                         @include('layouts.partials.products.call_rate')
@@ -318,11 +319,7 @@
             offerType.change(function () {
                 let offerTypeVal = $('option:selected', this).attr('data-alias')
                 let productImg = $('.product_details_img');
-                if(offerTypeVal === "internet" ||
-                    offerTypeVal === "voice" ||
-                    offerTypeVal === "bundles" ||
-                    offerTypeVal === "call_rate" ||
-                    offerTypeVal === "recharge_offer"){
+                if(offerTypeVal !== "others"){
                     productImg.show()
                 } else {
                     productImg.hide()
