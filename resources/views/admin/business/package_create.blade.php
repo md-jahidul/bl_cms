@@ -137,7 +137,21 @@
                                     </div>
 
                                 </div>
+                                <div class="form-group row">
 
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Banner Photo">Icon<span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_package" name="icon" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Banner Photo">Details Image <span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_package" name="detail_image" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+
+                                </div>
                                 <div class="form-group row">
 
                                     <div class="col-md-6 col-xs-12">
