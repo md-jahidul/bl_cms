@@ -175,13 +175,16 @@
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
                                         @include('layouts.partials.products.call_rate')
                                     </slot>
+
+                                    <slot id="recharge_offer" data-offer-type="recharge_offer" style="display: none">
+                                        @include('layouts.partials.products.bundle')
+                                    </slot>
                                 @endif
 
                                 <slot id="packages" data-offer-type="packages" style="display: none">
                                     @include('layouts.partials.products.packages')
                                     @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.common-field.call_rate')
-                                    @include('layouts.partials.products.common-field.call_rate_unit')
                                     @include('layouts.partials.products.common-field.minute_volume')
                                     @include('layouts.partials.products.common-field.internet_volume')
                                     @include('layouts.partials.products.common-field.sms_volume')
@@ -302,7 +305,11 @@
             offerType.change(function () {
                 let offerTypeVal = $('option:selected', this).attr('data-alias')
                 let productImg = $('.product_details_img');
-                if(offerTypeVal == "internet" || offerTypeVal == "voice" || offerTypeVal == "bundles" || offerTypeVal == "call_rate"){
+                if(offerTypeVal === "internet" ||
+                    offerTypeVal === "voice" ||
+                    offerTypeVal === "bundles" ||
+                    offerTypeVal === "call_rate" ||
+                    offerTypeVal === "recharge_offer"){
                     productImg.show()
                 } else {
                     productImg.hide()
