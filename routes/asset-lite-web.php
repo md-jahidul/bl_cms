@@ -391,7 +391,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
-    
+
     #Dynamic Page's Components
     // Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
     //     ->name('other-components');

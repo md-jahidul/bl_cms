@@ -104,8 +104,9 @@ class BusinessPackageRepository extends BaseRepository
         }
     }
 
-    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
+    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob,$cardIcon, $cardDetail, $request)
     {
+
         $package = $this->model;
 
 
@@ -116,6 +117,8 @@ class BusinessPackageRepository extends BaseRepository
         $package->banner_photo = $bannerWeb;
         $package->banner_image_mobile = $bannerMob;
         $package->alt_text = $request->alt_text;
+        $package->icon = $cardIcon;
+        $package->detail_image = $cardDetail;
 
         $package->banner_name = $request->banner_name;
         $package->url_slug = $request->url_slug;
@@ -148,7 +151,7 @@ class BusinessPackageRepository extends BaseRepository
         return $packages;
     }
 
-    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
+    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob,$cardIcon, $cardDetail, $request)
     {
         $packageId = $request->package_id;
         $package = $this->model->findOrFail($packageId);
@@ -158,6 +161,12 @@ class BusinessPackageRepository extends BaseRepository
         }
         if ($cardMob != "") {
             $package->card_banner_mobile = $cardMob;
+        }
+        if ($cardIcon != "") {
+            $package->icon = $cardIcon;
+        }
+        if ($cardDetail != "") {
+            $package->detail_image = $cardDetail;
         }
         $package->card_banner_alt_text = $request->card_banner_alt_text;
 
