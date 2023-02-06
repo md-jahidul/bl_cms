@@ -84,6 +84,9 @@
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::VOICE)
                             @include('layouts.partials.product-details.voice')
 
+                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::RECHARGE_OFFER)
+                                @include('layouts.partials.product-details.voice')
+
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::BUNDLES)
                             @include('layouts.partials.product-details.voice')
 

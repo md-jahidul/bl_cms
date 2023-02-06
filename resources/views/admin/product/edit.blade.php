@@ -136,7 +136,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ isset($product->image) ? '' : 'd-none' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ $product->offer_category_id != OfferType::OTHERS ? '' : 'd-none' }}">
                                     <label for="tag_category_id">Product Details Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="image" class="custom-file-input dropify" data-height="90"
@@ -164,7 +164,7 @@
                                             @include('layouts.partials.products.call_rate')
                                     </slot>
 
-                                    <slot class="{{ $product->offer_category_id == OfferType::RECHARGE_OFFER ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
+                                    <slot class="{{ $product->offer_category_id == OfferType::RECHARGE_OFFER ? '' : 'd-none' }}" id="recharge_offer" data-offer-type="recharge_offer">
                                         @include('layouts.partials.products.bundle')
                                     </slot>
                                 @endif
