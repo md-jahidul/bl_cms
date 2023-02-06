@@ -6,6 +6,8 @@
     }
 @endphp
 
+@include('layouts.partials.products.common-field.price_vat_mrp')
+
 @include('layouts.partials.products.common-field.call_rate')
 
 @include('layouts.partials.products.common-field.validity_unit')
