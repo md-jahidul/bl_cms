@@ -354,7 +354,7 @@ class MyblProductEntryController extends Controller
 
     public function redisKeyUpdate()
     {
-        Redis::set('new_product_upload_time', Carbon::now()->toDateTimeString());
+        Redis::set('new_product_upload_time', Carbon::now()->timestamp());
         Session::flash('message', 'Redis Key Update');
 
         return redirect('redis-key-update-view');
