@@ -490,6 +490,10 @@
                 class="la la-fighter-jet"></i>
             <span class="menu-title" data-i18n="nav.dash.main">Content & Course Deeplink</span></a>
     </li>
+    <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}"><i
+                class="la la-fighter-jet"></i>
+            <span class="menu-title" data-i18n="nav.dash.main">Activate New Product Code</span></a>
+    </li>
     @if( auth()->user()->can_view('HelpCenter') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Offers</span></a>
