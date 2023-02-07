@@ -22,7 +22,7 @@ class BusinessPackageController extends Controller {
 
     /**
      * List of business packages.
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 16/02/2020
@@ -34,7 +34,7 @@ class BusinessPackageController extends Controller {
 
     /**
      * create business packages [form].
-     * 
+     *
      * @param No
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
@@ -47,27 +47,27 @@ class BusinessPackageController extends Controller {
 
     /**
      * save business packages .
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function store(BusinessPackageRequest $request) {
-        
-         $response = $this->packageService->savePackage($request);
-         
+        //dd($request->all());
+        $response = $this->packageService->savePackage($request);
+
         if($response['success'] == 1){
-           Session::flash('sussess', 'Package is saved!');  
+            Session::flash('sussess', 'Package is saved!');
         }else{
-            Session::flash('error', 'Package saving process failed!'); 
+            Session::flash('error', 'Package saving process failed!');
         }
-        
+
         return redirect('/business-package');
     }
-    
-     /**
+
+    /**
      * Package Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 16/02/2020
@@ -76,37 +76,37 @@ class BusinessPackageController extends Controller {
         $sortChange = $this->packageService->changePackageSort($request);
         return $sortChange;
     }
-    
-    
+
+
     /**
      * home show status of business packages .
-     * 
+     *
      * @param $packageId
      * @return Response
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function homeShow($packageId) {
-        
+
         $response = $this->packageService->homeStatusChange($packageId);
         return $response;
     }
-    
+
     /**
      * home show status of business active/inactive .
-     * 
+     *
      * @param $packageId
      * @return Response
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function activationStatus($packageId) {
-        
+
         $response = $this->packageService->packageActive($packageId);
         return $response;
     }
-    
-     /**
+
+    /**
      * edit business packages [form].
-     * 
+     *
      * @param $packageId
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
@@ -119,52 +119,52 @@ class BusinessPackageController extends Controller {
         $relatedProducts = $this->packageService->relatedProducts($packageId);
         return view('admin.business.package_edit', compact('package', 'features', 'asgnFeatures', "packages", "relatedProducts"));
     }
-    
-    
+
+
     /**
      * update business packages .
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function update(BusinessPackageRequest $request) {
-        
-         $response = $this->packageService->updatePackage($request);
-        
+        //dd($request->all());
+        $response = $this->packageService->updatePackage($request);
+
         if($response['success'] == 1){
-           Session::flash('sussess', 'Package is updated!');  
+            Session::flash('sussess', 'Package is updated!');
         }else{
-            Session::flash('error', 'Package updating process failed!'); 
+            Session::flash('error', 'Package updating process failed!');
         }
-        
+
         return redirect('/business-package');
     }
-    
-    
+
+
     /**
      * delete business packages .
-     * 
+     *
      * @param $packageId
      * @return Redirect
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function delete($packageId) {
-        
-         $response = $this->packageService->deletePackage($packageId);
-        
+
+        $response = $this->packageService->deletePackage($packageId);
+
         if($response['success'] == 1){
-           Session::flash('sussess', 'Package is deleted!');  
+            Session::flash('sussess', 'Package is deleted!');
         }else{
-            Session::flash('error', 'Package deleting process failed!'); 
+            Session::flash('error', 'Package deleting process failed!');
         }
-        
+
         return redirect('/business-package');
     }
-    
-   
-    
-    
+
+
+
+
 
 
 }

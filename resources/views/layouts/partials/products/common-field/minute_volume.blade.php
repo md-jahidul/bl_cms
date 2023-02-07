@@ -1,3 +1,8 @@
+<div class="col-md-12">
+    <span><h4><strong>Voice</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('minute_volume') ? ' error' : '' }}">
     <label for="minute_volume">Minute Volume</label>
     <input type="text" name="minute_volume" class="form-control minute_volume" placeholder="Enter minute volume"

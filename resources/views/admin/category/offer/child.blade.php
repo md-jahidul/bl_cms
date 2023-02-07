@@ -31,7 +31,7 @@
                                 @php $type = strtolower($type) @endphp
                                 <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
                                     <td width="1%">{{ $loop->iteration }}</td>
-                                    <td width="15%">{{ $offerCategory->name_en }}
+                                    <td width="15%">{{ $offerCategory->name_en }} {!! $offerCategory->status == 0 ? '<span class="text-danger"><b>( Inactive )</b></span>' : '' !!}
                                         {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
                                     </td>
                                     <td width="20%">{{ $offerCategory->type->name ?? '' }}</td>

@@ -37,9 +37,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
-                                    <label for="details_en" class="required">Short Description En</label>
-                                    <textarea type="text" name="details_en"  class="form-control summernote_editor" placeholder="Enter short description in English" required rows="3"
-                                              data-validation-required-message="Enter short description in English"></textarea>
+                                    <label for="details_en">Short Description En</label>
+                                    <textarea type="text" name="details_en"  class="form-control summernote_editor"
+                                              placeholder="Enter short description in English" rows="3"
+                                              >{{ old("details_en") ? old("details_en") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
                                         <div class="help-block">  {{ $errors->first('details_en') }}</div>
@@ -47,34 +48,62 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
-                                    <label for="details_bn" class="required">Short Description BN</label>
-                                    <textarea type="text" name="details_bn"  class="form-control summernote_editor" placeholder="Enter short description in Bangla" required rows="3"
-                                              data-validation-required-message="Enter short description in Bangla"></textarea>
+                                    <label for="details_bn">Short Description BN</label>
+                                    <textarea type="text" name="details_bn"  class="form-control summernote_editor" placeholder="Enter short description in Bangla"
+                                              rows="3">{{ old("image_base_url") ? old("image_base_url") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
                                         <div class="help-block">  {{ $errors->first('details_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
+                                <div class="form-group col-md-12 {{ $errors->has('image_base_url') ? ' error' : '' }}">
                                     <label for="thumbnail_image">Thumbnail Image</label>
-                                    <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-{{--                                           data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->thumbnail_image }}"--}}
-                                           value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}">
+                                    <input type="file" name="image_base_url" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
+                                           value="{{ old("image_base_url") ? old("image_base_url") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('thumbnail_image'))
-                                        <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
+                                    @if ($errors->has('image_base_url'))
+                                        <div class="help-block">  {{ $errors->first('image_base_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="other_attributes[alt_text_en]" class="form-control" placeholder="Enter alt text"
-{{--                                           value="{{ $pressNewsEvent->alt_text_en }}"--}}
-                                           required data-validation-required-message="Enter alt text">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en" class="required1">Alt text English</label>
+                                    <input type="text" name="other_attributes[alt_text_en]" class="form-control section_alt_text"
+                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text_en'))
                                         <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn" class="required1">Alt text Bangla</label>
+                                    <input type="text" name="other_attributes[alt_text_bn]" class="form-control section_alt_text"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_en') ? ' error' : '' }}">
+                                    <label for="image_name_en" class="required">Image Name En</label>
+                                    <input type="text" name="image_name_en" class="form-control section_alt_text slug-convert" required
+                                           value="{{ old("image_name_en") ? old("image_name_en") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_en'))
+                                        <div class="help-block">  {{ $errors->first('image_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label for="image_name_bn" class="required">Image Name Bn</label>
+                                    <input type="text" name="image_name_bn" class="form-control section_alt_text slug-convert" required
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -120,6 +149,7 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $('.dropify').dropify({

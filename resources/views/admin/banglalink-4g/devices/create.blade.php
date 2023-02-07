@@ -93,30 +93,73 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('logo_alt_en') ? ' error' : '' }}">
-                                    <label for="logo_alt_en">Logo Alt Text</label>
-                                    <input type="text" name="logo_alt_en" class="form-control" placeholder="Enter logo alt text"
+                                <div class="form-group col-md-3">
+                                    <label for="logo_alt_en">Logo Alt Text EN</label>
+                                    <input type="text" name="logo_alt_en" class="form-control" placeholder="Enter logo alt text en"
                                            value="{{ old("logo_alt_en") ? old("logo_alt_en") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('logo_alt_en'))
-                                        <div class="help-block">  {{ $errors->first('logo_alt_en') }}</div>
-                                    @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_alt_en') ? ' error' : '' }}">
-                                    <label for="thumbnail_alt_en">Device Alt Text</label>
-                                    <input type="text" name="thumbnail_alt_en" class="form-control" placeholder="Enter thumbnail alt text"
+                                <div class="form-group col-md-3">
+                                    <label for="logo_alt_bn">Logo Alt Text BN</label>
+                                    <input type="text" name="logo_alt_bn" class="form-control" placeholder="Enter logo alt text bn"
+                                           value="{{ old("logo_alt_bn") ? old("logo_alt_bn") : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="thumbnail_alt_en">Device Alt Text EN</label>
+                                    <input type="text" name="thumbnail_alt_en" class="form-control" placeholder="Enter thumbnail alt text en"
                                            value="{{ old("thumbnail_alt_en") ? old("thumbnail_alt_en") : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label>Device Alt Text BN</label>
+                                    <input type="text" name="thumbnail_alt_bn" class="form-control" placeholder="Enter thumbnail alt text bn"
+                                           value="{{ old("thumbnail_alt_bn") ? old("thumbnail_alt_bn") : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('logo_img_name_en') ? ' error' : '' }}">
+                                    <label>Logo Img Name EN</label>
+                                    <input type="text" name="logo_img_name_en" class="form-control" placeholder="Enter img logo name en"
+                                           value="{{ old("logo_img_name_en") ? old("logo_img_name_en") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('thumbnail_alt_en'))
-                                        <div class="help-block">  {{ $errors->first('thumbnail_alt_en') }}</div>
+                                    @if ($errors->has('logo_img_name_en'))
+                                        <div class="help-block">  {{ $errors->first('logo_img_name_en') }}</div>
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-3 {{ $errors->has('logo_img_name_bn') ? ' error' : '' }}">
+                                    <label>Logo Img Name BN</label>
+                                    <input type="text" name="logo_img_name_bn" class="form-control" placeholder="Enter img logo name bn"
+                                           value="{{ old("logo_img_name_bn") ? old("logo_img_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('logo_img_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('logo_img_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('thumbnail_img_name_en') ? ' error' : '' }}">
+                                    <label>Device Img Name EN</label>
+                                    <input type="text" name="thumbnail_img_name_en" class="form-control" placeholder="Enter img logo name en"
+                                           value="{{ old("thumbnail_img_name_en") ? old("thumbnail_img_name_en") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('thumbnail_img_name_en'))
+                                        <div class="help-block">  {{ $errors->first('thumbnail_img_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('thumbnail_img_name_bn') ? ' error' : '' }}">
+                                    <label>Logo Img Name BN</label>
+                                    <input type="text" name="thumbnail_img_name_bn" class="form-control" placeholder="Enter img logo name bn"
+                                           value="{{ old("thumbnail_img_name_bn") ? old("thumbnail_img_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('thumbnail_img_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('thumbnail_img_name_bn') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('current_price') ? ' error' : '' }}">
                                     <label for="current_price">Current Price</label>
-                                    <input type="text" name="current_price" class="form-control" placeholder="Enter logo alt text"
+                                    <input type="text" name="current_price" class="form-control" placeholder="Enter current price"
                                            value="{{ old("current_price") ? old("current_price") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('current_price'))
@@ -126,7 +169,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('old_price') ? ' error' : '' }}">
                                     <label for="old_price">Old Price</label>
-                                    <input type="text" name="old_price" class="form-control" placeholder="Enter logo alt text"
+                                    <input type="text" name="old_price" class="form-control" placeholder="Enter old price"
                                            value="{{ old("old_price") ? old("old_price") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('old_price'))

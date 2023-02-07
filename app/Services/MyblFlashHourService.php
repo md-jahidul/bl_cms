@@ -12,6 +12,7 @@ use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 
@@ -159,7 +160,7 @@ class MyblFlashHourService
                     if (isset($productData['thumbnail_img'])) {
                         $productData['thumbnail_img'] = 'storage/' . $productData['thumbnail_img']->store('mybl_campaign');
                         if (!empty($product->thumbnail_img)) {
-                            if (file_exists(storage_path('mybl_campaign/' . $product->thumbnail_img))) {
+                            if (File::exists($product->thumbnail_img)) {
                                 unlink($product->thumbnail_img);
                             }
                         }

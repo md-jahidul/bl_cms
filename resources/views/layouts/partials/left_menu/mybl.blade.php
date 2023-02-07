@@ -69,7 +69,18 @@
                         <i class="la la-puzzle-piece"></i>Home Components</a>
                 </li>
             </ul>
-
+            <ul class="menu-content">
+                <li class="{{ is_active_url('mybl-commerce-components') }}">
+                    <a class="menu-item" href="{{ route('mybl.commerce.components') }}">
+                        <i class="la la-puzzle-piece"></i>Commerce Components</a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('content-components') }}">
+                    <a class="menu-item" href="{{ route('content-components') }}">
+                        <i class="la la-puzzle-piece"></i>Content Components</a>
+                </li>
+            </ul>
             <ul class="menu-content">
                 <li class=" {{is_active_url(route('health-hub.index'))}}">
                     <a class="menu-item" href="{{ route('health-hub.index') }} "
@@ -82,6 +93,13 @@
                 <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
                     <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
                         <i class="la la-paper-plane"></i>Home Navigation Rail
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Content Navigation Rail
                     </a>
                 </li>
             </ul>
@@ -139,6 +157,10 @@
                 <li class="{{ is_active_match(route('product-tags.index'))}}">
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
+                </li>
+                <li class="{{ is_active_match(route('product.schedule'))}}">
+                    <a class="menu-item" href="{{ route('product.schedule') }}">
+                        <i class="la la-history"></i>Schedule Products</a>
                 </li>
             </ul>
         </li>
@@ -295,6 +317,7 @@
 
 
 
+
         <!-- Campaign V2 Menu -->
 
             <li class="nav-item"><a href="#"><i class="la la-users"></i>
@@ -352,6 +375,7 @@
                     <i class="la la-bullhorn"></i> Campaign Winner
                 </a>
             </li>
+
         </ul>
     </li>
         <!-- Campaign Menu -->
@@ -364,6 +388,24 @@
                     <i class="la la-dollar"></i> Own Recharge Inventory
                 </a>
             </li>
+{{--            <li class="{{is_active_url('new-campaign-modality')}}">--}}
+{{--                <a class="menu-item" href="{{ route('new-campaign-modality.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> New Campaign Modality--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="{{is_active_url('mybl-campaign-section')}}">--}}
+{{--                <a class="menu-item" href="{{ route('mybl-campaign-section.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> Sections--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="{{is_active_url('mybl-campaign-winners')}}">--}}
+{{--                <a class="menu-item" href="{{ route('mybl-campaign-winners.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> Campaign Winner--}}
+{{--                </a>--}}
+{{--            </li>--}}
         </ul>
     </li>
 
@@ -402,6 +444,85 @@
                     <i class="la la-server"></i> Plans
                 </a>
             </li> --}}
+        </ul>
+    </li>
+
+    <!-- Campaign Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Commerce</span></a>
+        <ul class="menu-content">
+            <li class="{{is_active_url('commerce-bill-category')}}">
+                <a class="menu-item" href="{{ route('commerce-bill-category.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Bill Category
+                </a>
+            </li>
+            <li class="{{is_active_url('commerce-bill-utility')}}">
+                <a class="menu-item" href="{{ route('commerce-bill-utility.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Bill Utility
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- LMS -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">LMS</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_url('lms-components') }}">
+                <a class="menu-item" href="{{ route('lms-components') }}">
+                    <i class="la la-puzzle-piece"></i>Home Components</a>
+            </li>
+            <li class="{{ is_active_url('shortcut-components') }}">
+                <a class="menu-item" href="{{ route('shortcut-components') }}">
+                    <i class="la la-puzzle-piece"></i>Shortcut</a>
+            </li>
+        </ul>
+    </li>
+    <!-- PGW -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">PGW</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('pgw-gateway')}}">
+                <a class="menu-item" href="{{ url('pgw-gateway') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> PGW List</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- FIFA WC -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('fifa-content')}}">
+                <a class="menu-item" href="{{ route('fifa-content') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Fifa Content
+                </a>
+            </li>
+            <li class=" {{is_active_url('teams')}}">
+                <a class="menu-item" href="{{ route('teams.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Team
+                </a>
+            </li>
+            <li class=" {{is_active_url('matches')}}">
+                <a class="menu-item" href="{{ route('matches.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Match
+                </a>
+            </li>
+            <li class=" {{is_active_url('signed-cookie')}}">
+                <a class="menu-item" href="{{ route('signed-cookie') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Generate Signed Cookie
+                </a>
+            </li>
+            <li class=" {{is_active_url('fifa-deeplink')}}">
+                <a class="menu-item" href="{{ route('fifa-deeplink') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Deeplink
+                </a>
+            </li>
         </ul>
     </li>
     <!-- Loyalty Partner Menu -->
@@ -449,11 +570,6 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>App List</a>
                 </li>
-
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/refferal-claim-settings
             </ul>
         </li>
     @endif
@@ -469,6 +585,11 @@
                     <a class="menu-item" href="{{ route('myblslider.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
+                </li>
+                <li class="{{ is_active_match('generic-slider')}}">
+                    <a class="menu-item" href="{{ url('generic-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Slider</a>
                 </li>
                 <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
                     <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"
@@ -504,11 +625,37 @@
                     <a class="menu-item" href="{{ route('welcome-banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-image"></i>My-BL Welcome Banner</a>
                 </li>
+                <li class="{{is_active_url('popup-banner')}}">
+                    <a class="menu-item" href="{{ route('popup-banner.index') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Popup Banner
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
-
-
+    <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Orange Club</span></a>
+        <ul class="menu-content">
+            {{--page--}}
+            <li class="{{ is_active_url('orange-club-redeem') }}">
+                <a class="menu-item" href="{{ route('orange-club-redeem.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Redeem Detail
+                </a>
+            </li>
+            <li class="{{ is_active_url('orange-club') }}">
+                <a class="menu-item" href="{{ route('orange-club.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Banner
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
+                class="la la-fighter-jet"></i>
+            <span class="menu-title" data-i18n="nav.dash.main">Content & Course Deeplink</span></a>
+    </li>
     @if( auth()->user()->can_view('HelpCenter') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Offers</span></a>
@@ -549,7 +696,11 @@
         </li>
     @endif
 
-
+    <li class="{{is_active_url('ad-tech')}}">
+        <a class="menu-item" href="{{ route('ad-tech.index') }}"
+           data-i18n="nav.templates.vert.bullhorn">
+            <i class="la la-globe"></i>Ad Tech</a>
+    </li>
     @if( auth()->user()->can_view('MixedBundleFilter') )
         <li class=" nav-item"><a href="#"><i class="la la-flask"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
@@ -658,8 +809,6 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Migrate Plan List</a>
                 </li>
-
-
             </ul>
         </li>
     @endif

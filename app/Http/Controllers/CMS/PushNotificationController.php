@@ -123,11 +123,12 @@ class PushNotificationController extends Controller
         $notificationInfo = NotificationDraft::find($notification_id);
 
         $muteUsersPhone = $this->userMuteNotificationCategoryRepository->getUsersPhoneByCategory($categoryId);
-        
+
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
+
             /*
              * Reading and parsing users from the uploaded spreadsheet
              */
@@ -148,20 +149,20 @@ class PushNotificationController extends Controller
              */
             $filteredUserPhones = array_diff($userPhones, $muteUsersPhone);
             $filteredUserPhoneChunks = array_chunk($filteredUserPhones, 300);
-            
+
             /*
              * Dispatching chunks of users to notification send job
              */
             foreach ($filteredUserPhoneChunks as $userPhoneChunk) {
-                
                 list($customer, $notification) = $this->checkTargetWise($request, $notificationInfo,
                     $userPhoneChunk, $notification_id, $notification_data);
-                
+
                 NotificationSend::dispatch($notification, $notification_id, $customer,
                     $this->notificationService)
+                    ->onConnection('redis')
                     ->onQueue('notification');
             }
-           
+
             Log::info('Success: Notification sending from excel');
             return [
                 'success' => true,
@@ -209,6 +210,7 @@ class PushNotificationController extends Controller
                         $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                         NotificationSend::dispatch($notification, $notification_id, $user_phone,
                             $this->notificationService)
+                            ->onConnection('redis')
                             ->onQueue('notification');
                         $user_phone = [];
                     }
@@ -221,6 +223,7 @@ class PushNotificationController extends Controller
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
+                    ->onConnection('redis')
                     ->onQueue('notification');
 
 
@@ -258,28 +261,29 @@ class PushNotificationController extends Controller
         if(!$flag){
             $user_phone = [];
             $notification_id = $id;
-           
+
             try {
                 $reader = ReaderFactory::createFromType(Type::XLSX);
                 $path = $request->file('customer_file')->getRealPath();
                 $reader->open($path);
-    
+
                 foreach ($reader->getSheetIterator() as $sheet) {
                     if ($sheet->getIndex() > 0) {
                         break;
                     }
-    
+
                     foreach ($sheet->getRowIterator() as $row) {
                         $cells = $row->getCells();
                         $number = $cells[0]->getValue();
                         $user_phone[] = $number;
                         // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
-    
+
                         if (count($user_phone) == 300) {
                             $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                             $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                             NotificationSend::dispatch($notification, $notification_id, $user_phone,
                                 $this->notificationService)
+                                ->onConnection('redis')
                                 ->onQueue('notification');
                             $user_phone = [];
                         }
@@ -291,10 +295,11 @@ class PushNotificationController extends Controller
                     $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
                     // $notification = $this->getNotificationArray($request, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
+                        ->onConnection('redis')
                         ->onQueue('notification');
-    
+
                 }
-    
+
                 Log::info('Success: Notification sending from excel');
                 return [
                     'success' => true,
@@ -414,7 +419,8 @@ class PushNotificationController extends Controller
             if ($request->filled('user_phone')) {
 
                 $phone_list = explode(",", $request->input('user_phone'));
-                $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
+//                $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
+                $user_phone = $phone_list;
 
                 $notification = [
                     'title' => $request->input('title'),
@@ -476,8 +482,10 @@ class PushNotificationController extends Controller
             Log::info($response);
             $notify = json_decode($response);
             if ($notify->status == "SUCCESS") {
-                if ($request->filled('user_phone')) {
-                    $this->notificationService->attachNotificationToUser($notify->notification_id, $user_phone);
+                if ($notify->notification_id != "-1") {
+                    if ($request->filled('user_phone')) {
+                        $this->notificationService->attachNotificationToUser($notify->notification_id, $user_phone);
+                    }
                 }
                 return ['success' => true, 'message' => 'Notification Sent'];
             }
@@ -496,9 +504,9 @@ class PushNotificationController extends Controller
      */
     public function checkTargetWise(
         Request $request,
-        $notificationInfo,
+                $notificationInfo,
         array $user_phone,
-        $notification_id,
+                $notification_id,
         array $notification_data
     ): array {
         if ($notificationInfo->device_type != "all" || $notificationInfo->customer_type != "all") {

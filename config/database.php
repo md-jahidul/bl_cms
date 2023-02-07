@@ -63,6 +63,28 @@ return [
             ]) : [],
         ],
 
+        'mysql_slave' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_SLAVE', '127.0.0.1'),
+            'port' => env('DB_PORT_SLAVE', '3306'),
+            'database' => env('DB_DATABASE_SLAVE', 'forge'),
+            'username' => env('DB_USERNAME_SLAVE', 'forge'),
+            'password' => env('DB_PASSWORD_SLAVE', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::ATTR_TIMEOUT => 60,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
@@ -139,7 +161,16 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
         ],
-
+        'secondary_redis' => [
+            # 'url' => env('REDIS_URL'),
+            'host' => env('QUEUE_REDIS_HOST', '172.16.11.164'),
+            'password' => env('QUEUE_REDIS_PASSWORD'),
+            'port' => env('QUEUE_REDIS_PORT', '6379'),
+            //database set to 0 since only database 0 is supported in redis cluster
+            'database' => '0',
+            //redis key prefix for this connection
+            //'prefix' => 'q:'.env('QUEUE_PREFIX_VERSION', ''),
+        ],
     ],
 
 ];

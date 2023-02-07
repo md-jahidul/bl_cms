@@ -7,9 +7,6 @@
 @endsection
 @section('content')
     <section>
-
-
-
         <form method="POST" action="{{ url('roaming/save-other-offer') }}" class="form" enctype="multipart/form-data">
             @csrf
 
@@ -37,12 +34,12 @@
                                         <div>
                                             <label> Name (EN) <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" required name="name_en"
-                                                placeholder="Name EN">
+                                                   placeholder="Name EN">
                                         </div>
 
                                         <label>Name (BN) <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" required name="name_bn"
-                                            placeholder="Name BN">
+                                               placeholder="Name BN">
                                     </div>
                                     <div class="col-md-3 col-xs-12">
                                         <label> Card Text (EN) <span class="text-danger">*</span></label>
@@ -58,18 +55,17 @@
                                             <strong>Note:</strong> It'll show in card list (in accordion list)
                                         </small>
                                     </div>
-
                                 </div>
                                 <div class="form-group row">
 
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
                                         <label> Short Text (EN)</label>
                                         <textarea rows="4" class="form-control" name="short_text_en"></textarea>
                                         <small class="text-info">
                                             <strong>Note:</strong> It'll show in details page after name
                                         </small>
                                     </div>
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
                                         <label>Short Text (BN)</label>
                                         <textarea rows="4" class="form-control" name="short_text_bn"></textarea>
                                         <small class="text-info">
@@ -77,15 +73,39 @@
                                         </small>
                                     </div>
 
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-4 col-xs-12">
+                                        <label>Card Image</label>
+                                        <input type="file" class="dropify" name="card_image" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+
+                                    <div class="col-md-4 col-xs-12">
                                         <label>Banner (Web)</label>
                                         <input type="file" class="dropify" name="banner_web" data-height="70"
-                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
-                                    <div class="col-md-3 col-xs-12">
+                                    <div class="col-md-4 col-xs-12">
                                         <label>Banner (Mobile)</label>
                                         <input type="file" class="dropify" name="banner_mobile" data-height="70"
-                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Title (EN)</label>
+                                        <input class="form-control" name="banner_title_en">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Title (BN)</label>
+                                        <input class="form-control" name="banner_title_bn">
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Short Text (EN)</label>
+                                        <textarea rows="4" class="form-control" name="banner_desc_en"></textarea>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 mt-2">
+                                        <label>Banner Short Text (BN)</label>
+                                        <textarea rows="4" class="form-control" name="banner_desc_bn"></textarea>
                                     </div>
 
                                 </div>
@@ -102,7 +122,7 @@
                                     <div class="col-md-4 col-xs-12">
                                         <label>Page Header Bangla (HTML)</label>
                                         <textarea class="form-control page_header_bn" rows="7"
-                                            name="page_header_bn"></textarea>
+                                                  name="page_header_bn"></textarea>
                                         <small class="text-info">
                                             <strong>Note: </strong> Title, meta, canonical and other tags
                                         </small>
@@ -111,7 +131,7 @@
                                     <div class="col-md-4 col-xs-12">
                                         <label>Schema Markup</label>
                                         <textarea class="form-control schema_markup" rows="7"
-                                            name="schema_markup"></textarea>
+                                                  name="schema_markup"></textarea>
                                         <small class="text-info">
                                             <strong>Note: </strong> JSON-LD (Recommended by Google)
                                         </small>
@@ -120,7 +140,7 @@
                                     <div class="col-md-6 col-xs-12 mb-1">
                                         <label>Banner Photo Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control banner_name" required name="banner_name"
-                                            placeholder="Photo Name">
+                                               placeholder="Photo Name">
                                         <small class="text-info">
                                             <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                             <strong>Note: </strong> Don't need MIME type like jpg,png
@@ -151,37 +171,29 @@
                                         <label class="mr-1">
                                             <input type="radio" checked name="status" value="1" class="status_active"> Active
                                         </label>
-    
+
                                         <label><input type="radio" name="status" value="0" class="status_inactive">
                                             Inactive</label>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
 
                 </div>
             </div>
-            </div>
 
             <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
         </form>
-
-
-
-
-
     </section>
-
 @stop
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 
 @endpush
@@ -189,7 +201,7 @@
     <script src="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 

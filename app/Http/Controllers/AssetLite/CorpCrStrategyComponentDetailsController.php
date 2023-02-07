@@ -78,7 +78,7 @@ class CorpCrStrategyComponentDetailsController extends Controller
     public function componentEditForm($sectionComId, $id)
     {
         $componentTypes = $this->componentTypes;
-        $component = $this->componentService->findOne($id);
+        $component = $this->componentService->findOne($id, ['componentMultiData']);
         $multipleImage = $component['multiple_attributes'];
         return view('admin.corporate-responsibility.cr-strategy.details-components.edit', compact('component', 'multipleImage', 'componentTypes', 'sectionComId'));
     }

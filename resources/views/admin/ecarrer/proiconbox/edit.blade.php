@@ -44,10 +44,10 @@
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs category</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap" @if($sections->category_type == 'sap') selected @endif>Strategic Assistant Program</option>
-                                            <option value="ennovators" @if($sections->category_type == 'ennovators') selected @endif>Ennovators</option>
-                                            <option value="aip" @if($sections->category_type == 'aip') selected @endif>Advanced Internship Program</option>
-                                        </select>
+                                        @foreach ($program_lists as $program)
+                                            <option value="{{$program->slug}}" @if($sections->category_type == $program->slug) selected @endif>{{$program->title_en}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
@@ -70,7 +70,7 @@
                                     @else
                                         <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                     @endif
-                                    
+
                                 </div>
 
 
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -119,7 +119,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -134,7 +134,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

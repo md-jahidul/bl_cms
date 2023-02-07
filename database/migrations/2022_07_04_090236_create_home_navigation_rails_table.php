@@ -20,7 +20,6 @@ class CreateHomeNavigationRailsTable extends Migration
             $table->string('customer_type', 50)->nullable();
             $table->string('component_identifier')->nullable();
             $table->integer('display_order')->nullable();
-            $table->boolean('is_default')->default(false);
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

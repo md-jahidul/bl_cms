@@ -29,7 +29,7 @@
                             <th>SL</th>
                             <th>Company Logo</th>
                             <th>Company Name</th>
-                            <th>Category</th>
+{{--                            <th>Category</th>--}}
                             <th width="12%">Contact Parson Mobile</th>
                             <th>Address</th>
                             <th>Offer</th>
@@ -43,7 +43,7 @@
                                 <td class="pt-2">{{ ++$key }}</td>
                                 <td><img src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="50" width="50"></td>
                                 <td class="pt-2">{{ $partner->company_name_en }}</td>
-                                <td class="pt-2">{{ $partner->partnerCategory->name_en }}</td>
+{{--                                <td class="pt-2">{{ $partner->partnerCategory->name_en }}</td>--}}
                                 <td class="pt-2">{{ $partner->contact_person_mobile }}</td>
                                 <td class="pt-2">{{ $partner->company_address }}</td>
                                 <td>

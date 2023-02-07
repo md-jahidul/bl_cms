@@ -27,6 +27,24 @@
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
+                                    <label for="name_en">Name (English)</label>
+                                    <input type="text" name="name_en" class="form-control" placeholder="Enter Name"
+                                           value="{{ $category->name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_en'))
+                                        <div class="help-block">  {{ $errors->first('name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Name (Bangla)</label>
+                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter Name in Bangla"
+                                           value="{{ $category->name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">  {{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
                                     <label for="slug" class="">Slug</label>

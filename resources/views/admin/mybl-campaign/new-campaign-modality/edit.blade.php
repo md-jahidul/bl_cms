@@ -35,7 +35,7 @@
                                             <label  class="required">Select Campaign Tab </label>
                                             <select name="mybl_campaign_section_id" class="browser-default custom-select"
                                                     id="campaignTab" required data-validation-required-message="Please select campaign type">
-                                                <option value="" >--Select Tap Section--</option>
+                                                <option value="" >--Select Tab Section--</option>
                                                 @foreach($campaignSection as $tab)
                                                     <option value="{{ $tab->id }}" {{ $campaign->mybl_campaign_section_id == $tab->id ? 'selected' : "" }} >{{ $tab->title_en }}</option>
                                                 @endforeach
@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="max_amount"></label>
-                                            <a href="{{ route('mybl-campaign-section.create') }}" class="btn btn-outline-success mt-2"><i class="la la-plus"></i> Create New Section Tap</a>
+                                            <a href="{{ route('mybl-campaign-section.create') }}" class="btn btn-outline-success mt-2"><i class="la la-plus"></i> Create New Section Tab</a>
                                         </div>
                                     </div>
                                 </div>
@@ -384,21 +384,22 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="winning_title" class="required">Notification Title</label>
+                                    <input required
+                                           value="{{ $campaign->winning_title }}"
+                                           type="text" class="form-control @error('winning_title') is-invalid @enderror"
+                                           placeholder="Enter Winning Title" name="winning_title">
+                                    <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
+                                    <div class="help-block"></div>
+                                </div>
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="winning_massage_en" >Winning Communication Message (EN):</label>
+                                    <label for="winning_massage_en" >Notification Body</label>
                                     <textarea
                                         class="form-control @error('winning_massage_en') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_en"
                                         name="winning_massage_en" rows="5">{{ $campaign->winning_massage_en }}</textarea>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('winning_massage_en') {{ $message }} @enderror </small>
-                                </div>
-                                <div class="form-group col-md-6 mb-2">
-                                    <label for="winning_massage_bn" >Winning Communication Message (BN):</label>
-                                    <textarea
-                                        class="form-control @error('winning_massage_bn') is-invalid @enderror" placeholder="Enter body description....." id="winning_massage_bn"
-                                        name="winning_massage_bn" rows="5">{{ $campaign->winning_massage_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('winning_massage_bn') {{ $message }} @enderror </small>
                                 </div>
                             </div>
                             <div class="row">
@@ -424,6 +425,9 @@
                                     <label for="max_amount">Max Cash Back Amount</label>
                                     <input  type="number" name="max_amount" class="form-control"
                                            value = "{{ $campaign->max_amount }}">
+                                    <div class="help-block text-warning">
+                                        * Max cashback amount only for<strong> recharge type Campaign.</strong>
+                                    </div>
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $campaign->reward_getting_type == 'single_time' ? 'd-none' : "" }}" id="number_of_apply_times_for_campaign" >

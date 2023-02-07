@@ -158,13 +158,13 @@
             $('.report-repeater').repeater();
             let campaignStart = $('#start_date');
             let campaignEnd = $('#end_date');
-            let productStart = $('.product_start_date');
+            let productStart = $('.date_time');
             let productEnd = $('.product_end_date');
             function dateTime(element){
                 var date = new Date();
                 date.setDate(date.getDate());
                 element.datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
+                    format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
                 });
             }
@@ -172,12 +172,12 @@
                 $(".product-list").select2()
                 var date = new Date();
                 date.setDate(date.getDate());
-                $('.product_start_date').datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
+                $('.date_time').datetimepicker({
+                    format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
                 });
                 $('.product_end_date').datetimepicker({
-                    format : 'YYYY-MM-DD HH:mm:ss',
+                    format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
                 });
             })

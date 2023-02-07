@@ -13,6 +13,7 @@ use App\Repositories\ProductRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class ProductService
 {
 
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $partnerOfferRepository
@@ -87,13 +89,36 @@ class ProductService
                 $otherInfo[$key] = $offerInfo;
             }
         }
+
+        if (request()->hasFile('product_image')) {
+            $data['product_image'] = $this->upload($data['product_image'], 'assetlite/images/product');
+        }
+
         $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
         $data['sim_category_id'] = $simId;
         $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+
+        #Image store
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+        }
+
         $product = $this->save($data);
-        //save Search Data
-        $this->_saveSearchData($product);
+
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+         $internate_voice_bundles = [1,2,3];
+
+         if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+             $this->_saveSearchData($product);
+         }
+
         $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
         return new Response('Product added successfully');
     }
@@ -120,7 +145,13 @@ class ProductService
     private function _saveSearchData($product)
     {
         $productId = $product->id;
-        $name = $product->name_en;
+        $name = $product->name_en.' '.$product->name_bn;
+
+        #Product Code
+        $productCode = $product->product_code;
+
+        #Search Table Status
+        $status = $product->status;
 
         $url = "";
         if ($product->sim_category_id == 1) {
@@ -164,7 +195,7 @@ class ProductService
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
 
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
     }
 
     public function tableSortable($data)
@@ -191,7 +222,7 @@ class ProductService
     public function updateProduct($data, $type, $id)
     {
         $product = $this->productRepository->findByCode($type, $id);
-        
+
         /**
          * Checking URL slugs and generating dynamic url redirection accordingly
          */
@@ -208,6 +239,11 @@ class ProductService
             $this->addUrlRedirection($from, $to, $product->product_code);
         }
 
+        if (request()->hasFile('product_image')) {
+            $data['product_image'] = $this->upload($data['product_image'], 'assetlite/images/product');
+            $this->deleteFile($product->product_image);
+        }
+
 //        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
@@ -215,7 +251,7 @@ class ProductService
         $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
         $data['product_code'] = strtoupper($data['product_code']);
- 
+
         if(isset($data['validity_unit'])){
 
             $data['validity_postpaid'] = ($data['validity_unit'] == "bill_period") ? "Bill period" : null;
@@ -223,8 +259,16 @@ class ProductService
         else{
             $data['validity_postpaid'] = null;
         }
-        
+
+        #Image Update
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+            $this->deleteFile($product->image);
+        }
+
         $product->update($data);
+
 
         //save Search Data
         $this->_saveSearchData($product);
@@ -409,6 +453,23 @@ class ProductService
         }
 
         return $product->internet_volume_mb;
+    }
+
+    public function updateSearchData($product){
+
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+        $internate_voice_bundles = [1,2,3];
+        $response = '';
+
+        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+            $response = $this->_saveSearchData($product);
+        }
+        return $response;
     }
 
 }

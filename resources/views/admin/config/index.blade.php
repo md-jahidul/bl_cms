@@ -37,6 +37,38 @@
                                             </div>
                                         </div>
                                     <!-- customer image upload size -->
+                                    @elseif($config->key == "login_page_banner")
+                                        <div class="form-group row profile-pic">
+                                            <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
+                                            <div class="pb-0">
+                                                    <img src="{{ config('filesystems.file_base_url') . $config->value }}" height="55" width="50" id="imgDisplay" data-toggle="modal" data-target="#myModal">
+                                                    <input type="file" name="login_page_banner" class="banner-input-logo pl-2" style="display: none" placeholder="Enter logo alt text" value="{{ old($config->key) ?? $config->value }}">
+                                                    <a href="#" class="banner-close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
+                                            </div>
+                                            <div class="edit pt-3 pb-0">
+                                                <a href="#" class="banner-edit-btn"><i class="la la-pencil" title="Change Login Page Banner" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" role="dialog">
+                                            <div class="modal-dialog modal-lg">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img src="{{  config('filesystems.file_base_url') . $config->value }}" id="imgDisplay">
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                    <!-- customer image upload size -->
                                     @elseif($config->key == "image_upload_size")
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
@@ -122,6 +154,19 @@
                                             </div>
                                         </div>
 
+                                    @elseif($config->key == "purchased_pack_expire_volume")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">purchased_pack_expire_volume</label>
+                                            <div class="col-md-9">
+                                                <input type="number" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required
+                                                       data-validation-required-message="Enter {{$title}}"
+                                                       placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small class="text-danger">Note: Please enter a value in percentage (%) ex: 10</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @else
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
@@ -134,24 +179,20 @@
                                             </div>
                                         </div>
                                     @endif
-
                                 @endforeach
-
-
-
                             </div>
                             <hr>
-                                <div class="form-group row">
-                                    <label class="col-md-3 label-control" for="eventRegInput5"></label>
-                                    <div class="col-md-9 pt-0 pb-0">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save Changes
-                                        </button>
-                                        <a href="{{ url('/home') }}" class="btn btn-warning">
-                                            <i class="la la-arrow-circle-left"></i> Cancel
-                                        </a>
-                                    </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="eventRegInput5"></label>
+                                <div class="col-md-9 pt-0 pb-0">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> Save Changes
+                                    </button>
+                                    <a href="{{ url('/home') }}" class="btn btn-warning">
+                                        <i class="la la-arrow-circle-left"></i> Cancel
+                                    </a>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -188,7 +229,20 @@
                 $('.input-logo').hide();
                 $('.close-edit').hide();
             })
+
+            //Logiin page banner change image hide show JS
+            $(".banner-edit-btn").on('click', function () {
+                $('.banner-edit-btn').hide();
+                $('.banner-input-logo').show();
+                $('.banner-close-edit').show();
+            });
+            $(".banner-close-edit").on('click', function () {
+                $('.banner-edit-btn').show();
+                $('.banner-input-logo').hide();
+                $('.banner-close-edit').hide();
+            })
         })()
+
     </script>
 @endpush
 

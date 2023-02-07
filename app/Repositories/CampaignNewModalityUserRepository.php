@@ -17,22 +17,23 @@ class CampaignNewModalityUserRepository extends BaseRepository
 
     public function getCampaignFirstTypeUser($product, $slotStarts, $slotEnds) {
         return $this->model->where(function($q) use ($product, $slotStarts, $slotEnds){
+            // $q->where('my_bl_campaign_detail_id', $product->id);
             $q->where('my_bl_campaign_id', $product->my_bl_campaign_id);
-            $q->where('my_bl_campaign_detail_id', $product->id);
             $q->where('created_at', '>=', $slotStarts);
-            $q->where('created_at', '<=', $slotEnds);
+            $q->where('created_at', '<', $slotEnds);
         })
-        ->selectRaw('msisdn')
+        ->selectRaw('msisdn, amount')
         ->orderBy('created_at', 'asc')
+        ->orderBy('amount', 'DESC')
         ->first();
     }
 
     public function getCampaignHighestTypeUser($product, $slotStarts, $slotEnds) {
         return $this->model->where(function($q) use ($product, $slotStarts, $slotEnds){
+            // $q->where('my_bl_campaign_detail_id', $product->id);
             $q->where('my_bl_campaign_id', $product->my_bl_campaign_id);
-            $q->where('my_bl_campaign_detail_id', $product->id);
             $q->where('created_at', '>=', $slotStarts);
-            $q->where('created_at', '<=', $slotEnds);
+            $q->where('created_at', '<', $slotEnds);
         })
         ->groupBy('msisdn')
         ->selectRaw('msisdn, sum(amount) as amount_sum')

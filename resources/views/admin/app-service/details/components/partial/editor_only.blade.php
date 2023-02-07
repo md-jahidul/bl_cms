@@ -8,20 +8,26 @@
    @endif
 </div> --}}
 
+{{ Form::hidden('sections[section_name]', 'Table Component' ) }}
+{{ Form::hidden('sections[section_type]', 'table_component' ) }}
+{{ Form::hidden('sections[tab_type]', $tab_type ) }}
+{{ Form::hidden('sections[category]', 'component_sections' ) }}
+{{ Form::hidden('component[0][component_type]', 'table_component' ) }}
+
 
 <div class="col-md-6">
      <div class="form-group">
          <label for="exampleInputPassword1">Description (English)</label>
-         <textarea id="details_en" name="editor_en" class="form-control" rows="5"
-                   placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>
+         <textarea name="component[0][editor_en]" class="form-control summernote_editor" rows="5"
+                   placeholder="Enter description">{{ isset($component->editor_en) ? $component->editor_en : '' }}</textarea>
      </div>
  </div>
 
  <div class="col-md-6">
      <div class="form-group">
          <label for="exampleInputPassword1">Description (Bangla)</label>
-         <textarea id="details_bn" name="editor_bn" class="form-control" rows="5"
-                   placeholder="Enter description">{{ isset($ecarrer_item->editor_bn) ? $ecarrer_item->editor_bn : '' }}</textarea>
+         <textarea name="component[0][editor_bn]" class="form-control summernote_editor" rows="5"
+                   placeholder="Enter description">{{ isset($component->editor_bn) ? $component->editor_bn : '' }}</textarea>
      </div>
  </div>
 
@@ -41,31 +47,31 @@
 
  <script>
      $(function () {
-         $("textarea#details_en").summernote({
-             toolbar: [
-                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                 ['font', ['strikethrough', 'superscript', 'subscript']],
-                 ['fontsize', ['fontsize']],
-                 ['color', ['color']],
-                 // ['table', ['table']],
-                 ['para', ['ul', 'ol', 'paragraph']],
-                 ['view', ['fullscreen', 'codeview']]
-             ],
-             height:200
-         });
-
-         $("textarea#details_bn").summernote({
-             toolbar: [
-                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                 ['font', ['strikethrough', 'superscript', 'subscript']],
-                 ['fontsize', ['fontsize']],
-                 ['color', ['color']],
-                 // ['table', ['table']],
-                 ['para', ['ul', 'ol', 'paragraph']],
-                 ['view', ['fullscreen', 'codeview']]
-             ],
-             height:200
-         });
+         // $("textarea#details_en").summernote({
+         //     toolbar: [
+         //         ['style', ['bold', 'italic', 'underline', 'clear']],
+         //         ['font', ['strikethrough', 'superscript', 'subscript']],
+         //         ['fontsize', ['fontsize']],
+         //         ['color', ['color']],
+         //         // ['table', ['table']],
+         //         ['para', ['ul', 'ol', 'paragraph']],
+         //         ['view', ['fullscreen', 'codeview']]
+         //     ],
+         //     height:200
+         // });
+         //
+         // $("textarea#details_bn").summernote({
+         //     toolbar: [
+         //         ['style', ['bold', 'italic', 'underline', 'clear']],
+         //         ['font', ['strikethrough', 'superscript', 'subscript']],
+         //         ['fontsize', ['fontsize']],
+         //         ['color', ['color']],
+         //         // ['table', ['table']],
+         //         ['para', ['ul', 'ol', 'paragraph']],
+         //         ['view', ['fullscreen', 'codeview']]
+         //     ],
+         //     height:200
+         // });
 
          // $('#design_structure').change(function () {
          //     if($(this).val() === 'structure_1') {

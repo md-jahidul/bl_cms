@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\AboutUsManagementRequest;
 use App\Models\AboutUsManagement;
 use App\Services\ManagementService;
 use Illuminate\Http\RedirectResponse;
@@ -54,7 +55,7 @@ class ManagementController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(AboutUsManagementRequest $request)
     {
         $response = $this->managementService->storeManagementInfo($request->all());
         Session::flash('message', $response->getContent());
@@ -80,7 +81,7 @@ class ManagementController extends Controller
      * @param AboutUsManagement $management
      * @return void
      */
-    public function update(Request $request, AboutUsManagement $management)
+    public function update(AboutUsManagementRequest $request, AboutUsManagement $management)
     {
         $response = $this->managementService->updateManagementInfo($request, $management);
 

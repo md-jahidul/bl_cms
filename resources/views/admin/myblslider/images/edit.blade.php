@@ -120,7 +120,7 @@
                                 $actionList = Helper::navigationActionList();
                             @endphp
 
-                            <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
+                            <div class="form-group col-md-6 mb-2 "
                                  id="slider_action">
                                 <label for="redirect_url">Slider Action </label>
                                 <select id="navigate_action" name="redirect_url" class="browser-default custom-select">
@@ -403,7 +403,7 @@
 
 
             if (js_data) {
-                parse_data = JSON.parse(js_data);
+                parse_data = JSON.parse(js_data); 
                 other_attributes = parse_data.other_attributes;
                 if (other_attributes) {
                     let type = other_attributes.type;
@@ -415,6 +415,7 @@
                         purchase_content = other_attributes.content;
                     }
                 }
+
             }
 
             //alert(content);
@@ -446,6 +447,55 @@
                                     </select>
                                     <div class="help-block"></div>
                                 </div>`;
+                var code = (parse_data.ussd_code != null) ? parse_data.ussd_code : ''; 
+                var message_en = (parse_data.message_en != null) ? parse_data.message_en : '';  
+                var message_bn = (parse_data.message_bn != null) ? parse_data.message_bn : '';                
+                ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="ussd_code" class="required">USSD Code:</label>
+                                        <input
+                                            maxlength="16"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="USSD Code is required"
+                                            data-validation-maxlength-message="USSD code can not be more then 16 Characters"
+                                            value="${code}" required id="ussd_code"
+                                            type="text" class="form-control @error('ussd_code') is-invalid @enderror"
+                                            placeholder="USSD Code" name="ussd_code">
+                                        <small class="text-danger"> @error('ussd_code') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_en" class="required">Message En:</label>
+                                        <textarea 
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message En is required"
+                                            data-validation-regex-message="Message En must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_en')) {{old('message_en')}} @endif" required id="message_en"
+                                            type="text" class="form-control @error('message') is-invalid @enderror"
+                                            placeholder="Message En" name="message_en"> ${message_en} </textarea>
+                                        <small class="text-danger"> @error('message_en') {{ $message_en }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-12 mb-2 other-info-div">
+                                        <label for="message_bn" class="required">Message Bn:</label>
+                                        <textarea 
+                                            maxlength="250"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                            data-validation-required-message="Message Bn is required"
+                                            data-validation-regex-message="Message Bn must start with alphabets"
+                                            data-validation-maxlength-message="Message can not be more then 250 Characters"
+                                            value="@if(old('message_bn')) {{old('message_bn')}} @endif" required id="message_bn"
+                                            type="text" class="form-control @error('message_bn') is-invalid @enderror"
+                                            placeholder="Message Bn" name="message_bn"> ${message_bn} </textarea>
+                                        <small class="text-danger"> @error('message_bn') {{ $message_bn }} @enderror </small>
+                                        <div class="help-block"></div>
+                                    </div> `; 
+                            
+                if(parse_data.redirect_url == 'USSD'){
+                    $("#append_div").html(ussd_code);
+                }                
 
 
             $('#navigate_action').on('change', function () {
@@ -453,6 +503,8 @@
                 //console.log(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
+                }else if (action == 'USSD') {
+                        $("#append_div").html(ussd_code);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);
                 } else if (action === 'FEED_CATEGORY') {

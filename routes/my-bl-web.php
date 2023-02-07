@@ -175,6 +175,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Amar Offer
     Route::resource('amarOffer', 'CMS\AmarOfferController');
     Route::get('amarOffer/destroy/{id}', 'CMS\AmarOfferController@destroy');
+    Route::get('amar-offer-incident-status-update', 'CMS\AmarOfferController@statusUpdate')
+        ->name('amar-offer-incident.status.update');
+
 
     // mybl internet offer category
     Route::get('mybl-internet-offer-category', 'CMS\MyBlInternetOffersCategoryController@index')->name('mybl-internet-offer-category');
@@ -838,10 +841,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('mybl-campaign-section-deeplink/create', 'CMS\DynamicDeeplinkController@myblCampaignSectionDeepLinkCreate');
+    Route::get('commerce-bill-category-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillCategoryDeepLinkCreate');
+    Route::get('commerce-bill-utility-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
+    Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
+    Route::get('fifa-deeplink/create', 'CMS\DynamicDeeplinkController@fifaDeepLinkCreate');
 
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
@@ -871,6 +878,64 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('components.status.update');
     Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
         ->name('mybl.home.components.destroy');
+
+    //Commerce Component
+    Route::get('mybl-commerce-components', 'CMS\MyblCommerceComponentController@index')->name('mybl.commerce.components');
+    Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyblCommerceComponentController@edit')
+        ->name('mybl.commerce.components.edit');
+    Route::post('mybl-commerce-components/store', 'CMS\MyblCommerceComponentController@store')
+        ->name('mybl.commerce.components.store');
+    Route::post('mybl-commerce-components/update', 'CMS\MyblCommerceComponentController@update')
+        ->name('mybl.commerce.components.update');
+    Route::get('mybl-commerce-components-sort', 'CMS\MyblCommerceComponentController@componentSort');
+    Route::get('commerce-components-status-update/{id}', 'CMS\MyblCommerceComponentController@componentStatusUpdate')
+        ->name('commerce-components.status.update');
+    Route::get('mybl-commerce-components/destroy/{id}', 'CMS\MyblCommerceComponentController@destroy')
+        ->name('mybl.commerce.components.destroy');
+
+    //Content Component
+    Route::get('content-components', 'CMS\ContentComponentController@index')->name('content-components');
+    Route::get('content-components/edit/{id}', 'CMS\ContentComponentController@edit')
+        ->name('content-components.edit');
+    Route::post('content-components/store', 'CMS\ContentComponentController@store')
+        ->name('content-components.store');
+    Route::post('content-components/update', 'CMS\ContentComponentController@update')
+        ->name('content-components.update');
+    Route::get('content-components-sort', 'CMS\ContentComponentController@componentSort');
+    Route::get('content-components-status-update/{id}', 'CMS\ContentComponentController@componentStatusUpdate')
+        ->name('content-components.status.update');
+    Route::get('content-components/destroy/{id}', 'CMS\ContentComponentController@destroy')
+        ->name('content-components.destroy');
+
+    //LMS Component
+    Route::get('lms-components', 'CMS\LMS\LmsController@index')->name('lms-components');
+    Route::get('lms-components/edit/{id}', 'CMS\LMS\LmsController@edit')
+        ->name('lms.components.edit');
+    Route::post('lms-components/store', 'CMS\LMS\LmsController@store')
+        ->name('lms-components.store');
+    Route::post('lms-components/update', 'CMS\LMS\LmsController@update')
+        ->name('lms-components.update');
+    Route::get('lms-components-sort', 'CMS\LMS\LmsController@componentSort');
+    Route::get('lms-components-status-update/{id}', 'CMS\LMS\LmsController@componentStatusUpdate')
+        ->name('lms-components.status.update');
+    Route::get('lms-components/destroy/{id}', 'CMS\LMS\LmsController@destroy')
+        ->name('lms-components.destroy');
+
+    //LMS Shortcut
+    Route::get('shortcut-components', 'CMS\LMS\ShortcutController@index')->name('shortcut-components');
+    Route::get('shortcut-component-create', 'CMS\LMS\ShortcutController@create')
+        ->name('shortcut-component.create');
+    Route::get('shortcut-component/edit/{id}', 'CMS\LMS\ShortcutController@edit')
+        ->name('shortcut-component.edit');
+    Route::post('shortcut-component/store', 'CMS\LMS\ShortcutController@store')
+        ->name('shortcut-component.store');
+    Route::put('shortcut-component/update/{id}', 'CMS\LMS\ShortcutController@update')
+        ->name('shortcut-component.update');
+    Route::get('shortcut-components-sort', 'CMS\LMS\ShortcutController@componentSort');
+    Route::get('shortcut-status-update/{id}', 'CMS\LMS\ShortcutController@componentStatusUpdate')
+        ->name('shortcut-components.status.update');
+    Route::get('shortcut-components/destroy/{id}', 'CMS\LMS\ShortcutController@destroy')
+        ->name('shortcut-components.destroy');
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
@@ -944,6 +1009,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
         ->name('free-product-purchase-msisdn.list');
+
+    Route::get('product-schedule', 'CMS\MyblProductEntryController@getScheduleProduct')
+        ->name('product.schedule');
+
+    Route::get('product-schedule-revert/{id}', 'CMS\MyblProductEntryController@getScheduleProductRevert');
+
+    Route::get('product-schedule-view/{id}', 'CMS\MyblProductEntryController@scheduleProductsView')->name('schedule-product.view');
 
     /*
      * Event Base bonus V2
@@ -1069,6 +1141,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('mybl-campaign-section', 'CMS\NewCampaignModality\MyBlCampaignSectionController')->except(['show', 'destroy']);
     Route::get('mybl-campaign-section/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignSectionController@destroy')->name('mybl-campaign-section.destroy');
     Route::get('mybl-campaign-section/sort-auto-save', 'CMS\NewCampaignModality\MyBlCampaignSectionController@categorySortable');
+
+    Route::resource('mybl-campaign-winners', 'CMS\NewCampaignModality\MyBlCampaignWinnerController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign-winners/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignWinnerController@destroy')->name('mybl-campaign-winner.destroy');
     /**
      * Home Navigation Rail
      */
@@ -1080,10 +1155,131 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('mybl-campaign-winners', 'CMS\NewCampaignModality\MyBlCampaignWinnerController')->except(['show', 'destroy']);
     Route::get('mybl-campaign-winners/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignWinnerController@destroy')->name('mybl-campaign-winner.destroy');
+    /**
+     * Orange CLub Banner
+     */
+    Route::resource('orange-club', 'CMS\MyblOrangeClubBannerController');
+    Route::resource('orange-club-redeem', 'CMS\MyblOrangeClubRedeemDetailController');
+    Route::delete('orange-club/{id}/delete', 'CMS\MyblOrangeClubBannerController@destroy')->name('orange-club.destroy');
+    Route::get('orange-club/addImage/update-position', 'CMS\MyblOrangeClubBannerController@updatePosition');
+    /**
+     * Ad Tech
+     */
+    Route::resource('ad-tech', 'CMS\MyblAdTechController');
+    Route::delete('ad-tech/{id}/delete', 'CMS\MyblAdTechController@destroy')->name('orange-club.destroy');
+    Route::get('ad-tech/addImage/update-position', 'CMS\MyblAdTechController@updatePosition');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('commerce-bill-category', 'CMS\CommerceBillCategoryController')->except(['show', 'destroy']);
+    Route::get('commerce-bill-category/destroy/{id}', 'CMS\CommerceBillCategoryController@destroy')->name('commerce-bill-category.destroy');
+    Route::get('commerce-bill-category/sort-auto-save', 'CMS\CommerceBillCategoryController@categorySortable');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('commerce-bill-utility', 'CMS\CommerceBillUtilityController')->except(['show', 'destroy']);
+    Route::get('commerce-bill-utility/destroy/{id}', 'CMS\CommerceBillUtilityController@destroy')->name('commerce-bill-utility.destroy');
+    Route::get('commerce-bill-utility/sort-auto-save', 'CMS\CommerceBillUtilityController@categorySortable');
+    /**
+     * Home Navigation Rail
+     */
+    Route::resource('heme-navigation-rail', 'CMS\HomeNavigationRailController');
+    Route::get('heme-navigation-rail-sortable', 'CMS\HomeNavigationRailController@navigationMenuSortable')
+        ->name('navigation-rail.sort');
+    Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
+        ->name('heme-navigation-rail.destroy');
+
+    /**
+     * Content Deeplink
+     */
+    Route::get('content-deeplink', 'CMS\ContentDeeplinkController@index')->name('content-deeplink.index');
+    Route::post('content-deeplink', 'CMS\ContentDeeplinkController@store')->name('content-deeplink.store');
+    Route::get('content-deeplink/destroy/{id}', 'CMS\ContentDeeplinkController@destroy')
+        ->name('content-deeplink.destroy');
+
+    /**
+     * Content Navigation Rail
+     */
+    Route::resource('content-navigation-rail', 'CMS\ContentNavigationRailController');
+    Route::get('content-navigation-rail-sortable', 'CMS\ContentNavigationRailController@navigationMenuSortable')
+        ->name('content-navigation-rail.sort');
+    Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
+        ->name('content-navigation-rail.destroy');
+
+
+    /**
+     * FIFA WC
+     */
+    Route::resource('teams', 'CMS\FIFA\TeamController');
+    Route::get('teams/destroy/{id}', 'CMS\FIFA\TeamController@destroy')
+        ->name('teams.destroy');
+
+    Route::resource('matches', 'CMS\FIFA\MatchController');
+    Route::get('matches/destroy/{id}', 'CMS\FIFA\MatchController@destroy')
+        ->name('matches.destroy');
+
+    Route::get('signed-cookie', 'CMS\FIFA\MatchController@signedCookie')->name('signed-cookie');
+    Route::get('generate-cookie/{id}', 'CMS\FIFA\MatchController@generateCookie')
+        ->name('generate-cookie');
+
+    Route::get('fifa-content', 'CMS\FIFA\FifaContentController@createOrEdit')->name('fifa-content');
+
+    Route::post('fifa-content', 'CMS\FIFA\FifaContentController@store')
+        ->name('fifa-content.update');
+
+    /**
+     * Fifa Deeplink
+     */
+    Route::get('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@index')->name('fifa-deeplink');
+    Route::post('fifa-deeplink', 'CMS\FIFA\FifaDeeplinkController@store')->name('fifa-deeplink.store');
+    Route::get('fifa-deeplink/destroy/{id}', 'CMS\FIFA\FifaDeeplinkController@destroy')
+        ->name('fifa-deeplink.destroy');
+
+    //Mybl Popup Banner
+    Route::resource('popup-banner', 'CMS\PopupBannerController');
+    Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
+    Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+
+
+    //PGW Routes
+    Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
+    Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    Route::resource('generic-slider', 'CMS\GenericSliderController');
+    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+    Route::get(
+        'generic-slider/{slider_id}/images/create',
+        'CMS\GenericSliderImageController@create'
+    )->name('generic-slider.images.create');
+    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
+    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::delete(
+        'generic-slider/images/{id}/delete',
+        'CMS\GenericSliderImageController@destroy'
+    )->name('generic-slider.images.destroy');
+    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+//
 });
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+Route::get( 'winner-test', function() {
+    $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
+    return $myBlCampaignWinnerSelectionService->processCampaignWinner();
+  });
 
 
 Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {

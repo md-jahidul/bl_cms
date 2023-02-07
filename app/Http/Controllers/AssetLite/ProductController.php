@@ -9,6 +9,7 @@ use App\Models\OfferCategory;
 use App\Models\Product;
 use App\Models\SimCategory;
 use App\Models\ProductPriceSlab;
+use App\Services\AlBannerService;
 use App\Services\AlCoreProductService;
 use App\Services\Assetlite\AlInternetOffersCategoryService;
 use App\Services\DurationCategoryService;
@@ -38,6 +39,10 @@ class ProductController extends Controller
     private $offerCategoryService;
     private $durationCategoryService, $alInternetOffersCategoryService;
     protected $info = [];
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     /**
      * ProductController constructor.
@@ -49,15 +54,15 @@ class ProductController extends Controller
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
-        ProductService $productService, 
-        AlCoreProductService $alCoreProductService, 
-        ProductDetailService $productDetailService, 
-        TagCategoryService $tagCategoryService, 
-        OfferCategoryService $offerCategoryService, 
+        ProductService $productService,
+        AlCoreProductService $alCoreProductService,
+        ProductDetailService $productDetailService,
+        TagCategoryService $tagCategoryService,
+        OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService,
-        AlInternetOffersCategoryService $alInternetOffersCategoryService
-    )
-    {
+        AlInternetOffersCategoryService $alInternetOffersCategoryService,
+        AlBannerService $alBannerService
+    ) {
         $this->productService = $productService;
         $this->alCoreProductService = $alCoreProductService;
         $this->productDetailService = $productDetailService;
@@ -65,6 +70,7 @@ class ProductController extends Controller
         $this->offerCategoryService = $offerCategoryService;
         $this->durationCategoryService = $durationCategoryService;
         $this->alInternetOffersCategoryService = $alInternetOffersCategoryService;
+        $this->alBannerService = $alBannerService;
     }
 
     /**
@@ -77,7 +83,7 @@ class ProductController extends Controller
     {
         $products = Product::category($type)
             ->with(['offer_category' => function ($query) {
-                $query->select('id', 'name_en');
+                $query->select('id', 'alias', 'name_en');
             }, 'product_core'])
 //            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
             ->latest()
@@ -156,7 +162,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-        
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:products,url_slug_bn'
@@ -230,7 +235,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-        
+
         return view('admin.product.edit', $this->info);
     }
 
@@ -251,7 +256,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,' . $product->id,
             'product_code' => 'required|unique:products,product_code,'. $product->id
-            
+
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
@@ -273,9 +278,9 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-        $otherAttributes = isset($productDetail->product_details->other_attributes) ? $productDetail->product_details->other_attributes : null;
-
-        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
+        $otherAttributes = $productDetail->product_details->other_attributes ?? null;
+        $banner = $this->alBannerService->findBanner('product_details', $productDetail->id);
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes', 'banner'));
     }
 
     /**
@@ -286,12 +291,17 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-        }
+//        $request->validate([
+//           'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details,banner_name,' . $id : '',
+//           'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details,banner_name_bn,' . $id : '',
+//        ]);
+
+//        $validator = Validator::make($request->all(), [
+//            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+//        ]);
+//        if ($validator->fails()) {
+//            Session::flash('error', $validator->messages()->first());
+//        }
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
@@ -307,7 +317,7 @@ class ProductController extends Controller
         }
 
 
-        return redirect("offers/$type");
+        return redirect()->back();
     }
 
     public function packageRelatedProductStore(Request $request)
@@ -363,7 +373,7 @@ class ProductController extends Controller
             $path = Storage::disk('public')->path($path);
 
             return $this->alCoreProductService->syncProductCategory($path);
-            
+
         } catch (\Exception $e) {
             $response = [
                 'success' => 'FAILED',
@@ -371,6 +381,36 @@ class ProductController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+
+
+    /**
+     * User: BS(Shuvo)
+     * This function is only for bulk keyword update for the search_data Table.
+     *
+     */
+
+    public function updateSearchDataTable(){
+        // return $product = $this->productService->findProduct($type, '100MINS100TAKA');
+        $products = $this->productService->findBy();
+
+        foreach ($products as $key => $product) {
+            try {
+
+                $this->productService->updateSearchData($product);
+
+            } catch (\Throwable $th) {
+                $response = [
+                    'success' => 'FAILED',
+                    'errors' => $th->getMessage()
+                ];
+                return response()->json($response, 500);
+            }
+
+
+        }
+
+        return response()->json(['success' => 'Success'], 200);
     }
 
 }

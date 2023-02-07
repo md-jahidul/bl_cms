@@ -38,8 +38,9 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
                                     <label for="details_en" class="required">Short Description En</label>
-                                    <textarea type="text" name="details_en"  class="form-control summernote_editor" placeholder="Enter short description in English" required rows="3"
-                                              data-validation-required-message="Enter short description in English"></textarea>
+                                    <textarea type="text" name="details_en" class="form-control summernote_editor" placeholder="Enter short description in English"
+                                              required rows="3" data-validation-required-message="Enter short description in English"
+                                    >{{ old("details_en") ? old("details_en") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
                                         <div class="help-block">  {{ $errors->first('details_en') }}</div>
@@ -48,33 +49,64 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
                                     <label for="details_bn" class="required">Short Description BN</label>
-                                    <textarea type="text" name="details_bn"  class="form-control summernote_editor" placeholder="Enter short description in Bangla" required rows="3"
-                                              data-validation-required-message="Enter short description in Bangla"></textarea>
+                                    <textarea type="text" name="details_bn"  class="form-control summernote_editor" placeholder="Enter short description in Bangla"
+                                              required rows="3" data-validation-required-message="Enter short description in Bangla"
+                                    >{{ old("details_bn") ? old("details_bn") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
                                         <div class="help-block">  {{ $errors->first('details_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('base_image') ? ' error' : '' }}">
                                     <label for="thumbnail_image">Thumbnail Image</label>
-                                    <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-{{--                                           data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->thumbnail_image }}"--}}
-                                           value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}">
+                                    <input type="file" name="base_image" class="form-control dropify" data-height="90">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('thumbnail_image'))
-                                        <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
+                                    @if ($errors->has('base_image'))
+                                        <div class="help-block">  {{ $errors->first('base_image') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="other_attributes[alt_text_en]" class="form-control" placeholder="Enter alt text"
-{{--                                           value="{{ $pressNewsEvent->alt_text_en }}"--}}
-                                           required data-validation-required-message="Enter alt text">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en" class="">Alt Text English</label>
+                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control"
+                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}"
+                                           placeholder="Enter alt text" required data-validation-required-message="Enter alt text">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text_en'))
                                         <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has("alt_text_bn") ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text Bangla</label>
+                                    <input type="text" name="alt_text_bn" class="form-control"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has("alt_text_bn"))
+                                        <div class="help-block">  {{ $errors->first("alt_text_bn") }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has("image_name_en") ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Image Name English</label>
+                                    <input type="text" name="image_name_en" class="form-control img-data slug-convert" required
+                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}">
+                                    <span class="duplicate-error text-danger"></span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has("image_name_en"))
+                                        <div class="help-block">  {{ $errors->first("image_name_en") }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has("image_name_bn") ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Image Name Bangla</label>
+                                    <input type="text" name="image_name_bn" class="form-control img-data slug-convert" required
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : '' }}">
+                                    <span class="help-block duplicate-error text-danger"></span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
                                     @endif
                                 </div>
 

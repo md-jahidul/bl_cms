@@ -101,7 +101,7 @@
                                 <div class="form-group col-md-3 {{ $errors->has('link_bn') ? ' error' : '' }}">
                                     <label for="link_bn" class="required">URL Bangla </label>
                                     <input type="text" name="link_bn"  class="form-control" placeholder="example: /quick-recharge"
-                                           value="{{ $quickLaunch->link_bn }}">
+                                           value="{{ $quickLaunch->link_bn }}" required data-validation-required-message="Enter link">
                                     <div class="help-block"></div>
                                     @if ($errors->has('link_bn'))
                                         <div class="help-block">  {{ $errors->first('link_bn') }}</div>

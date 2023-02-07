@@ -41,23 +41,12 @@ class HomeNavigationRailService
         return $this->homeNavigationRailRepository->getNavigationRail();
     }
 
-    public function allDefaultNone()
-    {
-        foreach ($this->findAll() as $data) {
-            $data['is_default'] = false;
-            $data->update($data->toArray());
-        }
-    }
-
     /**
      * Storing the banner resource
      * @return Response
      */
     public function storeNavigationMenu($data)
     {
-        if ($data['is_default']) {
-            $this->allDefaultNone();
-        }
         $data['display_order'] = $this->findAll()->count() + 1;
         $this->save($data);
         Redis::del(self::REDIS_KEY);
@@ -73,9 +62,6 @@ class HomeNavigationRailService
     public function updateNavigationMenu($request, $id)
     {
         $navigationMenu = $this->findOne($id);
-        if ($request['is_default']) {
-            $this->allDefaultNone();
-        }
         $navigationMenu->update($request);
         Redis::del(self::REDIS_KEY);
         return new Response("Navigation rail has been successfully updated");

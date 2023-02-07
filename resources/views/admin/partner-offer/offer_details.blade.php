@@ -192,28 +192,65 @@
 {{--                                    @endif--}}
 {{--                                </div>--}}
 
-                                <div class="form-group col-md-6 mt-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                    <label> URL (url slug) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{ $partnerOfferDetail->partner_offer_details->url_slug }}"
-                                           name="url_slug" placeholder="URL">
+                                <div class="col-md-6 mt-4  {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label >Image Name EN</label>
+                                    <input type="text" name="banner_name"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ old('banner_name') ? old('banner_name') : $partnerOfferDetail->partner_offer_details->banner_name }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 mt-4  {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Image Name BN</label>
+                                    <input type="text" name="banner_name_bn"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ old('banner_name_bn') ? old('banner_name_bn') : $partnerOfferDetail->partner_offer_details->banner_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 mt-1">
+                                    <label for="banner_alt_text">Alt Text EN</label>
+                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}">
+                                </div>
+
+                                <div class="col-md-6 mt-1">
+                                    <label for="banner_alt_text">Alt Text BN</label>
+                                    <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}">
+                                </div>
+
+                                <div class="form-group col-md-6 mt-1 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                    <label> URL EN (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{ old('url_slug') ? old('url_slug') : $partnerOfferDetail->partner_offer_details->url_slug }}"
+                                           name="url_slug" placeholder="URL EN">
                                     <div class="help-block"></div>
                                     <small class="text-info">
                                         <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
                                     </small>
                                     @if ($errors->has('url_slug'))
-                                        <div class="help-block">  {{ $errors->first('url_slug') }} "{{  old("url_slug") ? old("url_slug") : '' }}"</div>
+                                        <div class="help-block">  {{ $errors->first('url_slug') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="col-md-6 mt-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                    <label for="banner_alt_text" class="required">Alt Text</label>
-                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
+                                <div class="form-group col-md-6 mt-1 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label> URL BN (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{ old('url_slug_bn') ? old('url_slug_bn') : $partnerOfferDetail->partner_offer_details->url_slug_bn }}"
+                                           name="url_slug_bn" placeholder="URL BN">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_alt_text'))
-                                        <div class="help-block">{{ $errors->first('banner_alt_text') }}</div>
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block">{{ $errors->first('url_slug_bn') }}</div>
                                     @endif
                                 </div>
+
+
 
                                 <div class="form-group col-md-6"></div>
 

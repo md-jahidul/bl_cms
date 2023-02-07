@@ -31,7 +31,7 @@ class RoamingGeneralService {
      * @param RoamingPagesRepository $pagesRepo
      */
     public function __construct(
-    RoamingCategoryRepository $catRepo, RoamingPagesRepository $pagesRepo
+        RoamingCategoryRepository $catRepo, RoamingPagesRepository $pagesRepo
     ) {
         $this->catRepo = $catRepo;
         $this->pagesRepo = $pagesRepo;
@@ -57,7 +57,7 @@ class RoamingGeneralService {
 
     /**
      * update roaming category
-     * @return Response
+     * @return array
      */
     public function updateCategory($request) {
         try {
@@ -84,15 +84,10 @@ class RoamingGeneralService {
             //save data in database
             $this->catRepo->updateCategory($webPath, $mobilePath, $request);
 
-
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "News Saved"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
@@ -138,7 +133,7 @@ class RoamingGeneralService {
         return $response;
     }
 
-       /**
+    /**
      * Change category sorting
      * @return Response
      */
@@ -146,13 +141,13 @@ class RoamingGeneralService {
         $response = $this->pagesRepo->changeComponentSorting($request);
         return $response;
     }
-       /**
+    /**
      * Change category sorting
      * @return Response
      */
     public function deleteComponent($comId) {
 
-         try {
+        try {
 
             $response = $this->pagesRepo->deleteComponent($comId);
 

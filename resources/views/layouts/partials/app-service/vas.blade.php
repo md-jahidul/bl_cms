@@ -2,7 +2,7 @@
 @include('layouts.partials.app-service.common-field.price')
 @include('layouts.partials.app-service.common-field.tag')
 
-@include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgTwo', 'showImg' => 'imgShowTwo'])
+{{--@include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgTwo', 'showImg' => 'imgShowTwo'])--}}
 
 <div class="form-group col-md-6 {{ $errors->has('provider_url') ? ' error' : '' }}">
     <label for="provider_url" class="required">Subscription Vendor</label>

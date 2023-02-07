@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class PartnerOffer extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'partner_id',
+        'partner_category_id',
+        'loyalty_tier_id',
         'product_code',
+        'card_img',
+        'card_img_name_en',
+        'card_img_name_bn',
+        'card_alt_text_en',
+        'card_alt_text_bn',
         'validity_en',
         'validity_bn',
         'start_date',

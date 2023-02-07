@@ -120,7 +120,21 @@ class Helper
             "4G_USIM_ELIGIBILITY"     => "4G USIM Eligibility",
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
-            "MYBL_CAMPAIGN"           => "MyBl Campaign Modality"
+            "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
+            "HELP_AND_TUTORIAL" => "Help & Tutorial",
+            "CALL_CENTER" => "Call Center",
+            "GAMES"                   => "Games",
+            "MUSICS"                  => "Musics",
+            "VIDEO"                   => "Video",
+            "STORIES"                 => "Stories",
+            "SHOP"                    => "Shop",
+            "USSD"               => "USSD Code",
+            "COURSES"                 => "Courses",
+            "GIFT_PACKS"              => "Gift Packs",
+            "ROAMING_PACKS"           => "Roaming Packs",
+            "ROAMING_DETAILS"         => "Roaming Details",
+            "USSD_CODE"               => "USSD code",
+            "CARE"                    => "Care",
         ];
     }
 
@@ -169,7 +183,16 @@ class Helper
             "sms_packs"                  => "SMS Pack",
             "voice_packs"                => "Voice Bundle",
             "orange_club"                => "Orange Club",
-            "4g_usim_eligibility"        => "4G USIM Eligibility"
+            "4g_usim_eligibility"        => "4G USIM Eligibility",
+            "recharge"                   => "Recharge",
+            "help_and_tutorial"          => "Help & Tutorial",
+            "check_for_updates"          => "Check For Updates",
+            "games"                      => "Games",
+            "musics"                     => "Musics",
+            "video"                      => "Video",
+            "stories"                    => "Stories",
+            "shop"                       => "Shop",
+            "courses"                    => "Courses"
         ];
     }
 
@@ -241,36 +264,6 @@ class Helper
         ];
     }
 
-    public static function productType()
-    {
-        return [
-            'internet_pack' => 'DATA',
-            'voice' => 'VOICE BUNDLES',
-            'bundle' => 'MIX BUNDLES'
-        ];
-    }
-
-    public static function guestUserActivityList(): array
-    {
-        return [
-           'landing_page' => 'Landing Page',
-           'otp_page' => 'OTP Page',
-           'otp_send' => 'OTP Send',
-           'password_login' => 'Password Login',
-           'password_page' => 'Password Page',
-           'logged_in' => 'Logged In',
-           'forget_password_page' => 'Forget Password Page',
-           'forget_password_send_otp' => 'Forget Password Send OTP',
-           'set_new_password_page' => 'Set New Password Page',
-           'change_password' => 'Change Password',
-           'register_page' => 'Register Page',
-           'send_otp_register' => 'Send OTP Register',
-           'register_set_new_password_page' => 'Register Set New Password Page',
-           'register_password_set' => 'Register Password Set',
-           'number_verification' => 'Number Verification'
-        ];
-    }
-
     public static function campaignType()
     {
         return [
@@ -293,6 +286,39 @@ class Helper
             'gift' => 'GIFT',
             'volume request' => 'VOLUME REQUEST',
             'volume transfer' => 'VOLUME TRANSFER'
+        ];
+    }
+
+
+    public static function productType()
+    {
+        return [
+            'internet_pack' => 'DATA',
+            'voice' => 'VOICE',
+            'mixed_bundle' => 'MIX BUNDLES',
+            'gift_packs' => "GIFT PACKS",
+            'roaming' => "ROAMING"
+        ];
+    }
+
+    public static function guestUserActivityList(): array
+    {
+        return [
+           'landing_page' => 'Landing Page',
+           'otp_page' => 'OTP Page',
+           'otp_send' => 'OTP Send',
+           'password_login' => 'Password Login',
+           'password_page' => 'Password Page',
+           'logged_in' => 'Logged In',
+           'forget_password_page' => 'Forget Password Page',
+           'forget_password_send_otp' => 'Forget Password Send OTP',
+           'set_new_password_page' => 'Set New Password Page',
+           'change_password' => 'Change Password',
+           'register_page' => 'Register Page',
+           'send_otp_register' => 'Send OTP Register',
+           'register_set_new_password_page' => 'Register Set New Password Page',
+           'register_password_set' => 'Register Password Set',
+           'number_verification' => 'Number Verification'
         ];
     }
 }
