@@ -120,8 +120,8 @@ class BusinessInternetService {
 
             //file upload in storege
 
-            $photoNameWeb = $data['banner_name'] . '-web';
-            $photoNameMob = $data['banner_name'] . '-mobile';
+            $photoNameWeb = $data['banner_name'] .time(). '-web';
+            $photoNameMob = $data['banner_name'] .time(). '-mobile';
             $directoryPath = 'assetlite/images/business-images';
 
             $bannerWeb = "";
