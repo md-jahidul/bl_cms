@@ -310,14 +310,13 @@
 
                     <!-- Banner -->
                     <div class="col-12">
-                        @if(isset($banner_info))
-                            <img style="height:100px;width:200px;" id="imgDisplay" src="{{asset($trivia->banner)}}"/>
+                        @if(isset($trivia))
+                            <img style="height:100px;width:200px;" id="imgDisplay" src="{{ asset($trivia->banner) }}"/>
                             @else
                             <img src="" style="height:100px;width:200px;display:none" id="imgDisplay"/>
                         @endif
                     </div>
                     <div class="col-12">
-
                         <div class="form-group">
                             <label for="banner" id="bor" class="required">Banner :</label>
                             <div id="banner" class="input-group">

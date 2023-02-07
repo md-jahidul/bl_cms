@@ -30,6 +30,14 @@ class TriviaGamificationService
      */
     public function saveTriviaInfo($data)
     {
+        $triviaInfo = $this->findOne($data['id']);
+        if (isset($data['banner'])) {
+            $data['banner'] = 'storage/' . $data['banner']->store('trivia');
+            if (isset($triviaInfo) && file_exists($triviaInfo->banner)) {
+                unlink($triviaInfo->banner);
+            }
+        }
+        
         return $this->triviaGamificationRepository->saveTriviaInfo($data);
     }
 }
