@@ -1276,6 +1276,37 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
     Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
 
+
+    //Commerce Component
+    Route::get('mybl-commerce-components', 'CMS\MyBlCommerceComponentController@index')->name('mybl.commerce.components');
+    Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyBlCommerceComponentController@edit')
+        ->name('mybl.commerce.components.edit');
+    Route::post('mybl-commerce-components/store', 'CMS\MyBlCommerceComponentController@store')
+        ->name('mybl.commerce.components.store');
+    Route::post('mybl-commerce-components/update', 'CMS\MyBlCommerceComponentController@update')
+        ->name('mybl.commerce.components.update');
+    Route::get('mybl-commerce-components-sort', 'CMS\MyBlCommerceComponentController@componentSort');
+    Route::get('commerce-components-status-update/{id}', 'CMS\MyBlCommerceComponentController@componentStatusUpdate')
+        ->name('commerce-components.status.update');
+    Route::get('mybl-commerce-components/destroy/{id}', 'CMS\MyBlCommerceComponentController@destroy')
+        ->name('mybl.commerce.components.destroy');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('utility-bill', 'CMS\UtilityBillController')->except(['show', 'destroy']);
+    Route::get('utility-bill/destroy/{id}', 'CMS\UtilityBillController@destroy')->name('utility-bill.destroy');
+    Route::get('utility-bill/sort-auto-save', 'CMS\UtilityBillController@categorySortable');
+    Route::get('utility-bill-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
+
+    /**
+     * Commerce Navigation Rail
+     */
+    Route::resource('commerce-navigation-rail', 'CMS\CommerceNavigationRailController');
+    Route::get('commerce-navigation-rail-sortable', 'CMS\CommerceNavigationRailController@navigationMenuSortable')
+        ->name('commerce-navigation-rail.sort');
+    Route::get('commerce-navigation-rail/destroy/{id}', 'CMS\CommerceNavigationRailController@destroy')
+        ->name('commerce-navigation-rail.destroy');
 });
 
 // 4G Map View Route
