@@ -102,7 +102,7 @@ class MyBlCommerceComponentService
         $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
         $commerceComponentCount = $this->findAll()->count();
 
-        $data['component_key'] = ucfirst($data['title_en']);
+        $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));;
         $data['display_order'] = $commerceComponentCount + $homeSecondarySliderCount + 1;
 
         $this->save($data);
