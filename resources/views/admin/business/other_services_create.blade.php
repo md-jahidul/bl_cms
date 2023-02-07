@@ -171,7 +171,66 @@
 
                         </div>
 
-                        <div class="col-md-4 col-xs-12">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
+                        <h4><strong>Details Data</strong></h4>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_title_en">Banner Title (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_en" required class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_title_bn">Banner Title (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_bn" class="form-control "></textarea>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_en">Banner Subtitle (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_en" required class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_bn">Banner Subtitle (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_bn" required class="form-control"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="short_details_en" required class="form-control"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Show in top, after product name
+                                    </small>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="Details">Offer Details (EN)</label>
+                                    <textarea type="text" name="offer_details_en" class="form-control summernote_editor"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Show in bottom accordion
+                                    </small>
+                                </div>
+
+
+
 
                             <div class="form-group">
                                 <label for="Banner Photo">Details Banner (Web) <span class="text-danger">*</span></label>
