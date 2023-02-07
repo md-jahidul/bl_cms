@@ -18,6 +18,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -344,5 +345,19 @@ class MyblProductEntryController extends Controller
         }
 
         return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning'));
+    }
+
+    public function redisKeyUpdateView()
+    {
+        return view('admin.my-bl-products.new-product-redis-key-update');
+    }
+
+    public function redisKeyUpdate()
+    {
+        Redis::set('new_product_upload_time', Carbon::now()->toDateTimeString());
+        Session::flash('message', 'Redis Key Update');
+
+        return redirect('redis-key-update-view');
+
     }
 }

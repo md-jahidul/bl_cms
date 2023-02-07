@@ -1271,6 +1271,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
 //
+
+    //Active new Product Code
+    Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
+    Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
+
 });
 
 // 4G Map View Route
