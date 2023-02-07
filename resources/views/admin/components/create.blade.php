@@ -199,20 +199,20 @@
                                         @include('admin.components.partial.multi_card_with_title_desc_icon', $component ?? [])
                                     </slot>
                                     <!--Customer Complains-->
-                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ isset($component) && $component->component_type == "customer_complaint" ? "" : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.other-attributes',
-                                                [
-                                                    'other_attributes' => [
-                                                        'compl_cld_no' => 'Complaint Closed No (%)',
-                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',
-                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',
-                                                        'unreached_cust_no' => 'Unreached Customer No (%)',
-                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',
-                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',
-                                                    ],
-                                                ])
-                                        @include('layouts.partials.product-details.component.common-field.text-editor')
-                                    </slot>
+{{--                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ isset($component) && $component->component_type == "customer_complaint" ? "" : "d-none" }}">--}}
+{{--                                        @include('layouts.partials.product-details.component.common-field.other-attributes',--}}
+{{--                                                [--}}
+{{--                                                    'other_attributes' => [--}}
+{{--                                                        'compl_cld_no' => 'Complaint Closed No (%)',--}}
+{{--                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',--}}
+{{--                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',--}}
+{{--                                                        'unreached_cust_no' => 'Unreached Customer No (%)',--}}
+{{--                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',--}}
+{{--                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',--}}
+{{--                                                    ],--}}
+{{--                                                ])--}}
+{{--                                        @include('layouts.partials.product-details.component.common-field.text-editor')--}}
+{{--                                    </slot>--}}
                                     <!--button_component-->
                                     <slot id="button_component" data-offer-type="button_component" class="{{ isset($component) && $component->component_type == "button_component" ? "" : "d-none" }}">
 
@@ -225,7 +225,7 @@
                                                         'url_bn' => 'Url BN',*/
                                                     ],
                                                 ])
-                                            
+
                                             <div class="form-group col-md-6 {{ $errors->has('redirect_url_en') ? ' error' : '' }} {{ (isset($component) && optional($component->other_attributes)['is_external_url']  == 0) ? '' : (!isset($component) ? '' : 'd-none') }}" id="pageDynamicEn">
                                                 <label for="redirect_url_en">Redirect URL EN</label>
                                                 <input type="text" name="other_attr[redirect_url_en]" class="form-control" placeholder="Enter URL"
@@ -264,7 +264,7 @@
                                                     <input type="checkbox" name="other_attr[is_external_url]" value="1" id="external_link"
                                                         {{ (isset($component) && optional($component->other_attributes)['is_external_url']  == 1) ? 'checked' : (old("other_attr.is_external_url") ? 'checked' : '') }}>
                                                 </div>
-                                            </div>                                    
+                                            </div>
 
 
                                     </slot>
@@ -274,7 +274,7 @@
                                         @include('layouts.partials.product-details.component.common-field.extra-title')
                                         @include('layouts.partials.product-details.component.common-field.title')
 
-                                        
+
                                         @include('admin.components.partial.multiple_image', $component ?? [])
                                     </slot>
 
@@ -289,7 +289,7 @@
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                         @include('layouts.partials.product-details.component.common-field.video')
                                     </slot>
-                                    
+
 
 {{--                                    --}}{{--Slider text with image right--}}
 {{--                                    <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="{{ isset($component) && $component->component_type == "accordion_section" ? "" : "d-none" }}">--}}
