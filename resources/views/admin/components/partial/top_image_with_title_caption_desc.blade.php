@@ -10,7 +10,7 @@
 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
     <label for="title_bn" class="required1">Title (Bangla)</label>
     <input type="text" name="title_bn"  class="form-control"
-        value="{{ old("title_bn") ? old("title_bn") : $component->title_bn ?? null }}}" >
+        value="{{ old("title_bn") ? old("title_bn") : $component->title_bn ?? null }}" >
     <div class="help-block"></div>
     @if ($errors->has('title_bn'))
         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -59,7 +59,7 @@
 <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
     <label for="alt_text_bn" class="required1">Alt Text (Bangla)</label>
     <input type="text" name="alt_text_bn"  class="form-control"
-        value="{{ old("alt_text_bn") ? old("alt_text_bn") : $component->alt_text_bn ?? null }}}" >
+        value="{{ old("alt_text_bn") ? old("alt_text_bn") : $component->alt_text_bn ?? null }}" >
     <div class="help-block"></div>
     @if ($errors->has('alt_text_bn'))
         <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
