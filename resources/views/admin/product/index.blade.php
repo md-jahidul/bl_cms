@@ -55,18 +55,18 @@
                                     <td>{{ $product->offer_category->name_en }} {{ $product->is_four_g_offer == 1 ? "(4G Offer)" : ''}}</td>
                                     <td class="text-center">
 {{--                                            // Other Details ==============================================--}}
-                                        @if(
-                                            $product->offer_category->alias == "others" ||
-                                            $product->offer_category->alias == 'packages' ||
-                                            $product->offer_category->alias == 'new_sim_offer' ||
-                                            $product->offer_category->alias == 'bondho_sim'
-                                        )
+{{--                                        @if(--}}
+{{--                                            $product->offer_category->alias == "others" ||--}}
+{{--                                            $product->offer_category->alias == 'packages' ||--}}
+{{--                                            $product->offer_category->alias == 'new_sim_offer' ||--}}
+{{--                                            $product->offer_category->alias == 'bondho_sim'--}}
+{{--                                        )--}}
                                             <a href="{{ route('section-list', [$type, $product->id]) }}"
                                                 class="btn-sm btn-outline-primary border">Details</a>
-                                        @else
-                                            <a href="{{ route('product.details', [strtolower($type), $product->product_code, strtolower( $product->offer_category->name_en)]) }}"
-                                               class="btn-sm btn-outline-primary border">Details</a>
-                                        @endif
+{{--                                        @else--}}
+{{--                                            <a href="{{ route('product.details', [strtolower($type), $product->product_code, strtolower( $product->offer_category->name_en)]) }}"--}}
+{{--                                               class="btn-sm btn-outline-primary border">Details</a>--}}
+{{--                                        @endif--}}
                                     </td>
                                     <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                     <td>

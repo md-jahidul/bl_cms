@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMyblCommerceComponentsTable extends Migration
+class CreateMyBlCommerceComponentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMyblCommerceComponentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mybl_commerce_components', function (Blueprint $table) {
+        Schema::create('my_bl_commerce_components', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('component_key')->nullable();
             $table->string('title_en')->nullable();
@@ -33,6 +33,6 @@ class CreateMyblCommerceComponentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mybl_commerce_components');
+        Schema::dropIfExists('my_bl_commerce_components');
     }
 }

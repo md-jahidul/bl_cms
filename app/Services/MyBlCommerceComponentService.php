@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\ContentComponentRepository;
-use App\Repositories\LmsHomeComponentRepository;
+use App\Repositories\AboutUsRepository;
+use App\Repositories\MyBlCommerceComponentRepository;
 use App\Repositories\MyblSliderRepository;
 use App\Traits\CrudTrait;
 use Exception;
@@ -12,28 +12,38 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
 
-class LmsHomeComponentService
+class MyBlCommerceComponentService
 {
     use CrudTrait;
 
-    private $lmsHomeComponentRepository;
+    private $componentRepository;
+    /**
+     * @var MyblSliderRepository
+     */
+    private $sliderRepository;
 
-    protected const REDIS_KEY = "lms_component";
+    protected const REDIS_KEY = "mybl_commerce_component";
 
     public function __construct(
-        LmsHomeComponentRepository $lmsHomeComponentRepository
+        MyblCommerceComponentRepository $componentRepository,
+        MyblSliderRepository $sliderRepository
     ) {
-        $this->lmsHomeComponentRepository = $lmsHomeComponentRepository;
-        $this->setActionRepository($lmsHomeComponentRepository);
+        $this->componentRepository = $componentRepository;
+        $this->sliderRepository = $sliderRepository;
+        $this->setActionRepository($componentRepository);
     }
 
     public function findAllComponents()
     {
         $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
-        $contentSortableComponents = $this->findBy([], null, $orderBy)->toArray();
+        $commerceSortableComponents = $this->findBy(['is_fixed_position' => false], null, $orderBy)->toArray();
 
-        return collect($contentSortableComponents)->sortBy('display_order')->values()->all();
+        $homeSecondarySliderCom = $this->sliderRepository->findByProperties(['component_for' => 'commerce'], [
+            'id', 'component_id', 'title as title_en', 'short_code', 'position as display_order'
+        ])->toArray();
 
+        $allMergeComponents = array_merge($commerceSortableComponents, $homeSecondarySliderCom);
+        return collect($allMergeComponents)->sortBy('display_order')->values()->all();
     }
 
     /**
@@ -60,8 +70,7 @@ class LmsHomeComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del('lms_component_prepaid');
-            Redis::del('lms_component_postpaid');
+            Redis::del(self::REDIS_KEY);
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -84,39 +93,36 @@ class LmsHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
+        Redis::del(self::REDIS_KEY);
         return response("Successfully status changed");
     }
 
     public function storeComponent($data)
     {
-        $msComponentCount = $this->findAll()->count();
+        $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+        $commerceComponentCount = $this->findAll()->count();
 
-        $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
-        $data['display_order'] = $msComponentCount + 1;
+        $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));;
+        $data['display_order'] = $commerceComponentCount + $homeSecondarySliderCount + 1;
 
         $this->save($data);
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        return response("LMS Component update successfully!");
+        Redis::del(self::REDIS_KEY);
+        return response("Component update successfully!");
     }
 
     public function updateComponent($data)
     {
         $component = $this->findOne($data['id']);
         $component->update($data);
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        return response("LMS Component update successfully!");
+        Redis::del(self::REDIS_KEY);
+        return response("Component update successfully!");
     }
 
     public function deleteComponent($id)
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
+        Redis::del(self::REDIS_KEY);
         return [
             'message' => 'Component delete successfully',
         ];

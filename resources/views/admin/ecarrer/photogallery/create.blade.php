@@ -78,7 +78,7 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description')
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
-class MyblCommerceComponent extends Model
+class MyBlCommerceComponent extends Model
 {
-    use LogModelAction;
-
     protected $fillable = [
         'component_key',
         'title_en',
