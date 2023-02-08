@@ -44,23 +44,23 @@ class DynamicPageController extends Controller
 
     }
 
-    protected $componentTypes = [
-        // 'large_title_with_text' => 'Large Title With Text',
-        // 'medium_title_with_text' => 'Medium Title With Text',
-        // 'small_title_with_text' => 'Small Title With Text',
-        // 'text_and_button' => 'Text And Button',
-        // 'text_component' => 'Text Component',
-        // 'features_component' => 'Features Component',
+    // protected $componentTypes = [
+    //     // 'large_title_with_text' => 'Large Title With Text',
+    //     // 'medium_title_with_text' => 'Medium Title With Text',
+    //     // 'small_title_with_text' => 'Small Title With Text',
+    //     // 'text_and_button' => 'Text And Button',
+    //     // 'text_component' => 'Text Component',
+    //     // 'features_component' => 'Features Component',
 
-        // 'title_with_text_and_right_image' => 'Title with text and right Image',
-        // 'bullet_text' => 'Bullet Text',
-        // 'accordion_text' => 'Accordion Text',
-        // 'table_component' => 'Table Component',
-        'title_with_video_and_text' => 'Title with Video and text',
-        'button_component' => 'Button Component',
-        'multiple_image' => 'Multiple Image',
-        'customer_complaint' => 'Customer Complaint',
-    ];
+    //     // 'title_with_text_and_right_image' => 'Title with text and right Image',
+    //     // 'bullet_text' => 'Bullet Text',
+    //     // 'accordion_text' => 'Accordion Text',
+    //     // 'table_component' => 'Table Component',
+    //     'title_with_video_and_text' => 'Title with Video and text',
+    //     'button_component' => 'Button Component',
+    //     'multiple_image' => 'Multiple Image',
+    //     'customer_complaint' => 'Customer Complaint',
+    // ];
 
 
     public function index()
@@ -112,7 +112,7 @@ class DynamicPageController extends Controller
         // $pageId = 1;
         // return view('admin.dynamic-pages.components.create', compact('componentTypes', 'pageId'));
 
-        $componentList = ComponentHelper::components() + $this->componentTypes;
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $storeAction = 'other-component-store';
         $listAction = 'other-components';
         $pageType = self::PAGE_TYPE;
@@ -140,7 +140,7 @@ class DynamicPageController extends Controller
 
         $component = $this->componentService->findOne($id, ['componentMultiData']);
         $multipleImage = $component['multiple_attributes'];
-        $componentList = ComponentHelper::components() + $this->componentTypes;
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $updateAction = 'other-component-update';
         $listAction = 'other-components';
         return view('admin.components.create', compact('component', 'multipleImage', 'componentList', 'updateAction', 'listAction'));
