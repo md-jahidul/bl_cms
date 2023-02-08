@@ -10,6 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\View\View;
 
 class TriviaGamificationController extends Controller
@@ -54,6 +55,7 @@ class TriviaGamificationController extends Controller
     public function store(TriviaGamificationRequest $request)
     {
         $this->triviaGamificationService->saveTriviaInfo($request->all());
+        Redis::del("mybl_home_component");
         return redirect()->route('trivia.create')->with('success', "Data saved successfully!");
     }
 
