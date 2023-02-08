@@ -1,0 +1,22 @@
+stages:
+    - triggers
+
+.job_template: &template
+    tags:
+        - bl-devops
+
+prod_deploy:
+  stage: triggers
+  trigger:
+    include: deployment/prod_deploy.yml
+    #strategy: depend
+  rules:
+    - if: $branch == "main"
+
+stg_deploy:
+  stage: triggers
+  trigger:
+    include: deployment/stg_deploy.yml
+    #strategy: depend
+  rules:
+    - if: $branch == "develop"
