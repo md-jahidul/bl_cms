@@ -49,7 +49,7 @@ class ExploreCDetailsController extends Controller
 
     public function componentCreate()
     {
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $storeAction = 'explore-c-component.store';
         $pageType = self::PAGE_TYPE;
         return view('admin.components.create', compact('componentList', 'storeAction', 'pageType'));
@@ -67,7 +67,7 @@ class ExploreCDetailsController extends Controller
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $updateAction = 'explore-c-component.update';
         return view('admin.components.create', compact('component', 'componentList', 'updateAction'));
     }
