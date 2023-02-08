@@ -26,9 +26,7 @@
                             <input
                             required
                             maxlength="200"
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                             data-validation-required-message="The field is required"
-                            data-validation-regex-message="The field must start with alphabets"
                             data-validation-maxlength-message = "Max Character: 200"
                             value="@if(isset($trivia)) {{$trivia->pending_bottom_label_en}} @elseif(old("pending_bottom_label_en")) {{ old("pending_bottom_label_en") }} @endif"
                             type="text"
@@ -47,9 +45,7 @@
                         <input
                             required
                             maxlength="200"
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                             data-validation-required-message="The field is required"
-                            data-validation-regex-message="The field must start with alphabets"
                             data-validation-maxlength-message = "Max Character: 200"
                             id="pending_bottom_label_bn"
                             value="@if(isset($trivia)) {{$trivia->pending_bottom_label_bn}} @elseif(old("pending_bottom_label_bn")) {{ old("pending_bottom_label_bn") }} @endif"
@@ -70,9 +66,7 @@
                             <input
                             required
                             maxlength="200"
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                             data-validation-required-message="The field is required"
-                            data-validation-regex-message="The field must start with alphabets"
                             data-validation-maxlength-message = "Max Character: 200"
                             id="completed_bottom_label_en"
                             value="@if(isset($trivia)) {{$trivia->completed_bottom_label_en}} @elseif(old("completed_bottom_label_en")) {{old("completed_bottom_label_en")}} @endif"
@@ -92,9 +86,7 @@
                         <input
                             required
                             maxlength="200"
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                             data-validation-required-message="The field is required"
-                            data-validation-regex-message="The field must start with alphabets"
                             data-validation-maxlength-message = "Max Character: 200"
                             id="completed_bottom_label_bn"
                             value="@if(isset($trivia)) {{$trivia->completed_bottom_label_bn}} @elseif(old("completed_bottom_label_bn")) {{old("completed_bottom_label_bn")}} @endif"
