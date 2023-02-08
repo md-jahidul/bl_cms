@@ -1242,6 +1242,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
 
+    Route::resource('trivia', 'CMS\TriviaGamificationController');
+
 
     //PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
