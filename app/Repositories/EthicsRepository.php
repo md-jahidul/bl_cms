@@ -23,9 +23,10 @@ class EthicsRepository extends BaseRepository {
         try {
 
             $page = $this->model->findOrFail($request->page_id);
-
             $page->page_name_en = $request->page_name_en;
             $page->page_name_bn = $request->page_name_bn;
+            $page->banner_desc_en = $request->banner_desc_en;
+            $page->banner_desc_bn = $request->banner_desc_bn;
             $page->banner_web = $webPath;
             $page->banner_mobile = $mobilePath;
             $page->alt_text = $request->alt_text;

@@ -24,6 +24,10 @@
                                         <input type="text" class="form-control" required name="page_name_en" value="{{ $pageInfo->page_name_en }}" placeholder="Page Name EN">
                                     </div>
                                     <div class="form-group">
+                                        <label>Banner Description (EN) <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="7" required name="banner_desc_en">{{ $pageInfo->banner_desc_en }}</textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <label>Banner (Web)</label>
                                         <input type="file" class="dropify" name="banner_web" data-height="70"
                                                data-default-file="{{ isset($pageInfo->banner_web) ? config('filesystems.file_base_url') . $pageInfo->banner_web : '' }}"
@@ -40,7 +44,10 @@
                                         <label>Page Name (BN) <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" required name="page_name_bn" value="{{ $pageInfo->page_name_bn }}"  placeholder="Page Name BN">
                                     </div>
-
+                                    <div class="form-group">
+                                        <label>Banner Description (BN) <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="7" required name="banner_desc_bn">{{ $pageInfo->banner_desc_bn }}</textarea>
+                                    </div>
                                     <div class="form-group">
                                         <label>Banner (Mobile)</label>
                                         <input type="file" class="dropify" name="banner_mobile" data-height="70"
