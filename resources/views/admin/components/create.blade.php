@@ -1,10 +1,10 @@
 @php
     $create_edit = isset($component) ? 'Edit' : 'Create';
-    /* $list_d = ['about-page', 'priyojon'];*/
+    $list_d = ['about-page', 'priyojon'];
     $store_d = 'about-page.component.store';
     $update_d = 'about-page.component.update';
     $action = [
-        /* 'list' => isset($listAction) ? $listAction : $list_d,*/
+        'list' => isset($listAction) ? $listAction : $list_d,
         'store' => isset($storeAction) ? $storeAction : $store_d,
         'update' => isset($updateAction) ? $updateAction : $update_d,
     ];
