@@ -49,10 +49,11 @@ class ExploreCDetailsController extends Controller
 
     public function componentCreate()
     {
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $storeAction = 'explore-c-component.store';
+        $listAction = 'explore-c-component.list';
         $pageType = self::PAGE_TYPE;
-        return view('admin.components.create', compact('componentList', 'storeAction', 'pageType'));
+        return view('admin.components.create', compact('componentList', 'storeAction','listAction', 'pageType'));
     }
 
     public function componentStore(Request $request)
@@ -67,14 +68,14 @@ class ExploreCDetailsController extends Controller
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $updateAction = 'explore-c-component.update';
-        return view('admin.components.create', compact('component', 'componentList', 'updateAction'));
+        $listAction = 'explore-c-component.list';
+        return view('admin.components.create', compact('component', 'componentList','listAction', 'updateAction'));
     }
 
     public function componentUpdate(Request $request, $id)
     {
-        // return $request->all();
         $request['page_type'] = self::PAGE_TYPE;
         $explore_c_id = $request->sections['id'];
 

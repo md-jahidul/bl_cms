@@ -1,7 +1,3 @@
-{{ Form::hidden('sections[section_name]', 'Explore C\'s' ) }}
-{{ Form::hidden('sections[section_type]', 'explore_c' ) }}
-{{ Form::hidden('component_type', 'multi_text_with_image_bottom' ) }}
-
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">
       <a href="#" class="btn btn-info  btn-glow px-1 add_more_text_section_item">+ Add Text Section</a>

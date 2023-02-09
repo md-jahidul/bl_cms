@@ -87,7 +87,7 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
 
 
                                 <div class="form-actions col-md-12 ">

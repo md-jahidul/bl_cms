@@ -50,6 +50,7 @@
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
+                                @include('layouts.partials.common_types.text_area_plane',['component'=>$component])
 
 {{--                                <div class="form-group col-md-6 {{ $errors->has('type') ? ' error' : '' }}">--}}
 {{--                                    <label for="type" class="required">Component Type</label>--}}

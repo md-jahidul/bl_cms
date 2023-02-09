@@ -1,4 +1,4 @@
-{{ Form::hidden('component_type', 'multi_card_with_title_desc_icon' ) }}
+{{-- {{ Form::hidden('component_type', 'multi_card_with_title_desc_icon' ) }} --}}
 
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">

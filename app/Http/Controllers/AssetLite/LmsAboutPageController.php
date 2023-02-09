@@ -110,7 +110,7 @@ class LmsAboutPageController extends Controller
 
     public function componentCreate()
     {
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()['all'];
         return view('admin.components.create', compact('componentList'));
     }
 
@@ -124,7 +124,7 @@ class LmsAboutPageController extends Controller
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()['all'];
         return view('admin.components.create', compact('component', 'componentList'));
     }
 

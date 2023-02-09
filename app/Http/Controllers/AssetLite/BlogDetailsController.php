@@ -53,7 +53,7 @@ class BlogDetailsController extends Controller
 
     public function componentCreate()
     {
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()['all'];
         $storeAction = 'blog-component.store';
         $listAction = 'blog-component.list';
         $pageType = self::REFERENCE_TYPE;
@@ -62,7 +62,6 @@ class BlogDetailsController extends Controller
 
     public function componentStore(Request $request)
     {
-        // return $request->all();
         $blog_id = $request->sections['id'];
         $response = $this->componentService->componentStore($request->all(), $blog_id , self::REFERENCE_TYPE);
         Session::flash('message', $response->getContent());
@@ -72,7 +71,7 @@ class BlogDetailsController extends Controller
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()['all'];
         $updateAction = 'blog-component.update';
         $listAction = 'blog-component.list';
         return view('admin.components.create', compact('component', 'componentList', 'updateAction', 'listAction'));
@@ -80,7 +79,6 @@ class BlogDetailsController extends Controller
 
     public function componentUpdate(Request $request, $id)
     {
-        // return $request->all();
         $request['page_type'] = self::REFERENCE_TYPE;
         $blog_id = $request->sections['id'];
 
