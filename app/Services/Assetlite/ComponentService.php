@@ -240,10 +240,10 @@ class ComponentService
             ]);
         }
 
-        request()->validate([
-            'image_name_en' => 'unique:components,image_name_en,' . $id,
-            'image_name_bn' => 'unique:components,image_name_bn,' . $id,
-        ]);
+        // request()->validate([
+        //     'image_name_en' => 'unique:components,image_name_en,' . $id,
+        //     'image_name_bn' => 'unique:components,image_name_bn,' . $id,
+        // ]);
 
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
@@ -309,7 +309,7 @@ class ComponentService
         }
 
         # other attributes to save
-        if (!empty($data['other_attr']) && count($data['other_attr']) > 0 && $component->page_type == "blog") {
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
             $data['other_attributes'] = $data['other_attr'];
         }
 
@@ -345,7 +345,7 @@ class ComponentService
             $data['editor_bn'] = $btn_html_bn;
 
         }
-
+        
         $component->update($data);
 
         if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
