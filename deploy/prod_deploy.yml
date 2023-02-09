@@ -5,10 +5,15 @@ stages:
   - clone
   - build
   - deploy
+  - svc-mgt
 
 .job_template: &template
     tags:
       - bl-devops
+
+.cms_template: &cms
+    tags:
+      - bl-cms
 
 tar_backup:
   <<: *template
@@ -50,3 +55,17 @@ deploy_ubuntu:
     #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ root@192.168.56.104:$path_2/$DEST
     #- cd $BUILD_LOCATION/$CI_PROJECT_NAME
     #- scp -r $BUILD_LOCATION/$CI_PROJECT_NAME/app/* bs1048@192.168.56.1:$path_1
+
+service_manage:
+  <<: *cms
+  stage: svc-mgt
+  variables:
+    ANSIBLE_PATH: "/app/mybl/ansible/ansible-mybl-app-deploy/ENV/PROD/CMS"
+  when: manual
+  # tags:
+  #   - ci-ansible
+  script:
+    #- echo $ANSIBLE_PATH
+    #- cp -r /home/usrdev/config /home/usrdev/builds/BErMj8E2/0/bl-front/bl-web-frontend/.git/config
+    - cd $ANSIBLE_PATH && ansible-playbook -i inventory cms.yml
+    - echo 1>/app/mybl/runner/stdout
