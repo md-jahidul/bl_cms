@@ -160,7 +160,7 @@
 
 
                                             <div
-                                                class="form-group col-md-4 {{ $errors->has('content_image') ? ' error' : '' }}">
+                                                class="form-group col-md-6 {{ $errors->has('content_image') ? ' error' : '' }}">
                                                 <label for="alt_text">Content Image</label>
                                                 <div class="custom-file">
                                                     <input type="file" name="content_image"
@@ -176,7 +176,7 @@
                                             </div>
 
                                             <div
-                                                class="form-group col-md-4 {{ $errors->has('banner_image') ? ' error' : '' }}">
+                                                class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
                                                 <label for="alt_text">Banner Image (Web)</label>
                                                 <div class="custom-file">
                                                     <input type="hidden" name="old_web_img"
@@ -193,21 +193,21 @@
                                                 @endif--}}
                                             </div>
 
-                                            <div
-                                                class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
-                                                <span>Banner image (Mobile)</span>
+{{--                                            <div--}}
+{{--                                                class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">--}}
+{{--                                                <span>Banner image (Mobile)</span>--}}
 
-                                                <div class="custom-file">
-                                                    <input type="hidden" name="old_mob_img"
-                                                           value="@if(isset($about)){{$about->banner_image_mobile}} @elseif(old("old_mob_img")) {{old("old_mob_img")}} @endif">
-                                                    <input type="file" name="banner_image_mobile"
-                                                           class="custom-file-input dropify"
-                                                           data-height="80"
-                                                           data-default-file="{{ isset($about->banner_image_mobile) ?  config('filesystems.file_base_url') . $about->banner_image_mobile : null  }}">
-                                                    {{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
-                                                </div>
-                                                <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                            </div>
+{{--                                                <div class="custom-file">--}}
+{{--                                                    <input type="hidden" name="old_mob_img"--}}
+{{--                                                           value="@if(isset($about)){{$about->banner_image_mobile}} @elseif(old("old_mob_img")) {{old("old_mob_img")}} @endif">--}}
+{{--                                                    <input type="file" name="banner_image_mobile"--}}
+{{--                                                           class="custom-file-input dropify"--}}
+{{--                                                           data-height="80"--}}
+{{--                                                           data-default-file="{{ isset($about->banner_image_mobile) ?  config('filesystems.file_base_url') . $about->banner_image_mobile : null  }}">--}}
+{{--                                                    --}}{{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
+{{--                                                </div>--}}
+{{--                                                <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                            </div>--}}
 
                                             <div
                                                 class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">

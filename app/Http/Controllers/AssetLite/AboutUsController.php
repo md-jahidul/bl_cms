@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Requests\StoreSliderImageRequest;
 use App\Models\AboutUsBanglalink;
 use App\Services\AboutUsService;
+use App\Services\AlBannerService;
 use App\Services\AlSliderImageService;
 use App\Services\AlSliderService;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -27,6 +28,10 @@ class AboutUsController extends Controller
     private $alSliderService;
 
     private $alSliderImageService;
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     /**
      * QuickLaunchController constructor.
@@ -37,11 +42,13 @@ class AboutUsController extends Controller
     public function __construct(
         AboutUsService $aboutUsService,
         AlSliderService $alSliderService,
-        AlSliderImageService $alSliderImageService
+        AlSliderImageService $alSliderImageService,
+        AlBannerService $alBannerService
     ) {
         $this->aboutUsService = $aboutUsService;
         $this->alSliderService = $alSliderService;
         $this->alSliderImageService = $alSliderImageService;
+        $this->alBannerService = $alBannerService;
     }
 
 
@@ -53,7 +60,8 @@ class AboutUsController extends Controller
     public function index()
     {
         $aboutUs = $this->aboutUsService->getAboutUsInfo();
-        return view('admin.about-us.index', compact('aboutUs'));
+        $banner = $this->alBannerService->findBanner('about_us_landing', 0);
+        return view('admin.about-us.index', compact('aboutUs', 'banner'));
     }
 
     /**
