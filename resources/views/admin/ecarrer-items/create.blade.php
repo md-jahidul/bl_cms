@@ -76,6 +76,25 @@ else{
                                     @include('admin.ecarrer-items.additional.description')
                                 @endif
 
+                                    <div class="form-group col-md-6 {{ $errors->has('sub_title_en') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1">Sub title EN</label>
+                                        <input type="text" name="sub_title_en"  class="form-control" placeholder="Enter sub title (english)"
+                                            value="{{ old("sub_title_en") ? old("sub_title_en") : '' }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('sub_title_en'))
+                                            <div class="help-block">  {{ $errors->first('sub_title_en') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('sub_title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1">Sub title BN</label>
+                                        <input type="text" name="sub_title_bn"  class="form-control" placeholder="Enter sub title (bangla)"
+                                            value="{{ old("sub_title_bn") ? old("sub_title_bn") : '' }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('sub_title_bn'))
+                                            <div class="help-block">  {{ $errors->first('sub_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
 
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Image (optional)</label>
