@@ -175,15 +175,6 @@
                                             @include('admin.components.partial.masonry_3_2_image_layout_row', $component ?? [])
                                         </slot>
 
-                                        <!--Multi Column For Video-->
-                                        <slot id="multi_col_for_video" data-offer-type="multi_col_for_video" class="{{ isset($component) && $component->component_type == "multi_col_for_video" ? "" : "d-none" }}">
-                                            @include('admin.components.partial.multi_col_for_video', $component ?? [])
-                                        </slot>
-                                        <!--Multi Column For Video middle-->
-                                        <slot id="multi_col_for_video_middle" data-offer-type="multi_col_for_video_middle" class="{{ isset($component) && $component->component_type == "multi_col_for_video_middle" ? "" : "d-none" }}">
-                                            @include('admin.components.partial.multi_col_for_video_middle', $component ?? [])
-                                        </slot>
-
                                         <!--Multi Column With title and desc-->
                                         <slot id="multi_col_with_title_desc" data-offer-type="multi_col_with_title_desc" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc" ? "" : "d-none" }}">
                                             @include('admin.components.partial.multi_col_with_title_desc', $component ?? [])
@@ -192,6 +183,19 @@
                                         <!--Multi Column With title, desc and Image -->
                                         <slot id="multi_col_with_title_desc_image" data-offer-type="multi_col_with_title_desc_image" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_image" ? "" : "d-none" }}">
                                             @include('admin.components.partial.multi_col_with_title_desc_image', $component ?? [])
+                                        </slot>
+                                    
+                                    @endif
+
+                                    @if (isset($component) && $component->page_type == 'other_dynamic_page' || isset($pageType) && $pageType == 'other_dynamic_page')
+
+                                        <!--Multi Column For Video-->
+                                        <slot id="multi_col_for_video" data-offer-type="multi_col_for_video" class="{{ isset($component) && $component->component_type == "multi_col_for_video" ? "" : "d-none" }}">
+                                            @include('admin.components.partial.multi_col_for_video', $component ?? [])
+                                        </slot>
+                                        <!--Multi Column For Video middle-->
+                                        <slot id="multi_col_for_video_middle" data-offer-type="multi_col_for_video_middle" class="{{ isset($component) && $component->component_type == "multi_col_for_video_middle" ? "" : "d-none" }}">
+                                            @include('admin.components.partial.multi_col_for_video_middle', $component ?? [])
                                         </slot>
                                         <!--Multi Column With title, desc and Icon -->
                                         <slot id="multi_col_with_title_desc_icon" data-offer-type="multi_col_with_title_desc_icon" class="{{ isset($component) && $component->component_type == "multi_col_with_title_desc_icon" ? "" : "d-none" }}">
@@ -292,8 +296,8 @@
                                             @include('layouts.partials.product-details.component.common-field.text-editor')
                                             @include('layouts.partials.product-details.component.common-field.video')
                                         </slot>
-                                    
                                     @endif
+
 
                                     {{ Form::hidden('sections[id]', isset($component) ? $component->section_details_id : request()->section_id ?? null, ['class' => 'section_id'] ) }}
                                     {{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
