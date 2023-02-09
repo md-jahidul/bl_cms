@@ -19,6 +19,7 @@ class EcareerPortalItem extends Model
     protected $fillable = [
         'ecarrer_portals_id',
         'title_en', 'title_bn',
+        'sub_title_en', 'sub_title_bn',
         'description_en', 'description_bn',
         'image', 'video', 'alt_text',
         'alt_links', 'call_to_action',
