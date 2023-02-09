@@ -142,6 +142,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
     Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
     Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
+    Route::post('management-component', 'AssetLite\ManagementController@managementComponentSave');
 
     Route::resource('about-career', 'AssetLite\AboutEcareerController')->except(['show', 'destroy']);
     Route::get('about-career-item/{careerId}', 'AssetLite\AboutEcareerItemController@index')

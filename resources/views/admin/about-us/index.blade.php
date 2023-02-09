@@ -23,7 +23,7 @@
                             <th width='20%'>Title</th>
                           {{--  <th width='30%'>Description</th>--}}
                             <th width='25%'>Content Image</th>
-                            <th width='25%'>Banner Image</th>
+                            <th width='25%'>Details Banner Image</th>
                             <th width='10%'>Action</th>
                         </tr>
                         </thead>
@@ -59,22 +59,26 @@
                 </div>
             </div>
         </div>
-
     </section>
+
+    @php
+        $action = [
+            'section_type' => "about_us_landing",
+            'section_id' => 0
+        ];
+    @endphp
+    @include('admin.al-banner.section', $action)
 @stop
 
 @push('page-css')
-    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
     <style>
         #sortable tr td{
             padding-top: 0 !important;
             padding-bottom: 0 !important;
         }
     </style>
-@endpush
-
-@push('page-js')
-
 @endpush
 
 @section('content_right_side_bar')
@@ -84,22 +88,12 @@
 @endsection
 
 
-@push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
-@endpush
-
-
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-
-
-
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
