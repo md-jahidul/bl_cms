@@ -8,7 +8,7 @@ stages:
 prod_deploy:
   stage: triggers
   trigger:
-    include: deployment/prod_deploy.yml
+    include: deploy/prod_deploy.yml
     #strategy: depend
   rules:
     - if: $branch == "master"
@@ -16,7 +16,7 @@ prod_deploy:
 stg_deploy:
   stage: triggers
   trigger:
-    include: deployment/stg_deploy.yml
+    include: deploy/stg_deploy.yml
     #strategy: depend
   rules:
     - if: $branch == "develop"
