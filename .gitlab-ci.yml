@@ -11,7 +11,7 @@ prod_deploy:
     include: deployment/prod_deploy.yml
     #strategy: depend
   rules:
-    - if: $branch == "main"
+    - if: $branch == "master"
 
 stg_deploy:
   stage: triggers
