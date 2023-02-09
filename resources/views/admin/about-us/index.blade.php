@@ -59,8 +59,15 @@
                 </div>
             </div>
         </div>
-
     </section>
+
+    @php
+        $action = [
+            'section_type' => "about_us_landing",
+            'section_id' => 0
+        ];
+    @endphp
+    @include('admin.al-banner.section', $action)
 @stop
 
 @push('page-css')
