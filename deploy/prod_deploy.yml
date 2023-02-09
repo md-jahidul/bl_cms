@@ -29,8 +29,8 @@ tar_backup:
 prod_repo_clone:
   <<: *template
   stage: clone
-  only:
-    - main
+  # only:
+  #   - main
   when: manual
   variables:
     BRANCH: master
