@@ -9,8 +9,6 @@ stages:
 .job_template: &template
     tags:
       - bl-devops
-    #only:
-    #  - main
 
 tar_backup:
   <<: *template
@@ -19,11 +17,8 @@ tar_backup:
   stage: cms-backup
   #needs: [CI_Pre-check]
   when: manual
-  # rules:
-  #   - if: ($CI_COMMIT_BRANCH == "main" || $NPM_VERSION == "$NPM_VERSION")
   script:
     - echo "Starting backup"
-    #- echo "$PROD_BUILD_LOCATION/$CI_PROJECT_NAME"
     - tar czf "$PROD_BUILD_LOCATION/$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz "$PROD_BUILD_LOCATION/$CI_PROJECT_NAME"
     #- ssh usrdev@$SERVER_IP tar czf - $DATA_LOCATION > /app/blcms/backup/"$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz
     #- sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
@@ -31,53 +26,27 @@ tar_backup:
 prod_repo_clone:
   <<: *template
   stage: clone
-  # only:
-  #   - main
   when: manual
   variables:
     BRANCH: master
-  #  BUILD_LOCATION: "/home/gitlab-runner/app"
   script:
     - echo "cloning repo"
     - cd $PROD_BUILD_LOCATION/$CI_PROJECT_NAME
-    #- sudo git clone https://$MYUSERNAME:$MYTOKEN@gitlab.com/techbeach1/mybl-qa.git
+    #- git clone https://$MYUSERNAME:$MYTOKEN@gitlab.com/plabon_dutta_bl/bl_cms.git
     - git pull origin $BRANCH
-
-# build:
-#   <<: *template
-#   stage: build
-#   when: manual
-#   # rules:
-#   #   - if: ($CI_COMMIT_BRANCH == "main" || $NPM_VERSION == "$NPM_VERSION")
-#   script:
-#     - echo "Buliding with NPM"
-#     - cd $PROD_BUILD_LOCATION/$CI_PROJECT_NAME
-#     - npm run build
-#   artifacts:
-#     name: build_artifacts
-#     paths:
-#       - ./
-#     exclude:
-#       - ".gitlab-ci.yml"
-#       - "README.md"
-#       - ".git"
 
 deploy_ubuntu:
   <<: *template
   variables:
-    path_1: "/home/bs1048/artifacts"
-    #path_2: "/root/myld-qa/app"
+    path_1: "/app/blcms/www/bl_cms"
   stage: deploy
   when: manual
-  # rules:
-  #   - if: ($CI_COMMIT_BRANCH == "main" || $NPM_VERSION == "$NPM_VERSION")
   before_script:
     - eval $(ssh-agent -s)
   script:
     - echo "Copying build artifacts to live server"
     - ssh-add <(echo "$STAGING_PRIVATE_KEY")
-   # - rsync -avzt ./* bs1048@192.168.56.1:$path
-    - rsync -avzt $PROD_BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ bs1048@192.168.56.1:$path_1/$DEST
+    - rsync -avzt $PROD_BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ usrdev@172.16.8.164/24:$path_1/$DEST
     #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ root@192.168.56.104:$path_2/$DEST
     #- cd $BUILD_LOCATION/$CI_PROJECT_NAME
     #- scp -r $BUILD_LOCATION/$CI_PROJECT_NAME/app/* bs1048@192.168.56.1:$path_1
