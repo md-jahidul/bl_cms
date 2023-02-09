@@ -12,11 +12,11 @@
     {!! $liHtml !!}
 @endsection
 @section('action')
-    @if($parent_id != 0)
+{{--    @if($parent_id != 0)--}}
         <a href="{{ url("priyojon/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
             Add Menu
         </a>
-    @endif
+{{--    @endif--}}
 @endsection
 @section('content')
     <section>

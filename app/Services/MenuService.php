@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Repositories\MenuRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 
 class MenuService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $menuRepository
@@ -45,6 +47,10 @@ class MenuService
 //            'url_bn' => 'required|regex:/^\S*$/u|unique:menus',
 //        ]);
 
+        if (request()->hasFile('icon')) {
+            $data['icon'] = $this->upload($data['icon'], 'assetlite/images/header-menu');
+        }
+
         $menu_count = count($this->menuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
         $data['external_site'] = isset($data['external_site']) ? 1 : 0;
@@ -70,11 +76,15 @@ class MenuService
     public function updateMenu($data, $id)
     {
         request()->validate([
-//            'url' => 'unique:menus,url,' . $id,
-//            'url_bn' => 'required|regex:/^\S*$/u|unique:menus,url_bn,' . $id,
+            //  'url' => 'unique:menus,url,' . $id,
+            //  'url_bn' => 'required|regex:/^\S*$/u|unique:menus,url_bn,' . $id,
         ]);
-
         $menu = $this->findOne($id);
+        if (request()->hasFile('icon')) {
+            $this->deleteFile($menu->icon);
+            $data['icon'] = $this->upload($data['icon'], 'assetlite/images/header-menu');
+        }
+
         $data['external_site'] = isset($data['external_site']) ? 1 : 0;
         $menu->update($data);
         return Response('Menu updated successfully');

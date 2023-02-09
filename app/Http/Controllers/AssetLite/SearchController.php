@@ -3,20 +3,24 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Services\AdTechService;
 use App\Services\SearchService;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Session;
+
 
 class SearchController extends Controller {
 
     private $searchService;
+    private $adTechService;
 
     /**
      * SearchController constructor.
      * @param EasyPaymentCardService $searchService
      */
-    public function __construct(SearchService $searchService) {
+    public function __construct(SearchService $searchService, AdTechService $adTechService) {
         $this->searchService = $searchService;
+        $this->adTechService = $adTechService;
     }
 
     /**
@@ -29,7 +33,8 @@ class SearchController extends Controller {
     public function index() {
         $settings = $this->searchService->getSettingData();
         $popular = $this->searchService->getPopularSearch();
-        return view('admin.search.index', compact('settings', 'popular'));
+        $adTech = $this->adTechService->getAdTechByRefType('search_modal');
+        return view('admin.search.index', compact('settings', 'popular', 'adTech'));
     }
 
     /**
@@ -159,6 +164,17 @@ class SearchController extends Controller {
     public function popularSearchStatus($kwId) {
         $products = $this->searchService->popularSearchStatusChange($kwId);
         return $products;
+    }
+
+    public function adTechStore(Request $request)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+        
+        $response = $this->adTechService->storeAdTech($request->all(), 'search_modal');
+        Session::flash('message', $response->getContent());
+        return redirect('popular-search');
     }
 
 }
