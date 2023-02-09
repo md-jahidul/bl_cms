@@ -23,7 +23,9 @@ tar_backup:
   #   - if: ($CI_COMMIT_BRANCH == "main" || $NPM_VERSION == "$NPM_VERSION")
   script:
     - echo "Starting backup"
-    - ssh usrdev@$SERVER_IP tar czf - $DATA_LOCATION > /app/blcms/backup/"$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz
+    - cd $PROD_BUILD_LOCATION/$CI_PROJECT_NAME
+    - tar czf "$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz "$CI_PROJECT_NAME"
+    #- ssh usrdev@$SERVER_IP tar czf - $DATA_LOCATION > /app/blcms/backup/"$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz
     #- sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
 
 prod_repo_clone:
