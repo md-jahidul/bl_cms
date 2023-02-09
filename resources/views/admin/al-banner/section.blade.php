@@ -10,10 +10,10 @@
                             method="POST" novalidate enctype="multipart/form-data">
                         @csrf
                         @if (isset($banner))
-                            
+
                             {{method_field('PUT')}}
                         @else
-                            
+
                             {{method_field('POST')}}
                         @endif
                         {{ Form::hidden('section_id', $action['section_id'] ) }}
@@ -51,7 +51,7 @@
                                         >{{ $banner->desc_bn ?? null }}</textarea>
                                 <div class="help-block"></div>
                             </div>
-                            
+
                             <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
                                 <label for="alt_text">Alt Text (English)</label>
                                 <input type="text" name="alt_text_en" id="alt_text_en" class="form-control"
@@ -132,7 +132,7 @@
                                     <div class="help-block">  {{ $errors->first('image') }}</div>
                                 @endif
                             </div>
-                            
+
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
@@ -148,3 +148,24 @@
         </div>
     </div>
 </section>
+
+@push('page-css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+@endpush
+
+@push('page-js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script type="text/javascript">
+        // Image Dropify
+        $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
+            });
+        });
+    </script>
+@endpush
