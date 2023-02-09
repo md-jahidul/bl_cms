@@ -40,12 +40,14 @@ prod_repo_clone:
     #- git clone https://$MYUSERNAME:$MYTOKEN@gitlab.com/plabon_dutta_bl/bl_cms.git
     - git pull origin $BRANCH
 
-deploy_ubuntu:
+deploy:
   <<: *template
   variables:
     path_1: "/app/blcms/www/bl_cms"
   stage: deploy
-  when: manual
+  when:
+    manual:
+      strategy: block
   before_script:
     - eval $(ssh-agent -s)
   script:
@@ -53,8 +55,8 @@ deploy_ubuntu:
     - ssh-add <(echo "$STAGING_PRIVATE_KEY")
     - rsync -avzt $PROD_BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ usrdev@172.16.8.164/24:$path_1/$DEST
     #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ root@192.168.56.104:$path_2/$DEST
-    #- cd $BUILD_LOCATION/$CI_PROJECT_NAME
     #- scp -r $BUILD_LOCATION/$CI_PROJECT_NAME/app/* bs1048@192.168.56.1:$path_1
+  environment: production
 
 service_manage:
   <<: *cms
@@ -62,10 +64,6 @@ service_manage:
   variables:
     ANSIBLE_PATH: "/app/mybl/ansible/ansible-mybl-app-deploy/ENV/PROD/CMS"
   when: manual
-  # tags:
-  #   - ci-ansible
   script:
-    #- echo $ANSIBLE_PATH
-    #- cp -r /home/usrdev/config /home/usrdev/builds/BErMj8E2/0/bl-front/bl-web-frontend/.git/config
     - cd $ANSIBLE_PATH && ansible-playbook -i inventory cms.yml
     - echo 1>/app/mybl/runner/stdout
