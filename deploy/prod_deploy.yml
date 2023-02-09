@@ -1,7 +1,7 @@
 variables:
-  PROD_BUILD_LOCATION: "/home/gitlab-runner/app"
+  PROD_BUILD_LOCATION: "/app/assetlite/src/projects/projects_gitlab"
 stages:
-  - mylite_backup
+  - cms-backup
   - clone
   - build
   - deploy
@@ -15,15 +15,16 @@ stages:
 tar_backup:
   <<: *template
   variables:
-    data_location: "/app/mybl-qa"
-  stage: mylite_backup
+    DATA_LOCATION: "/app/blcms/www/bl_cms"
+  stage: cms-backup
   #needs: [CI_Pre-check]
   when: manual
   # rules:
   #   - if: ($CI_COMMIT_BRANCH == "main" || $NPM_VERSION == "$NPM_VERSION")
   script:
     - echo "Starting backup"
-    - sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
+    - ssh usrdev@$SERVER_IP tar czf - $DATA_LOCATION > /app/blcms/backup/"$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz
+    #- sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
 
 prod_repo_clone:
   <<: *template
