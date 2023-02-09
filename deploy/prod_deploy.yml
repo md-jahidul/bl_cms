@@ -54,8 +54,8 @@ deploy:
     - rsync -avzt $PROD_BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ usrdev@172.16.8.164/24:$path_1/$DEST
     #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ root@192.168.56.104:$path_2/$DEST
     #- scp -r $BUILD_LOCATION/$CI_PROJECT_NAME/app/* bs1048@192.168.56.1:$path_1
-  rules:
-    if: '$SOURCE'
+  # rules:
+  #   if: '$SOURCE'
   environment: production
 
 service_manage:
