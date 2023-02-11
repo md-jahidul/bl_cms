@@ -32,7 +32,7 @@
                                 <td width="3%">{{ $loop->iteration }}</td>
                                 <td>{{ $campaign->title }} {!! $campaign->status == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                 <td><img class="" src="{{ config('filesystems.file_base_url') . $campaign->image_url }}" alt="Slider Image" height="100" width="180" /></td>
-                                <td>{{ $campaign->details_en }}</td>
+                                <td>{!! $campaign->details_en !!}</td>
                                 <td width="12%" class="text-center">
                                     <a href="{{ url("bl-4g-campaign/$campaign->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("bl-4g-campaign/destroy/$campaign->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $campaign->id }}" title="Delete">
