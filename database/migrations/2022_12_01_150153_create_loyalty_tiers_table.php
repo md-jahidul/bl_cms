@@ -19,7 +19,7 @@ class CreateLoyaltyTiersTable extends Migration
             $table->string('title_bn')->nullable();
             $table->string('slug')->nullable();
             $table->string('url_slug_en')->nullable();
-            $table->string('url_slug_en')->nullable();
+            $table->string('url_slug_bn')->nullable();
             $table->text('page_header_en')->nullable();
             $table->text('page_header_bn')->nullable();
             $table->text('schema_markup')->nullable();
