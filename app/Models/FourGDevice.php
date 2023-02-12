@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FourGDevice extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'offer_tag_id',
         'card_logo',
@@ -23,6 +23,9 @@ class FourGDevice extends Model
         'old_price',
         'view_details_url',
         'buy_url',
+        'product_status_en',
+        'product_status_bn',
+        'product_status_color',
         'status'
     ];
 
