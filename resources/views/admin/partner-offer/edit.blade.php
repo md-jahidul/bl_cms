@@ -48,15 +48,15 @@
                             </div>
 
                             <input type="hidden" name="campaign_redirect" value="{{ isset($campaignPath) ? $campaignPath : '' }}">
-                            {{-- <div class="form-group col-md-4 col-xs-12 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                <label for="product_code" class="">Product Code</label>
-                                <input type="text" class="form-control" placeholder="Enter offer validity in English" readonly
-                                       value="{{ $partnerOffer->product_code }}" >
-                                <div class="help-block"></div>
-                                @if ($errors->has('product_code'))
-                                <div class="help-block">{{ $errors->first('product_code') }}</div>
-                                @endif
-                            </div> --}}
+{{--                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('product_code') ? ' error' : '' }}">--}}
+{{--                                <label for="product_code" class="">Product Code</label>--}}
+{{--                                <input type="text" class="form-control" placeholder="Enter offer validity in English" readonly--}}
+{{--                                       value="{{ $partnerOffer->product_code }}" >--}}
+{{--                                <div class="help-block"></div>--}}
+{{--                                @if ($errors->has('product_code'))--}}
+{{--                                <div class="help-block">{{ $errors->first('product_code') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
                              <div class="form-group col-md-4 col-xs-12 {{ $errors->has('area') ? ' error' : '' }}">
                                 <label for="offer_unit" class="required">Area</label>
