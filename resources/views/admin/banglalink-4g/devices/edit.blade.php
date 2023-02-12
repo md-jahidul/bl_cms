@@ -106,6 +106,26 @@
                                 </div>
 
                                 <div class="form-group col-md-3">
+                                    <label for="product_status_en">Product Status EN</label>
+                                    <input type="text" name="product_status_en" class="form-control" placeholder="Enter logo alt text en"
+                                           value="{{ $device->product_status_en }}">
+                                    <span class="text-primary">Example: Out of Stock, In Stock</span>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="product_status_bn">Product Status BN</label>
+                                    <input type="text" name="product_status_bn" class="form-control" placeholder="Enter logo alt text en"
+                                           value="{{ $device->product_status_bn }}">
+                                    <span class="text-primary">Example: Out of Stock, In Stock</span>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="product_status_color">Product Status Color</label>
+                                    <input type="color" name="product_status_color" class="form-control" placeholder="Enter logo alt text en"
+                                           value="{{ $device->product_status_color }}">
+                                </div>
+
+                                <div class="form-group col-md-3">
                                     <label for="logo_alt_en">Logo Alt Text EN</label>
                                     <input type="text" name="logo_alt_en" class="form-control" placeholder="Enter logo alt text en"
                                            value="{{ old("logo_alt_en") ? old("logo_alt_en") : $device->logo_alt_en }}">
