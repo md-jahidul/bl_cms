@@ -84,7 +84,14 @@ class LmsAboutPageController extends Controller
          * shuvo-bs
          * We have Plan to merge all the banner in the al_banners table. For this reason we have store discount-privilege's banner in al_banner table
          */
-        if ($slug == 'discount-privilege') {
+        if ($slug == 'benefits-for-you' ) {
+
+            $priyojonLanding = $this->priyojonService->getPriyojonByType('benefits_for_you');
+            $banner = $this->alBannerService->findBanner('benefits_for_you', 0)??null;
+
+            return view('admin.loyalty.about-pages.benefits-for-you', compact('priyojonLanding','banner'));
+
+        }else if ($slug == 'discount-privilege') {
 
             // $details = $this->aboutPageService->findAboutDetail($slug);
             // $benefits = $this->lmsBenefitService->getBenefit($slug);
@@ -96,7 +103,7 @@ class LmsAboutPageController extends Controller
             // $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
             return view('admin.loyalty.about-pages.discount-privilege', compact('priyojonLanding','banner'));
 
-        } else {
+        }else {
             // $details = $this->aboutPageService->findAboutDetail($slug);
             // $benefits = $this->lmsBenefitService->getBenefit($slug);
             $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
