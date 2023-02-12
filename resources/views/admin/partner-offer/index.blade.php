@@ -47,7 +47,7 @@
                                 <td class="text-center"><a href="{{ route('offer.details', [$partnerName, $partnerOffer->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>
                                 <td class="action" width="12%">
                                     <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id] ) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("partner-offer/$partnerOffer->partner_id/$partnerName/offer/destroy/$partnerOffer->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $partnerOffer->id }}" title="Delete">
+                                    <a href="#" remove="{{ url("partner-offer/$partnerOffer->partner_id/$partnerName/offer/$partnerOffer->id/destroy/destroy") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $partnerOffer->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
