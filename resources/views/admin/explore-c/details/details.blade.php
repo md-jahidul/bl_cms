@@ -3,7 +3,7 @@
 @section('title', "C's Content")
 @section('card_name', "C's Content")
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('explore-c') }}"> Explore C List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('explore-c-pages') }}"> Explore C List</a></li>
     <li class="breadcrumb-item active">C's Content Details</li>
 @endsection
 @section('action')
