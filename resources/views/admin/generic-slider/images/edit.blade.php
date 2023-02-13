@@ -103,11 +103,11 @@
                                             class="form-control" id="status"
                                             name="status">
                                         <option value="1"
-                                                @if($imageInfo->is_active == "1") selected @endif>
+                                                @if($imageInfo->status == "1") selected @endif>
                                             Active
                                         </option>
                                         <option value="0"
-                                                @if($imageInfo->is_active == "0") selected @endif>
+                                                @if($imageInfo->status == "0") selected @endif>
                                             InActive
                                         </option>
                                     </select>
