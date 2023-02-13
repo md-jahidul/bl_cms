@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductCore extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'product_code',
         'renew_product_code',
@@ -50,8 +50,11 @@ class ProductCore extends Model
         'display_sd_vat_tax',
         'display_title_en',
         'display_title_bn',
-        'points'
-
+        'points',
+        'is_commercial_name_en_schedule',
+        'is_commercial_name_bn_schedule',
+        'is_display_title_en_schedule',
+        'is_display_title_bn_schedule'
     ];
 
     protected $guarded = ['id'];
