@@ -978,7 +978,7 @@ class ProductCoreService
         }
 
         if ($coreData['is_display_title_bn_schedule']) {
-            $productSchedule['display_title_bn'] = $request->schedule_commercial_name_bn;
+            $productSchedule['display_title_bn'] = $request->schedule_display_title_bn;
             $isProductSchedule = true;
         } else {
             $productSchedule['display_title_bn'] = null;
