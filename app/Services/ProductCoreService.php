@@ -916,6 +916,10 @@ class ProductCoreService
         $data['is_visible_schedule'] = isset($request->is_visible_schedule) ? true : false;
         $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
         $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
+        $coreData['is_commercial_name_en_schedule'] = isset($request->is_commercial_name_en_schedule) ? true : false;
+        $coreData['is_commercial_name_bn_schedule'] = isset($request->is_commercial_name_bn_schedule) ? true : false;
+        $coreData['is_display_title_en_schedule'] = isset($request->is_display_title_en_schedule) ? true : false;
+        $coreData['is_display_title_bn_schedule'] = isset($request->is_display_title_bn_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
         $productSchedule = [];
         $isProductSchedule = false;
@@ -963,6 +967,35 @@ class ProductCoreService
             $productSchedule['base_msisdn_group_id'] = null;
         }
 
+        if ($coreData['is_commercial_name_en_schedule']) {
+            $productSchedule['commercial_name_en'] = $request->schedule_commercial_name_en;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['commercial_name_en'] = null;
+        }
+
+        if ($coreData['is_commercial_name_bn_schedule']) {
+            $productSchedule['commercial_name_bn'] = $request->schedule_commercial_name_bn;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['commercial_name_bn'] = null;
+        }
+
+        if ($coreData['is_display_title_en_schedule']) {
+            $productSchedule['display_title_en'] = $request->schedule_display_title_en;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['display_title_en'] = null;
+        }
+
+        if ($coreData['is_display_title_bn_schedule']) {
+            $productSchedule['display_title_bn'] = $request->schedule_display_title_bn;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['display_title_bn'] = null;
+        }
+
+
         if($isProductSchedule == true) {
             $productSchedule['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d H:i:s');
             $productSchedule['end_date'] = Carbon::parse($request->end_date)->format('Y-m-d H:i:s');
@@ -977,6 +1010,8 @@ class ProductCoreService
             $model = MyBlProduct::where('product_code', $product_code);
 
             $model->update($data);
+
+            $coreProduct = ProductCore::where('product_code', $product_code)->update($coreData);
 
             $productSchedule['product_code'] = $request->product_code;
 
