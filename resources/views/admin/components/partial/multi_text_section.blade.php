@@ -1,3 +1,7 @@
+{{--{{ Form::hidden('sections[section_name]', 'Explore C\'s' ) }}--}}
+{{--{{ Form::hidden('sections[section_type]', 'explore_c' ) }}--}}
+{{--{{ Form::hidden('component_type', 'multi_text_with_image_bottom' ) }}--}}
+
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">
       <a href="#" class="btn btn-info  btn-glow px-1 add_more_text_section_item">+ Add Text Section</a>
@@ -12,7 +16,7 @@
         <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$count}}">
 
         @if (isset($component->multiple_attributes))
-            
+
             @foreach ( $component->multiple_attributes as $key => $single_attribute )
 
                 <div class="row single_text_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
@@ -44,7 +48,7 @@
                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                         @endif
                     </div>
-                    
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Description (English)</label>
@@ -74,7 +78,7 @@
                     </div>
                 </div>
             @endforeach
-            
+
         @else
             <div class="row single_text_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
                 <input type="hidden" name="multi_item[id-1]" value="1">
@@ -105,7 +109,7 @@
                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                     @endif
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Description (English)</label>
@@ -135,7 +139,7 @@
                     <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button>
                 </div>
             </div>
-            
+
         @endif
 
     </div>
@@ -195,7 +199,7 @@
                 '<div class="help-block"></div>'+
                 '<div class="help-block"></div>'+
             '</div>'+
-            
+
             '<div class="col-md-6">'+
                 '<div class="form-group">'+
                     '<label for="exampleInputPassword1">Description (English)</label>'+
