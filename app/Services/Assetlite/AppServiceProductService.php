@@ -67,12 +67,18 @@ class AppServiceProductService
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
         }
 
+        if (request()->hasFile('icon_img_url')) {
+            $data['icon_img_url'] = $this->upload($data['icon_img_url'], 'assetlite/images/app-service/product/icon');
+        }
+
         if (request()->hasFile('details_image_url')) {
             $data['details_image_url'] = $this->upload($data['details_image_url'], 'assetlite/images/app-service/product');
         }
 
         $data['created_by'] = Auth::id();
         $data['is_images'] = isset($data['is_images']) ? 1 : 0;
+        $data['show_in_details_page'] = isset($data['show_in_details_page']) ? 1 : 0;
+
         unset($data['referral']);
 
         $app = $this->save($data);
@@ -102,10 +108,16 @@ class AppServiceProductService
             $this->deleteFile($appServiceProduct->product_img_url);
         }
 
+        if (request()->hasFile('icon_img_url')) {
+            $data['icon_img_url'] = $this->upload($data['icon_img_url'], 'assetlite/images/app-service/product/icon');
+            $this->deleteFile($appServiceProduct->icon_img_url);
+        }
+
         if (request()->hasFile('details_image_url')) {
             $data['details_image_url'] = $this->upload($data['details_image_url'], 'assetlite/images/app-service/product');
             $this->deleteFile($appServiceProduct->details_image_url);
         }
+        $data['show_in_details_page'] = isset($data['show_in_details_page']) ? 1 : 0;
         $data['is_images'] = isset($data['is_images']) ? 1 : 0;
         $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
         $data['show_in_vas'] = (isset($data['show_in_vas']) ? 1 : 0);

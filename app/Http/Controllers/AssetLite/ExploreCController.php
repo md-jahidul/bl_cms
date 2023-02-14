@@ -8,14 +8,19 @@ use App\Http\Requests\ExploreCRequest;
 use App\Services\ExploreCService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Services\ExploreCDetailsService;
 
 class ExploreCController extends Controller
 {
+    public const PAGE_TYPE = "explore_c";
     protected $exploreCService;
+    protected $exploreCDetailsService;
 
-    public function __construct( ExploreCService $exploreCService)
+    public function __construct( ExploreCService $exploreCService, ExploreCDetailsService $exploreCDetailsService)
     {
         $this->exploreCService = $exploreCService;
+        $this->exploreCDetailsService = $exploreCDetailsService;
+
     }
 
         /**
@@ -38,8 +43,14 @@ class ExploreCController extends Controller
      */
     public function create()
     {
-
-        return view('admin.explore-c.create');
+        $allPages = $this->exploreCDetailsService->findBy(['type' => self::PAGE_TYPE]);
+        $pages = [];
+        foreach ($allPages as $key => $page) {
+            $row['url_slug'] = $page->url_slug;
+            $row['page_name_en'] = $page->page_name_en;
+            $pages[] = $row;
+        }
+        return view('admin.explore-c.create', compact('pages'));
     }
 
     /**
@@ -90,8 +101,14 @@ class ExploreCController extends Controller
     {
         
         $exploreC = $this->exploreCService->findOne($id);
-
-        return view('admin.explore-c.edit', compact('exploreC'));
+        $allPages = $this->exploreCDetailsService->findBy(['type' => self::PAGE_TYPE]);
+        $pages = [];
+        foreach ($allPages as $key => $page) {
+            $row['url_slug'] = $page->url_slug;
+            $row['page_name_en'] = $page->page_name_en;
+            $pages[] = $row;
+        }
+        return view('admin.explore-c.edit', compact('exploreC', 'pages'));
     }
 
     /**
@@ -105,7 +122,7 @@ class ExploreCController extends Controller
     {
         // return $request->route()->parameters();
         // return $request->all();
-        // return $this->exploreCService->store($request->all());
+        // return $this->exploreCService->updateExploreC($request->all(),$id);
         session()->flash('message', $this->exploreCService->updateExploreC($request->all(), $id)->getContent());
         return redirect(route('explore-c.index'));
     }

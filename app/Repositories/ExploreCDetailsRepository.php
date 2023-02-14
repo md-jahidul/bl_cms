@@ -5,9 +5,12 @@ namespace App\Repositories;
 use App\Models\OtherDynamicPage;
 use Illuminate\Support\Facades\Auth;
 
-class DynamicPageRepository extends BaseRepository {
+// use App\Repositories\BaseRepository;
 
-    public $modelName = OtherDynamicPage::class;
+
+class ExploreCDetailsRepository extends BaseRepository
+{
+    protected $modelName = OtherDynamicPage::class;
 
     public function savePage($data)
     {

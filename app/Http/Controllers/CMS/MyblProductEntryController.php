@@ -317,6 +317,9 @@ class MyblProductEntryController extends Controller
         $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
         $product = $product->first();
 
+        $productCore = $this->service->findBy(['product_code' => $productCode]);
+        $productCore = $productCore->first();
+
         $tagTitleForScheduler = null;
         $baseMsisdnTitleForSchedule = null;
         $baseMsisdnTitleForProduct = null;
@@ -344,7 +347,7 @@ class MyblProductEntryController extends Controller
             $productScheduleRunning = true;
         }
 
-        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning'));
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning', 'productCore'));
     }
 
     public function redisKeyUpdateView()

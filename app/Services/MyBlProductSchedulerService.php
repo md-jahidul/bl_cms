@@ -12,6 +12,7 @@ use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
 use App\Repositories\MyBlProductTagRepository;
+use App\Repositories\ProductCoreRepository;
 use App\Services\BlApiHub\BaseService;
 use App\Traits\CrudTrait;
 use App\Models\NotificationDraft;
@@ -30,15 +31,18 @@ class MyBlProductSchedulerService
     use CrudTrait;
 
     private $myblProductScheduleRepository, $myblProductRepository, $myblProductTagRepository;
+    private $productCoreRepository;
 
     public function __construct(
         MyBlProductSchedulerRepository $myblProductScheduleRepository,
         MyBlProductRepository $myBlProductRepository,
-        MyBlProductTagRepository $myBlProductTagRepository
+        MyBlProductTagRepository $myBlProductTagRepository,
+        ProductCoreRepository  $productCoreRepository
     ) {
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
         $this->myblProductRepository = $myBlProductRepository;
         $this->myblProductTagRepository = $myBlProductTagRepository;
+        $this->productCoreRepository = $productCoreRepository;
     }
 
     protected function removeRedisKeyByBaseGroupId()
@@ -59,6 +63,7 @@ class MyBlProductSchedulerService
     {
         $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
         $products = $this->myblProductRepository->findScheduleProductList();
+        $productCore = $this->productCoreRepository->findScheduleProductList();
 
         foreach ($products as $product) {
 
@@ -202,15 +207,111 @@ class MyBlProductSchedulerService
                 }
             }
         }
+
+        foreach ($productCore as $product) {
+
+            $productSchedule = $this->myblProductScheduleRepository->findScheduleDataByProductCodeV2($product['product_code']);
+
+            $this->removeRedisKeyByBaseGroupId($productSchedule);
+
+            if(is_null($productSchedule)) {
+                continue;
+            }
+
+            if ($currentTime >= $productSchedule['start_date'] && $currentTime <= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
+
+                $productData = [];
+                $productScheduleData = [];
+
+                if ($product->is_commercial_name_en_schedule) {
+                    $productData['commercial_name_en'] = $productSchedule['commercial_name_en'];
+                    $productScheduleData['commercial_name_en'] = $product['commercial_name_en'];
+                }
+
+                if ($product->is_commercial_name_bn_schedule) {
+                    $productData['commercial_name_bn'] = $productSchedule['commercial_name_bn'];
+                    $productScheduleData['commercial_name_bn'] = $product['commercial_name_bn'];
+                }
+
+                if ($product->is_display_title_en_schedule) {
+                    $productData['display_title_en'] = $productSchedule['display_title_en'];
+                    $productScheduleData['display_title_en'] = $product['display_title_en'];
+                }
+                if ($product->is_display_title_bn_schedule) {
+                    $productData['display_title_bn'] = $productSchedule['display_title_bn'];
+                    $productScheduleData['display_title_bn'] = $product['display_title_bn'];
+                }
+                $productScheduleData['change_state_status'] = 1;
+
+                try {
+
+                    DB::beginTransaction();
+
+                    $this->productCoreRepository->updateDataById($product['id'], $productData);
+                    $this->myblProductScheduleRepository->updateDataById($productSchedule['id'], $productScheduleData);
+
+                    DB::commit();
+                } catch (\Exception $e) {
+
+                    DB::rollback();
+                    Log::info($e->getMessage());
+                }
+            } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
+
+                $productData = [];
+                $productScheduleData = [];
+
+                if ($product->is_commercial_name_en_schedule) {
+                    $productData['commercial_name_en'] = $productSchedule['commercial_name_en'];
+                    $productScheduleData['commercial_name_en'] = $product['commercial_name_en'];
+                }
+
+                if ($product->is_commercial_name_bn_schedule) {
+                    $productData['commercial_name_bn'] = $productSchedule['commercial_name_bn'];
+                    $productScheduleData['commercial_name_bn'] = $product['commercial_name_bn'];
+                }
+
+                if ($product->is_display_title_en_schedule) {
+                    $productData['display_title_en'] = $productSchedule['display_title_en'];
+                    $productScheduleData['display_title_en'] = $product['display_title_en'];
+                }
+
+                if ($product->is_display_title_bn_schedule) {
+                    $productData['display_title_bn'] = $productSchedule['display_title_bn'];
+                    $productScheduleData['display_title_bn'] = $product['display_title_bn'];
+                }
+
+                $productScheduleData['change_state_status'] = 0;
+                $productData['is_commercial_name_en_schedule'] = 0;
+                $productData['is_commercial_name_bn_schedule'] = 0;
+                $productData['is_display_title_en_schedule'] = 0;
+                $productData['is_display_title_bn_schedule'] = 0;
+                try {
+                    DB::beginTransaction();
+
+                    $this->productCoreRepository->updateDataById($product['id'], $productData);
+                    $this->myblProductScheduleRepository->updateDataById($productSchedule['id'], $productScheduleData);
+
+                    DB::commit();
+                } catch (\Exception $e) {
+
+                    DB::rollback();
+                    Log::info($e->getMessage());
+                }
+            }
+        }
     }
 
     public function cancelSchedule($id)
     {
         $productSchedule = $this->myblProductScheduleRepository->findOne($id);
         $product = ($this->myblProductRepository->findByProperties(['product_code' => $productSchedule->product_code], ['*']))->first();
+        $productCore = ($this->productCoreRepository->findByProperties(['product_code' => $productSchedule->product_code], ['*']))->first();
 
         $productData = [];
+        $productCoreData = [];
         $productScheduleData = [];
+
         if ($product->is_banner_schedule && $productSchedule->change_state_status) {
             $productData['media'] = $productSchedule['media'];
             $productScheduleData['media'] = $product['media'];
@@ -258,19 +359,45 @@ class MyBlProductSchedulerService
             $productScheduleData['base_msisdn_group_id'] = $product['base_msisdn_group_id'];
         }
 
+        if ($productCore->is_commercial_name_en_schedule && $productSchedule->change_state_status) {
+            $productCoreData['commercial_name_en'] = $productSchedule['commercial_name_en'];
+            $productScheduleData['commercial_name_en'] = $productCore['commercial_name_en'];
+        }
+
+        if ($productCore->is_commercial_name_bn_schedule && $productSchedule->change_state_status) {
+            $productCoreData['commercial_name_bn'] = $productSchedule['commercial_name_bn'];
+            $productScheduleData['commercial_name_bn'] = $productCore['commercial_name_bn'];
+        }
+
+        if ($productCore->is_display_title_en_schedule && $productSchedule->change_state_status) {
+            $productCoreData['display_title_en'] = $productSchedule['display_title_en'];
+            $productScheduleData['display_title_en'] = $productCore['display_title_en'];
+        }
+
+        if ($productCore->is_display_title_bn_schedule && $productSchedule->change_state_status) {
+            $productCoreData['display_title_bn'] = $productSchedule['display_title_bn'];
+            $productScheduleData['display_title_bn'] = $productCore['display_title_bn'];
+        }
+
         $productScheduleData['change_state_status'] = 0;
         $productScheduleData['is_cancel'] = 1;
+
         $productData['is_banner_schedule'] = 0;
         $productData['is_tags_schedule'] = 0;
         $productData['is_visible_schedule'] = 0;
         $productData['is_pin_to_top_schedule'] = 0;
         $productData['is_base_msisdn_group_id_schedule'] = 0;
 
+        $productCoreData['is_commercial_name_en_schedule'] = 0;
+        $productCoreData['is_commercial_name_bn_schedule'] = 0;
+        $productCoreData['is_display_title_en_schedule'] = 0;
+        $productCoreData['is_display_title_bn_schedule'] = 0;
         try {
             DB::beginTransaction();
 
             $this->myblProductRepository->updateDataById($product['id'], $productData);
             $this->myblProductScheduleRepository->updateDataById($productSchedule['id'], $productScheduleData);
+            $this->productCoreRepository->updateDataById($productCore['id'], $productCoreData);
 
             DB::commit();
         } catch (\Exception $e) {

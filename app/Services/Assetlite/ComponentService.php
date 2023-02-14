@@ -206,7 +206,7 @@ class ComponentService
 
         $component = $this->save($data);
 
-        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
+        if (($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") && isset($data['base_image'])) {
             foreach ($data['base_image'] as $key => $img) {
                 if (!empty($img)) {
                     $baseImgUrl = $this->upload($img, 'assetlite/images/component');
@@ -349,7 +349,7 @@ class ComponentService
 
         $component->update($data);
 
-        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
+        if (($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") && isset($data['base_image'])) {
             $this->comMultiDataRepository->deleteAllById($id);
             foreach ($data['base_image'] as $key => $img) {
 //                dd($data);
