@@ -144,8 +144,8 @@ $hide_title = false;
                             @if( $ecarrer_section_slug == 'life_at_bl_contact' )
                             @include('admin.ecarrer-items.additional.alter_text_links')
                             @endif
+                            @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' || $ecarrer_section_slug == 'programs_ennovatorbatches')
 
-                            @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' )
                             @include('admin.ecarrer-items.additional.testimonial_text')
                             @endif
 

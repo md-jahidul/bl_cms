@@ -136,7 +136,8 @@ else{
 
 
                                 @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
-                                    @include('admin.ecarrer-items.additional.testimonial_text')
+        
+                                @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 
                                 
