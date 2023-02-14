@@ -20,7 +20,7 @@ class CreateCommerceBillStatusesTable extends Migration
             $table->string('message')->nullable();
             $table->string('bill_payment_id')->nullable();
             $table->string('bill_refer_id')->nullable();
-            $table->string('bill_id')->nullable();
+            $table->string('biller_id')->nullable();
             $table->string('bill_name')->nullable();
             $table->string('bill_no')->nullable();
             $table->string('biller_acc_no')->nullable();
