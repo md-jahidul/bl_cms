@@ -117,7 +117,7 @@ class AlFaqController extends Controller
         $for = null;
 
         if ($category->model != null) {
-            $for = $category->model::All();
+            $for = $category->model::where('type','explore_c')->get();
         }
 
         $faq = $this->faq->findOne($id);
