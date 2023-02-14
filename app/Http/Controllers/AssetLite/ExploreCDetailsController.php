@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AlBannerService;
 use App\Services\Assetlite\ComponentService;
+use App\Services\ExploreCDetailsService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
@@ -19,10 +20,11 @@ class ExploreCDetailsController extends Controller
     protected $alBannerService;
     protected $exploreCDetailsService;
 
-    public function __construct(ComponentService $componentService, AlBannerService $alBannerService)
+    public function __construct(ComponentService $componentService, AlBannerService $alBannerService, ExploreCDetailsService $exploreCDetailsService)
     {
         $this->componentService = $componentService;
         $this->alBannerService = $alBannerService;
+        $this->exploreCDetailsService = $exploreCDetailsService;
     }
 
 
@@ -45,6 +47,47 @@ class ExploreCDetailsController extends Controller
         $banner = $this->alBannerService->findBanner(self::PAGE_TYPE, $explore_c_id);
 
         return view('admin.explore-c.details.details', compact('components', 'banner'));
+    }
+
+    public function pageList()
+    {
+        $pages = $this->exploreCDetailsService->getList(self::PAGE_TYPE);
+        return view('admin.explore-c.pages.list', compact('pages'));
+    }
+
+    public function create()
+    {
+        return view('admin.explore-c.pages.create');
+    }
+
+    public function edit($id)
+    {
+        $page = $this->exploreCDetailsService->getPage($id);
+        return view('admin.explore-c.pages.create', compact('page'));
+    }
+
+    public function savePage(Request $request)
+    {
+        $response = $this->exploreCDetailsService->savePage($request->all(), self::PAGE_TYPE);
+
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Page is saved!');
+        } else {
+            Session::flash('error', $response['message']);
+        }
+
+        return redirect('/explore-c-pages');
+    }
+
+    public function deletePage($id)
+    {
+        $response = $this->exploreCDetailsService->deletePage($id);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Page is delete!');
+        } else {
+            Session::flash('error', 'Page deleting process failed!');
+        }
+        return redirect('/explore-c-pages');
     }
 
     public function componentCreate()
