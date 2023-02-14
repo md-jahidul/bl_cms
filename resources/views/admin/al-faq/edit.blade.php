@@ -26,7 +26,7 @@
                                                 required data-validation-required-message="Please select offer">
                                             <option data-alias="" value="">---Select cat Type---</option>
                                             @foreach($for as $model)
-                                                <option data-alias="{{ $model->id }}" value="{{ $model->id }}" {{ ($model->id == $faq->model_id ) ? 'selected' : '' }}>{{ $model->title_en }}</option>
+                                                <option data-alias="{{ $model->id }}" value="{{ $model->id }}" {{ ($model->id == $faq->model_id ) ? 'selected' : '' }}>{{ $model->page_name_en }}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
