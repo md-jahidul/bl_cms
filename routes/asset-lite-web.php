@@ -1323,7 +1323,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 
-    // Blogs
+    // Blogs Details
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
@@ -1345,11 +1345,35 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::post('blog-ad-tech/store', 'AssetLite\BlogDetailsController@adTechStore')->name('blog.adtech.store');
 
-
     // Blog Landing Page
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
     Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
     Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
+
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // CSR Page
+    Route::resource('csr-landing-page-component', 'AssetLite\CSRLandingPageController')->except(['show', 'destroy']);
+    Route::get('csr-landing-page-component/destroy/{id}', 'AssetLite\CSRLandingPageController@destroy');
+    Route::get('csr-landing-page-sortable', 'AssetLite\CSRLandingPageController@landingPageSortable');
+    # CSR Post Components
+    Route::resource('csr-post', 'AssetLite\CsrController')->except(['show', 'destroy']);
+    Route::get('csr-post/destroy/{id}', 'AssetLite\CsrController@destroy');
+    Route::resource('csr-categories', 'AssetLite\CsrCategoryController')->except(['show', 'destroy']);
+    Route::get('csr-categories/destroy/{id}', 'AssetLite\CsrCategoryController@destroy');
+    # CSR details Components
+    Route::get('csr-component/{blog_id}/list', 'AssetLite\CsrDetailsController@index')
+        ->name('csr-component.list');
+    Route::get('csr-component/create', 'AssetLite\CsrDetailsController@componentCreate')
+        ->name('csr-component.create');
+    Route::post('csr-component/store', 'AssetLite\CsrDetailsController@componentStore')
+        ->name('csr-component.store');
+    Route::get('csr-component/edit/{comId}', 'AssetLite\CsrDetailsController@componentEdit')
+        ->name('csr-component.edit');
+    Route::post('csr-component/update/{comId}', 'AssetLite\CsrDetailsController@componentUpdate')
+        ->name('csr-component.update');
+    Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
+        ->name('csr-component.destroy');
+    Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 });

@@ -658,6 +658,33 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-bold"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">CSR</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('csr-categories') . is_active_url('csr-categories/create') }} }} nav-item">
+                        <a href="{{ url('csr-categories') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Categories</span>
+                        </a>
+                    </li>
+                    <li class="{{ is_active_url('csr-post') . is_active_url('csr-post/create') }} }} nav-item">
+                        <a href="{{ url('csr-post') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post List</span>
+                        </a>
+                    </li>
+                    {{--                    <li class="{{ is_active_url('/tvc-video') }} nav-item">--}}
+                    {{--                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>--}}
+                    {{--                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>--}}
+                    {{--                        </a>--}}
+                    {{--                    </li>--}}
+
+                    <li class="{{ is_active_url('csr-landing-page-component') . is_active_url('csr-landing-page-component/create') }} nav-item">
+                        <a href="{{ url('csr-landing-page-component') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item"><a href="#"><i class="la la-star-half-full"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Customer Feedback</span></a>
                 <ul class="menu-content">
