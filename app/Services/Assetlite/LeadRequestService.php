@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Banglalink;
+namespace App\Services\Assetlite;
 
 use App\Mail\LeadInfoMail;
 use App\Models\LeadCategory;

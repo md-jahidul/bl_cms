@@ -118,6 +118,73 @@
                                         @endif
                                     </slot>
 
+                                    {{--Customer Complains--}}
+                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ ($component->component_type ==  "customer_complaint"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.other-attributes',
+                                                [
+                                                    'other_attributes' => [
+                                                        'compl_cld_no' => 'Complaint Closed No (%)',
+                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',
+                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',
+                                                        'unreached_cust_no' => 'Unreached Customer No (%)',
+                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',
+                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',
+                                                    ],
+                                                ])
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+                                    {{--button_component--}}
+                                    <slot id="button_component" data-offer-type="button_component" class="{{ ($component->component_type ==  "button_component"  ) ? '' : "d-none" }}">
+
+                                        @include('layouts.partials.product-details.component.common-field.title')
+
+                                        @if ($component->component_type ==  "button_component")
+                                            
+                                            <div class="form-group col-md-6 {{ $errors->has('redirect_url_en') ? ' error' : '' }} {{ (isset($component->other_attributes['is_external_url']) ? (($component->other_attributes['is_external_url'] == 0)? '' : 'd-none') : '')}}" id="pageDynamicEn">
+                                                <label for="redirect_url_en">Redirect URL EN</label>
+                                                <input type="text" name="other_attr[redirect_url_en]" class="form-control" placeholder="Enter URL"
+                                                    value="{{ isset($component) ? $component->other_attributes['redirect_url_en'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('redirect_url_en'))
+                                                    <div class="help-block">  {{ $errors->first('redirect_url_en') }}</div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-md-6 {{ $errors->has('redirect_url_bn') ? ' error' : '' }} {{ (isset($component->other_attributes['is_external_url']) ? (($component->other_attributes['is_external_url'] == 0)? '' : 'd-none') : '') }}" id="pageDynamicBn">
+                                                <label for="redirect_url_bn">Redirect URL BN</label>
+                                                <input type="text" name="other_attr[redirect_url_bn]" class="form-control" placeholder="Enter URL"
+                                                    value="{{ isset($component) ? $component->other_attributes['redirect_url_bn'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('redirect_url_bn'))
+                                                    <div class="help-block">  {{ $errors->first('redirect_url_bn') }}</div>
+                                                @endif
+                                            </div>
+
+                                            <div class="form-group col-md-6 {{ $errors->has('external_url') ? ' error' : '' }} {{ (isset($component->other_attributes['is_external_url']) ? (($component->other_attributes['is_external_url'] == 1)? '' : 'd-none') : 'd-none')}}" id="externalLink">
+                                                <label for="external_url">External URL</label>
+                                                <input type="text" name="other_attr[external_url]" class="form-control" placeholder="Enter URL"
+                                                    value="{{ isset($component) ? $component->other_attributes['external_url'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('external_url'))
+                                                    <div class="help-block">  {{ $errors->first('external_url') }}</div>
+                                                @endif
+                                            </div>
+
+                                            <div class="col-md-6 mt-1">
+                                                <label></label>
+                                                <div class="form-group">
+                                                    <label for="external_link">Is External Link:</label>
+                                                    <input type="checkbox" name="other_attr[is_external_url]" value="1" id="external_link"
+                                                        {{ (isset($component->other_attributes['is_external_url']) && $component->other_attributes['is_external_url'] == 1) ? 'checked' : (old("is_external_url") ? 'checked' : '') }}>
+                                                </div>
+                                            </div>
+                                        @endif
+
+
+                                    </slot>
+
+
+
+
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
@@ -267,6 +334,23 @@
             $(document).on('click', '.remove-image', function (event) {
                 var rowId = $(event.target).attr('data-id');
                 $('.'+rowId).remove();
+            });
+
+            //External Link
+            $('#external_link').click(function () {
+                var externalLink = $('#externalLink');
+                var pageDynamicEn = $('#pageDynamicEn');
+                var pageDynamicBn = $('#pageDynamicBn');
+
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                    pageDynamicEn.addClass('d-none');
+                    pageDynamicBn.addClass('d-none');
+                }else{
+                    pageDynamicEn.removeClass('d-none');
+                    pageDynamicBn.removeClass('d-none');
+                    externalLink.addClass('d-none');
+                }
             });
 
         })
