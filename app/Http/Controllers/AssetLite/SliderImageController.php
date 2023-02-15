@@ -101,6 +101,7 @@ class SliderImageController extends Controller
     public function edit($parentId, $type, $id)
     {
         $sliderImage = $this->alSliderImageService->findOne($id);
+        //dd($sliderImage);
         $other_attributes = $sliderImage->other_attributes;
         return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
     }
