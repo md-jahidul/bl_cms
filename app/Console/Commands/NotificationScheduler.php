@@ -160,7 +160,9 @@ class NotificationScheduler extends Command
 
                     NotificationSend::dispatch($notification, $notification_id, array_values($userPhoneChunkFiltered),
                         $notificationService, $activeSchedule)
-                        ->onQueue('notification')->delay(Carbon::now()->addSeconds($delaySeconds));
+                        ->onConnection('redis')
+                        ->onQueue('notification')
+                        ->delay(Carbon::now()->addSeconds($delaySeconds));
                     $iteration++;
                 }
 

@@ -1,13 +1,3 @@
-{{-- <div class="form-group col-md-6 {{ $errors->has('alt_links') ? ' error' : '' }}">
-   <label for="alt_links" class="required1">Links</label>
-   <input type="url" name="alt_links"  class="form-control section_name" placeholder="Links"
-          value="{{ !empty($ecarrer_item->alt_links) ? $ecarrer_item->alt_links : '' }}" required data-validation-required-message="Please enter text">
-   <div class="help-block"></div>
-   @if ($errors->has('alt_links'))
-       <div class="help-block">  {{ $errors->first('alt_links') }}</div>
-   @endif
-</div> --}}
-
 
 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
     <label for="title_en" class="required1">
@@ -52,7 +42,7 @@
  </div>
 
 <div class="form-group col-md-5 {{ $errors->has('image') ? ' error' : '' }}">
-    <label for="alt_text" class="">Image (optional)</label>
+    <label for="alt_text" class="">Image (optional) shuvo</label>
     <div class="custom-file">
         <input type="file" name="image" class="dropify" id="" data-default-file="{{ isset($component->image) ? config('filesystems.file_base_url') . $component->image : '' }}">
         {{-- <label class="custom-file-label" for="inputGroupFile01">Choose file</label> --}}
@@ -79,23 +69,6 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
-    <label for="title">Google Play Store Link</label>
-    <input type="text" name="other_attributes[google_play_link]"  class="form-control" placeholder="Enter play store link"
-        value="{{ (!empty($component->other_attributes['google_play_link'])) ? $component->other_attributes['google_play_link'] : old("other_attributes.google_play_link") ?? '' }}">
-    <div class="help-block"></div>
-    @if ($errors->has('google_play_link'))
-        <div class="help-block">  {{ $errors->first('google_play_link') }}</div>
-    @endif
-</div>
-
-
-<div class="form-group col-md-6 {{ $errors->has('app_store_link') ? ' error' : '' }}">
-    <label for="title">App Store Link</label>
-    <input type="text" name="other_attributes[app_store_link]"  class="form-control" placeholder="Enter app store link"
-        value="{{ (!empty($component->other_attributes['app_store_link'])) ? $component->other_attributes['app_store_link'] : old("other_attributes.app_store_link") ?? '' }}">
-    <div class="help-block"></div>
-    @if ($errors->has('app_store_link'))
-        <div class="help-block">  {{ $errors->first('app_store_link') }}</div>
-    @endif
-</div>
+{{-- <slot id="" data-offer-type="" class="">
+    @include('admin.components.partial.multi_button_section', $component->multiple_attributes ?? [])
+</slot> --}}

@@ -142,9 +142,11 @@ class ComponentService
             }
         }
 
-        $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
+        // return count($results);
+        $data['multiple_attributes'] = (count($results) >= 1) ? array_values($results) : null;
         $countComponents = $this->componentRepository->list($sectionId, $pageType);
         $data['component_order'] = count($countComponents) + 1;
+
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
 
@@ -152,6 +154,39 @@ class ComponentService
         if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
             $data['other_attributes'] = $data['other_attr'];
         }
+
+        /**
+         * Creator: Shuvo-bs
+         * For Button Component 
+         * Genareted Html stored in editor_en & editor_bn column
+         * 
+         */
+        // if ($data['component_type'] == 'button_component') {
+        //     $check_external = '';
+        //     $link_en = '#';
+        //     $link_bn = '#';
+
+        //     if (isset($data['other_attributes'] ['is_external_url'])) {
+
+        //         if ($data['other_attributes'] ['is_external_url'] == 1) {
+        //             $check_external = 'target="_blank"';
+        //             $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
+        //         }
+
+        //     }else{
+
+        //         $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
+        //         $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
+        //     }
+
+        //     $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
+        //     $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
+
+
+        //     $data['editor_en'] = $btn_html_en;
+        //     $data['editor_bn'] = $btn_html_bn;
+            
+        // }
 
         $this->save($data);
         return response('Component create successfully!');
@@ -231,6 +266,39 @@ class ComponentService
         if (!empty($data['other_attr']) && count($data['other_attr']) > 0 && $component->page_type == "blog") {
             $data['other_attributes'] = $data['other_attr'];
         }
+
+        /**
+         * Creator: Shuvo-bs
+         * For Button Component 
+         * Genareted Html stored in editor_en & editor_bn column
+         * 
+         */
+        // if ($data['component_type'] == 'button_component') {
+        //     $check_external = '';
+        //     $link_en = '#';
+        //     $link_bn = '#';
+
+        //     if (isset($data['other_attributes'] ['is_external_url'])) {
+
+        //         if ($data['other_attributes'] ['is_external_url'] == 1) {
+        //             $check_external = 'target="_blank"';
+        //             $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
+        //         }
+
+        //     }else{
+
+        //         $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
+        //         $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
+        //     }
+
+        //     $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
+        //     $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
+
+
+        //     $data['editor_en'] = $btn_html_en;
+        //     $data['editor_bn'] = $btn_html_bn;
+
+        // }
 
         $component->update($data);
         // return $data['multiple_attributes'];
@@ -376,7 +444,9 @@ class ComponentService
     public function deleteComponent($id)
     {
         $component = $this->findOne($id);
-        $component->delete();
+
+        if($component) $component->delete();
+        
         return Response('Component deleted successfully !');
     }
 
