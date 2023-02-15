@@ -26,12 +26,22 @@
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Package Name (EN)<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" required name="name_en" placeholder="Package Name English">
+                                    <input type="text" class="form-control" required name="name_en" placeholder="Package Name English" value={{old("name_en") ? old("name_en") : ''}}>
+                                    @if ($errors->has('name_en'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('name_en') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Package Name (BN)<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" required name="name_bn" placeholder="Package Name Bangla">
+                                    <input type="text" class="form-control" required name="name_bn" placeholder="Package Name Bangla" value={{old("name_bn") ? old("name_bn") : ''}}>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('name_bn') }}
+                                        </div>
+                                    @endif
                                 </div>
 
 
@@ -42,12 +52,12 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" class="form-control summernote_editor"></textarea>
+                                <textarea type="text" name="package_details_en" class="form-control summernote_editor">{{old("package_details_en") ? old("package_details_en") : ''}}</textarea>
 
                                 <hr>
 
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" class="form-control summernote_editor"></textarea>
+                                <textarea type="text" name="package_details_bn" class="form-control summernote_editor">{{old("package_details_bn") ? old("package_details_bn") : ''}}</textarea>
 
                             </div>
 
@@ -55,7 +65,7 @@
 
                                <div class="mb-1">
                                    <label>URL Slug EN<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN">
+                                   <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN" value={{old("url_slug") ? old("url_slug") : ''}}>
                                    <small class="text-info">
                                        <strong>i.e:</strong> banglalink-corporate-postpaid (no spaces and slash)<br>
                                    </small>
@@ -68,7 +78,7 @@
 
                                 <div>
                                     <label>URL Slug BN<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN">
+                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN" value={{old("url_slug_bn") ? old("url_slug_bn") : ''}}>
                                     <small class="text-info">
                                         <strong>i.e:</strong> বাংলালিংক-কর্পোরেট-পোস্টপেইড (no spaces and slash)<br>
                                     </small>
@@ -80,14 +90,14 @@
                                 </div>
                                 <hr>
                                 <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header"></textarea>
+                                <textarea class="form-control" rows="7" name="page_header">{{old("page_header") ? old("page_header") : ''}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
                                 <br>
                                 <br>
                                 <label>Page Header Bangla (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header_bn"></textarea>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{old("page_header_bn") ? old("page_header_bn") : ''}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -124,16 +134,27 @@
                                     <label for="Banner Photo">Card Photo (Web)<span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_web" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    @if ($errors->has('card_banner_web'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('card_banner_web') }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                    @if ($errors->has('card_banner_mobile'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('card_banner_mobile') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Card Photo Alt Text</label>
-                                    <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text">
+                                    <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text" value={{old("card_banner_alt_text") ? old("card_banner_alt_text") : ''}}>
                                 </div>
 
                             </div>
@@ -144,25 +165,42 @@
                                     <label for="Banner Photo">Banner Photo (Web)<span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                    @if ($errors->has('banner_photo'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('banner_photo') }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    @if ($errors->has('banner_mobile'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('banner_mobile') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name" value={{old("banner_name") ? old("banner_name") : ''}}>
 
                                     <small class="text-info">
                                         <strong>i.e:</strong> package-banner (no spaces)<br>
                                     </small>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('banner_name') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Alt Text</label>
-                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
+                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text" value={{old("alt_text") ? old("alt_text") : ''}}>
                                 </div>
 
 
@@ -173,12 +211,22 @@
 
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
-                                    <textarea type="text" name="short_details_en" required class="form-control"></textarea>
+                                    <textarea type="text" name="short_details_en" required class="form-control">{{old("short_details_en") ? old("short_details_en") : ''}}</textarea>
+                                    @if ($errors->has('short_details_en'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('short_details_en') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
-                                    <textarea type="text" name="short_details_bn" required class="form-control"></textarea>
+                                    <textarea type="text" name="short_details_bn" required class="form-control">{{old("short_details_bn") ? old("short_details_bn") : ''}}</textarea>
+                                    @if ($errors->has('short_details_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('short_details_bn') }}
+                                        </div>
+                                    @endif
                                 </div>
 
 
@@ -187,18 +235,33 @@
                             <div class="form-group">
 
                                 <label for="Offer Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor"></textarea>
+                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor">{{old("offer_details_en") ? old("offer_details_en") : ''}}</textarea>
+                                @if ($errors->has('offer_details_en'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('offer_details_en') }}
+                                    </div>
+                                @endif
 
                                 <hr>
 
                                 <label for="Offer Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" class="form-control summernote_editor"></textarea>
+                                <textarea type="text" name="offer_details_bn" class="form-control summernote_editor">{{old("offer_details_bn") ? old("offer_details_bn") : ''}}</textarea>
+                                @if ($errors->has('offer_details_bn'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('offer_details_bn') }}
+                                    </div>
+                                @endif
 
                             </div>
                             <div class="form-group">
 
                                 <label>Schema Markup</label>
-                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{old("schema_markup") ? old("schema_markup") : ''}}</textarea>
+                                @if ($errors->has('schema_markup'))
+                                    <div class="help-block text-danger">
+                                        {{ $errors->first('schema_markup') }}
+                                    </div>
+                                @endif
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
