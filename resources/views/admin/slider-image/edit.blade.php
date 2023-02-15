@@ -134,7 +134,7 @@
                                     @endif
                                 </div>
 
-                                 @include('layouts.partials.slider_types.' . $type )
+                                 @include('layouts.partials.slider_types.' . $type ,['component' =>$sliderImage])
 
                                 <div class="col-md-4 mt-2">
                                     <div class="form-group">

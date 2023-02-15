@@ -11,7 +11,8 @@ class ShortCode extends Model
         'page_id',
         'title_en',
         'title_bn',
-        'other_attributes'
+        'other_attributes',
+        'image_url'
     ];
 
     protected $casts = [
