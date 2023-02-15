@@ -42,6 +42,7 @@
                             @csrf
                             <div class="content-body">
                                 <div class="row">
+                                    <input type="hidden" name="component_type" value="{{ $component->component_type }}">
                                     <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                                         <label for="component_type" class="required">Component Type</label>
                                         <select name="component_type" class="form-control required" id="component_type"
@@ -350,7 +351,7 @@
 
     <script>
         $(function () {
-            /*$('.dropify').dropify({
+            $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Image File to upload',
                     'replace': 'Click to replace',
@@ -359,7 +360,6 @@
                 },
                 height: 100
             });
-            */
 
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"

@@ -74,7 +74,7 @@ class CsrDetailsController extends Controller
         $componentList = ComponentHelper::components()['blog'];
         $updateAction = 'csr-component.update';
         $listAction = 'csr-component.list';
-        return view('admin.components.create', compact('component', 'componentList', 'updateAction', 'listAction'));
+        return view('admin.components.edit', compact('component', 'componentList', 'updateAction', 'listAction'));
     }
 
     public function componentUpdate(Request $request, $id)
