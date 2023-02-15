@@ -53,7 +53,7 @@ class MenuService
 
         $menu_count = count($this->menuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
-        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
         return new Response('Menu added successfully');
     }
@@ -85,7 +85,7 @@ class MenuService
             $data['icon'] = $this->upload($data['icon'], 'assetlite/images/header-menu');
         }
 
-        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $menu->update($data);
         return Response('Menu updated successfully');
     }
