@@ -12,9 +12,10 @@ use App\Models\MetaTag;
 use App\Models\ShortCode;
 use App\Services\Assetlite\ShortCodeService;
 use Illuminate\Support\Facades\Session;
-
+use App\Traits\FileTrait;
 class FixedPageController extends Controller
 {
+    use FileTrait;
 
     /**
      * @var $metaTagService
@@ -152,15 +153,21 @@ class FixedPageController extends Controller
     }
 
     public function updateComponents($pageId,ShortCode $shortCode, Request $request){
+        //dd($request->all());
         $data = $request->all();
         if($data['other_attributes']){
             foreach ($data['other_attributes'] as $key => $val){
                 if(is_null($val)){
                     unset($data['other_attributes'][$key]);
                 }
+
             }
         }
-
+        if ($request->hasFile('image_url')) {
+            if (!empty($data['image_url'])) {
+                $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/home_page');
+            }
+        }
         $shortCodes = $shortCode->update($data);
         // ->where(['id'=>$id,'page_id'=>$pageId]);
         //return view('admin.pages.fixed.edit', compact('shortCodes'));

@@ -18,7 +18,7 @@
 
 
                 <div class="card-body card-dashboard">
-                    <form role="form" action="{{ route('fixed-page-components-update',[$pageId,$shortCodes->id]) }}" method="POST" novalidate>
+                    <form role="form" action="{{ route('fixed-page-components-update',[$pageId,$shortCodes->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                         @csrf
                         {{method_field('PATCH')}}
                         <div class="row">
@@ -53,6 +53,8 @@
 
                             @include('layouts.partials.common_types.label_with_url',['count'=> 'more','type'=>'view more'])
 
+                            @include('layouts.partials.common_types.image_other_component',['component'=> $shortCodes])
+
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i
@@ -72,8 +74,10 @@
 </section>
 @stop
 
+
 @push('page-css')
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <style>
         #sortable tr td{
             padding-top: 5px !important;
@@ -83,8 +87,24 @@
 @endpush
 
 @push('page-js')
-    <script>
 
+    <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+
+
+    <script>
+        $(function () {
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+        })
     </script>
 @endpush
 
