@@ -76,8 +76,8 @@ class MenuService
     public function updateMenu($data, $id)
     {
         request()->validate([
-            //  'url' => 'unique:menus,url,' . $id,
-            //  'url_bn' => 'required|regex:/^\S*$/u|unique:menus,url_bn,' . $id,
+          'url' => 'unique:menus,url,' . $id,
+//          'url_bn' => 'regex:/^\S*$/u|unique:menus,url_bn,' . $id,
         ]);
         $menu = $this->findOne($id);
         if (request()->hasFile('icon')) {
