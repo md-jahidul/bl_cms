@@ -94,7 +94,17 @@ class ComponentHelper
                 'multiple_image' => 'Multiple Image',
                 'title_with_video_and_text' => 'Title With Video Text',
                 'customer_complaint' => 'Customer Complaint',
-            ]
+            ],
+            'business_package' => [
+                'single_image' => 'Single Image',
+                'top_image_with_desc' => 'Top image with Desc',
+                'title_text_editor' => 'Title with text editor',
+                'left_image_with_title_desc_btn' => 'Left Image with Title, Desc, btn',
+                'masonry_1_2_image_layout_col' => 'Masonry 1-2',
+                'masonry_3_2_image_layout_row' => 'Masonry 3-2',
+                'multi_col_with_title_desc' => 'Multi Column With title and desc',
+                'multi_col_with_title_desc_image' => 'Multi Column With title, desc and Image'
+            ],
         ];
     }
 }
