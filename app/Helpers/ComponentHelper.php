@@ -104,7 +104,7 @@ class ComponentHelper
                 'masonry_3_2_image_layout_row' => 'Masonry 3-2',
                 'multi_col_with_title_desc' => 'Multi Column With title and desc',
                 'multi_col_with_title_desc_image' => 'Multi Column With title, desc and Image'
-            ],
+            ]
         ];
     }
 }
