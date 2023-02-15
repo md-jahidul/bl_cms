@@ -93,11 +93,11 @@ class DynamicPageController extends Controller
 
     public function componentList($pageId)
     {
-        
+
         $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
         $components = $this->componentService->findBy(['page_type' => self::PAGE_TYPE, 'section_details_id' => $pageId], '', $orderBy);
 
-        
+
         $page = $this->pageService->findOne($pageId);
         // $components = $this->pageService->getComponents($pageId);
         $banner = $this->alBannerService->findBanner(self::PAGE_TYPE, $pageId);
@@ -122,7 +122,7 @@ class DynamicPageController extends Controller
 
     public function componentStore(Request $request)
     {
-        
+
         // return $request->all();
         $pageId = $request->sections['id'];
         $response = $this->componentService->componentStore($request->all(), $pageId, self::PAGE_TYPE);
@@ -132,7 +132,6 @@ class DynamicPageController extends Controller
 
     public function componentEditForm(Request $request, $id)
     {
-
         // $componentTypes = $this->componentTypes;
         // $component = $this->componentService->findOne($id);
         // $multipleImage = $component['multiple_attributes'];
@@ -143,7 +142,7 @@ class DynamicPageController extends Controller
         $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $updateAction = 'other-component-update';
         $listAction = 'other-components';
-        return view('admin.components.create', compact('component', 'multipleImage', 'componentList', 'updateAction', 'listAction'));
+        return view('admin.components.edit', compact('component', 'multipleImage', 'componentList', 'updateAction', 'listAction'));
 
 
     }
