@@ -25,5 +25,9 @@ class TriviaGamification extends Model
         "failed_right_btn_en",
         "failed_right_btn_bn",
         "failed_right_btn_deeplink",
+        "success_message_en",
+        "success_message_bn",
+        "failed_message_en",
+        "failed_message_bn",
     ];
 }
