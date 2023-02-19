@@ -6,7 +6,8 @@
 <li class="breadcrumb-item active"> Package Edit</li>
 @endsection
 @section('action')
-<a href="{{ url('business-package') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
+    <a href="{{ route('business-package-details-component.list', $package->id)}}" class="btn btn-sm btn-primary btn-glow"><i class="la la-list"></i> Details page Component List</a>
+    <a href="{{ url('business-package') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 @endsection
 @section('content')
 <section>

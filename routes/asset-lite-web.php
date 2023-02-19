@@ -600,6 +600,24 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
         ->name('business-package-component.destroy');
     Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
+    
+    /**
+     * Business package details components
+     * 
+     */
+    Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
+        ->name('business-package-details-component.list');
+    Route::get('business-package-details-component/create', 'AssetLite\BusinessPackageDetailsController@componentCreate')
+        ->name('business-package-details-component.create');
+    Route::post('business-package-details-component/store', 'AssetLite\BusinessPackageDetailsController@componentStore')
+        ->name('business-package-details-component.store');
+    Route::get('business-package-details-component/edit/{comId}', 'AssetLite\BusinessPackageDetailsController@componentEdit')
+        ->name('business-package-details-component.edit');
+    Route::post('business-package-details-component/update/{comId}', 'AssetLite\BusinessPackageDetailsController@componentUpdate')
+        ->name('business-package-details-component.update');
+    Route::get('business-package-details-component/destroy/{comId}', 'AssetLite\BusinessPackageDetailsController@componentDestroy')
+        ->name('business-package-details-component.destroy');
+    Route::get('business-package-details-component-sort', 'AssetLite\BusinessPackageDetailsController@componentSortable');
 
     //__Category Internet Package
     Route::get('business-internet', 'AssetLite\BusinessInternetController@index');
