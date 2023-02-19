@@ -1,8 +1,10 @@
+
+
 <div class=" col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
-    <label for="alt_text" class="required">Component Image (Desktop View)</label>
+    <label for="alt_text" >Component Image (Desktop View)</label>
     <div class="custom-file">
         <input type="file" name="image_url" class="custom-file-input dropify"
-                required data-validation-required-message="Slider image field is required" data-height="80" data-default-file="{{  isset($component) && isset($component->image_url) ? config('filesystems.file_base_url') . $component->image_url : ''}}">
+                 data-validation-required-message="Slider image field is required" data-height="80" data-default-file="{{  isset($component) && isset($component->image_url) ? config('filesystems.file_base_url') . $component->image_url : ''}}">
     </div>
     <span class="text-primary">Please given file type (.png, .jpg, .svg, .gif)</span>
 
@@ -43,9 +45,9 @@
     @if ($errors->has('alt_text_bn'))
         <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
     @endif
-</div>
+</div> --}}
 
-<div class="form-group col-md-6 {{ $errors->has('image_name') ? ' error' : '' }}">
+{{-- <div class="form-group col-md-6 {{ $errors->has('image_name') ? ' error' : '' }}">
     <label class="">Image Name EN</label>
     <input type="text" name="image_name"  class="form-control" placeholder="Enter image name en"
              data-validation--message="Enter image name en"

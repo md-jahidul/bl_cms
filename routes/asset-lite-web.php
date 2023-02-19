@@ -599,7 +599,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     /**
      * Business package landing components
-     * 
+     *
      */
     Route::get('business-package-component/list', 'AssetLite\BusinessPackageController@index')
         ->name('business-package-component.list');
@@ -614,10 +614,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
         ->name('business-package-component.destroy');
     Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
-    
+
     /**
      * Business package details components
-     * 
+     *
      */
     Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
         ->name('business-package-details-component.list');
@@ -1415,7 +1415,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
     Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
 
-    // Blogs Details
+    // Network Types
+    Route::resource('network-types','AssetLite\NetworkTypesController')->except(['show', 'destroy']);
+    Route::get('network-types-sort', 'AssetLite\NetworkTypesController@typeSort');
+    Route::get('network-types/destroy/{id}', 'AssetLite\NetworkTypesController@destroy');
+    // Blogs
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
