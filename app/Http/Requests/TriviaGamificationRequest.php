@@ -41,6 +41,10 @@ class TriviaGamificationRequest extends FormRequest
             'failed_right_btn_en' => 'required|max:200',
             'failed_right_btn_bn' => 'required|max:200',
             'failed_right_btn_deeplink' => 'required|max:200',
+            'success_message_en' => 'required|max:200',
+            'success_message_bn' => 'required|max:200',
+            'failed_message_en' => 'required|max:200',
+            'failed_message_bn' => 'required|max:200',
         ];
     }
 }

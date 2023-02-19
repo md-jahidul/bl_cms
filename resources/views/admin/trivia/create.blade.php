@@ -283,7 +283,7 @@
                         <div class="help-block"></div>
                     </div>
                 </div>
-                    <div class="col-4">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="failed_right_btn_deeplink" class="required">Failed Right Button Deeplink:</label>
                         <input required
@@ -296,6 +296,74 @@
                                    @error('failed_right_btn_deeplink') is-invalid @enderror"
                                placeholder="Enter Deeplink..">
                          <small class="text-danger"> @error('failed_right_btn_deeplink') {{ $message }} @enderror</small>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="success_message_en" class="required">Success Message EN:</label>
+                        <input required
+                               data-validation-required-message="The field is required"
+                               id="success_message_en"
+                               value="@if(isset($trivia)){{$trivia->success_message_en}}@elseif(old("success_message_en")){{old("success_message_en")}}@endif"
+                               type="text"
+                               name="success_message_en"
+                               class="form-control
+                                   @error('success_message_en') is-invalid @enderror"
+                               placeholder="write success message">
+                        <small class="text-danger"> @error('success_message_en') {{ $message }} @enderror</small>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="success_message_bn" class="required">Success Message BN:</label>
+                        <input required
+                               data-validation-required-message="The field is required"
+                               id="success_message_bn"
+                               value="@if(isset($trivia)){{$trivia->success_message_bn}}@elseif(old("success_message_bn")){{old("success_message_bn")}}@endif"
+                               type="text"
+                               name="success_message_bn"
+                               class="form-control
+                                   @error('success_message_bn') is-invalid @enderror"
+                               placeholder="write success message">
+                        <small class="text-danger"> @error('success_message_bn') {{ $message }} @enderror</small>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="failed_message_en" class="required">Failed Message EN:</label>
+                        <input required
+                               data-validation-required-message="The field is required"
+                               id="failed_message_en"
+                               value="@if(isset($trivia)){{$trivia->failed_message_en}}@elseif(old("failed_message_en")){{old("failed_message_en")}}@endif"
+                               type="text"
+                               name="failed_message_en"
+                               class="form-control
+                                   @error('failed_message_en') is-invalid @enderror"
+                               placeholder="write failed message">
+                        <small class="text-danger"> @error('failed_message_en') {{ $message }} @enderror</small>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="failed_message_bn" class="required">Failed Message BN:</label>
+                        <input required
+                               data-validation-required-message="The field is required"
+                               id="failed_message_bn"
+                               value="@if(isset($trivia)){{$trivia->failed_message_en}}@elseif(old("failed_message_bn")){{old("failed_message_bn")}}@endif"
+                               type="text"
+                               name="failed_message_bn"
+                               class="form-control
+                                   @error('failed_message_bn') is-invalid @enderror"
+                               placeholder="write failed message">
+                        <small class="text-danger"> @error('failed_message_bn') {{ $message }} @enderror</small>
                         <div class="help-block"></div>
                     </div>
                 </div>
