@@ -67,7 +67,7 @@ class MyBlProductSchedulerService
 
         foreach ($products as $product) {
 
-            $productSchedule = $this->myblProductScheduleRepository->findScheduleDataByProductCodeV2($product['product_code']);
+            $productSchedule = $this->myblProductScheduleRepository->findScheduleDataByProductCode($product['product_code']);
 
             $this->removeRedisKeyByBaseGroupId($productSchedule);
 
@@ -232,7 +232,7 @@ class MyBlProductSchedulerService
                 continue;
             }
 
-            if ($currentTime >= $productSchedule['start_date'] && $currentTime <= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
+            if ($currentTime >= $productSchedule['start_date'] && $currentTime <= $productSchedule['end_date'] && $productSchedule['product_core_change_state_status'] == 0) {
 
                 $productData = [];
                 $productScheduleData = [];
@@ -255,7 +255,7 @@ class MyBlProductSchedulerService
                     $productData['display_title_bn'] = $productSchedule['display_title_bn'];
                     $productScheduleData['display_title_bn'] = $product['display_title_bn'];
                 }
-                $productScheduleData['change_state_status'] = 1;
+                $productScheduleData['product_core_change_state_status'] = 1;
 
                 try {
 
@@ -270,7 +270,7 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
-            } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
+            } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['product_core_change_state_status'] == 1) {
 
                 $productData = [];
                 $productScheduleData = [];
@@ -295,7 +295,7 @@ class MyBlProductSchedulerService
                     $productScheduleData['display_title_bn'] = $product['display_title_bn'];
                 }
 
-                $productScheduleData['change_state_status'] = 0;
+                $productScheduleData['product_core_change_state_status'] = 0;
                 $productData['is_commercial_name_en_schedule'] = 0;
                 $productData['is_commercial_name_bn_schedule'] = 0;
                 $productData['is_display_title_en_schedule'] = 0;
@@ -375,27 +375,28 @@ class MyBlProductSchedulerService
             $productScheduleData['base_msisdn_group_id'] = $product['base_msisdn_group_id'];
         }
 
-        if ($productCore->is_commercial_name_en_schedule && $productSchedule->change_state_status) {
+        if ($productCore->is_commercial_name_en_schedule && $productSchedule->product_core_change_state_status) {
             $productCoreData['commercial_name_en'] = $productSchedule['commercial_name_en'];
             $productScheduleData['commercial_name_en'] = $productCore['commercial_name_en'];
         }
 
-        if ($productCore->is_commercial_name_bn_schedule && $productSchedule->change_state_status) {
+        if ($productCore->is_commercial_name_bn_schedule && $productSchedule->product_core_change_state_status) {
             $productCoreData['commercial_name_bn'] = $productSchedule['commercial_name_bn'];
             $productScheduleData['commercial_name_bn'] = $productCore['commercial_name_bn'];
         }
 
-        if ($productCore->is_display_title_en_schedule && $productSchedule->change_state_status) {
+        if ($productCore->is_display_title_en_schedule && $productSchedule->product_core_change_state_status) {
             $productCoreData['display_title_en'] = $productSchedule['display_title_en'];
             $productScheduleData['display_title_en'] = $productCore['display_title_en'];
         }
 
-        if ($productCore->is_display_title_bn_schedule && $productSchedule->change_state_status) {
+        if ($productCore->is_display_title_bn_schedule && $productSchedule->product_core_change_state_status) {
             $productCoreData['display_title_bn'] = $productSchedule['display_title_bn'];
             $productScheduleData['display_title_bn'] = $productCore['display_title_bn'];
         }
 
         $productScheduleData['change_state_status'] = 0;
+        $productScheduleData['product_core_change_state_status'] = 0;
         $productScheduleData['is_cancel'] = 1;
 
         $productData['is_banner_schedule'] = 0;

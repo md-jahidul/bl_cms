@@ -119,12 +119,12 @@ class MyblProductEntryController extends Controller
         if(!is_null($productSchedulerData)) {
             $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
 //            dd($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel);
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel == 0)) {
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && (!$productSchedulerData->change_state_status || !$productSchedulerData->product_core_change_state_status) && $productSchedulerData->is_cancel == 0)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule will be start.";
             }
 
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && $productSchedulerData->change_state_status && $productSchedulerData->is_cancel == 0)) {
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && ($productSchedulerData->change_state_status || $productSchedulerData->product_core_change_state_status) && $productSchedulerData->is_cancel == 0)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule is running.";
             }
