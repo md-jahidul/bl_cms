@@ -2,100 +2,19 @@
 @section('title', 'Business Packages')
 @section('card_name', 'Business Packages')
 @section('action')
-    <a href="{{ route('business-package-component.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i> Add Component </a>
+    <a href="{{ route('business-package-details-component.create', ['section_id' => request()->business_package_details_id])}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i> Add Details page Component </a>
 
-    <a href="{{ url('business-package/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Package
-    </a>
 @endsection
 @section('content')
 <section>
-   
-<div class="card">
-    <div class="card-content collapse show">
-        <div class="card-body card-dashboard">
-            <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    <h4 class="pb-1"><strong>Packages</strong></h4>
-                    <table class="table table-striped table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                                <th width="20%">Name</th>
-                                <th width="60%">Short Details</th>
-                                <th width="20%">Home Show</th>
-                                <th width="10%">Status</th>
-                                <th width="10%">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="package_sortable cursor-move">
-                            @foreach($packages as $pk)
-                            <tr data-index="{{ $pk->id }}" data-position="{{ $pk->sort }}">
-
-                                <td class="category_name">
-                                   
-                                    <p class="text-bold-500 text-info">
-                                        <i class="icon-cursor-move icons"></i> &nbsp; {{ $pk->name }}
-                                    </p> 
-                                    @if($pk->banner_photo != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $pk->banner_photo }}" alt="Banner Photo" height="40px" />
-                                    @endif
-                                    
-                                    
-                                </td>
-                                
-                                <td>
-                                    {{$pk->short_details}}
-                                </td>
-                                <td class="text-center">
-
-                                    @if($pk->home_show == 1)
-                                    <a href="{{$pk->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
-                                    @else
-                                    <a href="{{$pk->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
-                                    @endif
-
-                                </td>
-                                <td class="text-center">
-
-                                    @if($pk->status == 1)
-                                    <a href="{{$pk->id}}" class="btn btn-sm btn-success package_status">Active</a>
-                                    @else
-                                    <a href="{{$pk->id}}" class="btn btn-sm btn-warning package_status">Inactive</a>
-                                    @endif
-
-                                </td>
-                                <td class="text-center">
-
-                                   <a class="text-info edit_package" href="{{url('business-package-edit/'.$pk->id)}}">
-                                        <i class="la la-pencil-square"></i>
-                                    </a>
-                                   <a class="text-danger delete_package" href="{{url('business-package-delete/'.$pk->id)}}">
-                                        <i class="la la-trash"></i>
-                                    </a>
-
-                                </td>
-                               
-
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
 
 @php
 
     $action = [
-        'edit' => 'business-package-component/edit',
-        'destroy' => 'business-package-component/destroy',
-        'componentSort' => 'business-package-component-sort',
-        'section_id' => request()->business_package_id??0
+        'edit' => 'business-package-details-component/edit',
+        'destroy' => 'business-package-details-component/destroy',
+        'componentSort' => 'business-package-details-component-sort',
+        'section_id' => request()->business_package_details_id
     ];
 
 @endphp

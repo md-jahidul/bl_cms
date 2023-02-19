@@ -303,11 +303,11 @@
                         <tr>
 
                             <td>
-                                <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed }}" disabled="disabled">
+                                <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed ?? '' }}" disabled="disabled">
 
                             </td>
                             <td class="category_name">
-                                <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed }}" disabled="disabled">
+                                <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed ?? '' }}" disabled="disabled">
                             </td>
                             <td class="text-center">
 
