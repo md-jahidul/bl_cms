@@ -900,7 +900,7 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-        $firstTag = ProductTag::where('id', $request->tags[0])->first();
+        $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
