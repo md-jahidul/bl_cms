@@ -110,6 +110,7 @@ class ComponentHelper
                 'accordion_section' => 'Accordion',
                 'text_editor' => 'Text Editor',
                 'title_text_editor' => 'Title with text editor',
+                'multi_application_form_with_title' => 'Multi Application Forms With Title',
             ]
         ];
     }

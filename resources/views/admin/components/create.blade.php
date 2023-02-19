@@ -391,6 +391,14 @@
 
                                     @endif
 
+                                    @if (array_key_exists('multi_application_form_with_title',$componentList))
+                                        
+                                        <!--Multiple Application with File-->
+                                        <slot id="multi_application_form_with_title" data-offer-type="multi_application_form_with_title" class="{{ isset($component) && $component->component_type == "multi_application_form_with_title" ? "" : "d-none" }}">
+                                            @include('admin.components.partial.multi_application_form_with_title', $component ?? [])
+                                        </slot>
+                                    @endif
+
 
                                     {{ Form::hidden('sections[id]', isset($component) ? $component->section_details_id : request()->section_id ?? null, ['class' => 'section_id'] ) }}
                                     {{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
