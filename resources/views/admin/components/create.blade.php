@@ -400,6 +400,14 @@
                                         </slot>
                                     @endif
 
+                                    @if (array_key_exists('testimonials_with_title_desc',$componentList))
+                                        
+                                        <!--Testimonials-->
+                                        <slot id="testimonials_with_title_desc" data-offer-type="testimonials_with_title_desc" class="{{ isset($component) && $component->component_type == "testimonials_with_title_desc" ? "" : "d-none" }}">
+                                            @include('admin.components.partial.testimonials_with_title_desc', $component ?? [])
+                                        </slot>
+                                    @endif
+
 
                                     {{ Form::hidden('sections[id]', isset($component) ? $component->section_details_id : request()->section_id ?? null, ['class' => 'section_id'] ) }}
                                     {{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}

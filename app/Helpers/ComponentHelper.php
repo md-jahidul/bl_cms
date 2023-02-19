@@ -96,15 +96,13 @@ class ComponentHelper
             ],
             'business_package' => [
                 'single_image' => 'Single Image',
-                'top_image_with_desc' => 'Top image with Desc',
+                'table_component' => 'Table Component',
+                'text_editor' => 'Text Editor',
                 'title_text_editor' => 'Title with text editor',
-                'left_image_with_title_desc_btn' => 'Left Image with Title, Desc, btn',
-                'masonry_1_2_image_layout_col' => 'Masonry 1-2',
-                'masonry_3_2_image_layout_row' => 'Masonry 3-2',
-                'multi_col_with_title_desc' => 'Multi Column With title and desc',
-                'multi_col_with_title_desc_image' => 'Multi Column With title, desc and Image'
+                'testimonials_with_title_desc' => 'Testimonials with title and desc',
             ],
             'business_package_details' => [
+                'single_image' => 'Single Image',
                 'table_component' => 'Table Component',
                 'accordion_section' => 'Accordion',
                 'text_editor' => 'Text Editor',

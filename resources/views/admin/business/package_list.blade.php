@@ -24,6 +24,7 @@
                                 <th width="60%">Short Details</th>
                                 <th width="20%">Home Show</th>
                                 <th width="10%">Status</th>
+                                <th width="10%">Details</th>
                                 <th width="10%">Action</th>
                             </tr>
                         </thead>
@@ -63,6 +64,9 @@
                                     <a href="{{$pk->id}}" class="btn btn-sm btn-warning package_status">Inactive</a>
                                     @endif
 
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('business-package-details-component.list', $pk->id)}}" class="btn btn-sm btn-primary btn-glow">Components</a>
                                 </td>
                                 <td class="text-center">
 

@@ -2,7 +2,8 @@
 @section('title', 'Business Packages')
 @section('card_name', 'Business Packages')
 @section('action')
-    <a href="{{ route('business-package-details-component.create', ['section_id' => request()->business_package_details_id])}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i> Add Details page Component </a>
+    <a href="{{ route('business-package-details-component.create', ['section_id' => request()->business_package_details_id])}}" class="btn btn-sm btn-primary btn-glow"><i class="la la-plus"></i> Add Details page Component </a>
+    <a href="{{ url('business-package') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 
 @endsection
 @section('content')
