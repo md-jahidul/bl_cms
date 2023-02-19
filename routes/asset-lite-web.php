@@ -1299,7 +1299,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
     Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
 
-
+    // Network Types
+    Route::resource('network-types','AssetLite\NetworkTypesController')->except(['show', 'destroy']);
+    Route::get('network-types-sort', 'AssetLite\NetworkTypesController@typeSort');
+    Route::get('network-types/destroy/{id}', 'AssetLite\NetworkTypesController@destroy');
     // Blogs
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
