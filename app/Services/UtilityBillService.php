@@ -43,9 +43,6 @@ class UtilityBillService
 
     public function update($id, array $data)
     {
-        $string = strtolower($data['name_en']);
-        $data['slug'] = str_replace(" ", "_", $string);
-
         try {
 
             $utility = $this->utilityBillRepository->findOne($id);
