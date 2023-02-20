@@ -47,10 +47,10 @@ class UtilityBillService
 
             $utility = $this->utilityBillRepository->findOne($id);
 
-            if (!empty($data['logo'])) {
-                $data['logo'] = 'storage/' . $data['logo']->store('commerce_bill_category');
-                if (isset($utility) && file_exists($utility->logo)) {
-                    unlink($utility->logo);
+            if (!empty($data['icon'])) {
+                $data['icon'] = 'storage/' . $data['icon']->store('utility_bill');
+                if (isset($utility) && file_exists($utility->icon)) {
+                    unlink($utility->icon);
                 }
             }
             return $utility->update($data);
