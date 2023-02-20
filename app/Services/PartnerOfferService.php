@@ -71,7 +71,7 @@ class PartnerOfferService
             $data['card_img'] = $this->upload($data['card_img'], 'assetlite/images/partner-offer');
         }
         $data['display_order'] = ++$count;
-        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+        // $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $data['phone'] = json_encode($data['phone']);
         $data['location'] = json_encode($data['location']);
         $data['created_by'] = Auth::id();

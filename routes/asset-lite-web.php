@@ -347,7 +347,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
         ->name('partner_offer_update');
-    Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
+
+    #Using this type of route because of this route is overriding by edit route
+    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/destroy/destroy', 'AssetLite\PartnerOfferController@destroy');
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
     Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');
