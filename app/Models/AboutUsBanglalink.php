@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AboutUsBanglalink extends Model
 {
-    use LogModelAction;
+//    use LogModelAction;
 
     /**
      * The table associated with the model.
