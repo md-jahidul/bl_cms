@@ -53,7 +53,7 @@ class BlogDetailsController extends Controller
 
     public function componentCreate()
     {
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()[self::REFERENCE_TYPE];
         $storeAction = 'blog-component.store';
         $listAction = 'blog-component.list';
         $pageType = self::REFERENCE_TYPE;
@@ -72,7 +72,7 @@ class BlogDetailsController extends Controller
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
-        $componentList = ComponentHelper::components();
+        $componentList = ComponentHelper::components()[self::REFERENCE_TYPE];
         $updateAction = 'blog-component.update';
         $listAction = 'blog-component.list';
         return view('admin.components.create', compact('component', 'componentList', 'updateAction', 'listAction'));
