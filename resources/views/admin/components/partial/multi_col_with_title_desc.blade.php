@@ -1,4 +1,4 @@
-{{ Form::hidden('component_type', 'multi_col_with_title_desc' ) }}
+{{-- {{ Form::hidden('component_type', 'multi_col_with_title_desc' ) }} --}}
 
 {{-- <div class="form-group col-md-4 {{ $errors->has('masonry_type') ? ' error' : '' }}">
     <label for="masonry_type" class="required">Masonry Type</label>

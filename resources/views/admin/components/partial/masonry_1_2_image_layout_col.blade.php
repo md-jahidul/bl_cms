@@ -1,4 +1,4 @@
-{{ Form::hidden('component_type', 'masonry_1_2_image_layout_col' ) }}
+{{-- {{ Form::hidden('component_type', 'masonry_1_2_image_layout_col' ) }} --}}
 
 
 <div class="col-sm-12">

@@ -176,56 +176,32 @@ class ComponentService
          * Genareted Html stored in editor_en & editor_bn column
          *
          */
-        if ($data['component_type'] == 'button_component') {
-            $check_external = '';
-            $link_en = '#';
-            $link_bn = '#';
+        // if ($data['component_type'] == 'button_component') {
+        //     $check_external = '';
+        //     $link_en = '#';
+        //     $link_bn = '#';
 
-            if (isset($data['other_attributes'] ['is_external_url'])) {
+        //     if (isset($data['other_attributes'] ['is_external_url'])) {
 
-                if ($data['other_attributes'] ['is_external_url'] == 1) {
-                    $check_external = 'target="_blank"';
-                    $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
-                }
+        //         if ($data['other_attributes'] ['is_external_url'] == 1) {
+        //             $check_external = 'target="_blank"';
+        //             $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
+        //         }
 
-            }else{
+        //     }else{
 
-                $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
-                $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
-            }
+        //         $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
+        //         $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
+        //     }
 
-            $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
-            $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
-
-
-            $data['editor_en'] = $btn_html_en;
-            $data['editor_bn'] = $btn_html_bn;
-
-        }
+        //     $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
+        //     $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
 
 
-        $component = $this->save($data);
+        //     $data['editor_en'] = $btn_html_en;
+        //     $data['editor_bn'] = $btn_html_bn;
 
-        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component" && isset($data['base_image'])) {
-            foreach ($data['base_image'] as $key => $img) {
-                if (!empty($img)) {
-                    $baseImgUrl = $this->upload($img, 'assetlite/images/component');
-                }
-                $imgData = [
-                    'component_id' => $component->id,
-                    'page_type' => $pageType,
-                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : '',
-                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : '',
-                    'alt_text_en' => $data['multi_alt_text_en'][$key],
-                    'alt_text_bn' => $data['multi_alt_text_bn'][$key],
-                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
-                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
-                    'base_image' => $baseImgUrl,
-                    'created_by' => Auth::id(),
-                ];
-                $this->comMultiDataRepository->save($imgData);
-            }
-        }
+        // }
 
         return response('Component create successfully!');
     }
@@ -303,7 +279,7 @@ class ComponentService
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
-        if ($data['component_type'] == 'table_component') {
+        if ($component['component_type'] == 'table_component') {
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
         }
@@ -319,32 +295,32 @@ class ComponentService
          * Genareted Html stored in editor_en & editor_bn column
          *
          */
-        if ($data['component_type'] == 'button_component') {
-            $check_external = '';
-            $link_en = '#';
-            $link_bn = '#';
+        // if ($data['component_type'] == 'button_component') {
+        //     $check_external = '';
+        //     $link_en = '#';
+        //     $link_bn = '#';
 
-            if (isset($data['other_attributes'] ['is_external_url'])) {
+        //     if (isset($data['other_attributes'] ['is_external_url'])) {
 
-                if ($data['other_attributes'] ['is_external_url'] == 1) {
-                    $check_external = 'target="_blank"';
-                    $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
-                }
+        //         if ($data['other_attributes'] ['is_external_url'] == 1) {
+        //             $check_external = 'target="_blank"';
+        //             $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
+        //         }
 
-            }else{
+        //     }else{
 
-                $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
-                $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
-            }
+        //         $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
+        //         $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
+        //     }
 
-            $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
-            $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
+        //     $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
+        //     $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
 
 
-            $data['editor_en'] = $btn_html_en;
-            $data['editor_bn'] = $btn_html_bn;
+        //     $data['editor_en'] = $btn_html_en;
+        //     $data['editor_bn'] = $btn_html_bn;
 
-        }
+        // }
 
         $component->update($data);
 

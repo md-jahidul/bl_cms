@@ -188,6 +188,8 @@ class BusinessPackageService {
 
             $cardWeb = "";
             $cardMob = "";
+            $cardIcon = "";
+            $cardDetail = "";
             if (!empty($data['card_banner_web'])) {
 
                 $data['old_card_banner_web'] != "" ? $this->deleteFile($data['old_card_banner_web']) : "";

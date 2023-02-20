@@ -1,6 +1,6 @@
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">
-      <a href="#" class="btn btn-info  btn-glow px-1 add_more_text_section_item">+ Add Text Section</a>
+      <a href="#" class="btn btn-info  btn-glow px-1 add_more_file_section_item">+ Add File Section</a>
     </div>
 </div>
 
@@ -8,14 +8,14 @@
         @php
             $count = (isset($component->multiple_attributes))? count($component->multiple_attributes) : 1 ;
         @endphp
-    <div id="text_content_section" class="text_content_section" data-count="1">
+    <div id="file_content_section" class="file_content_section" data-count="1">
         <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$count}}">
 
         @if (isset($component->multiple_attributes))
             
             @foreach ( $component->multiple_attributes as $key => $single_attribute )
 
-                <div class="row single_text_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
+                <div class="row single_file_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
                     <input type="hidden" name="multi_item[id-{{ $key +1 }}]" value="{{ $key +1 }}">
                     <input type="hidden" name="multi_item[display_order-{{ $key +1 }}]" value="{{ $key +1 }}">
 
@@ -48,7 +48,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Description (English)</label>
-                            <textarea name="multi_item[desc_en-{{ $key +1 }}]" class="form-control summernote_editor" rows="5"
+                            <textarea name="multi_item[desc_en-{{ $key +1 }}]" class="form-control" rows="5"
                                     placeholder="Enter description">{{ $single_attribute['desc_en'] ?? null}}</textarea>
                         </div>
                     </div>
@@ -56,18 +56,25 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Description (Bangla)</label>
-                            <textarea name="multi_item[desc_bn-{{ $key +1 }}]" class="form-control summernote_editor" rows="5"
+                            <textarea name="multi_item[desc_bn-{{ $key +1 }}]" class="form-control" rows="5"
                                     placeholder="Enter description">{{ $single_attribute['desc_bn'] ?? null}}</textarea>
                         </div>
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="status">Status</label>
-                        <select class="form-control" name="multi_item[status-{{ $key +1 }}]" aria-invalid="false">
-                            <option value="1" {{ isset ($single_attribute['status'])  && $single_attribute['status'] == 1 ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ isset ($single_attribute['status'])  && $single_attribute['status'] == 0 ? 'selected' : '' }}>Inactive</option>
-                        </select>
+                    <div class="form-group col-md-6 {{ $errors->has('file_url') ? ' error' : '' }}">
+                        <label for="file_url" class="">File</label>
+                        <div class="custom-file">
+                            <input type="file" name="multi_item[file_url-{{ $key +1 }}]" class="dropify" data-default-file="{{ isset($single_attribute['file_url']) ? config('filesystems.file_base_url') . $single_attribute['file_url'] : '' }}">
+                        </div>
+                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+
+                        <div class="help-block"></div>
+                        @if ($errors->has('file_url'))
+                            <div class="help-block">  {{ $errors->first('file_url') }}</div>
+                        @endif
                     </div>
+                    <div class="form-group col-md-6"></div>
+
                     <div class="form-group">
                         <label for="status" style="padding-bottom: 43px;"> </label>
                         <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button>
@@ -76,7 +83,7 @@
             @endforeach
             
         @else
-            <div class="row single_text_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
+            <div class="row single_file_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
                 <input type="hidden" name="multi_item[id-1]" value="1">
                 <input type="hidden" name="multi_item[display_order-1]" value="1">
 
@@ -109,7 +116,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Description (English)</label>
-                        <textarea name="multi_item[desc_en-1]" class="form-control summernote_editor" rows="5"
+                        <textarea name="multi_item[desc_en-1]" class="form-control" rows="5"
                                 placeholder="Enter description"></textarea>
                     </div>
                 </div>
@@ -117,19 +124,26 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Description (Bangla)</label>
-                        <textarea name="multi_item[desc_bn-1]" class="form-control summernote_editor" rows="5"
+                        <textarea name="multi_item[desc_bn-1]" class="form-control" rows="5"
                                 placeholder="Enter description"></textarea>
                     </div>
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label for="status">Status</label>
-                    <select class="form-control" name="multi_item[status-1]" aria-invalid="false">
-                        <option value="1" selected>Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
+                <div class="form-group col-md-6 {{ $errors->has('file_url') ? ' error' : '' }}">
+                    <label for="file_url" class="">File</label>
+                    <div class="custom-file">
+                        <input type="file" name="multi_item[file_url-1]" class="dropify" data-default-file="{{ isset($single_attribute['file_url']) ? config('filesystems.file_base_url') . $single_attribute['file_url'] : '' }}">
+                    </div>
+                    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
 
+                    <div class="help-block"></div>
+                    @if ($errors->has('file_url'))
+                        <div class="help-block">  {{ $errors->first('file_url') }}</div>
+                    @endif
                 </div>
+                <div class="form-group col-md-6"></div>
+
+
                 <div class="form-group">
                     <label for="status" style="padding-bottom: 43px;"> </label>
                     <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button>
@@ -166,20 +180,20 @@
 	$(document).ready(function () {
 
 	   // Add multiple item
-	   $('.add_more_text_section_item').on('click', function(event){
+	   $('.add_more_file_section_item').on('click', function(event){
         event.preventDefault();
 
-	   	$parentSelector = $('#multi_text_with_image_bottom');
+	   	$parentSelector = $('#multi_application_form_with_title');
 
 	     var i = parseInt($parentSelector.find('#multi_item_count').val(), 10);
          console.log(i);
-	     // $('#text_content_section').empty();
+	     // $('#file_content_section').empty();
 
 	     i = i+1;
 
 	     var html = '';
 
-        html += '<div class="row single_text_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">'+
+        html += '<div class="row single_file_section" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">'+
             '<input type="hidden" name="multi_item[id-'+i+']" value="'+i+'"><input type="hidden" name="multi_item[display_order-'+i+']" value="'+i+'">'+
             '<div class="form-group col-md-6">'+
                 '<label for="title_en" class="required1">Title (English)</label>'+
@@ -210,20 +224,19 @@
                 '</div>'+
             '</div>'+
 
-            '<div class="form-group col-md-3">'+
-                '<label for="status">Status</label>'+
-                '<select class="form-control" name="multi_item[status-'+i+']" aria-invalid="false">'+
-                    '<option value="1" selected>Active</option>'+
-                    '<option value="0">Inactive</option>'+
-                '</select>'+
-
+            '<div class="form-group col-md-6">'+
+                '<label for="file_url" class="">File</label>'+
+                '<div class="custom-file"><input type="file" name="multi_item[file_url-'+i+']" class="dropify"></div>'+
+                '<span class="text-primary">Please given file type (.png, .jpg, svg)</span>'+
+                '<div class="help-block"></div>'+
             '</div>'+
+
             '<div class="form-group">'+
                 '<label for="status" style="padding-bottom: 43px;"> </label>'+
                ' <button class="btn btn-danger multi_item_remove"><i class="la la-trash"></i></button>'+
             '</div>'+
         '</div>';
-	     $parentSelector.find('#text_content_section').append(html);
+	     $parentSelector.find('#file_content_section').append(html);
 
 
 	     $parentSelector.find('#multi_item_count').val(i);
@@ -237,7 +250,7 @@
 
 	     $(this).parent().parent().remove();
 
-        let parentSelector = $('#multi_text_with_image_bottom');
+        let parentSelector = $('#multi_application_form_with_title');
         let count =  parentSelector.find('#multi_item_count').val();
 
         parentSelector.find('#multi_item_count').val(count-1);

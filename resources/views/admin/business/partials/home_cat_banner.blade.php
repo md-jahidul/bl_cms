@@ -302,14 +302,14 @@
                         <tbody>
                         <tr>
 
-                            <td>
-                                <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed }}" disabled="disabled">
+                                <td>
+                                    <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed ?? '' }}" disabled="disabled">
 
-                            </td>
-                            <td class="category_name">
-                                <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed }}" disabled="disabled">
-                            </td>
-                            <td class="text-center">
+                                </td>
+                                <td class="category_name">
+                                    <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed ?? '' }}" disabled="disabled">
+                                </td>
+                                <td class="text-center">
 
                                 <a href="javascript:;" class="btn btn-sm btn-success update_slider_speed">Update</a>
 
@@ -377,6 +377,50 @@
                             var bannerMob = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_image_mobile + "' width='100%'>";
                             $('.banner_mobile').html(bannerMob);
                         }
+
+                        if (result.status == '1') {
+                            $(".status_active").attr('checked', 'checked');
+                        } else {
+                            $(".status_inactive").attr('checked', 'checked');
+                        }
+
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Failed',
+                            type: 'error',
+                        });
+                    }
+
+                        $('.banner_web').html("");
+                        if (result.banner_photo != null) {
+
+                            var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "' width='100%'>";
+                            $('.banner_web').html(bannerWeb);
+
+                        }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Failed',
+                        type: 'error',
+                    });
+                    var save_url = "{{ url('business-category-sort-change') }}";
+                    saveNewPositions(save_url);
+                }
+            });
+
+            let drop = $('.dropify_category').dropify({
+                messages: {
+                    'default': 'Browse',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+        });
 
                         if (result.status == '1') {
                             $(".status_active").attr('checked', 'checked');

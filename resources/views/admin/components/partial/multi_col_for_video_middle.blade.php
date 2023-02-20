@@ -1,4 +1,4 @@
-{{ Form::hidden('component_type', 'multi_col_for_video_middle' ) }}
+{{-- {{ Form::hidden('component_type', 'multi_col_for_video_middle' ) }} --}}
 
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">

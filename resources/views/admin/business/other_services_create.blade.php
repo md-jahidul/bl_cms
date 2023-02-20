@@ -92,6 +92,232 @@
                                     <label>Product Photo Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
 
+                            <div class="form-group">
+                                <label for="Short Details">List Page Short Details (BN)</label>
+                                <textarea type="text" name="home_short_details_bn" class="form-control"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Product Photo (Mobile)</label>
+                                <input type="file" class="dropify_package" name="banner_mobile" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+                                <label for="Package Name"> Name (BN)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="name_bn" placeholder="Package Name Bangla">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Icon">Icon <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" required name="icon" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Product Photo Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+
+                                <small class="text-info">
+                                    <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
+                                </small>
+
+                                <br>
+
+                                <label>Alt Text</label>
+                                <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4><strong>Details Data</strong></h4>
+                    <hr>
+
+                    <div class="row">
+
+
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+                                <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                <textarea type="text" name="short_details_en" required class="form-control"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Show in top, after product name
+                                </small>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="Details">Offer Details (EN)</label>
+                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Show in bottom accordion
+                                </small>
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+
+                                <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
+                                <textarea type="text" name="short_details_bn" required class="form-control"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Show in top, after product name
+                                </small>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="Details">Offer Details (BN)</label>
+                                <textarea type="text" name="offer_details_bn" class="form-control summernote_editor"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Show in bottom accordion
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
+                        <h4><strong>Details Data</strong></h4>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_title_en">Banner Title (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_en" required class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_title_bn">Banner Title (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_bn" class="form-control "></textarea>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_en">Banner Subtitle (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_en" required class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_bn">Banner Subtitle (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_bn" required class="form-control"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="short_details_en" required class="form-control"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Show in top, after product name
+                                    </small>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="Details">Offer Details (EN)</label>
+                                    <textarea type="text" name="offer_details_en" class="form-control summernote_editor"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Show in bottom accordion
+                                    </small>
+                                </div>
+
+
+
+
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Banner (Web) <span class="text-danger">*</span></label>
+                                <input type="file" required class="dropify_package" name="details_banner_web" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Banner (Mobile)</label>
+                                <input type="file" class="dropify_package" name="details_banner_mob" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                            </div>
+
+                             <div class="form-group">
+
+                                <label>Banner Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name" required name="details_banner_name" placeholder="Banner Name">
+
+                                <small class="text-info">
+                                    <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
+                                </small>
+
+                                <br>
+
+                                <label>Banner Alt Text</label>
+                                <input type="text" class="form-control"  name="banner_alt_text" placeholder="Alt Text">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4><strong>SEO and Others Data</strong></h4>
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-md-4 col-xs-12">
+                            <div class="form-group">
+                                <div class="mb-1">
+                                    <label>URL Slug EN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
+                                        value="{{ old('url_slug') }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
                                     </small>
