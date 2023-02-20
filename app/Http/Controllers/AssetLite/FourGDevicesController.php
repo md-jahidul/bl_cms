@@ -87,7 +87,7 @@ class FourGDevicesController extends Controller
             'thumbnail_img_name_en' => 'unique:four_g_devices,thumbnail_img_name_en,' . $id,
             'thumbnail_img_name_bn' => 'unique:four_g_devices,thumbnail_img_name_bn,' . $id,
         ]);
-        
+
         $response = $this->fourGDevicesService->updateDevices($request->all(), $id);
         if ($response['success'] == 1) {
             Session::flash('success', $response['message']);
