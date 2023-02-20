@@ -53,7 +53,7 @@ class MenuService
 
         $menu_count = count($this->menuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
-        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
         return new Response('Menu added successfully');
     }
@@ -76,8 +76,8 @@ class MenuService
     public function updateMenu($data, $id)
     {
         request()->validate([
-            //  'url' => 'unique:menus,url,' . $id,
-            //  'url_bn' => 'required|regex:/^\S*$/u|unique:menus,url_bn,' . $id,
+          'url' => 'unique:menus,url,' . $id,
+//          'url_bn' => 'regex:/^\S*$/u|unique:menus,url_bn,' . $id,
         ]);
         $menu = $this->findOne($id);
         if (request()->hasFile('icon')) {
@@ -85,7 +85,7 @@ class MenuService
             $data['icon'] = $this->upload($data['icon'], 'assetlite/images/header-menu');
         }
 
-        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $menu->update($data);
         return Response('Menu updated successfully');
     }
