@@ -162,4 +162,10 @@ class AlFaqController extends Controller
         $this->faq->deleteFaq($id);
         return url("faq/$slug");
     }
+
+    public function faqSortable(Request $request)/*: Response*/
+    {
+        return $this->faq->tableSortable($request->all());
+        
+    }
 }
