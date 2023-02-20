@@ -55,8 +55,7 @@
                                     <label for="category_type">Select section type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="news_on_top" @if($sections->category_type == 'news_on_top') selected @endif>Life at banglalink section</option>
-                                            <option value="values_section" @if($sections->category_type == 'values_section') selected @endif>Values section</option>
-                                            <option value="campus_section" @if($sections->category_type == 'campus_section') selected @endif>We at campus section</option>
+                                            <option value="programs_progeneral" @if($sections->category_type == 'programs_progeneral') selected @endif>Program section</option>
                                         </select>
                                 </div>
 
@@ -75,7 +74,7 @@
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    <img src="{{ config('filesystems.file_base_url') . $sections->image}}"style="height:70px;width:70px;display:none" id="imgDisplay">
+                                    <img src="{{ config('filesystems.file_base_url') . $sections->image}}"style="height:70px;width:70px;" id="imgDisplay">
                                 </div>
                                 @include('layouts.partials.common_types.text_area_plane',['component'=>$sections])
 
@@ -135,15 +134,15 @@
         jQuery(document).ready(function($){
 
 
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#general_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+            // $('input.section_name').on('keyup', function(){
+            //     var sectionName = $('#general_section').find('.section_name').val();
+            //     var sectionNameLower = sectionName.toLowerCase();
+            //     var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-                $('#general_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+            //     $('#general_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
-                // console.log(sectionNameRemoveSpace);
-            });
+            //     // console.log(sectionNameRemoveSpace);
+            // });
 
             $('.remove_photo').on('click', function (e) {
             e.preventDefault();

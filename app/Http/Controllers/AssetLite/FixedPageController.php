@@ -116,6 +116,10 @@ class FixedPageController extends Controller
     public function components($id)
     {
         $shortCodes = $this->shortCodeService->findBy(['page_id'=> $id],'slider',['column' => 'sequence','direction'=>'ASC']);
+        $shortCodes = ShortCode::where('page_id', $id)->with(['slider'=>function($q){
+            return $q->with('componentTypes');
+        }])->orderBy('sequence', 'ASC')->get();
+        //dd($shortCodes->toArray());
         $page =  Page::find($id)->title;
         return view('admin.pages.fixed.components', compact('shortCodes', 'page'));
     }

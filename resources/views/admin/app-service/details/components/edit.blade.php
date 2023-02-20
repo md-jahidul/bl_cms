@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+   <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -49,6 +49,11 @@
                                     {{--Accordion--}}
                                     <slot id="accordion_section" data-offer-type="accordion_section" class="{{ ($section['sections']->section_type ==  "accordion_section"  ) ? '' : "d-none" }}">
                                         @include('admin.app-service.details.section.component_modal.accordion.accordion')
+                                    </slot>
+
+                                    {{--Table Component--}}
+                                    <slot id="table_component" data-offer-type="table_component" class="{{ ($section['sections']->section_type ==  "table_component"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.components.partial.editor_only')
                                     </slot>
 
                                     {{--Text with image right--}}
@@ -105,6 +110,18 @@
                                     {{--static_easy_payment_card--}}
                                     <slot id="static_easy_payment_card" data-offer-type="static_easy_payment_card" class="{{ ($section['sections']->section_type ==  "static_easy_payment_card"  ) ? '' : "d-none" }}">
                                         @include('admin.app-service.details.section.component_modal.static_easy_payment_card')
+                                    </slot>
+                                    {{--image_with_content--}}
+                                    <slot id="image_with_content" data-offer-type="image_with_content" class="{{ ($section['sections']->section_type ==  "image_with_content"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.image_with_content')
+                                    </slot>
+                                    {{--multiple_tab_image--}}
+                                    <slot id="multiple_tab_image" data-offer-type="multiple_tab_image" class="{{ ($section['sections']->section_type ==  "multiple_tab_image"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_tab_image')
+                                    </slot>
+                                    {{--Pricing Multiple table--}}
+                                    <slot id="pricing_sections" data-offer-type="pricing_sections" class="{{ ($section['sections']->section_type ==  "pricing_sections"  ) ? '' : "d-none" }}">
+                                        @include('admin.app-service.details.section.component_modal.pricing_sections_create')
                                     </slot>
 
 
@@ -184,6 +201,11 @@
                 },
                 height: 100
             });
+            $('#component_type').on('change', function () {
+                var componentType = this.value + ".png"
+                var fullUrl = "{{ asset('app-assets/images/app_services') }}/" + componentType;
+                $("#componentImg").attr('src', fullUrl)
+            })
         })
 
 

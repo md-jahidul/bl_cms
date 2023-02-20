@@ -80,124 +80,40 @@
                             @endif
 
                             @if($productDetail->offer_category_id == \App\Enums\OfferType::INTERNET)
-                                @include('layouts.partials.product-details.voice')
+                            @include('layouts.partials.product-details.voice')
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::VOICE)
-                                @include('layouts.partials.product-details.voice')
+                            @include('layouts.partials.product-details.voice')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::BUNDLES)
-                                @include('layouts.partials.product-details.voice')
-
-                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::NEW_SIM_OFFER)
-                                @include('layouts.partials.product-details.voice')
-
-                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::CALL_RATE)
-                                @include('layouts.partials.product-details.voice')
+                            @include('layouts.partials.product-details.voice')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
-                                $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::PREPAID_PLANS)
-                                @include('layouts.partials.product-details.packages.prepaid_plan')
+                            $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::PREPAID_PLANS)
+                            @include('layouts.partials.product-details.packages.prepaid_plan')
 
                             @elseif( $productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
-                                $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
+                            $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
 
                             @include('layouts.partials.product-details.packages.startup_offer_details')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::POSTPAID_PLANS)
-                                <div class="col-md-12 text-center">
-                                    <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                </div>
+                            <div class="col-md-12 text-center">
+                                <h2><strong class="text-danger"> Under Construction</strong></h2>
+                            </div>
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::ICON_PLANS)
-                                <div class="col-md-12 text-center">
-                                    <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                </div>
+                            <div class="col-md-12 text-center">
+                                <h2><strong class="text-danger"> Under Construction</strong></h2>
+                            </div>
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::OTHERS &&
-                                $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::BONDHO_SIM_OFFER)
-                                @include('layouts.partials.product-details.other-details.bondho_sim')
+                            $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::BONDHO_SIM_OFFER)
+                            @include('layouts.partials.product-details.other-details.bondho_sim')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::OTHERS &&
-                                $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::FOUR_G_OFFERS)
-                                @include('layouts.partials.product-details.other-details.4g_offer')
+                            $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::FOUR_G_OFFERS)
+                            @include('layouts.partials.product-details.other-details.4g_offer')
                             @endif
-
-                            <div class="form-group col-md-4 ml-2 {{ $errors->has('banner_name') ? ' error' : '' }}">
-                                <label>Banner Photo Name EN</label>
-                                <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
-                                <input type="text" class="form-control" name="banner_name" value="{{optional($productDetail->product_details)->banner_name}}" placeholder="Photo Name EN">
-                                <small class="text-info">
-                                    <strong>Note: </strong> don't give space and slash
-                                </small>
-                                @if ($errors->has('banner_name'))
-                                    <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-4 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
-                                <label>Banner Photo Name BN</label>
-                                <input type="text" class="form-control" name="banner_name_bn" value="{{optional($productDetail->product_details)->banner_name_bn}}" placeholder="Photo Name BN">
-                                <small class="text-info">
-                                    <strong>Note: </strong> don't give space and slash
-                                </small>
-                                @if ($errors->has('banner_name_bn'))
-                                    <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                <label for="banner_alt_text">Alt Text EN</label>
-                                <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ optional($productDetail->product_details)->banner_alt_text}}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_alt_text'))
-                                <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-4 {{ $errors->has('banner_alt_text_bn') ? ' error' : '' }}">
-                                <label for="banner_alt_text_bn">Alt Text BN</label>
-                                <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text bn"
-                                       value="{{ optional($productDetail->product_details)->banner_alt_text_bn}}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('banner_alt_text_bn'))
-                                    <div class="help-block">  {{ $errors->first('banner_alt_text_bn') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <span>Banner image (Web)</span>
-
-                                <div class="custom-file">
-
-                                    <input type="hidden" name="old_web_img" value="{{ optional($productDetail->product_details)->banner_image_url }}">
-
-                                    <input type="file" name="banner_image_url" class="custom-file-input" id="image">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                </div>
-
-                                <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                @if( !empty($productDetail->product_details->banner_image_url) )
-                                    <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_url }}" style="width:100%;margin-top:10px;">
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
-                                <span>Banner image (Mobile)</span>
-
-                                <div class="custom-file">
-                                    <input type="hidden" name="old_mob_img" value="{{ optional($productDetail->product_details)->banner_image_mobile }}">
-
-                                    <input type="file" name="banner_image_mobile" class="custom-file-input">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                </div>
-                                <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                @if( !empty($productDetail->product_details->banner_image_url) )
-                                    <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_mobile }}" style="width:100%;margin-top:10px;">
-                                @endif
-
-                            </div>
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
@@ -213,6 +129,16 @@
         </div>
     </div>
 </section>
+
+    <!--Banner Section-->
+    @php
+        $action = [
+            'section_id' => $productDetail->id,
+            'section_type' => "product_details"
+        ];
+
+    @endphp
+    @include('admin.al-banner.section', $action)
 @stop
 
 
@@ -238,7 +164,7 @@
 @push('page-js')
 <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
-<script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
 {{--    <script>--}}

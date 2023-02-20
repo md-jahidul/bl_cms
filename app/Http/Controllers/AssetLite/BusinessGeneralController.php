@@ -70,6 +70,7 @@ class BusinessGeneralController extends Controller {
      * @Dev Bulbul Mahmud Nito || 06/04/2020
      */
     public function updateCategory(BusinessProductCategoriesRequest $request) {
+        
         $response = $this->businessHomeService->updateCategory($request);
         if ($response['success'] == 1) {
             Session::flash('message', 'Category updated successfully!');
@@ -149,7 +150,7 @@ class BusinessGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
      */
-    public function homeNewsSave(BusinessNewsRequest $request) 
+    public function homeNewsSave(BusinessNewsRequest $request)
     {
         $response = $this->businessHomeService->saveNews($request);
 

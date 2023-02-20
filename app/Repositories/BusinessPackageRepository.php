@@ -104,21 +104,21 @@ class BusinessPackageRepository extends BaseRepository
         }
     }
 
-    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
+    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob,$cardIcon, $cardDetail, $request)
     {
+
         $package = $this->model;
 
 
         $package->card_banner_web = $cardWeb;
         $package->card_banner_mobile = $cardMob;
         $package->card_banner_alt_text = $request->card_banner_alt_text;
-        $package->card_banner_alt_text_bn = $request->card_banner_alt_text_bn;
-        $package->card_banner_name_en = $request->card_banner_name_en;
-        $package->card_banner_name_bn = $request->card_banner_name_bn;
 
         $package->banner_photo = $bannerWeb;
         $package->banner_image_mobile = $bannerMob;
         $package->alt_text = $request->alt_text;
+        $package->icon = $cardIcon;
+        $package->detail_image = $cardDetail;
 
         $package->banner_title_en = $request->banner_title_en;
         $package->banner_title_bn = $request->banner_title_bn;
@@ -155,7 +155,7 @@ class BusinessPackageRepository extends BaseRepository
         return $this->model->findOrFail($packageId);
     }
 
-    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
+    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob,$cardIcon, $cardDetail, $request)
     {
         $packageId = $request->package_id;
         $package = $this->model->findOrFail($packageId);
@@ -166,6 +166,12 @@ class BusinessPackageRepository extends BaseRepository
         if ($cardMob != "") {
             $package->card_banner_mobile = $cardMob;
         }
+        if ($cardIcon != "") {
+            $package->icon = $cardIcon;
+        }
+        if ($cardDetail != "") {
+            $package->detail_image = $cardDetail;
+        }
         $package->card_banner_alt_text = $request->card_banner_alt_text;
 
         if ($bannerWeb != "") {
@@ -174,23 +180,13 @@ class BusinessPackageRepository extends BaseRepository
         if ($bannerMob != "") {
             $package->banner_image_mobile = $bannerMob;
         }
-
-        $package->card_banner_name_en = $request->card_banner_name_en;
-        $package->card_banner_name_bn = $request->card_banner_name_bn;
-        $package->card_banner_alt_text = $request->card_banner_alt_text;
-        $package->card_banner_alt_text_bn = $request->card_banner_alt_text_bn;
-
-
         $package->alt_text = $request->alt_text;
-        $package->alt_text_bn = $request->alt_text_bn;
         $package->banner_name = $request->banner_name;
 
         $package->banner_title_en = $request->banner_title_en;
         $package->banner_title_bn = $request->banner_title_bn;
         $package->banner_desc_en = $request->banner_desc_en;
         $package->banner_desc_bn = $request->banner_desc_bn;
-
-        $package->banner_name_bn = $request->banner_name_bn;
 
         $package->url_slug = $request->url_slug;
         $package->url_slug_bn = $request->url_slug_bn;

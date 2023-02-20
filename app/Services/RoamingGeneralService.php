@@ -31,7 +31,7 @@ class RoamingGeneralService {
      * @param RoamingPagesRepository $pagesRepo
      */
     public function __construct(
-    RoamingCategoryRepository $catRepo, RoamingPagesRepository $pagesRepo
+        RoamingCategoryRepository $catRepo, RoamingPagesRepository $pagesRepo
     ) {
         $this->catRepo = $catRepo;
         $this->pagesRepo = $pagesRepo;
@@ -133,7 +133,7 @@ class RoamingGeneralService {
         return $response;
     }
 
-       /**
+    /**
      * Change category sorting
      * @return Response
      */
@@ -141,13 +141,13 @@ class RoamingGeneralService {
         $response = $this->pagesRepo->changeComponentSorting($request);
         return $response;
     }
-       /**
+    /**
      * Change category sorting
      * @return Response
      */
     public function deleteComponent($comId) {
 
-         try {
+        try {
 
             $response = $this->pagesRepo->deleteComponent($comId);
 

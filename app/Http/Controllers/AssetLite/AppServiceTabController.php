@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\AppServiceTabRequest;
-use App\Services\AppServiceTabService;
+use App\Services\Assetlite\AppServiceTabService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -79,7 +79,7 @@ class AppServiceTabController extends Controller
      * @param  int  $id
      * @return RedirectResponse|Redirector
      */
-    public function update(AppServiceTabRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $response = $this->appServiceTabService->updateTabs($request->all(), $id);
         Session::flash('message', $response->getContent());

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\BlogPostRequest;
 use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
 use App\Services\MediaPressNewsEventService;
+use App\Services\MediaNewsCategoryService;
 use Bookworm\Bookworm;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -31,18 +33,25 @@ class BlogController extends Controller
      * @var MediaBannerImageService
      */
     private $mediaBannerImageService;
+    /**
+     * @var MediaNewsCategoryService
+     */
+    protected $mediaNewsCategoryService;
 
     /**
      * RolesController constructor.
      * @param MediaPressNewsEventService $mediaPressNewsEventService
      * @param MediaBannerImageService $mediaBannerImageService
+     * @param MediaNewsCategoryService $mediaNewsCategoryService
      */
     public function __construct(
         MediaPressNewsEventService $mediaPressNewsEventService,
-        MediaBannerImageService $mediaBannerImageService
+        MediaBannerImageService $mediaBannerImageService,
+        MediaNewsCategoryService $mediaNewsCategoryService
     ) {
         $this->mediaPNE = $mediaPressNewsEventService;
         $this->mediaBannerImageService = $mediaBannerImageService;
+        $this->mediaNewsCategoryService = $mediaNewsCategoryService;
     }
 
     /**
@@ -50,7 +59,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogPosts = $this->mediaPNE->findByReferenceType(self::REFERENCE_TYPE);
+       $blogPosts = $this->mediaPNE->findByReferenceType(self::REFERENCE_TYPE);
         return view('admin.blog.post.index', compact('blogPosts'));
     }
 
@@ -61,16 +70,17 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('admin.blog.post.create');
+        $categories = $this->mediaNewsCategoryService->findAll();
+        return view('admin.blog.post.create',compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param BlogPostRequest $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(BlogPostRequest $request)
     {
         $response = $this->mediaPNE->storePNE($request->all(), self::REFERENCE_TYPE);
         Session::flash('success', $response->getContent());
@@ -86,7 +96,8 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blogPost = $this->mediaPNE->findOne($id);
-        return view('admin.blog.post.edit', compact('blogPost'));
+        $categories = $this->mediaNewsCategoryService->findAll();
+        return view('admin.blog.post.edit', compact('blogPost','categories'));
     }
 
     /**
@@ -96,7 +107,7 @@ class BlogController extends Controller
      * @param  int  $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(BlogPostRequest $request, $id)
     {
         $request['read_time'] = Bookworm::estimate($request->short_details_bn, '');
         $response = $this->mediaPNE->updatePNE($request->all(), $id);

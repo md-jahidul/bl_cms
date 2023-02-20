@@ -35,9 +35,9 @@ class BusinessOtherPackageRequest extends FormRequest
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_other_services,url_slug_bn,' . $id,
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_other_services,url_slug_bn,' . $id,
             'banner_name' => 'required|regex:/^\S*$/u|unique:business_other_services,banner_name,' . $id,
-            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:business_other_services,banner_name_bn,' . $id,
-            'details_banner_name' => 'required|regex:/^\S*$/u|unique:business_other_services,details_banner_name,' . $id,
-            'details_banner_name_bn' => 'required|regex:/^\S*$/u|unique:business_other_services,details_banner_name,' . $id,
+            'banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_other_services,banner_name_bn,' . $id,
+            'details_banner_name' => 'nullable|regex:/^\S*$/u|unique:business_other_services,details_banner_name,' . $id,
+            'details_banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_other_services,details_banner_name,' . $id,
         ];
     }
 }

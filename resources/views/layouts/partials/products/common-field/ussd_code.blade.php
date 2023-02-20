@@ -1,3 +1,8 @@
+<div class="col-md-12">
+    <span><h4><strong>USSD Code</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
+
 <div class="form-group col-md-6">
     <label for="activation_ussd">USSD Code (English)</label>
     <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"

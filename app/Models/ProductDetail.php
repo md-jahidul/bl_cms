@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetail extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable =
         [
             'product_id',
@@ -25,6 +25,10 @@ class ProductDetail extends Model
             'banner_name_bn',
             'banner_alt_text',
             'banner_alt_text_bn',
+            'banner_title_en',
+            'banner_title_bn',
+            'banner_desc_en',
+            'banner_desc_bn',
             'url_slug',
             'schema_markup',
             'page_header',

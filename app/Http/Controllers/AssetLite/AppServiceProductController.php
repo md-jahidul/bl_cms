@@ -7,7 +7,7 @@ use App\Repositories\AppServiceCategoryRepository;
 use App\Repositories\AppServiceTabRepository;
 use App\Services\Assetlite\AppServiceCategoryService;
 use App\Services\Assetlite\AppServiceProductService;
-use App\Services\AppServiceTabService;
+use App\Services\Assetlite\AppServiceTabService;
 use App\Services\Assetlite\AppServiceVendorApiService;
 use App\Services\TagCategoryService;
 use Illuminate\Contracts\Routing\UrlGenerator;

@@ -70,7 +70,6 @@ class BusinessPackageService {
      */
     public function savePackage($request) {
         try {
-
             //file upload in storege
             $directoryPath = 'assetlite/images/business-images';
 
@@ -100,8 +99,15 @@ class BusinessPackageService {
                 $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoName);
             }
 
+            if (!empty($request['icon'])) {
+                $cardIcon = $this->upload($request['icon'], $directoryPath);
+            }
+
+            if (!empty($request['detail_image'])) {
+                $cardDetail = $this->upload($request['detail_image'], $directoryPath);
+            }
             //save data in database
-            $packageId = $this->packageRepo->savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request);
+            $packageId = $this->packageRepo->savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $cardIcon, $cardDetail, $request);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($packageId, $parentType, $request->feature);
             $this->relatedProductRepo->assignRelatedProduct($packageId, $parentType, $request->realated);
@@ -160,6 +166,7 @@ class BusinessPackageService {
         return $this->packageRepo->getPackageById($packageId);
     }
 
+
     /**
      * Get business package by id
      * @return Response
@@ -193,6 +200,18 @@ class BusinessPackageService {
                 $cardMob = $this->upload($data['card_banner_mobile'], $directoryPath);
             }
 
+            if (!empty($data['icon'])) {
+
+                $data['old_icon'] != "" ? $this->deleteFile($data['old_icon']) : "";
+                $cardIcon = $this->upload($data['icon'], $directoryPath);
+            }
+
+            if (!empty($data['detail_image'])) {
+
+                $data['old_detail_image'] != "" ? $this->deleteFile($data['old_detail_image']) : "";
+                $cardDetail = $this->upload($data['detail_image'], $directoryPath);
+            }
+
             $photoNameWeb = $data['banner_name'] . '-web';
             $photoNameMob = $data['banner_name'] . '-mobile';
             $directoryPath = 'assetlite/images/business-images';
@@ -222,9 +241,8 @@ class BusinessPackageService {
                     $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
                 }
             }
-
             //save data in database
-            $this->packageRepo->updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $data);
+            $this->packageRepo->updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $cardIcon, $cardDetail, $data);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($data->package_id, $parentType, $data->feature);
 

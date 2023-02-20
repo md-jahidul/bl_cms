@@ -78,7 +78,26 @@ $hide_title = false;
                             @if( ($ecarrer_section_slug != 'life_at_bl_events') && ($ecarrer_section_slug != 'life_at_bl_contact') && ($ecarrer_section_slug != 'programs_photogallery') )
                             @include('admin.ecarrer-items.additional.description')
                             @endif
-
+                            @if( ($ecarrer_section_slug === 'programs_progeneral') )
+                            <div class="form-group col-md-6 {{ $errors->has('sub_title_en') ? ' error' : '' }}">
+                                <label for="title_bn" class="required1">Sub title EN</label>
+                                <input type="text" name="sub_title_en"  class="form-control" placeholder="Enter sub title (english)"
+                                    value="{{ $ecarrer_item->sub_title_en }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('sub_title_en'))
+                                    <div class="help-block">  {{ $errors->first('sub_title_en') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('sub_title_bn') ? ' error' : '' }}">
+                                <label for="title_bn" class="required1">Sub title BN</label>
+                                <input type="text" name="sub_title_bn"  class="form-control" placeholder="Enter sub title (bangla)"
+                                    value="{{ $ecarrer_item->sub_title_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('sub_title_bn'))
+                                    <div class="help-block">  {{ $errors->first('sub_title_bn') }}</div>
+                                @endif
+                            </div>
+                            @endif
                             <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                 <label for="alt_text" class="">Banner Image (optional)</label>
                                 <div class="custom-file">
@@ -165,18 +184,18 @@ $hide_title = false;
                                 </div>
                             </div>
 
-
+                            @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$ecarrer_item])
                             <!-- Include additional field layout for individual section requirement -->
-                            @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
+                            {{-- @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
                             @include('admin.ecarrer-items.additional.call_to_actions')
-                            @endif
+                            @endif --}}
 
                             <!-- Include additional field layout for individual section requirement -->
                             @if( $ecarrer_section_slug == 'life_at_bl_contact' )
                             @include('admin.ecarrer-items.additional.alter_text_links')
                             @endif
+                            @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' || $ecarrer_section_slug == 'programs_ennovatorbatches')
 
-                            @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' )
                             @include('admin.ecarrer-items.additional.testimonial_text')
                             @endif
 

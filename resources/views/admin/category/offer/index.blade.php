@@ -86,10 +86,15 @@
                                                 {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-sm btn-outline-success round'> Childs</a>" : '<div class="badge badge-pill badge-danger">No</div>' !!}
                                             </td>
                                             <td>
-                                                <div class="badge badge-info badge-square">
-                                                    <span>Fixed</span>
-                                                    <i class="la la-lock font-medium-2"></i>
-                                                </div>
+                                                @if($offerCategory->status)
+                                                    <div class="badge badge-success badge-pill">
+                                                        <span>Active</span>
+                                                    </div>
+                                                @else
+                                                    <div class="badge badge-danger badge-pill">
+                                                        <span>Inactive</span>
+                                                    </div>
+                                                @endif
                                             </td>
 
                                             <td width="6%" class="text-center">

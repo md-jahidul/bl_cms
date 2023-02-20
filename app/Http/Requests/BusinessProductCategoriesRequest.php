@@ -27,8 +27,8 @@ class BusinessProductCategoriesRequest extends FormRequest
         return [
             'url_slug' => 'required|unique:business_product_categories,url_slug,' . $request->cat_id,
             'url_slug_bn' => 'required|unique:business_product_categories,url_slug_bn,' . $request->cat_id,
-            'banner_name' => 'required|unique:business_product_categories,banner_name,' . $request->cat_id,
-            'banner_name_bn' => 'required|unique:business_product_categories,banner_name_bn,' . $request->cat_id,
+            'banner_name' => 'nullable|unique:business_product_categories,banner_name,' . $request->cat_id,
+            'banner_name_bn' => 'nullable|unique:business_product_categories,banner_name_bn,' . $request->cat_id,
         ];
     }
 }

@@ -88,6 +88,8 @@ class EcareerService {
     //     return Response('Section updated successfully');
     // }
 
+
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
@@ -407,6 +409,24 @@ class EcareerService {
             }
         } else {
             return null;
+        }
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($position)
+    {
+        $this->ecarrerPortalRepository->sortData($position);
+        return new Response('update successfully');
+    }
+
+    public function findProgramId(){
+        //return
+        $programId = $this->ecarrerPortalRepository->findProgramId();
+        if(isset($programId)){
+            return $this->ecarrerPortalItemRepository->findProgramList($programId->id);
         }
     }
 

@@ -85,7 +85,7 @@
                                     @else
                                         <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                     @endif
-                                    
+
                                 </div>
 
 
@@ -112,7 +112,8 @@
                                 </div>
 
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=> $sections])
+                                @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=> $sections])
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -134,7 +135,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -149,7 +150,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

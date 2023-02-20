@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -31,6 +31,7 @@
                                             <option value="">--Select Data Type--</option>
                                             <option data-alias="title_text_editor" value="title_text_editor">Title with text editor</option>
                                             <option data-alias="accordion_section" value="accordion_section">Accordion</option>
+                                            <option data-alias="table_component" value="table_component">Table Component</option>
                                             <option data-alias="text_with_image_right" value="text_with_image_right">Text with image right</option>
                                             <option data-alias="text_with_image_bottom" value="text_with_image_bottom">Text with image bottom</option>
                                             <option data-alias="slider_text_with_image_right" value="slider_text_with_image_right">Slider text with image right</option>
@@ -38,6 +39,9 @@
                                             <option data-alias="multiple_image_banner" value="multiple_image_banner">Multiple image banner</option>
                                             <option data-alias="pricing_sections" value="pricing_sections">Pricing Multiple table</option>
                                             <option data-alias="static_easy_payment_card" value="static_easy_payment_card">Static Component - Easy payment card</option>
+                                            <option data-alias="image_with_content" value="image_with_content">Image With Content</option>
+                                            <option data-alias="multiple_tab_image" value="multiple_tab_image">Multiple Tab With Image</option>
+
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('component_type'))
@@ -59,6 +63,11 @@
                                     {{--Accordion--}}
                                     <slot id="accordion_section" data-offer-type="accordion_section" class="d-none">
                                         @include('admin.app-service.details.section.component_modal.accordion.accordion')
+                                    </slot>
+
+                                    {{--Table Component--}}
+                                    <slot id="table_component" data-offer-type="table_component" class="d-none">
+                                        @include('admin.app-service.details.components.partial.editor_only')
                                     </slot>
 
                                     {{--Text with image right--}}
@@ -118,6 +127,14 @@
                                     {{--static_easy_payment_card--}}
                                     <slot id="static_easy_payment_card" data-offer-type="static_easy_payment_card" class="d-none">
                                         @include('admin.app-service.details.section.component_modal.static_easy_payment_card')
+                                    </slot>
+                                    {{--image_with_content--}}
+                                    <slot id="image_with_content" data-offer-type="image_with_content" class="d-none">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.image_with_content')
+                                    </slot>
+                                    {{--multiple_tab_image--}}
+                                    <slot id="multiple_tab_image" data-offer-type="multiple_tab_image" class="d-none">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_tab_image')
                                     </slot>
 
 

@@ -101,13 +101,12 @@ class BusinessHomeService {
             $update['page_header'] = $request->page_header;
             $update['page_header_bn'] = $request->page_header_bn;
             $update['updated_by'] = Auth::id();
-
             if (!empty($request['banner_web'])) {
                 //delete old web photo
                 if ($request['old_web_img'] != "") {
                     $this->deleteFile($request['old_web_img']);
                 }
-                $photoName = $request['banner_name'] . '-web';
+                $photoName = pathinfo($request->file('banner_web')->getClientOriginalName(), PATHINFO_FILENAME).time(). '-web';
                 $update['banner_photo'] = $this->upload($request['banner_web'], 'assetlite/images/business-images', $photoName);
                 $status = $update['banner_photo'];
             }
@@ -118,7 +117,7 @@ class BusinessHomeService {
                     $this->deleteFile($request['old_mob_img']);
                 }
 
-                $photoName = $request['banner_name'] . '-mobile';
+                $photoName = pathinfo($request->file('banner_mobile')->getClientOriginalName(), PATHINFO_FILENAME).time() . '-mobile';
                 $update['banner_image_mobile'] = $this->upload($request['banner_mobile'], 'assetlite/images/business-images', $photoName);
                 $status = $update['banner_image_mobile'];
             }
@@ -234,9 +233,7 @@ class BusinessHomeService {
         try {
 
             $request->validate([
-                'home_sort' => 'required',
-                'image_name_en' => 'unique:business_home_banner,image_name_en,' . $request->banner_id,
-                'image_name_bn' => 'unique:business_home_banner,image_name_bn,' . $request->banner_id,
+                'home_sort' => 'required'
             ]);
 
             //file upload in storege

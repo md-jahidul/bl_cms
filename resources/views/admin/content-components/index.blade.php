@@ -44,11 +44,13 @@
                                             <a href="{{ route("content-components.status.update", $component['id']) }}" data-value="disable {{ $component['title_en'] }}"
                                                class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
                                         @endif
-                                        <a href="" data-id="{{ $component['id'] }}" data-toggle="modal" data-target="#large" role="button"
-                                           class="btn btn-info border-0 edit"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ route("content-components.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
-                                            <i class="la la-trash"></i>
-                                        </a>
+                                        @if(substr($component['component_key'], 0, 7) !== "generic")
+                                            <a href="" data-id="{{ $component['id'] }}" data-toggle="modal" data-target="#large" role="button"
+                                               class="btn btn-info border-0 edit"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            <a href="#" remove="{{ route("content-components.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                        @endif
                                     @else
                                         <button type="button"
                                                 class="btn btn-secondary border-0" title="Click to disable" disabled="disabled"> Enabled</button>

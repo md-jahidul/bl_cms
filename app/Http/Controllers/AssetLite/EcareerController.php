@@ -53,6 +53,7 @@ class EcareerController extends Controller {
         return view('admin.ecarrer.general.index', compact('sections'));
     }
 
+
     /**
      * [generalCreate create general section]
      * @return [type] [description]
@@ -162,6 +163,16 @@ class EcareerController extends Controller {
         Session::flash('message', $response->getContent());
         return redirect("life-at-banglalink/general");
     }
+
+    /**
+     * [generalDestroy description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function generalSort(Request $request) {
+        return $this->ecarrerService->tableSortable($request->position);
+    }
+
 
     /**
      * Life at banglalink teams section list
@@ -912,11 +923,9 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function progeneralIndex($sections_type) {
-
         $categoryTypes = 'programs_progeneral';
 
         $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-
         return view('admin.ecarrer.progeneral.index', compact('sections', 'sections_type'));
     }
 
@@ -925,8 +934,10 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function progeneralCreate($sections_type) {
-
-        return view('admin.ecarrer.progeneral.create', compact('sections_type'));
+        $categoryTypes = 'programs_progeneral';
+        $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.progeneral.create', compact('sections_type','program_lists'));
     }
 
     /**
@@ -979,7 +990,8 @@ class EcareerController extends Controller {
     public function progeneralEdit($id, $sections_type) {
 
         $sections = $this->ecarrerService->generalSectionById($id);
-        return view('admin.ecarrer.progeneral.edit', compact('sections', 'sections_type'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.progeneral.edit', compact('sections', 'sections_type','program_lists'));
     }
 
     /**
@@ -1058,8 +1070,8 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function proiconboxCreate() {
-
-        return view('admin.ecarrer.proiconbox.create');
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.proiconbox.create',compact('program_lists'));
     }
 
     /**
@@ -1108,7 +1120,8 @@ class EcareerController extends Controller {
     public function proiconboxEdit($id) {
 
         $sections = $this->ecarrerService->generalSectionById($id);
-        return view('admin.ecarrer.proiconbox.edit', compact('sections'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.proiconbox.edit', compact('sections','program_lists'));
     }
 
     /**
@@ -1180,8 +1193,8 @@ class EcareerController extends Controller {
      * @return [type] [description]
      */
     public function photogalleryCreate() {
-
-        return view('admin.ecarrer.photogallery.create');
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.photogallery.create',compact('program_lists'));
     }
 
     /**
@@ -1227,7 +1240,8 @@ class EcareerController extends Controller {
     public function photogalleryEdit($id) {
 
         $sections = $this->ecarrerService->generalSectionById($id);
-        return view('admin.ecarrer.photogallery.edit', compact('sections'));
+        $program_lists = $this->ecarrerService->findProgramId();
+        return view('admin.ecarrer.photogallery.edit', compact('sections','program_lists'));
     }
 
     /**

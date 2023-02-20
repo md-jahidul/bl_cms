@@ -31,7 +31,9 @@ class OfferCategory extends Model
         'postpaid_banner_title_en',
         'postpaid_banner_title_bn',
         'postpaid_banner_desc_en',
-        'postpaid_banner_desc_bn'
+        'postpaid_banner_desc_bn',
+        'postpaid_url_slug_bn',
+        'status', 'display_order'
     ];
 
     protected $casts = [

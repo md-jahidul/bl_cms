@@ -4,8 +4,55 @@
 {{ Form::hidden('sections[tab_type]', $tab_type ) }}
 {{ Form::hidden('sections[category]', 'component_sections' ) }}
 {{ Form::hidden('component[0][component_type]', 'pricing_mutiple_table' ) }}
+<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+    <label for="title_en" class="required1">
+        Component Title (English)
+    </label>
+    <input type="text" name="component_title_en"  class="form-control section_name" placeholder="Enter title"
+            value="{{ isset($section['sections']->title_en) ? $section['sections']->title_en : '' }}">
+</div>
 
-<div class="table_component_wrap">
+
+<div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
+    <label for="title_bn" class="required1">
+        Component Title (Bangla)
+    </label>
+    <input type="text" name="component_title_bn"  class="form-control section_name" placeholder="Enter title"
+            value="{{ isset($section['sections']->title_bn) ? $section['sections']->title_bn : '' }}">
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Left Table (English)</label>
+        <textarea name="component[0][left_editor_en]" class="form-control summernote_editor" rows="5"
+                  placeholder="Enter description">{{ isset($component->description_en) ? $component->description_en : '' }}</textarea>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Left Table (Bangla)</label>
+        <textarea name="component[0][left_editor_bn]" class="form-control summernote_editor" rows="5"
+                  placeholder="Enter description">{{ isset($component->description_bn) ? $component->description_bn : '' }}</textarea>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Right Table (English)</label>
+        <textarea name="component[0][right_editor_en]" class="form-control summernote_editor" rows="5"
+                  placeholder="Enter description">{{ isset($component->editor_en) ? $component->editor_en : '' }}</textarea>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Right Table (Bangla)</label>
+        <textarea name="component[0][right_editor_bn]" class="form-control summernote_editor" rows="5"
+                  placeholder="Enter description">{{ isset($component->editor_bn) ? $component->editor_bn : '' }}</textarea>
+    </div>
+</div>
+
+
+<!-- <div class="table_component_wrap">
     <div class="form-group row bg-light ml-1 mr-1 p-2">
         <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
             <label for="title_en" class="required1">
@@ -77,7 +124,7 @@
         {{--                                        <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">--}}
         {{--                                    </div>--}}
     </div>
-</div>
+</div> -->
 
 
 @push('page-css')

@@ -18,6 +18,12 @@ class AddAdditionalFieldInMediaPressNewsEventsTable extends Migration
             $table->integer('reference_id')->nullable()->after('reference_type');
             $table->tinyInteger('show_in_home')->default(0)->after('status');
             $table->integer('read_time')->default(0)->after('date');
+            $table->string('details_btn_en')->nullable()->after('details_image_name_bn');
+            $table->string('details_btn_bn')->nullable()->after('details_btn_en');
+            $table->string('tag_en')->nullable()->after('alt_text_bn');
+            $table->string('tag_bn')->nullable()->after('tag_en');
+            $table->string('url_slug_en')->nullable()->after('read_time');
+            $table->string('url_slug_bn')->nullable()->after('url_slug_en');
         });
     }
 
@@ -33,6 +39,12 @@ class AddAdditionalFieldInMediaPressNewsEventsTable extends Migration
             $table->dropColumn('reference_id');
             $table->dropColumn('show_in_home');
             $table->dropColumn('read_time');
+            $table->dropColumn('details_btn_en');
+            $table->dropColumn('details_btn_bn');
+            $table->dropColumn('tag_en');
+            $table->dropColumn('tag_bn');
+            $table->dropColumn('url_slug_en');
+            $table->dropColumn('url_slug_bn');
         });
     }
 }

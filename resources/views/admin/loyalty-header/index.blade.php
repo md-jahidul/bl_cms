@@ -12,11 +12,11 @@
     {!! $liHtml !!}
 @endsection
 @section('action')
-    @if($parent_id != 0)
+{{--    @if($parent_id != 0)--}}
         <a href="{{ url("priyojon/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
             Add Menu
         </a>
-    @endif
+{{--    @endif--}}
 @endsection
 @section('content')
     <section>
@@ -30,7 +30,7 @@
                             <td width="3%">#</td>
                             <th>Title</th>
                             @if($parent_id == 0)
-                                <th>Banner Image</th>
+                                <th>Banner Image/ Video</th>
                             @endif
                             <th width="12%">Action</th>
                         </tr>
@@ -41,11 +41,20 @@
                                 <tr data-index="{{ $priyojon->id }}" data-position="{{ $priyojon->display_order }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $priyojon->title_en }}{!! $priyojon->status == 0 ? '<span class="text-danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                    @if($parent_id == 0)
+                                    @if($parent_id == 0 && $priyojon->is_images == 1)
                                         <td>
                                             <img class="" src="{{ config('filesystems.file_base_url') . $priyojon->banner_image_url }}" alt="Slider Image" height="70" width="180">
                                             {!!  ($parent_id == 0) ? "<a href='".url("priyojon/$priyojon->id/child-menu")."' class='btn-sm btn-outline-secondary border float-md-right'> Child Menu</a>" : '' !!}
                                         </td>
+                                    @elseif ($priyojon->is_images == 0)
+                                        <td>
+                                            <video width="200" controls>
+                                                <source src="{{ $priyojon->banner_video_url }}" type="video/mp4">
+                                                Your browser does not support HTML video.
+                                            </video>
+                                            {!!  ($parent_id == 0) ? "<a href='".url("priyojon/$priyojon->id/child-menu")."' class='btn-sm btn-outline-secondary border float-md-right'> Child Menu</a>" : '' !!}
+                                        </td>
+
                                     @endif
                                     <td class="action" >
                                         <a href="{{ url('priyojon/'.$priyojon->id.'/edit') }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

@@ -53,11 +53,11 @@ class BusinessPackageController extends Controller {
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function store(BusinessPackageRequest $request) {
-
-         $response = $this->packageService->savePackage($request);
+        //dd($request->all());
+        $response = $this->packageService->savePackage($request);
 
         if($response['success'] == 1){
-           Session::flash('sussess', 'Package is saved!');
+            Session::flash('sussess', 'Package is saved!');
         }else{
             Session::flash('error', 'Package saving process failed!');
         }
@@ -65,7 +65,7 @@ class BusinessPackageController extends Controller {
         return redirect('/business-package');
     }
 
-     /**
+    /**
      * Package Sorting Change.
      *
      * @param Request $request
@@ -104,7 +104,7 @@ class BusinessPackageController extends Controller {
         return $response;
     }
 
-     /**
+    /**
      * edit business packages [form].
      *
      * @param $packageId
@@ -129,10 +129,11 @@ class BusinessPackageController extends Controller {
      * @Bulbul Mahmud Nito || 16/02/2020
      */
     public function update(BusinessPackageRequest $request) {
-         $response = $this->packageService->updatePackage($request);
+        //dd($request->all());
+        $response = $this->packageService->updatePackage($request);
 
         if($response['success'] == 1){
-           Session::flash('sussess', 'Package is updated!');
+            Session::flash('sussess', 'Package is updated!');
         }else{
             Session::flash('error', 'Package updating process failed!');
         }
@@ -150,10 +151,10 @@ class BusinessPackageController extends Controller {
      */
     public function delete($packageId) {
 
-         $response = $this->packageService->deletePackage($packageId);
+        $response = $this->packageService->deletePackage($packageId);
 
         if($response['success'] == 1){
-           Session::flash('sussess', 'Package is deleted!');
+            Session::flash('sussess', 'Package is deleted!');
         }else{
             Session::flash('error', 'Package deleting process failed!');
         }

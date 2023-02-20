@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Component;
 use App\Models\ProductDetailsSection;
+use App\Services\AlBannerService;
 use App\Services\Assetlite\BannerImgRelatedProductService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
@@ -62,17 +63,23 @@ class ProductDetailsController extends Controller
      * @var BannerImgRelatedProductService
      */
     private $bannerImgRelatedProductService;
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     public function __construct(
         ProductDetailsSectionService $productDetailsSectionService,
         BannerImgRelatedProductService $bannerImgRelatedProductService,
         ProductService $productService,
-        ComponentService $componentService
+        ComponentService $componentService,
+        AlBannerService $alBannerService
     ) {
         $this->productDetailsSectionService = $productDetailsSectionService;
         $this->bannerImgRelatedProductService = $bannerImgRelatedProductService;
         $this->componentService = $componentService;
         $this->productService = $productService;
+        $this->alBannerService = $alBannerService;
     }
 
 
@@ -84,18 +91,19 @@ class ProductDetailsController extends Controller
     public function sectionList($simType, $productDetailsId)
     {
         $productType = $this->productService->findOne($productDetailsId);
-        $productType = $productType->offer_category_id;
+        $productType = $productType->offer_category;
         $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
-
+        $banner = $this->alBannerService->findBanner('product_other_details', $productDetailsId);
         return view('admin.product.details.index', compact(
             'productSections',
             'simType',
             'productDetailsId',
             'products',
             'productType',
-            'bannerRelatedProduct'
+            'bannerRelatedProduct',
+            'banner'
         ));
     }
 
@@ -121,11 +129,6 @@ class ProductDetailsController extends Controller
      */
     public function storeSection(Request $request, $simType, $id)
     {
-        $request->validate([
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name' : '',
-            'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name_bn' : '',
-        ]);
-
         $response = $this->productDetailsSectionService->sectionStore($request->all());
         Session::flash('success', $response->content());
         return redirect(route('section-list', [$simType, $id]));
@@ -139,11 +142,6 @@ class ProductDetailsController extends Controller
 
     public function updateSection(Request $request, $simType, $productDetailsId, $id)
     {
-        $request->validate([
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name,' . $id : '',
-            'banner_name_bn' => !empty($request->banner_name_bn) ? 'regex:/^\S*$/u|unique:product_details_sections,banner_name_bn,' . $id : '',
-        ]);
-
         $response = $this->productDetailsSectionService->sectionUpdate($request->all(), $id);
         Session::flash('message', $response->content());
         return redirect(route('section-list', [$simType, $productDetailsId]));
@@ -187,7 +185,7 @@ class ProductDetailsController extends Controller
     public function componentEdit($simType, $productDetailsId, $sectionId, $id)
     {
         $dataTypes = $this->dataTypes;
-        $component = $this->componentService->findOne($id, ['componentMultiData']);
+        $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
         return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'simType', 'productDetailsId'));
@@ -204,18 +202,13 @@ class ProductDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $simType, $productDetailsId, $sectionId, $id)
     {
-        $response = $this->componentService->componentUpdate($request->all(), $id, self::PAGE_TYPE);
-        Session::flash('success', $response->content());
+        $this->componentService->componentUpdate($request->all(), $id);
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionId]));
     }
 
 
     public function bannerImgRelatedPro(Request $request, $simType, $productId)
     {
-        $request->validate([
-           'banner_name' => !empty($request->banner_name) ? 'unique:banner_img_related_products,banner_name,' . $request->banner_related_id : '',
-           'banner_name_bn' => !empty($request->banner_name) ? 'unique:banner_img_related_products,banner_name_bn,' . $request->banner_related_id : '',
-        ]);
         $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
         Session::flash('success', $response->content());
         return redirect(route('section-list', [$simType, $productId]));
