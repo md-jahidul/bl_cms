@@ -14,14 +14,14 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class BlogCategoryController extends Controller
+class CsrCategoryController extends Controller
 {
     /**
      * @var MediaNewsCategoryService
      */
     protected $mediaNewsCategoryService;
 
-    protected const SECTION_TYPE = "blog";
+    protected const SECTION_TYPE = "csr";
 
     /**
      * RolesController constructor.
@@ -38,8 +38,8 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
-        $blogCategories = $this->mediaNewsCategoryService->findAll();
-        return view('admin.blog.category.index', compact('blogCategories'));
+        $blogCategories = $this->mediaNewsCategoryService->findBy(['section_type' => self::SECTION_TYPE]);
+        return view('admin.al-csr.category.index', compact('blogCategories'));
     }
 
     /**
@@ -49,7 +49,7 @@ class BlogCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.blog.category.create');
+        return view('admin.al-csr.category.create');
     }
 
     /**
@@ -62,7 +62,7 @@ class BlogCategoryController extends Controller
     {
         $response = $this->mediaNewsCategoryService->storeCategory($request->all(), self::SECTION_TYPE);
         Session::flash('success', $response->getContent());
-        return redirect('blog-categories');
+        return redirect('csr-categories');
     }
 
     /**
@@ -74,7 +74,7 @@ class BlogCategoryController extends Controller
     public function edit($id)
     {
         $category = $this->mediaNewsCategoryService->findOne($id);
-        return view('admin.blog.category.edit', compact('category'));
+        return view('admin.al-csr.category.edit', compact('category'));
     }
 
     /**
@@ -88,7 +88,7 @@ class BlogCategoryController extends Controller
     {
         $response = $this->mediaNewsCategoryService->updateCategory($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('blog-categories');
+        return redirect('csr-categories');
     }
 
 
@@ -101,6 +101,6 @@ class BlogCategoryController extends Controller
     public function destroy($id)
     {
         $this->mediaNewsCategoryService->deleteCategory($id);
-        return url('blog-categories');
+        return url('csr-categories');
     }
 }

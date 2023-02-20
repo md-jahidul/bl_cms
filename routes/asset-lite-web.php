@@ -599,7 +599,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     /**
      * Business package landing components
-     * 
+     *
      */
     Route::get('business-package-component/list', 'AssetLite\BusinessPackageController@index')
         ->name('business-package-component.list');
@@ -614,10 +614,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
         ->name('business-package-component.destroy');
     Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
-    
+
     /**
      * Business package details components
-     * 
+     *
      */
     Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
         ->name('business-package-details-component.list');
@@ -1422,7 +1422,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('network-types','AssetLite\NetworkTypesController')->except(['show', 'destroy']);
     Route::get('network-types-sort', 'AssetLite\NetworkTypesController@typeSort');
     Route::get('network-types/destroy/{id}', 'AssetLite\NetworkTypesController@destroy');
-    // Blogs
+    // Blogs Details
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
@@ -1450,4 +1450,28 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // CSR Page
+    Route::resource('csr-landing-page-component', 'AssetLite\CSRLandingPageController')->except(['show', 'destroy']);
+    Route::get('csr-landing-page-component/destroy/{id}', 'AssetLite\CSRLandingPageController@destroy');
+    Route::get('csr-landing-page-sortable', 'AssetLite\CSRLandingPageController@landingPageSortable');
+    # CSR Post Components
+    Route::resource('csr-post', 'AssetLite\CsrController')->except(['show', 'destroy']);
+    Route::get('csr-post/destroy/{id}', 'AssetLite\CsrController@destroy');
+    Route::resource('csr-categories', 'AssetLite\CsrCategoryController')->except(['show', 'destroy']);
+    Route::get('csr-categories/destroy/{id}', 'AssetLite\CsrCategoryController@destroy');
+    # CSR details Components
+    Route::get('csr-component/{blog_id}/list', 'AssetLite\CsrDetailsController@index')
+        ->name('csr-component.list');
+    Route::get('csr-component/create', 'AssetLite\CsrDetailsController@componentCreate')
+        ->name('csr-component.create');
+    Route::post('csr-component/store', 'AssetLite\CsrDetailsController@componentStore')
+        ->name('csr-component.store');
+    Route::get('csr-component/edit/{comId}', 'AssetLite\CsrDetailsController@componentEdit')
+        ->name('csr-component.edit');
+    Route::post('csr-component/update/{comId}', 'AssetLite\CsrDetailsController@componentUpdate')
+        ->name('csr-component.update');
+    Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
+        ->name('csr-component.destroy');
+    Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 });
