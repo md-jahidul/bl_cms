@@ -20,6 +20,7 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
+                            <th width="25%">Page</th>
                             <th width="25%">Question En</th>
                             <th width="25%">Answer Bn</th>
                             <th class="">Action</th>
@@ -29,6 +30,7 @@
                             @foreach($faqs as $faq)
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
+                                    <td width="12%">{{ $faq->model_id != null ? $for[$faq->model_id] : '' }}</td>
                                     <td>{{ $faq->question_en }} {!! $faq->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{!! $faq->answer_en !!}</td>
                                     <td width="12%" class="text-center">
