@@ -154,16 +154,17 @@
 
 @push('page-js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script>
-        $('.dropify').dropify({
-            messages: {
-                'default': 'Browse for an Image File to upload',
-                'replace': 'Click to replace',
-                'remove': 'Remove',
-                'error': 'Choose correct file format'
-            }
+    <script type="text/javascript">
+        // Image Dropify
+        $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
+            });
         });
-
-        var auto_save_url = "{{ url('product-details/section-sortable') }}";
     </script>
 @endpush
