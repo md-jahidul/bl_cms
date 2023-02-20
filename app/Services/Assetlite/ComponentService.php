@@ -4,6 +4,8 @@ namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
+use App\Models\ComponentMultiData;
+use App\Repositories\ComponentMultiDataRepository;
 use App\Http\Controllers\AssetLite\ExploreCDetailsController;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -12,6 +14,8 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 use App\Repositories\ComponentRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ComponentService
 {
@@ -29,14 +33,22 @@ class ComponentService
      * @var $componentRepository
      */
     protected $componentRepository;
+    /**
+     * @var ComponentMultiDataRepository
+     */
+    private $comMultiDataRepository;
 
     /**
      * AppServiceProductService constructor.
      * @param ComponentRepository $componentRepository
+     * @param ComponentMultiDataRepository $componentMultiDataRepository
      */
-    public function __construct(ComponentRepository $componentRepository)
-    {
+    public function __construct(
+        ComponentRepository $componentRepository,
+        ComponentMultiDataRepository $componentMultiDataRepository
+    ) {
         $this->componentRepository = $componentRepository;
+        $this->comMultiDataRepository = $componentMultiDataRepository;
         $this->setActionRepository($componentRepository);
     }
 
@@ -99,21 +111,24 @@ class ComponentService
         return new Response('App Service Component added successfully');
     }
 
-//    protected function imageUpload($data)
-//    {
-//        return $image;
-//    }
-
-
     public function componentStore($data, $sectionId, $pageType)
     {
+
+//        dd($data);
+//        if ($data['component_type'] == "title_with_text_and_right_image") {
+//            request()->validate([
+//                'image_name_en' => 'unique:components,image_name_en',
+//                'image_name_bn' => 'unique:components,image_name_bn',
+//            ]);
+//        }
+
         if (request()->hasFile('image')) {
 
             if ($pageType == ExploreCDetailsController::PAGE_TYPE) {
 
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-                
+
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
         }
@@ -132,7 +147,7 @@ class ComponentService
 
                                 $value = $this->upload($value, 'assetlite/images/explore_c_details');
                             }else {
-                                
+
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
                         }
@@ -142,22 +157,72 @@ class ComponentService
             }
         }
 
-        $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
+        // return count($results);
+        $data['multiple_attributes'] = (count($results) >= 1) ? array_values($results) : null;
         $countComponents = $this->componentRepository->list($sectionId, $pageType);
         $data['component_order'] = count($countComponents) + 1;
+
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
 
-        $this->save($data);
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
+            $data['other_attributes'] = $data['other_attr'];
+        }
+
+        /**
+         * Creator: Shuvo-bs
+         * For Button Component
+         * Genareted Html stored in editor_en & editor_bn column
+         *
+         */
+        // if ($data['component_type'] == 'button_component') {
+        //     $check_external = '';
+        //     $link_en = '#';
+        //     $link_bn = '#';
+
+        //     if (isset($data['other_attributes'] ['is_external_url'])) {
+
+        //         if ($data['other_attributes'] ['is_external_url'] == 1) {
+        //             $check_external = 'target="_blank"';
+        //             $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
+        //         }
+
+        //     }else{
+
+        //         $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
+        //         $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
+        //     }
+
+        //     $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
+        //     $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
+
+
+        //     $data['editor_en'] = $btn_html_en;
+        //     $data['editor_bn'] = $btn_html_bn;
+
+        // }
+
         return response('Component create successfully!');
     }
 
 
     public function componentUpdate($data, $id)
     {
+        if ($data['component_type'] == "title_with_text_and_right_image") {
+            request()->validate([
+                'image_name_en' => 'required|unique:components,image_name_en,' . $id,
+                'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+            ]);
+        }
+
+        request()->validate([
+            'image_name_en' => 'unique:components,image_name_en,' . $id,
+            'image_name_bn' => 'unique:components,image_name_bn,' . $id,
+        ]);
+
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
-
             if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
 
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
@@ -174,7 +239,6 @@ class ComponentService
             $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
-                    // print_r($value);
                     $sub_data = [];
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
@@ -203,7 +267,6 @@ class ComponentService
             $data['multiple_attributes'] = $input_multiple_attributes;
 
         }else{
-
             //loop over the product array
             if ($input_multiple_attributes) {
                 foreach ($input_multiple_attributes as $data_id => $inputData) {
@@ -213,16 +276,79 @@ class ComponentService
                     }
                 }
             }
-    
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
-        if ($data['component_type'] == 'table_component') {
+        if ($component['component_type'] == 'table_component') {
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
         }
 
+        # other attributes to save
+        if (!empty($data['other_attr']) && count($data['other_attr']) > 0 && $component->page_type == "blog") {
+            $data['other_attributes'] = $data['other_attr'];
+        }
+
+        /**
+         * Creator: Shuvo-bs
+         * For Button Component
+         * Genareted Html stored in editor_en & editor_bn column
+         *
+         */
+        // if ($data['component_type'] == 'button_component') {
+        //     $check_external = '';
+        //     $link_en = '#';
+        //     $link_bn = '#';
+
+        //     if (isset($data['other_attributes'] ['is_external_url'])) {
+
+        //         if ($data['other_attributes'] ['is_external_url'] == 1) {
+        //             $check_external = 'target="_blank"';
+        //             $link_en = $link_bn = (isset($data['other_attributes'] ['external_url'])) ? $data['other_attributes'] ['external_url'] : '';
+        //         }
+
+        //     }else{
+
+        //         $link_en = (isset($data['other_attributes'] ['redirect_url_en'])) ? $data['other_attributes'] ['redirect_url_en'] : '';
+        //         $link_bn = (isset($data['other_attributes'] ['redirect_url_bn'])) ? $data['other_attributes'] ['redirect_url_bn'] : '';
+        //     }
+
+        //     $btn_html_en = '<a class="btn btn-danger" href="'.$link_en.'"'.$check_external.'  >'.$data['title_en'].'</a>';
+        //     $btn_html_bn = '<a class="btn btn-danger" href="'.$link_bn.'"'.$check_external.'  >'.$data['title_bn'].'</a>';
+
+
+        //     $data['editor_en'] = $btn_html_en;
+        //     $data['editor_bn'] = $btn_html_bn;
+
+        // }
+
         $component->update($data);
+
+        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
+            $this->comMultiDataRepository->deleteAllById($id);
+            foreach ($data['base_image'] as $key => $img) {
+//                dd($data);
+                if (is_object($img)) {
+                    $img = $this->upload($img, 'assetlite/images/component');
+                    $filePath = isset($data['old_img_url'][$key]) ? $data['old_img_url'][$key] : null;
+                    $this->deleteFile($filePath);
+                }
+                $imgData = [
+                    'component_id' => $component->id,
+                    'page_type' => $component->page_type,
+                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : null,
+                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : null,
+                    'alt_text_en' => $data['multi_alt_text_en'][$key],
+                    'alt_text_bn' => $data['multi_alt_text_bn'][$key],
+                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
+                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
+                    'base_image' => $img,
+                    'updated_by' => Auth::id()
+                ];
+                $this->comMultiDataRepository->save($imgData);
+            }
+        }
+
         // return $data['multiple_attributes'];
         return response("Component update successfully!!");
     }
@@ -368,7 +494,7 @@ class ComponentService
         $component = $this->findOne($id);
 
         if($component) $component->delete();
-        
+
         return Response('Component deleted successfully !');
     }
 

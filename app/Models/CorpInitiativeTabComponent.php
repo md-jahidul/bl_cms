@@ -20,10 +20,25 @@ class CorpInitiativeTabComponent extends Model
         'editor_bn',
         'multiple_attributes',
         'component_order',
+        'single_base_image',
+        'single_alt_text_en',
+        'single_alt_text_bn',
+        'single_image_name_en',
+        'single_image_name_bn',
         'status',
     ];
 
     protected $casts = [
         'multiple_attributes' => 'array'
     ];
+
+    public function batchTabs()
+    {
+        return $this->hasMany(CorpIntBatchComponentTab::class, 'corp_int_tab_com_id', 'id');
+    }
+
+    public function multiComponent()
+    {
+        return $this->hasMany(CorpIntComponentMultiItem::class, 'corp_int_tab_com_id', 'id');
+    }
 }

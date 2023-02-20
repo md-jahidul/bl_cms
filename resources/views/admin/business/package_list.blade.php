@@ -2,6 +2,8 @@
 @section('title', 'Business Packages')
 @section('card_name', 'Business Packages')
 @section('action')
+    <a href="{{ route('business-package-component.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i> Add Component </a>
+
     <a href="{{ url('business-package/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Package
     </a>
@@ -22,6 +24,7 @@
                                 <th width="60%">Short Details</th>
                                 <th width="20%">Home Show</th>
                                 <th width="10%">Status</th>
+                                <th width="10%">Details</th>
                                 <th width="10%">Action</th>
                             </tr>
                         </thead>
@@ -63,6 +66,9 @@
 
                                 </td>
                                 <td class="text-center">
+                                    <a href="{{ route('business-package-details-component.list', $pk->id)}}" class="btn btn-sm btn-primary btn-glow">Components</a>
+                                </td>
+                                <td class="text-center">
 
                                    <a class="text-info edit_package" href="{{url('business-package-edit/'.$pk->id)}}">
                                         <i class="la la-pencil-square"></i>
@@ -87,7 +93,17 @@
 </div>
 
 
- 
+@php
+
+    $action = [
+        'edit' => 'business-package-component/edit',
+        'destroy' => 'business-package-component/destroy',
+        'componentSort' => 'business-package-component-sort',
+        'section_id' => request()->business_package_id??0
+    ];
+
+@endphp
+@include('admin.components.index', $action)
 
 </section>
 

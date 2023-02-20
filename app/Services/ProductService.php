@@ -99,7 +99,7 @@ class ProductService
         $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
 
-        #Image Update
+        #Image store
         if (request()->hasFile('image')) {
 
             $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
@@ -123,6 +123,24 @@ class ProductService
         return new Response('Product added successfully');
     }
 
+    public function findSIMType($type)
+    {
+        $simTypeEn = null;
+        $simTypeBn = null;
+        $findSIMType = $this->dynamicRouteRepository->findByProperties(['key' => $type]);
+        foreach ($findSIMType as $data) {
+            if ($data->lang_type == 'en') {
+                $simTypeEn = str_replace('/en/', '', $data->url);
+            } elseif ($data->lang_type == 'bn') {
+                $simTypeBn = str_replace('/bn/', '', $data->url);
+            }
+        }
+        return [
+            'type_en' => $simTypeEn,
+            'type_bn' => $simTypeBn
+        ];
+    }
+
     //save Search Data
     private function _saveSearchData($product)
     {
@@ -137,10 +155,12 @@ class ProductService
 
         $url = "";
         if ($product->sim_category_id == 1) {
-            $url .= "prepaid/";
+            $data = $this->findSIMType('prepaid')['type_en'];
+            $url .= "$data/";
         }
         if ($product->sim_category_id == 2) {
-            $url .= "postpaid/";
+            $data = $this->findSIMType('postpaid')['type_en'];
+            $url .= "$data/";
         }
 
         //category url
@@ -148,26 +168,25 @@ class ProductService
 
         $keywordType = "offer-" . $product->offer_category->alias;
 
-
         $type = "";
         if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'prepaid-internet';
         }
         if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'prepaid-voice';
         }
         if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'prepaid-bundle';
         }
         if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'postpaid-internet';
         }
         if ($product->offer_category_id > 3) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
+            $url .= '/' . $product->url_slug;
             $type = 'others';
         }
 
@@ -250,6 +269,7 @@ class ProductService
 
         $product->update($data);
 
+
         //save Search Data
         $this->_saveSearchData($product);
         return Response('Product update successfully !');
@@ -273,6 +293,7 @@ class ProductService
             $langInSlug = explode('/', $item->url);
             return in_array($lang, $langInSlug);
         })->first();
+
         $langUrlSlug = $lang === 'bn' ? 'url_slug_bn' : 'url_slug';
 
         return $dynamicRoutes->url . '/' . $product->offer_category->$langUrlSlug . '/';
@@ -432,6 +453,23 @@ class ProductService
         }
 
         return $product->internet_volume_mb;
+    }
+
+    public function updateSearchData($product){
+
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+        $internate_voice_bundles = [1,2,3];
+        $response = '';
+
+        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+            $response = $this->_saveSearchData($product);
+        }
+        return $response;
     }
 
 }

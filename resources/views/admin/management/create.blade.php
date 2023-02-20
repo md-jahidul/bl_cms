@@ -174,7 +174,56 @@
                                     @endif--}}
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
+                                <div class="form-group col-md-6">
+                                       @if(isset($manage))
+                                           <img style="height:80px;width:100px;"
+                                                src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
+                                       @else
+                                           <img style="height:80px;width:100px; display:none" id="profile_image_Display">
+                                       @endif
+                                   </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('profile_img_name') ? ' error' : '' }}">
+                                   <label>Profile Image Name EN</label>
+                                   <input type="text" name="profile_img_name"  class="form-control" placeholder="Enter image name en"
+                                          value="@if(isset($manage)){{$manage->profile_img_name}}@elseif(old("profile_img_name")){{old("profile_img_name")}}@endif">
+                                   <div class="help-block"></div>
+                                   @if ($errors->has('profile_img_name'))
+                                       <div class="help-block">  {{ $errors->first('profile_img_name') }}</div>
+                                   @endif
+                               </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('profile_img_name_bn') ? ' error' : '' }}">
+                                   <label>Profile Image Name BN</label>
+                                   <input type="text" name="profile_img_name_bn"  class="form-control" placeholder="Enter image name bn"
+                                          value="@if(isset($manage)){{$manage->profile_img_name_bn}}@elseif(old("profile_img_name_bn")){{old("profile_img_name_bn")}}@endif">
+                                   <div class="help-block"></div>
+                                   @if ($errors->has('profile_img_name_bn'))
+                                       <div class="help-block">  {{ $errors->first('profile_img_name_bn') }}</div>
+                                   @endif
+                               </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('profile_img_alt_text') ? ' error' : '' }}">
+                                   <label>Profile Image Alt Text EN</label>
+                                   <input type="text" name="profile_img_alt_text"  class="form-control" placeholder="Enter image alt text en"
+                                          value="@if(isset($manage)){{$manage->profile_img_alt_text}}@elseif(old("profile_img_alt_text")){{old("profile_img_alt_text")}}@endif">
+                                   <div class="help-block"></div>
+                                   @if ($errors->has('profile_img_alt_text'))
+                                       <div class="help-block">  {{ $errors->first('profile_img_alt_text') }}</div>
+                                   @endif
+                               </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('profile_img_alt_text_bn') ? ' error' : '' }}">
+                                   <label>Profile Image Alt Text BN</label>
+                                   <input type="text" name="profile_img_alt_text_bn"  class="form-control" placeholder="Enter image alt text bn"
+                                          value="@if(isset($manage)){{$manage->profile_img_alt_text_bn}}@elseif(old("profile_img_alt_text_bn")){{old("profile_img_alt_text_bn")}}@endif">
+                                   <div class="help-block"></div>
+                                   @if ($errors->has('profile_img_alt_text_bn'))
+                                       <div class="help-block">  {{ $errors->first('profile_img_alt_text_bn') }}</div>
+                                   @endif
+                               </div>
+
+                               <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
                                     <label for="alt_text" >Modal Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="banner_image" class="custom-file-input" id="image">
@@ -187,23 +236,54 @@
                                     @endif--}}
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    @if(isset($manage))
-                                    <img style="height:80px;width:100px;"
-                                         src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
-                                    @else
-                                    <img style="height:80px;width:100px; display:none" id="profile_image_Display">
-                                    @endif
-                                </div>
+                               <div class="form-group col-md-6">
+                                       @if(isset($manage))
+                                           <img style="height:80px;width:100px;"
+                                                src="{{ config('filesystems.file_base_url') . $manage->banner_image }}" id="imgDisplay">
+                                       @else
+                                           <img style="height:80px;width:100px;display:none" id="imgDisplay">
+                                       @endif
+                                   </div>
 
-                                <div class="form-group col-md-6">
-                                    @if(isset($manage))
-                                    <img style="height:80px;width:100px;"
-                                         src="{{ config('filesystems.file_base_url') . $manage->banner_image }}" id="imgDisplay">
-                                    @else
-                                    <img style="height:80px;width:100px;display:none" id="imgDisplay">
-                                    @endif
-                                </div>
+                               <div class="form-group col-md-3 {{ $errors->has('banner_img_name') ? ' error' : '' }}">
+                                   <label>Banner Image Name EN</label>
+                                   <input type="text" name="banner_img_name"  class="form-control" placeholder="Enter image name en"
+                                          value="@if(isset($manage)){{$manage->banner_img_name}}@elseif(old("banner_img_name")){{old("banner_img_name")}}@endif">
+                                   <div class="help-block"></div>
+                                   @if ($errors->has('banner_img_name'))
+                                       <div class="help-block">  {{ $errors->first('banner_img_name') }}</div>
+                                   @endif
+                               </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('banner_img_name_bn') ? ' error' : '' }}">
+                                       <label>Banner Image Name BN</label>
+                                       <input type="text" name="banner_img_name_bn"  class="form-control" placeholder="Enter image name bn"
+                                              value="@if(isset($manage)){{$manage->banner_img_name_bn}}@elseif(old("banner_img_name_bn")){{old("banner_img_name_bn")}}@endif">
+                                       <div class="help-block"></div>
+                                       @if ($errors->has('banner_img_name_bn'))
+                                           <div class="help-block">  {{ $errors->first('banner_img_name_bn') }}</div>
+                                       @endif
+                                   </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('banner_img_alt_text') ? ' error' : '' }}">
+                                   <label>Banner Image Alt Text EN</label>
+                                   <input type="text" name="banner_img_alt_text"  class="form-control" placeholder="Enter image alt text en"
+                                          value="@if(isset($manage)){{$manage->banner_img_alt_text}}@elseif(old("banner_img_alt_text")){{old("banner_img_alt_text")}}@endif">
+                                   <div class="help-block"></div>
+                                   @if ($errors->has('banner_img_alt_text'))
+                                       <div class="help-block">  {{ $errors->first('banner_img_alt_text') }}</div>
+                                   @endif
+                               </div>
+
+                               <div class="form-group col-md-3 {{ $errors->has('banner_img_alt_text_bn') ? ' error' : '' }}">
+                                       <label>Banner Image Alt Text BN</label>
+                                       <input type="text" name="banner_img_alt_text_bn"  class="form-control" placeholder="Enter image alt text bn"
+                                              value="@if(isset($manage)){{$manage->banner_img_alt_text_bn}}@elseif(old("banner_img_alt_text_bn")) {{old("banner_img_alt_text_bn")}} @endif">
+                                       <div class="help-block"></div>
+                                       @if ($errors->has('banner_img_alt_text_bn'))
+                                           <div class="help-block">  {{ $errors->first('banner_img_alt_text_bn') }}</div>
+                                       @endif
+                                   </div>
 
                                <div class="form-group col-md-6">
                                    <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">

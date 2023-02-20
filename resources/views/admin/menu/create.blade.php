@@ -118,7 +118,7 @@
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> SAVE
+                                                class="la la-check-square-o"></i> SAVE
                                         </button>
                                     </div>
                                 </div>
@@ -138,18 +138,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
-{{--    <script>--}}
-{{--        $(function () {--}}
-{{--            var externalLink = $('#externalLink');--}}
-{{--            $('#external_link').click(function () {--}}
-{{--                if($(this).prop("checked") == true){--}}
-{{--                    externalLink.removeClass('d-none');--}}
-{{--                }else{--}}
-{{--                    externalLink.addClass('d-none')--}}
-{{--                }--}}
-{{--            })--}}
-{{--        })--}}
-{{--    </script>--}}
+    {{--    <script>--}}
+    {{--        $(function () {--}}
+    {{--            var externalLink = $('#externalLink');--}}
+    {{--            $('#external_link').click(function () {--}}
+    {{--                if($(this).prop("checked") == true){--}}
+    {{--                    externalLink.removeClass('d-none');--}}
+    {{--                }else{--}}
+    {{--                    externalLink.addClass('d-none')--}}
+    {{--                }--}}
+    {{--            })--}}
+    {{--        })--}}
+    {{--    </script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {

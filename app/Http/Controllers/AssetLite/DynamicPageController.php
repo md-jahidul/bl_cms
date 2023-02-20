@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Helpers\ComponentHelper;
 use App\Http\Requests\DynamicPageStoreRequest;
 use App\Services\Assetlite\ComponentService;
 use App\Services\DynamicPageService;
@@ -43,20 +44,23 @@ class DynamicPageController extends Controller
 
     }
 
-    protected $componentTypes = [
-//        'large_title_with_text' => 'Large Title With Text',
-//        'medium_title_with_text' => 'Medium Title With Text',
-//        'small_title_with_text' => 'Small Title With Text',
-//        'text_and_button' => 'Text And Button',
-//        'text_component' => 'Text Component',
-//        'features_component' => 'Features Component',
-        'title_with_text_and_right_image' => 'Title with text and right Image',
-        'title_with_video_and_text' => 'Title with Video and text',
-        'table_component' => 'Table Component',
-        'bullet_text' => 'Bullet Text',
-        'accordion_text' => 'Accordion Text',
-        'multiple_image' => 'Multiple Image',
-    ];
+    // protected $componentTypes = [
+    //     // 'large_title_with_text' => 'Large Title With Text',
+    //     // 'medium_title_with_text' => 'Medium Title With Text',
+    //     // 'small_title_with_text' => 'Small Title With Text',
+    //     // 'text_and_button' => 'Text And Button',
+    //     // 'text_component' => 'Text Component',
+    //     // 'features_component' => 'Features Component',
+
+    //     // 'title_with_text_and_right_image' => 'Title with text and right Image',
+    //     // 'bullet_text' => 'Bullet Text',
+    //     // 'accordion_text' => 'Accordion Text',
+    //     // 'table_component' => 'Table Component',
+    //     'title_with_video_and_text' => 'Title with Video and text',
+    //     'button_component' => 'Button Component',
+    //     'multiple_image' => 'Multiple Image',
+    //     'customer_complaint' => 'Customer Complaint',
+    // ];
 
 
     public function index()
@@ -79,45 +83,68 @@ class DynamicPageController extends Controller
     public function savePage(DynamicPageStoreRequest $request)
     {
         $response = $this->pageService->savePage($request->all());
-
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'Page is saved!');
+            Session::flash('success', $response['message']);
         } else {
             Session::flash('error', $response['message']);
         }
-
         return redirect('/dynamic-pages');
     }
 
     public function componentList($pageId)
     {
+
+        $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+        $components = $this->componentService->findBy(['page_type' => self::PAGE_TYPE, 'section_details_id' => $pageId], '', $orderBy);
+
+
         $page = $this->pageService->findOne($pageId);
-        $components = $this->pageService->getComponents($pageId);
+        // $components = $this->pageService->getComponents($pageId);
         $banner = $this->alBannerService->findBanner(self::PAGE_TYPE, $pageId);
         $pageType = self::PAGE_TYPE;
 
         return view('admin.dynamic-pages.components.index', compact('components', 'page', 'banner', 'pageType'));
     }
 
-    public function componentCreateForm($pageId)
+    public function componentCreateForm()
     {
-        $componentTypes = $this->componentTypes;
-        return view('admin.dynamic-pages.components.create', compact('componentTypes', 'pageId'));
+        // $componentTypes = $this->componentTypes;
+        // $pageId = 1;
+        // return view('admin.dynamic-pages.components.create', compact('componentTypes', 'pageId'));
+
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
+        $storeAction = 'other-component-store';
+        $listAction = 'other-components';
+        $pageType = self::PAGE_TYPE;
+        return view('admin.components.create', compact('componentList', 'storeAction', 'listAction', 'pageType'));
+
     }
 
-    public function componentStore(Request $request, $pageId)
+    public function componentStore(Request $request)
     {
+
+        // return $request->all();
+        $pageId = $request->sections['id'];
         $response = $this->componentService->componentStore($request->all(), $pageId, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('other-components', [$pageId]));
     }
 
-    public function componentEditForm($pageId, $id)
+    public function componentEditForm(Request $request, $id)
     {
-        $componentTypes = $this->componentTypes;
+
+        // $componentTypes = $this->componentTypes;
+        // $component = $this->componentService->findOne($id);
+        // $multipleImage = $component['multiple_attributes'];
+        // return view('admin.dynamic-pages.components.edit', compact('component', 'multipleImage', 'componentTypes', 'pageId'));
+
         $component = $this->componentService->findOne($id);
-        $multipleImage = $component['multiple_attributes'];
-        return view('admin.dynamic-pages.components.edit', compact('component', 'multipleImage', 'componentTypes', 'pageId'));
+        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
+        $updateAction = 'other-component-update';
+        $listAction = 'other-components';
+        return view('admin.components.edit', compact('component', 'componentList', 'updateAction', 'listAction'));
+
+
     }
 
     /**
@@ -126,10 +153,18 @@ class DynamicPageController extends Controller
      * @param $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function componentUpdate(Request $request, $pageId, $id)
+    public function componentUpdate(Request $request,  $id)
     {
+        // $response = $this->componentService->componentUpdate($request->all(), $id);
+        // Session::flash('success', $response->content());
+        // return redirect(route('other-components', [$pageId]));
+
+        // return $request->all();
+        $request['page_type'] = self::PAGE_TYPE;
+        $pageId = $request->sections['id'];
+
         $response = $this->componentService->componentUpdate($request->all(), $id);
-        Session::flash('success', $response->content());
+        Session::flash('message', $response->getContent());
         return redirect(route('other-components', [$pageId]));
     }
 
@@ -156,10 +191,11 @@ class DynamicPageController extends Controller
      * @return string
      * @throws \Exception
      */
-    public function componentDestroy($pageId, $id)
+    public function componentDestroy($id)
     {
         $this->componentService->deleteComponent($id);
-        return url(route('other-components', [$pageId]));
+        // return url(route('other-components', [$pageId]));
+        return url()->previous();
     }
 
 

@@ -52,9 +52,10 @@ class MediaLandingPageService
      * @param $data
      * @return Response
      */
-    public function storeComponent($data)
+    public function storeComponent($data, $referenceType = null)
     {
         $data['created_by'] = Auth::id();
+        $data['reference_type'] = $referenceType;
         $this->save($data);
         return new Response("Component has been successfully created");
     }
@@ -68,7 +69,8 @@ class MediaLandingPageService
     {
         $component = $this->findOne($id);
         $data['updated_by'] = Auth::id();
-        $data['items'] = isset($data['items']) ? $data['items'] : '';
+        $data['items'] = $data['items'] ?? '';
+        $data['slider_items'] = $data['slider_items'] ?? '';
         $component->update($data);
         return Response('Component has been successfully updated');
     }

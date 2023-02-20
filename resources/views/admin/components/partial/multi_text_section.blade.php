@@ -1,7 +1,3 @@
-{{ Form::hidden('sections[section_name]', 'Explore C\'s' ) }}
-{{ Form::hidden('sections[section_type]', 'explore_c' ) }}
-{{ Form::hidden('component_type', 'multi_text_with_image_bottom' ) }}
-
 <div class="col-sm-12">
     <div class="add_button_wrap float-right">
       <a href="#" class="btn btn-info  btn-glow px-1 add_more_text_section_item">+ Add Text Section</a>
@@ -61,17 +57,16 @@
                         <div class="form-group">
                             <label for="exampleInputPassword1">Description (Bangla)</label>
                             <textarea name="multi_item[desc_bn-{{ $key +1 }}]" class="form-control summernote_editor" rows="5"
-                                    placeholder="Enter description">{{ $single_attribute['desc_en'] ?? null}}</textarea>
+                                    placeholder="Enter description">{{ $single_attribute['desc_bn'] ?? null}}</textarea>
                         </div>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="status">Status</label>
                         <select class="form-control" name="multi_item[status-{{ $key +1 }}]" aria-invalid="false">
-                            <option value="1" {{ $single_attribute['status'] == 1 ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ $single_attribute['status'] == 0 ? 'selected' : '' }}>Inactive</option>
+                            <option value="1" {{ isset ($single_attribute['status'])  && $single_attribute['status'] == 1 ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ isset ($single_attribute['status'])  && $single_attribute['status'] == 0 ? 'selected' : '' }}>Inactive</option>
                         </select>
-
                     </div>
                     <div class="form-group">
                         <label for="status" style="padding-bottom: 43px;"> </label>
@@ -243,9 +238,9 @@
 	     $(this).parent().parent().remove();
 
         let parentSelector = $('#multi_text_with_image_bottom');
-           let count =  parentSelector.find('#multi_item_count').val();
+        let count =  parentSelector.find('#multi_item_count').val();
 
-           parentSelector.find('#multi_item_count').val(count-1);
+        parentSelector.find('#multi_item_count').val(count-1);
 
 	   });
 

@@ -210,7 +210,7 @@ class BaseRepository implements BaseRepositoryContract
      * @return Model
      */
     public function save(array $data)
-    {   
+    {
         return $this->model->create($data);
     }
 

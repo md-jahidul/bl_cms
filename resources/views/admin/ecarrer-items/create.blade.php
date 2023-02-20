@@ -12,7 +12,7 @@
 
 @php
 
-if( 
+if(
     $parent_categories['category'] == 'programs_photogallery'
 ){
     $hide_title = true;
@@ -48,7 +48,7 @@ else{
                                     @endif
                                 </div>
                                 @endif
-                                
+
                                 @if( !$hide_title )
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
@@ -76,6 +76,25 @@ else{
                                     @include('admin.ecarrer-items.additional.description')
                                 @endif
 
+                                    <div class="form-group col-md-6 {{ $errors->has('sub_title_en') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1">Sub title EN</label>
+                                        <input type="text" name="sub_title_en"  class="form-control" placeholder="Enter sub title (english)"
+                                            value="{{ old("sub_title_en") ? old("sub_title_en") : '' }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('sub_title_en'))
+                                            <div class="help-block">  {{ $errors->first('sub_title_en') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('sub_title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1">Sub title BN</label>
+                                        <input type="text" name="sub_title_bn"  class="form-control" placeholder="Enter sub title (bangla)"
+                                            value="{{ old("sub_title_bn") ? old("sub_title_bn") : '' }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('sub_title_bn'))
+                                            <div class="help-block">  {{ $errors->first('sub_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
 
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Image (optional)</label>
@@ -95,16 +114,46 @@ else{
                                     <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('image_name') ? ' error' : '' }}">
+                                    <label>Image Name EN</label>
+                                    <input type="text" name="image_name"  class="form-control" placeholder="Image Name EN"
+                                           value="{{ old("image_name") ? old("image_name") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name'))
+                                        <div class="help-block">  {{ $errors->first('image_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label>Image Name BN</label>
+                                    <input type="text" name="image_name_bn"  class="form-control" placeholder="Image Name BN"
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required1">Alt text</label>
-                                    <input type="text" name="alt_text"  class="form-control" placeholder="Section name"
+                                    <label for="alt_text">Alt text</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Alt Text EN"
                                            value="{{ old("alt_text") ? old("alt_text") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
-                                
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Alt Text BN"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
                                     <label for="embed">Video Embed Code</label>
                                     <textarea name="video" class="form-control"></textarea>
@@ -127,19 +176,20 @@ else{
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.call_to_actions')
                                 <!-- Include additional field layout for individual section requirement -->
                                 {{-- {{ dd($parent_data->check_type) }} --}}
-                                @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
+                                {{-- @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
                                     @include('admin.ecarrer-items.additional.call_to_actions')
-                                @endif
+                                @endif --}}
 
 
                                 @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
-                                    @include('admin.ecarrer-items.additional.testimonial_text')
+        
+                                @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 
-                                
+
                                 <!-- Include additional field layout for individual section requirement -->
                                 @if( $ecarrer_section_slug == 'life_at_bl_contact' )
                                     @include('admin.ecarrer-items.additional.alter_text_links')
@@ -172,7 +222,7 @@ else{
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    
+
 
 @endpush
 

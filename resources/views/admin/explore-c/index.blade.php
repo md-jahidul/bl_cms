@@ -23,7 +23,7 @@
                             <th width="25%">Start Date</th>
                             <th width="25%">End Date</th>
                             <th width="25%">Status</th>
-                            <th width="25%">Details</th>
+                            {{-- <th width="25%">Details</th> --}}
                             <th class="">Action</th>
                         </tr>
                         </thead>
@@ -37,9 +37,9 @@
                                     <td >{{ $exploreC->start_date }}</td>
                                     <td >{{ $exploreC->end_date }}</td>
                                     <td >{{ \App\Models\ExploreC::EXPLORE_C_STATUS_ENUM[$exploreC->status]  }}</td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                              <a href="{{ route( "explore-c-component.list", ['id' => $exploreC->id] ) }}" class="btn-sm btn-outline-warning border">Details</a>
-                                        </td>
+                                        </td> --}}
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("explore-c/$exploreC->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("explore-c/destroy/$exploreC->id") }}" class="border-0 btn-sm btn-outline-danger delete delete_btn" data-id="{{ $exploreC->id }}" title="Delete">

@@ -41,33 +41,34 @@
 
                             <div class="form-group col-md-6">
                                 <label for="title">Title: <small
-                                            class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <input
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Title is required"
-                                        data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                        value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
-                                        type="text"
-                                        class="form-control @error('title') is-invalid @enderror"
-                                        placeholder="Title" name="title">
+
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Title is required"
+                                    data-validation-regex-message="Title must start with alphabets"
+                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                    value="{{old('title')?old('title'):$imageInfo->title}}" required id="title"
+                                    type="text"
+                                    class="form-control @error('title') is-invalid @enderror"
+                                    placeholder="Title" name="title">
                                 <small
-                                        class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
                                 <label for="alt_text" class="required">Alt Text: </label>
                                 <input  required
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-regex-message="Alt Text must start with alphabets"
-                                        data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
-                                        value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
-                                        class="form-control @error('alt_text') is-invalid @enderror"
-                                        placeholder="Alt text" name="alt_text">
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-regex-message="Alt Text must start with alphabets"
+                                    data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
+                                    value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
+                                    class="form-control @error('alt_text') is-invalid @enderror"
+                                    placeholder="Alt text" name="alt_text">
                                 <small
-                                        class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
@@ -117,11 +118,9 @@
 
                             @php
                                 $actionList = Helper::navigationActionList();
-
-                                /*dd($actionList)*/
                             @endphp
 
-                            <div class="form-group col-md-6 mb-2 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}"
+                            <div class="form-group col-md-6 mb-2 "
                                  id="slider_action">
                                 <label for="redirect_url">Slider Action </label>
                                 <select id="navigate_action" name="redirect_url" class="browser-default custom-select">
@@ -155,11 +154,18 @@
                                         Shortcut icon should be in
                                         16:9 aspect ratio</small><br>
                                     <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
                                 </div>
                             </div>
-
+                            <div class="form-group col-md-6 mb-2">
+                                <label for="partner_details" >Partner Details::</label>
+                                <textarea
+                                    class="form-control @error('partner_details') is-invalid @enderror" placeholder="Enter Partner Details....." id="partner_details"
+                                    name="partner_details" rows="5">{{ $imageInfo->partner_details }}</textarea>
+                                <div class="help-block"></div>
+                                <small class="text-danger"> @error('partner_details') {{ $message }} @enderror </small>
+                            </div>
                             <div id="append_div" class="col-md-6 {{ $imageInfo->user_type != "segment_wise_banner" ? 'show' : 'hidden' }}">
                                 @if(isset($imageInfo))
                                     @if($info = json_decode(json_encode($imageInfo->other_attributes)))
@@ -176,14 +182,14 @@
                                             @endif
                                             @if($imageInfo->redirect_url == "PURCHASE")
                                                 <label>Linked Product</label>
-                                                    <select name="other_attributes" class="form-control select2" required>
-                                                        <option value="">Select a Product</option>
-                                                        @foreach ($products as $value)
-                                                            <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
-                                                                {{ $value['text'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select name="other_attributes" class="form-control select2" required>
+                                                    <option value="">Select a Product</option>
+                                                    @foreach ($products as $value)
+                                                        <option value="{{ $value['id'] }}" {{ ( $value['id']  == $info->content) ? 'selected' : '' }}>
+                                                            {{ $value['text'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             @endif
                                             @if($imageInfo->redirect_url == "FEED_CATEGORY")
                                                 <div class="form-group other-info-div">
@@ -403,8 +409,6 @@
                     let type = other_attributes.type;
                     if(type == 'dial'){
                         dial_content = other_attributes.content;
-                    }else if(type == 'USSD_CODE'){
-                        redirect_content = other_attributes.content;
                     }else if(type == 'url'){
                         redirect_content = other_attributes.content;
                     }else{
@@ -489,7 +493,7 @@
                                         <div class="help-block"></div>
                                     </div> `; 
                             
-                if(parse_data.redirect_url == 'USSD_CODE'){
+                if(parse_data.redirect_url == 'USSD'){
                     $("#append_div").html(ussd_code);
                 }                
 
@@ -499,7 +503,7 @@
                 //console.log(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
-                }else if (action == 'USSD_CODE') {
+                }else if (action == 'USSD') {
                         $("#append_div").html(ussd_code);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);

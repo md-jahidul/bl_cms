@@ -39,4 +39,9 @@ class AlFaqCategoryService
         $category->update($data);
         return Response('Category update successfully');
     }
+
+    public function getFaqsCategory($slug)
+    {
+        return $this->alFaqCategoryRepository->findOneByProperties(['slug' => $slug]);
+    }
 }

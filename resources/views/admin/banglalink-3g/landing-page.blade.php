@@ -88,14 +88,28 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text EN</label>
                                     <input type="text" name="other_attributes[alt_text_en]" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($bannerImage->other_attributes['alt_text_en']) ? $bannerImage->other_attributes['alt_text_en'] : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
-                                    @endif
+                                           placeholder="Enter alt text en" value="{{ isset($bannerImage->other_attributes['alt_text_en']) ? $bannerImage->other_attributes['alt_text_en'] : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text BN</label>
+                                    <input type="text" name="other_attributes[alt_text_bn]" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($bannerImage->other_attributes['alt_text_bn']) ? $bannerImage->other_attributes['alt_text_bn'] : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Banner Name EN</label>
+                                    <input type="text" name="other_attributes[banner_name_en]" id="alt_text" class="form-control"
+                                           placeholder="Enter banner name en" value="{{ isset($bannerImage->other_attributes['banner_name_en']) ? $bannerImage->other_attributes['banner_name_en'] : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Banner Name BN</label>
+                                    <input type="text" name="other_attributes[banner_name_bn]" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($bannerImage->other_attributes['banner_name_bn']) ? $bannerImage->other_attributes['banner_name_bn'] : '' }}">
                                 </div>
 
                                 <h5><strong>3G Landing Page Info</strong></h5>

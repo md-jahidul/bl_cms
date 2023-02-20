@@ -56,4 +56,13 @@ class AppServiceProductDetailsRepository extends BaseRepository
         return "success";
     }
 
+    public function findSectionEdit($section_id)
+    {
+        return $this->model->where('id', $section_id)
+            ->with(['sectionComponent' => function ($q) {
+                $q->with('componentMultiData');
+            }])
+            ->first();
+    }
+
 }

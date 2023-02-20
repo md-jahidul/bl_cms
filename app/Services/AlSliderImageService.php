@@ -52,6 +52,10 @@ class AlSliderImageService
         if (request()->hasFile('mobile_view_img')) {
             $data['mobile_view_img'] = $this->upload($data['mobile_view_img'], 'assetlite/images/slider-images');
         }
+
+        if (request()->hasFile('icon_image')) {
+            $data['icon_image'] = $this->upload($data['icon_image'], 'assetlite/images/slider-images');
+        }
         $data['slider_id'] = $sliderId;
         $data['display_order'] = ++$count;
         $image = $this->save($data);
@@ -92,6 +96,11 @@ class AlSliderImageService
             $imageUrl = $this->upload($data['mobile_view_img'], 'assetlite/images/slider-images');
             $data['mobile_view_img'] = $imageUrl;
             $this->deleteFile($sliderImage['mobile_view_img']);
+        }
+        if (request()->hasFile('icon_image')) {
+            $imageUrl = $this->upload($data['icon_image'], 'assetlite/images/slider-images');
+            $data['icon_image'] = $imageUrl;
+            $this->deleteFile($sliderImage['icon_image']);
         }
         $sliderImage->update($data);
         return Response('Slider Image update successfully !');

@@ -33,7 +33,7 @@ class BusinessFeaturesRepository extends BaseRepository {
                 $update['sort'] = $new_position;
                 $update->update();
             }
-            
+
             $response = [
                 'success' => 1,
                 'message' => 'Success'
@@ -71,8 +71,8 @@ class BusinessFeaturesRepository extends BaseRepository {
         }
     }
 
-    public function saveFeature($filePath, $request) {
-
+    public function saveFeature($filePath, $request)
+    {
         $featureId = $request->feature_id;
         if ($featureId != "") {
             $feature = $this->model->findOrFail($featureId);
@@ -86,7 +86,10 @@ class BusinessFeaturesRepository extends BaseRepository {
         }
         $feature->title = $request->title;
         $feature->title_bn = $request->title_bn;
+        $feature->icon_name_en = $request->icon_name_en;
+        $feature->icon_name_bn = $request->icon_name_bn;
         $feature->alt_text = $request->alt_text;
+        $feature->alt_text_bn = $request->alt_text_bn;
         return $feature->save();
     }
 

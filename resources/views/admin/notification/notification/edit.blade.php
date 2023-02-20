@@ -336,15 +336,15 @@
 
 
         function initiateDropify(selector) {
-                $(selector).dropify({
-                    messages: {
-                        'default': 'Browse for an Image to upload',
-                        'replace': 'Click to replace',
-                        'remove': 'Remove',
-                        'error': 'Choose correct Image file'
-                    }
-                });
-            }
+            $(selector).dropify({
+                messages: {
+                    'default': 'Browse for an Image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Image file'
+                }
+            });
+        }
 
         $(document).ready(function () {
             $("#lavel_id").empty();
@@ -359,43 +359,43 @@
             });
         });
 
-            var feed_category = "";
-            var dial_content = "";
-            var redirect_content = "";
-            var purchase_content = "";
-            var url_html;
-            var product_html;
-            var parse_data;
-            let dial_html, other_attributes = '';
-            var js_data ="<?php echo $notification->navigate_action; ?>"; //<?php echo isset($search_content) ? json_encode($search_content->other_contents) : null; ?>;
+        var feed_category = "";
+        var dial_content = "";
+        var redirect_content = "";
+        var purchase_content = "";
+        var url_html;
+        var product_html;
+        var parse_data;
+        let dial_html, other_attributes = '';
+        var js_data ="<?php echo $notification->navigate_action; ?>"; //<?php echo isset($search_content) ? json_encode($search_content->other_contents) : null; ?>;
 
-            if (js_data) {
-                other_attributes =js_data; //JSON.parse(js_data);
-                if (other_attributes) {
-                    type =js_data; //other_attributes.type;
-                    if(type == 'dial'){
-                        dial_content = js_data; //other_attributes.content;
-                    }else if(type == 'url'){
-                        redirect_content =js_data; // other_attributes.content;
-                    }else{
-                        purchase_content =js_data; /// other_attributes.content;
-                    }
+        if (js_data) {
+            other_attributes =js_data; //JSON.parse(js_data);
+            if (other_attributes) {
+                type =js_data; //other_attributes.type;
+                if(type == 'dial'){
+                    dial_content = js_data; //other_attributes.content;
+                }else if(type == 'url'){
+                    redirect_content =js_data; // other_attributes.content;
+                }else{
+                    purchase_content =js_data; /// other_attributes.content;
                 }
             }
-            // add dial number
-            dial_html = ` <div class="form-group other-info-div">
+        }
+        // add dial number
+        dial_html = ` <div class="form-group other-info-div">
                                         <label>Dial Number</label>
                                         <input type="text" name="external_url" class="form-control" value="${dial_content}" placeholder="Enter Valid Number" required>
                                         <div class="help-block"></div>
                                     </div>`;
 
-            url_html = ` <div class="form-group other-info-div">
+        url_html = ` <div class="form-group other-info-div">
                                         <label>Redirect External URL</label>
                                         <input type="text" name="external_url" class="form-control" value="${redirect_content}" placeholder="Enter Valid URL" required>
                                         <div class="help-block"></div>
                                     </div>`;
 
-            product_html = ` <div class="form-group other-info-div">
+        product_html = ` <div class="form-group other-info-div">
                                         <label>Select a product</label>
                                         <select class="product-list form-control" name="external_url">
                                             <option value="${purchase_content}" selected="selected">${purchase_content}</option>
@@ -403,7 +403,7 @@
                                         <div class="help-block"></div>
                                     </div>`;
 
-            feed_category = `<div class="form-group other-info-div">
+        feed_category = `<div class="form-group other-info-div">
                                     <label>Feed Category</label>
                                     <select class="feed-cat-list form-control" name="external_url" required>
                                         <option value="">---Select Feed Category---</option>
@@ -411,52 +411,41 @@
                                     <div class="help-block"></div>
                                 </div>`;
         $('#navigate_action').on('change', function () {
-                let action = $(this).val();
-                if (action == 'DIAL') {
-                    $("#append_div").html(dial_html);
-                }else if(action == 'URL') {
-                    $("#append_div").html(url_html);
-                } else if (action === 'FEED_CATEGORY') {
-                    $("#append_div").html(feed_category);
-                    $.ajax({
-                        url: "{{ route('feed.data') }}",
-                        type: 'GET',
-                        dataType: 'json', // added data type
-                        success: function(res) {
-                            res.map(function (data) {
-                                $(".feed-cat-list").append("<option value="+data.id+' data-id='+data.data_id+'>'+data.text+"</option>")
-                            })
+            let action = $(this).val();
+            if (action == 'DIAL') {
+                $("#append_div").html(dial_html);
+            }else if(action == 'URL') {
+                $("#append_div").html(url_html);
+            } else if (action === 'FEED_CATEGORY') {
+                $("#append_div").html(feed_category);
+                $.ajax({
+                    url: "{{ route('feed.data') }}",
+                    type: 'GET',
+                    dataType: 'json', // added data type
+                    success: function(res) {
+                        res.map(function (data) {
+                            $(".feed-cat-list").append("<option value="+data.id+' data-id='+data.data_id+'>'+data.text+"</option>")
+                        })
+                    }
+                });
+            } else if (action == 'PURCHASE') {
+                $("#append_div").html(product_html);
+                $(".product-list").select2({
+                    placeholder: "Select a product",
+                    ajax: {
+                        url: "{{ route('myblslider.active-products') }}",
+                        processResults: function (data) {
+                            // Transforms the top-level key of the response object from 'items' to 'results'
+                            return {
+                                results: data
+                            };
                         }
-                    });
-                } else if (action == 'PURCHASE') {
-                    $("#append_div").html(product_html);
-                    $(".product-list").select2({
-                        placeholder: "Select a product",
-                        minimumInputLength:3,
-                        allowClear: true,
-                        selectOnClose:true,
-                        ajax: {
-                            url: "{{ route('notification.productlist.dropdown') }}",
-                            dataType: 'json',
-                            data: function (params) {
-                            var query = {
-                                productCode: params.term
-                            }
-                            // Query parameters will be ?search=[term]&type=public
-                            return query;
-                            },
-                            processResults: function (data) {
-                                // Transforms the top-level key of the response object from 'items' to 'results'
-                                return {
-                                    results: data
-                                };
-                            }
-                        }
-                    });
-                }  else {
-                    $(".other-info-div").remove();
-                }
-            });
+                    }
+                });
+            }  else {
+                $(".other-info-div").remove();
+            }
+        });
             $("#navigate_action").select2();
     </script>
 @endpush

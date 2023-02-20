@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ContextualCardIcon;
 
 class ContextualCards extends Model
 {
@@ -13,10 +14,19 @@ class ContextualCards extends Model
     protected $fillable = [
         'title',
         'description',
-        'first_action_text',
-        'second_action_text',
-        'first_action',
-        'second_action',
-        'image_url'
+        'campaign_id',
+        'url',
+        'component',
+        'navigation',
+        'image_url',
+        'icon_id'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getIcon()
+    {
+        return $this->belongsTo(ContextualCardIcon::class, 'icon_id','card_number');
+    }
 }

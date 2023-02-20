@@ -37,18 +37,18 @@ class AdTechService
         $this->setActionRepository($adTechRepository);
     }
 
-    public function getAdTechByRefType($referenceType)
+    public function getAdTechByRefType($referenceType, $referenceId = null)
     {
-        return $this->adTechRepository->findOneByProperties(['reference_type' => $referenceType]);
+        return $this->adTechRepository->findOneByProperties(['reference_type' => $referenceType, 'reference_id' => $referenceId]);
     }
 
     /**
      * @param $data
      * @return Response
      */
-    public function storeAdTech($data, $referenceType)
+    public function storeAdTech($data, $referenceType, $referenceId = null)
     {
-        $adTech = $this->adTechRepository->findOneByProperties(['reference_type' => $referenceType]);
+        $adTech = $this->adTechRepository->findOneByProperties(['reference_type' => $referenceType, 'reference_id' => $referenceId]);
 
         if (request()->hasFile('img_url')) {
             isset($adTech->img_url) ?? $this->deleteFile($adTech->img_url);

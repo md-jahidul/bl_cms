@@ -2,113 +2,160 @@
 @section('title', 'App & Service Product Edit')
 @section('card_name', 'App & Service Product Edit')
 @section('breadcrumb')
-<li class="breadcrumb-item active"><a href="{{ route('app-service-product.index') }}">App & Service Product List</a></li>
-<li class="breadcrumb-item active"> App & Service Product Edit</li>
+    <li class="breadcrumb-item active"><a href="{{ route('app-service-product.index') }}">App & Service Product List</a></li>
+    <li class="breadcrumb-item active"> App & Service Product Edit</li>
 @endsection
 @section('action')
-<a href="{{ route('app-service-product.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('app-service-product.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
-<section>
-    <div class="card">
-        <div class="card-content collapse show">
-            <div class="card-body card-dashboard">
-                <h5 class="menu-title"><strong>Product Edit</strong></h5><hr>
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <form id="product_form" role="form" action="{{ route('app-service-product.update', $appServiceProduct->id) }}" method="POST" novalidate enctype="multipart/form-data">
-                        @csrf
-                        {{ method_field('PUT') }}
-                        <div class="row">
-                            <div class="form-group col-md-6 {{ $errors->has('app_service_tab_id') ? ' error' : '' }}">
-                                <label for="app_service_tab_id" class="required">App & Service Type</label>
-                                <select class="form-control required" id="offer_type"
-                                        required data-validation-required-message="Please select type" readonly disabled>
-                                    <option data-alias="" value="">---Select Type---</option>
-                                    @foreach($appServiceTabs as $tab)
-                                    <option data-alias="{{ $tab->alias }}" value="{{ $tab->id }}" {{ ($tab->id == $appServiceProduct->app_service_tab_id ) ? 'selected' : '' }}>{{ $tab->name_en }}</option>
-                                    @endforeach
-                                </select>
+                    <h5 class="menu-title"><strong>Product Edit</strong></h5><hr>
+                    <div class="card-body card-dashboard">
+                        <form id="product_form" role="form" action="{{ route('app-service-product.update', $appServiceProduct->id) }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{ method_field('PUT') }}
+                            <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('app_service_tab_id') ? ' error' : '' }}">
+                                    <label for="app_service_tab_id" class="required">App & Service Type</label>
+                                    <select class="form-control required" id="offer_type"
+                                            required data-validation-required-message="Please select type" readonly disabled>
+                                        <option data-alias="" value="">---Select Type---</option>
+                                        @foreach($appServiceTabs as $tab)
+                                            <option data-alias="{{ $tab->alias }}" value="{{ $tab->id }}" {{ ($tab->id == $appServiceProduct->app_service_tab_id ) ? 'selected' : '' }}>{{ $tab->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('app_service_tab_id'))
+                                        <div class="help-block">{{ $errors->first('app_service_tab_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="tag_category_id" class="required">Category</label>
+                                    <select class="form-control" name="app_service_cat_id" id="appServiceCat"
+                                            required data-validation-required-message="Please select category">
+                                        <option data-alias="" value="">---Select Category---</option>
+                                        @foreach($appServiceCategory as $category)
+                                            <option data-alias="{{ $category->alias }}" value="{{ $category->id }}" {{ ($category->id == $appServiceProduct->app_service_cat_id ) ? 'selected' : '' }}>{{ $category->title_en }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('app_service_cat_id'))
+                                        <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
+                                    <label for="name_en">Offer Title (English)</label>
+                                    <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
+                                           value="{{ $appServiceProduct->name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_en'))
+                                        <div class="help-block">{{ $errors->first('name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Offer Title (Bangla)</label>
+                                    <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           value="{{ $appServiceProduct->name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="description_en">Description (English)</label>
+                                    <textarea type="text" name="description_en" class="form-control text_editor" placeholder="Enter description in English"
+                                    >{{ $appServiceProduct->description_en }}</textarea>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="description_bn">Description (Bangla)</label>
+                                    <textarea type="text" name="description_bn" class="form-control text_editor" placeholder="Enter description in Bangla"
+                                    >{{ $appServiceProduct->description_bn }}</textarea>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date">Start Date</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               value="{{ $appServiceProduct->start_date }}" placeholder="Please select start date" />
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           value="{{ $appServiceProduct->end_date }}" autocomplete="0">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
+
+                            <div class="form-group col-md-12 {{ $errors->has('product_img_url') ? ' error' : '' }}">
+                                <label for="alt_text">Product Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="product_img_url" class="custom-file-input dropify"
+                                           data-default-file="{{ isset($appServiceProduct->product_img_url) ? config('filesystems.file_base_url') . $appServiceProduct->product_img_url : '' }}">
+                                </div>
+                                <span class="text-primary">Please given file type (.png, .jpg)</span>
+
                                 <div class="help-block"></div>
-                                @if ($errors->has('app_service_tab_id'))
-                                <div class="help-block">{{ $errors->first('app_service_tab_id') }}</div>
+                                @if ($errors->has('product_img_url'))
+                                    <div class="help-block">  {{ $errors->first('product_img_url') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label for="tag_category_id" class="required">Category</label>
-                                <select class="form-control" name="app_service_cat_id" id="appServiceCat"
-                                        required data-validation-required-message="Please select category">
-                                    <option data-alias="" value="">---Select Category---</option>
-                                    @foreach($appServiceCategory as $category)
-                                    <option data-alias="{{ $category->alias }}" value="{{ $category->id }}" {{ ($category->id == $appServiceProduct->app_service_cat_id ) ? 'selected' : '' }}>{{ $category->title_en }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('app_service_cat_id'))
-                                <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                <label for="name_en">Offer Title (English)</label>
-                                <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
-                                       value="{{ $appServiceProduct->name_en }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('name_en'))
-                                <div class="help-block">{{ $errors->first('name_en') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                <label for="name_bn">Offer Title (Bangla)</label>
-                                <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                       value="{{ $appServiceProduct->name_bn }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('name_bn'))
-                                <div class="help-block">{{ $errors->first('name_bn') }}</div>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 ">
-                                <label for="description_en">Description (English)</label>
-                                <textarea type="text" name="description_en" class="form-control text_editor" placeholder="Enter description in English"
-                                          >{{ $appServiceProduct->description_en }}</textarea>
-                                <div class="help-block"></div>
-                            </div>
-
-                            <div class="form-group col-md-6 ">
-                                <label for="description_bn">Description (Bangla)</label>
-                                <textarea type="text" name="description_bn" class="form-control text_editor" placeholder="Enter description in Bangla"
-                                          >{{ $appServiceProduct->description_bn }}</textarea>
-                                <div class="help-block"></div>
-                            </div>
-
-                            <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                <label for="start_date">Start Date</label>
-                                <div class='input-group'>
-                                    <input type='text' class="form-control" name="start_date" id="start_date"
-                                           value="{{ $appServiceProduct->start_date }}" placeholder="Please select start date" />
+                            <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }}
+                                {{ $appServiceProduct->is_images == 1 ? '' : 'd-none' }}" id="detailsImg">
+                                <label for="mobileImg">Details Image</label>
+                                <div class="custom-file">
+                                    <input type="file" name="details_image_url" data-height="90" class="dropify"
+                                           data-default-file="{{ config('filesystems.file_base_url') . $appServiceProduct->details_image_url }}">
                                 </div>
                                 <div class="help-block"></div>
-                                @if ($errors->has('start_date'))
-                                <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                @if ($errors->has('details_image_url'))
+                                    <div class="help-block">  {{ $errors->first('details_image_url') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
-                                <label for="end_date">End Date</label>
-                                <input type="text" name="end_date" id="end_date" class="form-control"
-                                       placeholder="Please select end date"
-                                       value="{{ $appServiceProduct->end_date }}" autocomplete="0">
+                            <div class="form-group col-md-6 {{ $errors->has('details_video_url') ? ' error' : '' }}
+                                {{ $appServiceProduct->is_images == 1 ? 'd-none' : '' }}" id="detailsVideo">
+                                <label for="details_video_url" class="required">Details Video URL</label>
+                                <input type="text" name="details_video_url" class="form-control" placeholder="Enter URL"
+                                       value="{{ $appServiceProduct->details_video_url }}">
                                 <div class="help-block"></div>
-                                @if ($errors->has('end_date'))
-                                <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                @if ($errors->has('details_video_url'))
+                                    <div class="help-block">  {{ $errors->first('details_video_url') }}</div>
                                 @endif
+                            </div>
+
+                            <div class="col-md-2 mt-1">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="is_images">Is Images:</label>
+                                    <input type="checkbox" name="is_images" value="1" id="is_images" {{ $appServiceProduct->is_images == 1 ? 'checked' : '' }}>
+                                </div>
                             </div>
 
 
                             <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
                                 @include('layouts.partials.app-service.app')
+                                @include('layouts.partials.app-service.referral')
                             </slot>
 
                             <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
@@ -273,6 +320,29 @@ $(function () {
 
     var fields = $("#form-fields").find("input, textarea");
     fields.val('');
+
+    // Image Dropify
+    $('.dropify').dropify({
+        messages: {
+            'default': 'Browse for an Image File to upload',
+            'replace': 'Click to replace',
+            'remove': 'Remove',
+            'error': 'Choose correct file format'
+        },
+    });
+
+    var detailsVideo = $('#detailsVideo');
+    var detailsImage = $('#detailsImg');
+
+    $('#is_images').click(function () {
+        if($(this).prop("checked") == true){
+            detailsVideo.addClass('d-none');
+            detailsImage.removeClass('d-none');
+        }else{
+            detailsImage.addClass('d-none')
+            detailsVideo.removeClass('d-none')
+        }
+    })
 });
 </script>
 @endpush

@@ -22,7 +22,7 @@
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title_en (English)</label>
+                                    <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
                                            value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
@@ -59,7 +59,7 @@
                                             <option value="batch_title" @if($sections->category_type == 'batch_title') selected @endif>Previus Batch Title</option>
                                         </select>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -97,7 +97,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -112,7 +112,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

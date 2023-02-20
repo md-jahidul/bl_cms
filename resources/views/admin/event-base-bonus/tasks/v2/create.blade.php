@@ -116,7 +116,7 @@
                                     <label for="product_code" class="required">Event</label>
 
                                     <select class="product_code" name="event" data-url="{{ url('product-core/match') }}" required data-validation-required-message="Please select event">
-                                        <option value="">Select product code </option>
+                                        <option value="">Select Event </option>
                                         @foreach($events as $key => $value)
                                         <option value="{{ $key }}">{{ $value }} </option>
                                         @endforeach

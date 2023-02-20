@@ -37,6 +37,26 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('year_en') ? ' error' : '' }}">
+                                    <label for="year_en" class="required">Year English</label>
+                                    <input type="text" name="year_en"  class="form-control" placeholder="Enter year in English"
+                                           value="{{ $tvcVideo->year_en }}" required data-validation-required-message="Enter year in English">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('year_en'))
+                                        <div class="help-block">  {{ $errors->first('year_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('year_bn') ? ' error' : '' }}">
+                                    <label for="year_bn" class="required">Year Bangla</label>
+                                    <input type="text" name="year_bn"  class="form-control" placeholder="Enter year in English"
+                                           value="{{ $tvcVideo->year_bn }}" required data-validation-required-message="Enter year in English">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('year_bn'))
+                                        <div class="help-block">{{ $errors->first('year_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
                                     <label for="video_url" class="required">Video Embed Code</label>
                                     <input type="text" name="video_url" class="form-control" placeholder="Enter title in Bangla"

@@ -250,7 +250,7 @@
                                         </button>
                                     </div>
                                 </div>
-                        </div>
+                            </div>
 
                         </form>
                     </div>
@@ -263,6 +263,7 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 
     <style>
         .type-line {

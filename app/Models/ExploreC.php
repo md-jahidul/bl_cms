@@ -28,6 +28,11 @@ class ExploreC extends Model
         'color',
         'slug_en',
         'slug_bn',
+        'multiple_attributes',
+    ];
+    
+    protected $casts = [
+        'multiple_attributes' => 'array',
     ];
 
     public const EXPLORE_C_STATUS_ENUM = [0 => 'Inactive', 1 => 'Active'];

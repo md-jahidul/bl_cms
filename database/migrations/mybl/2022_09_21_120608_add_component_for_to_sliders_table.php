@@ -1,7 +1,9 @@
 <?php
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+
 class AddComponentForToSlidersTable extends Migration
 {
     /**
@@ -15,6 +17,7 @@ class AddComponentForToSlidersTable extends Migration
             $table->string('component_for')->default('home')->nullable();
         });
     }
+
     /**
      * Reverse the migrations.
      *

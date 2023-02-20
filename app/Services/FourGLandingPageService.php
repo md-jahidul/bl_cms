@@ -79,12 +79,25 @@ class FourGLandingPageService
         $comType = $data['component_type'];
         $bannerImage = $this->fourGLandingPageRepository->findOneByProperties(['component_type' => $comType]);
 
+        $data['banner_image_url'] =  $bannerImage->items['banner_image_url'] ?? null;
+        $data['banner_mobile_view'] = $bannerImage->items['banner_mobile_view'] ?? null;
+
         $dirPath = 'assetlite/images/banner/four-g';
         if (!empty($data['items']['banner_image_url'])) {
             $data['items']['banner_image_url'] = $this->upload($data['items']['banner_image_url'], $dirPath);
+            $data['banner_image_url'] = $data['items']['banner_image_url'];
         }
         if (!empty($data['items']['banner_mobile_view'])) {
             $data['items']['banner_mobile_view'] = $this->upload($data['items']['banner_mobile_view'], $dirPath);
+            $data['banner_mobile_view'] = $data['items']['banner_mobile_view'];
+        }
+
+        if(!empty($data['items']['banner_name_en'])) {
+            $data['banner_name_en'] = $data['items']['banner_name_en'];
+        }
+
+        if(!empty($data['items']['banner_name_bn'])) {
+            $data['banner_name_bn'] = $data['items']['banner_name_bn'];
         }
 
         if (!$bannerImage) {

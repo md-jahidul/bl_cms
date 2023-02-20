@@ -61,43 +61,70 @@
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="section_component_id" value="{{ $sectionComponent->id }}">
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_web') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Desktop)</label>
                                     <div class="custom-file">
-                                        {{--                                        {{ dd($sectionComponent->items['banner_image_url']) }}--}}
-                                        {{--                                        <input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
-                                        <input type="file" name="banner[banner_image_url]" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($sectionComponent->banner['banner_image_url']) ? config('filesystems.file_base_url') . $sectionComponent->banner['banner_image_url'] : '' }}">
+                                        <input type="file" name="banner_image_web" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($sectionComponent->banner_image_web) ? config('filesystems.file_base_url') . $sectionComponent->banner_image_web : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_url'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
+                                    @if ($errors->has('banner_image_web'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_web') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Mobile)</label>
                                     <div class="custom-file">
-                                        {{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
-                                        <input type="file" name="banner[banner_mobile_view]" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($sectionComponent->banner['banner_mobile_view']) ? config('filesystems.file_base_url') . $sectionComponent->banner['banner_mobile_view'] : '' }}">
+                                        <input type="file" name="banner_image_mobile" class="dropify" data-height="90"
+                                               data-default-file="{{ isset($sectionComponent->banner_image_mobile) ? config('filesystems.file_base_url') . $sectionComponent->banner_image_mobile : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_mobile_view'))
-                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
+                                    @if ($errors->has('banner_image_mobile'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_mobile') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text English</label>
                                     <input type="text" name="banner[alt_text_en]" id="alt_text" class="form-control"
                                            placeholder="Enter alt text" value="{{ isset($sectionComponent->banner['alt_text_en']) ? $sectionComponent->banner['alt_text_en'] : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text Bangla</label>
+                                    <input type="text" name="banner[alt_text_bn]" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($sectionComponent->banner['alt_text_en']) ? $sectionComponent->banner['alt_text_en'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-3 {{ $errors->has('banner_name_en') ? ' error' : '' }}">
+                                    <label for="banner_name_en" class="required">Banner Image Name En</label>
+                                    <input type="text" name="banner_name_en" class="form-control slug-convert"
+                                           value="{{ $sectionComponent->banner_name_en }}" required>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label for="banner_name_bn" class="required">Banner Image Name Bn</label>
+                                    <input type="text" name="banner_name_bn" class="form-control slug-convert"
+                                           value="{{ $sectionComponent->banner_name_bn }}" required>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_name_bn') }}</div>
                                     @endif
                                 </div>
 
