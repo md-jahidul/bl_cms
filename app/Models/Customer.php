@@ -26,4 +26,9 @@ class Customer extends Model
         $customer_service = new CustomerConnectionTypeService();
         return $customer_service->getConnectionTypeInfo($customer->msisdn);
     }
+
+    public function logout()
+    {
+        return $this->hasOne(LogoutTrack::class);
+    }
 }

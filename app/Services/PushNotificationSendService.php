@@ -100,19 +100,32 @@ class PushNotificationSendService
         ];
     }
 
-    public function storeScheduledNotification(array $data)
+    public function storeScheduledNotification(array $data, array $data1 = null)
     {
+        if($data1){
+            $data['id']             = $data1['id'];
+            $data['title']          = $data1['title'];
+            $data["category_id"]    = $data1["category_id"];
+            $data["category_slug"]  = $data1["category_slug"];
+            $data["category_name"]  = $data1["category_name"];
+            $data["image_url"]      = $data1["image_url"];
+        }
+
         try {
             $scheduleArr = explode('-', $data['schedule_time']);
-            $uploadedFile = $this->upload($data['customer_file'], 'notification-scheduler-files');
+
             $notificationDraftId = $data['id'];
 
             $checkScheduleExists = NotificationSchedule::where('notification_draft_id', $notificationDraftId)->first();
+            if (!empty($data['customer_file'])) {
+                $uploadedFile = $this->upload($data['customer_file'], 'notification-scheduler-files');
+            }
+
             if ($checkScheduleExists) {
                 $data = [
                     'title' => $data['title'],
                     'message' => $data['message'],
-                    'file_name' => $uploadedFile,
+                    'file_name' => $uploadedFile ?? $checkScheduleExists->file_name,
                     'start' => Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s'),
                     'end' => Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s'),
                     'status' => 'active'
@@ -125,17 +138,17 @@ class PushNotificationSendService
                 $notificationSchedule->notification_category_id = $data['category_id'];
                 $notificationSchedule->title = $data['title'];
                 $notificationSchedule->message = $data['message'];
-                $notificationSchedule->file_name = $uploadedFile;
+                $notificationSchedule->file_name = $uploadedFile ?? null;
                 $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
                 $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
                 $notificationSchedule->status = 'active';
-
                 $notificationSchedule->save();
             }
 
             return [
                 'success' => true,
-                'message' => 'Notification Schedule Stored'
+                'message' => 'Notification Schedule Stored',
+                'quick_notification' => true,
             ];
         } catch (\Exception $e) {
             Log::info('Error:' . $e->getMessage());
@@ -144,6 +157,17 @@ class PushNotificationSendService
                 'message' => $e->getMessage(),
             ];
         }
+    }
+
+    public function stopSchedule($schedulerId)
+    {
+        return NotificationSchedule::where('id', $schedulerId)->update(['status' => 'inactive']);
+    }
+
+    public function downloadCustomerFile($schedulerId)
+    {
+        $schedule = NotificationSchedule::find($schedulerId);
+        return $this->download($schedule->file_name, 'customers.xlsx');
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\PartnerOfferDetailRequest;
 use App\Http\Requests\PartnerOfferDetailsRequest;
 use App\Http\Requests\StorePartnerOfferRequest;
 use App\Models\PartnerOfferDetail;
@@ -130,20 +131,12 @@ class PartnerOfferController extends Controller {
         return view('admin.partner-offer.offer_details', compact('partner', 'partnerOfferDetail'));
     }
 
-    public function offerDetailsUpdate(Request $request, $partnet)
+    public function offerDetailsUpdate(PartnerOfferDetailRequest $request, $partnet)
     {
-        $image_upload_size = ConfigController::adminImageUploadSize();
-        $image_upload_type = ConfigController::adminImageUploadType();
-
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-            'banner_image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size, // 2M
-            'url_slug' => 'required|regex:/^\S*$/u|unique:partner_offer_details,url_slug,' . $request->offer_details_id,
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect()->back();
-        }
+//        if ($validator->fails()) {
+//            Session::flash('error', $validator->messages()->first());
+//            return redirect()->back()->withInput();
+//        }
 
 
         $response = $this->partnerOfferDetailService

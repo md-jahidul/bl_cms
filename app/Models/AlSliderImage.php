@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class AlSliderImage extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'slider_id',
         'title_en',
@@ -17,12 +17,18 @@ class AlSliderImage extends Model
         'start_date',
         'end_date',
         'alt_text',
+        'alt_text_bn',
         'redirect_url',
         'is_active',
         'image_url',
         'mobile_view_img',
+        'image_name',
+        'image_name_bn',
         'display_order',
         'other_attributes',
+        'icon_image',
+        'icon_alt_text_en',
+        'icon_alt_text_bn'
     ];
 
     protected $casts = [

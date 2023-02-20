@@ -12,9 +12,13 @@ class FourGDevice extends Model
     protected $fillable = [
         'offer_tag_id',
         'card_logo',
+        'logo_img_name_en',
+        'logo_img_name_bn',
         'logo_alt_en',
         'logo_alt_bn',
         'thumbnail_image',
+        'thumbnail_img_name_en',
+        'thumbnail_img_name_bn',
         'thumbnail_alt_en',
         'thumbnail_alt_bn',
         'title_en',

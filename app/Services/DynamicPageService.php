@@ -16,6 +16,7 @@ use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DynamicPageService
 {
@@ -56,45 +57,34 @@ class DynamicPageService
     public function savePage($data)
     {
         try {
+            $pageInfo = $this->findOne($data['page_id']);
+            $dirPath = 'assetlite/images/banner/dynamic_page';
+
             if (!empty($data['banner_image_url'])) {
-                //delete old web photo
-                if ($data['old_web_img'] != "") {
-                    $this->deleteFile($data['old_web_img']);
-                }
                 $photoName = $data['banner_name'] . '-web';
-                $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/dynamic_page', $photoName);
+                $data['banner_image_url'] = $this->upload($data['banner_image_url'], $dirPath, $photoName);
+                $filePath = isset($pageInfo->banner_image_url) ? $pageInfo->banner_image_url : null;
+                $this->deleteFile($filePath);
             }
 
             if (!empty($data['banner_mobile_view'])) {
-                //delete old web photo
-                if ($data['old_mob_img'] != "") {
-                    $this->deleteFile($data['old_mob_img']);
-                }
-                $photoName = $data['banner_name'] . '-mobile';
-                $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], 'assetlite/images/banner/dynamic_page', $photoName);
+                $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath, $photoName);
+                $filePath = isset($pageInfo->banner_mobile_view) ? $pageInfo->banner_mobile_view : null;
+                $this->deleteFile($filePath);
+            }
+            $data['url_slug'] = str_replace(str_split('\/:*?" _<>|'), '-', strtolower($data['url_slug']));
+
+            if ($pageInfo) {
+                $data['updated_by'] = Auth::id();
+                $pageInfo->update($data);
+            } else {
+                $data['created_by'] = Auth::id();
+                $this->save($data);
             }
 
-            //only rename
-            if ($data['old_banner_name'] != $data['banner_name']) {
-                if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
-                    $fileName = $data['banner_name'] . '-web';
-                    $directoryPath = 'assetlite/images/banner/dynamic_page';
-                    $data['banner_image_url'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
-                }
-                if (empty($data['banner_mobile_view']) && $data['old_mob_img'] != "") {
-                    $fileName = $data['banner_name'] . '-mobile';
-                    $directoryPath = 'assetlite/images/banner/dynamic_page';
-                    $data['banner_mobile_view'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
-                }
-            }
-            unset($data['_token']);
-            unset($data['old_web_img']);
-            unset($data['old_mob_img']);
-            unset($data['old_banner_name']);
-            $data['url_slug'] = str_replace(str_split('\/:*?" _<>|'), '-', strtolower($data['url_slug']));
-            $this->pageRepo->savePage($data);
             $response = [
                 'success' => 1,
+                'message' => 'Page added successfully!'
             ];
         } catch (\Exception $e) {
             $response = [

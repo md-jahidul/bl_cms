@@ -245,10 +245,7 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
-
             <div class="col-md-12">
                 <div class="col-md-12" style="background-color: white; padding: 10px">
                     <div class="row">
@@ -267,7 +264,6 @@
                     </div>
                 </div>
                 <hr>
-
                 <div class="col-md-12" style="background-color: white; padding: 10px;">
                     <table class="table table-bordered" id="otp_log_table">
                         <thead class="alert-warning text-white">
@@ -504,11 +500,21 @@
         {{--================================================================================--}}
 
         <div class="row mt-3">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div>
                     <h5 class="mb-1 mt-2 text-bold-600 pull-left">Product Logs</h5>
                     {{--                    <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>--}}
                 </div>
+
+            </div>
+            <div class="col-md-6">
+                <input type='text'
+                       class="form-control date_range"
+                       id="logDate"
+                       {{-- value="{{ $current_date }}" --}}
+                       {{-- min="{{ $last_date }}" --}}
+                       {{-- max="{{ $current_date }}" --}}
+                       name="log_date"  autocomplete="off" placeholder="Select date">
             </div>
             <div class="col-md-12">
                 <hr/>
@@ -525,6 +531,11 @@
                                             <th>Date</th>
                                             <th>Msisdn</th>
                                             <th>Product Code</th>
+                                            <th>
+                                                Balance
+                                                <i class="la la-question-circle" style="cursor: pointer"
+                                                   title="Balance before purchase"></i>
+                                            </th>
                                             <th>Message</th>
                                             <th>Status</th>
                                             </thead>
@@ -632,8 +643,30 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js') }}"></script>
+<script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
+
     <script>
         $(function () {
+
+            $('.date_range').daterangepicker({
+                autoUpdateInput: false,
+                showDropdowns: true,
+                startDate: moment().add(9, 'day'),
+                // minDate: moment(),
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY-MM-DD'
+                },
+            });
+
+            $('input[name="log_date"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + '=' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('input[name="log_date"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
             $.fn.dataTable.ext.errMode = 'none';
             $(document).on('click', '#search_btn', function (e) {
                 let number;
@@ -769,7 +802,12 @@
                     pageLength: 10,
                     lengthChange: false,
                     ajax: {
-                        url: "/developer/api/debug/product/log/" + number
+                        url: "/developer/api/debug/product/log/" + number,
+                        data: {
+                            date: function () {
+                                return $("#logDate").val();
+                            }
+                        }
                     },
                     columns: [
                         {
@@ -789,7 +827,14 @@
                             render: function (data, type, row) {
                                 return row.others;
                             }
-                        }, {
+                        },
+                        {
+                            name: 'balance',
+                            render: function (data, type, row) {
+                                return row.balance;
+                            }
+                        },
+                        {
                             name: 'message',
                             render: function (data, type, row) {
                                 return row.message;
@@ -1229,5 +1274,14 @@
             //     $('#contact_restore_logs_table').DataTable().ajax.reload();
             // });
         })
+
+
+        $('#logDate').on('apply.daterangepicker', function(ev, picker) {
+                $('#productLog').DataTable().ajax.reload();
+            });
+            $('#logDate').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#productLog').DataTable().ajax.reload();
+            });
     </script>
 @endpush

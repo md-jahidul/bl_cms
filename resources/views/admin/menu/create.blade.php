@@ -21,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate>
+                        <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('en_label_text') ? ' error' : '' }}">
@@ -44,39 +44,89 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">
-                                    <label for="code">Page URL</label>
-                                    <select class="select2 form-control" name="code">
-                                        <option value="">---Select Page---</option>
-                                        @foreach($dynamicRoutes as $route)
-                                            <option value="{{ $route->key }}">{{ $route->url }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group col-md-4 {{ $errors->has('description_en') ? ' error' : '' }}">
+                                    <label>Description En</label>
+                                    <textarea class="form-control" rows="5" name="description_en"></textarea>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('description_bn') ? ' error' : '' }}">
+                                    <label>Description BN</label>
+                                    <textarea class="form-control" rows="5" name="description_bn"></textarea>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('icon') ? ' error' : '' }}">
+                                    <label for="mobileImg">Icon</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="icon" data-height="90" class="dropify">
+                                    </div>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('key'))
-                                        <div class="help-block">  {{ $errors->first('key') }}</div>
+                                    @if ($errors->has('icon'))
+                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="col-md-2 mt-1">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="external_link">Is External Menu:</label>
-                                        <input type="checkbox" name="external_site" value="1" id="external_link">
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-10 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
-                                    <label for="url" class="required">External URL</label>
-                                    <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
-                                           value="{{ old("url") ? old("url") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}" id="urlSlugEn">
+                                    <label for="url" class="required">URL English</label>
+                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL" id="url"
+                                           value="{{ old("url") ? old("url") : '' }}" required data-validation-required-message="Enter header menu url">
+                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="col-md-6 float-left">
+                                <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}" id="urlSlugBn">
+                                    <label for="url_bn">URL Bangla</label>
+                                    <input type="text" name="url_bn"  class="form-control" placeholder="Enter URL" id="url_bn"
+                                           value="{{ old("url_bn") ? old("url_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_bn') }}</div>
+                                    @endif
+                                </div>
+
+{{--                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">--}}
+{{--                                    <label for="code">Page URL</label>--}}
+{{--                                    <select class="select2 form-control" name="code">--}}
+{{--                                        <option value="">---Select Page---</option>--}}
+{{--                                        @foreach($dynamicRoutes as $route)--}}
+{{--                                            <option value="{{ $route->key }}">{{ $route->url }}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('key'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('key') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+
+
+                                @if($parent_id != 0)
+                                    <div class="form-group col-md-4 {{ $errors->has('description_en') ? ' error' : '' }}">
+                                        <label>Description En</label>
+                                        <textarea class="form-control" rows="5" name="description_en"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4 {{ $errors->has('description_bn') ? ' error' : '' }}">
+                                        <label>Description BN</label>
+                                        <textarea class="form-control" rows="5" name="description_bn"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4 {{ $errors->has('icon') ? ' error' : '' }}">
+                                        <label for="mobileImg">Icon</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="icon" data-height="90" class="dropify">
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('icon'))
+                                            <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 float-left">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <label for="title" class="required mr-1">Status:</label>
 
@@ -112,6 +162,7 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
 {{--    <script>--}}
@@ -126,21 +177,32 @@
 {{--            })--}}
 {{--        })--}}
 {{--    </script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {
-            var externalLink = $('#externalLink');
             var pageDynamic = $('#pageDynamic');
+            var urlSlugBn = $('#urlSlugBn');
 
             $('#external_link').click(function () {
                 if($(this).prop("checked") == true){
-                    externalLink.removeClass('d-none');
                     pageDynamic.addClass('d-none');
+                    urlSlugBn.addClass('d-none');
                 }else{
                     pageDynamic.removeClass('d-none')
-                    externalLink.addClass('d-none')
+                    urlSlugBn.removeClass('d-none')
                 }
             })
-
+            // Image Dropify
+            $(function () {
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'Browse for an Image File to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct file format'
+                    },
+                });
+            });
         })
     </script>
 @endpush

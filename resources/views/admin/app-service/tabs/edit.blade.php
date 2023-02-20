@@ -44,6 +44,9 @@
                                     <small class="text-info">
                                         <strong>i.e:</strong> apps (no spaces and slash)<br>
                                     </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
@@ -52,21 +55,19 @@
                                     <small class="text-info">
                                         <strong>i.e:</strong> অ্যাপ (no spaces and slash)<br>
                                     </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <span>Banner image (Web)</span>
-
                                     <div class="custom-file">
-
                                         <input type="hidden" name="old_web_img" value="{{ $appServiceTab->banner_image_url }}">
-
                                         <input type="file" name="banner_image_url" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
                                     @if( !empty($appServiceTab->banner_image_url) )
                                         <img src="{{ config('filesystems.file_base_url') . $appServiceTab->banner_image_url }}" style="width:100%;margin-top:10px;">
                                     @endif
@@ -74,7 +75,6 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
                                     <span>Banner image (Mobile)</span>
-
                                     <div class="custom-file">
                                         <input type="hidden" name="old_mob_img" value="{{ $appServiceTab->banner_image_mobile }}">
 
@@ -82,31 +82,93 @@
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
                                     @if( !empty($appServiceTab->banner_image_url) )
                                         <img src="{{ config('filesystems.file_base_url') . $appServiceTab->banner_image_mobile }}" style="width:100%;margin-top:10px;">
                                     @endif
+                                </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title EN</label>
+                                    <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                           value="{{ $appServiceTab->banner_title_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn_bn">Banner Title BN</label>
+                                    <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                           value="{{ $appServiceTab->banner_title_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label>Banner Description EN</label>
+                                    <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                              placeholder="Enter Banner short description in English">{{ $appServiceTab->banner_desc_en }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label>Banner Description BN</label>
+                                    <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                              placeholder="Enter Banner short description in Bangla">{{ $appServiceTab->banner_desc_bn }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                    <label for="banner_alt_text" class="required">Alt Text</label>
+                                    <label for="banner_alt_text">Alt Text</label>
                                     <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ $appServiceTab->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
+                                           value="{{ $appServiceTab->banner_alt_text }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_alt_text'))
                                         <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Banner Photo Name</label>
+                                <div class="form-group col-md-4 {{ $errors->has('banner_alt_text_bn') ? ' error' : '' }}">
+                                    <label for="banner_alt_text_bn">Alt Text</label>
+                                    <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text bn"
+                                           value="{{ $appServiceTab->banner_alt_text_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_alt_text'))
+                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Name EN<span class="text-danger">*</span></label>
                                     <input type="hidden" name="old_banner_name" value="{{$appServiceTab->banner_name}}">
-                                    <input type="text" class="form-control" name="banner_name" value="{{$appServiceTab->banner_name}}" placeholder="Photo Name">
+                                    <input type="text" class="form-control" required name="banner_name" value="{{$appServiceTab->banner_name}}" placeholder="Banner EN Name">
                                     <small class="text-info">
                                         <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('banner_name_bn') ? ' error' : '' }} col-xs-12 mb-1">
+                                    <label>Banner Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name_bn"
+                                           placeholder="Banner Name BN" value="{{ $appServiceTab->banner_name_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> এপ-সার্ভিস-ব্যনার (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">

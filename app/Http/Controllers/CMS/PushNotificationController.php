@@ -88,6 +88,27 @@ class PushNotificationController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function stopSchedule($id)
+    {
+        if ($this->pushNotificationSendService->stopSchedule($id)) {
+            $response = ['type' => 'success', 'message' => 'Schedule deactivated successfully'];
+        } else {
+            $response = ['type' => 'error', 'message' => 'Error! Can not deactivate. Please retry'];
+        }
+
+        return redirect()->back()->with($response['type'], $response['message']);
+    }
+
+    public function downloadCustomerFile($id)
+    {
+        return $this->pushNotificationSendService->downloadCustomerFile($id);
+
+    }
+
+    /**
      * Send Notification
      *
      * @param Request $request
@@ -398,7 +419,7 @@ class PushNotificationController extends Controller
             if ($request->filled('user_phone')) {
 
                 $phone_list = explode(",", $request->input('user_phone'));
-                //$user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
+//                $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
                 $user_phone = $phone_list;
 
                 $notification = [

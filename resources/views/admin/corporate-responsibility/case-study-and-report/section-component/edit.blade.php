@@ -58,25 +58,56 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('base_image') ? ' error' : '' }}">
                                     <label for="thumbnail_image">Thumbnail Image</label>
-                                    <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-                                          data-default-file="{{ config('filesystems.file_base_url') . $component->other_attributes['thumbnail_image'] }}"
-                                           value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}">
+                                    <input type="file" name="base_image" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
+                                          data-default-file="{{ config('filesystems.file_base_url') . $component->base_image }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('thumbnail_image'))
-                                        <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
+                                    @if ($errors->has('base_image'))
+                                        <div class="help-block">  {{ $errors->first('base_image') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
                                     <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="other_attributes[alt_text_en]" class="form-control" placeholder="Enter alt text"
-                                           value="{{ $component->other_attributes['alt_text_en'] }}"
+                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"
+                                           value="{{ $component->alt_text_en}}"
                                            required data-validation-required-message="Enter alt text">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text_en'))
                                         <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has("alt_text_bn") ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text Bangla</label>
+                                    <input type="text" name="alt_text_bn" class="form-control"
+                                           value="{{ $component->alt_text_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has("alt_text_bn"))
+                                        <div class="help-block">  {{ $errors->first("alt_text_bn") }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has("image_name_en") ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Image Name English</label>
+                                    <input type="text" name="image_name_en" class="form-control img-data slug-convert" required
+                                           value="{{ $component->image_name_en }}">
+                                    <span class="duplicate-error text-danger"></span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has("image_name_en"))
+                                        <div class="help-block">  {{ $errors->first("image_name_en") }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has("image_name_bn") ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Image Name Bangla</label>
+                                    <input type="text" name="image_name_bn" class="form-control img-data slug-convert" required
+                                           value="{{ $component->image_name_bn }}">
+                                    <span class="help-block duplicate-error text-danger"></span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
                                     @endif
                                 </div>
 

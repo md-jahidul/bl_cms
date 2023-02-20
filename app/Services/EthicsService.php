@@ -80,7 +80,7 @@ class EthicsService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->pageRepo->updatePageInfo($webPath, $mobilePath, $request);
 
 
@@ -117,10 +117,6 @@ class EthicsService {
     public function saveFile($request) {
         try {
 
-            $request->validate([
-                'file_name_en' => 'required',
-                'file_name_bn' => 'required',
-            ]);
 
             //file upload in storege
 
@@ -137,7 +133,7 @@ class EthicsService {
             }
 
 
-            //save data in database 
+            //save data in database
             $this->fileRepo->saveFileData($filePath, $request);
 
 
@@ -197,7 +193,7 @@ class EthicsService {
             $this->fileRepo->deleteFile($fileId);
 
             if ($filePath != "") {
-               
+
                 $this->deleteFile($filePath);
             }
 

@@ -164,25 +164,47 @@
                                     </p>
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Card Photo Alt Text</label>
-                                    <input type="text" class="form-control" value="{{$package->card_banner_alt_text}}"  name="card_banner_alt_text" placeholder="Alt Text">
-                                </div>
+                                 <div class="col-md-6 col-xs-12  mb-1">
+                                     <label class="required">Card Photo Name EN</label>
+                                     <input type="text" class="form-control" required name="card_banner_name_en" placeholder="Card Photo Name EN" value="{{ $package->card_banner_name_en }}">
+                                     <small class="text-info">
+                                         <strong>i.e:</strong> package-banner (no spaces)<br>
+                                     </small>
+                                     @if($errors->has('card_banner_name_en'))
+                                         <div class="help-block text-danger">{{ $errors->first('card_banner_name_en') }}</div>
+                                     @endif
+                                 </div>
+
+                                 <div class="col-md-6 col-xs-12  mb-1">
+                                     <label class="required">Card Photo Name BN</label>
+                                     <input type="text" class="form-control" required  name="card_banner_name_bn" placeholder="Card Photo Name BN" value="{{ $package->card_banner_name_bn }}">
+                                     <small class="text-info">
+                                         <strong>i.e:</strong> package-banner (no spaces)<br>
+                                     </small>
+                                     @if($errors->has('card_banner_name_bn'))
+                                         <div class="help-block text-danger">{{ $errors->first('card_banner_name_bn') }}</div>
+                                     @endif
+                                 </div>
+
+                                 <div class="col-md-6 col-xs-12">
+                                     <label>Card Photo Alt Text EN</label>
+                                     <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text EN" value="{{ $package->card_banner_alt_text_bn }}">
+                                 </div>
+
+                                 <div class="col-md-6 col-xs-12">
+                                     <label>Card Photo Alt Text BN</label>
+                                     <input type="text" class="form-control"  name="card_banner_alt_text_bn" placeholder="Alt Text BN" value="{{ $package->card_banner_alt_text_bn }}">
+                                 </div>
 
                             </div>
 
                             <div class="form-group row">
 
-
                                 <div class="col-md-6 col-xs-12">
-
                                     <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
-
                                     <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
-
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
                                     <p class="text-center">
                                         @if($package->banner_photo != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" width="100%" />
@@ -192,34 +214,88 @@
 
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
-
                                     <input type="hidden" name="old_banner_mob" value="{{$package->banner_image_mobile}}">
-
                                     <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
                                     <p class="text-center">
                                         @if($package->banner_image_mobile != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->banner_image_mobile }}" alt="Banner Photo" width="100%" />
                                         @endif
                                     </p>
-
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                    <input type="hidden" name="old_banner_name" value="{{$package->banner_name}}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title EN</label>
+                                    <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                           value="{{ $package->banner_title_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
 
-                                    <input type="text" class="form-control banner_name" required name="banner_name" value="{{ $package->banner_name }}" placeholder="Photo Name">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn_bn">Banner Title BN</label>
+                                    <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                           value="{{ $package->banner_title_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label>Banner Description EN</label>
+                                    <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                              placeholder="Enter Banner short description in English">{{ $package->banner_desc_en }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label>Banner Description BN</label>
+                                    <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                              placeholder="Enter Banner short description in Bangla">{{ $package->banner_desc_bn }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Banner Photo Name EN<span class="text-danger">*</span></label>
+                                    <input type="hidden" name="old_banner_name" value="{{$package->banner_name}}">
+                                    <input type="text" class="form-control" required name="banner_name" placeholder="Photo Name BN" value="{{$package->banner_name}}">
 
                                     <small class="text-info">
                                         <strong>i.e:</strong> package-banner (no spaces)<br>
                                     </small>
+
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12  mb-1">
+                                    <label>Banner Photo Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="banner_name_bn" placeholder="Photo Name EN" value="{{ $package->banner_name_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+
+                                    @if($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
-                                    <label>Alt Text</label>
-                                    <input type="text" class="form-control" value="{{$package->alt_text}}" name="alt_text" placeholder="Alt Text">
+                                    <label>Alt Text EN</label>
+                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text EN" value="{{$package->alt_text}}">
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" class="form-control"  name="alt_text_bn" placeholder="Alt Text BN" value="{{$package->alt_text_bn}}">
                                 </div>
 
                             </div>

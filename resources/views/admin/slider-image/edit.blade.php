@@ -79,7 +79,7 @@
                                         <input type="file" name="image_url" class="custom-file-input dropify" data-height="80"
                                                data-default-file="{{ config('filesystems.file_base_url') . $sliderImage->image_url }}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_url'))
@@ -93,7 +93,7 @@
                                         <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80"
                                                data-default-file="{{ config('filesystems.file_base_url') . $sliderImage->mobile_view_img}}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('mobile_view_img'))
@@ -101,7 +101,40 @@
                                     @endif
                                 </div>
 
-                                 @include('layouts.partials.slider_types.' . $type )
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label class="required">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control" placeholder="Enter alt text bn"
+                                           required data-validation-required-message="Enter alt text bn"
+                                           value="{{ old("alt_text_bn") ? old("alt_text_bn") : $sliderImage->alt_text_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('image_name') ? ' error' : '' }}">
+                                    <label class="required">Image Name EN</label>
+                                    <input type="text" name="image_name"  class="form-control" placeholder="Enter image name en"
+                                           required data-validation-required-message="Enter image name en"
+                                           value="{{ old("image_name") ? old("image_name") : $sliderImage->image_name }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name'))
+                                        <div class="help-block">  {{ $errors->first('image_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label class="required">Image Name BN</label>
+                                    <input type="text" name="image_name_bn"  class="form-control" placeholder="Enter image name en"
+                                           required data-validation-required-message="Enter image name en"
+                                           value="{{ old("image_name_bn") ? old("image_name_bn") : $sliderImage->image_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                 @include('layouts.partials.slider_types.' . $type ,['component' =>$sliderImage])
 
                                 <div class="col-md-4 mt-2">
                                     <div class="form-group">

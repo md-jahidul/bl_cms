@@ -29,6 +29,7 @@ class StoreQuickLaunch extends FormRequest
             'image_url' => 'required|mimes:png,jpeg,svg',
             'alt_text' => 'required',
             'link' => 'required',
+            'link_bn' => 'required',
             'status' => 'required',
         ];
     }
