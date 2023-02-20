@@ -125,7 +125,7 @@ class BusinessHomeService {
                 $update['banner_image_mobile'] = $this->upload($request['banner_mobile'], 'assetlite/images/business-images', $photoName);
                 $status = $update['banner_image_mobile'];
             }
-        }
+
 
         if ($status != false) {
             $this->businessCatRepo->updateCategory($update, $catId);
