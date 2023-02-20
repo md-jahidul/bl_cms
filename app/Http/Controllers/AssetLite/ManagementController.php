@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\AboutUsManagementRequest;
 use App\Models\AboutUsManagement;
+use App\Repositories\AboutUsLandingRepository;
 use App\Services\ManagementService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,14 +20,21 @@ class ManagementController extends Controller
      * @var $managementService
      */
     protected $managementService;
+    /**
+     * @var AboutUsLandingRepository
+     */
+    private $aboutUsLandingRepository;
 
     /**
      * QuickLaunchController constructor.
      * @param ManagementService $managementService
      */
-    public function __construct(ManagementService $managementService)
-    {
+    public function __construct(
+        ManagementService $managementService,
+        AboutUsLandingRepository $aboutUsLandingRepository
+    ) {
         $this->managementService = $managementService;
+        $this->aboutUsLandingRepository = $aboutUsLandingRepository;
     }
 
 
@@ -38,7 +46,8 @@ class ManagementController extends Controller
     public function index()
     {
         $management = $this->managementService->getManagementInfo();
-        return view('admin.management.index', compact('management'));
+        $componentData = $this->aboutUsLandingRepository->findOneByProperties(['component_type' => "management"]);
+        return view('admin.management.index', compact('management', 'componentData'));
     }
 
     /**
@@ -118,5 +127,12 @@ class ManagementController extends Controller
     public function managementSortable(Request $request)
     {
         $this->managementService->tableSortable($request);
+    }
+
+    public function managementComponentSave(Request $request)
+    {
+        $this->managementService->landingComponentSave($request->all());
+        session()->flash('success', "Save successfully");
+        return redirect()->back();
     }
 }

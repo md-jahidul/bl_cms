@@ -44,37 +44,57 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">
-                                    <label for="code">Page URL</label>
-                                    <select class="select2 form-control" name="code">
-                                        <option value="">---Select Page---</option>
-                                        @foreach($dynamicRoutes as $route)
-                                            <option value="{{ $route->key }}">{{ $route->url }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('key'))
-                                        <div class="help-block">  {{ $errors->first('key') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
-                                    <label for="url" class="required">External URL</label>
-                                    <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
-                                           value="{{ old("url") ? old("url") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
+                                    <label for="url" class="required">URL English</label>
+                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL"
+                                           value="{{ old("url") ? old("url") : '' }}" required data-validation-required-message="Enter header menu url">
+                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="external_link">Is External Menu:</label>
-                                        <input type="checkbox" name="external_site" value="1" id="external_link">
-                                    </div>
+                                <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">
+                                    <label for="url_bn">URL Bangla</label>
+                                    <input type="text" name="url_bn"  class="form-control" placeholder="Enter URL"
+                                           value="{{ old("url_bn") ? old("url_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_bn') }}</div>
+                                    @endif
                                 </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">--}}
+{{--                                    <label for="code">Page URL</label>--}}
+{{--                                    <select class="select2 form-control" name="code">--}}
+{{--                                        <option value="">---Select Page---</option>--}}
+{{--                                        @foreach($dynamicRoutes as $route)--}}
+{{--                                            <option value="{{ $route->key }}">{{ $route->url }}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('key'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('key') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+{{--                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">--}}
+{{--                                    <label for="url" class="required">External URL</label>--}}
+{{--                                    <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"--}}
+{{--                                           value="{{ old("url") ? old("url") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('url'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('url') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label></label>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="external_link">Is External Menu:</label>--}}
+{{--                                        <input type="checkbox" name="external_site" value="1" id="external_link">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 @if($parent_id != 0)
                                     <div class="form-group col-md-4 {{ $errors->has('description_en') ? ' error' : '' }}">

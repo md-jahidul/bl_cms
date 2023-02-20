@@ -147,6 +147,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
     Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
     Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
+    Route::post('management-component', 'AssetLite\ManagementController@managementComponentSave');
 
     Route::resource('about-career', 'AssetLite\AboutEcareerController')->except(['show', 'destroy']);
     Route::get('about-career-item/{careerId}', 'AssetLite\AboutEcareerItemController@index')
@@ -347,7 +348,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
         ->name('partner_offer_update');
-    Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
+
+    #Using this type of route because of this route is overriding by edit route
+    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/destroy/destroy', 'AssetLite\PartnerOfferController@destroy');
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
     Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');

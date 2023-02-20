@@ -362,6 +362,13 @@
                         <i class="la la-exclamation-circle"></i>Discount Privilege
                     </a>
                 </li>
+                <li class="{{ is_active_url('about-page/benefits-for-you') }}">
+                    <a class="menu-item" href="{{ url('about-page/benefits-for-you') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-exclamation-circle"></i>Benefits For You
+                    </a>
+                </li>
+
 {{--                <li class="{{ is_active_url('lms-about-page/banner-image') }}">--}}
 {{--                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"--}}
 {{--                       data-i18n="nav.templates.vert.classic_menu">--}}

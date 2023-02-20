@@ -61,7 +61,7 @@ class PriyojonController extends Controller
             /**
              * If type is discount_privilege and is parent then unset this 
              */
-            if ($priyojon->component_type == 'discount_privilege' && $priyojon->parent_id == 0) {
+            if (in_array($priyojon->component_type, ['discount_privilege', 'benefits_for_you']) && $priyojon->parent_id == 0) {
                 unset($priyojons[$key]);
             }
         }

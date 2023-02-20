@@ -157,7 +157,7 @@
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('priyojon.banner', $priyojonLanding->id) }}"
+                              action="{{ route('priyojon.banner', $priyojonLanding->id ?? 0) }}"
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
