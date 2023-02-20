@@ -60,7 +60,7 @@ class NetworkTypeService
         if (request()->hasFile('image_url')) {
             $imageUrl = $this->upload($data['image_url'], 'assetlite/images/network-types');
             $data['image_url'] = $imageUrl;
-            //$this->deleteFile($data['image_url']);
+            $this->deleteFile($data['image_url']);
         }
         $networkType->update($data);
         return Response('Network Types updated successfully !');
