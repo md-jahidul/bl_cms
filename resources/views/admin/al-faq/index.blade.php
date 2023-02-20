@@ -30,7 +30,8 @@
                             @foreach($faqs as $faq)
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td width="12%">{{ $faq->model_id != null ? $for[$faq->model_id] : '' }}</td>
+                                    <td width="12%">
+                                        {{ array_key_exists($faq->model_id, $for)? $for[$faq->model_id] : '' }}</td>
                                     <td>{{ $faq->question_en }} {!! $faq->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{!! $faq->answer_en !!}</td>
                                     <td width="12%" class="text-center">
