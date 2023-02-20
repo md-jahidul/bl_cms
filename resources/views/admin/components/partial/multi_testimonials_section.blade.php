@@ -111,18 +111,37 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-6 {{ $errors->has('file_url') ? ' error' : '' }}">
-                        <label for="file_url" class="">File</label>
+                    <div class="form-group col-md-6 image_url {{ $errors->has('image_url') ? ' error' : '' }} {{ !isset($single_attribute['is_video']) ? '' : 'd-none' }}">
+                        <label for="image_url" class="">Image</label>
                         <div class="custom-file">
-                            <input type="file" name="multi_item[file_url-{{ $key +1 }}]" class="dropify" data-default-file="{{ isset($single_attribute['file_url']) ? config('filesystems.file_base_url') . $single_attribute['file_url'] : '' }}">
+                            <input type="file" name="multi_item[image_url-{{ $key +1 }}]" class="dropify" data-default-file="{{ isset($single_attribute['image_url']) ? config('filesystems.file_base_url') . $single_attribute['image_url'] : '' }}">
                         </div>
                         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
 
                         <div class="help-block"></div>
-                        @if ($errors->has('file_url'))
-                            <div class="help-block">  {{ $errors->first('file_url') }}</div>
+                        @if ($errors->has('image_url'))
+                            <div class="help-block">  {{ $errors->first('image_url') }}</div>
                         @endif
                     </div>
+
+                    <div class="form-group col-md-6 video_url {{ $errors->has('video_url') ? ' error' : '' }} {{ isset($single_attribute['is_video']) && optional($single_attribute)['is_video'] == 1 ? '' : 'd-none' }}">
+                        <label for="video_url">Video URL</label>
+                        <input type="text" name="multi_item[video_url-{{ $key +1 }}]" class="form-control" placeholder="Enter URL"
+                            value="{{ $single_attribute['video_url'] ?? null}}">
+                        <div class="help-block"></div>
+                        @if ($errors->has('video_url'))
+                            <div class="help-block">  {{ $errors->first('video_url') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="col-md-6 mt-1">
+                        <label></label>
+                        <div class="form-group">
+                            <label for="is_video">Is Video:</label>
+                            <input type="checkbox" name="multi_item[is_video-1]" class="is_video" value="1" {{ (isset($single_attribute) && optional($single_attribute)['is_video'] == 1) ? 'checked' : (old("other_attr.is_video") ? 'checked' : '') }}>
+                        </div>
+                    </div>  
+
                     <div class="form-group col-md-6"></div>
 
                     <div class="form-group">
@@ -229,18 +248,33 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6 {{ $errors->has('file_url') ? ' error' : '' }}">
-                    <label for="file_url" class="">File</label>
+                <div class="form-group col-md-6 image_url d-none">
+                    <label for="image_url" class="">Image</label>
                     <div class="custom-file">
-                        <input type="file" name="multi_item[file_url-1]" class="dropify" data-default-file="{{ isset($single_attribute['file_url']) ? config('filesystems.file_base_url') . $single_attribute['file_url'] : '' }}">
+                        <input type="file" name="multi_item[image_url-1]" class="dropify" data-default-file="{{ isset($single_attribute['image_url']) ? config('filesystems.file_base_url') . $single_attribute['image_url'] : '' }}">
                     </div>
                     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
 
                     <div class="help-block"></div>
-                    @if ($errors->has('file_url'))
-                        <div class="help-block">  {{ $errors->first('file_url') }}</div>
-                    @endif
+                    <div class="help-block"></div>
                 </div>
+                
+                <div class="form-group col-md-6 video_url">
+                    <label for="video_url">Video URL</label>
+                    <input type="text" name="multi_item[video_url-1]" class="form-control" placeholder="Enter URL"
+                        value="">
+                    <div class="help-block"></div>
+                    <div class="help-block"> </div>
+                </div>
+
+                <div class="col-md-6 mt-1">
+                    <label></label>
+                    <div class="form-group">
+                        <label for="is_video">Is Video:</label>
+                        <input type="checkbox" name="multi_item[is_video-1]" class="is_video" value="1" checked>
+                    </div>
+                </div> 
+
                 <div class="form-group col-md-6"></div>
 
 
@@ -355,11 +389,26 @@
                 '</div>'+
             '</div>'+
 
-            '<div class="form-group col-md-6">'+
-                '<label for="file_url" class="">File</label>'+
-                '<div class="custom-file"><input type="file" name="multi_item[file_url-'+i+']" class="dropify"></div>'+
+            '<div class="form-group col-md-6 image_url d-none">'+
+                '<label for="image_url" class="">Image</label>'+
+                '<div class="custom-file"><input type="file" name="multi_item[image_url-'+i+']" class="dropify"></div>'+
                 '<span class="text-primary">Please given file type (.png, .jpg, svg)</span>'+
                 '<div class="help-block"></div>'+
+            '</div>'+
+
+            '<div class="form-group col-md-6 video_url">'+
+                '<label for="video_url">Video URL</label>'+
+                '<input type="text" name="multi_item[video_url-'+i+']" class="form-control" placeholder="Enter URL" value="">'+
+                '<div class="help-block"></div>'+
+                '<div class="help-block"> </div>'+
+            '</div>'+
+
+            '<div class="col-md-6 mt-1">'+
+                '<label></label>'+
+                '<div class="form-group">'+
+                    '<label for="is_video">Is Video:</label>'+
+                    '<input type="checkbox" name="multi_item[is_video-'+i+']" class="is_video" value="1" checked>'+
+                '</div>'+
             '</div>'+
 
             '<div class="form-group">'+
@@ -369,17 +418,25 @@
         '</div>';
 	     $parentSelector.find('#testimonials_content_section').append(html);
 
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            },
+            height: 100
+        });
 
-	     $parentSelector.find('#multi_item_count').val(i);
-         console.log($('#multi_item_count').val());
+	    $parentSelector.find('#multi_item_count').val(i);
 	   });
 
 
 	   $(document).on('click', '.multi_item_remove', function(e){
 
-	     e.preventDefault();
+	    e.preventDefault();
 
-	     $(this).parent().parent().remove();
+	    $(this).parent().parent().remove();
 
         let parentSelector = $('#testimonials_with_title_desc');
         let count =  parentSelector.find('#multi_item_count').val();
@@ -387,6 +444,25 @@
         parentSelector.find('#multi_item_count').val(count-1);
 
 	   });
+
+    $(document).on('change', '.is_video', function(){
+
+
+        var object = $(this).parents('.single_testimonials_section');
+
+        var image_url = object.find('.image_url');
+        var video_url = object.find('.video_url');
+
+        if($(this).prop("checked") == true){
+
+            video_url.removeClass('d-none');
+            image_url.addClass('d-none');
+        }else{
+
+            image_url.removeClass('d-none');
+            video_url.addClass('d-none');
+        }
+    });
 
 
 

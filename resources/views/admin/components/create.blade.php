@@ -1,4 +1,5 @@
 @php
+    $create_edit = isset($component) ? 'Edit' : 'Create';
     $list_d = ['about-page', 'priyojon'];
     $store_d = 'about-page.component.store';
     $update_d = 'about-page.component.update';
@@ -22,11 +23,11 @@
 
 @endphp
 @extends('layouts.admin')
-@section('title', 'Component Create')
-@section('card_name', 'Component Create')
+@section('title', 'Component'.$create_edit)
+@section('card_name', 'Component '.$create_edit)
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ $list }}"> Component List</a></li>
-    <li class="breadcrumb-item active"> Component Create</li>
+    <li class="breadcrumb-item active"> Component {{$create_edit}}</li>
 @endsection
 @section('action')
     <a href="{{ $list }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
