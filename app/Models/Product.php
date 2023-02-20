@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable =
         [
             'product_code',
@@ -41,6 +41,7 @@ class Product extends Model
             'display_order',
             'purchase_option',
             'offer_info',
+            'product_image',
             'is_four_g_offer',
             'is_amar_offer',
             'is_social_pack',
@@ -52,6 +53,8 @@ class Product extends Model
             'special_product',
             'created_by',
             'updated_by',
+            
+            'image',
         ];
 
     protected $casts = [

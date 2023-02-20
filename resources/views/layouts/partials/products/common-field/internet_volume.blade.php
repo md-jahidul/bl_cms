@@ -1,3 +1,8 @@
+<div class="col-md-12">
+    <span><h4><strong>Internet</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
     <label for="internet_volume_mb">Internet Volume (MB)</label>
     <input type="number" name="internet_volume_mb" class="form-control internet_volume_mb" placeholder="Enter internet volume in MB"
