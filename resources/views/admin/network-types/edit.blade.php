@@ -38,7 +38,7 @@
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
-                                @include('layouts.partials.common_types.image_other_component',[['component'=>$networkTypes]])
+                                @include('layouts.partials.common_types.image_other_component',['component'=>$networkTypes])
                                 @include('layouts.partials.common_types.label_with_url')
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input" class="required">Status: </label>
