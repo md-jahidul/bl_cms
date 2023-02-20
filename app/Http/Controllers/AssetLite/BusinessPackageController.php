@@ -188,11 +188,11 @@ class BusinessPackageController extends Controller {
  
     public function componentStore(Request $request)
     {
-    // return $request->all();
-    $section_details_id = 0;
-    $response = $this->componentService->componentStore($request->all(), $section_details_id , self::PAGE_TYPE);
-    Session::flash('message', $response->getContent());
-    return redirect('/business-package');
+        // return $request->all();
+        $section_details_id = 0;
+        $response = $this->componentService->componentStore($request->all(), $section_details_id , self::PAGE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('/business-package');
     }
  
     public function componentEdit(Request $request, $id)
@@ -206,24 +206,24 @@ class BusinessPackageController extends Controller {
  
     public function componentUpdate(Request $request, $id)
     {
-    // return $request->all();
-    $request['page_type'] = self::PAGE_TYPE;
-    $section_details_id = 0; 
-    $response = $this->componentService->componentUpdate($request->all(), $id);
-    Session::flash('message', $response->getContent());
-    return redirect('/business-package');
+        // return $request->all();
+        $request['page_type'] = self::PAGE_TYPE;
+        $section_details_id = 0; 
+        $response = $this->componentService->componentUpdate($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect('/business-package');
     }
  
  
     public function componentSortable(Request $request): Response
     {
-    return $this->componentService->tableSortable($request->all());
+        return $this->componentService->tableSortable($request->all());
     }
  
     public function componentDestroy($id)
     {
-    $this->componentService->deleteComponent($id);
-    return url()->previous();
+        $this->componentService->deleteComponent($id);
+        return url()->previous();
     }
    
     
