@@ -1,5 +1,4 @@
 
-
 <div class=" col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
     <label for="alt_text" >Component Image (Desktop View)</label>
     <div class="custom-file">
