@@ -136,6 +136,7 @@ class ComponentService
 
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
+
         $this->save($data);
         return response('Component create successfully!');
     }
