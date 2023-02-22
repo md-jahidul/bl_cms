@@ -994,6 +994,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('utility-bill/destroy/{id}', 'CMS\UtilityBillController@destroy')->name('utility-bill.destroy');
     Route::get('utility-bill/sort-auto-save', 'CMS\UtilityBillController@categorySortable');
     Route::get('utility-bill-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
+    Route::get('commerce-bill-status', 'CMS\UtilityBillController@showCommerceBill');
 
     /**
      * Commerce Navigation Rail
