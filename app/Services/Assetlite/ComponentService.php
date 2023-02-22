@@ -143,7 +143,6 @@ class ComponentService
         $data['multiple_attributes'] = (count($results) >= 1) ? array_values($results) : null;
         $countComponents = $this->componentRepository->list($sectionId, $pageType);
         $data['component_order'] = count($countComponents) + 1;
-
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
 
