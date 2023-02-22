@@ -116,7 +116,36 @@
                             @endif
 
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                <label for="banner_title_en">Banner Title EN</label>
+                                <input type="text" name="banner_title_en"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_title_en}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_en'))
+                                <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                <label for="banner_title_bn">Banner Title BN</label>
+                                <input type="text" name="banner_title_bn"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_title_bn}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_title_bn'))
+                                <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
+                                <label for="banner_alt_text">Alt Text</label>
+                                <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ optional($productDetail->product_details)->banner_alt_text}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_alt_text'))
+                                <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                 <span>Banner image (Web)</span>
 
                                 <div class="custom-file">
@@ -134,7 +163,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
                                 <span>Banner image (Mobile)</span>
 
                                 <div class="custom-file">
@@ -151,17 +180,26 @@
 
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                <label for="banner_alt_text">Alt Text</label>
-                                <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ optional($productDetail->product_details)->banner_alt_text}}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                <label for="banner_desc_en">Banner Description (English)</label>
+                                <textarea type="text" name="banner_desc_en"  class="form-control summernote_editor" placeholder="Enter short details in English" rows="5"
+                                >{{ $productDetail->product_details->banner_desc_en }}</textarea>
                                 <div class="help-block"></div>
-                                @if ($errors->has('banner_alt_text'))
-                                <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                @if ($errors->has('banner_desc_en'))
+                                    <div class="help-block">{{ $errors->first('banner_desc_en') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                <label for="banner_desc_bn">Banner Description (Bangla)</label>
+                                <textarea type="text" name="banner_desc_bn"  class="form-control summernote_editor" placeholder="Enter short details in English" rows="5">{{ $productDetail->product_details->banner_desc_bn }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_desc_bn'))
+                                    <div class="help-block">{{ $errors->first('banner_desc_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Banner Photo Name</label>
                                 <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
                                 <input type="text" class="form-control" name="banner_name" value="{{optional($productDetail->product_details)->banner_name}}" placeholder="Photo Name">

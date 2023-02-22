@@ -223,6 +223,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Product Offers  ======================================
+    Route::get('update-search-datatable', 'AssetLite\ProductController@updateSearchDataTable');
+
     Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
     Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
     Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
