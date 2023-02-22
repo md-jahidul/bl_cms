@@ -1134,6 +1134,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('faq.update');
     Route::get('faq/{cat_slug}/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
+    Route::get('faq-sort', 'AssetLite\AlFaqController@faqSortable');
+
+
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
