@@ -40,6 +40,8 @@ class BusinessInternetPackageRequest extends FormRequest
                 'validity_unit' => 'required',
                 'mrp' => 'required',
                 'price' => 'required',
+                'banner_photo' => 'filled',
+                'banner_mobile' => 'filled',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_internet_packages,url_slug,' . $id,
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_internet_packages,url_slug_bn,' . $id,
             ];

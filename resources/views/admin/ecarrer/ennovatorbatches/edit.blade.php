@@ -60,7 +60,7 @@
                                         </select>
                                 </div>
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
@@ -97,7 +97,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -112,7 +112,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

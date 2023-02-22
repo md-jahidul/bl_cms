@@ -257,7 +257,7 @@ class ComponentService
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
-        if ($data['component_type'] == 'table_component') {
+        if ($component['component_type'] == 'table_component') {
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
             $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
         }

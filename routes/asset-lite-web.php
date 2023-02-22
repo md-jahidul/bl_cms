@@ -396,7 +396,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
-    
+
     #Dynamic Page's Components
     // Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
     //     ->name('other-components');
@@ -587,6 +587,42 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('business-package/update',
         'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
+
+    /**
+     * Business package landing components
+     * 
+     */
+    Route::get('business-package-component/list', 'AssetLite\BusinessPackageController@index')
+        ->name('business-package-component.list');
+    Route::get('business-package-component/create', 'AssetLite\BusinessPackageController@componentCreate')
+        ->name('business-package-component.create');
+    Route::post('business-package-component/store', 'AssetLite\BusinessPackageController@componentStore')
+        ->name('business-package-component.store');
+    Route::get('business-package-component/edit/{comId}', 'AssetLite\BusinessPackageController@componentEdit')
+        ->name('business-package-component.edit');
+    Route::post('business-package-component/update/{comId}', 'AssetLite\BusinessPackageController@componentUpdate')
+        ->name('business-package-component.update');
+    Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
+        ->name('business-package-component.destroy');
+    Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
+    
+    /**
+     * Business package details components
+     * 
+     */
+    Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
+        ->name('business-package-details-component.list');
+    Route::get('business-package-details-component/create', 'AssetLite\BusinessPackageDetailsController@componentCreate')
+        ->name('business-package-details-component.create');
+    Route::post('business-package-details-component/store', 'AssetLite\BusinessPackageDetailsController@componentStore')
+        ->name('business-package-details-component.store');
+    Route::get('business-package-details-component/edit/{comId}', 'AssetLite\BusinessPackageDetailsController@componentEdit')
+        ->name('business-package-details-component.edit');
+    Route::post('business-package-details-component/update/{comId}', 'AssetLite\BusinessPackageDetailsController@componentUpdate')
+        ->name('business-package-details-component.update');
+    Route::get('business-package-details-component/destroy/{comId}', 'AssetLite\BusinessPackageDetailsController@componentDestroy')
+        ->name('business-package-details-component.destroy');
+    Route::get('business-package-details-component-sort', 'AssetLite\BusinessPackageDetailsController@componentSortable');
 
     //__Category Internet Package
     Route::get('business-internet', 'AssetLite\BusinessInternetController@index');

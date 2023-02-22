@@ -155,9 +155,66 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <h4><strong>Details Data</strong></h4>
-                    <hr>
-                    <div class="row">
+                        <h4><strong>Details Data</strong></h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_title_en">Banner Title (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_en" required class="form-control">{{$service->banner_title_en}}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_title_bn">Banner Title (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_bn" class="form-control ">{{$service->banner_title_bn}}</textarea>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_en">Banner Subtitle (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_en" required class="form-control">{{$service->banner_subtitle_en}}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_bn">Banner Subtitle (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_bn" required class="form-control">{{$service->banner_subtitle_bn}}</textarea>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_title_en">Banner Title (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_en" required class="form-control">{{$service->banner_title_en}}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_title_bn">Banner Title (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_bn" class="form-control ">{{$service->banner_title_bn}}</textarea>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_en">Banner Subtitle (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_en" required class="form-control">{{$service->banner_subtitle_en}}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="banner_subtitle_bn">Banner Subtitle (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_bn" required class="form-control">{{$service->banner_subtitle_bn}}</textarea>
+                                </div>
+
+                            </div>
+
 
                         <div class="col-md-4 col-xs-12">
 
