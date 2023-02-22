@@ -152,7 +152,7 @@
                 <li class="{{is_active_url('excel.upload')}}">
                     <a class="menu-item" href="{{ route('excel.upload') }} "
                        data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-align-center"></i>Category sync with Product 
+                        <i class="la la-align-center"></i>Category sync with Product
                     </a>
                 </li>
                 <li class="{{ is_active_url('product-price/slabs') }}">
@@ -331,6 +331,11 @@
                             class="la la-magic"></i> LMS Offer Categories</a>
                 </li>
 
+                <li class="{{ is_active_url('loyalty/tier') . is_active_url('lms-offer-category/create')}}">
+                    <a class="menu-item" href="{{ url('loyalty/tier') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-magic"></i> LMS Tier</a>
+                </li>
+
                 <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
                     <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Partner and Offers</a>
@@ -347,18 +352,18 @@
                         <i class="la la-exclamation-circle"></i>About Priyojon
                     </a>
                 </li>
-                <li class="{{ is_active_url('lms-about-page/banner-image') }}">
-                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-exclamation-circle"></i>About Page Banner
-                    </a>
-                </li>
+{{--                <li class="{{ is_active_url('lms-about-page/banner-image') }}">--}}
+{{--                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"--}}
+{{--                       data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                        <i class="la la-exclamation-circle"></i>About Page Banner--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
-                <li class="{{ is_active_url('about-page/reward_points')}}">
-                    <a class="menu-item" href="{{ url('about-page/reward_points') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-exclamation-circle"></i> About Reward Point</a>
-                </li>
+{{--                <li class="{{ is_active_url('about-page/reward_points')}}">--}}
+{{--                    <a class="menu-item" href="{{ url('about-page/reward_points') }}"--}}
+{{--                       data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                        <i class="la la-exclamation-circle"></i> About Reward Point</a>--}}
+{{--                </li>--}}
 
             </ul>
         </li>
@@ -626,6 +631,33 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-bold"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Blog</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('blog-categories') . is_active_url('blog-categories/create') }} }} nav-item">
+                        <a href="{{ url('blog-categories') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post Categories</span>
+                        </a>
+                    </li>
+                    <li class="{{ is_active_url('blog-post') . is_active_url('blog-post/create') }} }} nav-item">
+                        <a href="{{ url('blog-post') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post List</span>
+                        </a>
+                    </li>
+{{--                    <li class="{{ is_active_url('/tvc-video') }} nav-item">--}}
+{{--                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>--}}
+{{--                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+
+                    <li class="{{ is_active_url('blog/landing-page-component') . is_active_url('blog/landing-page-component/create') }} nav-item">
+                        <a href="{{ url('blog/landing-page-component') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item"><a href="#"><i class="la la-star-half-full"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Customer Feedback</span></a>
                 <ul class="menu-content">
@@ -685,6 +717,10 @@
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
+            </li>
+            <li class="{{ is_active_url('/explore-c') }} nav-item"><a href="{{ url('/explore-c') }}">
+                    <i class="la la-paragraph"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Explore C's</span></a>
             </li>
         </ul>
     </li>

@@ -21,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate>
+                        <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('en_label_text') ? ' error' : '' }}">
@@ -58,15 +58,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-2 mt-1">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="external_link">Is External Menu:</label>
-                                        <input type="checkbox" name="external_site" value="1" id="external_link">
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-10 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
                                     <label for="url" class="required">External URL</label>
                                     <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
                                            value="{{ old("url") ? old("url") : '' }}">
@@ -75,6 +67,37 @@
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="external_link">Is External Menu:</label>
+                                        <input type="checkbox" name="external_site" value="1" id="external_link">
+                                    </div>
+                                </div>
+
+                                @if($parent_id != 0)
+                                    <div class="form-group col-md-4 {{ $errors->has('description_en') ? ' error' : '' }}">
+                                        <label>Description En</label>
+                                        <textarea class="form-control" rows="5" name="description_en"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4 {{ $errors->has('description_bn') ? ' error' : '' }}">
+                                        <label>Description BN</label>
+                                        <textarea class="form-control" rows="5" name="description_bn"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-4 {{ $errors->has('icon') ? ' error' : '' }}">
+                                        <label for="mobileImg">Icon</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="icon" data-height="90" class="dropify">
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('icon'))
+                                            <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
                                 <div class="col-md-6 float-left">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
@@ -112,6 +135,7 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
 {{--    <script>--}}
@@ -126,6 +150,7 @@
 {{--            })--}}
 {{--        })--}}
 {{--    </script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {
             var externalLink = $('#externalLink');
@@ -140,7 +165,17 @@
                     externalLink.addClass('d-none')
                 }
             })
-
+            // Image Dropify
+            $(function () {
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'Browse for an Image File to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct file format'
+                    },
+                });
+            });
         })
     </script>
 @endpush

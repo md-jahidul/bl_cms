@@ -43,10 +43,10 @@
                                 $pageContentBn = $page->page_content_bn;
                                 $urlSlug = $page->url_slug;
                                 $urlSlugBn = $page->url_slug_bn;
-                                $desktopImg = $page->banner_image_url;
-                                $mobileImg = $page->banner_mobile_view;
-                                $altText = $page->alt_text;
-                                $photoName = $page->banner_name;
+                                //$desktopImg = $page->banner_image_url;
+                                //$mobileImg = $page->banner_mobile_view;
+                                //$altText = $page->alt_text;
+                                //$photoName = $page->banner_name;
                                 $pageHeader = $page->page_header;
                                 $pageHeaderBn = $page->page_header_bn;
                                 $schemaMarkup = $page->schema_markup;
@@ -57,18 +57,18 @@
 
                             <div class="form-group col-md-3">
                                 <label class="required">Page Name (EN)</label>
-                                <input type="text" name="page_name_en" required value="{{$nameEn}}"  class="form-control">
+                                <input type="text" name="page_name_en" required value="{{ old("page_name_en") ? old("page_name_en") : $nameEn ?? '' }}"  class="form-control">
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="required">Page Name (BN)</label>
-                                <input type="text" name="page_name_bn" required value="{{$nameBn}}"  class="form-control">
+                                <input type="text" name="page_name_bn" required value="{{ old("page_name_bn") ? old("page_name_bn") : $nameBn ?? '' }}"  class="form-control">
                                 <div class="help-block"></div>
                             </div>
 
                             <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label>English URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ $urlSlug }}" name="url_slug"
+                                <input type="text" class="form-control slug-convert" value="{{ old("url_slug") ? old("url_slug") : $urlSlug ?? '' }}" name="url_slug"
                                        required placeholder="URL">
                                 <div class="help-block"></div>
                                 <small class="text-info">
@@ -81,7 +81,7 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                 <label>Bangla URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ $urlSlugBn }}" name="url_slug_bn"
+                                <input type="text" class="form-control slug-convert" value="{{ old("url_slug_bn") ? old("url_slug_bn") : $urlSlugBn ?? '' }}" name="url_slug_bn"
                                        required placeholder="URL bangla">
                                 <div class="help-block"></div>
                                 <small class="text-info">
@@ -92,7 +92,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                            {{-- <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                 <label for="mobileImg">Desktop View Image</label>
                                 <div class="custom-file">
                                     <input type="hidden" name="old_web_img" value="{{ isset($desktopImg) ? $desktopImg : null }}">
@@ -104,9 +104,9 @@
                                 @if ($errors->has('banner_image_url'))
                                     <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
                                 @endif
-                            </div>
+                            </div> --}}
 
-                            <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
+                            {{-- <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                 <label for="mobileImg">Mobile View Image</label>
                                 <div class="custom-file">
                                     <input type="hidden" name="old_mob_img" value="{{ isset($mobileImg) ? $mobileImg : null }}">
@@ -119,9 +119,9 @@
                                 @if ($errors->has('banner_mobile_view'))
                                     <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
                                 @endif
-                            </div>
+                            </div> --}}
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            {{-- <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label for="alt_text">Alt Text</label>
                                 <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter offer name in English"
                                        value="{{ $altText }}">
@@ -129,9 +129,9 @@
                                 @if ($errors->has('alt_text'))
                                     <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                 @endif
-                            </div>
+                            </div> --}}
 
-                            <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            {{-- <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Banner Photo Name</label>
                                 <input type="hidden" name="old_banner_name" value="{{ $photoName }}">
                                 <input type="text" class="form-control" name="banner_name" value="{{ $photoName }}"
@@ -140,14 +140,14 @@
                                     <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group col-md-6 {{ $errors->has('page_content_en') ? ' error' : '' }}">
                                 <label for="page_content_en">Description (English)</label>
                                 <textarea type="text" name="page_content_en" id="page_content_en" rows="5"
                                           class="form-control summernote_editor"
                                           placeholder="Enter page description in English"
-                                >{{ $pageContentEn }}</textarea>
+                                >{{ old("page_content_en") ? old("page_content_en") : $pageContentEn ?? '' }}</textarea>
                                 <div class="help-block"></div>
                                 @if ($errors->has('page_content_en'))
                                     <div class="help-block">{{ $errors->first('page_content_en') }}</div>
@@ -159,16 +159,16 @@
                                 <textarea type="text" name="page_content_bn" rows="5" id="page_content_bn"
                                           class="form-control summernote_editor"
                                           placeholder="Enter page description in Bangla"
-                                >{{ $pageContentBn }}</textarea>
+                                >{{ old("page_content_bn") ? old("page_content_bn") : $pageContentBn ?? '' }}</textarea>
                                 <div class="help-block"></div>
                                 @if ($errors->has('page_content_bn'))
                                     <div class="help-block">{{ $errors->first('page_content_bn') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('page_header') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header">{{ $pageHeader }}</textarea>
+                                <textarea class="form-control" rows="7" name="page_header">{{ old("page_header") ? old("page_header") : $pageHeader ?? '' }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -176,15 +176,15 @@
 
                             <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
                                 <label>Page Header Bangla (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header_bn">{{ $pageHeaderBn }}</textarea>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{ old("page_header_bn") ? old("page_header_bn") : $pageHeaderBn ?? '' }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('schema_markup') ? ' error' : '' }}">
                                 <label>Schema Markup</label>
-                                <textarea class="form-control" rows="7" name="schema_markup">{{ $schemaMarkup }}</textarea>
+                                <textarea class="form-control" rows="7" name="schema_markup">{{ old("schema_markup") ? old("schema_markup") : $schemaMarkup??'' }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
@@ -212,6 +212,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
