@@ -66,20 +66,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="user_type" class="required mr-1">User Type:</label>
+{{--                                <div class="col-md-4">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="user_type" class="required mr-1">User Type:</label>--}}
 
-                                        <input type="radio" name="user_type" value="all" checked>
-                                        <label for="user_type" class="mr-1">All</label>
+{{--                                        <input type="radio" name="user_type" value="all" checked>--}}
+{{--                                        <label for="user_type" class="mr-1">All</label>--}}
 
-                                        <input type="radio" name="user_type" value="prepaid">
-                                        <label for="user_type">Prepaid</label>
+{{--                                        <input type="radio" name="user_type" value="prepaid">--}}
+{{--                                        <label for="user_type">Prepaid</label>--}}
 
-                                        <input type="radio" name="user_type" value="postpaid">
-                                        <label for="user_type">Postpaid</label>
-                                    </div>
-                                </div>
+{{--                                        <input type="radio" name="user_type" value="postpaid">--}}
+{{--                                        <label for="user_type">Postpaid</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">

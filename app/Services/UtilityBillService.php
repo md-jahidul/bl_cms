@@ -21,6 +21,7 @@ class UtilityBillService
     public function save(array $data)
     {
         $data['display_order'] = $this->findAll()->count() + 1;
+        $data['user_type'] = 'all';
         if (isset($data['icon'])) {
             $data['icon'] = 'storage/' . $data['icon']->store('utility_bill');
         }
