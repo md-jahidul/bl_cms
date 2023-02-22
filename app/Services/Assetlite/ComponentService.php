@@ -108,12 +108,9 @@ class ComponentService
     public function componentStore($data, $sectionId, $pageType)
     {
         if (request()->hasFile('image')) {
-
             if ($pageType == ExploreCDetailsController::PAGE_TYPE) {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-                
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
         }
@@ -132,7 +129,7 @@ class ComponentService
 
                                 $value = $this->upload($value, 'assetlite/images/explore_c_details');
                             }else {
-                                
+
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
                         }
@@ -157,9 +154,9 @@ class ComponentService
 
         /**
          * Creator: Shuvo-bs
-         * For Button Component 
+         * For Button Component
          * Genareted Html stored in editor_en & editor_bn column
-         * 
+         *
          */
         // if ($data['component_type'] == 'button_component') {
         //     $check_external = '';
@@ -185,7 +182,7 @@ class ComponentService
 
         //     $data['editor_en'] = $btn_html_en;
         //     $data['editor_bn'] = $btn_html_bn;
-            
+
         // }
 
         $this->save($data);
@@ -197,12 +194,9 @@ class ComponentService
     {
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
-
             if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
             $this->deleteFile($component->image);
@@ -214,13 +208,11 @@ class ComponentService
             $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
-                    // print_r($value);
                     $sub_data = [];
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
                             if ($component['page_type'] != ExploreCDetailsController::PAGE_TYPE) {
-
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
                         }
@@ -228,7 +220,6 @@ class ComponentService
                     }
                 }
             }
-            // return [$results, $data['multi_item']];
         }
 
         // get original data
@@ -243,7 +234,6 @@ class ComponentService
             $data['multiple_attributes'] = $input_multiple_attributes;
 
         }else{
-
             //loop over the product array
             if ($input_multiple_attributes) {
                 foreach ($input_multiple_attributes as $data_id => $inputData) {
@@ -253,7 +243,7 @@ class ComponentService
                     }
                 }
             }
-    
+
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
@@ -269,9 +259,9 @@ class ComponentService
 
         /**
          * Creator: Shuvo-bs
-         * For Button Component 
+         * For Button Component
          * Genareted Html stored in editor_en & editor_bn column
-         * 
+         *
          */
         // if ($data['component_type'] == 'button_component') {
         //     $check_external = '';
@@ -301,7 +291,6 @@ class ComponentService
         // }
 
         $component->update($data);
-        // return $data['multiple_attributes'];
         return response("Component update successfully!!");
     }
 
@@ -446,7 +435,7 @@ class ComponentService
         $component = $this->findOne($id);
 
         if($component) $component->delete();
-        
+
         return Response('Component deleted successfully !');
     }
 

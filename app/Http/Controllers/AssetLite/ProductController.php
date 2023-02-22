@@ -77,7 +77,7 @@ class ProductController extends Controller
     {
         $products = Product::category($type)
             ->with(['offer_category' => function ($query) {
-                $query->select('id', 'name_en');
+                $query->select('id', 'alias', 'name_en');
             }, 'product_core'])
 //            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
             ->latest()
@@ -381,7 +381,7 @@ class ProductController extends Controller
     /**
      * User: BS(Shuvo)
      * This function is only for bulk keyword update for the search_data Table.
-     * 
+     *
      */
 
     public function updateSearchDataTable(){
@@ -390,9 +390,7 @@ class ProductController extends Controller
 
         foreach ($products as $key => $product) {
             try {
-                
                 $this->productService->updateSearchData($product);
-
             } catch (\Throwable $th) {
                 $response = [
                     'success' => 'FAILED',
@@ -400,11 +398,8 @@ class ProductController extends Controller
                 ];
                 return response()->json($response, 500);
             }
-
-
         }
-        
+
         return response()->json(['success' => 'Success'], 200);
     }
-
 }
