@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Models\CommerceBillStatus;
+use App\Services\CommerceBillStatusService;
 use App\Services\UtilityBillService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -10,11 +12,17 @@ use Illuminate\Support\Facades\Session;
 class UtilityBillController extends Controller
 {
     public $utilityBillService;
+    public $commerceBillStatusService;
+
     public function __construct(
-        UtilityBillService $utilityBillService
-    ) {
+        UtilityBillService $utilityBillService,
+        CommerceBillStatusService $commerceBillStatusService
+    ) 
+    {
         $this->utilityBillService = $utilityBillService;
+        $this->commerceBillStatusService = $commerceBillStatusService;
     }
+
     public function index()
     {
         $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
@@ -71,5 +79,12 @@ class UtilityBillController extends Controller
     public function categorySortable(Request $request)
     {
         return $this->utilityBillService->tableSort($request);
+    }
+
+    public function showCommerceBill()
+    {
+        $billStatus = $this->commerceBillStatusService->getPaginatedBills();
+
+        return view('admin.commerce.bills', compact('billStatus'));
     }
 }

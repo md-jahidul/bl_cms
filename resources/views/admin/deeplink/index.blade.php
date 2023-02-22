@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Content Deeplink List')
-@section('card_name', 'Content Deeplink')
+@section('title', 'Deeplink List')
+@section('card_name', 'Deeplink')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Content & Course Deeplink List</li>
+    <li class="breadcrumb-item active">Content, Course & Commerce Deeplink List</li>
 @endsection
 
 @section('content_header')
@@ -37,6 +37,7 @@
                                 <option value="courses">Courses</option>
                                 <option value="cares">Cares</option>
                                 <option value="content">Content</option>
+                                <option value="commerce">Commerce</option>
                             </select>
                         </div>
 {{--                        <div class="form-group">--}}

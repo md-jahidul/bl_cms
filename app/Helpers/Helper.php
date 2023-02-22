@@ -135,6 +135,11 @@ class Helper
             "ROAMING_DETAILS"         => "Roaming Details",
             "USSD_CODE"               => "USSD code",
             "CARE"                    => "Care",
+            "COMMERCE"                => 'Commerce',
+            "UTILITY"                 => 'Utility',
+            "ELECTRICITY"             => 'Electricity',
+            "GAS"                     => 'Gas',
+            "WATER"                   => 'Water',
         ];
     }
 
