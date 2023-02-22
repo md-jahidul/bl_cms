@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AboutUsBanglalink extends Model
 {
-    use LogModelAction;
+//    use LogModelAction;
 
     /**
      * The table associated with the model.
@@ -16,6 +16,9 @@ class AboutUsBanglalink extends Model
      */
     protected $table = 'about_us_banglalink';
 
+    protected $casts = [
+        'other_attributes' => 'array'
+    ];
 
     protected $guarded = ['id'];
 

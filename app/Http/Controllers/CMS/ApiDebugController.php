@@ -158,8 +158,10 @@ class ApiDebugController extends Controller
     public function getLastLogin($number)
     {
         $user = Customer::where('msisdn', '88' . $number)->first();
-        if ($user) {
+        if ($user && $user->last_login_at) {
             return Carbon::parse($user->last_login_at)->format('Y-m-d g:i A');
+        } else {
+            return 'No Data Available';
         }
         // return $this->bonusLogsService->getLogs($request, $number);
     }
@@ -258,10 +260,32 @@ class ApiDebugController extends Controller
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
+        $today =Carbon::now()->toDateString(); //$request->date ? $request->date : Carbon::now()->toDateString();
+        if ($request->date != '') {
+            $date=explode('=',$request->date);
+            $start_date=Carbon::parse($date[0])->format('Y-m-d').' 00:00:00';
+            $end_date=Carbon::parse($date[1])->format('Y-m-d').' 23:59:59';
 
-        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE')->orderBy('created_at', 'DESC')->get();;
+        }
+
+        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE');
+        if ($request->date != '') {
+            $items->whereBetween('created_at', [$start_date, $end_date]);
+        }else{
+            $items->whereBetween('created_at', [$today . '  00:00:00', $today . '  23:59:59']);
+        }
+
+        $items=$items->orderBy('created_at', 'DESC')->get();
         $all_items_count = count($items);
-        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE')->orderBy('created_at', 'DESC')->skip($start)->take($length)->get();;
+        $items = MasterLog::where('msisdn', $number);
+        $items->where('log_type', 'PRODUCT-PURCHASE');
+
+        if ($request->date != '') {
+            $items->whereBetween('created_at', [$start_date, $end_date]);
+        }else{
+            $items->whereBetween('created_at', [$today . '  00:00:00', $today . '  23:59:59']);
+        }
+        $items->orderBy('created_at', 'DESC')->skip($start)->take($length)->get();
 
 
         $response = [
@@ -276,6 +300,7 @@ class ApiDebugController extends Controller
                 'date' => Carbon::parse($item->created_at)->toDateTimeString(),
                 'msisdn' => $item->msisdn,
                 'message' => $item->message,
+                'balance' => $item->data,
                 'others' => $item->others,
                 'status' => $item->status,
             ];

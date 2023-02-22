@@ -20,6 +20,8 @@
                             <div class="content-body">
                                 <div class="row">
 
+
+
                                     <div class="form-group col-md-4 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
 
@@ -85,35 +87,9 @@
                                         @include('layouts.partials.product-details.component.common-field.extra-title')
                                         @include('layouts.partials.product-details.component.common-field.title')
                                         @php( $i = 0 )
-                                        @if(isset($multipleImage))
-                                            @foreach($multipleImage as $key => $image)
-                                                @php($i++)
-                                                <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
-                                                <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
-                                                    <div class="form-group">
-                                                        <label for="message">Multiple Image</label>
-                                                        <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                               data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : '' }}"
-                                                               data-height="80"/>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-5 option-{{ $i }}">
-                                                    <label for="alt_text">Alt Text</label>
-                                                    <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
-                                                </div>
-
-                                                @if($i == 1)
-                                                    <div class="form-group col-md-1">
-                                                        <label for="alt_text"></label>
-                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
-                                                    </div>
-                                                    {{--                                                            @else--}}
-                                                    {{--                                                                <div class="form-group col-md-1 option-{{ $i }}">--}}
-                                                    {{--                                                                    <label for="alt_text"></label>--}}
-                                                    {{--                                                                    <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
-                                                    {{--                                                                </div>--}}
-                                                @endif
+                                        @if(isset($component->componentMultiData))
+                                            @foreach($component->componentMultiData as $key => $image)
+                                                @include('layouts.partials.product-details.component.common-field.multiple-image', [$image, $key])
                                             @endforeach
                                         @endif
                                     </slot>
@@ -267,6 +243,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>
 
     <script>
         $(function () {
@@ -301,30 +278,30 @@
                 height:200
             })
 
-            $(document).on('click', '#plus-image', function () {
-                var option_count = $('.options-count');
-                var total_option = option_count.length + 1;
-
-                var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
-                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
-                    '<div class="form-group">\n' +
-                    '      <label for="message">Multiple Image</label>\n' +
-                    '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
-                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
-                    '  </div>\n' +
-                    ' </div>\n'+
-                    '<div class="form-group col-md-5 option-'+total_option+'">\n' +
-                    '    <label for="alt_text">Alt Text</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
-                    '</div>\n' +
-                    '<div class="form-group col-md-1 option-'+total_option+'">\n' +
-                    '   <label for="alt_text"></label>\n' +
-                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
-                    '</div>';
-                $('#multiple-image-field').append(input);
-                //Call dropify Function
-                dropify();
-            });
+            // $(document).on('click', '#plus-image', function () {
+            //     var option_count = $('.options-count');
+            //     var total_option = option_count.length + 1;
+            //
+            //     var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+            //         '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
+            //         '<div class="form-group">\n' +
+            //         '      <label for="message">Multiple Image</label>\n' +
+            //         '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+            //         '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+            //         '  </div>\n' +
+            //         ' </div>\n'+
+            //         '<div class="form-group col-md-5 option-'+total_option+'">\n' +
+            //         '    <label for="alt_text">Alt Text</label>\n' +
+            //         '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+            //         '</div>\n' +
+            //         '<div class="form-group col-md-1 option-'+total_option+'">\n' +
+            //         '   <label for="alt_text"></label>\n' +
+            //         '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+            //         '</div>';
+            //     $('#multiple-image-field').append(input);
+            //     //Call dropify Function
+            //     dropify();
+            // });
 
             $(document).on('click', '.remove-image', function (event) {
                 var rowId = $(event.target).attr('data-id');

@@ -1,21 +1,31 @@
-<div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+<div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
     <label> URL (English) <span class="text-danger">*</span></label>
-    <input type="text" name="url_slug_en" class="form-control" value="{{ isset($data->url_slug_en) ? $data->url_slug_en : null }}"
-           required placeholder="Enter URL in English" id="url_slug">
+    <input type="text" name="url_slug_en" class="form-control slug-convert"
+           value="{{ isset($data->url_slug_en) ? $data->url_slug_en : null }}"
+           required placeholder="Enter URL in English">
     <small class="text-info">
         <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
     </small>
+
+    <div class="help-block"></div>
+    @if ($errors->has('url_slug_en'))
+        <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
+    @endif
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
     <label> URL (Bangla) <span class="text-danger">*</span></label>
-    <input type="text" name="url_slug_bn" class="form-control" value="{{ isset($data->url_slug_bn) ? $data->url_slug_bn : null }}"
-           required placeholder="Enter URL in Bangla" id="url_slug">
+    <input type="text" name="url_slug_bn" class="form-control slug-convert"
+           value="{{ isset($data->url_slug_bn) ? $data->url_slug_bn : null }}"
+           required placeholder="Enter URL in Bangla">
     <small class="text-info">
         <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
     </small>
+    <div class="help-block"></div>
+    @if ($errors->has('url_slug_bn'))
+        <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+    @endif
 </div>
-
 
 <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
     <label>Page Header (HTML)</label>
@@ -40,26 +50,4 @@
         <strong>Note: </strong> JSON-LD (Recommended by Google)
     </small>
 </div>
-
-
-@push('page-js')
-    <script type="text/javascript">
-        $(function () {
-            function convertToSlug(Text)
-            {
-                return Text
-                    .toLowerCase()
-                    .replace(/ /g,'-')
-                    .replace(/[^\w-]+/g,'')
-                    ;
-            }
-            $("#url_slug").keyup(function(){
-               var text = $(this).val();
-               var data = convertToSlug(text);
-                $(this).val(data);
-            });
-        });
-    </script>
-@endpush
-
 

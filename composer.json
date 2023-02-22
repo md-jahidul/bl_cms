@@ -17,6 +17,7 @@
         "cviebrock/eloquent-sluggable": "^4.8",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "5.8.*",
         "laravel/telescope": "^2.1",
         "laravel/tinker": "^1.0",
@@ -41,7 +42,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     },
 
     "extra": {

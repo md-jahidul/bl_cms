@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Component;
 use App\Models\ProductDetailsSection;
+use App\Services\AlBannerService;
 use App\Services\Assetlite\BannerImgRelatedProductService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
@@ -62,17 +63,23 @@ class ProductDetailsController extends Controller
      * @var BannerImgRelatedProductService
      */
     private $bannerImgRelatedProductService;
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     public function __construct(
         ProductDetailsSectionService $productDetailsSectionService,
         BannerImgRelatedProductService $bannerImgRelatedProductService,
         ProductService $productService,
-        ComponentService $componentService
+        ComponentService $componentService,
+        AlBannerService $alBannerService
     ) {
         $this->productDetailsSectionService = $productDetailsSectionService;
         $this->bannerImgRelatedProductService = $bannerImgRelatedProductService;
         $this->componentService = $componentService;
         $this->productService = $productService;
+        $this->alBannerService = $alBannerService;
     }
 
 
@@ -88,13 +95,15 @@ class ProductDetailsController extends Controller
         $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
+        $banner = $this->alBannerService->findBanner('product_other_details', $productDetailsId);
         return view('admin.product.details.index', compact(
             'productSections',
             'simType',
             'productDetailsId',
             'products',
             'productType',
-            'bannerRelatedProduct'
+            'bannerRelatedProduct',
+            'banner'
         ));
     }
 

@@ -10,10 +10,10 @@
             <table border="0" cellspacing="5" cellpadding="5" style="float: right">
                 <tr>
                     <td>From:</td>
-                    <td> <input required type='text' class="form-control" name="from_date" id="from_date" placeholder="Please select from date" />
+                    <td> <input required type='text' class="form-control" name="from_date" id="from_date" placeholder="Please select from date" autocomplete="off"/>
                     </td>
                     <td>To:</td>
-                    <td> <input required type='text' class="form-control" name="to_date" id="to_date" placeholder="Please select to date" />
+                    <td> <input required type='text' class="form-control" name="to_date" id="to_date" placeholder="Please select to date" autocomplete="off"/>
                     </td>
                     <td><input id="find_analytics" value="Go" class="btn btn-sm btn-success " type="button"></td>
                 </tr>
@@ -55,19 +55,18 @@
             date.setDate(date.getDate());
             $('#from_date').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm:ss',
-                showClose: true,
-                defaultDate: date
+                showClose: true
             });
             $('#to_date').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm:ss',
-                showClose: true,
-                defaultDate: date
+                showClose: true
             });
             $('#task_analytic_table').DataTable({
                 processing: true,
-                serverSide: false,
+                serverSide: true,
                 pageLength: 10,
                 destroy: true,
+                deferLoading: 0,
                 ajax: {
                     url: "{{ url('event-base-bonus/analytics/find') }}",
                     method: "post",

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Priyojon extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'parent_id',
         'title_en',
@@ -21,6 +21,10 @@ class Priyojon extends Model
         'banner_mobile_view',
         'alt_text_en',
         'alias',
+        'alt_text_bn',
+        'banner_name',
+        'banner_name_bn',
+        'url',
         'url_slug_en',
         'url_slug_bn',
         'page_header',

@@ -31,7 +31,9 @@
                             $desktopImg = null;
                             $mobileImg = null;
                             $altText = "";
+                            $altTextBn = "";
                             $photoName = "";
+                            $photoNameBn = "";
                             $pageHeader = "";
                             $pageHeaderBn = "";
                             $schemaMarkup = "";
@@ -74,6 +76,7 @@
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
+                                <div class="help-block"></div>
                                 @if ($errors->has('url_slug'))
                                     <div class="help-block">  {{ $errors->first('url_slug') }}</div>
                                 @endif
@@ -87,6 +90,7 @@
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
+                                <div class="help-block"></div>
                                 @if ($errors->has('url_slug_bn'))
                                     <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
                                 @endif
@@ -95,7 +99,6 @@
                             {{-- <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                 <label for="mobileImg">Desktop View Image</label>
                                 <div class="custom-file">
-                                    <input type="hidden" name="old_web_img" value="{{ isset($desktopImg) ? $desktopImg : null }}">
                                     <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
                                            data-default-file="{{ isset($desktopImg) ?  config('filesystems.file_base_url') . $desktopImg : null  }}">
                                 </div>
@@ -109,7 +112,6 @@
                             {{-- <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                 <label for="mobileImg">Mobile View Image</label>
                                 <div class="custom-file">
-                                    <input type="hidden" name="old_mob_img" value="{{ isset($mobileImg) ? $mobileImg : null }}">
                                     <input type="file" name="banner_mobile_view" class="dropify" data-height="80" id="image"
                                            data-default-file="{{ isset($mobileImg) ?  config('filesystems.file_base_url') . $mobileImg : null  }}">
                                 </div>

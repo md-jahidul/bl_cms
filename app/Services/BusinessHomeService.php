@@ -41,7 +41,11 @@ class BusinessHomeService {
      * @param BusinessFeaturesRepository $businessFeaturesRepo
      */
     public function __construct(
-    BusinessCategoryRepository $businessCatRepo, BusinessHomeBannerRepository $businessBannerRepo, BusinessSlidingRepository $slidingRepo, BusinessNewsRepository $businessNewsRepo, BusinessFeaturesRepository $businessFeaturesRepo
+        BusinessCategoryRepository $businessCatRepo,
+        BusinessHomeBannerRepository $businessBannerRepo,
+        BusinessSlidingRepository $slidingRepo,
+        BusinessNewsRepository $businessNewsRepo,
+        BusinessFeaturesRepository $businessFeaturesRepo
     ) {
         $this->businessCatRepo = $businessCatRepo;
         $this->businessBannerRepo = $businessBannerRepo;
@@ -70,26 +74,18 @@ class BusinessHomeService {
 
     /**
      * Change category name
-     * @return Response
+     * @return array
      */
-    public function updateCategory($request) {
-
+    public function updateCategory($request)
+    {
         try {
             $status = true;
-        $update = [];
+            $update = [];
 
-        $catId = $request->cat_id;
+            $catId = $request->cat_id;
 
-        $update['name'] = $request->name_en;
-        $update['name_bn'] = $request->name_bn;
-        $update['alt_text'] = $request->alt_text;
-        $update['banner_name'] = $request->banner_name;
-        $update['url_slug'] = $request->url_slug;
-        $update['url_slug_bn'] = $request->url_slug_bn;
-        $update['schema_markup'] = $request->schema_markup;
-        $update['page_header'] = $request->page_header;
-        $update['page_header_bn'] = $request->page_header_bn;
-        $update['updated_by'] = Auth::id();
+            $update['name'] = $request->name_en;
+            $update['name_bn'] = $request->name_bn;
 
             $update['banner_title_en'] = $request->banner_title_en;
             $update['banner_title_bn'] = $request->banner_title_bn;
@@ -126,30 +122,42 @@ class BusinessHomeService {
                 $status = $update['banner_image_mobile'];
             }
 
+            //only rename
+            if ($request['old_banner_name'] != $request['banner_name']) {
 
-        if ($status != false) {
-            $this->businessCatRepo->updateCategory($update, $catId);
+                if (empty($request['banner_web']) && $request['old_web_img'] != "") {
+                    $fileName = $request['banner_name'] . '-web';
+                    $directoryPath = 'assetlite/images/business-images';
+                    $update['banner_photo'] = $this->rename($request['old_web_img'], $fileName, $directoryPath);
+                    $status = $update['banner_photo'];
+                }
 
-            $response = [
-                'success' => 1,
-            ];
-        } else {
-            $response = [
-                'success' => 2,
-            ];
-        }
+                if (empty($request['banner_mobile']) && $request['old_mob_img'] != "") {
+                    $fileName = $request['banner_name'] . '-mobile';
+                    $directoryPath = 'assetlite/images/business-images';
+                    $update['banner_image_mobile'] = $this->rename($request['old_mob_img'], $fileName, $directoryPath);
+                    $status = $update['banner_image_mobile'];
+                }
+            }
 
-
+            if ($status) {
+                $this->businessCatRepo->updateCategory($update, $catId);
+                $response = [
+                    'success' => 1,
+                ];
+            } else {
+                $response = [
+                    'success' => 2,
+                ];
+            }
 
             return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
-
     }
 
     /**
@@ -250,7 +258,7 @@ class BusinessHomeService {
             }
 
             //save data in database
-            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request['alt_text'], $request['home_sort']);
+            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request);
 
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
             $photoMob = $filePathMob == "" ? $request['old_photo_mobile'] : $filePathMob;
@@ -350,12 +358,6 @@ class BusinessHomeService {
      */
     public function saveNews($request) {
         try {
-
-            $request->validate([
-                'title' => 'required',
-                'title_bn' => 'required',
-                'body_bn' => 'required'
-            ]);
 
             //file upload in storege
             $filePath = "";
@@ -461,11 +463,6 @@ class BusinessHomeService {
      */
     public function saveFeature($request) {
         try {
-
-            $request->validate([
-                'title' => 'required',
-                'title_bn' => 'required'
-            ]);
 
             //file upload in storege
             $filePath = "";

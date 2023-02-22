@@ -42,6 +42,16 @@
         </div>
     </section>
 
+      {{-- @php
+
+        $action = [
+            'section_type' => $pageType,
+            'section_id' => 0
+        ];
+
+    @endphp
+    @include('admin.al-banner.section', $action) --}}
+
     <!-- Fixed sections -->
     <section>
         <div class="card">
@@ -86,14 +96,48 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text EN</label>
                                     <input type="text" name="items[alt_text_en]" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($bannerImage->items['alt_text_en']) ? $bannerImage->items['alt_text_en'] : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
-                                    @endif
+                                           placeholder="Enter alt text en" value="{{ isset($bannerImage->items['alt_text_en']) ? $bannerImage->items['alt_text_en'] : '' }}">
+                                </div>
+
+
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Alt Text BN</label>
+                                    <input type="text" name="items[alt_text_bn]" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($bannerImage->items['alt_text_bn']) ? $bannerImage->items['alt_text_bn'] : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="title_en">Title (EN)</label>
+                                    <input type="text" name="items[title_en]" id="title_en" class="form-control"
+                                           placeholder="Enter alt text en" value="{{ isset($bannerImage->items['title_en']) ? $bannerImage->items['title_en'] : '' }}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="title_en">Title (BN)</label>
+                                    <input type="text" name="items[title_bn]" id="title_bn" class="form-control"
+                                           placeholder="Enter alt text en" value="{{ isset($bannerImage->items['title_bn']) ? $bannerImage->items['title_bn'] : '' }}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="title_en">Description (EN)</label>
+                                    <textarea name="items[desc_en]" id=""  class ="form-control" rows="7">{{ isset($bannerImage->items['desc_en']) ? $bannerImage->items['desc_en'] : '' }}</textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="title_en">Description (BN)</label>
+                                    <textarea name="items[desc_bn]" id="" class="form-control" rows="7">{{ isset($bannerImage->items['desc_bn']) ? $bannerImage->items['desc_bn'] : '' }}</textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Banner Name EN</label>
+                                    <input type="text" name="items[banner_name_en]" id="alt_text" class="form-control"
+                                           placeholder="Enter banner name en" value="{{ isset($bannerImage->items['banner_name_en']) ? $bannerImage->items['banner_name_en'] : '' }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text">Banner Name BN</label>
+                                    <input type="text" name="items[banner_name_bn]" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($bannerImage->items['banner_name_bn']) ? $bannerImage->items['banner_name_bn'] : '' }}">
                                 </div>
 
                                 <h5><strong>4G Landing Page Info</strong></h5>

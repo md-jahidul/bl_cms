@@ -12,15 +12,15 @@
                     <div class="col-md-12" style="margin-top: 10px;">
                         <table border="0" cellspacing="5" cellpadding="5" style="float: right">
                             <tr>
-                                <td>Title:</td>
-                                <td><input type="text" class="form-control" id="title" name="title" autocomplete="off">
+                                <td>Notification Title:</td>
+                                <td><input type="text" class="form-control" id="title" name="title" autocomplete="off" placeholder="Notification Title">
                                 </td>
-                                <td>From:</td>
+                                <td>Purchase From:</td>
                                 <td><input type="text" class="datepicker form-control" id="from" name="from"
-                                           autocomplete="off"></td>
-                                <td>To:</td>
+                                           autocomplete="off" placeholder="Select Date"></td>
+                                <td>Purchase To:</td>
                                 <td><input type="text" class="datepicker form-control" id="to" name="to"
-                                           autocomplete="off"></td>
+                                           autocomplete="off" placeholder="Select Date"></td>
                                 <td><input id="submit" value="Search" class="btn btn-sm btn-success " type="button">
                                 </td>
                             </tr>

@@ -15,6 +15,8 @@ class CreateMediaNewsCategoriesTable extends Migration
     {
         Schema::create('media_news_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('section_id')->nullable();
+            $table->string('section_type')->nullable();
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->string('url_slug_en')->nullable();

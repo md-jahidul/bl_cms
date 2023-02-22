@@ -163,6 +163,14 @@
                                             <small id="massage"></small>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="winning_massage_en" >Partner Details:</label>
+                                        <textarea
+                                            class="form-control @error('partner_details') is-invalid @enderror" placeholder="Enter Partner Details....." id="partner_details"
+                                            name="partner_details" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('partner_details') {{ $message }} @enderror </small>
+                                    </div>
                                     {{--<div id="link" class="form-group col-md-6">
                                         <label id="label_link" for="numbers">Web or Deep Link</label>
                                         <div class='input-group'>
@@ -395,7 +403,7 @@
                         $("#append_div").html(dial_html);
                     } else if (action == 'URL') {
                         $("#append_div").html(url_html);
-                    } else if (action == 'USSD_CODE') {
+                    } else if (action == 'USSD') {
                         $("#append_div").html(ussd_code);
                     } else if (action === 'FEED_CATEGORY') {
                         $("#append_div").html(feed_category);

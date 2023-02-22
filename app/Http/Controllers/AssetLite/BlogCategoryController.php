@@ -21,6 +21,8 @@ class BlogCategoryController extends Controller
      */
     protected $mediaNewsCategoryService;
 
+    protected const SECTION_TYPE = "blog";
+
     /**
      * RolesController constructor.
      * @param MediaNewsCategoryService $mediaNewsCategoryService
@@ -58,7 +60,7 @@ class BlogCategoryController extends Controller
      */
     public function store(BlogPostCategoryRequest $request)
     {
-        $response = $this->mediaNewsCategoryService->storeCategory($request->all());
+        $response = $this->mediaNewsCategoryService->storeCategory($request->all(), self::SECTION_TYPE);
         Session::flash('success', $response->getContent());
         return redirect('blog-categories');
     }

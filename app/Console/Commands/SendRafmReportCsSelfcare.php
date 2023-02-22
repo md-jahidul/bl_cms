@@ -62,6 +62,7 @@ class SendRafmReportCsSelfcare extends Command
             'Volume Disbursement (MB)',
             'IDENTIFIER',
             'Referral code',
+            'Campaign Type',
         ]);
         $writer->openToFile(storage_path('app/public/cs/') . $fileName . '.csv');
         $writer->addRow($row);
@@ -87,6 +88,7 @@ class SendRafmReportCsSelfcare extends Command
                 $redeem->referee_msisdn)->number_type) == 'prepaid' ? config('constants.cs_selfcare.cs_referral_product_code_prepaid') : config('constants.cs_selfcare.cs_referral_product_code_postpaid') : '';
 
             $data[10] = data_get($redeem->referrer, 'referral_code', '');
+            $data[11] = data_get($redeem->referrer, 'code_type', '');
             $row = WriterEntityFactory::createRowFromArray($data);
             $writer->addRow($row);
             $data = [];

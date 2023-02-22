@@ -63,12 +63,39 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text"  value="{{ $aboutCareerItem->alt_text }}" class="form-control">
+                                <div class="form-group col-md-3 {{ $errors->has('image_name') ? ' error' : '' }}">
+                                    <label>Image Name EN</label>
+                                    <input type="text" name="image_name"  class="form-control" placeholder="Enter image name en"
+                                           value="{{ old('image_name') ? old('image_name') : $aboutCareerItem->image_name }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name'))
+                                        <div class="help-block">  {{ $errors->first('image_name') }}</div>
+                                    @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3 {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                    <label>Image Name BN</label>
+                                    <input type="text" name="image_name_bn"  class="form-control" placeholder="Enter image name bn"
+                                           value="{{ old('image_name_bn') ? old('image_name_bn') : $aboutCareerItem->image_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Alt Text EN</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text en"
+                                           value="{{ old('alt_text') ? old('alt_text') : $aboutCareerItem->alt_text }}">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn"  class="form-control"  placeholder="Enter alt text bn"
+                                        value="{{ old('alt_text_bn') ? old('alt_text_bn') : $aboutCareerItem->alt_text_bn }}">
+                                </div>
+
+                                <div class="form-group col-md-4">
                                     <label for="alt_text">Alt Link</label>
                                     <input type="text" name="alt_links" placeholder="Enter alt link" class="form-control" value="{{ $aboutCareerItem->alt_links }}">
                                 </div>

@@ -88,6 +88,8 @@ class EcareerService {
     //     return Response('Section updated successfully');
     // }
 
+
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
@@ -133,7 +135,45 @@ class EcareerService {
         if (!empty($data['image_url'])) {
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
+        $call_to_action_buttons = [];
+        if ( isset($data['call_to_action_label_en_1']) && !empty($data['call_to_action_label_en_1']) ) {
 
+            if( !empty($data['call_to_action_count'])){
+
+                for ($i=1; $i <= $data['call_to_action_count']; $i++) {
+
+                    $buttons = [];
+
+                    if( isset($data['call_to_action_label_en_'.$i]) ){
+                        $buttons['label_en'] = $data['call_to_action_label_en_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_label_bn_'.$i]) ){
+                        $buttons['label_bn'] = $data['call_to_action_label_bn_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_url_'.$i]) ){
+                        $buttons['link'] = $data['call_to_action_url_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_url_bn_'.$i]) ){
+                        $buttons['link_bn'] = $data['call_to_action_url_bn_'.$i];
+                    }
+
+                    if( !empty($buttons) ){
+                        $call_to_action_buttons['button_'.$i] = $buttons;
+                    }
+
+                }
+            }
+        }
+
+        if( !empty($call_to_action_buttons) ){
+            $data['call_to_action'] = serialize($call_to_action_buttons);
+        }
+        else{
+            $data['call_to_action'] = null;
+        }
         $this->save($data);
         return new Response('Section created successfully');
     }
@@ -145,6 +185,7 @@ class EcareerService {
      * @return [type]       [description]
      */
     public function updateEcarrerSection($data, $id, $data_types = null) {
+
         $general_section = $this->findOne($id);
 
         if (!empty($data['slug'])) {
@@ -159,7 +200,51 @@ class EcareerService {
         if (isset($data_types['has_items'])) {
             $data['has_items'] = $data_types['has_items'];
         }
+        $call_to_action_buttons = [];
+        if ( isset($data['call_to_action_label_en_1']) && !empty($data['call_to_action_label_en_1']) ) {
 
+            if( !empty($data['call_to_action_count'])){
+
+                for ($i=1; $i <= $data['call_to_action_count']; $i++) {
+
+                    $buttons = [];
+
+                    if( isset($data['call_to_action_label_en_'.$i]) ){
+                        $buttons['label_en'] = $data['call_to_action_label_en_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_label_bn_'.$i]) ){
+                        $buttons['label_bn'] = $data['call_to_action_label_bn_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_url_'.$i]) ){
+                        $buttons['link'] = $data['call_to_action_url_'.$i];
+                        $buttons['external_site'] = strpos($data['call_to_action_url_'.$i], 'http') !== false ? 1 : 0;
+                    }
+
+                    if( isset($data['call_to_action_url_bn_'.$i]) ){
+                        $buttons['link_bn'] = $data['call_to_action_url_bn_'.$i];
+                        $buttons['external_site'] = strpos($data['call_to_action_url_bn_'.$i], 'http') !== false ? 1 : 0;
+                    }
+
+                    if( !empty($buttons) ){
+                        $call_to_action_buttons['button_'.$i] = $buttons;
+                    }
+
+                }
+            }
+        }
+
+        if( !empty($call_to_action_buttons) ){
+            $data['call_to_action'] = serialize($call_to_action_buttons);
+        }
+        else{
+            $data['call_to_action'] = null;
+        }
+
+        if( !empty($data['additional_info'])  ){
+            $data['additional_info'] = json_encode($data['additional_info']);
+        }
         $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;
 
         $general_section->update($data);
@@ -175,13 +260,14 @@ class EcareerService {
      */
     public function updateMainSection($data, $id) {
         try {
-
             $status = true;
 
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
             $update['alt_text'] = $data['alt_text'];
+            $update['alt_text_bn'] = $data['alt_text_bn'];
             $update['banner_name'] = $data['banner_name'];
+            $update['banner_name_bn'] = $data['banner_name_bn'];
             $update['page_header'] = $data['page_header'];
             $update['page_header_bn'] = $data['page_header_bn'];
             $update['schema_markup'] = $data['schema_markup'];
@@ -276,6 +362,8 @@ class EcareerService {
 
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
+            $update['description_en'] = $data['description_en'];
+            $update['description_bn'] = $data['description_bn'];
             $update['page_header'] = $data['page_header'];
             $update['page_header_bn'] = $data['page_header_bn'];
             $update['schema_markup'] = $data['schema_markup'];
@@ -321,6 +409,24 @@ class EcareerService {
             }
         } else {
             return null;
+        }
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($position)
+    {
+        $this->ecarrerPortalRepository->sortData($position);
+        return new Response('update successfully');
+    }
+
+    public function findProgramId(){
+        //return
+        $programId = $this->ecarrerPortalRepository->findProgramId();
+        if(isset($programId)){
+            return $this->ecarrerPortalItemRepository->findProgramList($programId->id);
         }
     }
 

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MediaBannerImage extends Model
 {
     use LogModelAction;
-    
-    protected $guarded = ['id'];
+
+    protected $guarded = ['id', 'tvc_banner_id', 'landing_page_id'];
 }

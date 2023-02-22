@@ -134,7 +134,7 @@ class AppLaunchPopupController extends Controller
             }
         )->get();
 
-        $data =[]; //[''=>'Please Select'];
+        $data = []; //[''=>'Please Select'];
 
         foreach ($products as $product) {
             $data[] =[

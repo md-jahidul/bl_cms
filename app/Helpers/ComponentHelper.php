@@ -27,7 +27,6 @@ class ComponentHelper
                 'text_with_image_right' => 'Text with image right',
                 'text_with_image_bottom' => 'Text with image bottom',
                 'multi_text_with_image_bottom' => 'Multi Text with image bottom',
-
                 'top_image_with_desc' => 'Top image with Desc',
                 'left_image_with_title_desc_btn' => 'Left Image with Title, Desc, btn',
                 'masonry_1_2_image_layout_col' => 'Masonry 1-2',
@@ -45,7 +44,6 @@ class ComponentHelper
                 'multiple_image' => 'Multiple Image',
                 'title_with_video_and_text' => 'Title With Video Text',
                 'customer_complaint' => 'Customer Complaint',
-
             ],
             'blog' => [
                 'single_image' => 'Single Image',

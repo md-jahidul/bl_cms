@@ -151,6 +151,9 @@ class HealthHubService
         $itemName = "";
         if ($request->excel_export == "items_export") {
             $reportData = $this->analyticReports($request);
+        } elseif ($request->excel_export == "feed_cat_export") {
+            $itemName = "in-app-hit-count";
+            $reportData = $this->categoryInAppHitCount($request);
         } elseif ($request->excel_export == "item_export_details") {
             $reportData = $this->healthHubRepository->getItemDetailsData($request, $request->item_id);
             $itemName = $this->healthHubRepository->findOneByProperties(['id' => $request->item_id], ['title_en'])->title_en;
@@ -160,7 +163,8 @@ class HealthHubService
 
     public function generateFileItem($items, $exportModuleType = null, $itemName = null)
     {
-        if ($exportModuleType == "items_export" || $exportModuleType == "deeplink_items_export") {
+//        dd($exportModuleType);
+        if ($exportModuleType == "items_export" || $exportModuleType == "deeplink_items_export" || $exportModuleType == "feed_cat_export") {
             //Health Hub Items
             $fileName = $itemName;
             $headerRow = [
@@ -180,7 +184,7 @@ class HealthHubService
                 "Msisdn",
                 "Total Hit Count"
             ];
-            if ($exportModuleType != "deeplink_item_export_details") {
+            if ($exportModuleType != "deeplink_item_export_details" && $exportModuleType != "feed_cat_details_export") {
                 $headerRow[] = "Average Session Time (Sec)";
             }
         }
@@ -202,7 +206,7 @@ class HealthHubService
             ->setFontSize(9)
             ->build();
 
-        if ($exportModuleType == "deeplink_items_export") {
+        if ($exportModuleType == "deeplink_items_export" || $exportModuleType == "feed_cat_export") {
             //Health Hub Deeplink Info
             $report = [
                 'SL' => 1,
@@ -229,7 +233,7 @@ class HealthHubService
                         'msisdn' => "0" . $data['msisdn'],
                         'hit_count' => $data['hit_count']
                     ];
-                    if ($exportModuleType != "deeplink_item_export_details") {
+                    if ($exportModuleType != "deeplink_item_export_details" && $exportModuleType != "feed_cat_details_export") {
                         $report['avg_session_count'] = (int)round($data['avg_session_count']);
                     }
                 }
@@ -266,6 +270,32 @@ class HealthHubService
     public function deeplinkAnalyticDetails($request, $dynamicDeepLinkId)
     {
         return $this->deeplinkMsisdnHitCountRepository->deeplinkAnalyticMsisdnCount($request, $dynamicDeepLinkId);
+    }
+
+    public function feedCatDetails($request, $feedCatId)
+    {
+        return $this->feedCategoryRepository->feedCatHitMsisdnCount($request, $feedCatId);
+    }
+
+    public function categoryInAppHitCount($request)
+    {
+        $feedCatData = $this->feedCategoryRepository->hitCountByfeedCatId($request, 'health-hub');
+        $data = [
+            "id" => $feedCatData->id ?? 0,
+            "title_en" => "Health Hub",
+            "total_hit_count" => isset($feedCatData->categoryInAppHitCounts) ? $feedCatData->categoryInAppHitCounts->count(
+            ) : 0,
+            "total_unique_hit" => isset($feedCatData->categoryInAppHitCounts) ? $feedCatData->categoryInAppHitCounts->groupBy(
+                'msisdn'
+            )->count() : 0,
+        ];
+        if (!empty($request->excel_export) && $request->excel_export == "feed_cat_details_export") {
+            $feedCatDetails = $this->feedCategoryRepository->feedCatHitMsisdnCount($request, $request['item_id']);
+            return $this->generateFileItem($feedCatDetails, $request->excel_export, 'in-app-hit-count-msisdn');
+        } else {
+            return $data;
+        }
+        return $data;
     }
 
     /**

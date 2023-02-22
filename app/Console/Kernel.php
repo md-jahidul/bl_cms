@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SyncMongoDbCustomersDevicesTable;
+use App\Console\Commands\SyncCustomersAndCustomersDevicesTable;
+use App\Console\Commands\SyncMongoDbNotificationsCategoriesTable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +16,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SyncMongoDbCustomersDevicesTable::class,
+        SyncCustomersAndCustomersDevicesTable::class,
+        SyncMongoDbNotificationsCategoriesTable::class
     ];
 
     /**
@@ -25,8 +30,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('notification:schedule')->withoutOverlapping()->everyMinute();
+        $schedule->command('redis-reset:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('flash-hour-reminder:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('product-data:schedule')->withoutOverlapping()->hourly();
+        $schedule->command('product-data:schedule')->withoutOverlapping()->hourly();
+        $schedule->command('send:rafm-report-cs-sefcare')
+                 ->withoutOverlapping()
+                 ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))
+                 ->timezone('Asia/Dhaka');
+        $schedule->command('mybl-table-sync:mongodb-customers_devices-table')->withoutOverlapping()->everyMinute();
+        $schedule->command('campaign:winner-process')->withoutOverlapping()->hourly();
         $schedule->command('campaign-modality-reminder:schedule')->withoutOverlapping()->everyMinute();
         $schedule->command('campaign:winner-process')->withoutOverlapping()->hourly();
         $schedule->command('send:rafm-report-cs-sefcare')->withoutOverlapping()

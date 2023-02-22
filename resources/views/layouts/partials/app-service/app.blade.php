@@ -2,7 +2,7 @@
 @include('layouts.partials.app-service.common-field.price')
 @include('layouts.partials.app-service.common-field.tag')
 
-@include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgOne', 'showImg' => 'imgShowOne'])
+{{--@include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgOne', 'showImg' => 'imgShowOne'])--}}
 
 <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
     <label for="title">Google Play Store Link</label>
@@ -44,56 +44,30 @@
     @endif
 </div>
 
-<h4>
-    <strong>Referral Engine Part</strong>
-</h4>
 <div class="form-actions col-md-12 mt-0"></div>
 
-<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-    <label for="title_en">Title (English)</label>
-    <input type="text" name="referral[title_en]" id="title_en" class="form-control" placeholder="Enter offer name in English"
-           value="{{ isset($referralInfo->title_en) ? $referralInfo->title_en : '' }}">
-    <div class="help-block"></div>
-    @if ($errors->has('title_en'))
-        <div class="help-block">{{ $errors->first('title_en') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-    <label for="title_bn">Title (Bangla)</label>
-    <input type="text" name="referral[title_bn]" id="title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-           value="{{ isset($referralInfo->title_bn) ? $referralInfo->title_bn : '' }}">
-    <div class="help-block"></div>
-    @if ($errors->has('title_bn'))
-        <div class="help-block">{{ $errors->first('title_bn') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-6 ">
-    <label for="rf_details_en">Description (English)</label>
-    <textarea type="text" name="referral[details_en]" id="rf_details_en" class="form-control summernote_editor" placeholder="Enter description in English"
-    >{{ isset($referralInfo->details_en) ? $referralInfo->details_en : '' }}</textarea>
-    <div class="help-block"></div>
-</div>
-
-<div class="form-group col-md-6 ">
-    <label for="rf_details_bn">Description (Bangla)</label>
-    <textarea type="text" name="referral[details_bn]" id="rf_details_bn" class="form-control summernote_editor" placeholder="Enter description in Bangla"
-    >{{ isset($referralInfo->details_bn) ? $referralInfo->details_bn : '' }}</textarea>
-    <div class="help-block"></div>
-</div>
-
-<div class="col-md-6">
-    <label></label>
-    <div class="form-group">
-        <label for="title" class="mr-1">Referral Engine Status:</label>
-        <input type="radio" name="referral[status]" value="1" id="active" {{ isset($referralInfo->status) ? ($referralInfo->status == 1) ? 'checked' : '' : 'checked' }}>
-        <label for="active" class="mr-1">Active</label>
-
-        <input type="radio" name="referral[status]" value="0" id="inactive" {{ isset($referralInfo->status) ? ($referralInfo->status == 0) ? 'checked' : '' : '' }}>
-        <label for="inactive">Inactive</label>
-    </div>
-</div>
 
 
-<div class="form-actions col-md-12 mt-0"></div>
+@push('page-css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+@endpush
+@push('page-js')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script>
+        $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
+                height: 100
+            });
+        })
+    </script>
+@endpush
+

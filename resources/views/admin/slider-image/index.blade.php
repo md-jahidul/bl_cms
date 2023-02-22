@@ -40,14 +40,14 @@
                             <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                             <td>{{ (isset($slider_image->other_attributes['redirect_url'])) ? $slider_image->other_attributes['redirect_url'] : '' }}</td>
                             <td class="action text-right">
-                                @if(isset($sliderItem->other_attributes['type']) == 'component_slider')
+                                {{-- @if(isset($sliderItem->other_attributes['type']) == 'component_slider')
                                     <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
                                         Banner
                                     </a>
                                     <a href="{{ url('business-others-components-list/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
                                         Components
                                     </a>
-                                @endif
+                                @endif --}}
                                 <a href="{{ route('slider_image_edit', [ $slider_image->slider_id, $type, $slider_image->id ] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                 <a href="#" remove="{{ url("slider/$slider_image->slider_id/$type/image/destroy/$slider_image->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $slider_image->id }}" title="Delete the user">
                                     <i class="la la-trash"></i>

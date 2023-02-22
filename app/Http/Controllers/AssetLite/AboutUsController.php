@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\CorpCaseStudyComponentRequest;
 use App\Http\Requests\StoreSliderImageRequest;
 use App\Models\AboutUsBanglalink;
 use App\Services\AboutUsService;
+use App\Services\AlBannerService;
 use App\Services\AlSliderImageService;
 use App\Services\AlSliderService;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -27,6 +29,10 @@ class AboutUsController extends Controller
     private $alSliderService;
 
     private $alSliderImageService;
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     /**
      * QuickLaunchController constructor.
@@ -37,11 +43,13 @@ class AboutUsController extends Controller
     public function __construct(
         AboutUsService $aboutUsService,
         AlSliderService $alSliderService,
-        AlSliderImageService $alSliderImageService
+        AlSliderImageService $alSliderImageService,
+        AlBannerService $alBannerService
     ) {
         $this->aboutUsService = $aboutUsService;
         $this->alSliderService = $alSliderService;
         $this->alSliderImageService = $alSliderImageService;
+        $this->alBannerService = $alBannerService;
     }
 
 
@@ -53,7 +61,8 @@ class AboutUsController extends Controller
     public function index()
     {
         $aboutUs = $this->aboutUsService->getAboutUsInfo();
-        return view('admin.about-us.index', compact('aboutUs'));
+        $banner = $this->alBannerService->findBanner('about_us_landing', 0);
+        return view('admin.about-us.index', compact('aboutUs', 'banner'));
     }
 
     /**
@@ -92,7 +101,7 @@ class AboutUsController extends Controller
      * @param $type
      * @return RedirectResponse|Redirector
      */
-    public function storeSliderImage(Request $request, $sliderId, $type)
+    public function storeSliderImage(StoreSliderImageRequest $request, $sliderId, $type)
     {
         $response = $this->alSliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
@@ -160,8 +169,9 @@ class AboutUsController extends Controller
      */
     public function edit($id)
     {
-        $aboutUs = $this->aboutUsService->findOne($id);
-        return view('admin.about-us.create')->with('about', $aboutUs);
+        $about = $this->aboutUsService->findOne($id);
+        $other_attributes = $about->other_attributes;
+        return view('admin.about-us.create',compact('about','other_attributes'));
     }
 
     /**

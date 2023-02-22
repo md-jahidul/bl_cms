@@ -338,9 +338,6 @@
                                             <input type="radio" name="claim_reward_type" class="claim_reward_type radio" value="unlimited" id="input-radio-17"
                                                 {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "unlimited") ? 'checked' : '' }}>
                                             <label for="input-radio-17" class="mr-3">Unlimited</label>
-                                            <input type="radio" name="claim_reward_type" class="claim_reward_type" value="automatic" id="input-radio-18"
-                                                {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "automatic") ? 'checked' : '' }}>
-                                            <label for="input-radio-18" class="mr-3">Automatic</label>
                                             <input type="radio" name="claim_reward_type" class="claim_reward_type" value="capped" id="input-radio-19"
                                                 {{ (isset($campaign->claim_reward_type) && $campaign->claim_reward_type == "capped") ? 'checked' : '' }}>
                                             <label for="input-radio-19" class="mr-3">Capped</label>
@@ -370,8 +367,8 @@
                                                placeholder="Enter The Number" name="number_of_referrals">
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="form-group col-md-3 mb-2 capped-check {{ isset($campaign) && $campaign->claim_reward_type == "capped" ? "" : "d-none" }}">
-                                        <label for="claim_validity_days" class="required">Claim Validity(Days)</label>
+                                    <div class="form-group col-md-3 mb-2">
+                                        <label for="claim_validity_days" >Claim Validity(Days)</label>
                                         <input
                                             value="{{ isset($campaign) ? $campaign->claim_validity_days : old('claim_validity_days') }}"
                                             id="claim_validity_days"
@@ -379,7 +376,34 @@
                                             placeholder="Enter Claim Validity Days" name="claim_validity_days">
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="form-group col-md-3 mb-2" id="exclude_base_groups_id">
+                                        <label for="redirect_url">Exclude User Group</label>
+                                        <select id="exclude_base_groups_id" name="exclude_base_groups_id"
+                                                class="browser-default custom-select">
+                                            <option value="">Select Action</option>
+                                            @foreach ($baseMsisdnGroups as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    {{ isset($campaign) && $campaign->exclude_base_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                    </div>
+                                    <div class="form-group col-md-3 mb-2">
+                                        <label for="is_auto_claim">Claim Type: </label>
+                                        <div class="form-group {{ $errors->has('is_auto_claim') ? ' error' : '' }}">
+                                            <input type="radio" name="is_auto_claim" class="is_auto_claim radio" value=1 id="input-radio-17"
+                                                {{ (isset($campaign->is_auto_claim) && $campaign->is_auto_claim == 1) ? 'checked' : '' }}>
+                                            <label for="input-radio-17" class="mr-3">Automatic</label>
+                                            <input type="radio" name="is_auto_claim" class="is_auto_claim" value=0 id="input-radio-18"
+                                                {{ !isset($campaign) || (isset($campaign) && $campaign->is_auto_claim == 0) ? 'checked' : '' }}>
+                                            <label for="input-radio-18" class="mr-3">Manual</label>
+
+                                            @if ($errors->has('is_auto_claim'))
+                                                <div class="help-block">  {{ $errors->first('is_auto_claim') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
                                         <label for="dashboard_card_btn_text" class="required">Home Button Text En</label>
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
@@ -389,7 +413,7 @@
                                                placeholder="Enter title in English" name="dashboard_card_btn_text">
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label for="dashboard_card_btn_text_bn" class="required">Home Button Text Bn</label>
                                         <input required maxlength="200"
                                                data-validation-required-message="Title is required"
@@ -565,10 +589,10 @@
                 $('#number_of_reffarals').prop('required', 'required');
             });
 
-            $('#claim_validity_days').keyup(function () {
-
-                $('#claim_validity_days').prop('required', 'required');
-            });
+            // $('#claim_validity_days').keyup(function () {
+            //
+            //     $('#claim_validity_days').prop('required', 'required');
+            // });
 
             $(function () {
                 console.log("test");

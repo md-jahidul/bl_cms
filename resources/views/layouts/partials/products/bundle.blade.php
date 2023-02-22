@@ -1,3 +1,4 @@
+@include('layouts.partials.products.common-field.renew_code')
 
 @include('layouts.partials.products.common-field.recharge_code')
 
@@ -11,9 +12,7 @@
 
 @include('layouts.partials.products.common-field.call_rate')
 
-@include('layouts.partials.products.common-field.call_rate_unit')
-
-@include('layouts.partials.products.common-field.sms_rate')
+{{--@include('layouts.partials.products.common-field.sms_rate')--}}
 
 @include('layouts.partials.products.common-field.sms_rate_unit')
 
@@ -29,6 +28,6 @@
 
 @include('layouts.partials.products.common-field.tag')
 
-@include('layouts.partials.products.common-field.image')
+{{--@include('layouts.partials.products.common-field.image')--}}
 
 

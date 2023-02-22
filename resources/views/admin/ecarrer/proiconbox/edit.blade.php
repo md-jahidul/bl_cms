@@ -22,12 +22,21 @@
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title_en (English)</label>
+                                    <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
                                            value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control section_name" placeholder="Enter title_bn (bangla)"
+                                           value="{{ $sections->title_bn }}" required data-validation-required-message="Enter slider title_bn (bangla)">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -44,10 +53,10 @@
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs category</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap" @if($sections->category_type == 'sap') selected @endif>Strategic Assistant Program</option>
-                                            <option value="ennovators" @if($sections->category_type == 'ennovators') selected @endif>Ennovators</option>
-                                            <option value="aip" @if($sections->category_type == 'aip') selected @endif>Advanced Internship Program</option>
-                                        </select>
+                                        @foreach ($program_lists as $program)
+                                            <option value="{{$program->slug}}" @if($sections->category_type == $program->slug) selected @endif>{{$program->title_en}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
@@ -70,7 +79,7 @@
                                     @else
                                         <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                     @endif
-                                    
+
                                 </div>
 
 
@@ -96,7 +105,7 @@
                                     </div>
                                 </div>
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -119,7 +128,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -134,7 +143,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

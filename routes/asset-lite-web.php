@@ -101,7 +101,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\FooterMenuController@index');  // always put it last
     Route::get('sort-autosave/parent-footer-sort', 'AssetLite\FooterMenuController@FooterMenuSortable');
 
-
+    Route::resource('sub-footer', 'AssetLite\SubFooterController');
     // Route::group(['prefix' => 'footer-menu'], function () {
     //     // Route::get('/{id}/child-footer', 'AssetLite\FooterMenuController@index');
     //     Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
@@ -147,6 +147,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
     Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
     Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
+    Route::post('management-component', 'AssetLite\ManagementController@managementComponentSave');
 
     Route::resource('about-career', 'AssetLite\AboutEcareerController')->except(['show', 'destroy']);
     Route::get('about-career-item/{careerId}', 'AssetLite\AboutEcareerItemController@index')
@@ -312,6 +313,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
+    //business
+    Route::get('business-home', 'AssetLite\ProductController@trendingOfferHome')->name('business-home');
     //amar offer details......
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
     Route::post('amaroffer/banner-image/upload', 'AssetLite\AmarOfferController@bannerImageUpload')
@@ -451,7 +454,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Fixed  ====================================
-    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent');
+    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent')->name('home_page.components');
     Route::get('fixed-pages', 'AssetLite\FixedPageController@fixedPageList');
     Route::get('fixed-pages/create', 'AssetLite\FixedPageController@fixedPageCreate');
     Route::post('fixed-pages/store', 'AssetLite\FixedPageController@fixedPageStore');
@@ -460,6 +463,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('fixed-pages/delete/{id}', 'AssetLite\FixedPageController@deleteFixedPage');
 
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
+    Route::get('fixed-page/{id}/components/{short_code}/edit', 'AssetLite\FixedPageController@editComponents')->name('fixed-page-components-edit');
+    Route::patch('fixed-page/{id}/components/{short_code}/update', 'AssetLite\FixedPageController@updateComponents')->name('fixed-page-components-update');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
@@ -495,8 +500,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
 
     Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
-    Route::post('popular-search-update',
-        'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')
+        ->name('popular.search.update');
 
     Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
 
@@ -594,7 +599,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     /**
      * Business package landing components
-     * 
+     *
      */
     Route::get('business-package-component/list', 'AssetLite\BusinessPackageController@index')
         ->name('business-package-component.list');
@@ -609,10 +614,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
         ->name('business-package-component.destroy');
     Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
-    
+
     /**
      * Business package details components
-     * 
+     *
      */
     Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
         ->name('business-package-details-component.list');
@@ -762,19 +767,19 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // eCarrer ============================================
-    Route::get('life-at-banglalink/general',
-        'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
-    Route::get('life-at-banglalink/general/create',
-        'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
-    Route::post('life-at-banglalink/general/store',
-        'AssetLite\EcareerController@generalStore')->name('life.at.banglalink.general.store');
-    Route::get('life-at-banglalink/general/{id}/edit',
-        'AssetLite\EcareerController@generalEdit')->name('life.at.banglalink.general.edit');
-    Route::post('life-at-banglalink/general/{id}/update',
-        'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
-    Route::get('life-at-banglalink/general/destroy/{id}',
-        'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
-
+    // Route::get('life-at-banglalink/general',
+    //     'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
+    // Route::get('life-at-banglalink/general/create',
+    //     'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
+    // Route::post('life-at-banglalink/general/store',
+    //     'AssetLite\EcareerController@generalStore')->name('life.at.banglalink.general.store');
+    // Route::get('life-at-banglalink/general/{id}/edit',
+    //     'AssetLite\EcareerController@generalEdit')->name('life.at.banglalink.general.edit');
+    // Route::post('life-at-banglalink/general/{id}/update',
+    //     'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
+    // Route::get('life-at-banglalink/general/destroy/{id}',
+    //     'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
+    require __DIR__.'/asset-lite/eCareer/ecarrer_general.php';
     // University
     Route::get('university', 'AssetLite\UniversityController@index')
         ->name('university.index');
@@ -1197,6 +1202,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
     Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
 
+    // 4G Devices elegibility Message
+    Route::resource('bl-4g-eligibility-msg', 'AssetLite\FourGEligibilityController')->except(['show', 'destroy']);
+    Route::get('bl-4g-eligibility-msg/destroy/{id}', 'AssetLite\FourGEligibilityController@destroy');
+
     // Banglalink 3G
     Route::resource('bl-3g-landing-page', 'AssetLite\BanglalinkThreeGController')->except(['store', 'show', 'destroy']);
     Route::post('bl-3g-banner-image', 'AssetLite\BanglalinkThreeGController@bannerUpload')
@@ -1390,7 +1399,30 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 
-    // Blogs
+    Route::get('component-multiple-data/{imgName}', "AssetLite\ComponentMultiDataController@findSingleData");
+
+    // Ad Tech banner Store
+    Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // Business Types
+    Route::resource('business-types', 'AssetLite\BusinessTypesController')->except(['show', 'destroy']);
+    Route::get('business-types-sort', 'AssetLite\BusinessTypesController@typeSort');
+    Route::get('business-types/destroy/{id}', 'AssetLite\BusinessTypesController@destroy');
+
+    // Business Types Items
+    Route::get('business-types-items-sort', 'AssetLite\BusinessTypesDatasController@typeSort');
+    Route::get('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@index');
+    Route::get('business-types-items/{id}/create', 'AssetLite\BusinessTypesDatasController@create');
+    Route::post('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@store')->name('business-types-datas.store');
+    Route::get('business-types-items/{business_type_id}/{id}/edit', 'AssetLite\BusinessTypesDatasController@edit')->name('business-types-datas.edit');
+    Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
+    Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
+
+    // Network Types
+    Route::resource('network-types','AssetLite\NetworkTypesController')->except(['show', 'destroy']);
+    Route::get('network-types-sort', 'AssetLite\NetworkTypesController@typeSort');
+    Route::get('network-types/destroy/{id}', 'AssetLite\NetworkTypesController@destroy');
+    // Blogs Details
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
@@ -1409,14 +1441,37 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('blog-component/destroy/{comId}', 'AssetLite\BlogDetailsController@componentDestroy')
         ->name('blog-component.destroy');
     Route::get('blog-component-sort', 'AssetLite\BlogDetailsController@componentSortable');
-
     Route::post('blog-ad-tech/store', 'AssetLite\BlogDetailsController@adTechStore')->name('blog.adtech.store');
-
 
     // Blog Landing Page
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
     Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
     Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
+
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // CSR Page
+    Route::resource('csr-landing-page-component', 'AssetLite\CSRLandingPageController')->except(['show', 'destroy']);
+    Route::get('csr-landing-page-component/destroy/{id}', 'AssetLite\CSRLandingPageController@destroy');
+    Route::get('csr-landing-page-sortable', 'AssetLite\CSRLandingPageController@landingPageSortable');
+    # CSR Post Components
+    Route::resource('csr-post', 'AssetLite\CsrController')->except(['show', 'destroy']);
+    Route::get('csr-post/destroy/{id}', 'AssetLite\CsrController@destroy');
+    Route::resource('csr-categories', 'AssetLite\CsrCategoryController')->except(['show', 'destroy']);
+    Route::get('csr-categories/destroy/{id}', 'AssetLite\CsrCategoryController@destroy');
+    # CSR details Components
+    Route::get('csr-component/{blog_id}/list', 'AssetLite\CsrDetailsController@index')
+        ->name('csr-component.list');
+    Route::get('csr-component/create', 'AssetLite\CsrDetailsController@componentCreate')
+        ->name('csr-component.create');
+    Route::post('csr-component/store', 'AssetLite\CsrDetailsController@componentStore')
+        ->name('csr-component.store');
+    Route::get('csr-component/edit/{comId}', 'AssetLite\CsrDetailsController@componentEdit')
+        ->name('csr-component.edit');
+    Route::post('csr-component/update/{comId}', 'AssetLite\CsrDetailsController@componentUpdate')
+        ->name('csr-component.update');
+    Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
+        ->name('csr-component.destroy');
+    Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 });

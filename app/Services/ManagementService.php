@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Helpers;
+use App\Repositories\AboutUsLandingRepository;
 use App\Repositories\ManagementRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -19,14 +20,21 @@ class ManagementService
      * @var ManagementRepository
      */
     protected $managementRepository;
+    /**
+     * @var AboutUsLandingRepository
+     */
+    private $aboutUsLandingRepository;
 
     /**
      * QuickLaunchService constructor.
      * @param ManagementRepository $managementRepository
      */
-    public function __construct(ManagementRepository $managementRepository)
-    {
+    public function __construct(
+        ManagementRepository $managementRepository,
+        AboutUsLandingRepository $aboutUsLandingRepository
+    ) {
         $this->managementRepository = $managementRepository;
+        $this->aboutUsLandingRepository = $aboutUsLandingRepository;
         $this->setActionRepository($managementRepository);
     }
 
@@ -105,5 +113,16 @@ class ManagementService
     {
         $this->managementRepository->sortManangementInfo($data);
         return new Response('update successfully');
+    }
+
+    public function landingComponentSave($data)
+    {
+        $componentData = $this->aboutUsLandingRepository->findOneByProperties(['component_type' => "management"]);
+        $data['component_type'] = "management";
+        if (!$componentData) {
+            return $this->aboutUsLandingRepository->save($data);
+        } else {
+            return $componentData->update($data);
+        }
     }
 }

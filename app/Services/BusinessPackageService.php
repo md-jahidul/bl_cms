@@ -163,9 +163,9 @@ class BusinessPackageService {
      * @return Response
      */
     public function getPackageById($packageId) {
-        $response = $this->packageRepo->getPackageById($packageId);
-        return $response;
+        return $this->packageRepo->getPackageById($packageId);
     }
+
 
     /**
      * Get business package by id
@@ -258,6 +258,7 @@ class BusinessPackageService {
 
             return $response;
         } catch (\Exception $e) {
+		dd($e->getMessage());
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()

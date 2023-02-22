@@ -16,6 +16,7 @@ use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DynamicPageService
 {
@@ -95,6 +96,7 @@ class DynamicPageService
             $this->pageRepo->savePage($data);
             $response = [
                 'success' => 1,
+                'message' => 'Page added successfully!'
             ];
         } catch (\Exception $e) {
             $response = [

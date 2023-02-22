@@ -47,8 +47,9 @@ class MediaNewsCategoryService
      * @param $data
      * @return Response
      */
-    public function storeCategory($data)
+    public function storeCategory($data, $sectionType = null)
     {
+        $data['section_type'] = $sectionType;
         $this->save($data);
         return new Response("Item has been successfully created");
     }

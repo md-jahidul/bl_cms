@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class BannerImgRelatedProduct extends Model
 {
     use LogModelAction;
-    
-    protected $guarded = ['id'];
+
+    protected $guarded = ['id', 'banner_related_id'];
     protected $casts = [
         'related_product_id' => 'array'
     ];

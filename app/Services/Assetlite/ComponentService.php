@@ -4,6 +4,8 @@ namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
+use App\Models\ComponentMultiData;
+use App\Repositories\ComponentMultiDataRepository;
 use App\Http\Controllers\AssetLite\ExploreCDetailsController;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -12,6 +14,8 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 use App\Repositories\ComponentRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ComponentService
 {
@@ -29,14 +33,22 @@ class ComponentService
      * @var $componentRepository
      */
     protected $componentRepository;
+    /**
+     * @var ComponentMultiDataRepository
+     */
+    private $comMultiDataRepository;
 
     /**
      * AppServiceProductService constructor.
      * @param ComponentRepository $componentRepository
+     * @param ComponentMultiDataRepository $componentMultiDataRepository
      */
-    public function __construct(ComponentRepository $componentRepository)
-    {
+    public function __construct(
+        ComponentRepository $componentRepository,
+        ComponentMultiDataRepository $componentMultiDataRepository
+    ) {
         $this->componentRepository = $componentRepository;
+        $this->comMultiDataRepository = $componentMultiDataRepository;
         $this->setActionRepository($componentRepository);
     }
 
@@ -98,12 +110,6 @@ class ComponentService
         $this->save($data);
         return new Response('App Service Component added successfully');
     }
-
-//    protected function imageUpload($data)
-//    {
-//        return $image;
-//    }
-
 
     public function componentStore($data, $sectionId, $pageType)
     {
@@ -191,6 +197,18 @@ class ComponentService
 
     public function componentUpdate($data, $id)
     {
+        if ($data['component_type'] == "title_with_text_and_right_image") {
+            request()->validate([
+                'image_name_en' => 'required|unique:components,image_name_en,' . $id,
+                'image_name_bn' => 'required|unique:components,image_name_bn,' . $id,
+            ]);
+        }
+
+        request()->validate([
+            'image_name_en' => 'unique:components,image_name_en,' . $id,
+            'image_name_bn' => 'unique:components,image_name_bn,' . $id,
+        ]);
+
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
             if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
@@ -242,7 +260,6 @@ class ComponentService
                     }
                 }
             }
-
             $data['multiple_attributes'] = $new_multiple_attributes;
         }
 
@@ -290,6 +307,33 @@ class ComponentService
         // }
 
         $component->update($data);
+
+        if ($data['component_type'] == "multiple_image" || $data['component_type'] == "features_component") {
+            $this->comMultiDataRepository->deleteAllById($id);
+            foreach ($data['base_image'] as $key => $img) {
+//                dd($data);
+                if (is_object($img)) {
+                    $img = $this->upload($img, 'assetlite/images/component');
+                    $filePath = isset($data['old_img_url'][$key]) ? $data['old_img_url'][$key] : null;
+                    $this->deleteFile($filePath);
+                }
+                $imgData = [
+                    'component_id' => $component->id,
+                    'page_type' => $component->page_type,
+                    'title_en' => isset($data['multi_title_en']) ? $data['multi_title_en'][$key] : null,
+                    'title_bn' => isset($data['multi_title_bn']) ? $data['multi_title_bn'][$key] : null,
+                    'alt_text_en' => $data['multi_alt_text_en'][$key],
+                    'alt_text_bn' => $data['multi_alt_text_bn'][$key],
+                    'img_name_en' => str_replace(' ', '-', strtolower($data['img_name_en'][$key])),
+                    'img_name_bn' => str_replace(' ', '-', strtolower($data['img_name_bn'][$key])),
+                    'base_image' => $img,
+                    'updated_by' => Auth::id()
+                ];
+                $this->comMultiDataRepository->save($imgData);
+            }
+        }
+
+        // return $data['multiple_attributes'];
         return response("Component update successfully!!");
     }
 

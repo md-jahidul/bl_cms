@@ -2,12 +2,11 @@
 @section('title', 'Component Create')
 @section('card_name', 'Component Create')
 @section('breadcrumb')
-{{--    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId, $sectionId]) }}"> Section List</a></li>--}}
-{{--    <li class="breadcrumb-item active"> <a href="{{ route('component-list', [$simType, $productDetailsId, $sectionId]) }}"> Component List</a></li>--}}
-{{--    <li class="breadcrumb-item active"> Component Create</li>--}}
+    <li class="breadcrumb-item active"> <a href="{{  url("app-service/details/$tab_type/$product_id") }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -32,6 +31,7 @@
                                             <option value="">--Select Data Type--</option>
                                             <option data-alias="title_text_editor" value="title_text_editor">Title with text editor</option>
                                             <option data-alias="accordion_section" value="accordion_section">Accordion</option>
+                                            <option data-alias="table_component" value="table_component">Table Component</option>
                                             <option data-alias="text_with_image_right" value="text_with_image_right">Text with image right</option>
                                             <option data-alias="text_with_image_bottom" value="text_with_image_bottom">Text with image bottom</option>
                                             <option data-alias="slider_text_with_image_right" value="slider_text_with_image_right">Slider text with image right</option>
@@ -39,6 +39,9 @@
                                             <option data-alias="multiple_image_banner" value="multiple_image_banner">Multiple image banner</option>
                                             <option data-alias="pricing_sections" value="pricing_sections">Pricing Multiple table</option>
                                             <option data-alias="static_easy_payment_card" value="static_easy_payment_card">Static Component - Easy payment card</option>
+                                            <option data-alias="image_with_content" value="image_with_content">Image With Content</option>
+                                            <option data-alias="multiple_tab_image" value="multiple_tab_image">Multiple Tab With Image</option>
+
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('component_type'))
@@ -62,6 +65,11 @@
                                         @include('admin.app-service.details.section.component_modal.accordion.accordion')
                                     </slot>
 
+                                    {{--Table Component--}}
+                                    <slot id="table_component" data-offer-type="table_component" class="d-none">
+                                        @include('admin.app-service.details.components.partial.editor_only')
+                                    </slot>
+
                                     {{--Text with image right--}}
                                     <slot id="text_with_image_right" data-offer-type="text_with_image_right" class="d-none">
                                         @include('admin.app-service.details.section.component_modal.text_with_image_right')
@@ -74,7 +82,25 @@
 
                                     {{--Slider text with image right--}}
                                     <slot id="slider_text_with_image_right" data-offer-type="slider_text_with_image_right" class="d-none">
-                                        @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')
+{{--                                        @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')--}}
+                                        {{ Form::hidden('sections[section_name]', 'Slider text with Image right' ) }}
+                                        {{ Form::hidden('sections[section_type]', 'slider_text_with_image_right' ) }}
+                                        {{ Form::hidden('sections[tab_type]', $tab_type ) }}
+                                        {{ Form::hidden('sections[category]', 'component_sections' ) }}
+                                        {{ Form::hidden('component[0][component_type]', 'slider_text_with_image_right' ) }}
+
+                                        <h3><strong>Slider 1</strong></h3>
+                                        <div class="form-actions col-md-12 mt-0"></div>
+                                        <div class="form-group col-md-6">
+                                            <label for="alt_text">Short Description En</label>
+                                            <input type="text" name="details_en[]" class="form-control img-data">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="alt_text">Short Description Bn</label>
+                                            <input type="text" name="details_bn[]" class="form-control img-data">
+                                        </div>
+                                        @include('layouts.partials.product-details.component.common-field.multiple-image')
+{{--                                        <slot id="multiple_image"></slot>--}}
                                     </slot>
 
                                     {{--Video with text right--}}
@@ -84,7 +110,13 @@
 
                                     {{--Multiple image banner--}}
                                     <slot id="multiple_image_banner" data-offer-type="multiple_image_banner" class="d-none">
-                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_image_banner')
+                                        {{ Form::hidden('sections[section_name]', 'Multiple Image Banner' ) }}
+                                        {{ Form::hidden('sections[section_type]', 'multiple_image_banner' ) }}
+                                        {{ Form::hidden('sections[tab_type]', $tab_type ) }}
+                                        {{ Form::hidden('sections[category]', 'component_sections' ) }}
+                                        {{ Form::hidden('component[0][component_type]', 'multiple_image_banner' ) }}
+{{--                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_image_banner')--}}
+                                        @include('layouts.partials.product-details.component.common-field.multiple-image')
                                     </slot>
 
                                     {{--Pricing Multiple table--}}
@@ -95,6 +127,14 @@
                                     {{--static_easy_payment_card--}}
                                     <slot id="static_easy_payment_card" data-offer-type="static_easy_payment_card" class="d-none">
                                         @include('admin.app-service.details.section.component_modal.static_easy_payment_card')
+                                    </slot>
+                                    {{--image_with_content--}}
+                                    <slot id="image_with_content" data-offer-type="image_with_content" class="d-none">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.image_with_content')
+                                    </slot>
+                                    {{--multiple_tab_image--}}
+                                    <slot id="multiple_tab_image" data-offer-type="multiple_tab_image" class="d-none">
+                                        @include('admin.app-service.details.section.component_modal.multi_banner.multiple_tab_image')
                                     </slot>
 
 
@@ -155,6 +195,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>
 
     <script>
         $(function () {

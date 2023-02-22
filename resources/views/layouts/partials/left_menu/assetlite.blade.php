@@ -73,6 +73,10 @@
                                     class="la la-futbol-o"></i>
                                 <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
                         </li>
+                        <li class="{{ is_active_url('/sub-footer') }} nav-item"><a href="{{ url('sub-footer') }}"><i
+                                    class="la la-futbol-o"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Sub Footer</span></a>
+                        </li>
                     @endif
 
                     @if( auth()->user()->can_view('QuickLaunch') )
@@ -390,11 +394,11 @@
                 <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
             <ul class="menu-content">
 
-                <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
+                {{-- <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('life.at.banglalink.topbanner') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-cogs"></i> Sections</a>
-                </li>
+                </li> --}}
 
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
@@ -429,22 +433,27 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-car"></i> Programs</a>
                     <ul class="menu-content">
-                        <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
+                        {{-- <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.tab.title') }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Tab Title</a>
-                        </li>
+                        </li> --}}
                         <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-safari"></i> News section</a>
+                                    class="la la-safari"></i> Hero section</a>
                         </li>
                         <li class="{{ request()->is('programs/progeneral/steps*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'steps']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Steps section</a>
                         </li>
-                        <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
+                        <li class="{{ request()->is('programs/progeneral/video*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'video']) }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Video section</a>
+                        </li>
+                        {{-- <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Events section</a>
@@ -671,6 +680,33 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-bold"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">CSR</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('csr-categories') . is_active_url('csr-categories/create') }} }} nav-item">
+                        <a href="{{ url('csr-categories') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Categories</span>
+                        </a>
+                    </li>
+                    <li class="{{ is_active_url('csr-post') . is_active_url('csr-post/create') }} }} nav-item">
+                        <a href="{{ url('csr-post') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post List</span>
+                        </a>
+                    </li>
+                    {{--                    <li class="{{ is_active_url('/tvc-video') }} nav-item">--}}
+                    {{--                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>--}}
+                    {{--                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>--}}
+                    {{--                        </a>--}}
+                    {{--                    </li>--}}
+
+                    <li class="{{ is_active_url('csr-landing-page-component') . is_active_url('csr-landing-page-component/create') }} nav-item">
+                        <a href="{{ url('csr-landing-page-component') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item"><a href="#"><i class="la la-star-half-full"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Customer Feedback</span></a>
                 <ul class="menu-content">
@@ -711,6 +747,12 @@
                     <li class="{{ is_active_url('/bl-4g-landing-page') }} nav-item">
                         <a href="{{ url('/bl-4g-landing-page') }}"><i class="la la-futbol-o"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">4G Landing Page</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ is_active_url('/bl-4g-eligibility-msg') }} nav-item">
+                        <a href="{{ url('/bl-4g-eligibility-msg') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Eligibility Message</span>
                         </a>
                     </li>
                 </ul>

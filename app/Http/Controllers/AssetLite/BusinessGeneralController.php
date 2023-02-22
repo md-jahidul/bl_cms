@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use Session;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BusinessHomeService;
-use Illuminate\Http\Request;
-use Session;
+use App\Http\Requests\BusinessNewsRequest;
+use App\Http\Requests\BusinessFeaturesRequest;
+use App\Http\Requests\BusinessProductCategoriesRequest;
 
 class BusinessGeneralController extends Controller {
 
@@ -67,7 +70,6 @@ class BusinessGeneralController extends Controller {
      * @Dev Bulbul Mahmud Nito || 06/04/2020
      */
     public function updateCategory(BusinessProductCategoriesRequest $request) {
-
         $response = $this->businessHomeService->updateCategory($request);
         if ($response['success'] == 1) {
             Session::flash('message', 'Category updated successfully!');
@@ -87,8 +89,7 @@ class BusinessGeneralController extends Controller {
      * @Dev Bulbul Mahmud Nito || 12/02/2020
      */
     public function categoryNameChange(Request $request) {
-        $nameChange = $this->businessHomeService->changeCategoryName($request);
-        return $nameChange;
+        return $this->businessHomeService->changeCategoryName($request);
     }
 
     /**
@@ -250,7 +251,7 @@ class BusinessGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
      */
-    public function featureSave(Request $request) {
+    public function featureSave(BusinessFeaturesRequest $request) {
 
         $response = $this->businessHomeService->saveFeature($request);
 
