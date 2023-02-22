@@ -56,6 +56,14 @@ class PriyojonController extends Controller
     public function index($parent_id = 0)
     {
         $priyojons = $this->priyojonService->priyojonList($parent_id);
+        foreach ($priyojons as $key => $priyojon) {
+            /**
+             * If type is discount_privilege and is parent then unset this 
+             */
+            if (in_array($priyojon->component_type, ['discount_privilege', 'benefits_for_you']) && $priyojon->parent_id == 0) {
+                unset($priyojons[$key]);
+            }
+        }
         $menu_id = $parent_id;
         while ($menu_id != 0) {
             $menu_id = $this->getBreadcrumbInfo($menu_id);
