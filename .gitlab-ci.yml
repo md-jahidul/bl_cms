@@ -24,7 +24,7 @@ stg_deploy:
 pre_release_final_deploy:
   stage: triggers
   trigger:
-    include: deploy/stg_deploy.yml
+    include: deploy/pre-release-final
     #strategy: depend
   rules:
     - if: $branch == "pre-release-final"
