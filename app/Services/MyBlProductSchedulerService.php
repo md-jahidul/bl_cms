@@ -108,6 +108,11 @@ class MyBlProductSchedulerService
                         }
                         $this->myblProductTagRepository->insert($tags);
                     } else {
+                        if (isset(($productSchedule->tags)[0])) {
+                            $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
+                            $tag = $firstTag->title;
+                            $productData['tag'] = $tag;
+                        }
 
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
