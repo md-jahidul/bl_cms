@@ -26,7 +26,7 @@ tar_backup:
     - echo "Starting backup"
     - sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
 
-stg_repo_clone:
+repo_clone:
   <<: *template
   stage: clone
 #   only:
@@ -39,7 +39,7 @@ stg_repo_clone:
     - echo "Clonging repo"
     #- cd $STG_BUILD_LOCATION
     #- sudo git clone -b $BRANCH https://$MYUSERNAME:$MYTOKEN@gitlab.com/techbeach1/mybl-qa.git
-    - cd $STG_BUILD_LOCATION/$CI_PROJECT_NAME
+    - cd $BUILD_LOCATION/$CI_PROJECT_NAME
     #- sudo git checkout develop
     - git pull origin $BRANCH
 
