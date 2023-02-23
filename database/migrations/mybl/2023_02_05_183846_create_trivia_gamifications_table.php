@@ -36,6 +36,8 @@ class CreateTriviaGamificationsTable extends Migration
             $table->string('success_message_bn')->nullable();
             $table->string('failed_message_en')->nullable();
             $table->string('failed_message_bn')->nullable();
+            $table->string('show_answer_btn_en')->nullable();
+            $table->string('show_answer_btn_bn')->nullable();
             $table->timestamps();
         });
     }
