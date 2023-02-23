@@ -368,6 +368,40 @@
                     </div>
                 </div>
 
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="show_answer_btn_en" class="required">Show Answer Button EN:</label>
+                        <input required
+                               data-validation-required-message="The field is required"
+                               id="show_answer_btn_en"
+                               value="@if(isset($trivia)){{$trivia->show_answer_btn_en}}@elseif(old("show_answer_btn_en")){{old("show_answer_btn_en")}}@endif"
+                               type="text"
+                               name="show_answer_btn_en"
+                               class="form-control
+                                   @error('show_answer_btn_en') is-invalid @enderror"
+                               placeholder="Enter Show Answer Button Label">
+                        <small class="text-danger"> @error('show_answer_btn_en') {{ $message }} @enderror</small>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="show_answer_btn_bn" class="required">Show Answer Button BN:</label>
+                        <input required
+                               data-validation-required-message="The field is required"
+                               id="show_answer_btn_bn"
+                               value="@if(isset($trivia)){{$trivia->show_answer_btn_en}}@elseif(old("show_answer_btn_bn")){{old("show_answer_btn_bn")}}@endif"
+                               type="text"
+                               name="show_answer_btn_bn"
+                               class="form-control
+                                   @error('show_answer_btn_en') is-invalid @enderror"
+                               placeholder="Enter Show Answer Button Label">
+                        <small class="text-danger"> @error('show_answer_btn_bn') {{ $message }} @enderror</small>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
                     <!-- Banner -->
                     <div class="col-12">
                         @if(isset($trivia))
