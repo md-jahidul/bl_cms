@@ -70,7 +70,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $categories = $this->mediaNewsCategoryService->findAll();
+        $categories = $this->mediaNewsCategoryService->findBy(['section_type' => self::REFERENCE_TYPE, 'status' => 1]);
         return view('admin.blog.post.create',compact('categories'));
     }
 
@@ -96,7 +96,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blogPost = $this->mediaPNE->findOne($id);
-        $categories = $this->mediaNewsCategoryService->findAll();
+        $categories = $this->mediaNewsCategoryService->findBy(['section_type' => self::REFERENCE_TYPE, 'status' => 1]);
         return view('admin.blog.post.edit', compact('blogPost','categories'));
     }
 
