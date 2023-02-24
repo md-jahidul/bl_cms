@@ -59,7 +59,7 @@
                                         <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-12 {{ $errors->has('media_news_category_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('media_news_category_id') ? ' error' : '' }}">
                                     <label for="media_news_category_id" class="required">Select Blog Category</label>
                                     <select class="form-control" name="media_news_category_id" aria-invalid="false">
                                         <option value="">Select a blog category</option>
@@ -72,6 +72,15 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('media_news_category_id'))
                                         <div class="help-block">  {{ $errors->first('media_news_category_id') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('read_time') ? ' error' : '' }}">
+                                    <label for="read_time" class="">Read Time</label>
+                                    <input type="number" id="read_time" name="read_time" class="form-control" placeholder="Enter read time"
+                                           value="{{ $blogPost->read_time }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('read_time'))
+                                        <div class="help-block">  {{ $errors->first('read_time') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
