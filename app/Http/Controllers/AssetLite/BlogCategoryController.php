@@ -20,6 +20,8 @@ class BlogCategoryController extends Controller
      * @var MediaNewsCategoryService
      */
     protected $mediaNewsCategoryService;
+    protected const SECTION_TYPE = "blog";
+
 
     /**
      * RolesController constructor.
@@ -36,7 +38,7 @@ class BlogCategoryController extends Controller
      */
     public function index()
     {
-        $blogCategories = $this->mediaNewsCategoryService->findAll();
+        $blogCategories = $this->mediaNewsCategoryService->findBy(['section_type' => self::SECTION_TYPE, 'status' => 1]);
         return view('admin.blog.category.index', compact('blogCategories'));
     }
 
