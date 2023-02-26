@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessProductCategoriesRequest;
 use App\Services\BusinessHomeService;
 use Illuminate\Http\Request;
 use Session;
