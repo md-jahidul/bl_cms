@@ -11,7 +11,7 @@
                     <th>message</th>
                     <th>bill_payment_id</th>
                     <th>bill_refer_id</th>
-                    <th>bill_id</th>
+                    <th>bllr_id</th>
                     <th>bill_name</th>
                     <th>bill_no</th>
                     <th>biller_acc_no</th>
@@ -39,7 +39,7 @@
                     <th>{{$item->message}}</th>
                     <th>{{$item->bill_payment_id}}</th>
                     <th>{{$item->bill_refer_id}}</th>
-                    <th>{{$item->bill_id}}</th>
+                    <th>{{$item->bllr_id}}</th>
                     <th>{{$item->bill_name}}</th>
                     <th>{{$item->bill_no}}</th>
                     <th>{{$item->biller_acc_no}}</th>
