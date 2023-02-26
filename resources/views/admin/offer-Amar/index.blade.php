@@ -34,6 +34,18 @@
                         @endif
                     </td>
                 </tr>
+                <tr width="100%">
+                    <th width="25%" class="text-center">Amar Offer 2.0 Incident </th>
+                    <td class="action">
+                        @if(!$amarOfferIncidentV2)
+                            <a href="{{ route("amar-offer2-incident.status.update") }}" data-value="enable  {{ "Amar Offer 2.0 Incident" }}"
+                               class="btn btn-danger border-0 change_status" title="Click to enable">Disabled</a>
+                        @else
+                            <a href="{{ route("amar-offer2-incident.status.update") }}" data-value="disable {{ "Amar Offer 2.0 Incident" }}"
+                               class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
+                        @endif
+                    </td>
+                </tr>
                 </thead>
             </table>
             <div class="card-content collapse show">

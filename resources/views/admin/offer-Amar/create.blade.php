@@ -217,9 +217,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 mb-0">
-                                    <label for="desc_en" class="required">Description</label>
-                                    <textarea rows="3" id="desc_en" name="description" class="form-control"
+                                    <label for="description" class="required">Description EN</label>
+                                    <textarea required rows="3" id="description" name="description" class="form-control"
                                               placeholder="Enter Product Description"></textarea>
+                                </div>
+                                <div class="form-group col-md-4 mb-0">
+                                    <label for="description_bn" class="required">Description BN</label>
+                                    <textarea rows="3" id="description_bn" name="description_bn" class="form-control"
+                                              placeholder="Enter Product Description BN"></textarea>
+                                </div>
+                                <div class="form-group col-md-4 mb-0">
+                                    <label for="short_description" class="required">Short Description EN</label>
+                                    <textarea rows="3" id="short_description" name="short_description" class="form-control"
+                                              placeholder="Enter Product Short Description EN"></textarea>
+                                </div>
+                                <div class="form-group col-md-4 mb-0">
+                                    <label for="short_description_bn" class="required">Short Description BN</label>
+                                    <textarea rows="3" id="short_description_bn" name="short_description_bn" class="form-control"
+                                              placeholder="Enter Product Short Description BN"></textarea>
                                 </div>
                             </div>
                         </div>

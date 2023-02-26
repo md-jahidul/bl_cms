@@ -220,6 +220,21 @@
                                 <textarea rows="3" id="desc_en" name="description" class="form-control"
                                           placeholder="Enter Product Description">{{ $amarOffer->description }}</textarea>
                             </div>
+                            <div class="form-group col-md-4 mb-0">
+                                <label for="desc_en" class="required">Description BN</label>
+                                <textarea rows="3" id="description_bn" name="description_bn" class="form-control"
+                                          placeholder="Enter Product Description">{{ $amarOffer->description_bn }}</textarea>
+                            </div>
+                            <div class="form-group col-md-4 mb-0">
+                                <label for="desc_en" class="required">Short Description EN</label>
+                                <textarea rows="3" id="short_description" name="short_description" class="form-control"
+                                          placeholder="Enter Product Description">{{ $amarOffer->short_description }}</textarea>
+                            </div>
+                            <div class="form-group col-md-4 mb-0">
+                                <label for="desc_en" class="required">Short Description BN</label>
+                                <textarea rows="3" id="short_description_bn" name="short_description_bn" class="form-control"
+                                          placeholder="Enter Product Description">{{ $amarOffer->short_description_bn }}</textarea>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">

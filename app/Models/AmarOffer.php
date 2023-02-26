@@ -22,6 +22,9 @@ class AmarOffer extends Model
         'tag',
         'validity_unit',
         'description',
-        'status'
+        'status',
+        'short_description',
+        'description_bn',
+        'short_description_bn'
     ];
 }

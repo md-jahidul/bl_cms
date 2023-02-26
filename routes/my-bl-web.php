@@ -175,6 +175,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('amarOffer/destroy/{id}', 'CMS\AmarOfferController@destroy');
     Route::get('amar-offer-incident-status-update', 'CMS\AmarOfferController@statusUpdate')
         ->name('amar-offer-incident.status.update');
+    Route::get('amar-offer2-incident-status-update', 'CMS\AmarOfferController@statusUpdateV2')
+        ->name('amar-offer2-incident.status.update');
 
 
     // mybl internet offer category

@@ -48,8 +48,10 @@ class AmarOfferController extends Controller
     {
         $amarOffers = $this->amarOfferService->findAll();
         $amarOfferIncident = Redis::get('amar-offer-incident') == null ? 0 : Redis::get('amar-offer-incident');
+        $amarOfferIncidentV2 = Redis::get('amar-offer-incident-v2') == null ? 0 : Redis::get('amar-offer-incident-v2');
+//        dd($amarOfferIncident, $amarOfferIncidentV2);
 
-        return view('admin.offer-Amar.index', compact('amarOffers', 'amarOfferIncident'));
+        return view('admin.offer-Amar.index', compact('amarOffers', 'amarOfferIncident', 'amarOfferIncidentV2'));
     }
 
     /**
@@ -144,6 +146,24 @@ class AmarOfferController extends Controller
         }
 
         Session()->flash("Amar Offer Incident Status Update Successfully");
+        return redirect(route('amarOffer.index'));
+    }
+
+    public function statusUpdateV2()
+    {
+        if (Redis::get("amar-offer-incident") == null) {
+            Redis::set("amar-offer-incident", 1);
+        } else {
+            $flag = Redis::get("amar-offer-incident-v2");
+
+            if ($flag == 1) {
+                Redis::set("amar-offer-incident-v2", 0);
+            } else {
+                Redis::set("amar-offer-incident-v2", 1);
+            }
+        }
+
+        Session()->flash("Amar Offer 2.0 Incident Status Update Successfully");
         return redirect(route('amarOffer.index'));
     }
 }
