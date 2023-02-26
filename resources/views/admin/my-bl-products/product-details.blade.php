@@ -512,6 +512,34 @@
                                     </div>
                                     <div class="col-md-2">
                                         <fieldset>
+                                            <input type="checkbox" id="is_commercial_name_en_schedule" value="1"
+                                                   name="is_commercial_name_en_schedule">
+                                            <label for="is_commercial_name_en_schedule">Commercial Name EN</label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <fieldset>
+                                            <input type="checkbox" id="is_commercial_name_bn_schedule" value="1"
+                                                   name="is_commercial_name_bn_schedule">
+                                            <label for="is_commercial_name_bn_schedule">Commercial Name BN</label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <fieldset>
+                                            <input type="checkbox" id="is_display_title_en_schedule" value="1"
+                                                   name="is_display_title_en_schedule">
+                                            <label for="is_display_title_en_schedule">Display Title EN</label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <fieldset>
+                                            <input type="checkbox" id="is_display_title_bn_schedule" value="1"
+                                                   name="is_display_title_bn_schedule">
+                                            <label for="is_display_title_bn_schedule">Display Title BN</label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <fieldset>
                                             <input type="checkbox" id="is_base_msisdn_group_id_schedule" value="1"
                                                    name="is_base_msisdn_group_id_schedule">
                                             <label for="is_base_msisdn_group_id_schedule">Base Msisdn Schedule</label>
@@ -581,6 +609,38 @@
                                                     >{{ $value->title }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-md-4 schedule_commercial_name_en {{ isset($details->details->is_commercial_name_en_schedule) && $details->details->is_commercial_name_en_schedule == true ? "": 'd-none'}}">
+                                        <label for="schedule_commercial_name_en" class="required">Commercial Name En</label>
+                                        <input class="form-control" name="schedule_commercial_name_en" required id="schedule_commercial_name_en">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('schedule_commercial_name_en'))
+                                            <div class="help-block">{{ $errors->first('schedule_commercial_name_en') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4 schedule_commercial_name_bn {{ isset($details->details->is_commercial_name_bn_schedule) && $details->details->is_commercial_name_bn_schedule == true ? "": 'd-none'}}">
+                                        <label for="schedule_commercial_name_bn" class="required">Commercial Name BN</label>
+                                        <input class="form-control" name="schedule_commercial_name_bn" required id="schedule_commercial_name_bn">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('schedule_commercial_name_bn'))
+                                            <div class="help-block">{{ $errors->first('schedule_commercial_name_bn') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4 schedule_display_title_en {{ isset($details->details->is_display_title_en_schedule) && $details->details->is_display_title_en_schedule == true ? "": 'd-none'}}">
+                                        <label for="schedule_display_title_en" class="required">Display Ttile En</label>
+                                        <input class="form-control" name="schedule_display_title_en" required id="schedule_display_title_en">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('schedule_display_title_en'))
+                                            <div class="help-block">{{ $errors->first('schedule_display_title_en') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4 schedule_display_title_bn {{ isset($details->details->is_display_title_bn_schedule) && $details->details->is_display_title_bn_schedule == true ? "": 'd-none'}}">
+                                        <label for="name" class="required">Display Ttile BN</label>
+                                        <input class="form-control" name="schedule_display_title_bn" required id="schedule_display_title_bn">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('schedule_display_title_bn'))
+                                            <div class="help-block">{{ $errors->first('schedule_display_title_bn') }}</div>
+                                        @endif
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -820,6 +880,38 @@
                 $('.schedule_base_msisdn_groups').removeClass('d-none');
             } else {
                 $('.schedule_base_msisdn_groups').addClass('d-none');
+            }
+        });
+
+        $('#is_commercial_name_en_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_commercial_name_en').removeClass('d-none');
+            } else {
+                $('.schedule_commercial_name_en').addClass('d-none');
+            }
+        });
+
+        $('#is_commercial_name_bn_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_commercial_name_bn').removeClass('d-none');
+            } else {
+                $('.schedule_commercial_name_bn').addClass('d-none');
+            }
+        });
+
+        $('#is_display_title_en_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_display_title_en').removeClass('d-none');
+            } else {
+                $('.schedule_display_title_en').addClass('d-none');
+            }
+        });
+
+        $('#is_display_title_bn_schedule').change(function () {
+            if(this.checked) {
+                $('.schedule_display_title_bn').removeClass('d-none');
+            } else {
+                $('.schedule_display_title_bn').addClass('d-none');
             }
         });
     </script>
