@@ -5,10 +5,10 @@ namespace App\Http\Controllers\AssetLite;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessProductCategoriesRequest;
 use App\Services\BusinessHomeService;
 use App\Http\Requests\BusinessNewsRequest;
 use App\Http\Requests\BusinessFeaturesRequest;
-use App\Http\Requests\BusinessProductCategoriesRequest;
 
 class BusinessGeneralController extends Controller {
 
