@@ -130,7 +130,7 @@ class Helper
             "GIFT_PACKS"              => "Gift Packs",
             "ROAMING_PACKS"           => "Roaming Packs",
             "ROAMING_DETAILS"         => "Roaming Details",
-            "USSD_CODE"               => "USSD code",
+            "USSD"                    => "USSD code",
             "CARE"                    => "Care",
             "COMMERCE"                => 'Commerce',
             "UTILITY"                 => 'Utility',

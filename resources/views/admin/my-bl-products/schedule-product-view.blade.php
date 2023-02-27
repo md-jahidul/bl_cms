@@ -43,6 +43,10 @@
                                 <th>Is Visible</th>
                                 <th>Pin To Top</th>
                                 <th>Base Group Title</th>
+                                <th>Commercial Name EN</th>
+                                <th>Commercial Name BN</th>
+                                <th>Display Title EN</th>
+                                <th>Display Title BN</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -53,6 +57,10 @@
                                 <td>{{ $scheduleProduct->is_visible == 1 ? "On" : "Off"}}</td>
                                 <td> {{ $scheduleProduct->pin_to_top == 1 ? "On" : "Off"}}</td>
                                 <td> {{ $baseMsisdnTitleForSchedule == null ? 'No Base' : $baseMsisdnTitleForSchedule }}</td>
+                                <td>{{ $scheduleProduct->commercial_name_en}}</td>
+                                <td>{{ $scheduleProduct->commercial_name_bn}}</td>
+                                <td>{{ $scheduleProduct->display_title_en}}</td>
+                                <td>{{ $scheduleProduct->display_title_bn}}</td>
                             </tbody>
                         </table>
                     @endif

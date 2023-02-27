@@ -397,13 +397,13 @@
 
 
             if (js_data) {
-                parse_data = JSON.parse(js_data); 
+                parse_data = JSON.parse(js_data);
                 other_attributes = parse_data.other_attributes;
                 if (other_attributes) {
                     let type = other_attributes.type;
                     if(type == 'dial'){
                         dial_content = other_attributes.content;
-                    }else if(type == 'USSD_CODE'){
+                    }else if(type == 'USSD'){
                         redirect_content = other_attributes.content;
                     }else if(type == 'url'){
                         redirect_content = other_attributes.content;
@@ -443,9 +443,9 @@
                                     </select>
                                     <div class="help-block"></div>
                                 </div>`;
-                var code = (parse_data.ussd_code != null) ? parse_data.ussd_code : ''; 
-                var message_en = (parse_data.message_en != null) ? parse_data.message_en : '';  
-                var message_bn = (parse_data.message_bn != null) ? parse_data.message_bn : '';                
+                var code = (parse_data.ussd_code != null) ? parse_data.ussd_code : '';
+                var message_en = (parse_data.message_en != null) ? parse_data.message_en : '';
+                var message_bn = (parse_data.message_bn != null) ? parse_data.message_bn : '';
                 ussd_code = ` <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="ussd_code" class="required">USSD Code:</label>
                                         <input
@@ -462,7 +462,7 @@
 
                                     <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="message_en" class="required">Message En:</label>
-                                        <textarea 
+                                        <textarea
                                             maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Message En is required"
@@ -476,7 +476,7 @@
                                     </div>
                                     <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="message_bn" class="required">Message Bn:</label>
-                                        <textarea 
+                                        <textarea
                                             maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Message Bn is required"
@@ -487,11 +487,11 @@
                                             placeholder="Message Bn" name="message_bn"> ${message_bn} </textarea>
                                         <small class="text-danger"> @error('message_bn') {{ $message_bn }} @enderror </small>
                                         <div class="help-block"></div>
-                                    </div> `; 
-                            
-                if(parse_data.redirect_url == 'USSD_CODE'){
+                                    </div> `;
+
+                if(parse_data.redirect_url == 'USSD'){
                     $("#append_div").html(ussd_code);
-                }                
+                }
 
 
             $('#navigate_action').on('change', function () {
@@ -499,7 +499,7 @@
                 //console.log(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
-                }else if (action == 'USSD_CODE') {
+                }else if (action == 'USSD') {
                         $("#append_div").html(ussd_code);
                 } else if (action == 'URL') {
                     $("#append_div").html(url_html);
