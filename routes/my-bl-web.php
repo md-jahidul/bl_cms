@@ -1303,6 +1303,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('commerce-bill-status', 'CMS\UtilityBillController@showCommerceBill');
 
     /**
+     * Commerce Bill Category
+     */
+    Route::resource('travel', 'CMS\TravelAgencyController')->except(['show', 'destroy']);
+    Route::get('travel/destroy/{id}', 'CMS\TravelAgencyController@destroy')->name('travel.destroy');
+    Route::get('travel/sort-auto-save', 'CMS\TravelAgencyController@categorySortable');
+
+    /**
      * Commerce Navigation Rail
      */
     Route::resource('commerce-navigation-rail', 'CMS\CommerceNavigationRailController');
