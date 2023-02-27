@@ -1341,11 +1341,10 @@ class ProductCoreService
                 $insert_data[19] = $product->details->vat;
                 $insert_data[20] = ($product->show_recharge_offer) ? 'Yes' : 'No';
                 $insert_data[21] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
-                // $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
-                //     ',',
-                //     $product->detailTabs->pluck('name')->toArray()
-                // ) ?: $product->offer_section_title);
-                $insert_data[22] = implode(',',$product->detailTabs->pluck('name')->toArray());
+                $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
+                    ',',
+                    $product->detailTabs->pluck('name')->where('platform', 'mybl')->toArray()
+                ) ?: $product->offer_section_title);
                 $productTags = $product->tags;
                 $insert_data[23] = $productTags->count() ? implode(',',
                     $productTags->pluck('title')->toArray()) : $product->tag;
