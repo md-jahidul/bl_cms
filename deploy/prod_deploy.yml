@@ -1,0 +1,69 @@
+variables:
+  PROD_BUILD_LOCATION: "/app/assetlite/src/projects/projects_gitlab"
+stages:
+  - cms-backup
+  - clone
+  - build
+  - deploy
+  - svc-mgt
+
+.job_template: &template
+    tags:
+      - bl-devops
+
+.cms_template: &cms
+    tags:
+      - bl-cms
+
+tar_backup:
+  <<: *template
+  variables:
+    DATA_LOCATION: "/app/blcms/www/bl_cms"
+  stage: cms-backup
+  #needs: [CI_Pre-check]
+  when: manual
+  script:
+    - echo "Starting backup"
+    - tar czf "$PROD_BUILD_LOCATION/$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz "$PROD_BUILD_LOCATION/$CI_PROJECT_NAME"
+    #- ssh usrdev@$SERVER_IP tar czf - $DATA_LOCATION > /app/blcms/backup/"$CI_PROJECT_NAME"_"$CI_PIPELINE_IID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz
+    #- sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
+
+prod_repo_clone:
+  <<: *template
+  stage: clone
+  when: manual
+  variables:
+    BRANCH: master
+  script:
+    - echo "cloning repo"
+    - cd $PROD_BUILD_LOCATION/$CI_PROJECT_NAME
+    #- git clone https://$MYUSERNAME:$MYTOKEN@gitlab.com/plabon_dutta_bl/bl_cms.git
+    - git pull origin $BRANCH
+
+deploy:
+  <<: *template
+  variables:
+    path_1: "/app/blcms/www/bl_cms"
+  stage: deploy
+  when: manual
+  before_script:
+    - eval $(ssh-agent -s)
+  script:
+    - echo "Copying build artifacts to live server"
+    - ssh-add <(echo "$STAGING_PRIVATE_KEY")
+    - rsync -avzt $PROD_BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ usrdev@172.16.8.164/24:$path_1/$DEST
+    #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ root@192.168.56.104:$path_2/$DEST
+    #- scp -r $BUILD_LOCATION/$CI_PROJECT_NAME/app/* bs1048@192.168.56.1:$path_1
+  # rules:
+  #   if: '$SOURCE'
+  environment: production
+
+service_manage:
+  <<: *cms
+  stage: svc-mgt
+  variables:
+    ANSIBLE_PATH: "/app/mybl/ansible/ansible-mybl-app-deploy/ENV/PROD/CMS"
+  when: manual
+  script:
+    - cd $ANSIBLE_PATH && ansible-playbook -i inventory cms.yml
+    - echo 1>/app/mybl/runner/stdout
