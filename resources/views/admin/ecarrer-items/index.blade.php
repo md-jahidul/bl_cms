@@ -88,7 +88,7 @@
                                     </td>
                                 @endif
                                 <td>{{ $items->title_en }}</td>
-                                <td>{{ ($items->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
+                                <td>{{ ($items->is_active == 1) ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("ecarrer-items/$parent_id/$items->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="{{ url("ecarrer-items/$parent_id/destroy/$items->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a>
