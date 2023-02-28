@@ -43,7 +43,7 @@
                                     @endif --}}
                                     {{$section->category_type}}
                                 </td>
-                                <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
+                                <td>{{ ($section->is_active == 1) ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("programs/photogallery/$section->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="{{ url("programs/photogallery/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a>
