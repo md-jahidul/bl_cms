@@ -50,7 +50,7 @@
                                         Ennovators
                                     @endif
                                 </td>
-                                <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
+                                <td>{{ ($section->is_active == 1) ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("programs/progeneral/$section->id/$sections_type/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 
