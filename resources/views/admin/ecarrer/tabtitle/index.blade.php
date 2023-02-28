@@ -34,7 +34,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $section->title_en }} {!! $section->is_active == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{ $section->slug }}</td>
-                                <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
+                                <td>{{ ($section->is_active == 1) ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("programs/tab-title/$section->id/edit") }}" role="button" class="btn btn-sm btn-outline-info"><i class="la la-edit" aria-hidden="true"></i></a>
                                     {{-- <a href="{{ url("programs/tab-title/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a> --}}

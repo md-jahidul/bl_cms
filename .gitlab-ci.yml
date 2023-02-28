@@ -20,3 +20,11 @@ stg_deploy:
     #strategy: depend
   rules:
     - if: $branch == "develop"
+
+pre_release_final_deploy:
+  stage: triggers
+  trigger:
+    include: deploy/pre-release-final.yml
+    #strategy: depend
+  rules:
+    - if: $branch == "pre-release-final"

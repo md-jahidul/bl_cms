@@ -67,7 +67,7 @@ class CsrController extends Controller
      */
     public function create()
     {
-        $categories = $this->mediaNewsCategoryService->findAll();
+        $categories = $this->mediaNewsCategoryService->findBy(['section_type' => self::REFERENCE_TYPE, 'status' => 1]);
         return view('admin.al-csr.post.create',compact('categories'));
     }
 
@@ -93,7 +93,7 @@ class CsrController extends Controller
     public function edit($id)
     {
         $blogPost = $this->mediaPNE->findOne($id);
-        $categories = $this->mediaNewsCategoryService->findAll();
+        $categories = $this->mediaNewsCategoryService->findBy(['section_type' => self::REFERENCE_TYPE, 'status' => 1]);
         return view('admin.al-csr.post.edit', compact('blogPost','categories'));
     }
 
