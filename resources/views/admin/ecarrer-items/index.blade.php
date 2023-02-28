@@ -6,10 +6,10 @@
 @endsection
 
 @php
-    if( 
+    if(
         $parent_categories['category'] == 'life_at_bl_events' ||
         $parent_categories['category'] == 'life_at_bl_general' ||
-        $parent_categories['category'] == 'programs_photogallery' 
+        $parent_categories['category'] == 'programs_photogallery'
     ){
         $sortable = true;
     }
@@ -17,7 +17,7 @@
         $sortable = false;
     }
 
-    if( 
+    if(
         $parent_categories['category'] == 'life_at_bl_teams' ||
         ($parent_categories['category'] == 'programs_progeneral' && $parent_categories['additional_type'] == 'programs_news_section')
 
@@ -33,7 +33,7 @@
 
 @section('action')
     <a href="{{ url("$route_slug") }}" class="btn btn-info round btn-glow px-2">Go back Section</a>
-    
+
     @if( !$single_item || count($all_items) == 0 )
         <a href="{{ url("ecarrer-items/$parent_id/create") }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
             Add New Item
@@ -55,16 +55,16 @@
                         <thead>
                         <tr>
                             <th width="3%">SL</th>
-                            
-                            @if( 
-                                $parent_categories['category'] == 'life_at_bl_events' || 
+
+                            @if(
+                                $parent_categories['category'] == 'life_at_bl_events' ||
                                 $parent_categories['category'] == 'life_at_bl_general' ||
                                 $parent_categories['category'] == 'programs_photogallery'
                                 )
                                 <th>Images</th>
                             @endif
 
-                            <th>Title</th>                            
+                            <th>Title</th>
                             <th width="15%">Status</th>
                             <th width="22%">Action</th>
                         </tr>
@@ -76,7 +76,7 @@
                             {{-- @php( $itemsType = str_replace(" ", "-", strtolower( $items->type->name ) )) --}}
                             <tr @if($sortable) data-index="{{ $items->id }}" data-position="{{ $items->display_order }}" @endif>
                                 <td>{{ ++$key }}</td>
-                                @if( 
+                                @if(
                                     $parent_categories['category'] == 'life_at_bl_events' ||
                                     $parent_categories['category'] == 'life_at_bl_general' ||
                                     $parent_categories['category'] == 'programs_photogallery'
