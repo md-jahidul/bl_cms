@@ -148,7 +148,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/bl_db/convert-url-slug.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
             var externalLink = $('#externalLink');
