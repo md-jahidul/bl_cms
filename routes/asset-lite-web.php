@@ -1422,7 +1422,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('network-types','AssetLite\NetworkTypesController')->except(['show', 'destroy']);
     Route::get('network-types-sort', 'AssetLite\NetworkTypesController@typeSort');
     Route::get('network-types/destroy/{id}', 'AssetLite\NetworkTypesController@destroy');
-    // Blogs
+
+    // Blogs Details
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
@@ -1474,4 +1475,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
+
+
+    #Cash Back Campaign
+    Route::resource('al-cash-back-campaign', 'AssetLite\AlCashBackController')->except(['show', 'destroy']);
+    Route::get('al-cash-back-campaign/destroy/{id}', 'AssetLite\AlCashBackController@destroy');
 });

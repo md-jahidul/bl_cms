@@ -87,7 +87,7 @@
                                     <textarea name="short_desc_bn" class="form-control" rows="4">{{ $component->short_desc_bn }}</textarea>
                                 </div>
 
-                                <div class="form-group select-role col-md-6 {{ $errors->has('role_id') ? ' error' : '' }} slider-section {{ $component->component_type == "news_archive" ? 'd-none' : '' }}">
+                                <div class="form-group select-role col-md-12 {{ $errors->has('role_id') ? ' error' : '' }} slider-section {{ $component->component_type == "news_archive" ? 'd-none' : '' }}">
                                     <label for="role_id">Select Post For Sliding</label>
                                     <div class="role-select">
                                         <select class="select2 form-control" multiple="multiple" id="multi_items" name="slider_items[]">
@@ -103,7 +103,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group select-role col-md-6 {{ $errors->has('role_id') ? ' error' : '' }}">
+                                <div class="form-group select-role col-md-12 {{ $errors->has('role_id') ? ' error' : '' }}">
                                     <label for="role_id">Select Post For Card</label>
                                     <div class="role-select">
                                         <select class="select2 form-control" multiple="multiple" id="multi_items" name="items[]">

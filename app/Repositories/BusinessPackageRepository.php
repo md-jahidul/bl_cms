@@ -120,11 +120,6 @@ class BusinessPackageRepository extends BaseRepository
         $package->icon = $cardIcon;
         $package->detail_image = $cardDetail;
 
-        $package->banner_title_en = $request->banner_title_en;
-        $package->banner_title_bn = $request->banner_title_bn;
-        $package->banner_desc_en = $request->banner_desc_en;
-        $package->banner_desc_bn = $request->banner_desc_bn;
-
         $package->banner_name = $request->banner_name;
         $package->url_slug = $request->url_slug;
         $package->url_slug_bn = $request->url_slug_bn;

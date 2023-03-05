@@ -396,9 +396,7 @@ class ProductController extends Controller
 
         foreach ($products as $key => $product) {
             try {
-
                 $this->productService->updateSearchData($product);
-
             } catch (\Throwable $th) {
                 $response = [
                     'success' => 'FAILED',
@@ -406,11 +404,8 @@ class ProductController extends Controller
                 ];
                 return response()->json($response, 500);
             }
-
-
         }
 
         return response()->json(['success' => 'Success'], 200);
     }
-
 }

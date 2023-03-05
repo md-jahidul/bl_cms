@@ -44,7 +44,8 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- Repleased with component-->
+                                {{-- <div class="form-group">
 
                                     <label for="Details">Package Details (EN)</label>
                                     <textarea type="text" name="package_details_en" class="form-control summernote_editor">{{old("package_details_en") ? old("package_details_en") : ''}}</textarea>
@@ -54,7 +55,7 @@
                                     <label for="Details">Package Details (BN)</label>
                                     <textarea type="text" name="package_details_bn" class="form-control summernote_editor">{{old("package_details_bn") ? old("package_details_bn") : ''}}</textarea>
 
-                                </div>
+                                </div> --}}
 
                             <div class="form-group">
 
@@ -183,7 +184,7 @@
                                         <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
                                         <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                        
+
                                         @if ($errors->has('banner_mobile'))
                                             <div class="help-block text-danger">
                                                 {{ $errors->first('banner_mobile') }}
@@ -286,7 +287,7 @@
                                     </small>
 
                                 </div>
-                    
+
                             </div>
 
                             <div class="col-md-12 col-xs-12">

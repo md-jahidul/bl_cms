@@ -5,10 +5,10 @@ namespace App\Http\Controllers\AssetLite;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BusinessProductCategoriesRequest;
 use App\Services\BusinessHomeService;
 use App\Http\Requests\BusinessNewsRequest;
 use App\Http\Requests\BusinessFeaturesRequest;
-use App\Http\Requests\BusinessProductCategoriesRequest;
 
 class BusinessGeneralController extends Controller {
 
@@ -70,7 +70,6 @@ class BusinessGeneralController extends Controller {
      * @Dev Bulbul Mahmud Nito || 06/04/2020
      */
     public function updateCategory(BusinessProductCategoriesRequest $request) {
-        
         $response = $this->businessHomeService->updateCategory($request);
         if ($response['success'] == 1) {
             Session::flash('message', 'Category updated successfully!');

@@ -137,14 +137,18 @@ class DynamicPageController extends Controller
         // $multipleImage = $component['multiple_attributes'];
         // return view('admin.dynamic-pages.components.edit', compact('component', 'multipleImage', 'componentTypes', 'pageId'));
 
-        $component = $this->componentService->findOne($id, ['componentMultiData']);
-        $multipleImage = $component['multiple_attributes'];
+//        $component = $this->componentService->findOne($id, ['componentMultiData']);
+//        $multipleImage = $component['multiple_attributes'];
+//        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
+//        $updateAction = 'other-component-update';
+//        $listAction = 'other-components';
+//        return view('admin.components.edit', compact('component', 'multipleImage', 'componentList', 'updateAction', 'listAction'));
+
+        $component = $this->componentService->findOne($id);
         $componentList = ComponentHelper::components()[self::PAGE_TYPE];
         $updateAction = 'other-component-update';
         $listAction = 'other-components';
-        return view('admin.components.edit', compact('component', 'multipleImage', 'componentList', 'updateAction', 'listAction'));
-
-
+        return view('admin.components.edit', compact('component', 'componentList', 'updateAction', 'listAction'));
     }
 
     /**

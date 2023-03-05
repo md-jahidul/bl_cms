@@ -84,10 +84,9 @@
                                 </small>
                             </div>
 
-                        </div>
 
                         <div class="form-group row">
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-6 col-xs-12">
                                 <label>Banner (Web)</label>
                                 <input type="file" class="dropify_category" name="banner_web" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]' id="banner_web">
@@ -96,7 +95,7 @@
 
                                 <p class="banner_web"></p>
                             </div>
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-6 col-xs-12">
                                 <label>Banner (Mobile)</label>
                                 <input type="file" class="dropify_category" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
@@ -145,9 +144,9 @@
                                 </small>
                             </div>
 
-                            {{--                                <div class="col-md-4 col-xs-12">--}}
-                            {{--                                    <label>Banner Photo Name<span class="text-danger">*</span></label>--}}
-                            {{--                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">--}}
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
 
                             {{--                                    <input type="hidden" class="old_banner_name" name="old_banner_name">--}}
 
@@ -157,28 +156,38 @@
                             {{--                                </div>--}}
                         </div>
 
-                        <div class="form-group row">
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Alt Text</label>
+                                    <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
+                                </div>
 
-                            {{--                                <div class="col-md-6 col-xs-12">--}}
-                            {{--                                    <label>Alt Text</label>--}}
-                            {{--                                    <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">--}}
-                            {{--                                </div>--}}
 
-                            <div class="col-md-4 col-xs-12">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                </small>
-                            </div>
 
-                            <div class="col-md-4 col-xs-12">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
+                            <div class="form-group row">
+
+                                <div class="col-md-12 col-xs-12">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
 
                             <div class="col-md-4 col-xs-12">
                                 <label>Page Header Bangla (HTML)</label>
@@ -301,18 +310,14 @@
                         </thead>
                         <tbody>
                         <tr>
-
                             <td>
                                 <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed ?? '' }}" disabled="disabled">
-
                             </td>
                             <td class="category_name">
                                 <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed ?? '' }}" disabled="disabled">
                             </td>
                             <td class="text-center">
-
                                 <a href="javascript:;" class="btn btn-sm btn-success update_slider_speed">Update</a>
-
                             </td>
                         </tr>
                         </tbody>
@@ -330,7 +335,20 @@
     <script>
         $(function () {
 
-            /*######################################### Category Javascript ##################################################*/
+        /*######################################### Category Javascript ##################################################*/
+        function dropify(){
+                $('.dropify_category').dropify({
+                    messages: {
+                        'default': 'Browse for an Image File to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct file format'
+                    }
+                });
+            }
+            dropify();
+
+        /*######################################### Category Javascript ##################################################*/
 
 
             $('.edit_category').on('click', function (e) {
@@ -384,6 +402,17 @@
                             $(".status_inactive").attr('checked', 'checked');
                         }
 
+                        dropify();
+
+                        /* Need to check
+                        let drop = $('.dropify_category').dropify({
+                            messages: {
+                                'default': 'Browse',
+                                'replace': 'Click to replace',
+                                'remove': 'Remove',
+                                'error': 'Choose correct file format'
+                            }
+                        });*/
 
                     },
                     error: function (data) {
@@ -392,8 +421,11 @@
                             type: 'error',
                         });
                     }
+
                 });
-            });
+            /*});*/
+
+        });
 
 
 

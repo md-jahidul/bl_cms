@@ -45,7 +45,6 @@ class ComponentHelper
                 'multiple_image' => 'Multiple Image',
                 'title_with_video_and_text' => 'Title With Video Text',
                 'customer_complaint' => 'Customer Complaint',
-
             ],
             'blog' => [
                 'single_image' => 'Single Image',

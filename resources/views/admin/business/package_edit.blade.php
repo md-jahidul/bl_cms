@@ -43,8 +43,8 @@
 
                                 </div>
 
-
-                                <div class="form-group">
+                                <!-- Repleased with component-->
+                                {{-- <div class="form-group">
 
                                     <label for="Details">Package Details (EN)</label>
                                     <textarea type="text" name="package_details_en" class="form-control summernote_editor">{!! $package->main_details !!}</textarea>
@@ -54,7 +54,7 @@
                                     <label for="Details">Package Details (BN)</label>
                                     <textarea type="text" name="package_details_bn" class="form-control summernote_editor">{!! $package->main_details_bn !!}</textarea>
 
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
 
@@ -283,6 +283,8 @@
 
                                 </div>
 
+                                    <label for="Details">Package Details (EN)</label>
+                                    <textarea type="text" name="package_details_en" class="form-control summernote_editor">{!! $package->main_details !!}</textarea>
 
                                 <div class="form-group row">
 

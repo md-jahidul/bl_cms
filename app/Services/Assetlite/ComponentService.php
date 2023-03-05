@@ -113,22 +113,10 @@ class ComponentService
 
     public function componentStore($data, $sectionId, $pageType)
     {
-
-//        dd($data);
-//        if ($data['component_type'] == "title_with_text_and_right_image") {
-//            request()->validate([
-//                'image_name_en' => 'unique:components,image_name_en',
-//                'image_name_bn' => 'unique:components,image_name_bn',
-//            ]);
-//        }
-
         if (request()->hasFile('image')) {
-
             if ($pageType == ExploreCDetailsController::PAGE_TYPE) {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
         }
@@ -200,7 +188,7 @@ class ComponentService
 
         //     $data['editor_en'] = $btn_html_en;
         //     $data['editor_bn'] = $btn_html_bn;
-            
+
         // }
 
 
@@ -226,7 +214,8 @@ class ComponentService
                 $this->comMultiDataRepository->save($imgData);
             }
         }
-        
+
+
 
         return response('Component create successfully!');
     }
@@ -249,10 +238,8 @@ class ComponentService
         $component = $this->findOne($id);
         if (request()->hasFile('image')) {
             if ($component['page_type'] == ExploreCDetailsController::PAGE_TYPE) {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/explore_c_details');
             }else {
-
                 $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
             }
             $this->deleteFile($component->image);
@@ -269,7 +256,6 @@ class ComponentService
                     if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
                             if ($component['page_type'] != ExploreCDetailsController::PAGE_TYPE) {
-
                                 $value = $this->upload($value, 'assetlite/images/product_details');
                             }
                         }
@@ -277,7 +263,6 @@ class ComponentService
                     }
                 }
             }
-            // return [$results, $data['multi_item']];
         }
 
         // get original data
@@ -344,7 +329,7 @@ class ComponentService
 
         //     $data['editor_en'] = $btn_html_en;
         //     $data['editor_bn'] = $btn_html_bn;
-        
+
         // }
 
         $component->update($data);

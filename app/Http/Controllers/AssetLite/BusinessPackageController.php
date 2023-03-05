@@ -39,7 +39,7 @@ class BusinessPackageController extends Controller {
         $packages = $this->packageService->getPackages();
         $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
         $components = $this->componentService->findBy(['page_type' => self::PAGE_TYPE, 'section_details_id' => 0], '', $orderBy);
-        
+
         return view('admin.business.package_list', compact('packages','components'));
     }
 
@@ -68,7 +68,7 @@ class BusinessPackageController extends Controller {
         $response = $this->packageService->savePackage($request);
 
         if($response['success'] == 1){
-            Session::flash('sussess', 'Package is saved!');
+           Session::flash('sussess', 'Package is saved!');
         }else{
             Session::flash('error', 'Package saving process failed!');
         }
@@ -144,7 +144,7 @@ class BusinessPackageController extends Controller {
         $response = $this->packageService->updatePackage($request);
 
         if($response['success'] == 1){
-            Session::flash('sussess', 'Package is updated!');
+           Session::flash('sussess', 'Package is updated!');
         }else{
             Session::flash('error', 'Package updating process failed!');
         }
@@ -162,10 +162,10 @@ class BusinessPackageController extends Controller {
      */
     public function delete($packageId) {
 
-        $response = $this->packageService->deletePackage($packageId);
+         $response = $this->packageService->deletePackage($packageId);
 
         if($response['success'] == 1){
-            Session::flash('sussess', 'Package is deleted!');
+           Session::flash('sussess', 'Package is deleted!');
         }else{
             Session::flash('error', 'Package deleting process failed!');
         }
@@ -176,7 +176,7 @@ class BusinessPackageController extends Controller {
     /**
      * Component
      */
-    
+
     public function componentCreate()
     {
         $componentList = ComponentHelper::components()[self::PAGE_TYPE];
@@ -185,7 +185,7 @@ class BusinessPackageController extends Controller {
         $pageType = self::PAGE_TYPE;
         return view('admin.components.create', compact('componentList', 'storeAction','listAction', 'pageType'));
     }
- 
+
     public function componentStore(Request $request)
     {
         // return $request->all();
@@ -194,7 +194,7 @@ class BusinessPackageController extends Controller {
         Session::flash('message', $response->getContent());
         return redirect('/business-package');
     }
- 
+
     public function componentEdit(Request $request, $id)
     {
         $component = $this->componentService->findOne($id);
@@ -203,31 +203,26 @@ class BusinessPackageController extends Controller {
         $listAction = 'business-package-component.list';
         return view('admin.components.edit', compact('component', 'componentList', 'updateAction', 'listAction'));
     }
- 
+
     public function componentUpdate(Request $request, $id)
     {
         // return $request->all();
         $request['page_type'] = self::PAGE_TYPE;
-        $section_details_id = 0; 
+        $section_details_id = 0;
         $response = $this->componentService->componentUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('/business-package');
     }
- 
- 
+
+
     public function componentSortable(Request $request): Response
     {
         return $this->componentService->tableSortable($request->all());
     }
- 
+
     public function componentDestroy($id)
     {
         $this->componentService->deleteComponent($id);
         return url()->previous();
     }
-   
-    
-    
-
-
 }
