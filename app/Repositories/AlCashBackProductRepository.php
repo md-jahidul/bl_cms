@@ -10,6 +10,6 @@ class AlCashBackProductRepository extends BaseRepository
 
     public function deleteCampaignWiseProduct($id)
     {
-        return $this->model->whereIn('all_cash_back_id', [$id])->delete();
+        return $this->model->whereIn('al_cash_back_id', [$id])->delete();
     }
 }

@@ -234,6 +234,20 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Campaign</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('al-cash-back-campaign') }}">
+                    <a class="menu-item" href="{{ url('al-cash-back-campaign') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Cashback</a>
+                </li>
+                
+            </ul>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('BusinessGeneral') ||
          auth()->user()->can_view('BusinessPackage') ||
          auth()->user()->can_view('BusinessInternet') ||
