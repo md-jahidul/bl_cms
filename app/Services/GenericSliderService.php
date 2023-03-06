@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Repositories\NonBlComponentRepository;
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\GenericSliderRepository;
 use App\Repositories\MyBlCommerceComponentRepository;
@@ -25,8 +26,9 @@ class GenericSliderService
 
     protected $genericSliderRepository;
     protected $myblHomeComponentService;
-    protected  $sliderRepository;
+    protected $sliderRepository;
     protected $contentComponentRepository;
+    protected $nonBlComponentRepository;
     protected $contentComponentService;
     protected $commerceComponentRepository;
     protected $commerceComponentService;
@@ -34,6 +36,7 @@ class GenericSliderService
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
         ContentComponentRepository $contentComponentRepository,
+        NonBlComponentRepository $nonBlComponentRepository,
         ContentComponentService $contentComponentService,
         SliderRepository $sliderRepository,
         MyBlCommerceComponentRepository $commerceComponentRepository,
@@ -44,6 +47,7 @@ class GenericSliderService
         $this->myblHomeComponentService = $myblHomeComponentService;
         $this->sliderRepository = $sliderRepository;
         $this->contentComponentRepository = $contentComponentRepository;
+        $this->nonBlComponentRepository = $nonBlComponentRepository;
         $this->contentComponentService = $contentComponentService;
         $this->commerceComponentRepository = $commerceComponentRepository;
         $this->commerceComponentService = $commerceComponentService;
@@ -55,11 +59,13 @@ class GenericSliderService
     {
         try {
             DB::beginTransaction();
+            
             $data['status'] = 1;
+            $genericSlider = $this->save($data);
+
             $homeComponentData['title_en'] = $data['title_en'];
             $homeComponentData['title_bn'] = $data['title_en'];
             $homeComponentData['display_order'] = $this->displayOrder($data['component_for']);
-            $genericSlider = $this->save($data);
             $homeComponentData['component_key'] = "generic-" . $genericSlider->id;
             $homeComponentData['is_api_call_enable'] = 1;
 
@@ -74,6 +80,10 @@ class GenericSliderService
             elseif ($data['component_for'] == 'commerce') {
                 $this->commerceComponentRepository->save($homeComponentData);
                 Redis::del('mybl_commerce_component');
+            }
+            elseif ($data['component_for'] == 'non_bl') {
+                $this->nonBlComponentRepository->save($homeComponentData);
+                Redis::del('non_bl_component');
             }
 
             DB::commit();
@@ -114,6 +124,11 @@ class GenericSliderService
                 $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
                 $commerceComponent->update($homeComponentData);
                 Redis::del('mybl_commerce_component');
+            }
+            elseif ($slider['component_for'] == 'non_bl') {
+                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $nonBlComponent->update($homeComponentData);
+                Redis::del('non_bl_component');
             }
             $slider->update($data);
             DB::commit();
@@ -156,6 +171,13 @@ class GenericSliderService
 
             return $contentSecondarySliderCount + $commerceComponentCount + 1;
         }
+        elseif ($type == 'non_bl')
+        {
+            $nonBlComponentCount = $this->nonBlComponentRepository->findAll()->count();
+            $contentSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+
+            return $contentSecondarySliderCount + $nonBlComponentCount + 1;
+        }
 
         return 1;
     }
@@ -177,6 +199,10 @@ class GenericSliderService
             else if ($componentFor == 'commerce') {
                 $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
                 $this->commerceComponentService->deleteComponent($commerceComponent->id);
+            }
+            else if ($componentFor == 'non_bl') {
+                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $this->nonBlComponentRepository->delete($nonBlComponent);
             }
             $slider->delete();
 

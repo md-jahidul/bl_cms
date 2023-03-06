@@ -56,13 +56,30 @@
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
                                         <label for="campaignStatusActive" class="mr-3">Content</label>
                                         <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}
-                                            {{ isset($single_slider->component_for) ? '' : 'checked' }}>
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}>
                                         <label for="campaignStatusInactive" class="mr-3">Home</label>
+                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="component_size" class="required">Component Size</label>
+                                    <select name="component_size" class="form-control custom-select"
+                                            id="component_size" required data-validation-required-message="Please select component size">
+                                        <option value="" >--Select Tab Section--</option>
+                                        
+                                        <option value="400x240" >4:2 400 x 240</option>
+                                        
+                                    </select>
+                                    @if($errors->has('component_ratio'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_ratio') }}</small>
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
                             <div class="card-footer">

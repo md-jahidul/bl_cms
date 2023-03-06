@@ -60,13 +60,38 @@
                                             {{ (isset($slider->component_for) && $slider->component_for == 'content') ? 'checked' : '' }} disabled>
                                         <label for="campaignStatusActive" class="mr-3">Content</label>
                                         <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }}
-                                            {{ isset($slider->component_for) ? '' : 'checked' }} disabled>
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }} disabled>
                                         <label for="campaignStatusInactive" class="mr-3">Home</label>
+                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="component_size" class="required">Component Size</label>
+                                    <select name="component_size" class="form-control custom-select"
+                                            id="component_size" required data-validation-required-message="Please select component size">
+                                        <option value="" >--Select Tab Section--</option>
+                                        
+                                        <option value="400x240" {{ (isset($slider->component_size) && $slider->component_size == '400x240') ? 'selected' : '' }} >
+                                            4:2 400 x 240
+                                        </option>
+                                        <option value="600x400" {{ (isset($slider->component_size) && $slider->component_size == '600x400') ? 'selected' : '' }} >
+                                            6:4 600 x 400
+                                        </option>
+                                        <option value="800x600" {{ (isset($slider->component_size) && $slider->component_size == '800x600') ? 'selected' : '' }} >
+                                            8:6 800 x 600
+                                        </option>
+                                        
+                                    </select>
+                                    @if($errors->has('component_ratio'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_ratio') }}</small>
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
                             <div class="card-footer">
