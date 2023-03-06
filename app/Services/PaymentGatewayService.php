@@ -43,7 +43,7 @@ class PaymentGatewayService
 
             $this->paymentGatewayRepository->save($data);
 
-//            Redis::connection('secondary_redis')->del('PaymentGatewayList');
+            Redis::del('PaymentGatewayListV2');
             return new Response("Payment gateway has been successfully created");
         } catch (\Exception $e) {
             return response()->json([
@@ -82,7 +82,7 @@ class PaymentGatewayService
             $pgw = $this->paymentGatewayRepository->findOne($id);
             $pgw->update($data);
             // Delete Redis Data
-//            Redis::connection('secondary_redis')->del('PaymentGatewayList');
+            Redis::del('PaymentGatewayListV2');
 
             return new Response("Payment Gateway has been successfully updated");
         } catch (\Exception $e) {
@@ -95,13 +95,14 @@ class PaymentGatewayService
 
     public function delete($id)
     {
+        Redis::del('PaymentGatewayListV2');
         return $this->paymentGatewayRepository->destroy($id);
     }
 
     public function tableSort($data)
     {
         $this->paymentGatewayRepository->manageTableSort($data);
-
+        Redis::del('PaymentGatewayListV2');
         return new Response('Sorted successfully');
     }
 }
