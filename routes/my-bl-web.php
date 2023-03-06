@@ -1249,6 +1249,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 
+    //Payment Gateway
+    Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
+    Route::get('payment-gateways/destroy/{id}', 'CMS\PaymentGatewayController@destroy')->name('payment-gateways.destroy');
+    Route::get('payment-gateways/sort-auto-save', 'CMS\PaymentGatewayController@categorySortable');
+
     Route::resource('generic-slider', 'CMS\GenericSliderController');
     Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
     Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
