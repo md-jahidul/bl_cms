@@ -1476,8 +1476,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 
-
     #Cash Back Campaign
     Route::resource('al-cash-back-campaign', 'AssetLite\AlCashBackController')->except(['show', 'destroy']);
     Route::get('al-cash-back-campaign/destroy/{id}', 'AssetLite\AlCashBackController@destroy');
+    
+    #Emergency Balance
+    Route::get('emergency-balance', 'AssetLite\EmergencyBalanceController@index');
+
 });
