@@ -973,6 +973,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 
+    // Groups
+    Route::get('group-components', 'CMS\GroupComponentController@index')->name('group.components');
+
     // Non Bl Components
     Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
     Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');

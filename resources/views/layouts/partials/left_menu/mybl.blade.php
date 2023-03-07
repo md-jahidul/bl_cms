@@ -378,6 +378,16 @@
         </ul>
     </li>
 
+    <!-- Groups -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Group Components</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Create Group</a>
+            </li>
+        </ul>
+    </li>
+
     <!-- Non Bl -->
     <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
         <span class="menu-title" data-i18n="nav.templates.main">Non Bl</span></a>
