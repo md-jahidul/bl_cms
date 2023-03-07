@@ -16,7 +16,7 @@
                                 Terms and Conditions Field is required. You cannot set blank.
                             </div>
                         @endif
-                        <form role="form" action="{{ route('terms-conditions.store') }}" method="POST">
+                        <form role="form" action="{{ route('al-terms-conditions.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="content-header-right col-md-12">
@@ -35,7 +35,7 @@
                                         {{ucwords(str_replace('_', ' ', $featureName))}} Terms and Conditions
                                     </label>
                                     <input type="hidden" name="feature_name" value="{{$featureName}}">
-                                    <textarea id="terms-conditions" name="terms_conditions" required>
+                                    <textarea id="terms-conditions" name="terms_conditions" required class="summernote_editor">
                                         @if($terms_conditions)
                                             {{ $terms_conditions->terms_conditions }}
                                         @endif
@@ -44,7 +44,7 @@
 
                                 <div class="col-md-6">
                                     <label for="title_en" class="required">Terms and Conditions (Bangla)</label>
-                                    <textarea id="terms-conditions" name="terms_conditions_bn" required>
+                                    <textarea id="terms-conditions" name="terms_conditions_bn" required class="summernote_editor">
                                         @if($terms_conditions)
                                             {{ $terms_conditions->terms_conditions_bn }}
                                         @endif
@@ -61,24 +61,8 @@
 @stop
 
 @push('page-css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-    <script>
-        $(function () {
-            $("textarea#terms-conditions").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen']]
-                ],
-                height:300
-            })
-        })
-    </script>
+
 @endpush
