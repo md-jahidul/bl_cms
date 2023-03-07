@@ -1,11 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Create Generic Slider')
-@section('card_name', 'Create Generic Slider')
+@section('title', 'Create Bill Utility')
+@section('card_name', 'Create Bill Utility')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">
-        <a href="{{ url('generic-slider') }}">Generic Slider List</a>
-    </li>
-    <li class="breadcrumb-item active">Create Campaign</li>
+    <li class="breadcrumb-item active">Create Bill Utility</li>
 @endsection
 @section('content')
     <section>
@@ -14,18 +11,18 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('generic-slider.store') }}"
+                              action="{{ route('utility-bill.store') }}"
                               method="POST"
                               class="form"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="title_en" class="required">Title English</label>
+                                    <label for="title_en" class="required">Bill Utility Title EN</label>
                                     <input class="form-control"
                                            name="title_en"
                                            id="title_en"
-                                           placeholder="Enter English Title"
+                                           placeholder="Bill utility Title"
                                            required>
                                     @if($errors->has('title_en'))
                                         <p class="text-left">
@@ -34,11 +31,11 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="title_bn" class="required">Title Bangla</label>
+                                    <label for="title_bn" class="required">Bill utility Title BN</label>
                                     <input class="form-control"
                                            name="title_bn"
                                            id="title_bn"
-                                           placeholder="Enter Bangla Title"
+                                           placeholder="Enter Utility Name"
                                            required>
                                     @if($errors->has('title_bn'))
                                         <p class="text-left">
@@ -46,41 +43,43 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 mb-2">
-                                    <label for="status_input">Component For: </label>
-                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
-                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
-                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>
-                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
-                                        <label for="campaignStatusActive" class="mr-3">Content</label>
-                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Home</label>
-                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
-                                        @if ($errors->has('component_for'))
-                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>
-                                        @endif
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Status</label>
+                                        <select name="status" class="form-control">
+                                            <option value="1" >Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="component_size" class="required">Component Size</label>
-                                    <select name="component_size" class="form-control custom-select"
-                                            id="component_size" required data-validation-required-message="Please select component size">
-                                        <option value="" >--Select Tab Section--</option>
-                                        
-                                        <option value="400x240" >4:2 400 x 240</option>
-                                        
-                                    </select>
-                                    @if($errors->has('component_size'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('component_size') }}</small>
-                                        </p>
-                                    @endif
+                                <div id="image-input" class="form-group col-md-6 mb-2">
+                                    <div class="form-group">
+                                        <label for="icon">Upload Icon</label>
+                                        <input type="file" id="icon" name="icon" class="dropify_image"
+                                               data-allowed-file-extensions="png jpg gif"/>
+                                        {{--                                        <div class="help-block text-warning">--}}
+                                        {{--                                            The Dimensions should be <strong>200x200</strong>--}}
+                                        {{--                                        </div>--}}
+                                        <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        <small id="message"></small>
+                                    </div>
                                 </div>
+
+{{--                                <div class="col-md-4">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="user_type" class="required mr-1">User Type:</label>--}}
+
+{{--                                        <input type="radio" name="user_type" value="all" checked>--}}
+{{--                                        <label for="user_type" class="mr-1">All</label>--}}
+
+{{--                                        <input type="radio" name="user_type" value="prepaid">--}}
+{{--                                        <label for="user_type">Prepaid</label>--}}
+
+{{--                                        <input type="radio" name="user_type" value="postpaid">--}}
+{{--                                        <label for="user_type">Postpaid</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
@@ -114,5 +113,18 @@
     {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
     {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script>
+        $(document).ready(function () {
+            $('.dropify_image').dropify({
+                messages: {
+                    'default': 'Browse for an Logo to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Logo'
+                },
+                error: {
+                    'imageFormat': 'The logo must be valid format'
+                }
+            });
+        });
     </script>
 @endpush

@@ -969,11 +969,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
 
 
-    //PGW Routes
+    // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 
-    //Commerce Component
+    // Non Bl Components
+    Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
+    Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');
+    Route::get('non-bl-components-status-update/{id}', 'CMS\NonBlComponentController@componentStatusUpdate')->name('nonbl.components.status.update');
+    Route::post('non-bl-components/store', 'CMS\NonBlComponentController@store')->name('nonbl.components.store');
+    Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
+    Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
+    Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    // Commerce Component
     Route::get('mybl-commerce-components', 'CMS\MyBlCommerceComponentController@index')->name('mybl.commerce.components');
     Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyBlCommerceComponentController@edit')
         ->name('mybl.commerce.components.edit');

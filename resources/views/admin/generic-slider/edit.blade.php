@@ -87,9 +87,9 @@
                                         </option>
                                         
                                     </select>
-                                    @if($errors->has('component_ratio'))
+                                    @if($errors->has('component_size'))
                                         <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('component_ratio') }}</small>
+                                            <small class="danger text-muted">{{ $errors->first('component_size') }}</small>
                                         </p>
                                     @endif
                                 </div>
