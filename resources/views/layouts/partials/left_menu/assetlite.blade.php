@@ -229,6 +229,12 @@
                         <span class="menu-title" data-i18n="nav.templates.main">Device Offers</span>
                     </a>
                 </li>
+                <li class="{{ is_active_url('/emergency-balance') }} nav-item">
+                    <a href="{{ url('emergency-balance') }}">
+                        <i class="la la-credit-card"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Emergency Balance</span>
+                    </a>
+                </li>
 
             </ul>
         </li>
