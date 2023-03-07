@@ -792,8 +792,8 @@
                 <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Terms and Conditions</span></a>
                     <ul class="menu-content">
-                        <li class="{{ is_active_url('/terms-conditions/balance_transfer') }} nav-item">
-                            <a href="{{route('terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
+                        <li class="{{ is_active_url('/al-terms-conditions/balance_transfer') }} nav-item">
+                            <a href="{{route('al-terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
                                 <i class="la la-legal"></i><span class="menu-title">Balance Transfer</span>
                             </a>
                         </li>

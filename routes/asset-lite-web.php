@@ -1478,6 +1478,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     /*
      * terms and conditions
      */
-    Route::get('terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('terms-conditions.show');
-    Route::post('terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('terms-conditions.store');
+    Route::get('al-terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('al-terms-conditions.show');
+    Route::post('al-terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('al-terms-conditions.store');
 });
