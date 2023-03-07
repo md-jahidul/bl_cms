@@ -1476,7 +1476,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 
-
     #Cash Back Campaign
     Route::resource('al-cash-back-campaign', 'AssetLite\AlCashBackController')->except(['show', 'destroy']);
     Route::get('al-cash-back-campaign/destroy/{id}', 'AssetLite\AlCashBackController@destroy');
@@ -1486,4 +1485,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
      */
     Route::get('terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('terms-conditions.store');
+
+    #Emergency Balance
+    Route::get('emergency-balance', 'AssetLite\EmergencyBalanceController@index');
+
 });
