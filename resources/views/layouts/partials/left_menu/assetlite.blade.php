@@ -768,7 +768,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
@@ -787,7 +787,19 @@
                     </li>
                 </ul>
             </li>
-            
+
+{{--            @if( auth()->user()->can_view('AlTermsAndConditions') )--}}
+                <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Terms and Conditions</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url('/terms-conditions/balance_transfer') }} nav-item">
+                            <a href="{{route('terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
+                                <i class="la la-legal"></i><span class="menu-title">Balance Transfer</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+{{--            @endif--}}
         </ul>
     </li>
 

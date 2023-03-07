@@ -1474,4 +1474,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
+
+    /*
+     * terms and conditions
+     */
+    Route::get('terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('terms-conditions.show');
+    Route::post('terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('terms-conditions.store');
 });
