@@ -1480,4 +1480,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     #Cash Back Campaign
     Route::resource('al-cash-back-campaign', 'AssetLite\AlCashBackController')->except(['show', 'destroy']);
     Route::get('al-cash-back-campaign/destroy/{id}', 'AssetLite\AlCashBackController@destroy');
+
+    /*
+     * terms and conditions
+     */
+    Route::get('terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('terms-conditions.show');
+    Route::post('terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('terms-conditions.store');
 });

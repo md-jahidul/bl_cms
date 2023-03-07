@@ -1043,12 +1043,14 @@
             </li>
         </ul>
     </li>
+
+    <li class="{{ is_active_url('developer/api/debug') }}">
+        <a class="menu-item" href="{{ route('support-message') }}">
+            <i class="la la-code-fork"></i>Support Messages</a>
+    </li>
 @endif
 
-<li class="{{ is_active_url('developer/api/debug') }}">
-    <a class="menu-item" href="{{ route('support-message') }}">
-        <i class="la la-code-fork"></i>Support Messages</a>
-</li>
+
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
