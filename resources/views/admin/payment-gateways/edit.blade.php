@@ -29,17 +29,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="required">Payment Gateway Type :
-                                    </label>
-                                    <div class="controls">
-                                        <input type='text' class="form-control" name="type" id="type"
-                                               value="@if(isset($pgwGateways_info)){{$pgwGateways_info->type}}@endif"
-                                               placeholder="Please Enter Payment Gateway Type" required />
-                                    </div>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-4">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label class="required">Payment Gateway Type :--}}
+{{--                                    </label>--}}
+{{--                                    <div class="controls">--}}
+{{--                                        <input type='text' class="form-control" name="type" id="type"--}}
+{{--                                               value="@if(isset($pgwGateways_info)){{$pgwGateways_info->type}}@endif"--}}
+{{--                                               placeholder="Please Enter Payment Gateway Type" required />--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="required">Currency :
@@ -48,6 +48,20 @@
                                         <input type='text' class="form-control" name="currency" id="currency"
                                                value="@if(isset($pgwGateways_info)){{$pgwGateways_info->currency}}@else BDT @endif"
                                                placeholder="Please Enter Currency" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="required">Payment Gateway Status :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="status" id="select" required class="form-control">
+                                            <option value="1"
+                                                    @if(isset($pgwGateways_info) && $pgwGateways_info->status == 1) selected @endif
+                                            >Active</option>
+                                            <option value="0" @if(isset($pgwGateways_info) && $pgwGateways_info->status == 0) selected @endif>Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -91,20 +105,6 @@
                                 </div>
                             </div>
                         </div> -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="required">Payment Gateway Status :
-                                    </label>
-                                    <div class="controls">
-                                        <select name="status" id="select" required class="form-control">
-                                            <option value="1"
-                                                    @if(isset($pgwGateways_info) && $pgwGateways_info->status == 1) selected @endif
-                                            >Active</option>
-                                            <option value="0" @if(isset($pgwGateways_info) && $pgwGateways_info->status == 0) selected @endif>Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-md-10"></div>
                             <div class="col-md-2 " style="float: right;">
                                 <div class="form-group" style="margin-top:26px">

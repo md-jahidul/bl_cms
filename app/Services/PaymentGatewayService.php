@@ -31,7 +31,7 @@ class PaymentGatewayService
             } else {
                 $data['gateway_name'] = 'ssl';
             }
-            $data['type'] =  $request['type'];
+            $data['type'] =  $data['gateway_name'];
             $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             if (!empty($request['logo_web'])) {
@@ -70,7 +70,6 @@ class PaymentGatewayService
             } else {
                 $data['gateway_name'] = 'ssl';
             }
-            $data['type'] =  $request['type'];
             $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             if (isset($request['logo_web'])) {
