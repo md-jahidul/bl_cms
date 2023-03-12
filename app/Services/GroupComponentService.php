@@ -44,7 +44,6 @@ class GroupComponentService
         $this->componentRepository = $componentRepository;
         $this->sliderRepository = $sliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->sliderRepository = $sliderRepository;
         $this->contentComponentRepository = $contentComponentRepository;
         $this->nonBlComponentRepository = $nonBlComponentRepository;

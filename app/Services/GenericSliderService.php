@@ -68,6 +68,7 @@ class GenericSliderService
             $homeComponentData['display_order'] = $this->displayOrder($data['component_for']);
             $homeComponentData['component_key'] = "generic-" . $genericSlider->id;
             $homeComponentData['is_api_call_enable'] = 1;
+            $homeComponentData['is_eligible'] = 0;
 
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($homeComponentData);
