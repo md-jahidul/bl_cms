@@ -33,6 +33,12 @@ class GenericShortcutMasterController extends Controller
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
+        $request->validate([
+            'title_en' => 'required|max:200',
+            'title_bn' => 'required|max:200',
+            'component_for' => 'required'
+        ]);
+
         $this->genericShortcutMasterService->save($request->all());
         return redirect()->route('generic-shortcut-master.index')->with('success', "Generic Shortcut Meta Data Saved Successfully");
     }
@@ -45,6 +51,12 @@ class GenericShortcutMasterController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'title_en' => 'required|max:200',
+            'title_bn' => 'required|max:200',
+            'component_for' => 'required'
+        ]);
+
         $this->genericShortcutMasterService->findOne($id)->update($request->all());
         return redirect()->route('generic-shortcut-master.index')->with('success', "Generic Shortcut Meta Data Updated Successfully");
     }

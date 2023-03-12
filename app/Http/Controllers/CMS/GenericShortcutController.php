@@ -37,8 +37,15 @@ class GenericShortcutController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->genericShortcutService->saveGenericShortcut($request->all());
+        $request->validate([
+           'title_en' => 'required|max:200',
+           'title_bn' =>  'required|max:200',
+           'customer_type' => 'required',
+           'component_identifier' => 'required',
+           'icon' => 'required'
+        ]);
 
+        $this->genericShortcutService->saveGenericShortcut($request->all());
         return redirect()->route('generic-shortcut', $request->generic_shortcut_master_id)->with('success', "Generic Shortcut Saved Successfully");
     }
 
@@ -51,8 +58,15 @@ class GenericShortcutController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $this->genericShortcutService->updateGenericShortcut($request->all(), $id);
+        $request->validate([
+            'title_en' => 'required|max:50',
+            'title_bn' =>  'required|max:50',
+            'customer_type' => 'required',
+            'component_identifier' => 'required',
+            'icon' => 'required'
+        ]);
 
+        $this->genericShortcutService->updateGenericShortcut($request->all(), $id);
         return redirect()->route('generic-shortcut', $request->generic_shortcut_master_id)->with('success', "Generic Shortcut Updated Successfully");
     }
 

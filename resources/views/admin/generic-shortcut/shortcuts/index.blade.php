@@ -41,34 +41,34 @@
                         </thead>
                         <tbody id="sortable">
                         @php $shortcuts = isset($shortcut) ? $shortcut->shortcuts : [] @endphp
-                        @foreach ($shortcuts as $shortcut)
-                            <tr data-index="{{ $shortcut->id }}" data-position="{{ $shortcut->display_order }}">
+                        @foreach ($shortcuts as $value)
+                            <tr data-index="{{ $value->id }}" data-position="{{ $value->display_order }}">
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{$shortcut->title_en}}</td>
-                                <td>{{$shortcut->title_bn}}</td>
+                                <td>{{$value->title_en}}</td>
+                                <td>{{$value->title_bn}}</td>
                                 <td>
-                                    {{ $actionList[$shortcut->component_identifier] ?? '' }}
+                                    {{ $actionList[$value->component_identifier] ?? '' }}
                                 </td>
-                                <td><img style="height:20px;width:20px" src="{{asset($shortcut->icon)}}"
+                                <td><img style="height:20px;width:20px" src="{{asset($value->icon)}}"
                                          alt="" srcset=""></td>
                                 <td width="10%">
-                                    @if($shortcut->is_default==1) Default @else Not Default @endif
+                                    @if($value->is_default==1) Default @else Not Default @endif
                                 </td>
                                 <td width="10%">
-                                    {{ $shortcut->customer_type }}
+                                    {{ $value->customer_type }}
                                 </td>
                                 <td>
                                     <div class="form-group">
                                         <div class="btn-group" role="group">
                                             <a type="button"
                                                title="Edit"
-                                               href="{{ route('generic-shortcut.edit', $shortcut->id) }}"
+                                               href="{{ route('generic-shortcut.edit', $value->id) }}"
                                                class="btn btn-icon btn-outline-primary">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                             <button type="button"
                                                     title="Delete"
-                                                    data-id="{{$shortcut->id}}"
+                                                    data-id="{{$value->id}}"
                                                     class="btn btn-icon btn-outline-danger delete">
                                                 <i class="la la-remove"></i>
                                             </button>
@@ -129,7 +129,7 @@
 
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
-                var masterId = "{{ isset($shortcut) ?? $shortcut->id }}"
+                var masterId = "{{ isset($shortcut) ? $shortcut->id : 1 }}"
 
                 Swal.fire({
                     title: 'Are you sure?',

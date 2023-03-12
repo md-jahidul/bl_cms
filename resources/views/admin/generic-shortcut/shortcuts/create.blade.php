@@ -23,7 +23,7 @@
     <section>
         <form
             action=" @if(isset($shortcut)) {{ route('generic-shortcut.update', $shortcut->id)}} @else {{route('generic-shortcut.store')}} @endif"
-            method="post" enctype="multipart/form-data">
+            method="post" enctype="multipart/form-data" novalidate class="form" id="slider-form">
 
             @csrf
             @if(isset($shortcut)) @method('put') @else @method('post') @endif
@@ -66,10 +66,8 @@
                             <input required
                                    value="@if(isset($shortcut)){{$shortcut->title_en}} @elseif(old("title_en")) {{old("title_en")}} @endif"
                                    type="text" name="title_en" class="form-control @error('title_en') is-invalid @enderror"
+                                   data-validation-required-message="Name is required"
                                    id="title_en" placeholder="Enter Shortcut Name in English..">
-                            <div class="help-block">
-                                <small class="text-info"> Title can not be more then 50 Characters</small>
-                            </div>
                             <small class="text-danger"> @error('title_en') {{ $message }} @enderror </small>
                         </div>
                     </div>
@@ -81,9 +79,6 @@
                                    value="@if(isset($shortcut)){{$shortcut->title_bn}} @elseif(old("title_bn")) {{old("title_bn")}} @endif"
                                    type="text" name="title_bn" class="form-control @error('title_bn') is-invalid @enderror"
                                    id="title_bn" placeholder="Enter Shortcut Name in Bangla..">
-                            <div class="help-block">
-                                <small class="text-info"> Title can not be more then 50 Characters</small>
-                            </div>
                             <small class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
                         </div>
                     </div>
@@ -107,7 +102,7 @@
                             @if (isset($shortcut))
                                 <input type="file"
                                        id="icon"
-{{--                                       class="dropify"--}}
+                                       class="dropify"
                                        name="icon"
                                        data-height="70"
                                        data-allowed-formats="square"
@@ -118,7 +113,7 @@
                                 <input type="file" required
                                        id="icon"
                                        name="icon"
-{{--                                       class="dropify"--}}
+                                       class="dropify"
                                        data-allowed-formats="square"
                                        data-allowed-file-extensions="png"
                                        data-height="70"/>
@@ -200,11 +195,14 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
             type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
     <script>
 
         var auto_save_url = "{{ url('shortcuts-sortable') }}";
 
         $(function () {
+            $("#slider-form").validate();
            var content = "";
             var url_html;
             var parse_data;
