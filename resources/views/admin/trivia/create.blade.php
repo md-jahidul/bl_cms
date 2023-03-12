@@ -357,7 +357,7 @@
                         <input required
                                data-validation-required-message="The field is required"
                                id="failed_message_bn"
-                               value="@if(isset($trivia)){{$trivia->failed_message_en}}@elseif(old("failed_message_bn")){{old("failed_message_bn")}}@endif"
+                               value="@if(isset($trivia)){{$trivia->failed_message_bn}}@elseif(old("failed_message_bn")){{old("failed_message_bn")}}@endif"
                                type="text"
                                name="failed_message_bn"
                                class="form-control
@@ -391,7 +391,7 @@
                         <input required
                                data-validation-required-message="The field is required"
                                id="show_answer_btn_bn"
-                               value="@if(isset($trivia)){{$trivia->show_answer_btn_en}}@elseif(old("show_answer_btn_bn")){{old("show_answer_btn_bn")}}@endif"
+                               value="@if(isset($trivia)){{$trivia->show_answer_btn_bn}}@elseif(old("show_answer_btn_bn")){{old("show_answer_btn_bn")}}@endif"
                                type="text"
                                name="show_answer_btn_bn"
                                class="form-control
