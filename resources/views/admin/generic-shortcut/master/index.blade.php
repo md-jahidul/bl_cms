@@ -49,7 +49,7 @@
                                             </a>
                                         </div>
                                         <div class="col-md-3">
-                                            <a role="button" title="View Images" href="{{route('generic-shortcut-master.edit',$shortcut->id)}}"
+                                            <a role="button" title="View Images" href="{{ route('generic-shortcut', $shortcut->id)}}"
                                                class=" btn btn-outline-success">
                                                 <i class="la la-picture-o"></i>
                                             </a>

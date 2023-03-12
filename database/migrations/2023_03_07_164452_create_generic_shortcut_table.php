@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGenericShortcutsTable extends Migration
+class CreateGenericShortcutTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,18 @@ class CreateGenericShortcutsTable extends Migration
     {
         Schema::create('generic_shortcuts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('generic_shortcut_master_id');
-            $table->string('title');
+            $table->unsignedBigInteger('generic_shortcut_master_id');
+            $table->string('title_en');
+            $table->string('title_bn');
             $table->text('icon');
             $table->string('customer_type');
             $table->string('component_identifier');
+            $table->text('other_info')->nullable();
             $table->tinyinteger('is_default')->default('0');
+            $table->foreign('generic_shortcut_master_id')
+                ->references('id')
+                ->on('generic_shortcut_masters')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +38,7 @@ class CreateGenericShortcutsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('generic_shortcuts');
     }
 }

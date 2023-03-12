@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class GenericShortcut extends Model
 {
     protected $fillable = [
-        'title',
+        'title_en',
         'title_bn',
+        'generic_shortcut_master_id',
         'icon',
         'component_identifier',
         'is_default',
-        'customer_type'
+        'customer_type',
+        'other_info'
     ];
 }
 

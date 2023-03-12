@@ -10,7 +10,7 @@
 
 @section('action')
     <a href="{{route('generic-shortcut-master.index') }}" class="btn btn-info btn-glow px-2">
-        Back
+       Go Back
     </a>
 @endsection
 
