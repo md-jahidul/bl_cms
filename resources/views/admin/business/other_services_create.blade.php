@@ -273,6 +273,19 @@
                                     </div>
                                 @endif
                             </div>
+
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" name="details_card_web" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="hidden" name="old_details_card_web">
+                            </div>
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" name="details_card_mob" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="hidden" name="old_details_card_mob">
+                            </div>
                         </div>
 
                     </div>
