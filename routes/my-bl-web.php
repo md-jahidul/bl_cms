@@ -53,6 +53,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
     Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');;
 
+    Route::resource('generic-shortcut-master', 'CMS\GenericShortcutMasterController');
+    Route::get('generic-shortcut-master/destroy/{id}', 'CMS\GenericShortcutMasterController@destroy');
+
+    Route::get('generic-shortcut/{id}', 'CMS\GenericShortcutController@index')->name('generic-shortcut');
+    Route::get('generic-shortcut/{id}/create', 'CMS\GenericShortcutController@create')->name('generic-shortcut.create');
+    Route::post('generic-shortcut/store', 'CMS\GenericShortcutController@store')->name('generic-shortcut.store');
+    Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
+    Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
+    Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+
     //------ shortcuts -----------//
 
     // Banner
