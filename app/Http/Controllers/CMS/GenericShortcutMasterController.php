@@ -39,7 +39,7 @@ class GenericShortcutMasterController extends Controller
             'component_for' => 'required'
         ]);
 
-        $this->genericShortcutMasterService->save($request->all());
+        $this->genericShortcutMasterService->storeShortcutMaster($request->all());
         return redirect()->route('generic-shortcut-master.index')->with('success', "Generic Shortcut Meta Data Saved Successfully");
     }
 
@@ -57,13 +57,13 @@ class GenericShortcutMasterController extends Controller
             'component_for' => 'required'
         ]);
 
-        $this->genericShortcutMasterService->findOne($id)->update($request->all());
+        $this->genericShortcutMasterService->updateShortcutMasterData($request->all(), $id);
         return redirect()->route('generic-shortcut-master.index')->with('success', "Generic Shortcut Meta Data Updated Successfully");
     }
 
     public function destroy($id)
     {
-        $this->genericShortcutMasterService->findOne($id)->delete();
+        $this->genericShortcutMasterService->deleteShortcutMasterData($id);
         return url('generic-shortcut-master');
     }
 }

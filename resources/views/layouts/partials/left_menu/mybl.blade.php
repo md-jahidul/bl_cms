@@ -447,7 +447,7 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
                 </li>
-                <li class="{{ is_active_url('generic-shortcut-master') . is_active_url('generic-shortcut/*') }}">
+                <li class="@if(is_active_match('generic-shortcut-master')) {{ is_active_match('generic-shortcut-master') }} @else {{ is_active_match('generic-shortcut') }}  @endif">
                     <a class="menu-item" href="{{ route('generic-shortcut-master.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Shortcut</a>
