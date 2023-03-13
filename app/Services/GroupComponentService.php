@@ -131,7 +131,7 @@ class GroupComponentService
 
             $component = $this->save($data);
 
-            $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en'])) . '-' . $component->id;
+            $data['component_key'] = 'group' . '-' . $component->id;
     
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($data);
