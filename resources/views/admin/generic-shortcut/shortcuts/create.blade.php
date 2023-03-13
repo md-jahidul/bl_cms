@@ -66,9 +66,9 @@
                             <input required
                                    value="@if(isset($shortcut)){{$shortcut->title_en}} @elseif(old("title_en")) {{old("title_en")}} @endif"
                                    type="text" name="title_en" class="form-control @error('title_en') is-invalid @enderror"
-                                   data-validation-required-message="Name is required"
                                    id="title_en" placeholder="Enter Shortcut Name in English..">
                             <small class="text-danger"> @error('title_en') {{ $message }} @enderror </small>
+                            <div class="help-block"></div>
                         </div>
                     </div>
 
@@ -80,6 +80,7 @@
                                    type="text" name="title_bn" class="form-control @error('title_bn') is-invalid @enderror"
                                    id="title_bn" placeholder="Enter Shortcut Name in Bangla..">
                             <small class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
+                            <div class="help-block"></div>
                         </div>
                     </div>
 
