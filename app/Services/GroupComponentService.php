@@ -127,7 +127,7 @@ class GroupComponentService
             $data['is_api_call_enable'] = $data['active'];
             $data['is_eligible'] = 0;
             $data['display_order'] = $this->displayOrder($data['component_for']);
-            
+
             unset($data['member_1'], $data['member_2']);
 
             $component = $this->save($data);

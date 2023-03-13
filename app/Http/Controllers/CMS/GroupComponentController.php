@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Services\GenericShortcutMasterService;
 use App\Services\MyBlCommerceComponentService;
 use App\Services\GenericSliderService;
 use App\Services\GroupComponentService;
@@ -16,13 +17,16 @@ use Illuminate\Support\Facades\Session;
 class GroupComponentController extends Controller
 {
     private $genericSliderService;
+    private $genericShortcutMasterService;
     private $shorcutService;
     private $componentService;
 
     public function __construct(
         GenericSliderService $genericSliderService,
+        GenericShortcutMasterService $genericShortcutMasterService,
         GroupComponentService $componentService
     ) {
+        $this->genericShortcutMasterService = $genericShortcutMasterService;
         $this->genericSliderService = $genericSliderService;
         $this->componentService = $componentService;
     }
@@ -41,7 +45,13 @@ class GroupComponentController extends Controller
             return $item;
         }, $sliders);
 
-        $components = [ ...$sliders];
+        $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
+        $shortcuts = array_map(function($item) {
+            $item['prefix'] = 'generic-shortcut';
+            return $item;
+        }, $shortcuts);
+
+        $components = [ ...$sliders, ...$shortcuts];
         
         return view('admin.group-components.create', compact('components'));
     }
