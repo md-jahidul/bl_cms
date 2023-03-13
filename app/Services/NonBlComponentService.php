@@ -102,6 +102,7 @@ class NonBlComponentService
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));;
         $data['display_order'] = $nonBlComponentCount + $homeSecondarySliderCount + 1;
+        $data['is_eligible'] = 0;
 
         $this->save($data);
         Redis::del(self::REDIS_KEY);

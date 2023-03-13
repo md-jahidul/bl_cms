@@ -20,7 +20,7 @@ class CreateNonBlComponentsTable extends Migration
             $table->string('title_bn')->nullable();
             $table->integer('display_order')->nullable();
             $table->boolean('is_api_call_enable')->nullable();
-            $table->boolean('is_eligible')->nullable();
+            $table->boolean('is_eligible')->default(false);
             $table->boolean('is_fixed_position')->default(false);
             $table->timestamps();
         });
