@@ -26,12 +26,15 @@ class PaymentGatewayService
             $data['gateway_name'] = null;
             if ($data['gateway_id'] == 101) {
                 $data['gateway_name'] = 'Visa/Master';
+                $data['type'] = 'card';
             } else if ($data['gateway_id'] == 201) {
                 $data['gateway_name'] = 'bKash';
+                $data['type'] = 'mfs';
             } else {
                 $data['gateway_name'] = 'ssl';
+                $data['type'] =  'ssl';
             }
-            $data['type'] =  $data['gateway_name'];
+
             $data['status'] =  $request['status'];
             $data['currency'] =  $request['currency'];
             if (!empty($request['logo_web'])) {
