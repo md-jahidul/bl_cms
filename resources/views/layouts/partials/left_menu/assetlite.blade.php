@@ -863,6 +863,11 @@
                 class="la la-list"></i> Dynamic Routes</a>
     </li>
     {{--    @endif--}}
+    <li class="{{ is_active_url(route('meta-tag.index')) }}">
+        <a class="menu-item" href="{{ route('meta-tag.index') }}"
+           data-i18n="nav.templates.vert.classic_menu"><i
+                class="la la-list"></i> Meta Tags</a>
+    </li>
 
 
     <hr>
