@@ -170,8 +170,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('about-us-career-sortable', 'AssetLite\AboutEcareerItemController@aboutUsCareerSortable');
 
 
-    // META TAG  ====================================
-    Route::resource('meta-tag', 'AssetLite\MetaTagController');
+    # META TAG  ====================================
+    Route::resource('meta-tag', 'AssetLite\MetaTagController')->except(['create']);
     Route::get('meta-tag/destroy/{id}', 'AssetLite\MetaTagController@destroy');
 
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
@@ -1385,7 +1385,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us-field.update');
     Route::get('corporate/contact-us-field/{section_id}/destroy/{id}',
         'AssetLite\CorpContactUsFieldController@destroy');
-//    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
+    // Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
 
     // Corporate Responsibility Contact Us Info List
     Route::get('corporate/contact-us-info', 'AssetLite\CorporateRespContactUsController@customerContactInfoList')

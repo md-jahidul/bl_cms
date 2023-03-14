@@ -5,9 +5,9 @@
     <li class="breadcrumb-item "><a href="{{ url('meta-tag') }}"> Meta Tag List</a></li>
 @endsection
 @section('action')
-    <a href="{{route('meta-tag.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    {{-- <a href="{{route('meta-tag.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Create Meta Tag
-    </a>
+    </a> --}}
 @endsection
 @section('content')
     <section>

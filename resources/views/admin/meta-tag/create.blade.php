@@ -31,7 +31,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('dynamic_route_key') ? ' error' : '' }}">
                                 <label class="required"> Key</label>
-                                <input type="text" class="form-control slug-convert required" name="dynamic_route_key" placeholder="Key" id="dynamic_route_key" value="{{ old("dynamic_route_key") ? old("dynamic_route_key") : '' }}">
+                                <input type="text" class="form-control slug-convert required" name="dynamic_route_key" placeholder="Key" readonly value="{{ old("dynamic_route_key") ? old("dynamic_route_key") : '' }}">
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
@@ -44,7 +44,7 @@
 
                             <div class="form-group col-md-6 ">
                                 <label for="page_header">Page Header (HTML)</label>
-                                <textarea type="text" name="page_header" class="form-control">{{ old("page_header") ? old("page_header") : '' }}</textarea>
+                                <textarea type="text" name="page_header" rows="7" class="form-control">{{ old("page_header") ? old("page_header") : '' }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -52,7 +52,7 @@
 
                             <div class="form-group col-md-6 ">
                                 <label for="page_header_bn">Page Header Bangla (HTML)</label>
-                                <textarea type="text" name="page_header_bn" class="form-control">{{ old("page_header_bn") ? old("page_header_bn") : '' }}</textarea>
+                                <textarea type="text" name="page_header_bn" rows="7" class="form-control">{{ old("page_header_bn") ? old("page_header_bn") : '' }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -60,7 +60,7 @@
 
                             <div class="form-group col-md-6 ">
                                 <label for="schema_markup">Schema Markup</label>
-                                <textarea type="text" name="schema_markup" class="form-control">{{ old("schema_markup") ? old("schema_markup") : '' }}</textarea>
+                                <textarea type="text" name="schema_markup" rows="7" class="form-control">{{ old("schema_markup") ? old("schema_markup") : '' }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
