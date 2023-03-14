@@ -5,6 +5,9 @@ namespace App\Http\Controllers\AssetLite;
 use App\Services\MetaTagService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
+
 
 class MetaTagController extends Controller
 {
@@ -30,7 +33,7 @@ class MetaTagController extends Controller
     {
         $metaTags = $this->metaTagService->findAll('', 'page:id,title');
 
-//        return $metaTags;
+        // return $metaTags;
         return view('admin.meta-tag.index', compact('metaTags'));
     }
 
@@ -41,7 +44,7 @@ class MetaTagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.meta-tag.create');
     }
 
     /**
@@ -52,7 +55,16 @@ class MetaTagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'dynamic_route_key' => 'required|regex:/^\S*$/u|unique:meta_tags,dynamic_route_key',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        session()->flash('message', $this->metaTagService->storeFixedPageTag($request->all())->getContent());
+        return redirect(route('meta-tag.index'));
     }
 
     /**
@@ -74,7 +86,9 @@ class MetaTagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $metaTag = $this->metaTagService->findOne($id);
+
+        return view('admin.meta-tag.edit', compact('metaTag'));
     }
 
     /**
@@ -86,7 +100,17 @@ class MetaTagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $metaTag = $this->metaTagService->findOne($id);
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'dynamic_route_key' => 'required|regex:/^\S*$/u|unique:meta_tags,dynamic_route_key,' . $metaTag->id,
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        session()->flash('message', $this->metaTagService->updateMetaTag($request->all(), $id)->getContent());
+        return redirect(route('meta-tag.index'));
     }
 
     /**
@@ -97,6 +121,7 @@ class MetaTagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        session()->flash('message', $this->metaTagService->deleteFixedPage($id)->getContent());
+        return redirect(route('meta-tag.index'));
     }
 }
