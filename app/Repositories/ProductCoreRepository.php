@@ -48,4 +48,14 @@ class ProductCoreRepository extends BaseRepository
         }
         return $productType;
     }
+
+    public function findScheduleProductList()
+    {
+        return $this->model::where('is_commercial_name_en_schedule', 1)->orWhere('is_commercial_name_bn_schedule', 1)->orWhere('is_display_title_en_schedule', 1)->orWhere('is_display_title_bn_schedule', 1)->get();
+    }
+
+    public function updateDataById($id, $data)
+    {
+        return $this->model::where('id', $id)->update($data);
+    }
 }
