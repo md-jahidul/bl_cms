@@ -25,7 +25,9 @@ class AlBannerController extends Controller
      */
     public function index()
     {
-        //
+        $banners = $this->alBannerService->findBy(['section_id' => 0]);
+
+        return view('admin.al-banner.index', compact('banners'));
     }
 
     /**
@@ -35,7 +37,7 @@ class AlBannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.al-banner.create');
     }
 
     /**
@@ -50,8 +52,11 @@ class AlBannerController extends Controller
         $response = $this->alBannerService->alBannerStore($request->all());
         Session::flash('message', $response->getContent());
 
+        if ($request->from_generic == true) 
+        {
+            return redirect('al-banner');
+        }
         return redirect()->back();
-        // return redirect('explore-c-component/'.$request->section_id.'/list');
     }
 
     /**
@@ -73,7 +78,8 @@ class AlBannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = $this->alBannerService->findOne($id);
+        return view('admin.al-banner.create', compact('banner'));
     }
 
     /**
@@ -90,8 +96,11 @@ class AlBannerController extends Controller
         $response = $this->alBannerService->alBannerUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
         
+        if ($request->from_generic == true) 
+        {
+            return redirect('al-banner');
+        }
         return redirect()->back();
-        // return redirect('explore-c-component/'.$request->section_id.'/list');
     }
 
     /**
@@ -102,6 +111,14 @@ class AlBannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // if ($this->alBannerService->delete($id)) {
+        //     $message = "Successfully Deleted";
+        //     $type = 'success';
+        //     $code = 200;
+        // } else {
+        //     $message = "Error! Not Deleted";
+        //     $type = 'error';
+        //     $code = 500;
+        // }
     }
 }
