@@ -10,10 +10,10 @@
                             method="POST" novalidate enctype="multipart/form-data">
                         @csrf
                         @if (isset($banner))
-                            
+
                             {{method_field('PUT')}}
                         @else
-                            
+
                             {{method_field('POST')}}
                         @endif
 
@@ -50,7 +50,7 @@
                                         >{{ $banner->desc_bn ?? null }}</textarea>
                                 <div class="help-block"></div>
                             </div>
-                            
+
                             <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
                                 <label for="alt_text">Alt Text (English)</label>
                                 <input type="text" name="alt_text_en" id="alt_text_en" class="form-control"
@@ -131,6 +131,7 @@
                                     <div class="help-block">  {{ $errors->first('image') }}</div>
                                 @endif
                             </div>
+                            
                             @if (array_key_exists('from_generic', $action) && $action['from_generic'] == true)
                                 <div class="form-group col-md-6 {{ $errors->has('section_type') ? ' error' : '' }}">
                                     <label for="section_type" class="required">Section Type</label>
