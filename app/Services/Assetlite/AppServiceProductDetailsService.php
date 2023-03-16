@@ -140,96 +140,113 @@ class AppServiceProductDetailsService
             if (!empty($component_data) && count($component_data) > 0) {
                 foreach ($component_data as $key => $value) {
 
+                    
                     $value['section_details_id'] = $sections_saved_data->id;
                     $value['page_type'] = self::PAGE_TYPE;
 
-                    if (request()->hasFile('component.' . $key . '.image_url')) {
-                        $value['image'] = $this->upload($data['component'][$key]['image_url'], 'assetlite/images/app-service/product-details');
-                    }
+                    if ($value['component_type'] != 'multiple_tab_image') {
 
-
-                    # get video url
-                    if (isset($value['video_url']) && is_object($value['video_url'])) {
-                        $value['video'] = $this->upload($value['video_url'], 'assetlite/images/app-service/product/details');
-                    } elseif (isset($value['video_url'])) {
-                        $value['video'] = $value['video_url'];
-                    }
-                    # Multiple item to save
-                    if (request()->filled('component.' . $key . '.multi_item')) {
-                        $request_multi = $value['multi_item'];
-                        if (!isset($request_multi['status-1'])) {
-                            $request_multi['status-1'] = "1";
+                        if (request()->hasFile('component.' . $key . '.image_url')) {
+                            $value['image'] = $this->upload($data['component'][$key]['image_url'], 'assetlite/images/app-service/product-details');
                         }
-                        $item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
-                        $results = [];
-                        for ($i = 1; $i <= $item_count; $i++) {
-                            foreach ($request_multi as $m_key => $m_value) {
-                                $sub_data = [];
-                                $check_index = explode('-', $m_key);
-                                if ($check_index[1] == $i) {
-                                    if (request()->hasFile('component.' . $key . '.multi_item.' . $m_key)) {
-                                        // dd( request()->hasFile('component.'.$key.'.multi_item.'.$m_key) );
-                                        $m_value = $this->upload($data['component'][$key]['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
-                                    }
-                                    $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-
-                                }
+    
+    
+                        # get video url
+                        if (isset($value['video_url']) && is_object($value['video_url'])) {
+                            $value['video'] = $this->upload($value['video_url'], 'assetlite/images/app-service/product/details');
+                        } elseif (isset($value['video_url'])) {
+                            $value['video'] = $value['video_url'];
+                        }
+                        # Multiple item to save
+                        if (request()->filled('component.' . $key . '.multi_item')) {
+                            $request_multi = $value['multi_item'];
+                            if (!isset($request_multi['status-1'])) {
+                                $request_multi['status-1'] = "1";
                             }
-                        }
-                        $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
-                    }
-
-
-                    # Image With Content Component ====
-                    if(isset($value['image_with_content_item'])){
-                        $request_multi = $value['image_with_content_item'];
-                        if (!isset($request_multi['status-1'])) {
-                            $request_multi['status-1'] = "1";
-                        }
-                        $item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
-                        $results = [];
-                        for ($i = 1; $i <= $item_count; $i++) {
-                            foreach ($request_multi as $m_key => $m_value) {
-                                $sub_data = [];
-                                $check_index = explode('-', $m_key);
-                                if ($check_index[1] == $i) {
-                                    if (isset($request_multi['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
-                                        $m_value = $this->upload($data['component'][$key]['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
-                                    }
-                                    $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-
-                                }
-                            }
-                        }
-                        $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
-                    }
-
-                    # Multi Tab With Image Component ====
-                    if(isset($value['multi_tab_item'])){
-                        $tabData = [];
-                        $request_multi = $value['multi_tab_item'];
-                        foreach($request_multi as $k => $tab){
-                            $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+                            $item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
                             $results = [];
                             for ($i = 1; $i <= $item_count; $i++) {
-                                foreach ($tab as $m_key => $m_value) {
+                                foreach ($request_multi as $m_key => $m_value) {
                                     $sub_data = [];
                                     $check_index = explode('-', $m_key);
-                                    if (isset($check_index[1]) && $check_index[1] == $i) {
-                                        if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
-                                            $m_value = $this->upload($data['component'][$key]['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+                                    if ($check_index[1] == $i) {
+                                        if (request()->hasFile('component.' . $key . '.multi_item.' . $m_key)) {
+                                            // dd( request()->hasFile('component.'.$key.'.multi_item.'.$m_key) );
+                                            $m_value = $this->upload($data['component'][$key]['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
                                         }
                                         $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+    
+                                    }
+                                }
+                            }
+                            $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
+                        }
+    
+    
+                        # Image With Content Component ====
+                        if(isset($value['image_with_content_item'])){
+                            $request_multi = $value['image_with_content_item'];
+                            if (!isset($request_multi['status-1'])) {
+                                $request_multi['status-1'] = "1";
+                            }
+                            $item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
+                            $results = [];
+                            for ($i = 1; $i <= $item_count; $i++) {
+                                foreach ($request_multi as $m_key => $m_value) {
+                                    $sub_data = [];
+                                    $check_index = explode('-', $m_key);
+                                    if ($check_index[1] == $i) {
+                                        if (isset($request_multi['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                                            $m_value = $this->upload($data['component'][$key]['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
+                                        }
+                                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+    
+                                    }
+                                }
+                            }
+                            $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
+                        }
+                    } else {
+                        
+                        # Multi Tab With Image Component ====
+                        if(isset($value['multi_tab_item']) && !empty($value['multi_tab_item'])){
+                            $tabData = [];
+                            $request_multi = $value['multi_tab_item'];
+                            $item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
+                            $results = [];
+                            for ($i = 1; $i <= $item_count; $i++) {
+                                foreach ($request_multi as $m_key => $m_value) {
+                                    $sub_data = [];
+                                    $check_index = explode('-', $m_key);
+                                    if ($check_index[1] == $i) {
+                                        if ($check_index[0] == 'image_array') {
+                                            $image_array_all = [];
+                                            foreach ($m_value as $image_array_key => $image_array_value) {
+                                                $image_array = [];
+                                                $image_array['title_en'] = $image_array_value['title_en'];
+                                                $image_array['title_bn'] = $image_array_value['title_bn'];
+                                                $image_array['alt_text'] = $image_array_value['alt_text'];
+                                                $image_array['image_url'] = $image_array_value['image_url'];
+                                                
+                                                if (request()->hasFile('component.0.multi_tab_item.image_array-1.1.image_url')) {
+                                                    $image_array['image_url'] = $this->upload($image_array_value['image_url'], 'assetlite/images/app-service/product/details');
+                                                }
+                                                
+                                                $image_array_all[] = $image_array;
+                                            }
 
-                                    }else{
+                                            $m_value = $image_array_all;
+                                        }
                                         $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
                                     }
                                 }
                             }
-                            $tabData[$k] = $results;
+                            $tabData = $results;
+                            $value['multiple_attributes'] = (count($tabData) >= 1) ? array_values($tabData) : null;    
                         }
-                        $value['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
                     }
+
+
 
                     # other attributes to save
                     if (!empty($value['other_attr']) && count($value['other_attr']) > 0) {
@@ -296,121 +313,168 @@ class AppServiceProductDetailsService
     public function updateAppServiceDetailsComponent($data, $compoent_id, $request, $key = null)
     {
         $component = $this->componentRepository->findOne($compoent_id);
-        if (isset($data['image_url']) && !empty($data['image_url'])) {
-            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product-details');
-        }
+        if ($data['component_type'] != 'multiple_tab_image') {
 
-        if (isset($data['other_attr']) && !empty($data['other_attr'])) {
-            $data['other_attributes'] = json_encode($data['other_attr']);
-        }
-
-        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
-            $request_multi = $data['multi_item'];
-            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
-            $results = [];
-            for ($i = 1; $i <= $item_count; $i++) {
-                foreach ($request_multi as $m_key => $m_value) {
-                    $sub_data = [];
-                    $check_index = explode('-', $m_key);
-
-                    if ($check_index[1] == $i) {
-                        if (request()->hasFile('component.' . $key . '.multi_item.' . $m_key)) {
-                            $m_value = $this->upload($data['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
-                        }
-
-                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-
-                    }
-                }
+            if (isset($data['image_url']) && !empty($data['image_url'])) {
+                $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product-details');
             }
-
-            if (request()->input('update') == 'full_update_multi_attr') {
-                $final_results = $results;
-            } else {
-                # get existing multiattr data
-                $existing_multi_data = $component->multiple_attributes;
-
-                if (!empty($existing_multi_data)) {
-                    $existing_multi_data = json_decode($existing_multi_data, true);
-
-                    $last_array_id = end($existing_multi_data)['id'];
-                    $last_display_order_id = end($existing_multi_data)['display_order'];
-
-                    $new_results = array_map(function ($value) use ($last_array_id, $last_display_order_id) {
-
-                        $value['id'] = ($value['id'] + $last_array_id);
-                        $value['display_order'] = $value['id'];
-
-                        return $value;
-
-                    }, $results);
-
-                }
-
-                $final_results = array_merge($existing_multi_data, $new_results);
+    
+            if (isset($data['other_attr']) && !empty($data['other_attr'])) {
+                $data['other_attributes'] = json_encode($data['other_attr']);
             }
-
-            $data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
-        }
-
-        # Image With Content Component ====
-        if(isset($data['image_with_content_item'])){
-
-            $request_multi = $data['image_with_content_item'];
-            if (!isset($request_multi['status-1'])) {
-                $request_multi['status-1'] = "1";
-            }
-            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
-            $results = [];
-            for ($i = 1; $i <= $item_count; $i++) {
-                foreach ($request_multi as $m_key => $m_value) {
-                    $sub_data = [];
-                    $check_index = explode('-', $m_key);
-                    if ($check_index[1] == $i) {
-                        if (isset($request_multi['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
-                            $m_value = $this->upload($data['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
-                        }
-                        $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-
-                        if(!isset($request_multi['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
-                            $results[$i]['image_url'] = $data['image_with_content_item']['prev_image_url-'.$i];
-                        }
-                    }
-                    //$results[$i][$check_index[0]] = $data['image_with_content_item']['display_order-'.$i];
-                }
-            }
-            $data['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
-        }
-
-        # Multi Tab With Image Component ====
-        if(isset($data['multi_tab_item'])){
-            $tabData = [];
-            $request_multi = $data['multi_tab_item'];
-            foreach($request_multi as $k => $tab){
-                $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+    
+            if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+                $request_multi = $data['multi_item'];
+                $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
                 $results = [];
                 for ($i = 1; $i <= $item_count; $i++) {
-                    foreach ($tab as $m_key => $m_value) {
+                    foreach ($request_multi as $m_key => $m_value) {
                         $sub_data = [];
                         $check_index = explode('-', $m_key);
-                        //$results[$i][$check_index[0]] = $tab;
-                        if (isset($check_index[1]) && $check_index[1] == $i) {
-                            if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
-                                $m_value = $this->upload($data['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+    
+                        if ($check_index[1] == $i) {
+                            if (request()->hasFile('component.' . $key . '.multi_item.' . $m_key)) {
+                                $m_value = $this->upload($data['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
                             }
+    
                             $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-
-                            if(!isset($tab['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
-                                $results[$i]['image_url'] = $data['multi_tab_item'][$k]['prev_image_url-'.$i];
-                            }
+    
                         }
                     }
-
                 }
-                $tabData[$k] = $results;
+    
+                if (request()->input('update') == 'full_update_multi_attr') {
+                    $final_results = $results;
+                } else {
+                    # get existing multiattr data
+                    $existing_multi_data = $component->multiple_attributes;
+    
+                    if (!empty($existing_multi_data)) {
+                        $existing_multi_data = json_decode($existing_multi_data, true);
+    
+                        $last_array_id = end($existing_multi_data)['id'];
+                        $last_display_order_id = end($existing_multi_data)['display_order'];
+    
+                        $new_results = array_map(function ($value) use ($last_array_id, $last_display_order_id) {
+    
+                            $value['id'] = ($value['id'] + $last_array_id);
+                            $value['display_order'] = $value['id'];
+    
+                            return $value;
+    
+                        }, $results);
+    
+                    }
+    
+                    $final_results = array_merge($existing_multi_data, $new_results);
+                }
+    
+                $data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
             }
-            $data['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
+    
+            # Image With Content Component ====
+            if(isset($data['image_with_content_item'])){
+    
+                $request_multi = $data['image_with_content_item'];
+                if (!isset($request_multi['status-1'])) {
+                    $request_multi['status-1'] = "1";
+                }
+                $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+                $results = [];
+                for ($i = 1; $i <= $item_count; $i++) {
+                    foreach ($request_multi as $m_key => $m_value) {
+                        $sub_data = [];
+                        $check_index = explode('-', $m_key);
+                        if ($check_index[1] == $i) {
+                            if (isset($request_multi['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+                                $m_value = $this->upload($data['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
+                            }
+                            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+    
+                            if(!isset($request_multi['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
+                                $results[$i]['image_url'] = $data['image_with_content_item']['prev_image_url-'.$i];
+                            }
+                        }
+                        //$results[$i][$check_index[0]] = $data['image_with_content_item']['display_order-'.$i];
+                    }
+                }
+                $data['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
+            }
+        }else{
+
+            // # Multi Tab With Image Component ====
+            // if(isset($data['multi_tab_item']) && !empty($value['multi_tab_item'])){
+            //     $tabData = [];
+            //     $request_multi = $data['multi_tab_item'];
+            //     foreach($request_multi as $k => $tab){
+            //         $item_count = isset($tab['sub_item_count']) ? $tab['sub_item_count'] : 0;
+            //         $results = [];
+            //         for ($i = 1; $i <= $item_count; $i++) {
+            //             foreach ($tab as $m_key => $m_value) {
+            //                 $sub_data = [];
+            //                 $check_index = explode('-', $m_key);
+            //                 //$results[$i][$check_index[0]] = $tab;
+            //                 if (isset($check_index[1]) && $check_index[1] == $i) {
+            //                     if (isset($tab['image_url-'.$i]) && $m_key == 'image_url-'.$i) {
+            //                         $m_value = $this->upload($data['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
+            //                     }
+            //                     $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+    
+            //                     if(!isset($tab['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
+            //                         $results[$i]['image_url'] = $data['multi_tab_item'][$k]['prev_image_url-'.$i];
+            //                     }
+            //                 }
+            //             }
+    
+            //         }
+            //         $tabData[$k] = $results;
+            //     }
+            //     // $data['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
+            //     $data['multiple_attributes'] = !empty($tabData) ? array_values($tabData) : null;
+    
+            // }
+
+
+            # Multi Tab With Image Component ====
+            if(isset($data['multi_tab_item']) && !empty($data['multi_tab_item'])){
+                $tabData = [];
+                $request_multi = $data['multi_tab_item'];
+                $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+                $results = [];
+                for ($i = 1; $i <= $item_count; $i++) {
+                    foreach ($request_multi as $m_key => $m_value) {
+                        $sub_data = [];
+                        $check_index = explode('-', $m_key);
+                        if ($check_index[1] == $i) {
+                            if ($check_index[0] == 'image_array') {
+                                $image_array_all = [];
+                                foreach ($m_value as $image_array_key => $image_array_value) {
+                                    $image_array = [];
+                                    $image_array['title_en'] = $image_array_value['title_en'];
+                                    $image_array['title_bn'] = $image_array_value['title_bn'];
+                                    $image_array['alt_text'] = $image_array_value['alt_text'];
+                                    $image_array['image_url'] = $image_array_value['prev_image_url'] ?? '';
+                                    
+                                    if (request()->hasFile('component.0.multi_tab_item.image_array-'.$i.'.'.$image_array_key.'.image_url')) {
+                                        $image_array['image_url'] = $this->upload($image_array_value['image_url'], 'assetlite/images/app-service/product/details');
+                                        #TODO:: NEED To Delete Previous IMAGE;
+                                        if(isset($image_array_value['prev_image_url']) && $image_array_value['prev_image_url'] != '') $this->deleteFile($image_array_value['prev_image_url']);
+                                    }
+                                    $image_array_all[] = $image_array;
+                                }
+
+                                $m_value = $image_array_all;
+                            }
+                            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
+                        }
+                    }
+                }
+                $tabData = $results;
+                $data['multiple_attributes'] = (count($tabData) >= 1) ? array_values($tabData) : null;    
+            }
         }
+
+
         # get video url
         if (isset($data['video_url']) && is_object($data['video_url'])) {
             $data['video'] = $this->upload($data['video_url'], 'assetlite/images/app-service/product/details');
@@ -432,6 +496,7 @@ class AppServiceProductDetailsService
         }
 
         $component->update($data);
+
         if ($request['component_type'] == "multiple_image_banner" || $request['component_type'] == "slider_text_with_image_right") {
             $this->comMultiDataRepository->deleteAllById($compoent_id);
             foreach ($request['base_image'] as $key => $img) {
@@ -581,15 +646,18 @@ class AppServiceProductDetailsService
                 $results['component'][] = $value;
 
                 if (isset($value->multiple_attributes) && !empty($value->multiple_attributes)) {
-                    $res = json_decode($value->multiple_attributes, true);
-
-                    usort($res, function ($a, $b) {
-                        if(isset($a["display_order"]) && isset($b["display_order"])){
-                            return strcmp($a["display_order"], $b["display_order"]);
-                        }
-                    });
-
-                    $results['component'][$key]['multiple_attributes'] = json_encode($res);
+                    if ($value->component_type != 'multiple_tab_image') {
+                        # code...
+                        $res = json_decode($value->multiple_attributes, true);
+    
+                        usort($res, function ($a, $b) {
+                            if(isset($a["display_order"]) && isset($b["display_order"])){
+                                return strcmp($a["display_order"], $b["display_order"]);
+                            }
+                        });
+    
+                        $results['component'][$key]['multiple_attributes'] = json_encode($res);
+                    }
                 }
 
                 if (isset($value->other_attributes) && !empty($value->other_attributes)) {
