@@ -49,9 +49,15 @@
                         <div class="form-group col-md-12">
                             <fieldset class="image_card">
                                 <label for="image_card">Images:</label>
+
+                                @php
+                                    $count = (isset($tab['image_array']))? count($tab['image_array']) : 0 ;
+                                @endphp
+                                <input id="multi_image_item_count_{{$key+1}}" type="hidden" value="{{$count}}">
+
                                 @foreach ($tab['image_array'] as $k => $single_image_array )
                                     <div id="add-more-item-{{$key+1}}" class="add-more-item">
-                                        <div class="card-body" >
+                                        <div class="card-body multi_image_item_div" >
                                             <div class="col-sm-12">
                                                 <div class="multiple_tab_image" data-count="{{$k+1}}">
                                                     <div class="row">
@@ -135,8 +141,10 @@
                     <div class="form-group col-md-12">
                         <fieldset class="image_card">
                             <label for="image_card">Images:</label>
+                            <input id="multi_image_item_count_1" type="hidden" value="1">
+
                             <div id="add-more-item-1" class="add-more-item">
-                                <div class="card-body" >
+                                <div class="card-body multi_image_item_div" >
                                     <div class="col-sm-12">
                                         <div class="multiple_tab_image" data-count="1">
                                             <div class="row">
@@ -233,7 +241,6 @@
                 event.preventDefault();
 
                 var i = parseInt($padrentSelector.find('#multi_item_count').val(), 10);
-                console.log(i);
                 // $('#slider_content_section').empty();
                 i = i+1;
                 var html = '';
@@ -265,8 +272,10 @@
                                         <div class="form-group col-md-12">
                                             <fieldset class="image_card">
                                                 <label for="image_card">Images:</label>
+                                                <input data-item="1" id="multi_image_item_count_${i}" type="hidden" value="1">
+
                                                 <div id="add-more-item-${i}" class="add-more-item">
-                                                    <div class="card-body" >
+                                                    <div class="card-body multi_image_item_div" >
                                                         <div class="col-sm-12">
                                                             <div class="multiple_tab_image" data-count="1">
 
@@ -347,7 +356,7 @@
 
             $(document).on('click', '.multi_image_item', function(e){
                 e.preventDefault();
-                $(this).parents('.multi_image_item').remove();
+                $(this).parents('.multi_image_item_div').remove();
             });
             
 
@@ -358,11 +367,10 @@
                 var item = $(this).data("item"); 
                 var id = '#add-more-item-' + item;
                 //i = item+1;
-                //var count = $('#sub_item_count_' + item).val();
-                var count = 1;
+                var count = $('#multi_image_item_count_' + item).val();
                 i = parseInt(count) + 1; 
                 //var html = `<div class="card-body multi_image_item" >
-                var html = `<div class="card-body" >
+                var html = `<div class="card-body multi_image_item_div" >
                             <div class="col-sm-12">
                                 <div class="multiple_tab_image" data-count="1">
                                     <div class="row">
@@ -413,6 +421,8 @@
 
                 //$(this).parents('.add-more-item').append(html);
                 dropify();
+                $padrentSelector.find('#multi_image_item_count_' + item).val(i);
+                console.log($('#multi_image_item_count_' + item).val());
             });
             
 

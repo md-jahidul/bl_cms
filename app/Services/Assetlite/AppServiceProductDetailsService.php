@@ -453,12 +453,12 @@ class AppServiceProductDetailsService
                                     $image_array['title_en'] = $image_array_value['title_en'];
                                     $image_array['title_bn'] = $image_array_value['title_bn'];
                                     $image_array['alt_text'] = $image_array_value['alt_text'];
-                                    $image_array['image_url'] = $image_array_value['prev_image_url'];
+                                    $image_array['image_url'] = $image_array_value['prev_image_url'] ?? '';
                                     
                                     if (request()->hasFile('component.0.multi_tab_item.image_array-'.$i.'.'.$image_array_key.'.image_url')) {
                                         $image_array['image_url'] = $this->upload($image_array_value['image_url'], 'assetlite/images/app-service/product/details');
                                         #TODO:: NEED To Delete Previous IMAGE;
-                                        $this->deleteFile($image_array_value['prev_image_url']);
+                                        if(isset($image_array_value['prev_image_url']) && $image_array_value['prev_image_url'] != '') $this->deleteFile($image_array_value['prev_image_url']);
                                     }
                                     $image_array_all[] = $image_array;
                                 }
