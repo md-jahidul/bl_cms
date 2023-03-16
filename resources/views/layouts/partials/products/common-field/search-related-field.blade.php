@@ -13,7 +13,7 @@
 
 <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
     <label> URL BN (url slug)<span class="text-danger">*</span></label>
-    <input type="text" class="form-control slug-convert" value="{{ isset($product->url_slug_bn) ? $product->url_slug_bn : null }}" required name="url_slug_bn" placeholder="URL Bangla">
+    <input type="text" class="form-control" value="{{ isset($product->url_slug_bn) ? $product->url_slug_bn : null }}" required name="url_slug_bn" placeholder="URL Bangla">
     <small class="text-info">
         <strong>i.e:</strong> ১০০০মিনিট-১৫জিবি-১০০০এসএমএস (no spaces and slash)<br>
     </small>
