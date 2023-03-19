@@ -152,6 +152,13 @@
                     <a class="menu-item" href="{{ route('product.schedule') }}">
                         <i class="la la-history"></i>Schedule Products</a>
                 </li>
+                <li class="{{ is_active_url('redis-key-update-view') }}">
+                    <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
+                        <i class="la la-align-center"></i>Activate New Product Code</a>
+                </li>
+{{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
+{{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
+{{--                </li>--}}
             </ul>
         </li>
     @endif
