@@ -75,19 +75,26 @@ class DynamicDeeplinkService
      */
     public function generateDeeplink($sectionType, $moduleData, $request)
     {
-
         $category = $request->category;
         $subCategory = $request->sub_category;
+
         if ($sectionType == "others") {
             $endPointURL = $category;
-        }elseif ($request->category == "content") {
+        } elseif ($request->category == "content") {
             $endPointURL = "$category/$sectionType";
-        }elseif ($category && $subCategory) {
+        } elseif ($moduleData->category_name == "commerce") {
+            if($moduleData->slug == 'commerce') {
+                $endPointURL = "commerce/all";
+            } else {
+                $endPointURL = "$moduleData->slug";
+            }
+
+        } elseif ($category && $subCategory) {
             $endPointURL = "$sectionType/$category/$subCategory";
         } else {
             $endPointURL = "$sectionType/$category";
         }
-//        dd($endPointURL);
+
         $body = [
             "dynamicLinkInfo" => [
                 "domainUriPrefix" => env('DOMAINURIPREFIX'),

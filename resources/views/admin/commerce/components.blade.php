@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Content Components List')
-@section('card_name', 'Content Components List')
+@section('title', 'Commerce Components List')
+@section('card_name', 'Commerce Components List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><strong>Content Components List</strong></li>
+    <li class="breadcrumb-item active"><strong>Commerce Components List</strong></li>
 @endsection
 @section('action')
     <a href="" class="btn btn-primary round btn-glow px-2 create_component" data-toggle="modal" data-target="#large" role="button">
-        <i class="la la-plus"></i>Add Content Component
+        <i class="la la-plus"></i>Add Commerce Component
     </a>
 @endsection
 @section('content')
@@ -38,16 +38,16 @@
                                 <td class="action">
                                     @if(isset($component['is_api_call_enable']))
                                         @if($component['is_api_call_enable'] == 0)
-                                            <a href="{{ route("content-components.status.update", $component['id']) }}" data-value="enable  {{ $component['title_en'] }}"
+                                            <a href="{{ route("commerce-components.status.update", $component['id']) }}" data-value="enable  {{ $component['title_en'] }}"
                                                class="btn btn-danger border-0 change_status" title="Click to enable">Disabled</a>
                                         @else
-                                            <a href="{{ route("content-components.status.update", $component['id']) }}" data-value="disable {{ $component['title_en'] }}"
+                                            <a href="{{ route("commerce-components.status.update", $component['id']) }}" data-value="disable {{ $component['title_en'] }}"
                                                class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
                                         @endif
                                         @if(substr($component['component_key'], 0, 7) !== "generic")
                                             <a href="" data-id="{{ $component['id'] }}" data-toggle="modal" data-target="#large" role="button"
                                                class="btn btn-info border-0 edit"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                            <a href="#" remove="{{ route("content-components.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
+                                            <a href="#" remove="{{ route("mybl.commerce.components.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
                                                 <i class="la la-trash"></i>
                                             </a>
                                         @endif
@@ -170,7 +170,7 @@
             let disable_no = $("#can_disable_no");
 
             $('.create_component').click(function () {
-                $('#form').prop('action', "{{ route('content-components.store') }}")
+                $('#form').prop('action', "{{ route('mybl.commerce.components.store') }}")
                 $('#submit').text('Save')
                 titleEn.val('');
                 titleBn.val('');
@@ -179,7 +179,7 @@
             })
 
             $('.edit').click(function () {
-                $('#form').prop('action', "{{ route('content-components.update') }}")
+                $('#form').prop('action', "{{ route('mybl.commerce.components.update') }}")
                 $('#submit').text("Update")
 
                 let componentID = $(this).attr('data-id')
@@ -187,7 +187,7 @@
 
 
                 $.ajax({
-                    url: "{{ url("content-components/edit") }}/" + componentID,
+                    url: "{{ url("mybl-commerce-components/edit") }}/" + componentID,
                     methods: "get",
                     success: function (data) {
                         titleEn.val(data.title_en)
@@ -218,7 +218,7 @@
                 })
                 $.ajax({
                     methods: "POST",
-                    url: "{{ url('content-components-sort') }}",
+                    url: "{{ url('mybl-commerce-components-sort') }}",
                     data: {
                         position: positions
                     },
@@ -230,7 +230,7 @@
                     },
                     error: function () {
                         alert('Opps, something went wrong!!')
-                        window.location.replace("{{ url('content-components') }}");
+                        window.location.replace("{{ url('mybl-commerce-components') }}");
                     }
                 });
             }
@@ -281,3 +281,8 @@
         })();
     </script>
 @endpush
+
+
+
+
+
