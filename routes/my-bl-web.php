@@ -974,6 +974,80 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    //Payment Gateway
+    Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
+    Route::get('payment-gateways/destroy/{id}', 'CMS\PaymentGatewayController@destroy')->name('payment-gateways.destroy');
+    Route::get('payment-gateways/sort-auto-save', 'CMS\PaymentGatewayController@categorySortable');
+
+    //Active new Product Code
+    Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
+    Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
+
+
+    //Commerce Component
+    Route::get('mybl-commerce-components', 'CMS\MyBlCommerceComponentController@index')->name('mybl.commerce.components');
+    Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyBlCommerceComponentController@edit')
+        ->name('mybl.commerce.components.edit');
+    Route::post('mybl-commerce-components/store', 'CMS\MyBlCommerceComponentController@store')
+        ->name('mybl.commerce.components.store');
+    Route::post('mybl-commerce-components/update', 'CMS\MyBlCommerceComponentController@update')
+        ->name('mybl.commerce.components.update');
+    Route::get('mybl-commerce-components-sort', 'CMS\MyBlCommerceComponentController@componentSort');
+    Route::get('commerce-components-status-update/{id}', 'CMS\MyBlCommerceComponentController@componentStatusUpdate')
+        ->name('commerce-components.status.update');
+    Route::get('mybl-commerce-components/destroy/{id}', 'CMS\MyBlCommerceComponentController@destroy')
+        ->name('mybl.commerce.components.destroy');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('utility-bill', 'CMS\UtilityBillController')->except(['show', 'destroy']);
+    Route::get('utility-bill/destroy/{id}', 'CMS\UtilityBillController@destroy')->name('utility-bill.destroy');
+    Route::get('utility-bill/sort-auto-save', 'CMS\UtilityBillController@categorySortable');
+    Route::get('utility-bill-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
+    Route::get('commerce-bill-status', 'CMS\UtilityBillController@showCommerceBill');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('travel', 'CMS\TravelAgencyController')->except(['show', 'destroy']);
+    Route::get('travel/destroy/{id}', 'CMS\TravelAgencyController@destroy')->name('travel.destroy');
+    Route::get('travel/sort-auto-save', 'CMS\TravelAgencyController@categorySortable');
+
+    /**
+     * Commerce Navigation Rail
+     */
+    Route::resource('commerce-navigation-rail', 'CMS\CommerceNavigationRailController');
+    Route::get('commerce-navigation-rail-sortable', 'CMS\CommerceNavigationRailController@navigationMenuSortable')
+        ->name('commerce-navigation-rail.sort');
+    Route::get('commerce-navigation-rail/destroy/{id}', 'CMS\CommerceNavigationRailController@destroy')
+        ->name('commerce-navigation-rail.destroy');
+
+    Route::resource('generic-slider', 'CMS\GenericSliderController');
+    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+    Route::get(
+        'generic-slider/{slider_id}/images/create',
+        'CMS\GenericSliderImageController@create'
+    )->name('generic-slider.images.create');
+    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
+    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::delete(
+        'generic-slider/images/{id}/delete',
+        'CMS\GenericSliderImageController@destroy'
+    )->name('generic-slider.images.destroy');
+    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+//
 });
 
 // 4G Map View Route
