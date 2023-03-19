@@ -426,6 +426,14 @@
             </li>
         </ul>
     </li>
+
+    <li class="{{ is_active_url('trivia') . is_active_url('trivia/create')}}">
+        <a class="menu-item" href="{{ route('trivia.create') }} "
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-gamepad"></i> Trivia Gamification
+        </a>
+    </li>
+
     <!-- Loyalty Partner Menu -->
     @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
