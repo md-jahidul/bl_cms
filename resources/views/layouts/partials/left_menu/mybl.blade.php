@@ -152,6 +152,13 @@
                     <a class="menu-item" href="{{ route('product.schedule') }}">
                         <i class="la la-history"></i>Schedule Products</a>
                 </li>
+                <li class="{{ is_active_url('redis-key-update-view') }}">
+                    <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
+                        <i class="la la-align-center"></i>Activate New Product Code</a>
+                </li>
+{{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
+{{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
+{{--                </li>--}}
             </ul>
         </li>
     @endif
@@ -353,6 +360,36 @@
         </ul>
     </li>
 
+    <!-- PGW -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Commerce</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('mybl-commerce-components')}}">
+                <a class="menu-item" href="{{ url('mybl-commerce-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('utility-bill')}}">
+                <a class="menu-item" href="{{ url('utility-bill') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Utility</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('commerce-navigation-rail')}}">
+                <a class="menu-item" href="{{ url('commerce-navigation-rail') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Navigation Rail</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('travel')}}">
+                <a class="menu-item" href="{{ url('travel') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Travel</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('commerce-bill-status')}}">
+                <a class="menu-item" href="{{ url('commerce-bill-status') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Bill Status</a>
+            </li>
+        </ul>
+    </li>
+
     <!-- FIFA WC -->
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
             <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
@@ -451,6 +488,11 @@
                     <a class="menu-item" href="{{ route('myblslider.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
+                </li>
+                <li class="{{ is_active_match('generic-slider')}}">
+                    <a class="menu-item" href="{{ url('generic-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Slider</a>
                 </li>
                 <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
                     <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"
