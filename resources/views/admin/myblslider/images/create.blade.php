@@ -234,7 +234,7 @@
                                         </table>
                                     </div>
 
-                                    
+
 
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
@@ -360,7 +360,7 @@
 
                                     <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="message_en" class="required">Message En:</label>
-                                        <textarea 
+                                        <textarea
                                             maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Message En is required"
@@ -374,7 +374,7 @@
                                     </div>
                                     <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="message_bn" class="required">Message Bn:</label>
-                                        <textarea 
+                                        <textarea
                                             maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Message Bn is required"
@@ -395,7 +395,7 @@
                         $("#append_div").html(dial_html);
                     } else if (action == 'URL') {
                         $("#append_div").html(url_html);
-                    } else if (action == 'USSD_CODE') {
+                    } else if (action == 'USSD') {
                         $("#append_div").html(ussd_code);
                     } else if (action === 'FEED_CATEGORY') {
                         $("#append_div").html(feed_category);

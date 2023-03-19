@@ -1,0 +1,60 @@
+variables:
+  SERVER_IP: "172.16.8.97"
+  BUILD_LOCATION: "/app/assetlite/src/projects_uat/gitlab_uat"
+stages:
+  - cms_backup
+  - clone
+  - build
+  - deploy
+
+.job_template: &template
+    tags:
+      - bl-devops
+    # only:
+    #   - develop
+
+tar_backup:
+  <<: *template
+  variables:
+    data_location: "/app/mybl-qa"
+  stage: cms_backup
+  #needs: [CI_Pre-check]
+  when: manual
+  # rules:
+  #   - if: ($CI_COMMIT_BRANCH == "develop" || $NPM_VERSION == "$NPM_VERSION")
+  script:
+    - echo "Starting backup"
+    - sh /app/script/bl-web-cms-bak.sh
+    #- sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
+
+repo_clone:
+  <<: *template
+  stage: clone
+#   only:
+#     - main
+  when: manual
+  variables:
+    BRANCH: pre-release-final
+  script:
+    - echo "Clonging repo"
+    #- cd $STG_BUILD_LOCATION
+    #- sudo git clone -b $BRANCH https://$MYUSERNAME:$MYTOKEN@gitlab.com/techbeach1/mybl-qa.git
+    - cd $BUILD_LOCATION/$CI_PROJECT_NAME
+    #- sudo git checkout develop
+    - git pull origin $BRANCH
+
+deploy_ubuntu:
+  <<: *template
+  variables:
+    DEST_PATH: "/app/blcms/www/bl_cms"
+  stage: deploy
+  when: manual
+  # rules:
+  #   - if: ($CI_COMMIT_BRANCH == "develop" || $NPM_VERSION == "$NPM_VERSION")
+  before_script:
+    - eval $(ssh-agent -s)
+  script:
+    - echo "Copying build artifacts to live server"
+    - ssh-add <(echo "$KEY_STAGING")
+    #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ bs1048@192.168.56.1:$path_1/$DEST
+    - rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/ --exclude .git/ --exclude .gitlab-ci.yml --exclude .gitignore --exclude .gitattributes usrdev@$SERVER_IP:$DEST_PATH
