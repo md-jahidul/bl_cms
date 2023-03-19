@@ -8,6 +8,7 @@ use App\Models\MyBlInternetOffersCategory;
 use App\Repositories\FifaDeeplinkRepository;
 use App\Repositories\ContentDeeplinkRepository;
 use App\Repositories\MyblManageItemRepository;
+use App\Repositories\UtilityBillRepository;
 use App\Services\DynamicDeeplinkService;
 use App\Services\FeedCategoryService;
 use App\Services\MyblAppMenuService;
@@ -69,6 +70,7 @@ class DynamicDeeplinkController extends Controller
      * @param DynamicDeeplinkService $dynamicDeeplinkService
      */
     protected $fifaDeeplinkRepository;
+    public $utilityBillRepository;
     public function __construct(
         DynamicDeeplinkService $dynamicDeeplinkService,
         MyBlInternetOffersCategoryService $internetOffersCategoryService,
@@ -78,7 +80,8 @@ class DynamicDeeplinkController extends Controller
         MyblManageItemRepository $manageItemRepository,
         MyBlCampaignSectionService $myBlCampaignSectionService,
         ContentDeeplinkRepository $contentDeeplinkRepository,
-        FifaDeeplinkRepository $fifaDeeplinkRepository
+        FifaDeeplinkRepository $fifaDeeplinkRepository,
+        UtilityBillRepository $utilityBillRepository
     ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->internetOffersCategoryService = $internetOffersCategoryService;
@@ -89,6 +92,7 @@ class DynamicDeeplinkController extends Controller
         $this->myBlCampaignSectionService = $myBlCampaignSectionService;
         $this->fifaDeeplinkRepository = $fifaDeeplinkRepository;
         $this->contentDeeplinkRepository = $contentDeeplinkRepository;
+        $this->utilityBillRepository = $utilityBillRepository;
         $this->middleware('auth');
     }
 
@@ -168,13 +172,13 @@ class DynamicDeeplinkController extends Controller
     public function contentDeepLinkCreate(Request  $request)
     {
         $contentData = $this->contentDeeplinkRepository->findOne($request->id);
-        
+
         $sectionType = self::Content;
         if ($contentData->category_name == 'courses') {
             $sectionType = 'course';
-        }else if ($contentData->category_name == 'cares') {
+        } else if ($contentData->category_name == 'cares') {
             $sectionType = 'care';
-        }else if($contentData->category_name == 'content'){
+        } else if($contentData->category_name == 'content'){
             $sectionType = 'all';
         }
 
