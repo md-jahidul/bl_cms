@@ -353,6 +353,11 @@
                 <a class="menu-item" href="{{ url('pgw-gateway') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> PGW List</a>
             </li>
         </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('payment-gateways')}}">
+                <a class="menu-item" href="{{ url('payment-gateways') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Gateway List V2</a>
+            </li>
+        </ul>
     </li>
 
     <!-- PGW -->
