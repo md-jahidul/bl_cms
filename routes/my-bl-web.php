@@ -973,6 +973,45 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 
+    //Commerce Component
+    Route::get('mybl-commerce-components', 'CMS\MyBlCommerceComponentController@index')->name('mybl.commerce.components');
+    Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyBlCommerceComponentController@edit')
+        ->name('mybl.commerce.components.edit');
+    Route::post('mybl-commerce-components/store', 'CMS\MyBlCommerceComponentController@store')
+        ->name('mybl.commerce.components.store');
+    Route::post('mybl-commerce-components/update', 'CMS\MyBlCommerceComponentController@update')
+        ->name('mybl.commerce.components.update');
+    Route::get('mybl-commerce-components-sort', 'CMS\MyBlCommerceComponentController@componentSort');
+    Route::get('commerce-components-status-update/{id}', 'CMS\MyBlCommerceComponentController@componentStatusUpdate')
+        ->name('commerce-components.status.update');
+    Route::get('mybl-commerce-components/destroy/{id}', 'CMS\MyBlCommerceComponentController@destroy')
+        ->name('mybl.commerce.components.destroy');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('utility-bill', 'CMS\UtilityBillController')->except(['show', 'destroy']);
+    Route::get('utility-bill/destroy/{id}', 'CMS\UtilityBillController@destroy')->name('utility-bill.destroy');
+    Route::get('utility-bill/sort-auto-save', 'CMS\UtilityBillController@categorySortable');
+    Route::get('utility-bill-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
+    Route::get('commerce-bill-status', 'CMS\UtilityBillController@showCommerceBill');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('travel', 'CMS\TravelAgencyController')->except(['show', 'destroy']);
+    Route::get('travel/destroy/{id}', 'CMS\TravelAgencyController@destroy')->name('travel.destroy');
+    Route::get('travel/sort-auto-save', 'CMS\TravelAgencyController@categorySortable');
+
+    /**
+     * Commerce Navigation Rail
+     */
+    Route::resource('commerce-navigation-rail', 'CMS\CommerceNavigationRailController');
+    Route::get('commerce-navigation-rail-sortable', 'CMS\CommerceNavigationRailController@navigationMenuSortable')
+        ->name('commerce-navigation-rail.sort');
+    Route::get('commerce-navigation-rail/destroy/{id}', 'CMS\CommerceNavigationRailController@destroy')
+        ->name('commerce-navigation-rail.destroy');
+
     Route::resource('generic-slider', 'CMS\GenericSliderController');
     Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
     Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');

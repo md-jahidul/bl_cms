@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\GenericSliderRepository;
+use App\Repositories\MyBlCommerceComponentRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
@@ -27,18 +28,25 @@ class GenericSliderService
     protected  $sliderRepository;
     protected $contentComponentRepository;
     protected $contentComponentService;
+    protected $commerceComponentRepository;
+    protected $commerceComponentService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
         ContentComponentRepository $contentComponentRepository,
         ContentComponentService $contentComponentService,
-        SliderRepository $sliderRepository
+        SliderRepository $sliderRepository,
+        MyBlCommerceComponentRepository $commerceComponentRepository,
+        MyBlCommerceComponentService  $commerceComponentService
+
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
         $this->sliderRepository = $sliderRepository;
         $this->contentComponentRepository = $contentComponentRepository;
         $this->contentComponentService = $contentComponentService;
+        $this->commerceComponentRepository = $commerceComponentRepository;
+        $this->commerceComponentService = $commerceComponentService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -62,6 +70,10 @@ class GenericSliderService
             elseif ($data['component_for'] == 'content') {
                 $this->contentComponentRepository->save($homeComponentData);
                 Redis::del('content_component');
+            }
+            elseif ($data['component_for'] == 'commerce') {
+                $this->commerceComponentRepository->save($homeComponentData);
+                Redis::del('mybl_commerce_component');
             }
 
             DB::commit();
@@ -98,6 +110,11 @@ class GenericSliderService
                 $contentComponent->update($homeComponentData);
                 Redis::del('content_component');
             }
+            elseif ($slider['component_for'] == 'commerce') {
+                $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $commerceComponent->update($homeComponentData);
+                Redis::del('mybl_commerce_component');
+            }
             $slider->update($data);
             DB::commit();
             return true;
@@ -132,6 +149,13 @@ class GenericSliderService
 
             return $contentSecondarySliderCount + $contentComponentCount + 1;
         }
+        elseif ($type == 'commerce')
+        {
+            $commerceComponentCount = $this->commerceComponentRepository->findAll()->count();
+            $contentSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+
+            return $contentSecondarySliderCount + $commerceComponentCount + 1;
+        }
 
         return 1;
     }
@@ -149,6 +173,10 @@ class GenericSliderService
             else if ($componentFor == 'content') {
                 $contentComponent = $this->contentComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
                 $this->contentComponentService->deleteComponent($contentComponent->id);
+            }
+            else if ($componentFor == 'commerce') {
+                $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $this->commerceComponentService->deleteComponent($commerceComponent->id);
             }
             $slider->delete();
 
