@@ -90,7 +90,8 @@ class MediaPressNewsEventService
 
     public function findByReferenceType($referenceType)
     {
-        return $this->mediaPNERepository->findByProperties(['reference_type' => $referenceType]);
+        $orderBy = ['column' => 'created_at', 'direction' => 'DESC'];
+        return $this->mediaPNERepository->findBy(['reference_type' => $referenceType], '', $orderBy);
     }
 
     /**
