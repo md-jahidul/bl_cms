@@ -49,6 +49,9 @@
                                     <a role="button" href="{{route('about-us.edit',$about->id)}}" class="btn btn-outline-success">
                                         <i class="la la-pencil"></i>
                                     </a>
+                                    <a href="#" class="btn btn-outline-danger delete" data-id="{{ $about->id }}" title="Delete">
+                                        <i class="la la-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
 
