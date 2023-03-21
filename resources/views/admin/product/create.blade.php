@@ -47,7 +47,7 @@
                                 <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <select id="product_core" name="product_code"
-                                            data-url="{{ url('product-core/match') }}"
+{{--                                            data-url="{{ url('product-core/match') }}"--}}
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)

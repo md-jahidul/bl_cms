@@ -166,7 +166,6 @@
                     <h4><strong>Details Data</strong></h4>
                     <hr>
                     <div class="row">
-
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -331,30 +330,30 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" name="details_card_web" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="hidden" name="old_details_card_web" value="{{$service->details_card_web}}">
+                                @if($service->details_card_web != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $service->details_card_web }}" width="100%">
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
+                                <input type="file" class="dropify_package" name="details_card_mob" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <input type="hidden" name="old_details_card_mob" value="{{$service->details_card_mob}}">
+                                @if($service->details_card_mob != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $service->details_card_mob }}" width="100%">
+                                @endif
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
-                            <input type="file" class="dropify_package" name="details_card_web" data-height="60"
-                                   data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                            <input type="hidden" name="old_details_card_web" value="{{$service->details_card_web}}">
-                            @if($service->details_card_web != "")
-                                <img src="{{ config('filesystems.file_base_url') . $service->details_card_web }}" width="100%">
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
-                            <input type="file" class="dropify_package" name="details_card_mob" data-height="60"
-                                   data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                            <input type="hidden" name="old_details_card_mob" value="{{$service->details_card_mob}}">
-                            @if($service->details_card_mob != "")
-                                <img src="{{ config('filesystems.file_base_url') . $service->details_card_mob }}" width="100%">
-                            @endif
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -362,6 +361,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-4 col-xs-12">
+
                             <div class="form-group">
                                 <div class="mb-1">
                                     <label>URL Slug EN <span class="text-danger">*</span></label>
@@ -509,70 +509,70 @@
 @stop
 
 @push('style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
-<link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 
 @endpush
 @push('page-js')
-<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
-<script>
-$(function () {
+    <script>
+        $(function () {
 
-    //success and error msg
-<?php
-if (Session::has('sussess')) {
-    ?>
-        swal.fire({
-            title: "{{ Session::get('sussess') }}",
-            type: 'success',
-            timer: 2000,
-            showConfirmButton: false
+            //success and error msg
+            <?php
+            if (Session::has('sussess')) {
+                ?>
+            swal.fire({
+                title: "{{ Session::get('sussess') }}",
+                type: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+                <?php
+            }
+            if (Session::has('error')) {
+                ?>
+
+            swal.fire({
+                title: "{{ Session::get('error') }}",
+                type: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            <?php } ?>
+
+            //show dropify for package photo
+            $('.dropify_package').dropify({
+                messages: {
+                    'default': 'Browse for photo',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+
+
+            //text editor for package details
+            // $("textarea.textarea_details").summernote({
+            //     toolbar: [
+            //         ['style', ['bold', 'italic', 'underline', 'clear']],
+            //         ['font', ['strikethrough', 'superscript', 'subscript']],
+            //         ['fontsize', ['fontsize']],
+            //         ['color', ['color']],
+            //         // ['table', ['table']],
+            //         ['para', ['ul', 'ol', 'paragraph']],
+            //         ['view', ['codeview']]
+            //     ],
+            //     height: 170
+            // });
+
         });
-    <?php
-}
-if (Session::has('error')) {
-    ?>
-
-        swal.fire({
-            title: "{{ Session::get('error') }}",
-            type: 'error',
-            timer: 2000,
-            showConfirmButton: false
-        });
-
-<?php } ?>
-
-    //show dropify for package photo
-    $('.dropify_package').dropify({
-        messages: {
-            'default': 'Browse for photo',
-            'replace': 'Click to replace',
-            'remove': 'Remove',
-            'error': 'Choose correct file format'
-        }
-    });
 
 
-    //text editor for package details
-    // $("textarea.textarea_details").summernote({
-    //     toolbar: [
-    //         ['style', ['bold', 'italic', 'underline', 'clear']],
-    //         ['font', ['strikethrough', 'superscript', 'subscript']],
-    //         ['fontsize', ['fontsize']],
-    //         ['color', ['color']],
-    //         // ['table', ['table']],
-    //         ['para', ['ul', 'ol', 'paragraph']],
-    //         ['view', ['codeview']]
-    //     ],
-    //     height: 170
-    // });
-
-});
-
-
-</script>
+    </script>
 @endpush

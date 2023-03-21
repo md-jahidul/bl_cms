@@ -15,11 +15,11 @@
             <div class="card">
                 <div class="card-content collapse show">
 
-                    <div class="card-body card-dashboard">
-                        <h4><strong>Common Data</strong></h4>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4 col-xs-12">
+                <div class="card-body card-dashboard">
+                    <h4><strong>Common Data</strong></h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12">
                             <div class="form-group">
                                 <label> Select Category <span class="text-danger">*</span></label>
                                 <select class="form-control" required="required" name="type">
@@ -28,11 +28,11 @@
                                     <option value="iot">IOT</option>
                                     <option value="others">Others</option>
                                 </select>
-                                  @if ($errors->has('type'))
+                                @if ($errors->has('type'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('type') }}
                                     </div>
-                                 @endif
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="Short Details">List Page Short Details (EN)</label>
@@ -43,10 +43,11 @@
                                     </div>
                                 @endif
                             </div>
-                                <div class="form-group">
-                                    <label for="Banner Photo">Product Photo (Web) <span class="text-danger">*</span></label>
-                                    <input type="file" required class="dropify_package" name="banner_photo" data-height="60"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>@if ($errors->has('banner_photo'))
+                            <div class="form-group">
+                                <label for="Banner Photo">Product Photo (Web) <span class="text-danger">*</span></label>
+                                <input type="file" required class="dropify_package" name="banner_photo" data-height="60"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                @if ($errors->has('banner_photo'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('banner_photo') }}
                                     </div>
@@ -273,21 +274,18 @@
                                     </div>
                                 @endif
                             </div>
-
                             <div class="form-group">
                                 <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
-                                <input type="file" class="dropify_package" name="details_card_web" data-height="60"
+                                <input type="file" required class="dropify_package" name="details_card_web" data-height="60"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                <input type="hidden" name="old_details_card_web">
                             </div>
                             <div class="form-group">
                                 <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
-                                <input type="file" class="dropify_package" name="details_card_mob" data-height="60"
+                                <input type="file" required class="dropify_package" name="details_card_mob" data-height="60"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                <input type="hidden" name="old_details_card_mob">
                             </div>
                         </div>
-
+                    </div>
                     </div>
 
                 </div>
@@ -360,7 +358,6 @@
                             </div>
 
                             <div class="form-group">
-
                                 <label>Schema Markup</label>
                                 <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{ old('schema_markup') }}</textarea>
                                 <small class="text-info">
@@ -371,17 +368,13 @@
                                         {{ $errors->first('schema_markup') }}
                                     </div>
                                 @endif
-
                             </div>
-
                         </div>
 
                         <div class="col-md-8 col-xs-12">
-
                             <div class="form-group ">
                                 <label>Features</label>
                                 <div class="row">
-
                                     @foreach($features as $feature)
                                     <div class="col-md-12">
                                         <label>
@@ -429,70 +422,70 @@
 @stop
 
 @push('style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
-<link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 
 @endpush
 @push('page-js')
- <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
-<script>
-$(function () {
+    <script>
+        $(function () {
 
-    //success and error msg
-<?php
-if (Session::has('sussess')) {
-    ?>
-        swal.fire({
-            title: "{{ Session::get('sussess') }}",
-            type: 'success',
-            timer: 2000,
-            showConfirmButton: false
+            //success and error msg
+            <?php
+            if (Session::has('sussess')) {
+                ?>
+            swal.fire({
+                title: "{{ Session::get('sussess') }}",
+                type: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+                <?php
+            }
+            if (Session::has('error')) {
+                ?>
+
+            swal.fire({
+                title: "{{ Session::get('error') }}",
+                type: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            <?php } ?>
+
+            //show dropify for package photo
+            $('.dropify_package').dropify({
+                messages: {
+                    'default': 'Browse for photo',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+
+
+            // text editor for package details
+            // $("textarea.textarea_details").summernote({
+            //     toolbar: [
+            //         ['style', ['bold', 'italic', 'underline', 'clear']],
+            //         ['font', ['strikethrough', 'superscript', 'subscript']],
+            //         ['fontsize', ['fontsize']],
+            //         ['color', ['color']],
+            //         // ['table', ['table']],
+            //         ['para', ['ul', 'ol', 'paragraph']],
+            //         ['view', ['codeview']]
+            //     ],
+            //     height: 170
+            // });
+
         });
-    <?php
-}
-if (Session::has('error')) {
-    ?>
-
-        swal.fire({
-            title: "{{ Session::get('error') }}",
-            type: 'error',
-            timer: 2000,
-            showConfirmButton: false
-        });
-
-<?php } ?>
-
-    //show dropify for package photo
-    $('.dropify_package').dropify({
-        messages: {
-            'default': 'Browse for photo',
-            'replace': 'Click to replace',
-            'remove': 'Remove',
-            'error': 'Choose correct file format'
-        }
-    });
 
 
-    // text editor for package details
-    // $("textarea.textarea_details").summernote({
-    //     toolbar: [
-    //         ['style', ['bold', 'italic', 'underline', 'clear']],
-    //         ['font', ['strikethrough', 'superscript', 'subscript']],
-    //         ['fontsize', ['fontsize']],
-    //         ['color', ['color']],
-    //         // ['table', ['table']],
-    //         ['para', ['ul', 'ol', 'paragraph']],
-    //         ['view', ['codeview']]
-    //     ],
-    //     height: 170
-    // });
-
-});
-
-
-</script>
+    </script>
 @endpush

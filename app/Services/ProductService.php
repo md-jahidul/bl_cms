@@ -6,6 +6,7 @@ use App\Enums\OfferType;
 use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductDetail;
+use App\Repositories\AlCoreProductRepository;
 use App\Repositories\DynamicRouteRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
@@ -42,6 +43,10 @@ class ProductService
      * @var DynamicUrlRedirectionService
      */
     private $dynamicUrlRedirectionService;
+    /**
+     * @var AlCoreProductRepository
+     */
+    private $alCoreProductRepository;
 
     /**
      * ProductService constructor.
@@ -60,11 +65,13 @@ class ProductService
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
         DynamicRouteRepository $dynamicRouteRepository,
-        DynamicUrlRedirectionService $dynamicUrlRedirectionService
+        DynamicUrlRedirectionService $dynamicUrlRedirectionService,
+        AlCoreProductRepository $alCoreProductRepository
     ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
+        $this->alCoreProductRepository = $alCoreProductRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->setActionRepository($productRepository);
@@ -345,6 +352,10 @@ class ProductService
     public function deleteProduct($id)
     {
         $product = $this->findOne($id);
+
+        if ($product) {
+            $this->alCoreProductRepository->findOneByProperties(['product_code' => $product->product_code])->delete();
+        }
         $product->delete();
         return Response('Product delete successfully');
     }
