@@ -14,7 +14,8 @@ class GenericShortcut extends Model
         'component_identifier',
         'is_default',
         'customer_type',
-        'other_info'
+        'other_info',
+        'deep_link'
     ];
 }
 
