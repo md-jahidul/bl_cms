@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 
 use App\Models\AmarOfferDetails;
+use App\Services\AlBannerService;
 use App\Services\AmarOfferDetailsService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -17,14 +18,21 @@ class AmarOfferController extends Controller
 {
 
     private $amarOfferDetailsService;
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     /**
      * AmarOfferController constructor.
      * @param AmarOfferDetailsService $amarOfferDetailsService
      */
-    public function __construct(AmarOfferDetailsService $amarOfferDetailsService)
-    {
+    public function __construct(
+        AmarOfferDetailsService $amarOfferDetailsService,
+        AlBannerService $alBannerService
+    ) {
         $this->amarOfferDetailsService = $amarOfferDetailsService;
+        $this->alBannerService = $alBannerService;
     }
 
     /**
@@ -33,8 +41,9 @@ class AmarOfferController extends Controller
     public function amarOfferDetails()
     {
         $offerDetails = $this->amarOfferDetailsService->amarOfferDetailsList();
-        $bannerImage = $this->amarOfferDetailsService->findBannerImage();
-        return view('admin.amar-offer-details.index', compact('offerDetails', 'bannerImage'));
+
+        $banner = $this->alBannerService->findBanner('amar_offer', 0);
+        return view('admin.amar-offer-details.index', compact('offerDetails', 'banner'));
     }
 
 
