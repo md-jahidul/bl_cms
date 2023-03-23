@@ -50,26 +50,8 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 mb-2">
-                                    <label for="status_input">Component For: </label>
-                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
-                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'commerce') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>
-                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'content') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusActive" class="mr-3">Content</label>
-                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Home</label>
-                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
-                                        @if ($errors->has('component_for'))
-                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>
-                                        @endif
-                                    </div>
-                                </div>
+
+                                
                                 <div class="form-group col-md-6">
                                     <label for="component_size" class="required">Component Size</label>
                                     <select name="component_size" class="form-control custom-select"
@@ -93,6 +75,60 @@
                                         </p>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="component_type" class="required">Component Type</label>
+                                    <select name="component_type" class="form-control custom-select"
+                                            id="component_type" required data-validation-required-message="Please select component type">
+                                        <option value="" >--Select Tab Section--</option>
+                                        @foreach (Config::get('generic-slider.component_type') as $type)
+                                        <option value="{{$type}}" {{ (isset($slider->component_type) && $slider->component_type == $type) ? 'selected' : '' }} >{{ucfirst($type)}}</option>    
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('component_type'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_type') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                
+                                <div class="form-group col-md-6 mb-2">
+                                    <label for="status_input">Component For: </label>
+                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
+                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'commerce') ? 'checked' : '' }} disabled>
+                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>
+                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'content') ? 'checked' : '' }} disabled>
+                                        <label for="campaignStatusActive" class="mr-3">Content</label>
+                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }} disabled>
+                                        <label for="campaignStatusInactive" class="mr-3">Home</label>
+                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
+                                        @if ($errors->has('component_for'))
+                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="scrollable" class="">Scrollable</label>
+                                    <select name="scrollable" class="form-control custom-select"
+                                            id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
+                                        <option value="" >--Select Tab Section--</option>
+                                        <option value="1" {{ (isset($slider->scrollable) && $slider->scrollable == 1) ? 'selected' : '' }}>True</option>
+                                        <option value="0" {{ (isset($slider->scrollable) && $slider->scrollable == 0) ? 'selected' : '' }}>False</option>    
+                                        
+                                    </select>
+                                    @if($errors->has('scrollable'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('scrollable') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">

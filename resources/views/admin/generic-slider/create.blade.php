@@ -46,8 +46,41 @@
                                         </p>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="component_size" class="required">Component Size</label>
+                                    <select name="component_size" class="form-control custom-select"
+                                            id="component_size" required data-validation-required-message="Please select component size">
+                                        <option value="" >--Select Tab Section--</option>
+                                        
+                                        <option value="400x240" >4:2 400 x 240</option>
+                                        
+                                    </select>
+                                    @if($errors->has('component_size'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_size') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="component_type" class="required">Component Type</label>
+                                    <select name="component_type" class="form-control custom-select"
+                                            id="component_type" required data-validation-required-message="Please select component type">
+                                        <option value="" >--Select Tab Section--</option>
+                                        @foreach (Config::get('generic-slider.component_type') as $type)
+                                        <option value="{{$type}}" >{{ucfirst($type)}}</option>    
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('component_type'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_type') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="status_input">Component For: </label>
+                                    <label for="status_input" class="required">Component For: </label>
                                     <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
                                         <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
@@ -66,21 +99,23 @@
                                         @endif
                                     </div>
                                 </div>
+
                                 <div class="form-group col-md-6">
-                                    <label for="component_size" class="required">Component Size</label>
-                                    <select name="component_size" class="form-control custom-select"
-                                            id="component_size" required data-validation-required-message="Please select component size">
+                                    <label for="scrollable" class="">Scrollable</label>
+                                    <select name="scrollable" class="form-control custom-select"
+                                            id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
                                         <option value="" >--Select Tab Section--</option>
-                                        
-                                        <option value="400x240" >4:2 400 x 240</option>
+                                        <option value="1" >True</option>
+                                        <option value="0" >False</option>    
                                         
                                     </select>
-                                    @if($errors->has('component_size'))
+                                    @if($errors->has('scrollable'))
                                         <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('component_size') }}</small>
+                                            <small class="danger text-muted">{{ $errors->first('scrollable') }}</small>
                                         </p>
                                     @endif
                                 </div>
+
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
