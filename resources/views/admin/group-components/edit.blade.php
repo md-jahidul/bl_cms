@@ -156,6 +156,28 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                    <div class="form-group">
+                                        <label for="image" class="required">Upload Icon :</label>
+                                        @if (isset($component->icon))
+                                            <input type="file"
+                                                id="icon"
+                                                class="dropify_image"
+                                                name="icon"
+                                                data-height="70"
+                                                data-allowed-formats="square"
+                                                data-allowed-file-extensions="png"
+                                                data-default-file="{{ asset($component->icon) }}"
+                                            />
+                                        @endif
+                                        <div class="help-block">
+                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
+                                        </div>
+                                        <small id="massage"></small>
+                                    </div>
+                                </div>
                             
                         </div>
                         <div class="card-footer">

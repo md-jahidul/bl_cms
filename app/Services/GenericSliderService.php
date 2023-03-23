@@ -60,6 +60,10 @@ class GenericSliderService
         try {
             DB::beginTransaction();
             
+            if (isset($data['icon'])) {
+                $data['icon'] = 'storage/' . $data['icon']->store('generic_sliders_icons');
+            }
+
             $data['status'] = 1;
             $genericSlider = $this->save($data);
 
@@ -131,6 +135,14 @@ class GenericSliderService
                 $nonBlComponent->update($homeComponentData);
                 Redis::del('non_bl_component');
             }
+
+            if (isset($data['icon'])) {
+                $data['icon'] = 'storage/' . $data['icon']->store('generic_sliders_icons');
+                if (isset($slider) && file_exists($slider->icon)) {
+                    unlink($slider->icon);
+                }
+            }
+
             $slider->update($data);
             DB::commit();
             return true;

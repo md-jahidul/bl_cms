@@ -116,6 +116,24 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <div class="form-group">
+                                        <label for="image" class="required">Upload Icon :</label>                                        
+                                        <input type="file" required
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>
+                                        <div class="help-block">
+                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
+                                        </div>
+                                        <small id="massage"></small>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
@@ -146,8 +164,21 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
-    {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
+    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>
+
     <script>
+        $(document).ready(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Icon to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Icon file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
+        });
     </script>
 @endpush

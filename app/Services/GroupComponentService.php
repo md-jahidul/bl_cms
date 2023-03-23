@@ -117,6 +117,10 @@ class GroupComponentService
     {
         try {
             DB::beginTransaction();
+
+            if (isset($data['icon'])) {
+                $data['icon'] = 'storage/' . $data['icon']->store('group_components_icons');
+            }
             
             $member_1 = json_decode($data['member_1'], true);
             $member_2 = json_decode($data['member_2'], true);
@@ -132,7 +136,7 @@ class GroupComponentService
 
             $component = $this->save($data);
 
-            $data['component_key'] = 'group' . '-' . $component->id;
+            $data['component_key'] = $component->title_en . '-' . $component->id;
     
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($data);
@@ -243,6 +247,14 @@ class GroupComponentService
                 $nonBlComponent->update($data);
                 Redis::del('non_bl_component');
             }
+
+            if (isset($data['icon'])) {
+                $data['icon'] = 'storage/' . $data['icon']->store('group_components_icons');
+                if (isset($component) && file_exists($component->icon)) {
+                    unlink($component->icon);
+                }
+            }
+
             $component->update($data);
             DB::commit();
             
@@ -250,7 +262,7 @@ class GroupComponentService
 
             return true;
         } catch (\Exception $e) {
-            // dd($e);
+
             DB::rollback();
             Log::info($e->getMessage());
             return false;

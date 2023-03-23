@@ -98,6 +98,7 @@
                             </select>
                         </div>
                     </div>
+                    
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="image" class="required">Upload Icon :</label>

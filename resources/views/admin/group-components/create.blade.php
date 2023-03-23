@@ -151,6 +151,24 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                    <div class="form-group">
+                                        <label for="image" class="required">Upload Icon :</label>                                        
+                                        <input type="file" required
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify_image"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>
+                                        <div class="help-block">
+                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
+                                        </div>
+                                        <small id="massage"></small>
+                                    </div>
+                                </div>
                             
                         </div>
                         <div class="card-footer">

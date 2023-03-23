@@ -129,6 +129,28 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <div class="form-group">
+                                        <label for="image" class="required">Upload Icon :</label>
+                                        @if (isset($slider->icon))
+                                            <input type="file"
+                                                id="icon"
+                                                class="dropify"
+                                                name="icon"
+                                                data-height="70"
+                                                data-allowed-formats="square"
+                                                data-allowed-file-extensions="png"
+                                                data-default-file="{{ asset($slider->icon) }}"
+                                            />
+                                        @endif
+                                        <div class="help-block">
+                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
+                                        </div>
+                                        <small id="massage"></small>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
@@ -162,5 +184,18 @@
     {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
     {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script>
+                $(document).ready(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Icon to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Icon file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
+        });
     </script>
 @endpush
