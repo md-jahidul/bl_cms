@@ -162,6 +162,13 @@
                     <a class="menu-item" href="{{ route('product.schedule') }}">
                         <i class="la la-history"></i>Schedule Products</a>
                 </li>
+                <li class="{{ is_active_url('redis-key-update-view') }}">
+                    <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
+                        <i class="la la-align-center"></i>Activate New Product Code</a>
+                </li>
+{{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
+{{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
+{{--                </li>--}}
             </ul>
         </li>
     @endif
@@ -207,7 +214,12 @@
             </ul>
         </li>
     @endif
-
+    <li class="{{ is_active_url('digital-service') }}">
+        <a class="menu-item" href="{{ route('digital-service.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
@@ -703,10 +715,6 @@
     <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
                 class="la la-fighter-jet"></i>
             <span class="menu-title" data-i18n="nav.dash.main">Content & Course Deeplink</span></a>
-    </li>
-    <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}"><i
-                class="la la-fighter-jet"></i>
-            <span class="menu-title" data-i18n="nav.dash.main">Activate New Product Code</span></a>
     </li>
     @if( auth()->user()->can_view('HelpCenter') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
