@@ -1047,6 +1047,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('generic-slider.images.destroy');
     Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
 //
 });
 
