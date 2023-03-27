@@ -63,7 +63,7 @@ deploy_ubuntu:
 service_restart:
   stage: svc-restart
   variables:
-    ANSIBLE_PATH: "/app/mybl/ansible/ansible-mybl-app-deploy/ENV/PROD/WEB-API"
+    ANSIBLE_PATH: "/app/mybl/ansible/ansible-mybl-app-deploy/ENV/PROD/WEB-CMS"
   when: manual
   tags:
     - bl-cms
