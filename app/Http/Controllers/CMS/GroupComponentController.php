@@ -90,7 +90,13 @@ class GroupComponentController extends Controller
             return $item;
         }, $sliders);
 
-        $components = [ ...$sliders];
+        $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
+        $shortcuts = array_map(function($item) {
+            $item['prefix'] = 'generic-shortcut';
+            return $item;
+        }, $shortcuts);
+
+        $components = [...$sliders, ...$shortcuts];
         
         return view('admin.group-components.edit', compact('component', 'components'));
     }
