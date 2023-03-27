@@ -136,7 +136,7 @@ class GroupComponentService
 
             $component = $this->save($data);
 
-            $data['component_key'] = $component->title_en . '-' . $component->id;
+            $data['component_key'] = 'group' . '-' . $component->id;
     
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($data);
@@ -225,7 +225,7 @@ class GroupComponentService
             
             unset($data['member_1'], $data['member_2']);
 
-            $componentKey = str_replace(' ', '_', strtolower($component['title_en'])) . '-' . $component->id;
+            $componentKey = 'group' . '-' . $component->id;
 
             if ($component['component_for'] == 'home') {
                 $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => $componentKey])[0];
@@ -277,7 +277,7 @@ class GroupComponentService
             $component = $this->findOne($id);
             $componentFor = $component['component_for'];
             
-            $componentKey = str_replace(' ', '_', strtolower($component['title_en'])) . '-' . $component->id;
+            $componentKey = 'group' . '-' . $component->id;
             
             if ($componentFor == 'home') {
                 $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => $componentKey])->first();
