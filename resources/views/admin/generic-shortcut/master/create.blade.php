@@ -88,10 +88,10 @@
                                             {{ (isset($shortcut->component_for) && $shortcut->component_for == 'home') ? 'checked' : '' }}
                                             {{ isset($shortcut) ? 'disabled' : '' }}>
                                         <label for="campaignStatusInactive" class="mr-3">Home</label>
-                                        <input type="radio" name="component_for" value="ott" id="campaignStatusInactive"
-                                            {{ (isset($shortcut->component_for) && $shortcut->component_for == 'ott') ? 'checked' : '' }}
-                                            {{ isset($shortcut) ? 'disbaled' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">OTT</label>
+                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
+                                            {{ (isset($shortcut->component_for) && $shortcut->component_for == 'non_bl') ? 'checked' : '' }}
+                                            {{ isset($shortcut) ? 'disabled' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Non BL</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
