@@ -989,7 +989,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('group-components/store', 'CMS\GroupComponentController@store')->name('group.components.store');
     Route::get('group-components/edit{id}', 'CMS\GroupComponentController@edit')->name('group.components.edit');
     Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
-    Route::get('group-components/destroy{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
+    Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
     Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
     
 

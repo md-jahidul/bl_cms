@@ -43,17 +43,13 @@
                                             class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
                                     @endif
                                 
-                                    <!-- <button type="button" id="changeStatus"
-                                            class="btn btn-secondary border-0" title="Click to disable" > Enabled</button> -->
-                                    
                                     <a href="{{route('group.components.edit', $component['id'])}}">
-                                        <button type="button"
-                                            class="btn btn-secondary-info border-0"><i class="la la-pencil" aria-hidden="true" ></i></button>
+                                        <button type="button"class="btn btn-secondary-info border-0"><i class="la la-pencil" aria-hidden="true" ></i></button>
                                     </a>        
                                             
-                                    <a href="#" remove="{{ route('group.components.destroy', $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
+                                    <button  class="delete_component border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete">
                                         <i class="la la-trash"></i>
-                                    </a>
+                                    </button>
                                     
                                 </td>
                             </tr>
@@ -69,31 +65,23 @@
 
 @push('page-js')
     <script>
-        (function () {
-            let titleEn = $("input[name='title_en']");
-            let titleBn = $("input[name='title_bn']");
-            let active = $("#active");
-            let inactive = $("#inactive");
-            let enable_yes = $("#can_enable_yes");
-            let disable_no = $("#can_disable_no");
+        $(document).ready(function () {
             
-
             $('.change_status').click(function (event) {
                 event.preventDefault()
                 let status = $(this).attr('data-value');
                 let url = $(this).attr('href');
-                var confirmPopupParams = {
+                let confirmPopupParams = {
                     title: 'Are you sure?',
                     text: "You want to " + status,
                     type: 'warning',
-                    // html: jQuery().html(),
                     showCancelButton: true,
                     confirmButtonColor: '#77ba6a',
                     cancelButtonColor: '#a9afa9',
                     confirmButtonText: 'Yes'
                 };
 
-                var successPopupParams = {
+                let successPopupParams = {
                     title: 'Updated!',
                     text: 'Component status has been changed',
                     type: 'success'
@@ -108,8 +96,39 @@
                     }
                 })
             });
-
-        })();
+            
+            $('.delete_component').click(function (event) {
+                event.preventDefault()
+                let id = $(this).attr('data-id');
+                Swal.fire({
+                    title: 'Are you sure? ching',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#a9afa9',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('group-components/destroy') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('group-components') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+        });
     </script>
 @endpush
 

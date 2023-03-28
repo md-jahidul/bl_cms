@@ -118,18 +118,18 @@
                             </div>
 
                             <div class="form-group col-md-6 mb-2">
-                                <label for="status_input">Component For: </label>
+                                <label class="required" for="status_input">Component For: </label>
                                 <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
-                                    <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
+                                    <input required type="radio" name="component_for" value="commerce" id="campaignStatusActive"
                                         {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
                                     <label for="campaignStatusActive" class="mr-3">Commerce</label>
-                                    <input type="radio" name="component_for" value="content" id="campaignStatusActive"
+                                    <input required type="radio" name="component_for" value="content" id="campaignStatusActive"
                                         {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
                                     <label for="campaignStatusActive" class="mr-3">Content</label>
-                                    <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
+                                    <input required type="radio" name="component_for" value="home" id="campaignStatusInactive"
                                         {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}>
                                     <label for="campaignStatusInactive" class="mr-3">Home</label>
-                                    <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
+                                    <input required type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
                                         {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
                                     <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
                                     @if ($errors->has('component_for'))
@@ -139,11 +139,11 @@
                             </div>
 
                             <div class="form-group col-md-6 mb-2">
-                                <label for="active_status">Status: </label>
+                                <label class="required" for="active_status">Status: </label>
                                 <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                    <input type="radio" name="active" value="1" id="groupComponentStatusActive"/>
+                                    <input required type="radio" name="active" value="1" id="groupComponentStatusActive"/>
                                     <label for="campaignStatusActive" class="mr-3">Active</label>
-                                    <input type="radio" name="active" value="0" id="groupComponentStatusInactive"/>
+                                    <input required type="radio" name="active" value="0" id="groupComponentStatusInactive"/>
                                     <label for="campaignStatusActive" class="mr-3">Inactive</label>
                                     
                                     @if ($errors->has('status'))
