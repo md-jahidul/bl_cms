@@ -51,7 +51,7 @@ class GroupComponentController extends Controller
             return $item;
         }, $shortcuts);
 
-        $components = [ ...$sliders, ...$shortcuts];
+        $components = array_merge($sliders, $shortcuts);
 
         return view('admin.group-components.create', compact('components'));
     }
@@ -96,7 +96,7 @@ class GroupComponentController extends Controller
             return $item;
         }, $shortcuts);
 
-        $components = [...$sliders, ...$shortcuts];
+        $components = array_merge($sliders, $shortcuts);
 
         return view('admin.group-components.edit', compact('component', 'components'));
     }
