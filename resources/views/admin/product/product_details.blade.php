@@ -81,8 +81,12 @@
 
                             @if($productDetail->offer_category_id == \App\Enums\OfferType::INTERNET)
                             @include('layouts.partials.product-details.voice')
+
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::VOICE)
                             @include('layouts.partials.product-details.voice')
+
+                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::CALL_RATE)
+                                @include('layouts.partials.product-details.voice')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::RECHARGE_OFFER)
                                 @include('layouts.partials.product-details.voice')
