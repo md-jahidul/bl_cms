@@ -121,7 +121,7 @@ class GroupComponentService
             if (isset($data['icon'])) {
                 $data['icon'] = 'storage/' . $data['icon']->store('group_components_icons');
             }
-            
+
             $member_1 = json_decode($data['member_1'], true);
             $member_2 = json_decode($data['member_2'], true);
             $data['member_1_id'] = $member_1['id'];
@@ -136,8 +136,8 @@ class GroupComponentService
 
             $component = $this->save($data);
 
-            $data['component_key'] = 'group' . '-' . $component->id;
-    
+            $data['component_key'] = 'group' . '_' . $component->id;
+
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($data);
                 Redis::del('mybl_home_component');
@@ -154,11 +154,11 @@ class GroupComponentService
                 $this->nonBlComponentRepository->save($data);
                 Redis::del('non_bl_component');
             }
-            
+
             $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
             $groupComponentCount = $this->findAll()->count();
             $data['display_order'] = $groupComponentCount + $homeSecondarySliderCount + 1;
-    
+
             Redis::del(self::REDIS_KEY);
 
             DB::commit();
@@ -169,7 +169,7 @@ class GroupComponentService
             Log::info($e->getMessage());
             return false;
         }
-        
+
     }
 
     public function displayOrder($type)
@@ -222,10 +222,10 @@ class GroupComponentService
             $data['member_2_type'] = $member_2['type'];
             $data['is_api_call_enable'] = $data['active'];
             $data['display_order'] = $this->displayOrder($data['component_for']);
-            
+
             unset($data['member_1'], $data['member_2']);
 
-            $componentKey = 'group' . '-' . $component->id;
+            $componentKey = 'group' . '_' . $component->id;
 
             if ($component['component_for'] == 'home') {
                 $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => $componentKey])[0];
@@ -257,7 +257,7 @@ class GroupComponentService
 
             $component->update($data);
             DB::commit();
-            
+
             Redis::del(self::REDIS_KEY);
 
             return true;
@@ -276,9 +276,9 @@ class GroupComponentService
 
             $component = $this->findOne($id);
             $componentFor = $component['component_for'];
-            
-            $componentKey = 'group' . '-' . $component->id;
-            
+
+            $componentKey = 'group' . '_' . $component->id;
+
             if ($componentFor == 'home') {
                 $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => $componentKey])->first();
                 $this->myblHomeComponentService->deleteComponent($homeComponent->id);

@@ -41,18 +41,18 @@ class GroupComponentController extends Controller
     {
         $sliders = $this->genericSliderService->getSlider()->toArray();
         $sliders = array_map(function($item) {
-            $item['prefix'] = 'generic-slider';
+            $item['prefix'] = 'generic_slider';
             return $item;
         }, $sliders);
 
         $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
         $shortcuts = array_map(function($item) {
-            $item['prefix'] = 'generic-shortcut';
+            $item['prefix'] = 'generic_shortcut';
             return $item;
         }, $shortcuts);
 
         $components = [ ...$sliders, ...$shortcuts];
-        
+
         return view('admin.group-components.create', compact('components'));
     }
 
@@ -65,7 +65,7 @@ class GroupComponentController extends Controller
             Session::flash('success', "Save Successful");
             return redirect()->route('group.components');
         }
-        return redirect()->route('group.components')->with('error', 'Failed');       
+        return redirect()->route('group.components')->with('error', 'Failed');
     }
 
     public function componentStatusUpdate($id)
@@ -83,43 +83,43 @@ class GroupComponentController extends Controller
     public function edit($id)
     {
         $component = $this->componentService->findOne($id);
-        
+
         $sliders = $this->genericSliderService->getSlider()->toArray();
         $sliders = array_map(function($item) {
-            $item['prefix'] = 'generic-slider';
+            $item['prefix'] = 'generic_slider';
             return $item;
         }, $sliders);
 
         $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
         $shortcuts = array_map(function($item) {
-            $item['prefix'] = 'generic-shortcut';
+            $item['prefix'] = 'generic_shortcut';
             return $item;
         }, $shortcuts);
 
         $components = [...$sliders, ...$shortcuts];
-        
+
         return view('admin.group-components.edit', compact('component', 'components'));
     }
 
     public function update(Request $request, $id)
     {
         $success = $this->componentService->updateComponent($request->all(), $id);
-        
+
         if($success) {
             Session::flash('success', "Update Successful");
             return redirect()->route('group.components');
         }
-        return redirect()->route('group.components')->with('error', 'Failed');       
+        return redirect()->route('group.components')->with('error', 'Failed');
     }
 
     public function destroy($id)
     {
         $success = $this->componentService->deleteComponent($id);
-        
+
         if($success) {
             Session::flash('success', "Delete Successful");
             return redirect()->route('group.components');
         }
-        return redirect()->route('group.components')->with('error', 'Failed');       
+        return redirect()->route('group.components')->with('error', 'Failed');
     }
 }
