@@ -53,8 +53,7 @@ class GenericShortcutMasterController extends Controller
     {
         $request->validate([
             'title_en' => 'required|max:200',
-            'title_bn' => 'required|max:200',
-            'component_for' => 'required'
+            'title_bn' => 'required|max:200'
         ]);
 
         $this->genericShortcutMasterService->updateShortcutMasterData($request->all(), $id);
