@@ -103,7 +103,7 @@
                                 </div>
 
                                 <div class="form-group col-md-3 {{ $errors->has('sd_vat_tax_en') ? ' error' : '' }}">
-                                    <label for="sd_vat_tax_en">Display SD VAT Tax (English)</label>
+                                    <label for="sd_vat_tax_en">Offer sub title (English)</label>
                                     <input type="text" name="sd_vat_tax_en" id="sd_vat_tax_en" class="form-control" placeholder="Enter SD Vat Tax in English"
                                            value="{{ old("sd_vat_tax_en") ? old("sd_vat_tax_en") : '' }}">
                                     <div class="help-block"></div>
@@ -113,7 +113,7 @@
                                 </div>
 
                                 <div class="form-group col-md-3 {{ $errors->has('sd_vat_tax_bn') ? ' error' : '' }}">
-                                    <label for="sd_vat_tax_bn">Display SD VAT Tax (Bangla)</label>
+                                    <label for="sd_vat_tax_bn">Offer Sub Title (Bangla)</label>
                                     <input type="text" name="sd_vat_tax_bn" id="sd_vat_tax_bn" class="form-control" placeholder="Enter SD Vat Tax in Bangla"
                                            value="{{ old("sd_vat_tax_bn") ? old("sd_vat_tax_bn") : '' }}">
                                     <div class="help-block"></div>
