@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGenericShortcutTable extends Migration
+class CreateGenericShortcutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -22,6 +22,7 @@ class CreateGenericShortcutTable extends Migration
             $table->string('customer_type');
             $table->string('component_identifier');
             $table->text('other_info')->nullable();
+            $table->string('deep_link')->nullable();
             $table->tinyinteger('is_default')->default('0');
             $table->foreign('generic_shortcut_master_id')
                 ->references('id')

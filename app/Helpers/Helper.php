@@ -139,6 +139,7 @@ class Helper
             "ELECTRICITY"             => 'Electricity',
             "GAS"                     => 'Gas',
             "WATER"                   => 'Water',
+            "SHARETRIP"                   => 'Sharetrip',
         ];
     }
 

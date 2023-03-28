@@ -40,7 +40,7 @@
                                <td>{{ $key + 1 }}</td>
                                 <td>{{ $shortcut->title_en }}</td>
                                <td>{{ $shortcut->title_bn }}</td>
-                               <td>{{ strtoupper($shortcut->component_for) }}</td>
+                               <td>{{ $shortcut->component_for == "non_bl" ? 'NON BL' : strtoupper($shortcut->component_for) }}</td>
                                 <td width="30%">
                                     <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-3">

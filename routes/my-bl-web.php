@@ -1255,7 +1255,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('trivia', 'CMS\TriviaGamificationController');
 
 
-    //PGW Routes
+    // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
 
@@ -1287,14 +1287,31 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('generic-slider.images.destroy');
     Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
-//
-
     //Active new Product Code
     Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
     Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
 
 
-    //Commerce Component
+    // Group Components
+    Route::get('group-components', 'CMS\GroupComponentController@index')->name('group.components');
+    Route::get('group-components/create', 'CMS\GroupComponentController@create')->name('group.components.create');
+    Route::post('group-components/store', 'CMS\GroupComponentController@store')->name('group.components.store');
+    Route::get('group-components/edit{id}', 'CMS\GroupComponentController@edit')->name('group.components.edit');
+    Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
+    Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
+    Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
+    
+
+    // Non Bl Components
+    Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
+    Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');
+    Route::get('non-bl-components-status-update/{id}', 'CMS\NonBlComponentController@componentStatusUpdate')->name('nonbl.components.status.update');
+    Route::post('non-bl-components/store', 'CMS\NonBlComponentController@store')->name('nonbl.components.store');
+    Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
+    Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
+    Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    // Commerce Component
     Route::get('mybl-commerce-components', 'CMS\MyBlCommerceComponentController@index')->name('mybl.commerce.components');
     Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyBlCommerceComponentController@edit')
         ->name('mybl.commerce.components.edit');
@@ -1356,6 +1373,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 //    )->name('generic-slider.images.destroy');
 //    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
 //
 });
 
