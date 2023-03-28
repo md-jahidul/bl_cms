@@ -55,7 +55,7 @@ class GenericShortcutMasterService
     {
         $homeComponentData['title_en'] = $shortcut->title_en;
         $homeComponentData['title_bn'] = $shortcut->title_bn;
-        $homeComponentData['component_key'] = "generic-shortcut-" . $shortcut->id;
+        $homeComponentData['component_key'] = "generic_shortcut_" . $shortcut->id;
         $homeComponentData['is_api_call_enable'] = 1;
         $homeComponentData['is_eligible'] = 0;
 
@@ -93,19 +93,19 @@ class GenericShortcutMasterService
         $homeComponentData['title_bn'] = $shortcut->title_bn;
 
         if ($shortcut->component_for == 'home') {
-            $component = $this->myBlHomeComponentService->findBy(['component_key' => "generic-shortcut-" . $shortcut->id])->first();
+            $component = $this->myBlHomeComponentService->findBy(['component_key' => "generic_shortcut_" . $shortcut->id])->first();
             $component->update($homeComponentData);
             Redis::del('mybl_home_component');
         }
 
         if ($shortcut->component_for == 'content') {
-            $component = $this->contentComponentService->findBy(['component_key' => "generic-shortcut-" . $shortcut->id])->first();
+            $component = $this->contentComponentService->findBy(['component_key' => "generic_shortcut_" . $shortcut->id])->first();
             $component->update($homeComponentData);
             Redis::del('content_component');
         }
 
         if ($shortcut->component_for == 'non_bl') {
-            $component = $this->nonBlComponentService->findBy(['component_key' => "generic-shortcut-" . $shortcut->id])->first();
+            $component = $this->nonBlComponentService->findBy(['component_key' => "generic_shortcut_" . $shortcut->id])->first();
             $component->update($homeComponentData);
             Redis::del('non_bl_component');
         }
@@ -123,19 +123,19 @@ class GenericShortcutMasterService
     private function deleteHomeComponentData($shortcut)
     {
         if ($shortcut->component_for == 'home') {
-            $component = $this->myBlHomeComponentService->findBy(['component_key' => "generic-shortcut-" . $shortcut->id])->first();
+            $component = $this->myBlHomeComponentService->findBy(['component_key' => "generic_shortcut_" . $shortcut->id])->first();
             $component->delete();
             Redis::del('mybl_home_component');
         }
 
         if ($shortcut->component_for == 'content') {
-            $component = $this->contentComponentService->findBy(['component_key' => "generic-shortcut-" . $shortcut->id])->first();
+            $component = $this->contentComponentService->findBy(['component_key' => "generic_shortcut_" . $shortcut->id])->first();
             $component->delete();
             Redis::del('content_component');
         }
 
         if ($shortcut->component_for == 'non_bl') {
-            $component = $this->nonBlComponentService->findBy(['component_key' => "generic-shortcut-" . $shortcut->id])->first();
+            $component = $this->nonBlComponentService->findBy(['component_key' => "generic_shortcut_" . $shortcut->id])->first();
             $component->delete();
             Redis::del('non_bl_component');
         }

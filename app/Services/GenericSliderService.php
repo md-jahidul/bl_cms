@@ -59,7 +59,7 @@ class GenericSliderService
     {
         try {
             DB::beginTransaction();
-            
+
             if (isset($data['icon'])) {
                 $data['icon'] = 'storage/' . $data['icon']->store('generic_sliders_icons');
             }
@@ -70,7 +70,7 @@ class GenericSliderService
             $homeComponentData['title_en'] = $data['title_en'];
             $homeComponentData['title_bn'] = $data['title_en'];
             $homeComponentData['display_order'] = $this->displayOrder($data['component_for']);
-            $homeComponentData['component_key'] = "generic-" . $genericSlider->id;
+            $homeComponentData['component_key'] = "generic_slider_" . $genericSlider->id;
             $homeComponentData['is_api_call_enable'] = 1;
             $homeComponentData['is_eligible'] = 0;
 
@@ -116,22 +116,22 @@ class GenericSliderService
             $homeComponentData['title_en'] = $data['title_en'];
             $homeComponentData['title_bn'] = $data['title_bn'];
             if ($slider['component_for'] == 'home') {
-                $homeComponent = $this->myblHomeComponentService->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $homeComponent = $this->myblHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $homeComponent->update($homeComponentData);
                 Redis::del('mybl_home_component');
             }
             elseif ($slider['component_for'] == 'content') {
-                $contentComponent = $this->contentComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $contentComponent = $this->contentComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $contentComponent->update($homeComponentData);
                 Redis::del('content_component');
             }
             elseif ($slider['component_for'] == 'commerce') {
-                $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $commerceComponent->update($homeComponentData);
                 Redis::del('mybl_commerce_component');
             }
             elseif ($slider['component_for'] == 'non_bl') {
-                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $nonBlComponent->update($homeComponentData);
                 Redis::del('non_bl_component');
             }
@@ -202,19 +202,19 @@ class GenericSliderService
             $componentFor = $slider['component_for'];
 
             if ($componentFor == 'home') {
-                $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->myblHomeComponentService->deleteComponent($homeComponent->id);
             }
             else if ($componentFor == 'content') {
-                $contentComponent = $this->contentComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $contentComponent = $this->contentComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->contentComponentService->deleteComponent($contentComponent->id);
             }
             else if ($componentFor == 'commerce') {
-                $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->commerceComponentService->deleteComponent($commerceComponent->id);
             }
             else if ($componentFor == 'non_bl') {
-                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->nonBlComponentRepository->delete($nonBlComponent);
             }
             $slider->delete();
