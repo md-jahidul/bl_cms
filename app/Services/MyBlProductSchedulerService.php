@@ -75,7 +75,7 @@ class MyBlProductSchedulerService
                 continue;
             }
 
-            if ($currentTime >= $productSchedule['start_date'] && $currentTime <= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
+            if ($currentTime >= $productSchedule['start_date'] && $currentTime < $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
 
                 $productData = [];
                 $productScheduleData = [];
@@ -155,7 +155,7 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
-            } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
+            } elseif ($currentTime >= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
 
                 $productData = [];
                 $productScheduleData = [];
