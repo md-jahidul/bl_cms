@@ -58,15 +58,9 @@
                                             id="component_size" required data-validation-required-message="Please select component size">
                                         <option value="" >--Select Tab Section--</option>
                                         
-                                        <option value="400x240" {{ (isset($slider->component_size) && $slider->component_size == '400x240') ? 'selected' : '' }} >
-                                            4:2 400 x 240
-                                        </option>
-                                        <option value="600x400" {{ (isset($slider->component_size) && $slider->component_size == '600x400') ? 'selected' : '' }} >
-                                            6:4 600 x 400
-                                        </option>
-                                        <option value="800x600" {{ (isset($slider->component_size) && $slider->component_size == '800x600') ? 'selected' : '' }} >
-                                            8:6 800 x 600
-                                        </option>
+                                        @foreach (Config::get('generic-slider.component_size') as $key => $size)
+                                        <option value="{{$key}}" {{ (isset($slider->component_size) && $slider->component_size == $key) ? 'selected' : '' }} >{{$size}}</option>
+                                        @endforeach
                                         
                                     </select>
                                     @if($errors->has('component_size'))
@@ -81,8 +75,8 @@
                                     <select name="component_type" class="form-control custom-select"
                                             id="component_type" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.component_type') as $type)
-                                        <option value="{{$type}}" {{ (isset($slider->component_type) && $slider->component_type == $type) ? 'selected' : '' }} >{{ucfirst($type)}}</option>    
+                                        @foreach (Config::get('generic-slider.component_type') as $key => $type)
+                                        <option value="{{$key}}" {{ (isset($slider->component_type) && $slider->component_type == $key) ? 'selected' : '' }} >{{ucfirst($type)}}</option>    
                                         @endforeach
                                     </select>
                                     @if($errors->has('component_type'))
