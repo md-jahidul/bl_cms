@@ -52,9 +52,9 @@
                                     <select name="component_size" class="form-control custom-select"
                                             id="component_size" required data-validation-required-message="Please select component size">
                                         <option value="" >--Select Tab Section--</option>
-                                        
-                                        <option value="400x240" >4:2 400 x 240</option>
-                                        
+                                        @foreach (Config::get('generic-slider.component_size') as $key => $size)
+                                        <option value="{{$key}}" >{{$size}}</option>    
+                                        @endforeach
                                     </select>
                                     @if($errors->has('component_size'))
                                         <p class="text-left">
@@ -68,8 +68,8 @@
                                     <select name="component_type" class="form-control custom-select"
                                             id="component_type" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.component_type') as $type)
-                                        <option value="{{$type}}" >{{ucfirst($type)}}</option>    
+                                        @foreach (Config::get('generic-slider.component_type') as $key => $type)
+                                        <option value="{{$key}}" >{{ucfirst($type)}}</option>    
                                         @endforeach
                                     </select>
                                     @if($errors->has('component_type'))
