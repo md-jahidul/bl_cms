@@ -937,6 +937,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['media'] = null;
+            unset($data['is_banner_schedule']);
         }
 
         if ($data['is_tags_schedule'] == true) {
@@ -944,6 +945,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['tags'] = null;
+            unset($data['is_tags_schedule']);
         }
 
         if ($data['is_visible_schedule'] == true) {
@@ -951,6 +953,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['is_visible'] = 0;
+            unset($data['is_visible_schedule']);
         }
 
         if ($data['is_pin_to_top_schedule'] == true) {
@@ -958,6 +961,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['pin_to_top'] = 0;
+            unset($data['is_pin_to_top_schedule']);
         }
 
         if ($data['is_base_msisdn_group_id_schedule'] == true) {
@@ -965,6 +969,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['base_msisdn_group_id'] = null;
+            unset($data['is_base_msisdn_group_id_schedule']);
         }
 
         if ($coreData['is_commercial_name_en_schedule']) {
@@ -972,6 +977,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['commercial_name_en'] = null;
+            unset($coreData['is_commercial_name_en_schedule']);
         }
 
         if ($coreData['is_commercial_name_bn_schedule']) {
@@ -979,6 +985,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['commercial_name_bn'] = null;
+            unset($coreData['is_commercial_name_bn_schedule']);
         }
 
         if ($coreData['is_display_title_en_schedule']) {
@@ -986,6 +993,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['display_title_en'] = null;
+            unset($coreData['is_display_title_en_schedule']);
         }
 
         if ($coreData['is_display_title_bn_schedule']) {
@@ -993,6 +1001,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['display_title_bn'] = null;
+            unset($coreData['is_display_title_bn_schedule']);
         }
 
 
@@ -1015,7 +1024,9 @@ class ProductCoreService
 
             $productSchedule['product_code'] = $request->product_code;
 
-            $this->myblProductScheduleRepository->createProductSchedule($productSchedule);
+            if ($isProductSchedule == true) {
+                $this->myblProductScheduleRepository->createProductSchedule($productSchedule);
+            }
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
