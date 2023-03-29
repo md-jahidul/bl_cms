@@ -101,13 +101,11 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="scrollable" class="">Scrollable</label>
+                                    <label for="scrollable" class="required">Scrollable</label>
                                     <select name="scrollable" class="form-control custom-select"
                                             id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
-                                        <option value="" >--Select Tab Section--</option>
-                                        <option value="1" >True</option>
-                                        <option value="0" >False</option>    
-                                        
+                                        <option selected value="0" >False</option>
+                                        <option value="1" >True</option>    
                                     </select>
                                     @if($errors->has('scrollable'))
                                         <p class="text-left">
@@ -133,8 +131,44 @@
                                         <small id="massage"></small>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-12 text-center">
+                                    <label>Please input only if "Component Type" is either "Category Banner" Or "Swipe Banner"</label>
+                                </div>
 
                             </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="banner_text_en" class="required">Banner Text English</label>
+                                    <input class="form-control"
+                                           name="banner_text_en"
+                                           id="banner_text_en"
+                                           placeholder="Enter English Banner Text"
+                                           >
+                                    @if($errors->has('banner_text_en'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="banner_text_bn" class="required">Banner Text Bangla</label>
+                                    <input class="form-control"
+                                           name="banner_text_bn"
+                                           id="banner_text_bn"
+                                           placeholder="Enter Bangla Banner Text"
+                                           >
+                                    @if($errors->has('banner_text_bn'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
                                     <i class="ft-save"></i> Save
