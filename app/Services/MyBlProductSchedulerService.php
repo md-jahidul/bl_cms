@@ -155,6 +155,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             } elseif ($currentTime >= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
 
                 $productData = [];
@@ -224,6 +226,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             }
         }
 
@@ -275,6 +279,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['product_core_change_state_status'] == 1) {
 
                 $productData = [];
@@ -317,6 +323,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             }
         }
     }
@@ -427,6 +435,8 @@ class MyBlProductSchedulerService
             DB::rollback();
             Log::info($e->getMessage());
         }
+        Redis::del('prepaid_popular_pack');
+        Redis::del('postpaid_popular_pack');
     }
 
     public function getTag($tagId) {
