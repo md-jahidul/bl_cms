@@ -32,7 +32,20 @@ class GenericSliderController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'banner_text_en' => 'required_unless:component_type,carousel',
+            'banner_text_bn' => 'required_unless:component_type,carousel'
+        ]);
+
+        if($request->input('component_type') == 'carousel') {
+            $request->merge([
+                'banner_text_en' => null,
+                'banner_text_bn' => null
+            ]);
+        }
+
         $flag = $this->genericSliderService->storeSlider($request->all());
+        
         if ($flag) {
             Session::flash('success', 'Slider Created Successfully');
         } else {
@@ -58,8 +71,20 @@ class GenericSliderController extends Controller
 
     public function update(Request $request, $sliderId)
     {
+        $request->validate([
+            'banner_text_en' => 'required_unless:component_type,carousel',
+            'banner_text_bn' => 'required_unless:component_type,carousel'
+        ]);
+
+        if($request->input('component_type') == 'carousel') {
+            $request->merge([
+                'banner_text_en' => null,
+                'banner_text_bn' => null
+            ]);
+        }
 
         $success = $this->genericSliderService->updateSlider($request->all(), $sliderId);
+        
         if ($success) {
             Session::flash('success', 'Slider Updtaed Successfully');
         } else {
@@ -67,7 +92,6 @@ class GenericSliderController extends Controller
         }
 
         return redirect('generic-slider');
-
     }
 
 
