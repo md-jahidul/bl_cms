@@ -150,6 +150,41 @@
                                         <div class="help-block"></div>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="subscription_message_en" class="required">Subscription Message EN</label>
+                                    <input class="form-control"
+                                           name="subscription_message_en"
+                                           id="subscription_message_en"
+                                           placeholder="Enter Body Title EN"
+                                           required>
+                                    @if($errors->has('subscription_message_en'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('subscription_message_en') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="subscription_message_bn" class="required">Subscription Message BN</label>
+                                    <input class="form-control"
+                                           name="subscription_message_bn"
+                                           id="subscription_message_bn"
+                                           placeholder="Enter Body Title BN"
+                                           required>
+                                    @if($errors->has('subscription_message_bn'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('subscription_message_bn') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Subscription Type</label>
+                                        <select name="is_paid" class="form-control">
+                                            <option value="0">Free</option>
+                                            <option value="1" >Paid</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="eventInput3">Status</label>

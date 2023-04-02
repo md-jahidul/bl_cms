@@ -53,6 +53,7 @@ class MyBlDigitalServiceController extends Controller
 
     public function update(Request $request, $id)
     {
+//        dd($request->all());
         $service = $this->myblDigitalserviceRepository->findOne($id);
         if ($service->update($request->all())) {
             Session::flash('message', 'Service Update successful');
