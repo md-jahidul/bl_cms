@@ -152,6 +152,13 @@
                     <a class="menu-item" href="{{ route('product.schedule') }}">
                         <i class="la la-history"></i>Schedule Products</a>
                 </li>
+                <li class="{{ is_active_url('redis-key-update-view') }}">
+                    <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
+                        <i class="la la-align-center"></i>Activate New Product Code</a>
+                </li>
+{{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
+{{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
+{{--                </li>--}}
             </ul>
         </li>
     @endif
@@ -346,6 +353,11 @@
                 <a class="menu-item" href="{{ url('pgw-gateway') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> PGW List</a>
             </li>
         </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('payment-gateways')}}">
+                <a class="menu-item" href="{{ url('payment-gateways') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Gateway List V2</a>
+            </li>
+        </ul>
     </li>
 
     <!-- PGW -->
@@ -437,6 +449,14 @@
             </li>
         </ul>
     </li>
+
+    <li class="{{ is_active_url('trivia') . is_active_url('trivia/create')}}">
+        <a class="menu-item" href="{{ route('trivia.create') }} "
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-gamepad"></i> Trivia Gamification
+        </a>
+    </li>
+
     <!-- Loyalty Partner Menu -->
     @if( auth()->user()->can_view('LoyaltyPartnerImage') || auth()->user()->can_view('LoyaltyPartnerImage') )
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
