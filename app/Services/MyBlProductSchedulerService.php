@@ -91,6 +91,7 @@ class MyBlProductSchedulerService
                     $productData['tag'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
+                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
                     if ($productScheduleData['tags'] != null && $productSchedule->tags != null) {
 
