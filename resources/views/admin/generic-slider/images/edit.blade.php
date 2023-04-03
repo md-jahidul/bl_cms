@@ -96,6 +96,36 @@
                                 @endif
                             </div>
 
+                            @if($imageInfo->slider->component_type == "swipe_banner" || 
+                                $imageInfo->slider->component_type == "catgory_banner")
+                            <div class="form-group col-md-6">
+                                <label for="banner_text_en">Banner Text English</label>
+                                <input class="form-control"
+                                        name="banner_text_en"
+                                        id="banner_text_en"
+                                        placeholder="Enter English Banner Text"
+                                        value="{{ $imageInfo->banner_text_en }}">
+                                @if($errors->has('banner_text_en'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="banner_text_bn">Banner Text Bangla</label>
+                                <input class="form-control"
+                                        name="banner_text_bn"
+                                        id="banner_text_bn"
+                                        placeholder="Enter Bangla Banner Text"
+                                        value="{{ $imageInfo->banner_text_bn }}">
+                                @if($errors->has('banner_text_bn'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            @endif
+
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="status">Active Status:</label>
