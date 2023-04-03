@@ -146,42 +146,6 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="form-group col-12 text-center">
-                                    <label>Please input only if "Component Type" is either "Category Banner" Or "Swipe Banner"</label>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="banner_text_en" class="required">Banner Text English</label>
-                                    <input class="form-control"
-                                           name="banner_text_en"
-                                           id="banner_text_en"
-                                           placeholder="Enter English Banner Text"
-                                           value="{{ $slider->banner_text_en }}">
-                                    @if($errors->has('banner_text_en'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="banner_text_bn" class="required">Banner Text Bangla</label>
-                                    <input class="form-control"
-                                           name="banner_text_bn"
-                                           id="banner_text_bn"
-                                           placeholder="Enter Bangla Banner Text"
-                                           value="{{ $slider->banner_text_bn }}">
-                                    @if($errors->has('banner_text_bn'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
                                     <i class="ft-save"></i> Save
