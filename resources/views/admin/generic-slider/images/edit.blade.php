@@ -96,8 +96,8 @@
                                 @endif
                             </div>
 
-                            @if($imageInfo->slider->component_type == "swipe_banner" || 
-                                $imageInfo->slider->component_type == "catgory_banner")
+                            @if($imageInfo->slider->component_type == "swipe_banner" ||
+                                $imageInfo->slider->component_type == "category_banner")
                             <div class="form-group col-md-6">
                                 <label for="banner_text_en">Banner Text English</label>
                                 <input class="form-control"
@@ -241,7 +241,7 @@
                             </div>
 
                             {{-- <div class="col-2">
-                                 <button type="submit" style="width:100%" id="submitForm"
+                                 <button type="submit" style="width:100%"
                                          class=" btn btn-success">Submit
                                  </button>
                              </div>--}}
@@ -613,11 +613,11 @@
                     imageURL($this, 'img_display');
 
                 } else {
+                    document.getElementById("submitForm").disabled = true;
                     document.getElementById('image_input_div').style.border = '1px solid red';
                     document.getElementById('message').innerHTML = `<b style="color: red">image size must be ${width} x ${height} pixel (change the picture to enable button)</b>`;
                     document.getElementById('ratio_info').innerHTML = '';
                     document.getElementById('message').classList.add('text-danger');
-                    document.getElementById('submitForm').disabled = true;
                 }
             })
         };

@@ -99,14 +99,14 @@
                                         @endif
                                     </div>
 
-                                    @if($slider_information->component_type == "swipe_banner" || 
-                                        $slider_information->component_type == "catgory_banner")
+                                    @if($slider_information->component_type == "swipe_banner" ||
+                                        $slider_information->component_type == "category_banner")
                                     <div class="form-group col-md-6">
                                         <label for="banner_text_en">Banner Text English</label>
                                         <input class="form-control"
                                                 name="banner_text_en"
                                                 id="banner_text_en"
-                                                
+
                                                 placeholder="Enter English Banner Text"
                                                 >
                                         @if($errors->has('banner_text_en'))
