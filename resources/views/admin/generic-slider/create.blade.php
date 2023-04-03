@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div id="scrollable_div" class="form-group col-md-6">
                                     <label for="scrollable" class="required">Scrollable</label>
                                     <select name="scrollable" class="form-control custom-select"
                                             id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
@@ -165,6 +165,16 @@
 
     <script>
         $(document).ready(function () {
+            $('#component_type').change(function() {
+                let show = $('#component_type').val() == 'carousel'
+
+                if(show) {
+                    $('#scrollable_div').show()
+                } else {
+                    $('#scrollable_div').hide()
+                }
+            });
+
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Icon to upload',
