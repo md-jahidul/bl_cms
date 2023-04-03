@@ -930,10 +930,11 @@ class ProductCoreService
         }
 
         if ($data['is_tags_schedule'] == true) {
-            $productSchedule['tags'] = json_encode($request->schedule_tags);
+            if ($request->schedule_tags !=null) {
+                $productSchedule['tags'] = json_encode($request->schedule_tags);
+            }
             $isProductSchedule = true;
         } else {
-            $productSchedule['tags'] = null;
             unset($data['is_tags_schedule']);
         }
 
