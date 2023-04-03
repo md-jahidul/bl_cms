@@ -161,21 +161,23 @@
                                             <label for="image" class="required">Upload Image :</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
+                                                    @php
+                                                        $width = explode('x', $slider_information->component_size)[0];
+                                                        $height = explode('x', $slider_information->component_size)[1];
+                                                        $size = $width/$height;
+                                                    @endphp
                                                     <input accept="image/*"
                                                            required
                                                            data-validation-required-message="Image is required"
                                                            onchange="createImageBitmap(this.files[0]).then((bmp) => {
 
-                                                    if(bmp.width/bmp.height == 16/9){
-                                                        console.log('yes')
+                                                    if ((bmp.width/bmp.height).toFixed(2) == `{{round($size, 2)}}`){
                                                         document.getElementById('submitForm').disabled = false;
                                                         document.getElementById('massage').innerHTML = '';
                                                         this.style.border = 'none';
-                                                        // this.nextElementSibling.innerHTML = '';
-                                                    }else{
-                                                        console.log('no')
+                                                    } else {
                                                         this.style.border = '1px solid red';
-                                                        document.getElementById('massage').innerHTML = '<b>Image aspect ratio must 16:9(change the picture to enable button)</b>';
+                                                        document.getElementById('massage').innerHTML = `<b>Image size must be {{$width}} x {{$height}} pixel (change the picture to enable button)</b>`;
                                                         document.getElementById('massage').classList.add('text-danger');
                                                         document.getElementById('submitForm').disabled = true;
                                                     }
@@ -185,10 +187,6 @@
                                                     <label class="custom-file-label" for="image_url">Upload
                                                         Image...</label>
                                                 </div>
-                                            </div>
-                                            <div class="help-block">
-                                                <small class="text-info"> Image aspect ratio should be in
-                                                    16:9 </small><br>
                                             </div>
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                             <small id="massage"></small>
