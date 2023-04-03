@@ -26,7 +26,7 @@ class AddRegionColumnToStoreLocatorsTable extends Migration
     public function down()
     {
         Schema::table('store_locators', function (Blueprint $table) {
-            //
+            $table->dropColumn('region');
         });
     }
 }
