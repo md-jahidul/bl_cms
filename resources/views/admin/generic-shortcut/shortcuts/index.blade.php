@@ -92,6 +92,7 @@
     <h1>
         info
     </h1>
+
 @endsection
 
 
@@ -100,6 +101,13 @@
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #sortable tr td {
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
@@ -111,7 +119,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
 
-        var auto_save_url = "{{ url('shortcuts-sortable') }}";
+        let auto_save_url = "{{ url('generic-shortcut/update-position') }}";
 
         $(function () {
            var content = "";
