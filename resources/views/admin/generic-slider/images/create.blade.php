@@ -34,16 +34,19 @@
                                     <div class="form-group col-md-12">
                                         <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
 
-                                            <input type="radio" name="user_type" value="all" id="input-radio-15"
-                                                   checked>
+                                            <input type="radio" name="user_type" value="all" id="input-radio-15" checked>
                                             <label for="input-radio-15" class="mr-3">All</label>
+                                            @if($slider_information->component_for != 'non_bl')            
+                                                    
                                             <input type="radio" name="user_type" value="prepaid" id="input-radio-16">
                                             <label for="input-radio-16" class="mr-3">Prepaid</label>
+
                                             <input type="radio" name="user_type" value="postpaid" id="input-radio-17">
                                             <label for="input-radio-17" class="mr-3">Postpaid</label>
-{{--                                            <input type="radio" name="user_type" value="segment_wise_banner"--}}
-{{--                                                   id="segment_wise_banner">--}}
-{{--                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
+                                    
+                                        {{--<input type="radio" name="user_type" value="segment_wise_banner" id="segment_wise_banner">--}}
+                                        {{--<label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
+                                            @endif
 
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>
