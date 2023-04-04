@@ -26,15 +26,16 @@
                                     <input type="radio" name="user_type" value="all" id="all"
                                     @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
                                     <label for="all" class="mr-3 cursor-pointer">All</label>
+                                    @if($imageInfo->slider->component_for != 'non_bl')  
                                     <input type="radio" name="user_type" value="prepaid"
                                            id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
                                     <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
                                     <input type="radio" name="user_type" value="postpaid"
                                            id="postpaid" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
                                     <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
-{{--                                    <input type="radio" name="user_type" value="segment_wise_banner"--}}
-{{--                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>--}}
-{{--                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>--}}
+                                    @endif
+                                {{--<input type="radio" name="user_type" value="segment_wise_banner" id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>--}}
+                                {{--<label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>--}}
                                 </div>
                             </div>
 
