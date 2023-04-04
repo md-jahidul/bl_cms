@@ -94,6 +94,7 @@ class GenericSliderService
             }
             elseif ($data['component_for'] == 'non_bl_offer') {
                 $this->nonBlOfferService->save($homeComponentData);
+                Redis::del('non_bl_offer');
             }
 
             DB::commit();
@@ -143,6 +144,7 @@ class GenericSliderService
             elseif ($slider['component_for'] == 'non_bl_offer') {
                 $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $nonBlComponent->update($homeComponentData);
+                Redis::del('non_bl_offer');
             }
 
             if (isset($data['icon'])) {
