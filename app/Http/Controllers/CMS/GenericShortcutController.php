@@ -42,8 +42,7 @@ class GenericShortcutController extends Controller
            'title_bn' =>  'required|max:200',
            'customer_type' => 'required',
            'component_identifier' => 'required',
-           'icon' => 'required',
-           'deep_link' => 'required'
+           'icon' => 'required'
         ]);
 
         $this->genericShortcutService->saveGenericShortcut($request->all());
@@ -63,8 +62,7 @@ class GenericShortcutController extends Controller
             'title_en' => 'required|max:50',
             'title_bn' =>  'required|max:50',
             'customer_type' => 'required',
-            'component_identifier' => 'required',
-            'deep_link' => 'required'
+            'component_identifier' => 'required'
         ]);
 
         $this->genericShortcutService->updateGenericShortcut($request->all(), $id);
