@@ -26,19 +26,19 @@ class StoreLocatorService
     public function __construct()
     {
         $this->config = [
-            'district' => 1,
-            'thana' => 2,
-            'cc_code' => 3,
-            'cc_name' => 4,
-            'longitude' => 5,
-            'latitude' => 6,
-            'opening_time' => 7,
-            'closing_time' => 8,
-            'holiday' => 9,
-            'half_holiday' => 10,
-            'half_holiday_opening_time' => 11,
-            'half_holiday_closing_time' => 12,
-            'address' => 13,
+            'cc_code' => 4,
+            'cc_name' => 5,
+            'district' => 2,
+            'thana' => 3,
+            'address' => 14,
+            'longitude' => 6,
+            'latitude' => 7,
+            'opening_time' => 8,
+            'closing_time' => 9,
+            'holiday' => 10,
+            'half_holiday' => 11,
+            'half_holiday_opening_time' => 12,
+            'half_holiday_closing_time' => 13
         ];
     }
 
