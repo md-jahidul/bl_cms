@@ -46,9 +46,12 @@
                                                    class=" btn btn-outline-success">
                                                     <i class="la la-picture-o"></i>
                                                 </a>
+
                                             </div>
                                             <div class="col-md-3">
-                                                <button data-id="{{$slider->id}}" title="Delete" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                                <a href="#" remove="{{ url("generic-slider/destroy/$slider->id") }}" class="btn btn-outline-danger delete_btn" data-id="{{ $slider->id }}" title="Delete">
+                                                    <i class="la la-trash"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -73,38 +76,25 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
       $(function () {
-            $('.delete').click(function () {
-                var id = $(this).attr('data-id');
+          $('.delete').click(function () {
+              var id = $(this).attr('data-id');
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: "{{ url('generic-slider/destroy') }}/"+id,
-                            methods: "get",
-                            success: function (res) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success',
-                                );
-                                setTimeout(redirect, 2000)
-                                function redirect() {
-                                    window.location.href = "{{ url('generic-slider') }}"
-                                }
-                            }
-                        })
-                    }
-                }).catch(e => console.log(e))
-            })
+              Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  type: 'warning',
+                  html: jQuery('.delete_btn').html(),
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                  if (result.value) {
+                      event.preventDefault();
+                      document.getElementById(`delete-form-${id}`).submit();
+                  }
+              })
+          })
         })
 
 
