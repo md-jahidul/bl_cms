@@ -22,6 +22,7 @@
                             <th>Header Title En</th>
                             <th>Body Title En</th>
                             <th>Component For</th>
+                            <th>Subscription Type</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -33,6 +34,7 @@
                                     <td>{{ $service->header_title_en }}</td>
                                     <td>{{ $service->body_title_bn }}</td>
                                     <td>{{ $service->component_for }}</td>
+                                    <td>{{ $service->is_paid ? 'Paid':'Free' }}</td>
                                     <td>{{ $service->status ? 'Active':'Inactive' }}</td>
                                     <td>
                                         <a href="{{ route('digital-service.edit', $service->id) }}" role="button"

@@ -18,6 +18,9 @@ class MyBlDigitalService extends Model
         'header_sub_title_en',
         'header_sub_title_bn',
         'body_sub_title_en',
-        'body_sub_title_bn'
+        'body_sub_title_bn',
+        'is_paid',
+        'subscription_message_en',
+        'subscription_message_bn'
     ];
 }

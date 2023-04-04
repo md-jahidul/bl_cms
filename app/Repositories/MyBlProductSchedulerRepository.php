@@ -20,7 +20,7 @@ class MyBlProductSchedulerRepository extends BaseRepository
     public function findScheduleDataByProductCode($product_code)
     {
         $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
-        return $this->model::where('product_code', $product_code)->where('start_date', '<=' ,$currentTime)->where('end_date', '>=' ,$currentTime)->where('is_cancel', 0)->orWhere('change_state_status', 1)->orWhere('start_date', '>' ,$currentTime)->first();
+        return $this->model::where('product_code', $product_code)->where('start_date', '<=' ,$currentTime)->where('end_date', '>=' ,$currentTime)->where('is_cancel', 0)->orWhere('change_state_status', 1)->where('product_code',$product_code)->first();
     }
     public function findActiveScheduleDataByProductCode($product_code)
     {

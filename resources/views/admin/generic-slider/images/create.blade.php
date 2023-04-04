@@ -23,7 +23,6 @@
             </div>
             <div class="card-content collapse show">
                 <div class="card-body">
-
                     <div class="card-body">
                         <form novalidate class="form row" action="{{route('generic-slider.images.store')}}"
                               enctype="multipart/form-data" method="POST">
@@ -99,6 +98,38 @@
                                             <div class="help-block">{{ $errors->first('end_date') }}</div>
                                         @endif
                                     </div>
+
+                                    @if($slider_information->component_type == "swipe_banner" ||
+                                        $slider_information->component_type == "category_banner")
+                                    <div class="form-group col-md-6">
+                                        <label for="banner_text_en">Banner Text English</label>
+                                        <input class="form-control"
+                                                name="banner_text_en"
+                                                id="banner_text_en"
+
+                                                placeholder="Enter English Banner Text"
+                                                >
+                                        @if($errors->has('banner_text_en'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="banner_text_bn">Banner Text Bangla</label>
+                                        <input class="form-control"
+                                                name="banner_text_bn"
+                                                id="banner_text_bn"
+                                                placeholder="Enter Bangla Banner Text"
+                                                >
+                                        @if($errors->has('banner_text_bn'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    @endif
+
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="is_active">Active Status:</label>
@@ -130,21 +161,23 @@
                                             <label for="image" class="required">Upload Image :</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
+                                                    @php
+                                                        $width = explode('x', $slider_information->component_size)[0];
+                                                        $height = explode('x', $slider_information->component_size)[1];
+                                                        $size = $width/$height;
+                                                    @endphp
                                                     <input accept="image/*"
                                                            required
                                                            data-validation-required-message="Image is required"
                                                            onchange="createImageBitmap(this.files[0]).then((bmp) => {
 
-                                                    if(bmp.width/bmp.height == 16/9){
-                                                        console.log('yes')
+                                                    if ((bmp.width/bmp.height).toFixed(2) == `{{round($size, 2)}}`){
                                                         document.getElementById('submitForm').disabled = false;
                                                         document.getElementById('massage').innerHTML = '';
                                                         this.style.border = 'none';
-                                                        // this.nextElementSibling.innerHTML = '';
-                                                    }else{
-                                                        console.log('no')
+                                                    } else {
                                                         this.style.border = '1px solid red';
-                                                        document.getElementById('massage').innerHTML = '<b>Image aspect ratio must 16:9(change the picture to enable button)</b>';
+                                                        document.getElementById('massage').innerHTML = `<b>Image size must be {{$width}} x {{$height}} pixel (change the picture to enable button)</b>`;
                                                         document.getElementById('massage').classList.add('text-danger');
                                                         document.getElementById('submitForm').disabled = true;
                                                     }
@@ -154,10 +187,6 @@
                                                     <label class="custom-file-label" for="image_url">Upload
                                                         Image...</label>
                                                 </div>
-                                            </div>
-                                            <div class="help-block">
-                                                <small class="text-info"> Image aspect ratio should be in
-                                                    16:9 </small><br>
                                             </div>
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                             <small id="massage"></small>

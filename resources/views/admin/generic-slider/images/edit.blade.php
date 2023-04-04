@@ -96,6 +96,36 @@
                                 @endif
                             </div>
 
+                            @if($imageInfo->slider->component_type == "swipe_banner" ||
+                                $imageInfo->slider->component_type == "category_banner")
+                            <div class="form-group col-md-6">
+                                <label for="banner_text_en">Banner Text English</label>
+                                <input class="form-control"
+                                        name="banner_text_en"
+                                        id="banner_text_en"
+                                        placeholder="Enter English Banner Text"
+                                        value="{{ $imageInfo->banner_text_en }}">
+                                @if($errors->has('banner_text_en'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="banner_text_bn">Banner Text Bangla</label>
+                                <input class="form-control"
+                                        name="banner_text_bn"
+                                        id="banner_text_bn"
+                                        placeholder="Enter Bangla Banner Text"
+                                        value="{{ $imageInfo->banner_text_bn }}">
+                                @if($errors->has('banner_text_bn'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            @endif
+
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="status">Active Status:</label>
@@ -136,6 +166,11 @@
                             </div>
 
 
+                            @php
+                                $width = explode('x', $imageInfo->slider->component_size)[0];
+                                $height = explode('x', $imageInfo->slider->component_size)[1];
+                                $size = $width/$height;
+                            @endphp
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="image">Upload Image :</label>
@@ -151,9 +186,6 @@
                                                    for="image_url">Upload Image...</label>
                                         </div>
                                     </div>
-                                    <small class="text-info" id="ratio_info">
-                                        Shortcut icon should be in
-                                        16:9 aspect ratio</small><br>
                                     <small
                                         class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
@@ -209,7 +241,7 @@
                             </div>
 
                             {{-- <div class="col-2">
-                                 <button type="submit" style="width:100%" id="submitForm"
+                                 <button type="submit" style="width:100%"
                                          class=" btn btn-success">Submit
                                  </button>
                              </div>--}}
@@ -567,9 +599,12 @@
         }
 
         let checkImageRatio = function ($this) {
+            let size = "<?php echo round($size, 2) ?>";
+            let width = "<?php echo $width ?>";
+            let height = "<?php echo $height ?>";
             createImageBitmap($this.files[0]).then((bmp) => {
 
-                if (bmp.width / bmp.height == 16 / 9) {
+                if ((bmp.width / bmp.height).toFixed(2) == size) {
                     document.getElementById('submitForm').disabled = false;
                     document.getElementById('message').innerHTML = '';
                     document.getElementById('image_input_div').style.border = 'none';
@@ -578,11 +613,11 @@
                     imageURL($this, 'img_display');
 
                 } else {
+                    document.getElementById("submitForm").disabled = true;
                     document.getElementById('image_input_div').style.border = '1px solid red';
-                    document.getElementById('message').innerHTML = '<b>image aspact ratio must 16:9(change the picture to enable button)</b>';
+                    document.getElementById('message').innerHTML = `<b style="color: red">image size must be ${width} x ${height} pixel (change the picture to enable button)</b>`;
                     document.getElementById('ratio_info').innerHTML = '';
                     document.getElementById('message').classList.add('text-danger');
-                    document.getElementById('submitForm').disabled = true;
                 }
             })
         };

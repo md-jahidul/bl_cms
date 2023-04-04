@@ -52,9 +52,9 @@
                                     <select name="component_size" class="form-control custom-select"
                                             id="component_size" required data-validation-required-message="Please select component size">
                                         <option value="" >--Select Tab Section--</option>
-                                        
-                                        <option value="400x240" >4:2 400 x 240</option>
-                                        
+                                        @foreach (Config::get('generic-slider.component_size') as $key => $size)
+                                        <option value="{{$key}}" >{{$size}}</option>    
+                                        @endforeach
                                     </select>
                                     @if($errors->has('component_size'))
                                         <p class="text-left">
@@ -68,8 +68,8 @@
                                     <select name="component_type" class="form-control custom-select"
                                             id="component_type" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.component_type') as $type)
-                                        <option value="{{$type}}" >{{ucfirst($type)}}</option>    
+                                        @foreach (Config::get('generic-slider.component_type') as $key => $type)
+                                        <option value="{{$key}}" >{{ucfirst($type)}}</option>    
                                         @endforeach
                                     </select>
                                     @if($errors->has('component_type'))
@@ -100,14 +100,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="scrollable" class="">Scrollable</label>
+                                <div id="scrollable_div" class="form-group col-md-6">
+                                    <label for="scrollable" class="required">Scrollable</label>
                                     <select name="scrollable" class="form-control custom-select"
                                             id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
-                                        <option value="" >--Select Tab Section--</option>
-                                        <option value="1" >True</option>
-                                        <option value="0" >False</option>    
-                                        
+                                        <option selected value="0" >False</option>
+                                        <option value="1" >True</option>    
                                     </select>
                                     @if($errors->has('scrollable'))
                                         <p class="text-left">
@@ -133,14 +131,13 @@
                                         <small id="massage"></small>
                                     </div>
                                 </div>
-
                             </div>
+
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
                                     <i class="ft-save"></i> Save
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -168,6 +165,16 @@
 
     <script>
         $(document).ready(function () {
+            $('#component_type').change(function() {
+                let show = $('#component_type').val() == 'carousel'
+
+                if(show) {
+                    $('#scrollable_div').show()
+                } else {
+                    $('#scrollable_div').hide()
+                }
+            });
+
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Icon to upload',

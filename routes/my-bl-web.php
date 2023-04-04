@@ -62,6 +62,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
     Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
     Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+    Route::get('generic-shortcut/update-position', 'CMS\GenericShortcutController@updatePosition');
 
     //------ shortcuts -----------//
 
@@ -1300,7 +1301,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
     Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
     Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
-    
+
 
     // Non Bl Components
     Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
@@ -1311,7 +1312,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
     Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
 
-    // Commerce Component
+    //Payment Gateway
+    Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
+    Route::get('payment-gateways/destroy/{id}', 'CMS\PaymentGatewayController@destroy')->name('payment-gateways.destroy');
+    Route::get('payment-gateways/sort-auto-save', 'CMS\PaymentGatewayController@categorySortable');
+
+    //Active new Product Code
+    Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
+    Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
+
+
+    //Commerce Component
     Route::get('mybl-commerce-components', 'CMS\MyBlCommerceComponentController@index')->name('mybl.commerce.components');
     Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyBlCommerceComponentController@edit')
         ->name('mybl.commerce.components.edit');

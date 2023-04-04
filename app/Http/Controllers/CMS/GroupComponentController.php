@@ -45,13 +45,13 @@ class GroupComponentController extends Controller
             return $item;
         }, $sliders);
 
-        $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
-        $shortcuts = array_map(function($item) {
-            $item['prefix'] = 'generic_shortcut';
-            return $item;
-        }, $shortcuts);
+        // $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
+        // $shortcuts = array_map(function($item) {
+        //     $item['prefix'] = 'generic_shortcut';
+        //     return $item;
+        // }, $shortcuts);
 
-        $components = array_merge($sliders, $shortcuts);
+        $components = array_merge($sliders, []);
 
         return view('admin.group-components.create', compact('components'));
     }
@@ -90,13 +90,13 @@ class GroupComponentController extends Controller
             return $item;
         }, $sliders);
 
-        $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
-        $shortcuts = array_map(function($item) {
-            $item['prefix'] = 'generic_shortcut';
-            return $item;
-        }, $shortcuts);
+        // $shortcuts = $this->genericShortcutMasterService->findAll()->toArray();
+        // $shortcuts = array_map(function($item) {
+        //     $item['prefix'] = 'generic_shortcut';
+        //     return $item;
+        // }, $shortcuts);
 
-        $components = array_merge($sliders, $shortcuts);
+        $components = array_merge($sliders, []);
 
         return view('admin.group-components.edit', compact('component', 'components'));
     }

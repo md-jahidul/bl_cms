@@ -26,6 +26,9 @@ class CreateMyBlDigitalServicesTable extends Migration
             $table->string('button_title_en');
             $table->string('button_title_bn');
             $table->string('component_for');
+            $table->boolean('is_paid')->default(false);
+            $table->string('subscription_message_en')->nullable();
+            $table->string('subscription_message_bn')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
