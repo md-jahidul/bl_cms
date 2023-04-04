@@ -101,6 +101,9 @@
                                         <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
                                             {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>
                                         <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
+                                        <input type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl_offer') ? 'checked' : '' }} disabled>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
@@ -127,7 +130,7 @@
                                     <div class="form-group">
                                         <label for="image" class="required">Upload Icon :</label>
                                         @if (isset($slider->icon))
-                                            <input disabled 
+                                            <input 
                                                 type="file"
                                                 id="icon"
                                                 class="dropify"
@@ -137,6 +140,14 @@
                                                 data-allowed-file-extensions="png"
                                                 data-default-file="{{ asset($slider->icon) }}"
                                             />
+                                        @else
+                                            <input type="file" 
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>    
                                         @endif
                                         <div class="help-block">
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>

@@ -65,9 +65,12 @@ class GenericSliderImageController extends Controller
         foreach ($request->position as $position) {
             $image = GenericSliderImage::FindorFail($position[0]);
             $image->update(['sequence' => $position[1]]);
-            Redis::del('mybl_home_component');
-            Redis::del('content_component');
         }
+
+        Redis::del('mybl_home_component');
+        Redis::del('content_component');
+        Redis::del('non_bl_component');
+        Redis::del('mybl_commerce_component');
         return "success";
     }
 

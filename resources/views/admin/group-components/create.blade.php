@@ -132,6 +132,9 @@
                                     <input required type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
                                         {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
                                     <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
+                                    <input required type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"
+                                        {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl_offer') ? 'checked' : '' }}>
+                                    <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>
                                     @if ($errors->has('component_for'))
                                         <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                     @endif

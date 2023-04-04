@@ -62,6 +62,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
     Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
     Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+    Route::get('generic-shortcut/update-position', 'CMS\GenericShortcutController@updatePosition');
 
     //------ shortcuts -----------//
 
@@ -1300,7 +1301,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
     Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
     Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
-    
+
 
     // Non Bl Components
     Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
@@ -1310,6 +1311,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
     Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
     Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
+    Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);

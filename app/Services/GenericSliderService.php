@@ -32,6 +32,7 @@ class GenericSliderService
     protected $contentComponentService;
     protected $commerceComponentRepository;
     protected $commerceComponentService;
+    protected $nonBlOfferService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
@@ -40,8 +41,8 @@ class GenericSliderService
         ContentComponentService $contentComponentService,
         SliderRepository $sliderRepository,
         MyBlCommerceComponentRepository $commerceComponentRepository,
-        MyBlCommerceComponentService  $commerceComponentService
-
+        MyBlCommerceComponentService  $commerceComponentService,
+        NonBlOfferService $nonBlOfferService
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
@@ -51,6 +52,7 @@ class GenericSliderService
         $this->contentComponentService = $contentComponentService;
         $this->commerceComponentRepository = $commerceComponentRepository;
         $this->commerceComponentService = $commerceComponentService;
+        $this->nonBlOfferService = $nonBlOfferService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -89,6 +91,10 @@ class GenericSliderService
             elseif ($data['component_for'] == 'non_bl') {
                 $this->nonBlComponentRepository->save($homeComponentData);
                 Redis::del('non_bl_component');
+            }
+            elseif ($data['component_for'] == 'non_bl_offer') {
+                $this->nonBlOfferService->save($homeComponentData);
+                Redis::del('non_bl_offer');
             }
 
             DB::commit();
@@ -135,11 +141,23 @@ class GenericSliderService
                 $nonBlComponent->update($homeComponentData);
                 Redis::del('non_bl_component');
             }
+            elseif ($slider['component_for'] == 'non_bl_offer') {
+                $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
+                $nonBlComponent->update($homeComponentData);
+                Redis::del('non_bl_offer');
+            }
 
             if (isset($data['icon'])) {
                 $data['icon'] = 'storage/' . $data['icon']->store('generic_sliders_icons');
                 if (isset($slider) && file_exists($slider->icon)) {
                     unlink($slider->icon);
+                }
+            } else {
+                if (isset($slider) && file_exists($slider->icon)) {
+                    unlink($slider->icon);
+                }
+                if (isset($slider)) {
+                    $data['icon'] = null;
                 }
             }
 
@@ -191,6 +209,13 @@ class GenericSliderService
 
             return $contentSecondarySliderCount + $nonBlComponentCount + 1;
         }
+        elseif ($type == 'non_bl_offer')
+        {
+            $nonBlofferCount = $this->nonBlOfferService->findAll()->count();
+            $contentSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
+
+            return $contentSecondarySliderCount + $nonBlofferCount + 1;
+        }
 
         return 1;
     }
@@ -217,6 +242,11 @@ class GenericSliderService
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->nonBlComponentRepository->delete($nonBlComponent);
             }
+            else if ($componentFor == 'non_bl_offer') {
+                $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                $this->nonBlOfferService->delete($nonBlOffer);
+            }
+
             $slider->delete();
 
             return [

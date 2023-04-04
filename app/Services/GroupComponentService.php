@@ -2,18 +2,19 @@
 
 namespace App\Services;
 
-use App\Repositories\ContentComponentRepository;
-use App\Repositories\GroupComponentRepository;
-use App\Repositories\MyBlCommerceComponentRepository;
-use App\Repositories\MyblSliderRepository;
-use App\Repositories\NonBlComponentRepository;
 use App\Traits\CrudTrait;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Services\NonBlOfferService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use App\Repositories\MyblSliderRepository;
+use App\Repositories\GroupComponentRepository;
+use App\Repositories\NonBlComponentRepository;
+use App\Repositories\ContentComponentRepository;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use App\Repositories\MyBlCommerceComponentRepository;
 
 class GroupComponentService
 {
@@ -28,6 +29,7 @@ class GroupComponentService
     protected $contentComponentService;
     protected $commerceComponentRepository;
     protected $commerceComponentService;
+    protected $nonBlOfferService;
 
     protected const REDIS_KEY = "group_component";
 
@@ -39,7 +41,8 @@ class GroupComponentService
         ContentComponentService $contentComponentService,
         MyblSliderRepository $sliderRepository,
         MyBlCommerceComponentRepository $commerceComponentRepository,
-        MyBlCommerceComponentService  $commerceComponentService
+        MyBlCommerceComponentService  $commerceComponentService,
+        NonBlOfferService $nonBlOfferService
     ) {
         $this->componentRepository = $componentRepository;
         $this->sliderRepository = $sliderRepository;
@@ -50,6 +53,7 @@ class GroupComponentService
         $this->contentComponentService = $contentComponentService;
         $this->commerceComponentRepository = $commerceComponentRepository;
         $this->commerceComponentService = $commerceComponentService;
+        $this->nonBlOfferService = $nonBlOfferService;
         $this->setActionRepository($componentRepository);
     }
 
@@ -154,6 +158,10 @@ class GroupComponentService
                 $this->nonBlComponentRepository->save($data);
                 Redis::del('non_bl_component');
             }
+            elseif ($data['component_for'] == 'non_bl_offer') {
+                $this->nonBlOfferService->save($data);
+                Redis::del('non_bl_offer');
+            }
 
             $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
             $groupComponentCount = $this->findAll()->count();
@@ -247,6 +255,11 @@ class GroupComponentService
                 $nonBlComponent->update($data);
                 Redis::del('non_bl_component');
             }
+            elseif ($component['component_for'] == 'non_bl_offer') {
+                $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => $componentKey])[0];
+                $nonBlOffer->update($data);
+                Redis::del('non_bl_offer');
+            }
 
             if (isset($data['icon'])) {
                 $data['icon'] = 'storage/' . $data['icon']->store('group_components_icons');
@@ -295,6 +308,11 @@ class GroupComponentService
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => $componentKey])->first();
                 $this->nonBlComponentRepository->delete($nonBlComponent);
             }
+            else if ($componentFor == 'non_bl_offer') {
+                $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => $componentKey])->first();
+                $this->nonBlComponentRepository->delete($nonBlOffer);
+            }
+
             $component->delete();
             DB::commit();
             Redis::del(self::REDIS_KEY);
