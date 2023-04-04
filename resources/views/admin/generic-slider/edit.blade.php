@@ -130,7 +130,7 @@
                                     <div class="form-group">
                                         <label for="image" class="required">Upload Icon :</label>
                                         @if (isset($slider->icon))
-                                            <input disabled 
+                                            <input 
                                                 type="file"
                                                 id="icon"
                                                 class="dropify"
@@ -140,6 +140,14 @@
                                                 data-allowed-file-extensions="png"
                                                 data-default-file="{{ asset($slider->icon) }}"
                                             />
+                                        @else
+                                            <input type="file" 
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>    
                                         @endif
                                         <div class="help-block">
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>

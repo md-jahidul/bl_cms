@@ -152,6 +152,13 @@ class GenericSliderService
                 if (isset($slider) && file_exists($slider->icon)) {
                     unlink($slider->icon);
                 }
+            } else {
+                if (isset($slider) && file_exists($slider->icon)) {
+                    unlink($slider->icon);
+                }
+                if (isset($slider)) {
+                    $data['icon'] = null;
+                }
             }
 
             $slider->update($data);

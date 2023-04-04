@@ -65,7 +65,7 @@ class GenericSliderController extends Controller
 
     public function update(Request $request, $sliderId)
     {
-        if($request->input('component_type') != 'carousel') {
+        if($request->input('component_type') != 'carousel' && $request->input('component_type') != null) {
             $request->merge([
                 'scrollable' => false,
             ]);
