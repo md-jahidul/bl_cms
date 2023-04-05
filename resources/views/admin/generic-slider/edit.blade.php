@@ -51,17 +51,17 @@
                                     @endif
                                 </div>
 
-                                
+
                                 <div class="form-group col-md-6">
                                     <label for="component_size" class="required">Component Size</label>
                                     <select disabled name="component_size" class="form-control custom-select"
                                             id="component_size" required data-validation-required-message="Please select component size">
                                         <option value="" >--Select Tab Section--</option>
-                                        
+
                                         @foreach (Config::get('generic-slider.component_size') as $key => $size)
                                         <option value="{{$key}}" {{ (isset($slider->component_size) && $slider->component_size == $key) ? 'selected' : '' }} >{{$size}}</option>
                                         @endforeach
-                                        
+
                                     </select>
                                     @if($errors->has('component_size'))
                                         <p class="text-left">
@@ -76,7 +76,7 @@
                                             id="component_type" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
                                         @foreach (Config::get('generic-slider.component_type') as $key => $type)
-                                        <option value="{{$key}}" {{ (isset($slider->component_type) && $slider->component_type == $key) ? 'selected' : '' }} >{{ucfirst($type)}}</option>    
+                                        <option value="{{$key}}" {{ (isset($slider->component_type) && $slider->component_type == $key) ? 'selected' : '' }} >{{ucfirst($type)}}</option>
                                         @endforeach
                                     </select>
                                     @if($errors->has('component_type'))
@@ -85,7 +85,7 @@
                                         </p>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="status_input">Component For: </label>
                                     <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
@@ -110,14 +110,14 @@
                                     </div>
                                 </div>
 
-                                <div id="scrollable_div" class="form-group col-md-6">
+                                <div id="scrollable_div" class="form-group col-md-3">
                                     <label for="scrollable" class="">Scrollable</label>
                                     <select name="scrollable" class="form-control custom-select"
                                             id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
                                         <option value="" >--Select Tab Section--</option>
                                         <option value="1" {{ (isset($slider->scrollable) && $slider->scrollable == 1) ? 'selected' : '' }}>True</option>
-                                        <option value="0" {{ (isset($slider->scrollable) && $slider->scrollable == 0) ? 'selected' : '' }}>False</option>    
-                                        
+                                        <option value="0" {{ (isset($slider->scrollable) && $slider->scrollable == 0) ? 'selected' : '' }}>False</option>
+
                                     </select>
                                     @if($errors->has('scrollable'))
                                         <p class="text-left">
@@ -125,12 +125,24 @@
                                         </p>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-3 mb-2">
+                                    <label for="is_title_show">Is Title Show: </label>
+                                    <div class="form-group {{ $errors->has('is_title_show') ? ' error' : '' }}">
+                                        <input type="radio" name="is_title_show" value="1" id="true" {{$slider->is_title_show == 1 ? 'checked' : ''}} />
+                                        <label for="is_title_show" class="mr-3">True</label>
+                                        <input type="radio" name="is_title_show" value="0" id="false" {{$slider->is_title_show == 0 ? 'checked' : ''}} />
+                                        <label for="is_title_show" class="mr-3">False</label>
 
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-group">
                                         <label for="image" class="required">Upload Icon :</label>
                                         @if (isset($slider->icon))
-                                            <input 
+                                            <input
                                                 type="file"
                                                 id="icon"
                                                 class="dropify"
@@ -141,13 +153,13 @@
                                                 data-default-file="{{ asset($slider->icon) }}"
                                             />
                                         @else
-                                            <input type="file" 
+                                            <input type="file"
                                                id="icon"
                                                name="icon"
                                                class="dropify"
                                                data-allowed-formats="square"
                                                data-allowed-file-extensions="png"
-                                               data-height="70"/>    
+                                               data-height="70"/>
                                         @endif
                                         <div class="help-block">
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
@@ -193,13 +205,13 @@
         $(document).ready(function () {
 
             let show = $('#component_type').val() == 'carousel'
-            
+
             if(show) {
                 $('#scrollable_div').show()
             } else {
                 $('#scrollable_div').hide()
             }
-            
+
 
             $('.dropify').dropify({
                 messages: {
