@@ -18,6 +18,7 @@ class AddComponentSizeToGenericSlidersTable extends Migration
             $table->string('component_type')->nullable()->after('component_for');
             $table->boolean('scrollable')->nullable()->after('component_type');
             $table->string('icon')->nullable()->after('status');
+            $table->boolean('is_title_show')->default(0)->after('icon');
         });
     }
 
@@ -33,6 +34,7 @@ class AddComponentSizeToGenericSlidersTable extends Migration
             $table->dropColumn('component_type');
             $table->dropColumn('scrollable');
             $table->dropColumn('icon');
+            $table->dropColumn('is_title_show');
         });
     }
 }
