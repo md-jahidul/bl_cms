@@ -157,8 +157,8 @@
 
                             <div class="form-group col-md-6">
                                     <div class="form-group">
-                                        <label for="image" class="required">Upload Icon :</label>                                        
-                                        <input type="file" required
+                                        <label for="image">Upload Icon :</label>                                        
+                                        <input type="file"
                                                id="icon"
                                                name="icon"
                                                class="dropify_image"

@@ -266,6 +266,13 @@ class GroupComponentService
                 if (isset($component) && file_exists($component->icon)) {
                     unlink($component->icon);
                 }
+            } else {
+                if (isset($component) && file_exists($component->icon)) {
+                    unlink($component->icon);
+                }
+                if (isset($component)) {
+                    $data['icon'] = null;
+                }
             }
 
             $component->update($data);

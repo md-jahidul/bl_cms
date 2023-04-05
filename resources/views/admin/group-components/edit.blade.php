@@ -162,7 +162,7 @@
 
                             <div class="form-group col-md-6">
                                     <div class="form-group">
-                                        <label for="image" class="required">Upload Icon :</label>
+                                        <label for="image">Upload Icon :</label>
                                         @if (isset($component->icon))
                                             <input type="file"
                                                 id="icon"
@@ -173,6 +173,14 @@
                                                 data-allowed-file-extensions="png"
                                                 data-default-file="{{ asset($component->icon) }}"
                                             />
+                                        @else
+                                            <input type="file"
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify_image"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>
                                         @endif
                                         <div class="help-block">
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
