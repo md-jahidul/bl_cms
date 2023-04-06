@@ -129,17 +129,17 @@
                         </div>
                     </div>
 
-{{--                    <div class="col-md-4">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="deep_link" class="required">Deep Link:</label>--}}
-{{--                            <input required--}}
-{{--                                   value="@if(isset($shortcut)){{$shortcut->deep_link}} @elseif(old("deep_link")) {{old("deep_link")}} @endif"--}}
-{{--                                   type="text" name="deep_link" class="form-control @error('deep_link') is-invalid @enderror"--}}
-{{--                                   id="deep_link" placeholder="Enter Deep Link URL..">--}}
-{{--                            <small class="text-danger"> @error('deep_link') {{ $message }} @enderror </small>--}}
-{{--                            <div class="help-block"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="deep_link" >Deeplink:</label>
+                            <input
+                                   value="@if(isset($shortcut)){{$shortcut->deep_link}} @elseif(old("deep_link")) {{old("deep_link")}} @endif"
+                                   type="text" name="deep_link" class="form-control @error('deep_link') is-invalid @enderror"
+                                   id="deep_link" placeholder="Enter Deep Link URL..">
+                            <small class="text-danger"> @error('deep_link') {{ $message }} @enderror </small>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
 
                     <div class="col-md-4" id="action_div">
                         @php
