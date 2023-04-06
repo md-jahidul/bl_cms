@@ -26,7 +26,7 @@
                                     <input type="radio" name="user_type" value="all" id="all"
                                     @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
                                     <label for="all" class="mr-3 cursor-pointer">All</label>
-                                    @if($imageInfo->slider->component_for != 'non_bl')  
+                                    @if($imageInfo->slider->component_for != 'non_bl')
                                     <input type="radio" name="user_type" value="prepaid"
                                            id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
                                     <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
@@ -144,7 +144,13 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Deeplink</label>
+                                    <input type="text" name="deeplink" class="form-control" value="{{ $imageInfo->deeplink }}" placeholder="Enter Valid Deeplink" >
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
 
                             @php
                                 $actionList = Helper::navigationActionList();
@@ -168,9 +174,15 @@
 
 
                             @php
-                                $width = explode('x', $imageInfo->slider->component_size)[0];
-                                $height = explode('x', $imageInfo->slider->component_size)[1];
-                                $size = $width/$height;
+                                if (isset($imageInfo->slider->component_size) && $imageInfo->slider->component_size !=null){
+                                        $width = explode('x', $imageInfo->slider->component_size)[0];
+                                        $height = explode('x', $imageInfo->slider->component_size)[1];
+                                        $size = $width/$height;
+                                    } else {
+                                        $size = - 1;
+                                        $width = -1;
+                                        $height = -1;
+                                    }
                             @endphp
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -605,7 +617,7 @@
             let height = "<?php echo $height ?>";
             createImageBitmap($this.files[0]).then((bmp) => {
 
-                if ((bmp.width / bmp.height).toFixed(2) == size) {
+                if (size != -1 || (bmp.width / bmp.height).toFixed(2) == size) {
                     document.getElementById('submitForm').disabled = false;
                     document.getElementById('message').innerHTML = '';
                     document.getElementById('image_input_div').style.border = 'none';
