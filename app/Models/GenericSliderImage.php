@@ -27,7 +27,8 @@ class GenericSliderImage extends Model
         'message_bn',
         'other_attributes',
         'banner_text_en',
-        'banner_text_bn'
+        'banner_text_bn',
+        'deeplink'
     ];
 
     protected $casts = [
