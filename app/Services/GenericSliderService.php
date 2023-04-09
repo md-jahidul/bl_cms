@@ -70,7 +70,7 @@ class GenericSliderService
             $genericSlider = $this->save($data);
 
             $homeComponentData['title_en'] = $data['title_en'];
-            $homeComponentData['title_bn'] = $data['title_en'];
+            $homeComponentData['title_bn'] = $data['title_bn'];
             $homeComponentData['display_order'] = $this->displayOrder($data['component_for']);
             $homeComponentData['component_key'] = "generic_slider_" . $genericSlider->id;
             $homeComponentData['is_api_call_enable'] = 1;
