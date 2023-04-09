@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Traits\CrudTrait;
+use Illuminate\Support\Facades\Redis;
 use App\Repositories\NonBlOfferRepository;
 
 class NonBlOfferService
@@ -34,6 +35,7 @@ class NonBlOfferService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
+        Redis::del('non_bl_offer');
         return response("Successfully status changed");
     }
 }
