@@ -26,7 +26,7 @@
                                     <input type="radio" name="user_type" value="all" id="all"
                                     @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
                                     <label for="all" class="mr-3 cursor-pointer">All</label>
-                                    @if($imageInfo->slider->component_for != 'non_bl')
+                                    @if(!($imageInfo->slider->component_for == 'non_bl' || $imageInfo->slider->component_for == 'non_bl_offer'))
                                     <input type="radio" name="user_type" value="prepaid"
                                            id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
                                     <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>

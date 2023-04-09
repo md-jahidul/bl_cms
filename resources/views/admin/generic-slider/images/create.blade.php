@@ -36,7 +36,7 @@
 
                                             <input type="radio" name="user_type" value="all" id="input-radio-15" checked>
                                             <label for="input-radio-15" class="mr-3">All</label>
-                                            @if($slider_information->component_for != 'non_bl')
+                                            @if(!($slider_information->component_for == 'non_bl' || $slider_information->component_for == 'non_bl_offer'))
 
                                             <input type="radio" name="user_type" value="prepaid" id="input-radio-16">
                                             <label for="input-radio-16" class="mr-3">Prepaid</label>
