@@ -90,10 +90,10 @@
                             <label for="default">Default :</label>
                             <select required class="form-control" value="" name="is_default" id="default">
                                 <option @if(isset($shortcut)) @if($shortcut->is_default==0) selected
-                                        @endif @endif value="0">Not Default
+                                        @endif @endif value="0">Default
                                 </option>
                                 <option @if(isset($shortcut)) @if($shortcut->is_default==1) selected
-                                        @endif @endif value="1">Default
+                                        @endif @endif value="1">Not Default
                                 </option>
                             </select>
                         </div>
