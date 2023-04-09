@@ -52,7 +52,7 @@
                                 <td><img style="height:20px;width:20px" src="{{asset($value->icon)}}"
                                          alt="" srcset=""></td>
                                 <td width="10%">
-                                    @if($value->is_default==1) Default @else Not Default @endif
+                                    @if($value->is_default==1) Not Default @else Default @endif
                                 </td>
                                 <td width="10%">
                                     {{ $value->customer_type }}
