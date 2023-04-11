@@ -261,7 +261,7 @@ class GroupComponentService
                 Redis::del('non_bl_offer');
             }
 
-            if (isset($data['icon']) && $data['icon'] != 'not-updated') {
+            if (isset($data['icon']) && $data['icon'] != 'not-updated' && $data['icon'] != 'removed') {
                 $data['icon'] = 'storage/' . $data['icon']->store('group_components_icons');
                 if (isset($component) && file_exists($component->icon)) {
                     unlink($component->icon);
