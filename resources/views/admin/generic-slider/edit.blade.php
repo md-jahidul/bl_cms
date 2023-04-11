@@ -152,6 +152,18 @@
                                                 data-allowed-file-extensions="png"
                                                 data-default-file="{{ asset($slider->icon) }}"
                                             />
+
+                                            <input
+                                                hidden
+                                                type="text"
+                                                id="icon-unchanged"
+                                                class=""
+                                                name="icon"
+                                                data-height="70"
+                                                data-allowed-formats="square"
+                                                data-allowed-file-extensions="png"
+                                                value="not-updated"
+                                            />
                                         @else
                                             <input type="file"
                                                id="icon"
@@ -212,8 +224,7 @@
                 $('#scrollable_div').hide()
             }
 
-
-            $('.dropify').dropify({
+            let dropify = $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Icon to upload',
                     'replace': 'Click to replace',
@@ -224,6 +235,11 @@
                     'imageFormat': 'The image ratio must be 1:1.'
                 }
             });
+
+            dropify.on('dropify.beforeClear', function(event, element) {
+                $('#icon-unchanged').val('removed')
+            });
         });
+
     </script>
 @endpush
