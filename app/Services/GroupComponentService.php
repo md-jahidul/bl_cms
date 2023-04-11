@@ -261,18 +261,20 @@ class GroupComponentService
                 Redis::del('non_bl_offer');
             }
 
-            if (isset($data['icon'])) {
+            if (isset($data['icon']) && $data['icon'] != 'not-updated') {
                 $data['icon'] = 'storage/' . $data['icon']->store('group_components_icons');
                 if (isset($component) && file_exists($component->icon)) {
                     unlink($component->icon);
                 }
-            } else {
+            } else if (isset($data['icon']) && $data['icon'] == 'removed') {
                 if (isset($component) && file_exists($component->icon)) {
                     unlink($component->icon);
                 }
                 if (isset($component)) {
                     $data['icon'] = null;
                 }
+            } else {
+                unset($data['icon']);
             }
 
             $component->update($data);

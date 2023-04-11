@@ -147,18 +147,20 @@ class GenericSliderService
                 Redis::del('non_bl_offer');
             }
 
-            if (isset($data['icon'])) {
+            if (isset($data['icon']) && $data['icon'] != 'not-updated') {
                 $data['icon'] = 'storage/' . $data['icon']->store('generic_sliders_icons');
                 if (isset($slider) && file_exists($slider->icon)) {
                     unlink($slider->icon);
                 }
-            } else {
+            } else if (isset($data['icon']) && $data['icon'] == 'removed') {
                 if (isset($slider) && file_exists($slider->icon)) {
                     unlink($slider->icon);
                 }
                 if (isset($slider)) {
                     $data['icon'] = null;
                 }
+            } else {
+                unset($data['icon']);
             }
 
             $slider->update($data);
