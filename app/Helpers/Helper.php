@@ -138,6 +138,7 @@ class Helper
             "GAS"                     => 'Gas',
             "WATER"                   => 'Water',
             "SHARETRIP"                   => 'Sharetrip',
+            "CONTENT"                 => 'Content'
         ];
     }
 
