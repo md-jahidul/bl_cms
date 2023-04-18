@@ -91,6 +91,7 @@ class MyBlProductSchedulerService
                     $productData['tag'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
+                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
                     if ($productScheduleData['tags'] != null && $productSchedule->tags != null) {
 
@@ -112,17 +113,18 @@ class MyBlProductSchedulerService
                             $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                             $tag = $firstTag->title;
                             $productData['tag'] = $tag;
+                            $tags = [];
+
+                            foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
+
+                                $data['product_code'] = $product['product_code'];
+                                $data['product_tag_id'] = $productScheduleTag;
+
+                                $tags [] = $data;
+                            }
+
+                            $this->myblProductTagRepository->insert($tags);
                         }
-
-                        $tags = [];
-                        foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
-
-                            $data['product_code'] = $product['product_code'];
-                            $data['product_tag_id'] = $productScheduleTag;
-
-                            $tags [] = $data;
-                        }
-                        $this->myblProductTagRepository->insert($tags);
                     }
                 }
 
@@ -174,12 +176,15 @@ class MyBlProductSchedulerService
                     $productData['tag'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
+
+                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
-                    if ($productScheduleData['tags'] != null && $productSchedule->tags != null) {
+
+                    if ($productSchedule->tags != null) {
                         $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                         $tag = $firstTag->title;
                         $productData['tag'] = $tag;
-                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
+
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
 
@@ -189,7 +194,8 @@ class MyBlProductSchedulerService
                             $tags [] = $data;
                         }
                         $this->myblProductTagRepository->insert($tags);
-                    } else {
+                    }
+                    else {
                         $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
                 }
