@@ -1393,6 +1393,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
     Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
         ->name('digital-service.destroy');
+        
+    /* * Generic Carousel
+     * Live content
+     */
+    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
+    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
+    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
+
+
 //
 });
 
