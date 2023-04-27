@@ -1047,6 +1047,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('generic-slider.images.destroy');
     Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
+    /**
+     * Generic Carousel
+     * Live content
+     */
+    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
+    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
+    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
+
+
 //
 });
 
