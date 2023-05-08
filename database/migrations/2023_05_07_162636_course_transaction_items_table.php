@@ -32,6 +32,6 @@ class CourseTransactionItemsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('course_transaction_items');
     }
 }

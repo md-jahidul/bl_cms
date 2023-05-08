@@ -33,6 +33,6 @@ class CourseTransactionStatusTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('course_transaction_status');
     }
 }
