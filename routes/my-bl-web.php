@@ -1047,6 +1047,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('generic-slider.images.destroy');
     Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
+
+    /*
+     *  Transaction status report
+     */
+
+     Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
+     Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
+        ->name('mybl.transaction-status.course.list');
+
 //
 });
 

@@ -867,6 +867,19 @@
             </li>
         </ul>
     </li>
+
+    <!-- Transaction Status Report Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-list"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Transaction Report</span></a>
+        <ul class="menu-content">
+            <li class="{{is_active_url('deeplink/agent/deeplink/list')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.course') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Course Transaction
+                </a>
+            </li>
+        </ul>
+    </li>
 @endif
 
 <li class="{{ is_active_url('developer/api/debug') }}">
