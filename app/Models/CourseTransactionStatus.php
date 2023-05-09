@@ -28,4 +28,14 @@ class CourseTransactionStatus extends Model
         'total_default_discount',
         'order_total_price'
     ];
+
+    /**
+     * Get Items
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function items()
+    {
+        return $this->hasMany(CourseTransactionItem::class, 'invoice_id', 'invoice_id');
+    }
 }

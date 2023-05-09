@@ -27,8 +27,9 @@
                                 <th>Sub Total</th>
                                 <th>Promo Code</th>
                                 <th>Total Promo Discount</th>
-                                <th>total_default_discount</th>
+                                <th>Total Default Discount</th>
                                 <th>Order Total Price</th>
+                                <th>Items</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -120,6 +121,18 @@
                         name: 'order_total_price	',
                         render: function (data, type, row) {
                             return row.order_total_price	;
+                        }
+                    },
+                    
+                    {
+                        name: 'items	',
+                        render: function (data, type, row) {
+                            let itemList = '<ol>';
+                            row.items.forEach((item, index)=>{
+                                itemList += `<li>Catalog Product Id: ${item.catalog_product_id}</li>`
+                            })
+                            itemList += '<ol>';
+                            return itemList;
                         }
                     }
                 ],

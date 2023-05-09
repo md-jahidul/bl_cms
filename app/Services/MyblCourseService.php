@@ -39,37 +39,16 @@ class MyblCourseService
         $length = $request->get('length');
 
         $builder = new CourseTransactionStatus();
-        // $builder = $builder->where('invoice_id', 1);
         $builder = $builder->latest();
 
-        // $builder = $builder->whereHas(
-        //     'details',
-        //     function ($q) use ($request, $bundles) {
-        //         if ($request->product_code) {
-        //             $q->where('product_code', $request->product_code);
-        //         }
-        //         if ($request->sim_type) {
-        //             $q->where('sim_type', $request->sim_type);
-        //         }
-
-        //         if ($request->content_type) {
-        //             if (in_array($request->content_type, $bundles)) {
-        //                 $q->where('content_type', $request->content_type);
-        //                 $q->whereNull('call_rate');
-        //             } elseif ($request->content_type == 'recharge_offer') {
-        //                 $q->whereNotNull('recharge_product_code');
-        //             } elseif ($request->content_type == 'scr') {
-        //                 $q->whereNotNull('call_rate');
-        //             } elseif ($request->content_type == 'free_products') {
-        //                 $q->where('mrp_price', null);
-        //             } elseif ($request->content_type == 'is_popular_pack') {
-        //                 $q->where('is_popular_pack', 1);
-        //             } else {
-        //                 $q->where('content_type', $request->content_type);
-        //             }
-        //         }
-        //     }
-        // )->with('details');
+        $builder = $builder->whereHas(
+            'items',
+            function ($q) use ($request) {
+                if ($request->invoice_id) {
+                    $q->where('invoice_id', $request->invoice_id);
+                }
+            }
+        )->with('items:id,invoice_id,catalog_product_id,catalog_sku_id,actual_price,default_discount,final_price');
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
@@ -89,7 +68,8 @@ class MyblCourseService
                 'promo_code' => $item->promo_code,
                 'total_promo_discount' => $item->total_promo_discount,
                 'total_default_discount' => $item->total_default_discount,
-                'order_total_price' => $item->order_total_price
+                'order_total_price' => $item->order_total_price,
+                'items' => collect($item->items),
             ];
         });
         return $response;
