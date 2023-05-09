@@ -84,7 +84,12 @@ class MyblCourseService
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
                 'invoice_id' => $item->invoice_id,
-                'contact_no' => $item->contact_no
+                'contact_no' => $item->contact_no,
+                'sub_total' => $item->sub_total,
+                'promo_code' => $item->promo_code,
+                'total_promo_discount' => $item->total_promo_discount,
+                'total_default_discount' => $item->total_default_discount,
+                'order_total_price' => $item->order_total_price
             ];
         });
         return $response;

@@ -19,13 +19,13 @@ class CourseTransactionStatus extends Model
      * @var array
      */
 
-    // protected $fillable = [
-    //     'invoice_id',
-    //     'contact_no',
-    //     'sub_total',
-    //     'promo_code',
-    //     'total_promo_discount',
-    //     'total_default_discount',
-    //     'order_total_price'
-    // ];
+    protected $fillable = [
+        'invoice_id',
+        'contact_no',
+        'sub_total',
+        'promo_code',
+        'total_promo_discount',
+        'total_default_discount',
+        'order_total_price'
+    ];
 }

@@ -18,12 +18,17 @@
                     </div>
                     <div class="col-md-12 mt-3">
                         <table class="table table-striped table-bordered dataTable"
-                            id="product_list" role="grid">
+                            id="transaction_list" role="grid">
                             <thead>
                             <tr>
                                 <th>Sl.</th>
                                 <th>Invoice Id</th>
                                 <th>Contact no</th>
+                                <th>Sub Total</th>
+                                <th>Promo Code</th>
+                                <th>Total Promo Discount</th>
+                                <th>total_default_discount</th>
+                                <th>Order Total Price</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -72,15 +77,49 @@
                     {
                         name: 'invoice_id',
                         render: function (data, type, row) {
-                            let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.invoice_id;
-                            return '<a href="' + detail_question_url + '">' + row.invoice_id  + '</a>';
+                            return row.invoice_id;
                         }
                     },
-
+                    
                     {
                         name: 'contact_no',
                         render: function (data, type, row) {
                             return row.contact_no;
+                        }
+                    },
+                    
+                    {
+                        name: 'sub_total',
+                        render: function (data, type, row) {
+                            return row.sub_total;
+                        }
+                    },
+                    
+                    {
+                        name: 'promo_code',
+                        render: function (data, type, row) {
+                            return row.promo_code;
+                        }
+                    },
+                    
+                    {
+                        name: 'total_promo_discount',
+                        render: function (data, type, row) {
+                            return row.total_promo_discount;
+                        }
+                    },
+                    
+                    {
+                        name: 'total_default_discount',
+                        render: function (data, type, row) {
+                            return row.total_default_discount;
+                        }
+                    },
+                    
+                    {
+                        name: 'order_total_price	',
+                        render: function (data, type, row) {
+                            return row.order_total_price	;
                         }
                     }
                 ],
