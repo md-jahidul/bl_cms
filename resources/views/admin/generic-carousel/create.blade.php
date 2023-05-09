@@ -45,9 +45,7 @@
                                         <label for="title_bn" class="required">Title(BN):</label>
                                         <input
                                             maxlength="200"
-                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Title is required"
-                                            data-validation-regex-message="Title must start with alphabets"
                                             data-validation-maxlength-message="Title can not be more then 200 Characters"
                                             value="@if(old('title_bn')) {{old('title_bn')}} @endif" required id="title_bn"
                                             type="text" class="form-control @error('title_bn') is-invalid @enderror"
@@ -73,9 +71,7 @@
                                         <label for="sub_title_bn" class="required">Sub Title(BN):</label>
                                         <input
                                             maxlength="200"
-                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Title is required"
-                                            data-validation-regex-message="Title must start with alphabets"
                                             data-validation-maxlength-message="Title can not be more then 200 Characters"
                                             value="@if(old('sub_title_bn')) {{old('sub_title_bn')}} @endif" required id="sub_title_bn"
                                             type="text" class="form-control @error('sub_title_bn') is-invalid @enderror"
