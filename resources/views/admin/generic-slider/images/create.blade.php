@@ -34,16 +34,19 @@
                                     <div class="form-group col-md-12">
                                         <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
 
-                                            <input type="radio" name="user_type" value="all" id="input-radio-15"
-                                                   checked>
+                                            <input type="radio" name="user_type" value="all" id="input-radio-15" checked>
                                             <label for="input-radio-15" class="mr-3">All</label>
+                                            @if(!($slider_information->component_for == 'non_bl' || $slider_information->component_for == 'non_bl_offer'))
+
                                             <input type="radio" name="user_type" value="prepaid" id="input-radio-16">
                                             <label for="input-radio-16" class="mr-3">Prepaid</label>
+
                                             <input type="radio" name="user_type" value="postpaid" id="input-radio-17">
                                             <label for="input-radio-17" class="mr-3">Postpaid</label>
-{{--                                            <input type="radio" name="user_type" value="segment_wise_banner"--}}
-{{--                                                   id="segment_wise_banner">--}}
-{{--                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
+
+                                        {{--<input type="radio" name="user_type" value="segment_wise_banner" id="segment_wise_banner">--}}
+                                        {{--<label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
+                                            @endif
 
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>
@@ -140,6 +143,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Deeplink</label>
+                                            <input type="text" name="deeplink" class="form-control"  placeholder="Enter Valid Deeplink" >
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
                                     @php
                                         $actionList = Helper::navigationActionList();
                                     @endphp
@@ -162,16 +172,22 @@
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     @php
+                                                    if (isset($slider_information->component_size) && $slider_information->component_size !=null){
                                                         $width = explode('x', $slider_information->component_size)[0];
                                                         $height = explode('x', $slider_information->component_size)[1];
                                                         $size = $width/$height;
+                                                    } else {
+                                                        $size = - 1;
+                                                        $width = -1;
+                                                        $height = -1;
+                                                    }
                                                     @endphp
                                                     <input accept="image/*"
                                                            required
                                                            data-validation-required-message="Image is required"
                                                            onchange="createImageBitmap(this.files[0]).then((bmp) => {
 
-                                                    if ((bmp.width/bmp.height).toFixed(2) == `{{round($size, 2)}}`){
+                                                    if ($size == -1 || (bmp.width/bmp.height).toFixed(2) == `{{round($size, 2)}}`){
                                                         document.getElementById('submitForm').disabled = false;
                                                         document.getElementById('massage').innerHTML = '';
                                                         this.style.border = 'none';

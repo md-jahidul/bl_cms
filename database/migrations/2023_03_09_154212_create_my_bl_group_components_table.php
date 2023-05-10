@@ -30,6 +30,7 @@ class CreateMyBlGroupComponentsTable extends Migration
             $table->timestamp('end_time')->nullable();
             $table->boolean('active')->default(true);
             $table->string('icon')->nullable();
+            $table->boolean('is_title_show')->default(0);
             $table->timestamps();
         });
     }

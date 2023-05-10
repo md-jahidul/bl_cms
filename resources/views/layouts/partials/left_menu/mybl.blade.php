@@ -556,6 +556,9 @@
             <li class="{{ is_active_match('non-bl-components')}}">
                 <a class="menu-item" href="{{ url('non-bl-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>
             </li>
+            <li class="{{ is_active_match('non-bl-offers')}}">
+                <a class="menu-item" href="{{ url('non-bl-offers') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Offer</a>
+            </li>
         </ul>
     </li>
 
@@ -672,6 +675,11 @@
                     <a class="menu-item" href="{{ route('generic-shortcut-master.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Shortcut</a>
+                </li>
+                <li class="{{ is_active_match('generic-carousel')}}">
+                    <a class="menu-item" href="{{ url('generic-carousel') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Carousel</a>
                 </li>
                 <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
                     <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"

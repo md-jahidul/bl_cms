@@ -20,7 +20,7 @@
                         <tr width="100%">
                             <th width="25%">Component Type</th>
                             <th class="text-center">User Can Enable/Disable</th>
-                            <th width="25%" class="text-right">Action</th>
+                            <th width="10%" class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody id="">
@@ -34,23 +34,12 @@
                                     @endif
                                 </td>
                                 <td class="action text-right">
-                                    
-                                    @if($component['active'] == 0)
-                                        <a href="{{ route('group.components.status.update', $component['id']) }}" data-value="enable  {{ $component['title_en'] }}"
-                                            class="btn btn-danger border-0 change_status" title="Click to enable">Disabled</a>
-                                    @else
-                                        <a href="{{ route('group.components.status.update', $component['id']) }}" data-value="disable {{ $component['title_en'] }}"
-                                            class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
-                                    @endif
-                                
                                     <a href="{{route('group.components.edit', $component['id'])}}">
                                         <button type="button"class="btn btn-secondary-info border-0"><i class="la la-pencil" aria-hidden="true" ></i></button>
-                                    </a>        
-                                            
+                                    </a>
                                     <button  class="delete_component border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </button>
-                                    
                                 </td>
                             </tr>
                         @endforeach
@@ -66,7 +55,7 @@
 @push('page-js')
     <script>
         $(document).ready(function () {
-            
+
             $('.change_status').click(function (event) {
                 event.preventDefault()
                 let status = $(this).attr('data-value');

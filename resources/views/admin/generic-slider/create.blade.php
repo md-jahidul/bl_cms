@@ -53,7 +53,7 @@
                                             id="component_size" required data-validation-required-message="Please select component size">
                                         <option value="" >--Select Tab Section--</option>
                                         @foreach (Config::get('generic-slider.component_size') as $key => $size)
-                                        <option value="{{$key}}" >{{$size}}</option>    
+                                        <option value="{{$key}}" >{{$size}}</option>
                                         @endforeach
                                     </select>
                                     @if($errors->has('component_size'))
@@ -69,7 +69,7 @@
                                             id="component_type" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
                                         @foreach (Config::get('generic-slider.component_type') as $key => $type)
-                                        <option value="{{$key}}" >{{ucfirst($type)}}</option>    
+                                        <option value="{{$key}}" >{{ucfirst($type)}}</option>
                                         @endforeach
                                     </select>
                                     @if($errors->has('component_type'))
@@ -94,18 +94,21 @@
                                         <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
                                         <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
+                                        <input type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl_offer') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div id="scrollable_div" class="form-group col-md-6">
+                                <div id="scrollable_div" class="form-group col-md-3">
                                     <label for="scrollable" class="required">Scrollable</label>
                                     <select name="scrollable" class="form-control custom-select"
                                             id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
                                         <option selected value="0" >False</option>
-                                        <option value="1" >True</option>    
+                                        <option value="1" >True</option>
                                     </select>
                                     @if($errors->has('scrollable'))
                                         <p class="text-left">
@@ -113,11 +116,24 @@
                                         </p>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-3 mb-2">
+                                    <label class="required" for="is_title_show">Is Title Show: </label>
+                                    <div class="form-group {{ $errors->has('is_title_show') ? ' error' : '' }}">
+                                        <input required type="radio" name="is_title_show" value="1" id=""/>
+                                        <label for="is_title_show" class="mr-3">True</label>
+                                        <input required type="radio" name="is_title_show" value="0" id=""/>
+                                        <label for="is_title_show" class="mr-3">False</label>
+
+                                        @if ($errors->has('is_title_show'))
+                                            <div class="help-block">  {{ $errors->first('is_title_show') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group col-md-6">
                                     <div class="form-group">
-                                        <label for="image" class="required">Upload Icon :</label>                                        
-                                        <input type="file" required
+                                        <label for="image">Upload Icon :</label>
+                                        <input type="file"
                                                id="icon"
                                                name="icon"
                                                class="dropify"
