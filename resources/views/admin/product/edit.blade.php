@@ -24,10 +24,10 @@
                             <div class="row">
                                 <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
                                 <input type="hidden" name="type" value="{{ $type }}">
-                                <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control" name="offer_category_id" id="offer_type"
-                                            required data-validation-required-message="Please select offer">
+                                            required data-validation-required-message="Please select offer" disabled>
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
                                             <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
@@ -38,8 +38,24 @@
                                         <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-3 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id">Show In</label>
+                                    <select class="form-control data-section" name="show_in_multi_cat[]" id="offer_type" multiple>
+                                        @foreach($offersType as $offer)
+                                            @if(!in_array($offer->alias, ['others', 'packages', 'campaign']) && $product->offer_category_id != $offer->id)
+                                                <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}"
+                                                        @if(is_array($product->show_in_multi_cat) && in_array($offer->id, $product->show_in_multi_cat)) selected @endif
+                                                >{{ $offer->name_en }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
+                                    @endif
+                                </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <input type="text" class="form-control" name="product_code" placeholder="Enter product code"
                                            required data-validation-required-message="Enter product code"
@@ -49,7 +65,7 @@
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Please Select Category</label>
                                         <select multiple
@@ -161,7 +177,7 @@
                                 </slot>
                                 @if(strtolower($type) == 'prepaid')
                                     <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
-                                            @include('layouts.partials.products.call_rate')
+                                        @include('layouts.partials.products.call_rate')
                                     </slot>
 
                                     <slot class="{{ $product->offer_category_id == OfferType::RECHARGE_OFFER ? '' : 'd-none' }}" id="recharge_offer" data-offer-type="recharge_offer">
@@ -206,7 +222,7 @@
                                     <label for="mobileImg">Product Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="product_image" data-height="90" class="dropify"
-                                        data-default-file="{{ config('filesystems.file_base_url') . $product->product_image }}">
+                                               data-default-file="{{ config('filesystems.file_base_url') . $product->product_image }}">
                                     </div>
                                     <div class="help-block"></div>
                                     @if ($errors->has('icon'))
@@ -227,6 +243,8 @@
                                         <label for="rate_cutter" class="ml-1"><strong>Is Rate Cutter Offer</strong></label> <br>
                                         <input type="checkbox" name="is_four_g_offer" value="1" id="is_four_g_offer" {{ ($product->is_four_g_offer == 1) ? 'checked' : '' }}>
                                         <label for="is_four_g_offer" class="ml-1"><strong>Is 4G Offer</strong></label> <br>
+                                        <input type="checkbox" name="is_recharge" value="1" id="is_recharge" {{ ($product->is_recharge == 1) ? 'checked' : '' }}>
+                                        <label for="is_recharge" class="ml-1"><strong>Is Recharge Offer</strong></label> <br>
                                     </div>
                                 </div>
 
@@ -251,6 +269,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -262,6 +281,7 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 
     <style>
         .type-line {
@@ -330,10 +350,3 @@
         });
     </script>
 @endpush
-
-
-
-
-
-
-

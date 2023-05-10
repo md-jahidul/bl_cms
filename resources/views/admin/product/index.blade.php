@@ -35,13 +35,14 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="10%">Product Name</th>
-                                <th width="4%">Product ID</th>
-                                <th width="6%">USSD</th>
+                                <th width="25%">Product Name</th>
+                                <th width="3%">Product Code</th>
+                                <th width="3%">USSD</th>
                                 <th width="2%">Offer Type</th>
-                                <th width="8%" class="text-center">Details</th>
-                                <th width="4%" class="text-center">Trending Offer</th>
-                                <th width="10%" class="">Action</th>
+                                <th width="15%" class="text-center">URL Slug</th>
+                                <th width="4%" class="text-center">MRP</th>
+                                <th width="4%" class="text-center">Details</th>
+                                <th width="6%" class="">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,11 +50,16 @@
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                    <td>{{ $product->name_en }}
+                                        {!! $product->status == 0 ? '<span class="danger pl-1"><strong> (Inactive)</strong></span>' : '' !!}
+                                        {!! $product->show_in_home == 1 ? '<span class="success pl-1"><strong> (Show In Home)</strong></span>' : '' !!}
+                                    </td>
                                     <td>{{ $product->product_code }}</td>
                                     <td>{{ $product->product_core['activation_ussd'] }}</td>
                                     <td>{{ $product->offer_category->name_en }} {{ $product->is_four_g_offer == 1 ? "(4G Offer)" : ''}}</td>
-                                    <td class="text-center">
+                                    <td>{{ $product->url_slug }}</td>
+                                    <td>{{ isset($product->product_core['mrp_price']) ? $product->product_core['mrp_price'] : "" }}</td>
+                                    <td>
 {{--                                            // Other Details ==============================================--}}
 {{--                                        @if(--}}
 {{--                                            $product->offer_category->alias == "others" ||--}}
@@ -68,7 +74,6 @@
 {{--                                               class="btn-sm btn-outline-primary border">Details</a>--}}
 {{--                                        @endif--}}
                                     </td>
-                                    <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                     <td>
 {{--                                            <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                         <a href="{{ route('product.edit', [$type, $product->product_code]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

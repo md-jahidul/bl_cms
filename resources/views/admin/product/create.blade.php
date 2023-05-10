@@ -29,7 +29,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="form-group col-md-4 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-3 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
@@ -43,8 +43,19 @@
                                         <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
+{{--                                @dd($offers)--}}
+                                <div class="form-group col-md-3 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id" class="required">Show In</label>
+                                    <select class="form-control required data-section" name="show_in_multi_cat[]" id="show_in_multi_cat" multiple>
 
-                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-3 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <select id="product_core" name="product_code"
                                             data-url="{{ url('product-core/match') }}"
@@ -60,7 +71,7 @@
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Please Select Category</label>
                                         <select multiple
@@ -356,6 +367,26 @@
                 allowClear: true
             });
         })
+        $('#offer_type').change(function () {
+            let offerType = $(this).val(),
+                itemAlias = $(this).find(':selected').data('alias'),
+                offers =  @json($offers),
+                options = "",
+                aliasArr = ['others', 'packages', 'campaign'],
+                notRenderAbleItems = ['others', 'packages'];
+
+            $("#show_in_multi_cat").empty();
+
+            if(!aliasArr.includes(itemAlias)) {
+                for (let offer of offers) {
+                    if (offer.id != offerType && !aliasArr.includes(offer.alias)) {
+                        options += `<option data-alias="${offer.alias}" value="${offer.id}">${offer.name_en}</option>`;
+                    }
+                }
+                $("#show_in_multi_cat").append(options)
+            }
+
+        });
     </script>
 @endpush
 
