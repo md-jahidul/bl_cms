@@ -884,6 +884,12 @@
                     <i class="la la-list"></i>Music Transaction
                 </a>
             </li>
+            <li class="{{is_active_url('mybl/sharetrip-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.sharetrip') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>ShareTrip Transaction
+                </a>
+            </li>
         </ul>
     </li>
 @endif

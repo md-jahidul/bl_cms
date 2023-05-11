@@ -1062,6 +1062,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
         ->name('mybl.transaction-status.music.list');
 
+    #ShareTrip
+    Route::get('mybl/sharetrip-transaction-status-report-view', 'CMS\MyblTransactionStatusController@sharetripTransactionList')->name('mybl.transaction-status.sharetrip');
+    Route::get('mybl/sharetrip-transaction-status-report', 'CMS\MyblTransactionStatusController@getSharetripTransaction')
+        ->name('mybl.transaction-status.sharetrip.list');
+
 //
 });
 

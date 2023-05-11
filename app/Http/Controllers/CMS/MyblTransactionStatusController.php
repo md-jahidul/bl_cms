@@ -7,6 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Controllers\Controller;
 use App\Services\MyblMusicService;
+use App\Services\MyblSharetripService;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
@@ -21,16 +22,22 @@ class MyblTransactionStatusController extends Controller
      * @var MyblMusicService
      */
     private $musicService;
+    /**
+     * @var MyblSharetripService
+     */
+    private $sharetripService;
 
     /**
      * MyblTransactionStatusController constructor.
      */
     public function __construct(
         MyblCourseService $courseService,
-        MyblMusicService $musicService
+        MyblMusicService $musicService,
+        MyblSharetripService $sharetripService
     ) {
         $this->courseService = $courseService;
         $this->musicService = $musicService;
+        $this->sharetripService = $sharetripService;
     }
 
     /**
@@ -69,6 +76,25 @@ class MyblTransactionStatusController extends Controller
     public function getMusicTransaction(Request $request)
     {
         return $this->musicService->getMusicTransaction($request);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function sharetripTransactionList()
+    {
+        return view('admin.transaction-status.sharetrip_transaction_list');
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getSharetripTransaction(Request $request)
+    {
+        return $this->sharetripService->getSharetripTransaction($request);
     }
 
 }
