@@ -39,9 +39,8 @@
                                 @endif
                             </div>
                             <div class="form-group col-md-3 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                <label for="offer_category_id" class="required">Show In</label>
-                                <select class="form-control required data-section" name="show_in_multi_cat[]" id="offer_type" multiple>
-                                    {{--                                        <option data-alias="" value="">---Select Offer Type---</option>--}}
+                                <label for="offer_category_id">Show In</label>
+                                <select class="form-control data-section" name="show_in_multi_cat[]" id="offer_type" multiple>
                                     @foreach($offersType as $offer)
                                         @if(!in_array($offer->alias, ['others', 'packages', 'campaign']) && $product->offer_category_id != $offer->id)
                                             <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}"
