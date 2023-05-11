@@ -1402,6 +1402,26 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
 
 
+
+    /*
+     *  Transaction status report
+     */
+
+    #Course
+    Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
+    Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
+        ->name('mybl.transaction-status.course.list');
+        
+    #Music
+    Route::get('mybl/music-transaction-status-report-view', 'CMS\MyblTransactionStatusController@musicTransactionList')->name('mybl.transaction-status.music');
+    Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
+        ->name('mybl.transaction-status.music.list');
+
+    #ShareTrip
+    Route::get('mybl/sharetrip-transaction-status-report-view', 'CMS\MyblTransactionStatusController@sharetripTransactionList')->name('mybl.transaction-status.sharetrip');
+    Route::get('mybl/sharetrip-transaction-status-report', 'CMS\MyblTransactionStatusController@getSharetripTransaction')
+        ->name('mybl.transaction-status.sharetrip.list');
+
 //
 });
 
