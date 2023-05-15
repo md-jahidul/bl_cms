@@ -196,16 +196,6 @@
                     'error': 'Choose correct file format'
                 }
             });
-
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Image File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
-            $("#navigate_action").select2();
         })
     </script>
 @endpush
