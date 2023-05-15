@@ -397,8 +397,8 @@
             </li>
         </ul>
         <ul class="menu-content">
-            <li class="{{ is_active_match('commerce-bill-status')}}">
-                <a class="menu-item" href="{{ url('commerce-bill-status') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Bill Status</a>
+            <li class="{{ is_active_match('commerce-bill-status-view')}}">
+                <a class="menu-item" href="{{ url('commerce-bill-status-view') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Bill Status</a>
             </li>
         </ul>
     </li>
