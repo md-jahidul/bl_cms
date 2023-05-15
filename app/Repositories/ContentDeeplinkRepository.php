@@ -23,10 +23,14 @@ class ContentDeeplinkRepository extends BaseRepository
         $data['slug'] = $data['category_name'];
 
         if (isset($data['detail_id'])) {
-            $data['slug'] = $data['slug'] . '/' . $data['detail_id'];
+
+            if (substr($data['detail_id'], 0, 1) === '?') {
+                $data['slug'] .= $data['detail_id'];
+            } else {
+                $data['slug'] .= ('/' . $data['detail_id']);
+            }
         }
 
         return ContentDeeplink::create($data);
     }
-
 }
