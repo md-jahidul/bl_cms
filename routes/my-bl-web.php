@@ -51,7 +51,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('shortcuts/create', 'CMS\ShortCutController@create')->name('short_cuts.create');
     Route::get('shortcuts/{short_cut}/edit', 'CMS\ShortCutController@edit')->name('short_cuts.edit');
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
-    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');;
+    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
 
     //------ shortcuts -----------//
 
@@ -763,6 +763,35 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('content-components/destroy/{id}', 'CMS\ContentComponentController@destroy')
         ->name('content-components.destroy');
 
+    //LMS Component
+    Route::get('lms-components', 'CMS\LMS\LmsController@index')->name('lms-components');
+    Route::get('lms-components/edit/{id}', 'CMS\LMS\LmsController@edit')
+        ->name('lms.components.edit');
+    Route::post('lms-components/store', 'CMS\LMS\LmsController@store')
+        ->name('lms-components.store');
+    Route::post('lms-components/update', 'CMS\LMS\LmsController@update')
+        ->name('lms-components.update');
+    Route::get('lms-components-sort', 'CMS\LMS\LmsController@componentSort');
+    Route::get('lms-components-status-update/{id}', 'CMS\LMS\LmsController@componentStatusUpdate')
+        ->name('lms-components.status.update');
+    Route::get('lms-components/destroy/{id}', 'CMS\LMS\LmsController@destroy')
+        ->name('lms-components.destroy');
+
+    //LMS Shortcut
+    Route::get('shortcut-components', 'CMS\LMS\ShortcutController@index')->name('shortcut-components');
+    Route::get('shortcut-component-create', 'CMS\LMS\ShortcutController@create')
+        ->name('shortcut-component.create');
+    Route::get('shortcut-component/edit/{id}', 'CMS\LMS\ShortcutController@edit')
+        ->name('shortcut-component.edit');
+    Route::post('shortcut-component/store', 'CMS\LMS\ShortcutController@store')
+        ->name('shortcut-component.store');
+    Route::put('shortcut-component/update/{id}', 'CMS\LMS\ShortcutController@update')
+        ->name('shortcut-component.update');
+    Route::get('shortcut-components-sort', 'CMS\LMS\ShortcutController@componentSort');
+    Route::get('shortcut-status-update/{id}', 'CMS\LMS\ShortcutController@componentStatusUpdate')
+        ->name('shortcut-components.status.update');
+    Route::get('shortcut-components/destroy/{id}', 'CMS\LMS\ShortcutController@destroy')
+        ->name('shortcut-components.destroy');
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
