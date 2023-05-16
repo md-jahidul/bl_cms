@@ -127,4 +127,8 @@ class Product extends Model
     {
         return $this->morphMany(SearchableData::class, 'featureable');
     }
+    public function featureableSearch()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }
