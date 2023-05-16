@@ -123,5 +123,8 @@ class Product extends Model
         return $this->hasMany(OtherRelatedProduct::class);
     }
 
-
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

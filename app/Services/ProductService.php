@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Enums\OfferType;
+use App\Helpers\BaseURLLocalization;
 use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductDetail;
+use App\Repositories\AlCoreProductRepository;
 use App\Repositories\DynamicRouteRepository;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
@@ -42,6 +44,10 @@ class ProductService
      * @var DynamicUrlRedirectionService
      */
     private $dynamicUrlRedirectionService;
+    /**
+     * @var AlCoreProductRepository
+     */
+    private $alCoreProductRepository;
 
     /**
      * ProductService constructor.
@@ -60,11 +66,13 @@ class ProductService
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository,
         DynamicRouteRepository $dynamicRouteRepository,
-        DynamicUrlRedirectionService $dynamicUrlRedirectionService
+        DynamicUrlRedirectionService $dynamicUrlRedirectionService,
+        AlCoreProductRepository $alCoreProductRepository
     ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
+        $this->alCoreProductRepository = $alCoreProductRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
         $this->setActionRepository($productRepository);
@@ -84,99 +92,102 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-        foreach ($data['offer_info'] as $key => $offerInfo) {
-            if ($offerInfo) {
-                $otherInfo[$key] = $offerInfo;
+        DB::beginTransaction();
+        try {
+            foreach ($data['offer_info'] as $key => $offerInfo) {
+                if ($offerInfo) {
+                    $otherInfo[$key] = $offerInfo;
+                }
             }
+
+            if (request()->hasFile('product_image')) {
+                $data['product_image'] = $this->upload($data['product_image'], 'assetlite/images/product');
+            }
+
+            $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
+            $data['sim_category_id'] = $simId;
+            $data['created_by'] = Auth::id();
+            $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+
+            #Image store
+            if (request()->hasFile('image')) {
+
+                $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+            }
+
+            $product = $this->save($data);
+
+            /**
+             * save Search Data
+             * If product is in offer category: internet, voice, bundles
+             */
+
+//            $internate_voice_bundles = [1,2,3];
+//
+//            if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+//            }
+            $this->_saveSearchData($product);
+
+            $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
+            DB::commit();
+            return new Response('Product added successfully');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return new Response($e->getMessage());
         }
-
-        if (request()->hasFile('product_image')) {
-            $data['product_image'] = $this->upload($data['product_image'], 'assetlite/images/product');
-        }
-
-        $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
-        $data['sim_category_id'] = $simId;
-        $data['created_by'] = Auth::id();
-        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-
-        #Image Update
-        if (request()->hasFile('image')) {
-
-            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
-        }
-
-        $product = $this->save($data);
-
-        /**
-         * save Search Data
-         * If product is in offer category: internet, voice, bundles
-         */
-
-         $internate_voice_bundles = [1,2,3];
-
-         if (in_array($product->offer_category_id, $internate_voice_bundles)) {
-
-             $this->_saveSearchData($product);
-         }
-
-        $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
-        return new Response('Product added successfully');
     }
 
     //save Search Data
     private function _saveSearchData($product)
     {
-        $productId = $product->id;
-        $name = $product->name_en.' '.$product->name_bn;
+        $feature = BaseURLLocalization::featureBaseUrl();
 
+        $titleEn = $product->name_en;
+        $titleBn = $product->name_bn;
+
+        $productCode = null;
         #Product Code
-        $productCode = $product->product_code;
+        if ($product->offer_category->alias != "others"){
+            $productCode = $product->product_code;
+        }
 
         #Search Table Status
         $status = $product->status;
 
-        $url = "";
+        $urlEn = "";
+        $urlBn = "";
         if ($product->sim_category_id == 1) {
-            $url .= "prepaid/";
+            $urlEn .= $feature['prepaid_en'];
+            $urlBn .= $feature['prepaid_bn'];
         }
+
         if ($product->sim_category_id == 2) {
-            $url .= "postpaid/";
+            $urlEn .= $feature['postpaid_en'];
+            $urlBn .= $feature['postpaid_bn'];
         }
 
         //category url
-        $url .= $product->offer_category->url_slug;
+        $urlEn .= "/" . $product->offer_category->url_slug;
+        $urlBn .= "/" . $product->offer_category->url_slug_bn;
+        $urlEn .= "/" . $product->url_slug;
+        $urlBn .= "/" . $product->url_slug_bn;
 
-        $keywordType = "offer-" . $product->offer_category->alias;
+        $saveSearchData = [
+            'product_code' => $productCode,
+            'type' => 'offer-product',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $status,
+        ];
 
-
-        $type = "";
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
-            $type = 'prepaid-internet';
+        if (!$product->searchableFeature()->first()) {
+            $product->searchableFeature()->create($saveSearchData);
+        }else {
+            $product->searchableFeature()->update($saveSearchData);
         }
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
-            $type = 'prepaid-voice';
-        }
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
-            $type = 'prepaid-bundle';
-        }
-        if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
-            $type = 'postpaid-internet';
-        }
-        if ($product->offer_category_id > 3) {
-            $url .= '/' . $product->url_slug . '/' . $productId;
-            $type = 'others';
-        }
-
-        $tag = "";
-        if ($product->tag_category_id) {
-            $tag = $this->tagRepository->getTagById($product->tag_category_id);
-        }
-
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
     }
 
     public function tableSortable($data)
@@ -230,9 +241,11 @@ class ProductService
         $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
         $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
         $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
+        $data['is_recharge'] = (isset($data['is_recharge']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
         $data['product_code'] = strtoupper($data['product_code']);
         $data['show_in_multi_cat'] = $data['show_in_multi_cat'] ?? null;
+//        $data['show_in_multi_cat'] = array_map('intval', $data['show_in_multi_cat']) ?? null;
 
         if(isset($data['validity_unit'])){
 
@@ -248,6 +261,7 @@ class ProductService
             $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
             $this->deleteFile($product->image);
         }
+
         $product->update($data);
 
         //save Search Data
@@ -273,6 +287,7 @@ class ProductService
             $langInSlug = explode('/', $item->url);
             return in_array($lang, $langInSlug);
         })->first();
+
         $langUrlSlug = $lang === 'bn' ? 'url_slug_bn' : 'url_slug';
 
         return $dynamicRoutes->url . '/' . $product->offer_category->$langUrlSlug . '/';
@@ -324,7 +339,11 @@ class ProductService
     public function deleteProduct($id)
     {
         $product = $this->findOne($id);
+        if ($product) {
+            $this->alCoreProductRepository->findOneByProperties(['product_code' => $product->product_code])->delete();
+        }
         $product->delete();
+        $product->searchableFeature()->delete();
         return Response('Product delete successfully');
     }
 
@@ -434,4 +453,14 @@ class ProductService
         return $product->internet_volume_mb;
     }
 
+    public function updateSearchData()
+    {
+        $products = $this->productRepository->findAll();
+        foreach ($products as $product){
+            if ($product->status) {
+                $this->_saveSearchData($product);
+            }
+        }
+        return Response('Product search data sync successfully !');
+    }
 }
