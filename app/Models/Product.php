@@ -53,7 +53,7 @@ class Product extends Model
             'special_product',
             'created_by',
             'updated_by',
-            
+
             'image',
         ];
 
@@ -122,5 +122,8 @@ class Product extends Model
         return $this->hasMany(OtherRelatedProduct::class);
     }
 
-
+    public function featureableSearch()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

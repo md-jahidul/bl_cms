@@ -91,68 +91,77 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-        foreach ($data['offer_info'] as $key => $offerInfo) {
-            if ($offerInfo) {
-                $otherInfo[$key] = $offerInfo;
+        DB::beginTransaction();
+        try {
+            foreach ($data['offer_info'] as $key => $offerInfo) {
+                if ($offerInfo) {
+                    $otherInfo[$key] = $offerInfo;
+                }
             }
+
+            if (request()->hasFile('product_image')) {
+                $data['product_image'] = $this->upload($data['product_image'], 'assetlite/images/product');
+            }
+
+            $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
+            $data['sim_category_id'] = $simId;
+            $data['created_by'] = Auth::id();
+            $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+
+            #Image store
+            if (request()->hasFile('image')) {
+
+                $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+            }
+
+            $product = $this->save($data);
+
+            /**
+             * save Search Data
+             * If product is in offer category: internet, voice, bundles
+             */
+
+            $internate_voice_bundles = [1,2,3];
+
+            if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+                $this->_saveSearchData($product);
+            }
+
+            $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
+            DB::commit();
+            return new Response('Product added successfully');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return new Response($e->getMessage());
         }
-
-        if (request()->hasFile('product_image')) {
-            $data['product_image'] = $this->upload($data['product_image'], 'assetlite/images/product');
-        }
-
-        $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
-        $data['sim_category_id'] = $simId;
-        $data['created_by'] = Auth::id();
-        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-
-        #Image store
-        if (request()->hasFile('image')) {
-
-            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
-        }
-
-        $product = $this->save($data);
-
-        /**
-         * save Search Data
-         * If product is in offer category: internet, voice, bundles
-         */
-
-         $internate_voice_bundles = [1,2,3];
-
-         if (in_array($product->offer_category_id, $internate_voice_bundles)) {
-
-             $this->_saveSearchData($product);
-         }
-
-        $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
-        return new Response('Product added successfully');
     }
 
-    public function findSIMType($type)
-    {
-        $simTypeEn = null;
-        $simTypeBn = null;
-        $findSIMType = $this->dynamicRouteRepository->findByProperties(['key' => $type]);
-        foreach ($findSIMType as $data) {
-            if ($data->lang_type == 'en') {
-                $simTypeEn = str_replace('/en/', '', $data->url);
-            } elseif ($data->lang_type == 'bn') {
-                $simTypeBn = str_replace('/bn/', '', $data->url);
-            }
-        }
-        return [
-            'type_en' => $simTypeEn,
-            'type_bn' => $simTypeBn
-        ];
-    }
+//    public function findSIMType($type)
+//    {
+//        $simTypeEn = null;
+//        $simTypeBn = null;
+//        $findSIMType = $this->dynamicRouteRepository->findByProperties(['key' => $type]);
+//        foreach ($findSIMType as $data) {
+//            if ($data->lang_type == 'en') {
+//                $simTypeEn = str_replace('/en/', '', $data->url);
+//            } elseif ($data->lang_type == 'bn') {
+//                $simTypeBn = str_replace('/bn/', '', $data->url);
+//            }
+//        }
+//        return [
+//            'type_en' => $simTypeEn,
+//            'type_bn' => $simTypeBn
+//        ];
+//    }
 
     //save Search Data
     private function _saveSearchData($product)
     {
         $productId = $product->id;
-        $name = $product->name_en.' '.$product->name_bn;
+        $titleEn = $product->name_en;
+        $titleBn = $product->name_bn;
 
         #Product Code
         $productCode = $product->product_code;
@@ -160,41 +169,48 @@ class ProductService
         #Search Table Status
         $status = $product->status;
 
-        $url = "";
+        $urlEn = "";
+        $urlBn = "";
         if ($product->sim_category_id == 1) {
-            $data = $this->findSIMType('prepaid')['type_en'];
-            $url .= "$data/";
+//            $data = $this->findSIMType('prepaid')['type_en'];
+            $urlEn .= "prepaid/";
+            $urlBn .= "prepaid/";
         }
         if ($product->sim_category_id == 2) {
-            $data = $this->findSIMType('postpaid')['type_en'];
-            $url .= "$data/";
+//            $data = $this->findSIMType('postpaid')['type_en'];
+            $urlEn .= "postpaid/";
+            $urlBn .= "postpaid/";
         }
 
         //category url
-        $url .= $product->offer_category->url_slug;
+        $urlEn .= $product->offer_category->url_slug;
+        $urlBn .= $product->offer_category->url_slug_bn;
 
         $keywordType = "offer-" . $product->offer_category->alias;
 
-        $type = "";
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug;
-            $type = 'prepaid-internet';
+//        $type = "";
+        if ($product->sim_category_id == 1 && in_array($product->offer_category_id, [1,2,3])) {
+            $urlEn .= '/' . $product->url_slug;
+            $urlBn .= '/' . $product->url_slug_bn;
+//            $type = 'prepaid-internet';
         }
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-            $url .= '/' . $product->url_slug;
-            $type = 'prepaid-voice';
-        }
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-            $url .= '/' . $product->url_slug;
-            $type = 'prepaid-bundle';
-        }
+//        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
+//            $url .= '/' . $product->url_slug;
+////            $type = 'prepaid-voice';
+//        }
+//        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
+//            $url .= '/' . $product->url_slug;
+////            $type = 'prepaid-bundle';
+//        }
         if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $url .= '/' . $product->url_slug;
-            $type = 'postpaid-internet';
+            $urlEn .= '/' . $product->url_slug;
+            $urlBn .= '/' . $product->url_slug_bn;
+//            $type = 'postpaid-internet';
         }
         if ($product->offer_category_id > 3) {
-            $url .= '/' . $product->url_slug;
-            $type = 'others';
+            $urlEn .= '/' . $product->url_slug;
+            $urlBn .= '/' . $product->url_slug_bn;
+//            $type = 'others';
         }
 
         $tag = "";
@@ -202,7 +218,19 @@ class ProductService
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
 
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
+        $saveSearchData = [
+            'product_code' => $productCode,
+            'type' => 'product',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $status,
+        ];
+
+//        dd($product, $saveSearchData);
+        $product->featureableSearch()->create($saveSearchData);
+//        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
     }
 
     public function tableSortable($data)

@@ -175,6 +175,7 @@ class ProductController extends Controller
         $this->alCoreProductService->storeProductCore($request->all(), $simId);
         $this->strToint($request);
         $response = $this->productService->storeProduct($request->all(), $simId);
+        dd($response);
         Session::flash('success', $response->content());
         return redirect("offers/$type");
     }
