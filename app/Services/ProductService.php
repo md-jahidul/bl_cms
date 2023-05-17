@@ -463,4 +463,5 @@ class ProductService
         }
         return Response('Product search data sync successfully !');
     }
+
 }
