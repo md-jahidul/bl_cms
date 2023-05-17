@@ -121,12 +121,11 @@ class ProductService
              * If product is in offer category: internet, voice, bundles
              */
 
-            $internate_voice_bundles = [1,2,3];
-
-            if (in_array($product->offer_category_id, $internate_voice_bundles)) {
-
-                $this->_saveSearchData($product);
-            }
+//            $internate_voice_bundles = [1,2,3];
+//
+//            if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+//            }
+            $this->_saveSearchData($product, 'create');
 
             $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
             DB::commit();
@@ -138,33 +137,17 @@ class ProductService
         }
     }
 
-//    public function findSIMType($type)
-//    {
-//        $simTypeEn = null;
-//        $simTypeBn = null;
-//        $findSIMType = $this->dynamicRouteRepository->findByProperties(['key' => $type]);
-//        foreach ($findSIMType as $data) {
-//            if ($data->lang_type == 'en') {
-//                $simTypeEn = str_replace('/en/', '', $data->url);
-//            } elseif ($data->lang_type == 'bn') {
-//                $simTypeBn = str_replace('/bn/', '', $data->url);
-//            }
-//        }
-//        return [
-//            'type_en' => $simTypeEn,
-//            'type_bn' => $simTypeBn
-//        ];
-//    }
-
     //save Search Data
-    private function _saveSearchData($product)
+    private function _saveSearchData($product, $requestType)
     {
-        $productId = $product->id;
         $titleEn = $product->name_en;
         $titleBn = $product->name_bn;
 
+        $productCode = null;
         #Product Code
-        $productCode = $product->product_code;
+        if ($product->offer_category->alias != "others"){
+            $productCode = $product->product_code;
+        }
 
         #Search Table Status
         $status = $product->status;
@@ -172,12 +155,10 @@ class ProductService
         $urlEn = "";
         $urlBn = "";
         if ($product->sim_category_id == 1) {
-//            $data = $this->findSIMType('prepaid')['type_en'];
             $urlEn .= "prepaid/";
             $urlBn .= "prepaid/";
         }
         if ($product->sim_category_id == 2) {
-//            $data = $this->findSIMType('postpaid')['type_en'];
             $urlEn .= "postpaid/";
             $urlBn .= "postpaid/";
         }
@@ -185,42 +166,12 @@ class ProductService
         //category url
         $urlEn .= $product->offer_category->url_slug;
         $urlBn .= $product->offer_category->url_slug_bn;
-
-        $keywordType = "offer-" . $product->offer_category->alias;
-
-//        $type = "";
-        if ($product->sim_category_id == 1 && in_array($product->offer_category_id, [1,2,3])) {
-            $urlEn .= '/' . $product->url_slug;
-            $urlBn .= '/' . $product->url_slug_bn;
-//            $type = 'prepaid-internet';
-        }
-//        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-//            $url .= '/' . $product->url_slug;
-////            $type = 'prepaid-voice';
-//        }
-//        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-//            $url .= '/' . $product->url_slug;
-////            $type = 'prepaid-bundle';
-//        }
-        if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $urlEn .= '/' . $product->url_slug;
-            $urlBn .= '/' . $product->url_slug_bn;
-//            $type = 'postpaid-internet';
-        }
-        if ($product->offer_category_id > 3) {
-            $urlEn .= '/' . $product->url_slug;
-            $urlBn .= '/' . $product->url_slug_bn;
-//            $type = 'others';
-        }
-
-        $tag = "";
-        if ($product->tag_category_id) {
-            $tag = $this->tagRepository->getTagById($product->tag_category_id);
-        }
+        $urlEn .= '/' . $product->url_slug;
+        $urlBn .= '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => $productCode,
-            'type' => 'product',
+            'type' => 'offer-product',
             'page_title_en' => $titleEn,
             'page_title_bn' => $titleBn,
             'url_slug_en' => $urlEn,
@@ -228,9 +179,11 @@ class ProductService
             'status' => $status,
         ];
 
-//        dd($product, $saveSearchData);
-        $product->featureableSearch()->create($saveSearchData);
-//        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
+        if ($requestType == "create") {
+            $product->searchableFeature()->create($saveSearchData);
+        }else {
+            $product->searchableFeature()->update($saveSearchData);
+        }
     }
 
     public function tableSortable($data)
@@ -304,9 +257,8 @@ class ProductService
 
         $product->update($data);
 
-
         //save Search Data
-        $this->_saveSearchData($product);
+        $this->_saveSearchData($product, 'update');
         return Response('Product update successfully !');
     }
 
@@ -380,11 +332,11 @@ class ProductService
     public function deleteProduct($id)
     {
         $product = $this->findOne($id);
-
         if ($product) {
             $this->alCoreProductRepository->findOneByProperties(['product_code' => $product->product_code])->delete();
         }
         $product->delete();
+        $product->searchableFeature()->delete();
         return Response('Product delete successfully');
     }
 
@@ -505,7 +457,6 @@ class ProductService
         $response = '';
 
         if (in_array($product->offer_category_id, $internate_voice_bundles)) {
-
             $response = $this->_saveSearchData($product);
         }
         return $response;
