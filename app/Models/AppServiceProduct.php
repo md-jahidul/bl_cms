@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class AppServiceProduct extends Model
 {
     use LogModelAction;
-    
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -32,4 +32,8 @@ class AppServiceProduct extends Model
         });
     }
 
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

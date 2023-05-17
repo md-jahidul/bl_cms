@@ -87,6 +87,7 @@ class AppServiceProductService
         unset($data['referral']);
 
         $app = $this->save($data);
+        $this->_saveSearchData($app);
 
         // Referral Info Store
         if ($referralInfo) {
@@ -97,6 +98,29 @@ class AppServiceProductService
             $this->alReferralInfoRepository->save($referralInfo);
         }
         return new Response('App Service Category added successfully');
+    }
+
+    private function _saveSearchData($product)
+    {
+        // URL make
+        $urlEn = "apps-and-services/" . $product->appServiceTab->url_slug . '/' . $product->url_slug;
+        $urlBn = "apps-and-services/" . $product->appServiceTab->url_slug_bn . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'app-and-service',
+            'page_title_en' => $product->name_en,
+            'page_title_bn' => $product->name_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
     }
 
     /**
@@ -138,6 +162,8 @@ class AppServiceProductService
         unset($data['referral']);
         $appServiceProduct->update($data);
 
+        $this->_saveSearchData($appServiceProduct);
+
         if ($referralData) {
             $referralInfo = $this->alReferralInfoRepository->findOneByProperties(['app_id' => $id]);
 
@@ -166,6 +192,7 @@ class AppServiceProductService
         $appServiceProduct = $this->findOne($id);
         $this->deleteFile($appServiceProduct->product_img_url);
         $appServiceProduct->delete();
+        $appServiceProduct->searchableFeature()->delete();
         return Response('App Service Product deleted successfully !');
     }
 
@@ -177,5 +204,16 @@ class AppServiceProductService
     public function detailsProduct($id)
     {
         return $this->appServiceProductRepository->findOne(['id' => $id]);
+    }
+
+    public function syncSearchData()
+    {
+        $allProducts = $this->findAll();
+        foreach ($allProducts as $product) {
+            if ($product->status) {
+                $this->_saveSearchData($product);
+            }
+        }
+        return Response('App service product search data sync successfully !');
     }
 }
