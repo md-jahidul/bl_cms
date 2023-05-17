@@ -125,7 +125,7 @@ class ProductService
 //
 //            if (in_array($product->offer_category_id, $internate_voice_bundles)) {
 //            }
-            $this->_saveSearchData($product, 'create');
+            $this->_saveSearchData($product);
 
             $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
             DB::commit();
@@ -138,7 +138,7 @@ class ProductService
     }
 
     //save Search Data
-    private function _saveSearchData($product, $requestType)
+    private function _saveSearchData($product)
     {
         $titleEn = $product->name_en;
         $titleBn = $product->name_bn;
@@ -180,7 +180,7 @@ class ProductService
             'status' => $status,
         ];
 
-        if (!$product->searchableFeature()->first() || $requestType == "create") {
+        if (!$product->searchableFeature()->first()) {
             $product->searchableFeature()->create($saveSearchData);
         }else {
             $product->searchableFeature()->update($saveSearchData);
@@ -259,7 +259,7 @@ class ProductService
         $product->update($data);
 
         //save Search Data
-        $this->_saveSearchData($product, 'update');
+        $this->_saveSearchData($product);
         return Response('Product update successfully !');
     }
 
@@ -447,20 +447,15 @@ class ProductService
         return $product->internet_volume_mb;
     }
 
-    public function updateSearchData($product){
-
-        /**
-         * save Search Data
-         * If product is in offer category: internet, voice, bundles
-         */
-
-        $internate_voice_bundles = [1,2,3];
-        $response = '';
-
-        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
-            $response = $this->_saveSearchData($product);
+    public function updateSearchData()
+    {
+        $products = $this->productRepository->findAll();
+        foreach ($products as $product){
+            if ($product->status) {
+                $this->_saveSearchData($product);
+            }
         }
-        return $response;
+        return Response('Product search data sync successfully !');
     }
 
 }

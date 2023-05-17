@@ -1020,6 +1020,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // App & Service Product =========================================================
     Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
     Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
+    Route::get('app-service/search-data-sync', 'AssetLite\AppServiceProductController@searchDataSync')
+    ->name('app-service-search-sync');
 
     Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 

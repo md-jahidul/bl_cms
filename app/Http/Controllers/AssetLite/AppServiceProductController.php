@@ -157,6 +157,13 @@ class AppServiceProductController extends Controller
             ->findByProperties(['app_service_tab_id' => $tabId], ['id', 'title_en', 'alias']);
     }
 
+    public function searchDataSync()
+    {
+        $response = $this->appServiceProductService->syncSearchData();
+        Session::flash('message', $response->getContent());
+        return redirect(route('app-service-product.index'));
+    }
+
     /**
      * @param $id
      * @return UrlGenerator|string
