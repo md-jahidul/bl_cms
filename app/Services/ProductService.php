@@ -158,6 +158,7 @@ class ProductService
             $urlEn .= "prepaid/";
             $urlBn .= "prepaid/";
         }
+
         if ($product->sim_category_id == 2) {
             $urlEn .= "postpaid/";
             $urlBn .= "postpaid/";
@@ -179,7 +180,7 @@ class ProductService
             'status' => $status,
         ];
 
-        if ($requestType == "create") {
+        if (!$product->searchableFeature()->first() || $requestType == "create") {
             $product->searchableFeature()->create($saveSearchData);
         }else {
             $product->searchableFeature()->update($saveSearchData);

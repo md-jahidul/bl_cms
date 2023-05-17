@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class OtherDynamicPage extends Model
 {
@@ -15,4 +16,9 @@ class OtherDynamicPage extends Model
         'page_name_en', 'page_name_bn', 'url_slug', 'url_slug_bn',
         'page_content_en', 'page_content_bn', 'created_by', 'updated_by'
     ];
+
+    public function searchableFeature(): MorphMany
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }
