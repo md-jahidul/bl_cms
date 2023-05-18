@@ -8,6 +8,9 @@
     <a href="{{ url("blog-post/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New
     </a>
+    <a href="{{ url('blog-post/search-data-sync') }}" class="btn btn-blue-grey  round btn-glow px-2"><i class="la la-refresh"></i>
+        Sync Search
+    </a>
 @endsection
 @section('content')
     <section>
