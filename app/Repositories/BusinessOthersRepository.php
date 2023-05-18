@@ -90,7 +90,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->type = $request->type;
         $service->created_by = Auth::id();
         $service->save();
-        return $service->id;
+        return $service;
     }
 
     public function changeHomeShowStatus($serviceId) {
@@ -260,7 +260,8 @@ class BusinessOthersRepository extends BaseRepository {
 
         $service->type = $request->type;
         $service->updated_by = Auth::id();
-        return $service->save();
+        $service->save();
+        return $service;
     }
 
     public function getEnterEnterpriseSol($id = null)

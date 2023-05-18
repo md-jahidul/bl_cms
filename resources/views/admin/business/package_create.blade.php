@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-6 col-xs-12">
-                                        <label for="Banner Photo">Banner Photo (Web)<span class="text-danger">*</span></label>
+                                        <label for="Banner Photo">Banner Photo (Web)</label>
                                         <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
@@ -181,10 +181,10 @@
                                         @endif
                                     </div>
                                     <div class="col-md-6 col-xs-12">
-                                        <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
+                                        <label for="Banner Photo">Banner Photo (Mobile)</label>
                                         <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                        
+
                                         @if ($errors->has('banner_mobile'))
                                             <div class="help-block text-danger">
                                                 {{ $errors->first('banner_mobile') }}
@@ -287,7 +287,7 @@
                                     </small>
 
                                 </div>
-                    
+
                             </div>
 
                             <div class="col-md-12 col-xs-12">
