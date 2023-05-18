@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class BusinessInternet extends Model
 {
     use LogModelAction;
+    protected $table = "business_internet_packages";
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'business_internet_packages';
+    protected $guarded = ['id'];
+
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

@@ -106,9 +106,7 @@ class BusinessPackageRepository extends BaseRepository
 
     public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob,$cardIcon, $cardDetail, $request)
     {
-
         $package = $this->model;
-
 
         $package->card_banner_web = $cardWeb;
         $package->card_banner_mobile = $cardMob;
@@ -147,7 +145,8 @@ class BusinessPackageRepository extends BaseRepository
         $package->created_by = Auth::id();
 
         $package->save();
-        return $package->id;
+
+        return $package;
     }
 
     public function getPackageById($packageId)
@@ -206,7 +205,8 @@ class BusinessPackageRepository extends BaseRepository
         $package->offer_details = $request->offer_details_en;
         $package->offer_details_bn = $request->offer_details_bn;
         $package->updated_by = Auth::id();
-        return $package->save();
+        $package->save();
+        return $package;
     }
 
     public function getBusinessPack($packageId = null)

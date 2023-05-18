@@ -13,4 +13,9 @@ class BusinessPackages extends Model
      * @var string
      */
     protected $table = 'business_packages';
+
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

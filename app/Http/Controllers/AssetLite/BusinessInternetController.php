@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Services\BusinessInternetService;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class BusinessInternetController extends Controller {
 
@@ -126,6 +126,18 @@ class BusinessInternetController extends Controller {
 
         $response = $this->internetService->deletePackage($packageId);
         return $response;
+    }
+
+    public function searchDataSync()
+    {
+        $response = $this->internetService->syncSearchData();
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Internet product sync for search successfully!');
+        } else {
+            Session::flash('error', 'Package updating process failed!');
+        }
+
+        return redirect('/business-internet');
     }
 
 }
