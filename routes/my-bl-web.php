@@ -1106,6 +1106,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
 
 
+    /**
+     * Internet Gift content
+     */
+    Route::resource('internet-gift-content', 'CMS\InternetGiftContentController');
+    Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
+    Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
+
+
 //
 });
 
