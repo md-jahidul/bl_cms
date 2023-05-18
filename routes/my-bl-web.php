@@ -1422,6 +1422,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/sharetrip-transaction-status-report-view', 'CMS\MyblTransactionStatusController@sharetripTransactionList')->name('mybl.transaction-status.sharetrip');
     Route::get('mybl/sharetrip-transaction-status-report', 'CMS\MyblTransactionStatusController@getSharetripTransaction')
         ->name('mybl.transaction-status.sharetrip.list');
+        
+    /**
+     * Internet Gift content
+     */
+    Route::resource('internet-gift-content', 'CMS\InternetGiftContentController');
+    Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
+    Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
+
 
 //
 });

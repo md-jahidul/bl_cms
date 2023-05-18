@@ -21,6 +21,7 @@ class CreateMusicTransactionStatusesTable extends Migration
             $table->string('payment_id')->nullable();
             $table->string('msisdn')->nullable();
             $table->string('service_id')->nullable();
+            $table->string('amount')->nullable();
             $table->timestamps();
         });
     }
