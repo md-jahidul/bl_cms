@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessInternetRepository;
 use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
@@ -110,9 +111,10 @@ class BusinessInternetService {
 
     private function _saveSearchData($product)
     {
+        $feature = BaseURLLocalization::featureBaseUrl();
         // URL make
-        $urlEn = "business/" . "internet" . '/' . $product->url_slug;
-        $urlBn = "business/" . "internet" . '/' . $product->url_slug_bn;
+        $urlEn = $feature["business_en"] . "internet" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "internet" . '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,

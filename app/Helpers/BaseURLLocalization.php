@@ -26,20 +26,20 @@ class BaseURLLocalization
             "app_service_bn" =>  "BUY_INTERNET" ,
 
             // Business Packages
-            "business_packages_en" =>  "packages",
-            "business_packages_bn" =>  "packages" ,
-
-            // Business Packages
-            "business_internet_en" =>  "internet",
-            "business_internet_bn" =>  "internet" ,
-
-            // Business Solution
-            "business_solution_en" =>  "business-solution",
-            "business_solution_bn" =>  "business-solution" ,
+            "business_en" =>  "business",
+            "business_bn" =>  "business" ,
 
             // Blogs
             "blog_en" =>  "blogs",
             "blog_bn" =>  "blogs" ,
+
+            // CSR
+            "csr_en" =>  "corporate-social-responsibility",
+            "csr_bn" =>  "corporate-social-responsibility" ,
+
+            // About Loyalty
+            "about_loyalty_en" => "loyalty/life-style",
+            "about_loyalty_bn" => "loyalty/life-style"
         ];
     }
 }

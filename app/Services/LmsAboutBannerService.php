@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\LmsAboutBannerRepository;
 use App\Repositories\MediaBannerImageRepository;
 use App\Traits\CrudTrait;
@@ -81,10 +82,44 @@ class LmsAboutBannerService
 ////        }
 //        $moduleWiseData['about_reward']['alt_text_en'] = $data['reward_alt_text_en'];
 //        $moduleWiseData['about_reward']['page_type'] = 'about_reward';
-//        dd($moduleWiseData);
-        foreach ($moduleWiseData as $data) {
-            $this->lmsAboutBannerRepository->bannerUpload($data);
+
+        foreach ($moduleWiseData as $aboutLoyaltyData) {
+            $aboutLoyalty = $this->lmsAboutBannerRepository->bannerUpload($aboutLoyaltyData);
+            $specialKeyWord = [
+                'tag_en' => $data['tag_en'],
+                'tag_bn' => $data['tag_bn']
+            ];
+
+            $this->_saveSearchData($aboutLoyalty, $specialKeyWord);
         }
+
         return Response('Banner Image has been successfully updated');
+    }
+
+    private function _saveSearchData($product, $specialKeyWord = [])
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        // URL make
+        $urlEn = $feature['about_loyalty_en'] . "/" . $product->url_slug_en;
+        $urlBn = $feature['about_loyalty_bn'] . "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => $product->reference_type,
+            'page_title_en' => $product->title_en,
+            'page_title_bn' => $product->title_bn,
+            'tag_en' => $specialKeyWord['tag_en'],
+            'tag_bn' => $specialKeyWord['tag_bn'],
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
     }
 }

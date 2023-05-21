@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,15 +20,18 @@ class CreateSearchableDataTable extends Migration
             $table->string('featureable_type');
             $table->string('product_code')->nullable();
             $table->string('type')->nullable();
-            $table->string('page_title_en', 500)->index()->nullable();
-            $table->string('page_title_bn', 500)->index()->nullable();
-            $table->string('tag_en')->index()->nullable();
-            $table->string('tag_bn')->index()->nullable();
+            $table->text('page_title_en')->nullable();
+            $table->text('page_title_bn')->nullable();
+            $table->text('tag_en')->nullable();
+            $table->text('tag_bn')->nullable();
             $table->string('url_slug_en')->nullable();
             $table->string('url_slug_bn')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
+
+        // Fulltext search index
+        DB::statement('ALTER TABLE searchable_data ADD FULLTEXT search(page_title_en,page_title_bn,tag_en,tag_bn)');
     }
 
     /**
