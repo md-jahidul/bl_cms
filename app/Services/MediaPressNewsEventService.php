@@ -71,12 +71,20 @@ class MediaPressNewsEventService
         $feature = BaseURLLocalization::featureBaseUrl();
 
         // URL make
-        $urlEn = $feature['blog_en'] . "/" . $product->url_slug_en;
-        $urlBn = $feature['blog_bn'] . "/" . $product->url_slug_bn;
+        if ($product->reference_type == "blog"){
+            $featureBaseUrlEn = $feature['blog_en'];
+            $featureBaseUrlBn = $feature['blog_bn'];
+        } else {
+            $featureBaseUrlEn = $feature['csr_en'];
+            $featureBaseUrlBn = $feature['csr_bn'];
+        }
+
+        $urlEn = $featureBaseUrlEn . "/" . $product->url_slug_en;
+        $urlBn = $featureBaseUrlBn . "/" . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,
-            'type' => 'blog',
+            'type' => $product->reference_type,
             'page_title_en' => $product->title_en,
             'page_title_bn' => $product->title_bn,
             'url_slug_en' => $urlEn,
@@ -113,7 +121,6 @@ class MediaPressNewsEventService
         $data['show_in_home'] = (isset($data['show_in_home'])) ? 1 : 0;
         $data['updated_by'] = Auth::id();
         $mediaPNE->update($data);
-
         $this->_saveSearchData($mediaPNE);
         return Response('Update successfully!');
     }

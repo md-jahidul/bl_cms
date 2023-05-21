@@ -79,7 +79,6 @@ class LmsAboutPageController extends Controller
      */
     public function index($slug)
     {
-        
         /**
          * shuvo-bs
          * We have Plan to merge all the banner in the al_banners table. For this reason we have store discount-privilege's banner in al_banner table
@@ -112,7 +111,7 @@ class LmsAboutPageController extends Controller
             $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
             return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
         }
-        
+
     }
 
     public function componentCreate()

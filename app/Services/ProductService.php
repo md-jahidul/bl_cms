@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\OfferType;
+use App\Helpers\BaseURLLocalization;
 use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductDetail;
@@ -140,6 +141,8 @@ class ProductService
     //save Search Data
     private function _saveSearchData($product)
     {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
         $titleEn = $product->name_en;
         $titleBn = $product->name_bn;
 
@@ -155,20 +158,20 @@ class ProductService
         $urlEn = "";
         $urlBn = "";
         if ($product->sim_category_id == 1) {
-            $urlEn .= "prepaid/";
-            $urlBn .= "prepaid/";
+            $urlEn .= $feature['prepaid_en'];
+            $urlBn .= $feature['prepaid_bn'];
         }
 
         if ($product->sim_category_id == 2) {
-            $urlEn .= "postpaid/";
-            $urlBn .= "postpaid/";
+            $urlEn .= $feature['postpaid_en'];
+            $urlBn .= $feature['postpaid_bn'];
         }
 
         //category url
-        $urlEn .= $product->offer_category->url_slug;
-        $urlBn .= $product->offer_category->url_slug_bn;
-        $urlEn .= '/' . $product->url_slug;
-        $urlBn .= '/' . $product->url_slug_bn;
+        $urlEn .= "/" . $product->offer_category->url_slug;
+        $urlBn .= "/" . $product->offer_category->url_slug_bn;
+        $urlEn .= "/" . $product->url_slug;
+        $urlBn .= "/" . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => $productCode,

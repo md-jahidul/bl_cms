@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\BusinessFeaturesRepository;
 use App\Repositories\BusinessAssignedFeaturesRepository;
@@ -131,9 +132,10 @@ class BusinessPackageService {
 
     private function _saveSearchData($product)
     {
+        $feature = BaseURLLocalization::featureBaseUrl();
         // URL make
-        $urlEn = "business/" . "packages" . '/' . $product->url_slug;
-        $urlBn = "business/" . "packages" . '/' . $product->url_slug_bn;
+        $urlEn = $feature["business_en"] . "packages" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "packages" . '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,

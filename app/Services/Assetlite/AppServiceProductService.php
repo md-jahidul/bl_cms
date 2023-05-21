@@ -4,6 +4,7 @@ namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AlReferralInfoRepository;
 use App\Repositories\AppServiceProductRepository;
 use App\Traits\CrudTrait;
@@ -97,9 +98,10 @@ class AppServiceProductService
 
     private function _saveSearchData($product)
     {
+        $feature = BaseURLLocalization::featureBaseUrl();
         // URL make
-        $urlEn = "apps-and-services/" . $product->appServiceTab->url_slug . '/' . $product->url_slug;
-        $urlBn = "apps-and-services/" . $product->appServiceTab->url_slug_bn . '/' . $product->url_slug_bn;
+        $urlEn = $feature['app_service_en'] . $product->appServiceTab->url_slug . '/' . $product->url_slug;
+        $urlBn = $feature['app_service_bn'] . $product->appServiceTab->url_slug_bn . '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,
