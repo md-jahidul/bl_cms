@@ -22,9 +22,10 @@ class InternetGiftContentRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {  
+        $contentId = $this->route()->parameters()['internet_gift_content'] ?? '';
         return [
-            'slug' => 'required|max:200|unique:internet_gift_contents,slug,' . $this->id,
+            'slug' => 'required|max:200|unique:internet_gift_contents,slug,' . $contentId,
             'name_en' => 'required',
             'name_bn' => 'required',
         ];
