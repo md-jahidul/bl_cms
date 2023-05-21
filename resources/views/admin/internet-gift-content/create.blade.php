@@ -38,8 +38,12 @@
                                             value="@if(old('name_en')) {{old('name_en')}} @endif" required id="name_en"
                                             type="text" class="form-control @error('name_en') is-invalid @enderror"
                                             placeholder="Title in English" name="name_en">
-                                        <small class="text-danger"> @error('name_en') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
+                                        @if ($errors->has('name_en'))
+                                            <div class="help-block">
+                                                <small class="text-danger"> {{ $errors->first('name_en') }} </small>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="name_bn" class="required">Name(BN):</label>
@@ -50,8 +54,12 @@
                                             value="@if(old('name_bn')) {{old('name_bn')}} @endif" required id="name_bn"
                                             type="text" class="form-control @error('name_bn') is-invalid @enderror"
                                             placeholder="Title in Bangla" name="name_bn">
-                                        <small class="text-danger"> @error('name_bn') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
+                                        @if ($errors->has('name_bn'))
+                                            <div class="help-block">
+                                                <small class="text-danger"> {{ $errors->first('name_bn') }} </small>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
@@ -71,16 +79,27 @@
                                                 data-validation-required-message="Slug is required"
                                                 placeholder="Please enter slug" />
                                         </div>
+                                        <div class="help-block"></div>
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> sample-name (no spaces)<br>
+                                        </small>
+                                        @if ($errors->has('slug'))
+                                            <div class="help-block">
+                                                <small class="text-danger"> {{ $errors->first('slug') }} </small>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
-                                        <label for="alt_text" class="required">Icon</label>
+                                        <label for="icon" class="required">Icon</label>
                                         <div class="custom-file">
                                             <input type="file" name="icon" class="custom-file-input dropify"
                                                     required data-validation-required-message="Icon field is required" data-height="80">
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('icon'))
-                                            <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                            <div class="help-block">
+                                                <small class="text-danger"> {{ $errors->first('icon') }} </small>
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6 {{ $errors->has('banner') ? ' error' : '' }}">
@@ -91,7 +110,9 @@
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('banner'))
-                                            <div class="help-block">  {{ $errors->first('banner') }}</div>
+                                            <div class="help-block">
+                                                <small class="text-danger"> {{ $errors->first('banner') }} </small>
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="form-group col-md-12">

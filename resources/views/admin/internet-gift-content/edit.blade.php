@@ -35,9 +35,10 @@
                                 <small
                                     class="text-danger"> @error('name_en') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
-                                <div class="help-block"></div>
                                 @if ($errors->has('name_en'))
-                                    <div class="help-block">  {{ $errors->first('name_en') }}</div>
+                                    <div class="help-block">
+                                        <small class="text-danger"> {{ $errors->first('name_en') }} </small>
+                                    </div>
                                 @endif
                             </div>
 
@@ -52,9 +53,10 @@
                                     placeholder="Title in Bangla" name="name_bn">
                                 <small class="text-danger"> @error('name_bn') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
-                                <div class="help-block"></div>
                                 @if ($errors->has('name_bn'))
-                                    <div class="help-block">  {{ $errors->first('name_bn') }}</div>
+                                    <div class="help-block">
+                                        <small class="text-danger"> {{ $errors->first('name_bn') }} </small>
+                                    </div>
                                 @endif
                             </div>
 
@@ -85,8 +87,13 @@
                                         placeholder="Please enter Slug" />
                                 </div>
                                 <div class="help-block"></div>
+                                <small class="text-info">
+                                    <strong>i.e:</strong> sample-name (no spaces)<br>
+                                </small>
                                 @if ($errors->has('slug'))
-                                    <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    <div class="help-block">
+                                        <small class="text-danger"> {{ $errors->first('slug') }} </small>
+                                    </div>
                                 @endif
                             </div>
 
@@ -98,7 +105,9 @@
                                 </div>
                                 <div class="help-block"></div>
                                 @if ($errors->has('icon'))
-                                    <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                    <div class="help-block">
+                                        <small class="text-danger"> {{ $errors->first('icon') }} </small>
+                                    </div>
                                 @endif
                             </div>
                             <div class="form-group col-md-6 {{ $errors->has('banner') ? ' error' : '' }}">
@@ -109,7 +118,9 @@
                                 </div>
                                 <div class="help-block"></div>
                                 @if ($errors->has('banner'))
-                                    <div class="help-block">  {{ $errors->first('banner') }}</div>
+                                    <div class="help-block">
+                                        <small class="text-danger"> {{ $errors->first('banner') }} </small>
+                                    </div>
                                 @endif
                             </div>
 

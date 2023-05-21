@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InternetGiftContentRequest;
 use App\Services\InternetGiftContentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,7 @@ class InternetGiftContentController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(InternetGiftContentRequest $request)
     {
         if($this->internetGiftContentService->storeInternetGiftContent($request->all())) {
             session()->flash('message', 'Content Created Successfully');
@@ -51,7 +52,7 @@ class InternetGiftContentController extends Controller
     }
 
 
-    public function update(Request $request, $contentId)
+    public function update(InternetGiftContentRequest $request, $contentId)
     {
 
         if($this->internetGiftContentService->updateInternetGiftContent($request->all(), $contentId)) {
