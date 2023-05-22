@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PartnerOffer extends Model
 {
@@ -65,4 +66,14 @@ class PartnerOffer extends Model
     protected $casts = [
         'other_attributes' => 'array'
     ];
+
+    public function partnerCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PartnerCategory::class);
+    }
+
+    public function searchableFeature()
+    {
+        return $this->morphOne(SearchableData::class, 'featureable');
+    }
 }

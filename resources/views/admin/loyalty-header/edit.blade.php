@@ -47,30 +47,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">
-                                    <label for="desc_en">Description (English)</label>
-                                    <textarea type="text" name="desc_en" rows="5"
-                                            class="form-control summernote_editor"
-                                            placeholder="Enter page description in English"
-                                    >{{ $priyojonLanding->desc_en }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('desc_bn'))
-                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">
-                                    <label for="desc_bn">Description (Bangla)</label>
-                                    <textarea type="text" name="desc_bn" rows="5"
-                                            class="form-control summernote_editor"
-                                            placeholder="Enter page description in Bangla"
-                                    >{{ $priyojonLanding->desc_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('desc_bn'))
-                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
-                                    @endif
-                                </div>
-
-
                                 @if($priyojonLanding->parent_id != 0)
 {{--                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
 {{--                                        <label for="url">Redirect Url</label>--}}
@@ -81,51 +57,6 @@
 {{--                                            <div class="help-block">  {{ $errors->first('url') }}</div>--}}
 {{--                                        @endif--}}
 {{--                                    </div>--}}
-
-                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
-                                        <label for="url_slug_en" class="required">Url Slug EN</label>
-                                        <input type="text" name="url_slug_en"  required class="form-control" placeholder="Enter Url Slug EN"
-                                        value="{{ $priyojonLanding->url_slug_en }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url_slug_en'))
-                                            <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                        <label for="url" class="required">Url Slug BN</label>
-                                        <input type="text" name="url_slug_bn" required class="form-control" placeholder="Enter Url Slug BN"
-                                         value="{{ $priyojonLanding->url_slug_bn }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url_slug_bn'))
-                                            <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">
-                                        <label for="alias">Alias</label>
-                                        <input type="text" name="alias" required class="form-control" placeholder="Enter alias"
-                                               value="{{ $priyojonLanding->alias }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('alias'))
-                                            <div class="help-block">  {{ $errors->first('alias') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Page Header</label>
-                                        <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonLanding->page_header }}</textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Page Header BN</label>
-                                        <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Schema Markup</label>
-                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->schema_markup }}</textarea>
-                                    </div>
 
                                     <div class="col-md-6">
                                         <label></label>
@@ -169,7 +100,7 @@
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
-                            
+
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}
                                 {{ $priyojonLanding->is_images == 1 ? '' : 'd-none' }}" id="banner_image_url">
                                     <label for="banner_image_url">Banner Image</label>

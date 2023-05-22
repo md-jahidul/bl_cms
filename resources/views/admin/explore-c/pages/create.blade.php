@@ -88,7 +88,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('page_content_en') ? ' error' : '' }}">
                                 <label for="page_content_en">Description (English)</label>
                                 <textarea type="text" name="page_content_en" id="page_content_en" rows="5"
-                                          class="form-control summernote_editor"
+                                          class="form-control"
                                           placeholder="Enter page description in English"
                                 >{{ $pageContentEn }}</textarea>
                                 <div class="help-block"></div>
@@ -100,7 +100,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('page_content_bn') ? ' error' : '' }}">
                                 <label for="page_content_bn">Description (Bangla)</label>
                                 <textarea type="text" name="page_content_bn" rows="5" id="page_content_bn"
-                                          class="form-control summernote_editor"
+                                          class="form-control"
                                           placeholder="Enter page description in Bangla"
                                 >{{ $pageContentBn }}</textarea>
                                 <div class="help-block"></div>

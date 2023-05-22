@@ -37,6 +37,10 @@ class BaseURLLocalization
             "csr_en" =>  "corporate-social-responsibility",
             "csr_bn" =>  "corporate-social-responsibility" ,
 
+            // Loyalty Offer Details
+            "partner_offer_details_en" => "loyalty/life-style/discount-privilege",
+            "partner_offer_details_bn" => "loyalty/life-style/discount-privilege",
+
             // About Loyalty
             "about_loyalty_en" => "loyalty/life-style",
             "about_loyalty_bn" => "loyalty/life-style"

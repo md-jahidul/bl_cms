@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Loyalty Banner Image</strong></h4>
+                    <h4 class="menu-title"><strong>About Loyalty Page Info</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
@@ -107,7 +107,7 @@
                                     <label for="alt_text">Search Special Keyword En</label>
                                     <textarea name="tag_en" id="tag_en" class="form-control" rows="4"
                                               placeholder="Enter keywords en"
-                                    >{{ isset($aboutLoyaltyBanner->tag_en) ? $aboutLoyaltyBanner->tag_en : '' }}</textarea>
+                                    >{{ isset($searchTag->tag_en) ? $searchTag->tag_en : '' }}</textarea>
                                     <small class="warning"><strong>Example: Internet Packs, Tier Based Tenure, Eligible Customers, Point Status</strong></small>
                                     <div class="help-block"></div>
                                     @if ($errors->has('tag_en'))
@@ -118,12 +118,60 @@
                                 <div class="form-group col-md-6 {{ $errors->has('tag_bn') ? ' error' : '' }}">
                                     <label for="alt_text">Search Special Keyword Bn</label>
                                     <textarea type="text" name="tag_bn" id="alt_text" class="form-control" rows="4"
-                                              placeholder="Enter keywords bn">{{ isset($aboutLoyaltyBanner->tag_bn) ? $aboutLoyaltyBanner->tag_bn : '' }}</textarea>
+                                              placeholder="Enter keywords bn">{{ isset($searchTag->tag_bn) ? $searchTag->tag_bn : '' }}</textarea>
                                     <small class="warning"><strong>Example: পয়েন্ট স্ট্যাটাস, টিয়ার সিস্টেম, অরেঞ্জ ক্লাব এর সদস্য</strong></small>
                                     <div class="help-block"></div>
                                     @if ($errors->has('tag_bn'))
                                         <div class="help-block">{{ $errors->first('tag_bn') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                                    <label for="url_slug_en" class="required">Url Slug EN</label>
+                                    <input type="text" name="url_slug_en"  required class="form-control" placeholder="Enter Url Slug EN"
+                                           value="{{ $priyojonMenu->url_slug_en ?? "" }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_en'))
+                                        <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label for="url" class="required">Url Slug BN</label>
+                                    <input type="text" name="url_slug_bn" required class="form-control" placeholder="Enter Url Slug BN"
+                                           value="{{ $priyojonMenu->url_slug_bn ?? "" }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <!--Parent ID 1 for priyojons table ID 1-->
+                                <input type="hidden" name="parent_id" value="1">
+
+{{--                                <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">--}}
+{{--                                    <label for="alias">Alias</label>--}}
+{{--                                    <input type="text" name="alias" required class="form-control" placeholder="Enter alias"--}}
+{{--                                           value="{{ $priyojonMenu->alias ?? "" }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('alias'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('alias') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonMenu->page_header ?? "" }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonMenu->page_header_bn ?? "" }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonMenu->schema_markup ?? "" }}</textarea>
                                 </div>
 
                                 <div class="form-actions col-md-12">
