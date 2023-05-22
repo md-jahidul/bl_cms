@@ -15,14 +15,15 @@ class ExploreCDetailsRepository extends BaseRepository
     public function savePage($data)
     {
         if ($data['page_id'] != "") {
-            $page = $this->model->where('id', $data['page_id']);
+            $page = $this->model->where('id', $data['page_id'])->first();
             unset($data['page_id']);
             $data['updated_by'] = Auth::id();
-            return $page->update($data);
+            $page->update($data);
+            return $page;
         } else {
             unset($data['page_id']);
             $data['created_by'] = Auth::id();
-            return $this->model->insert($data);
+            return $this->model->create($data);
         }
     }
 }

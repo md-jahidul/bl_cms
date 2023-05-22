@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class ExploreCDetailsController extends Controller
 {
-    
+
     public const PAGE_TYPE = "explore_c";
 
     protected $componentService;
@@ -35,7 +35,7 @@ class ExploreCDetailsController extends Controller
      */
     public function index($explore_c_id)
     {
-        
+
         // return "List";
         // $this->info["section_list"] = $this->exploreCDetailsService->sectionList($explore_c_id);
         // $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($explore_c_id);
@@ -71,7 +71,7 @@ class ExploreCDetailsController extends Controller
         $response = $this->exploreCDetailsService->savePage($request->all(), self::PAGE_TYPE);
 
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'Page is saved!');
+            Session::flash('success', 'Page is saved!');
         } else {
             Session::flash('error', $response['message']);
         }
