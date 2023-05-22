@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 class ExploreCDetailsService
 {
     use CrudTrait;
-    
+
     protected $exploreCDetailsRepository;
 
     public function __construct( ExploreCDetailsRepository $exploreCDetailsRepository)

@@ -106,10 +106,12 @@ class LmsAboutPageController extends Controller
             // $details = $this->aboutPageService->findAboutDetail($slug);
             // $benefits = $this->lmsBenefitService->getBenefit($slug);
             $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
-            // dd($aboutLoyaltyBanner);
+
+            $searchTag = $aboutLoyaltyBanner->searchableFeature()->first();
             $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
             $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
-            return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
+            $priyojonMenu = $this->priyojonService->findByAlias("about-priyojon");
+            return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner', 'searchTag', 'priyojonMenu'));
         }
 
     }
@@ -259,7 +261,7 @@ class LmsAboutPageController extends Controller
      * file delete.
      *
      * @param $fileId
-     * @return JsonResponse|Application|RedirectResponse|Redirector
+     * @return Application|Redirector|RedirectResponse
      * @Dev Bulbul Mahmud Nito || 24/06/2020
      */
     public function fileDelete($slug, $fileId)

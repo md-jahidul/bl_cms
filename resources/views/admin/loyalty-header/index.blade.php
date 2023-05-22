@@ -58,12 +58,12 @@
                                     @endif
                                     <td class="action" >
                                         <a href="{{ url('priyojon/'.$priyojon->id.'/edit') }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        @if($parent_id != 0)
-                                            <a href="#" remove="{{ url("priyojon/$parent_id/destroy/$priyojon->id") }}"
-                                               class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $priyojon->id }}" title="Delete the user">
-                                                <i class="la la-trash"></i>
-                                            </a>
-                                        @endif
+{{--                                        @if($parent_id != 0)--}}
+{{--                                            <a href="#" remove="{{ url("priyojon/$parent_id/destroy/$priyojon->id") }}"--}}
+{{--                                               class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $priyojon->id }}" title="Delete the user">--}}
+{{--                                                <i class="la la-trash"></i>--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
                                     </td>
 
                                 </tr>

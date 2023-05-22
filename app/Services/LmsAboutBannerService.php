@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Helpers\BaseURLLocalization;
+use App\Models\Priyojon;
 use App\Repositories\LmsAboutBannerRepository;
 use App\Repositories\MediaBannerImageRepository;
+use App\Repositories\PriyojonRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Foundation\Application;
@@ -21,14 +23,21 @@ class LmsAboutBannerService
      * @var LmsAboutBannerRepository
      */
     private $lmsAboutBannerRepository;
+    /**
+     * @var PriyojonRepository
+     */
+    private $priyojonRepository;
 
     /**
      * AboutPageService constructor.
      * @param LmsAboutBannerRepository $lmsAboutBannerRepository
      */
-    public function __construct(LmsAboutBannerRepository $lmsAboutBannerRepository)
-    {
+    public function __construct(
+        LmsAboutBannerRepository $lmsAboutBannerRepository,
+        PriyojonRepository $priyojonRepository
+    ) {
         $this->lmsAboutBannerRepository = $lmsAboutBannerRepository;
+        $this->priyojonRepository = $priyojonRepository;
         $this->setActionRepository($lmsAboutBannerRepository);
     }
 
@@ -83,11 +92,24 @@ class LmsAboutBannerService
 //        $moduleWiseData['about_reward']['alt_text_en'] = $data['reward_alt_text_en'];
 //        $moduleWiseData['about_reward']['page_type'] = 'about_reward';
 
+        $priyojonMenuData = [
+            'url_slug_en' => $data['url_slug_en'],
+            'url_slug_bn' => $data['url_slug_bn'],
+            'page_header' => $data['page_header'],
+            'page_header_bn' => $data['page_header_bn'],
+            'schema_markup' => $data['schema_markup'],
+        ];
+
+        $menu = Priyojon::where('alias', 'about-priyojon')->first();
+        $menu->update($priyojonMenuData);
+
         foreach ($moduleWiseData as $aboutLoyaltyData) {
             $aboutLoyalty = $this->lmsAboutBannerRepository->bannerUpload($aboutLoyaltyData);
             $specialKeyWord = [
                 'tag_en' => $data['tag_en'],
-                'tag_bn' => $data['tag_bn']
+                'tag_bn' => $data['tag_bn'],
+                'url_slug_en' => $data['url_slug_en'],
+                'url_slug_bn' => $data['url_slug_bn'],
             ];
 
             $this->_saveSearchData($aboutLoyalty, $specialKeyWord);
@@ -101,12 +123,12 @@ class LmsAboutBannerService
         $feature = BaseURLLocalization::featureBaseUrl();
 
         // URL make
-        $urlEn = $feature['about_loyalty_en'] . "/" . $product->url_slug_en;
-        $urlBn = $feature['about_loyalty_bn'] . "/" . $product->url_slug_bn;
+        $urlEn = $feature['about_loyalty_en'] . "/" . $specialKeyWord['url_slug_en'];
+        $urlBn = $feature['about_loyalty_bn'] . "/" . $specialKeyWord['url_slug_bn'];
 
         $saveSearchData = [
             'product_code' => null,
-            'type' => $product->reference_type,
+            'type' => "about-loyalty",
             'page_title_en' => $product->title_en,
             'page_title_bn' => $product->title_bn,
             'tag_en' => $specialKeyWord['tag_en'],
