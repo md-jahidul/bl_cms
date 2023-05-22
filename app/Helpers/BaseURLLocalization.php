@@ -43,7 +43,11 @@ class BaseURLLocalization
 
             // About Loyalty
             "about_loyalty_en" => "loyalty/life-style",
-            "about_loyalty_bn" => "loyalty/life-style"
+            "about_loyalty_bn" => "loyalty/life-style",
+
+            // Explore C
+            "explore_c_en" => "explore-c",
+            "explore_c_bn" => "explore-c"
         ];
     }
 }
