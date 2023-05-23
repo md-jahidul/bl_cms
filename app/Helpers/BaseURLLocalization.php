@@ -47,7 +47,11 @@ class BaseURLLocalization
 
             // Explore C
             "explore_c_en" => "explore-c",
-            "explore_c_bn" => "explore-c"
+            "explore_c_bn" => "explore-c",
+
+            // Roaming Offer
+            "roaming_en" => "roaming",
+            "roaming_bn" => "roaming"
         ];
     }
 }

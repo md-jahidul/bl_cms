@@ -29,12 +29,14 @@ class RoamingPagesRepository extends BaseRepository {
         return $response;
     }
 
-    public function updatePage($request) {
-        try {
+    public function updatePage($request)
+    {
+            $page = $this->model->findOrFail($request->page_id);
+
             if ($request->page_type == 'info-and-tips') {
-                
+
             } else {
-                $page = $this->model->findOrFail($request->page_id);
+
                 $page->title_en = $request->title_en;
                 $page->title_bn = $request->title_bn;
                 $page->short_description_en = $request->short_description_en;
@@ -51,7 +53,6 @@ class RoamingPagesRepository extends BaseRepository {
             RoamingPageComponents::where(array('page_type' => $request->page_type, 'parent_id' => $request->page_id))->delete();
 
             $insert = [];
-
             $count = 0;
             foreach ($request->component_position as $k => $val) {
                 $insert[$count]['page_type'] = $request->page_type;
@@ -66,7 +67,6 @@ class RoamingPagesRepository extends BaseRepository {
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'headline-text';
                 }
-
                 if (isset($request->list_headline_en[$k])) {
                     $insert[$count]['headline_en'] = $request->list_headline_en[$k];
                     $insert[$count]['headline_bn'] = $request->list_headline_bn[$k];
@@ -76,7 +76,6 @@ class RoamingPagesRepository extends BaseRepository {
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'list-component';
                 }
-
                 if (isset($request->free_textarea_en[$k])) {
                     $insert[$count]['headline_en'] = "";
                     $insert[$count]['headline_bn'] = "";
@@ -86,24 +85,11 @@ class RoamingPagesRepository extends BaseRepository {
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'free-text';
                 }
-
-
                 $count++;
             }
 
-            RoamingPageComponents::insert($insert);
-
-
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
+        RoamingPageComponents::insert($insert);
+        return $page;
     }
 
     public function changeComponentSorting($request) {
@@ -150,13 +136,13 @@ class RoamingPagesRepository extends BaseRepository {
         }
         return $response;
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 
     public function changeCategorySorting($request) {
         try {
