@@ -90,7 +90,7 @@ class AboutPageService
 //        if (isset($data['right_side_ing'])) {
 //            $data['right_side_ing'] = null;
 //        }
-
+        dd($data);
         if ($data['slug'] == "priyojon") {
             $this->aboutPageUpdate($data, 'assetlite/images/about-priyojon');
         } elseif ($data['slug'] == "reward_points") {

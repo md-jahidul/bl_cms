@@ -36,8 +36,8 @@ class StorePartnerOfferRequest extends FormRequest
             'btn_text_en' => 'required',
             'btn_text_bn' => 'required',
             'is_active' => 'required',
-            'url_slug' => 'required|regex:/^\S*$/u|unique:partner_offers,url_slug,' . $this->id,
-            'url_slug_bn' => 'required|regex:/^\S*$/u|unique:partner_offers,url_slug_bn,' . $this->id,
+//            'url_slug' => 'required|regex:/^\S*$/u|unique:partner_offers,url_slug,' . $this->id,
+//            'url_slug_bn' => 'required|regex:/^\S*$/u|unique:partner_offers,url_slug_bn,' . $this->id,
         ];
     }
 

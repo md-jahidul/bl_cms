@@ -59,7 +59,7 @@ class PriyojonController extends Controller
         $priyojons = $this->priyojonService->priyojonList($parent_id);
         foreach ($priyojons as $key => $priyojon) {
             /**
-             * If type is discount_privilege and is parent then unset this 
+             * If type is discount_privilege and is parent then unset this
              */
             if (in_array($priyojon->component_type, ['discount_privilege', 'benefits_for_you']) && $priyojon->parent_id == 0) {
                 unset($priyojons[$key]);

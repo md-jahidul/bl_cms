@@ -43,29 +43,29 @@
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
-                                
-                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">
-                                    <label for="desc_en">Description (English)</label>
-                                    <textarea type="text" name="desc_en" rows="5"
-                                            class="form-control summernote_editor"
-                                            placeholder="Enter page description in English"
-                                    ></textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('desc_bn'))
-                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">
-                                    <label for="desc_bn">Description (Bangla)</label>
-                                    <textarea type="text" name="desc_bn" rows="5"
-                                            class="form-control summernote_editor"
-                                            placeholder="Enter page description in Bangla"
-                                    ></textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('desc_bn'))
-                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>
-                                    @endif
-                                </div>
+
+{{--                                <div class="form-group col-md-6 {{ $errors->has('desc_en') ? ' error' : '' }}">--}}
+{{--                                    <label for="desc_en">Description (English)</label>--}}
+{{--                                    <textarea type="text" name="desc_en" rows="5"--}}
+{{--                                            class="form-control summernote_editor"--}}
+{{--                                            placeholder="Enter page description in English"--}}
+{{--                                    ></textarea>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('desc_bn'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group col-md-6 {{ $errors->has('desc_bn') ? ' error' : '' }}">--}}
+{{--                                    <label for="desc_bn">Description (Bangla)</label>--}}
+{{--                                    <textarea type="text" name="desc_bn" rows="5"--}}
+{{--                                            class="form-control summernote_editor"--}}
+{{--                                            placeholder="Enter page description in Bangla"--}}
+{{--                                    ></textarea>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('desc_bn'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('desc_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 @if($parent_id != 0)
 {{--                                    <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">--}}
@@ -76,48 +76,6 @@
 {{--                                            <div class="help-block">  {{ $errors->first('url') }}</div>--}}
 {{--                                        @endif--}}
 {{--                                    </div>--}}
-
-                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
-                                        <label for="url_slug_en" class="required">Url Slug EN</label>
-                                        <input type="text" name="url_slug_en"  class="form-control" placeholder="Enter Url Slug EN">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url_slug_en'))
-                                            <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                        <label for="url" class="required priyojonLanding">Url Slug BN</label>
-                                        <input type="text" name="url_slug_bn"  class="form-control" placeholder="Enter Url Slug BN">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url_slug_bn'))
-                                            <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">
-                                        <label for="alias">Alias</label>
-                                        <input type="text" name="alias" required class="form-control" placeholder="Enter alias">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('alias'))
-                                            <div class="help-block">  {{ $errors->first('alias') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Page Header</label>
-                                        <textarea class="form-control" name="page_header" id="" cols="30" rows="4"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Page Header BN</label>
-                                        <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Schema Markup</label>
-                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4"></textarea>
-                                    </div>
 
                                     <div class="col-md-6">
                                         <label></label>

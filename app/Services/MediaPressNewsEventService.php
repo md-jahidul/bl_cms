@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AlFaqRepository;
 use App\Repositories\MediaPressNewsEventRepository;
 use App\Traits\CrudTrait;
@@ -59,8 +60,43 @@ class MediaPressNewsEventService
         unset($data['file']);
         $data['created_by'] = Auth::id();
         $data['reference_type'] = $referenceType;
-        $this->save($data);
+        $blog = $this->save($data);
+
+        $this->_saveSearchData($blog);
         return new Response("Item has been successfully created");
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        // URL make
+        if ($product->reference_type == "blog"){
+            $featureBaseUrlEn = $feature['blog_en'];
+            $featureBaseUrlBn = $feature['blog_bn'];
+        } else {
+            $featureBaseUrlEn = $feature['csr_en'];
+            $featureBaseUrlBn = $feature['csr_bn'];
+        }
+
+        $urlEn = $featureBaseUrlEn . "/" . $product->url_slug_en;
+        $urlBn = $featureBaseUrlBn . "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => $product->reference_type,
+            'page_title_en' => $product->title_en,
+            'page_title_bn' => $product->title_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
     }
 
     /**
@@ -85,6 +121,7 @@ class MediaPressNewsEventService
         $data['show_in_home'] = (isset($data['show_in_home'])) ? 1 : 0;
         $data['updated_by'] = Auth::id();
         $mediaPNE->update($data);
+        $this->_saveSearchData($mediaPNE);
         return Response('Update successfully!');
     }
 
@@ -104,6 +141,19 @@ class MediaPressNewsEventService
         $mediaPNE = $this->findOne($id);
         $this->deleteFile($mediaPNE->thumbnail_image);
         $mediaPNE->delete();
+
+        $mediaPNE->searchableFeature()->delete();
         return Response('Item has been successfully deleted');
+    }
+
+    public function searchDataSync()
+    {
+        $products = $this->findAll();
+        foreach ($products as $product){
+            if ($product->status && $product->reference_type == "blog") {
+                $this->_saveSearchData($product);
+            }
+        }
+        return Response('Blog post search data sync successfully !');
     }
 }

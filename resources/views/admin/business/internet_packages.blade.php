@@ -5,6 +5,9 @@
 <a href="{{ url('business-internet-create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
     Add Package
 </a>
+<a href="{{ url('business-internet/search-data-sync') }}" class="btn btn-blue-grey  round btn-glow px-2"><i class="la la-refresh"></i>
+    Sync Search
+</a>
 @endsection
 @section('content')
 <section>
@@ -28,7 +31,7 @@
                                     <input type="file" class="dropify" name="package_file" data-height="80"
                                            data-allowed-file-extensions='["xlsx", "xls"]' required/>
                                 </div>
-                                
+
                                 <div class="form-group text-center">
                                     <button class="btn btn-info" type="submit">Upload</button>
                                 </div>
@@ -62,8 +65,8 @@
 
 <script>
 $(function () {
-    
-    
+
+
             //success and error msg
 <?php
 if (Session::has('sussess')) {
@@ -87,7 +90,7 @@ if (Session::has('error')) {
             });
 
 <?php } ?>
-    
+
     $('.dropify').dropify({
         messages: {
             'default': 'Browse for an Excel File to upload',

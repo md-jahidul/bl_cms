@@ -12,4 +12,9 @@ class MediaPressNewsEvent extends Model
     {
         return $this->belongsTo(MediaNewsCategory::class,'media_news_category_id');
     }
+
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

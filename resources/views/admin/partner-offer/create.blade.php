@@ -260,6 +260,29 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-4 {{ $errors->has('tag_en') ? ' error' : '' }}">
+                                <label for="alt_text">Search Special Keyword En</label>
+                                <textarea name="tag_en" id="tag_en" class="form-control" rows="4"
+                                          placeholder="Enter keywords en"
+                                >{{ isset($searchTag->tag_en) ? $searchTag->tag_en : '' }}</textarea>
+                                <small class="warning"><strong>Example: Internet Packs, Tier Based Tenure, Eligible Customers, Point Status</strong></small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('tag_en'))
+                                    <div class="help-block">{{ $errors->first('tag_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('tag_bn') ? ' error' : '' }}">
+                                <label for="alt_text">Search Special Keyword Bn</label>
+                                <textarea type="text" name="tag_bn" id="alt_text" class="form-control" rows="4"
+                                          placeholder="Enter keywords bn">{{ isset($searchTag->tag_bn) ? $searchTag->tag_bn : '' }}</textarea>
+                                <small class="warning"><strong>Example: পয়েন্ট স্ট্যাটাস, টিয়ার সিস্টেম, অরেঞ্জ ক্লাব এর সদস্য</strong></small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('tag_bn'))
+                                    <div class="help-block">{{ $errors->first('tag_bn') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{ isset($product->page_header) ? $product->page_header : null }}</textarea>
@@ -286,7 +309,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label> URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ old("url_slug") ? old("url_slug") : '' }}"
+                                <input type="text" class="form-control slug-convert" value="{{ old("url_slug") ? old("url_slug") : '' }}"
                                        name="url_slug" placeholder="URL">
                                 <div class="help-block"></div>
                                 <small class="text-info">
@@ -297,7 +320,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                 <label> URL Bangla (url slug) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{ old("url_slug_bn") ? old("url_slug_bn") : '' }}"
                                        name="url_slug_bn" placeholder="URL">
@@ -319,7 +342,7 @@
 {{--                                </div>--}}
 {{--                            </div>--}}
 
-                            <div class="col-md-4 pr-0 pt-1">
+                            <div class="col-md-4 pr-0">
                                 <div class="form-group">
                                     <label for="" class="mr-1">Home Show:</label>
                                     <input type="checkbox" name="show_in_home" value="1">

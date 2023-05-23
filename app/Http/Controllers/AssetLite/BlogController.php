@@ -25,9 +25,9 @@ class BlogController extends Controller
      */
     private $mediaPNE;
 
-    protected const LATEST_NEWS = "latest_news";
-    protected const FEATURED_TOPICS = "featured_topics";
-    protected const NEWS_ARCHIVE = "news_archive";
+//    protected const LATEST_NEWS = "latest_news";
+//    protected const FEATURED_TOPICS = "featured_topics";
+//    protected const NEWS_ARCHIVE = "news_archive";
     protected const REFERENCE_TYPE = "blog";
     /**
      * @var MediaBannerImageService
@@ -132,5 +132,12 @@ class BlogController extends Controller
     {
         $this->mediaPNE->deletePNE($id);
         return url('blog-post');
+    }
+
+    public function searchDataSync()
+    {
+        $response = $this->mediaPNE->searchDataSync();
+        Session::flash('message', $response->getContent());
+        return redirect('blog-post');
     }
 }

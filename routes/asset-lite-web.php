@@ -649,6 +649,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\BusinessInternetController@packageStatusChange');
     Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
+    Route::get('business-internet/search-data-sync', 'AssetLite\BusinessInternetController@searchDataSync');
+
+
 
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
@@ -1022,6 +1025,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // App & Service Product =========================================================
     Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
     Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
+    Route::get('app-service/search-data-sync', 'AssetLite\AppServiceProductController@searchDataSync')
+    ->name('app-service-search-sync');
 
     Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 
@@ -1428,6 +1433,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Blogs Details
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
+
+    // Blog Search Data Sync
+    Route::get('blog-post/search-data-sync', 'AssetLite\BlogController@searchDataSync');
+
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
     Route::get('blog-categories/destroy/{id}', 'AssetLite\BlogCategoryController@destroy');
     # Blogs Components
