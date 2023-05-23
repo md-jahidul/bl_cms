@@ -11,4 +11,9 @@ class RoamingOtherOffer extends Model
      * @var string
      */
     protected $table = 'roaming_other_offer';
+
+    public function searchableFeature()
+    {
+        return $this->morphOne(SearchableData::class, 'featureable');
+    }
 }

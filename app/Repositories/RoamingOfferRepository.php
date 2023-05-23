@@ -124,9 +124,7 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->status = $request->status;
             $offer->save();
 
-            $response = [
-                'success' => 1,
-            ];
+            return $offer;
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,

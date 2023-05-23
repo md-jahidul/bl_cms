@@ -25,7 +25,6 @@ class RoamingCategoryRepository extends BaseRepository {
     }
 
     public function updateCategory($webPath, $mobilePath, $request) {
-        try {
             $category = $this->model->findOrFail($request->cat_id);
 
             $category->name_en = $request->name_en;
@@ -53,17 +52,7 @@ class RoamingCategoryRepository extends BaseRepository {
             $category->updated_by = Auth::id();
 
             $category->save();
-
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
+            return $category;
     }
 
 
