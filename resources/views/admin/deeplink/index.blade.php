@@ -39,6 +39,7 @@
                                 <option value="content">Content</option>
                                 <option value="commerce">Commerce</option>
                                 <option value="ott">OTT</option>
+                                <option value="connect">Connect</option>
                             </select>
                         </div>
 {{--                        <div class="form-group">--}}
