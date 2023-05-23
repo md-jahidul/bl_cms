@@ -5,8 +5,11 @@
     <li class="breadcrumb-item active">Partner List</li>
 @endsection
 @section('action')
-    <a href="{{ route('campaign-offers.list') }}" class="btn btn-warning  round btn-glow px-2"><i class="la la-bullhorn"></i>
-        Campaign
+{{--    <a href="{{ route('campaign-offers.list') }}" class="btn btn-warning  round btn-glow px-2"><i class="la la-bullhorn"></i>--}}
+{{--        Campaign--}}
+{{--    </a>--}}
+    <a href="{{ url('partner-offer/search-data-sync') }}" class="btn btn-blue-grey  round btn-glow px-2"><i class="la la-refresh"></i>
+        Sync Search
     </a>
 
     <a href="{{ route('partner-offer-home') }}" class="btn btn-instagram  round btn-glow px-2"><i class="la la-list"></i>
