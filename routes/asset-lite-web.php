@@ -506,10 +506,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
 
-
+    // Popular Search
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange');
     Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
+
+    // Single Search Page
+    Route::resource('search-single-page', 'AssetLite\SearchController');
+    Route::get('search-single-page/destroy/{id}', 'AssetLite\SearchController@destroy');
 
     // Product core ============================================
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
