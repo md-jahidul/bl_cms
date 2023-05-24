@@ -113,7 +113,7 @@
                             <div class="form-group col-md-6 {{ $errors->has('banner') ? ' error' : '' }}">
                                 <label for="banner">Banner</label>
                                 <div class="custom-file">
-                                    <input type="file" name="banner" class="custom-file-input dropify" data-default-file="{{ asset($internetGiftContent->banner) }}"
+                                    <input type="file" name="banner" class="custom-file-input dropify" @if($internetGiftContent->banner) data-default-file="{{ asset($internetGiftContent->banner) }}" @endif
                                             data-height="80">
                                 </div>
                                 <div class="help-block"></div>
