@@ -3,178 +3,234 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\SearchableDataRepository;
 use App\Services\AdTechService;
 use App\Services\SearchService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Session;
 
 
-class SearchController extends Controller {
+class SearchController extends Controller
+{
 
     private $searchService;
     private $adTechService;
+    /**
+     * @var SearchableDataRepository
+     */
+    private $searchableDataRepository;
 
     /**
      * SearchController constructor.
-     * @param EasyPaymentCardService $searchService
+     * @param SearchService $searchService
      */
-    public function __construct(SearchService $searchService, AdTechService $adTechService) {
+    public function __construct(
+        SearchService $searchService,
+        SearchableDataRepository $searchableDataRepository,
+        AdTechService $adTechService
+    ) {
         $this->searchService = $searchService;
+        $this->searchableDataRepository = $searchableDataRepository;
         $this->adTechService = $adTechService;
     }
 
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @param $type
-     * @return Factory|View
+     * @return Application|Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-    public function index() {
-        $settings = $this->searchService->getSettingData();
-        $popular = $this->searchService->getPopularSearch();
+    public function index()
+    {
+        $pages = $this->searchableDataRepository->findByProperties(['type' => "single-search-page"]);
         $adTech = $this->adTechService->getAdTechByRefType('search_modal');
-        return view('admin.search.index', compact('settings', 'popular', 'adTech'));
+        return view('admin.search.index', compact('adTech', 'pages'));
     }
 
     /**
-     * Update search setting limit
-     * 
+     * Single search create form
+     *
+     * @param NO
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 11/03/2020
+     */
+    public function create()
+    {
+        return view('admin.search.create-edit');
+    }
+
+    /**
+     * Save Single Search Page
+     *
      * @param Request $request
-     * @return Factory|View
+     * @return Application|Redirector|RedirectResponse
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-    public function saveLimit(Request $request) {
-        $limitChange = $this->searchService->updateSearchLimit($request);
-        return $limitChange;
+    public function store(Request $request)
+    {
+        $response = $this->searchService->storeSearchPage($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect("search-single-page");
     }
 
     /**
-     * Popular search create form
-     * 
+     * Single search edit form
+     *
      * @param NO
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-    public function popularSearchCreate() {
-        return view('admin.search.create');
+    public function edit($id)
+    {
+        $searchSinglePage = $this->searchableDataRepository->findOne($id);
+        return view('admin.search.create-edit', compact('searchSinglePage'));
     }
 
     /**
-     * save Popular search
-     * 
+     * Update Single Search Page
+     *
      * @param Request $request
-     * @return Redirect
+     * @return Application|Redirector|RedirectResponse
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-    public function popularSearchSave(Request $request) {
-
-
-        $response = $this->searchService->savePopularSearch($request);
-
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Keyword is saved!');
-        } else {
-            Session::flash('error', 'Keyword saving process failed!');
-        }
-
-        return redirect('/popular-search');
+    public function update(Request $request, $id)
+    {
+        $response = $this->searchService->updateSearchPage($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect("search-single-page");
     }
 
-    /**
-     * Popular search edit form
-     * 
-     * @param NO
-     * @return Factory|View
-     * @Bulbul Mahmud Nito || 12/03/2020
-     */
-    public function popularSearchEdit($kwId) {
-        $popularSearch = $this->searchService->popularSearchById($kwId);
-        return view('admin.search.edit', compact('popularSearch'));
+    public function destroy($id)
+    {
+        $this->searchService->deleteSingleSearchPage($id);
+        return url('search-single-page');
     }
 
-    /**
-     * Popular search update
-     * 
-     * @param NO
-     * @return Factory|View
-     * @Bulbul Mahmud Nito || 12/03/2020
-     */
-    public function popularSearchUpdate(Request $request) {
-        $response = $this->searchService->updatePopularSearch($request);
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Keyword is updated!');
-        } else {
-            Session::flash('error', 'Keyword updating process failed!');
-        }
+//    /**
+//     * save Popular search
+//     *
+//     * @param Request $request
+//     * @return Application|RedirectResponse|Redirector
+//     * @Bulbul Mahmud Nito || 11/03/2020
+//     */
+//    public function popularSearchSave(Request $request)
+//    {
+//        $response = $this->searchService->savePopularSearch($request);
+//        if ($response['success'] == 1) {
+//            Session::flash('sussess', 'Keyword is saved!');
+//        } else {
+//            Session::flash('error', 'Keyword saving process failed!');
+//        }
+//        return redirect('/popular-search');
+//    }
 
-        return redirect('/popular-search');
-    }
-    
-     /**
-     * Keyword Sorting Change.
-     * 
-     * @param Request $request
-     * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito || 20/03/2020
-     */
-    public function popularSortChange(Request $request) {
-        $sortChange = $this->searchService->changeKeywordSort($request);
-        return $sortChange;
-    }
+//    /**
+//     * Popular search edit form
+//     *
+//     * @param NO
+//     * @return Factory|View
+//     * @Bulbul Mahmud Nito || 12/03/2020
+//     */
+//    public function popularSearchEdit($kwId)
+//    {
+//        $popularSearch = $this->searchService->popularSearchById($kwId);
+//        $products = $this->searchService->offerWiseProducts($popularSearch->type);
+//        return view('admin.search.edit', compact('popularSearch', 'products'));
+//    }
 
-    /**
-     * delete Popular search
-     * 
-     * @param $kwId
-     * @return Redirect
-     * @Bulbul Mahmud Nito || 11/03/2020
-     */
-    public function deletePopularSearch($kwId) {
-        $response = $this->searchService->deletePopularSearch($kwId);
+//    /**
+//     * Popular search update
+//     *
+//     * @param NO
+//     * @return Factory|View
+//     * @Bulbul Mahmud Nito || 12/03/2020
+//     */
+//    public function popularSearchUpdate(Request $request)
+//    {
+//        $response = $this->searchService->updatePopularSearch($request);
+//        if ($response['success'] == 1) {
+//            Session::flash('sussess', 'Keyword is updated!');
+//        } else {
+//            Session::flash('error', 'Keyword updating process failed!');
+//        }
+//
+//        return redirect('/popular-search');
+//    }
 
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Keyword is deleted!');
-        } else {
-            Session::flash('error', 'Keyword deleting process failed!');
-        }
+//    /**
+//     * Keyword Sorting Change.
+//     *
+//     * @param Request $request
+//     * @return JsonResponse
+//     * @Dev Bulbul Mahmud Nito || 20/03/2020
+//     */
+//    public function popularSortChange(Request $request)
+//    {
+//        $sortChange = $this->searchService->changeKeywordSort($request);
+//        return $sortChange;
+//    }
 
-        return redirect('/popular-search');
-    }
+//    /**
+//     * delete Popular search
+//     *
+//     * @param $kwId
+//     * @return Redirect
+//     * @Bulbul Mahmud Nito || 11/03/2020
+//     */
+//    public function deletePopularSearch($kwId)
+//    {
+//        $response = $this->searchService->deletePopularSearch($kwId);
+//
+//        if ($response['success'] == 1) {
+//            Session::flash('sussess', 'Keyword is deleted!');
+//        } else {
+//            Session::flash('error', 'Keyword deleting process failed!');
+//        }
+//
+//        return redirect('/popular-search');
+//    }
 
-    /**
-     * Get product list by type
-     * 
-     * @param NO
-     * @return $response
-     * @Bulbul Mahmud Nito || 11/03/2020
-     */
-    public function getProductList(Request $request) {
-        $products = $this->searchService->getProducts($request);
-        return $products;
-    }
+//    /**
+//     * Get product list by type
+//     *
+//     * @param NO
+//     * @return $response
+//     * @Bulbul Mahmud Nito || 11/03/2020
+//     */
+//    public function getProductList(Request $request)
+//    {
+//        $products = $this->searchService->getProducts($request);
+//        return $products;
+//    }
 
-    /**
-     * Change status of popular search
-     * 
-     * @param $kwId
-     * @return $response
-     * @Bulbul Mahmud Nito || 12/03/2020
-     */
-    public function popularSearchStatus($kwId) {
-        $products = $this->searchService->popularSearchStatusChange($kwId);
-        return $products;
-    }
+//    /**
+//     * Change status of popular search
+//     *
+//     * @param $kwId
+//     * @return $response
+//     * @Bulbul Mahmud Nito || 12/03/2020
+//     */
+//    public function popularSearchStatus($kwId)
+//    {
+//        $products = $this->searchService->popularSearchStatusChange($kwId);
+//        return $products;
+//    }
 
     public function adTechStore(Request $request)
     {
         $request->validate([
             'status' => 'required',
         ]);
-        
+
         $response = $this->adTechService->storeAdTech($request->all(), 'search_modal');
         Session::flash('message', $response->getContent());
         return redirect('popular-search');
     }
-
 }
