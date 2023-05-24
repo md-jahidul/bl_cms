@@ -103,10 +103,9 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6 {{ $errors->has('banner') ? ' error' : '' }}">
-                                        <label for="banner" class="required">Banner</label>
+                                        <label for="banner" class="">Banner</label>
                                         <div class="custom-file">
-                                            <input type="file" name="banner" class="custom-file-input dropify"
-                                                    required data-validation-required-message="Banner field is required" data-height="80">
+                                            <input type="file" name="banner" class="custom-file-input dropify" data-height="80">
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('banner'))
