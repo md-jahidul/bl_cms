@@ -23,7 +23,8 @@
                             <th>Icon</th>
                             <th>Image</th>
                             <th width="30%">Title</th>
-                            <th width="10%">Visibility</th>
+                            <th width="15%">Slug</th>
+                            <th width="5%">Visibility</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $giftContent->name_en }}</td>
+                                <td>{{ $giftContent->slug }}</td>
                                 <td>
                                     @if($giftContent->visibilityStatus())
                                         <span class="badge badge-success">Visible</span>

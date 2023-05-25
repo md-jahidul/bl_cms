@@ -78,25 +78,6 @@
                                 </div>
                             </div>
 
-                            <div id="link" class="form-group col-md-6">
-                                <label for="slug" class="required">Slug</label>
-                                <div class='input-group'>
-                                    <input type='text' class="form-control" name="slug" id="slug"
-                                        value="{{old('slug')?old('slug'):$internetGiftContent->slug}}"
-                                        data-validation-required-message="Slug is required"
-                                        placeholder="Please enter Slug" />
-                                </div>
-                                <div class="help-block"></div>
-                                <small class="text-info">
-                                    <strong>i.e:</strong> sample-name (no spaces)<br>
-                                </small>
-                                @if ($errors->has('slug'))
-                                    <div class="help-block">
-                                        <small class="text-danger"> {{ $errors->first('slug') }} </small>
-                                    </div>
-                                @endif
-                            </div>
-
                             <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
                                 <label for="icon">Icon</label>
                                 <div class="custom-file">

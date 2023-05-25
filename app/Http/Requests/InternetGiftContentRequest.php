@@ -25,7 +25,7 @@ class InternetGiftContentRequest extends FormRequest
     {  
         $contentId = $this->route()->parameters()['internet_gift_content'] ?? '';
         return [
-            'slug' => 'required|max:200|unique:internet_gift_contents,slug,' . $contentId,
+            // 'slug' => 'required|max:200|unique:internet_gift_contents,slug,' . $contentId,
             'name_en' => 'required',
             'name_bn' => 'required',
         ];
