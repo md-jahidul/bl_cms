@@ -51,7 +51,15 @@ class BaseURLLocalization
 
             // Roaming Offer
             "roaming_en" => "roaming",
-            "roaming_bn" => "roaming"
+            "roaming_bn" => "roaming",
+
+            // Banglalink 4G
+            "bl_4g_en" => "banglalink-4g",
+            "bl_4g_bn" => "banglalink-4g",
+
+            // Banglalink 4G
+            "ethics-compliance_en" => "ethics-compliance",
+            "ethics-compliance_bn" => "ethics-compliance"
         ];
     }
 }

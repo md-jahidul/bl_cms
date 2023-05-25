@@ -11,4 +11,9 @@ class EthicsPageInfo extends Model
      * @var string
      */
     protected $table = 'ethics_page_info';
+
+    public function searchableFeature()
+    {
+        return $this->morphOne(SearchableData::class, 'featureable');
+    }
 }
