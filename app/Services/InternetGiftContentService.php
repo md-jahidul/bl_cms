@@ -44,12 +44,12 @@ class InternetGiftContentService
                     $giftContent['banner'] = 'storage/' . $giftContent['banner']->store('internet-gift-content');
                 }
                 $giftContent['display_order'] = $i;
-                $giftContent['slug'] = str_replace(" ", "-", $giftContent['slug']);
+                $giftContent['slug'] = str_replace(" ", "_", strtolower($giftContent['name_en']));
 
                 $giftContent = $this->save($giftContent);
 
             });
-            Redis::del('internet-gift-content');
+            Redis::del('internet-gift-contents');
             return true;
 
         } catch (\Exception $e) {
@@ -63,7 +63,7 @@ class InternetGiftContentService
     public function tableSortable($data)
     {
         $this->internetGiftContentRepository->internetGiftContentTableSort($data);
-        Redis::del('internet-gift-content');
+        Redis::del('internet-gift-contents');
         return new Response('Sequence has been successfully update');
     }
 
@@ -80,12 +80,12 @@ class InternetGiftContentService
                     $data['banner'] = 'storage/' . $data['banner']->store('internet-gift-content');
                     $this->deleteFile($giftContent->banner);
                 }
-                $data['slug'] = str_replace(" ", "-", $data['slug']);
+                // $data['slug'] = str_replace(" ", "-", strtolower($data['slug']));
 
                 
                 $giftContent->update($data);
             });
-            Redis::del('internet-gift-content');
+            Redis::del('internet-gift-contents');
             return true;
         } catch (\Exception $e) {
             Log::error('Content store failed' . $e->getMessage());
@@ -110,7 +110,7 @@ class InternetGiftContentService
         return Response('Content has been successfully deleted');
     }
 
-    public function delSliderRedisCache($redisKey = 'internet-gift-content')
+    public function delSliderRedisCache($redisKey = 'internet-gift-contents')
     {
         Redis::del($redisKey);
     }
