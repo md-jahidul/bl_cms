@@ -20,8 +20,6 @@ class EthicsRepository extends BaseRepository {
 
 
     public function updatePageInfo($webPath, $mobilePath, $request) {
-        try {
-
             $page = $this->model->findOrFail($request->page_id);
             $page->page_name_en = $request->page_name_en;
             $page->page_name_bn = $request->page_name_bn;
@@ -34,17 +32,7 @@ class EthicsRepository extends BaseRepository {
             $page->page_header_bn = $request->page_header_bn;
             $page->schema_markup = $request->schema_markup;
             $page->save();
-
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
+            return $page;
     }
 
 

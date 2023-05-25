@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\EthicsRepository;
 use App\Repositories\EthicsFilesRepository;
 use App\Traits\CrudTrait;
@@ -47,7 +48,7 @@ class EthicsService {
 
     /**
      * update ethics page info
-     * @return Response
+     * @return array
      */
     public function updatePageInfo($request) {
         try {
@@ -81,23 +82,18 @@ class EthicsService {
             }
 
             //save data in database
-            $this->pageRepo->updatePageInfo($webPath, $mobilePath, $request);
+            $ethicsData = $this->pageRepo->updatePageInfo($webPath, $mobilePath, $request);
 
-
-
-            $response = [
+            $this->_saveSearchData($ethicsData);
+            return [
                 'success' => 1,
                 'message' => "Page info updated"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
@@ -112,7 +108,7 @@ class EthicsService {
 
     /**
      * update ethics page info
-     * @return Response
+     * @return array
      */
     public function saveFile($request) {
         try {
@@ -147,25 +143,44 @@ class EthicsService {
                 }
             }
 
-
             //save data in database
-            $this->fileRepo->saveFileData($filePath,$imgPath,$mobImgPath, $request);
+            $fileData = $this->fileRepo->saveFileData($filePath,$imgPath,$mobImgPath, $request);
 
+            $this->_saveSearchData($fileData, 'file_info');
 
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Page info updated"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product, $reqType = null)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['ethics-compliance_en'];
+        $urlBn = $feature['ethics-compliance_bn'];
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'ethics-compliance',
+            'page_title_en' => $reqType == "file_info" ? $product['file_name_en'] : $product['page_name_en'],
+            'page_title_bn' => $reqType == "file_info" ? $product['file_name_bn'] : $product['page_name_bn'],
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product['status'] ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 

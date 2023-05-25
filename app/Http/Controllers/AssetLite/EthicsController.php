@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Services\EthicsService;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class EthicsController extends Controller {
 
