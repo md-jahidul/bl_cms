@@ -33,6 +33,8 @@ class GenericSliderService
     protected $commerceComponentRepository;
     protected $commerceComponentService;
     protected $nonBlOfferService;
+
+    protected $lmsHomeComponentService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
@@ -42,7 +44,9 @@ class GenericSliderService
         SliderRepository $sliderRepository,
         MyBlCommerceComponentRepository $commerceComponentRepository,
         MyBlCommerceComponentService  $commerceComponentService,
-        NonBlOfferService $nonBlOfferService
+        NonBlOfferService $nonBlOfferService,
+        LmsHomeComponentService $lmsHomeComponentService
+
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
@@ -53,6 +57,7 @@ class GenericSliderService
         $this->commerceComponentRepository = $commerceComponentRepository;
         $this->commerceComponentService = $commerceComponentService;
         $this->nonBlOfferService = $nonBlOfferService;
+        $this->lmsHomeComponentService = $lmsHomeComponentService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -95,6 +100,11 @@ class GenericSliderService
             elseif ($data['component_for'] == 'non_bl_offer') {
                 $this->nonBlOfferService->save($homeComponentData);
                 Redis::del('non_bl_offer');
+            }
+            elseif ($data['component_for'] == 'lms') {
+                $this->lmsHomeComponentService->save($homeComponentData);
+                Redis::del('lms_component_prepaid');
+                Redis::del('lms_component_postpaid');
             }
 
             DB::commit();
@@ -145,6 +155,11 @@ class GenericSliderService
                 $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $nonBlComponent->update($homeComponentData);
                 Redis::del('non_bl_offer');
+            }  elseif ($slider['component_for'] == 'lms') {
+                $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $lmsComponent->update($homeComponentData);
+                Redis::del('lms_component_prepaid');
+                Redis::del('lms_component_postpaid');
             }
 
             if (isset($data['icon']) && $data['icon'] != 'not-updated' && $data['icon'] != 'removed') {
@@ -218,6 +233,12 @@ class GenericSliderService
 
             return $contentSecondarySliderCount + $nonBlofferCount + 1;
         }
+        elseif ($type == 'lms')
+        {
+            $lmsHomeComponentCount = $this->lmsHomeComponentService->findAll()->count();
+
+            return $lmsHomeComponentCount + 1;
+        }
 
         return 1;
     }
@@ -249,6 +270,12 @@ class GenericSliderService
                 $this->nonBlOfferService->delete($nonBlOffer);
             }
 
+            else if ($componentFor == 'lms') {
+                $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
+                Redis::del('lms_component_prepaid');
+                Redis::del('lms_component_postpaid');
+            }
             $slider->delete();
 
             return [
