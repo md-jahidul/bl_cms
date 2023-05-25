@@ -32,10 +32,16 @@
                             <tr data-index="{{ $giftContent->id }}" data-position="{{ $giftContent->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $giftContent->id }}</td>
-                                <td><img class="" src="{{ asset($giftContent->icon) }}" alt="content Icon"
-                                         height="100" width="100"/></td>
-                                <td><img class="" src="{{ asset($giftContent->banner) }}" alt="Content Banner"
-                                         height="100" width="200"/></td>
+                                <td>
+                                    @if($giftContent->icon) 
+                                        <img class="" src="{{ asset($giftContent->icon) }}" alt="content Icon" height="100" width="100"/>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($giftContent->banner) 
+                                        <img class="" src="{{ asset($giftContent->banner) }}" alt="Content Banner" height="100" width="200"/>
+                                    @endif
+                                </td>
                                 <td>{{ $giftContent->name_en }}</td>
                                 <td>
                                     @if($giftContent->visibilityStatus())
