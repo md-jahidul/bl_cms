@@ -13,4 +13,9 @@ class RoamingCategory extends Model
      * @var string
      */
     protected $table = 'roaming_cagegories';
+
+    public function searchableFeature()
+    {
+        return $this->morphOne(SearchableData::class, 'featureable');
+    }
 }

@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AlFaqRepository;
 use App\Repositories\FourGCampaignRepository;
 use App\Repositories\FourGLandingPageRepository;
@@ -66,6 +67,8 @@ class FourGLandingPageService
         $component = $this->findOne($id);
         $data['updated_by'] = Auth::id();
         $component->update($data);
+
+        $this->_saveSearchData($component);
         return Response('Component has been successfully updated');
     }
 
@@ -124,5 +127,27 @@ class FourGLandingPageService
         return Response('Banner Image update successfully!!');
     }
 
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['bl_4g_en'];
+        $urlBn = $feature['bl_4g_bn'];
 
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'banglalink-4g',
+            'page_title_en' => $product->title_en,
+            'page_title_bn' => $product->title_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
+    }
 }

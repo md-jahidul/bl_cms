@@ -350,6 +350,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
         ->name('partner_offer_update');
+    Route::get('partner-offer/search-data-sync', 'AssetLite\PartnerOfferController@syncSearchData');
 
     #Using this type of route because of this route is overriding by edit route
     Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/destroy/destroy', 'AssetLite\PartnerOfferController@destroy');
@@ -507,10 +508,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
 
-
+    // Popular Search
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange');
     Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
+
+    // Single Search Page
+    Route::resource('search-single-page', 'AssetLite\SearchController');
+    Route::get('search-single-page/destroy/{id}', 'AssetLite\SearchController@destroy');
 
     // Product core ============================================
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');

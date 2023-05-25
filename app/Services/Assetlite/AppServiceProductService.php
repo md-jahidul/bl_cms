@@ -100,8 +100,8 @@ class AppServiceProductService
     {
         $feature = BaseURLLocalization::featureBaseUrl();
         // URL make
-        $urlEn = $feature['app_service_en'] . $product->appServiceTab->url_slug . '/' . $product->url_slug;
-        $urlBn = $feature['app_service_bn'] . $product->appServiceTab->url_slug_bn . '/' . $product->url_slug_bn;
+        $urlEn = $feature['app_service_en'] . "/" . $product->appServiceTab->url_slug . '/' . $product->url_slug;
+        $urlBn = $feature['app_service_bn'] . "/" . $product->appServiceTab->url_slug_bn . '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,

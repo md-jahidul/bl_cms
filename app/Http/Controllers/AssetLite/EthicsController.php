@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Services\EthicsService;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class EthicsController extends Controller {
 
@@ -67,7 +67,7 @@ class EthicsController extends Controller {
             'file_name_en' => 'required|unique:ethics_files,file_name_en,' . $request->file_id,
             'file_name_bn' => 'required|unique:ethics_files,file_name_bn,' . $request->file_id,
         ]);
-        
+
         $response = $this->service->saveFile($request);
 
         if ($response['success'] == 1) {
