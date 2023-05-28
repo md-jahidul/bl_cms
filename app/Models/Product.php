@@ -31,6 +31,7 @@ class Product extends Model
             'point',
             'is_recharge',
             'show_in_home',
+            'show_in_e_shop',
             'tag_category_id',
             'sim_category_id',
             'offer_category_id',
