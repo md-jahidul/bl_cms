@@ -49,7 +49,9 @@
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                    <td>{{ $product->name_en }}
+                                        {!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}
+                                        {!! $product->show_in_e_shop == 1 ? '<span class="primary pl-1"><strong> (Show In E-shop)</strong></span>' : '' !!}</td>
                                     <td>{{ $product->product_code }}</td>
                                     <td>{{ $product->product_core['activation_ussd'] }}</td>
                                     <td>{{ $product->offer_category->name_en }} {{ $product->is_four_g_offer == 1 ? "(4G Offer)" : ''}}</td>
