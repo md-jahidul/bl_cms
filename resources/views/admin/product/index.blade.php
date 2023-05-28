@@ -55,6 +55,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $product->name_en }}
                                         {!! $product->status == 0 ? '<span class="danger pl-1"><strong> (Inactive)</strong></span>' : '' !!}
+                                        {!! $product->show_in_e_shop == 1 ? '<span class="primary pl-1"><strong> (Show In E-shop)</strong></span>' : '' !!}
                                         {!! $product->show_in_home == 1 ? '<span class="success pl-1"><strong> (Show In Home)</strong></span>' : '' !!}
                                     </td>
                                     <td>{{ $product->product_code }}</td>
