@@ -25,6 +25,7 @@
                                             >bKash</option>
                                             <option value="101" @if(isset($pgwGateways_info) && $pgwGateways_info->gateway_id == 101) selected @endif>Visa/Master</option>
                                             <option value="301" @if(isset($pgwGateways_info) && $pgwGateways_info->gateway_id == 301) selected @endif>SSL</option>
+                                            <option value="211" @if(isset($pgwGateways_info) && $pgwGateways_info->gateway_id == 211) selected @endif>bKash One Tap</option>
                                         </select>
                                     </div>
                                 </div>
