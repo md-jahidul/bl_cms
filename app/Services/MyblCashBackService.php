@@ -84,6 +84,7 @@ class MyblCashBackService
                 $this->cashBackProductRepo->save($product);
             }
         }
+
         $campaign->update($data);
         return Response('Cash back campaign has been successfully updated');
     }
