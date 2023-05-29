@@ -150,27 +150,24 @@ class BusinessInternetService {
             $bannerMob = "";
             if (!empty($data['banner_photo'])) {
 
-                $data['old_banner'] != "" ? $this->deleteFile($data['old_banner']) : "";
+//                $data['old_banner'] != "" ? $this->deleteFile($data['old_banner']) : "";
                 $bannerWeb = $this->upload($data['banner_photo'], $directoryPath, $photoNameWeb);
             }
 
             if (!empty($data['banner_mobile'])) {
-
                 $data['old_banner_mob'] != "" ? $this->deleteFile($data['old_banner_mob']) : "";
                 $bannerMob = $this->upload($data['banner_mobile'], $directoryPath, $photoNameMob);
             }
 
             //only rename
-            if ($data['old_banner_name'] != $data['banner_name']) {
-
-                if (empty($data['banner_photo'])) {
-                    $bannerWeb = $this->rename($data['old_banner'], $photoNameWeb, $directoryPath);
-                }
-
-                if (empty($data['banner_mobile'])) {
-                    $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
-                }
-            }
+//            if ($data['old_banner_name'] != $data['banner_name']) {
+//                if (empty($data['banner_photo'])) {
+//                    $bannerWeb = $this->rename($data['old_banner'], $photoNameWeb, $directoryPath);
+//                }
+//                if (empty($data['banner_mobile'])) {
+//                    $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
+//                }
+//            }
 
             $businessInternet = $this->internetRepo->saveInternet($bannerWeb, $bannerMob, $data);
             $this->_saveSearchData($businessInternet);
