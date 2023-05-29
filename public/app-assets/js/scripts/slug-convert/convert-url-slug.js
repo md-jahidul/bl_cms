@@ -5,7 +5,7 @@
 
 function convertToSlug(Text)
 {
-    return Text.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '-').replace(/ /g,'-').replace(/\//g,'-');
+    return Text.toLowerCase().replace(/ /g,'-').replace(/\//g,'-');
 }
 
 
