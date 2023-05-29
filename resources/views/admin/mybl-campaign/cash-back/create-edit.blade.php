@@ -47,6 +47,7 @@
                                         <label for="user_type">Campaign For</label>
                                         <div>
                                             <input type="radio" name="user_type" value="all" id="all"
+                                            @if(!isset($campaign)) {{ 'checked' }}@endif
                                             @if( isset($campaign) && $campaign->user_type == "all") {{ 'checked' }} @endif>
                                             <label for="all" class="mr-3 cursor-pointer">All</label>
                                             <input type="radio" name="user_type" value="prepaid"
