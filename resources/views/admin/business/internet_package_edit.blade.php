@@ -292,7 +292,7 @@
                                 <input type="file" class="dropify" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
-                                <input type="hidden" name="old_banner" value="{{$internet->banner_photo}}">
+{{--                                <input type="hidden" name="old_banner" value="{{$internet->banner_photo}}">--}}
 
                                 @if($internet->banner_photo != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_photo }}" alt="Banner Photo" width="100%" />
@@ -314,7 +314,7 @@
                                 <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
-                                <input type="hidden" name="old_banner_mob" value="{{$internet->banner_image_mobile}}">
+{{--                                <input type="hidden" name="old_banner_mob" value="{{$internet->banner_image_mobile}}">--}}
 
                                 @if($internet->banner_image_mobile != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_image_mobile }}" alt="Banner Photo" width="100%" />
@@ -329,38 +329,38 @@
 
                         </div>
 
-                        <div class="col-md-6 col-xs-12 mb-1">
+{{--                        <div class="col-md-6 col-xs-12 mb-1">--}}
 
-                            <label>Banner Photo Name EN</label>
-                            <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">
-                            <input type="text" class="form-control banner_name" name="banner_name" placeholder="Photo Name EN"
-                                   value="{{$internet->banner_name}}">
+{{--                            <label>Banner Photo Name EN</label>--}}
+{{--                            <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">--}}
+{{--                            <input type="text" class="form-control banner_name" name="banner_name" placeholder="Photo Name EN"--}}
+{{--                                   value="{{$internet->banner_name}}">--}}
 
-                            <small class="text-info">
-                                <strong>i.e:</strong> package-banner (no spaces)<br>
-                            </small>
+{{--                            <small class="text-info">--}}
+{{--                                <strong>i.e:</strong> package-banner (no spaces)<br>--}}
+{{--                            </small>--}}
 
-                            @if ($errors->has('banner_name'))
-                                <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
-                            @endif
+{{--                            @if ($errors->has('banner_name'))--}}
+{{--                                <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>--}}
+{{--                            @endif--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="col-md-6 col-xs-12 mb-1">
+{{--                        <div class="col-md-6 col-xs-12 mb-1">--}}
 
-                            <label>Banner Photo Name BN<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" required name="banner_name_bn" placeholder="Photo Name BN"
-                                   value="{{$internet->banner_name_bn}}">
+{{--                            <label>Banner Photo Name BN<span class="text-danger">*</span></label>--}}
+{{--                            <input type="text" class="form-control" required name="banner_name_bn" placeholder="Photo Name BN"--}}
+{{--                                   value="{{$internet->banner_name_bn}}">--}}
 
-                            <small class="text-info">
-                                <strong>i.e:</strong> প্যাকেজ-ব্যনার (no spaces)<br>
-                            </small>
+{{--                            <small class="text-info">--}}
+{{--                                <strong>i.e:</strong> প্যাকেজ-ব্যনার (no spaces)<br>--}}
+{{--                            </small>--}}
 
-                            @if ($errors->has('banner_name_bn'))
-                                <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
-                            @endif
+{{--                            @if ($errors->has('banner_name_bn'))--}}
+{{--                                <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>--}}
+{{--                            @endif--}}
 
-                        </div>
+{{--                        </div>--}}
 
                         <div class="col-md-6 col-xs-12">
 
