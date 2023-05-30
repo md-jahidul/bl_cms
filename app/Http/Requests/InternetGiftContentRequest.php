@@ -23,11 +23,11 @@ class InternetGiftContentRequest extends FormRequest
      */
     public function rules()
     {  
-        $contentId = $this->route()->parameters()['internet_gift_content'] ?? '';
         return [
-            // 'slug' => 'required|max:200|unique:internet_gift_contents,slug,' . $contentId,
             'name_en' => 'required',
             'name_bn' => 'required',
+            'icon'   => 'mimes:jpeg,jpg,png,gif|max:3000',
+            'banner'   => 'mimes:jpeg,jpg,png,gif|max:3000'
         ];
     }
 }
