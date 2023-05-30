@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Edit Content')
-@section('card_name', 'Edit COntent Info')
+@section('card_name', 'Edit Content Info')
 
 @section('action')
     <a href="{{route('internet-gift-content.index')}}" class="btn btn-info btn-glow px-2">
@@ -82,7 +82,7 @@
                                 <label for="icon">Icon</label>
                                 <div class="custom-file">
                                     <input type="file" name="icon" class="custom-file-input dropify" data-default-file="{{ asset($internetGiftContent->icon) }}"
-                                            data-height="80">
+                                            data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
                                 </div>
                                 <div class="help-block"></div>
                                 @if ($errors->has('icon'))
@@ -95,7 +95,7 @@
                                 <label for="banner">Banner</label>
                                 <div class="custom-file">
                                     <input type="file" name="banner" class="custom-file-input dropify" @if($internetGiftContent->banner) data-default-file="{{ asset($internetGiftContent->banner) }}" @endif
-                                            data-height="80">
+                                            data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
                                 </div>
                                 <div class="help-block"></div>
                                 @if ($errors->has('banner'))
@@ -160,10 +160,13 @@
 
             $('.dropify').dropify({
                 messages: {
-                    'default': 'Browse for an Image File to upload',
+                    'default': 'Browse for an Image/Json File to upload',
                     'replace': 'Click to replace',
                     'remove': 'Remove',
-                    'error': 'Choose correct file format'
+                    'error': 'Choose correct Image/Json file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
                 }
             });
         });

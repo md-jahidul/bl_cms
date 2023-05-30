@@ -26,8 +26,6 @@ class InternetGiftContentRequest extends FormRequest
         return [
             'name_en' => 'required',
             'name_bn' => 'required',
-            'icon'   => 'mimes:jpeg,jpg,png,gif|max:3000',
-            'banner'   => 'mimes:jpeg,jpg,png,gif|max:3000'
         ];
     }
 }

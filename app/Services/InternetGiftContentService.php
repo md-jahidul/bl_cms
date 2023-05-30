@@ -37,11 +37,12 @@ class InternetGiftContentService
                 if (!empty($image_data)) {
                     $i = $image_data->display_order + 1;
                 }
+
                 if (request()->hasFile('icon')) {
-                    $giftContent['icon'] = 'storage/' . $giftContent['icon']->store('internet-gift-content');
+                    $giftContent['icon'] = 'storage/' . $giftContent['icon']->storeAs('internet-gift-content', time().'-'.bin2hex(random_bytes(4)).'-'.$giftContent['icon']->getClientOriginalName());
                 }
                 if (request()->hasFile('banner')) {
-                    $giftContent['banner'] = 'storage/' . $giftContent['banner']->store('internet-gift-content');
+                    $giftContent['banner'] = 'storage/' . $giftContent['banner']->storeAs('internet-gift-content', time().'-'.bin2hex(random_bytes(4)).'-'.$giftContent['banner']->getClientOriginalName());
                 }
                 $giftContent['display_order'] = $i;
                 $giftContent['slug'] = str_replace(" ", "_", strtolower($giftContent['name_en']));
@@ -73,11 +74,12 @@ class InternetGiftContentService
             $giftContent = $this->findOne($id);
             DB::transaction(function () use ($data, $id, $giftContent) {
                 if (request()->hasFile('icon')) {
-                    $data['icon'] = 'storage/' . $data['icon']->store('internet-gift-content');
+                    $data['icon'] = 'storage/' . $data['icon']->storeAs('internet-gift-content', time().'-'.bin2hex(random_bytes(4)).'-'.$data['icon']->getClientOriginalName());
                     $this->deleteFile($giftContent->icon);
+
                 }
                 if (request()->hasFile('banner')) {
-                    $data['banner'] = 'storage/' . $data['banner']->store('internet-gift-content');
+                    $data['banner'] = 'storage/' . $data['banner']->storeAs('internet-gift-content', time().'-'.bin2hex(random_bytes(4)).'-'.$data['banner']->getClientOriginalName());
                     $this->deleteFile($giftContent->banner);
                 }
                 // $data['slug'] = str_replace(" ", "-", strtolower($data['slug']));
