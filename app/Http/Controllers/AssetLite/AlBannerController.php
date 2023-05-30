@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AlBannerService;
@@ -9,15 +10,15 @@ use Illuminate\Support\Facades\Session;
 
 class AlBannerController extends Controller
 {
-    
+
     protected $alBannerService;
 
     public function __construct(AlBannerService $alBannerService)
     {
         $this->alBannerService = $alBannerService;
     }
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +53,7 @@ class AlBannerController extends Controller
         $response = $this->alBannerService->alBannerStore($request->all());
         Session::flash('message', $response->getContent());
 
-        if ($request->from_generic == true) 
+        if ($request->from_generic == true)
         {
             return redirect('al-banner');
         }
@@ -95,8 +96,8 @@ class AlBannerController extends Controller
 
         $response = $this->alBannerService->alBannerUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
-        
-        if ($request->from_generic == true) 
+
+        if ($request->from_generic == true)
         {
             return redirect('al-banner');
         }
@@ -107,18 +108,11 @@ class AlBannerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Http\Response|string
      */
     public function destroy($id)
     {
-        // if ($this->alBannerService->delete($id)) {
-        //     $message = "Successfully Deleted";
-        //     $type = 'success';
-        //     $code = 200;
-        // } else {
-        //     $message = "Error! Not Deleted";
-        //     $type = 'error';
-        //     $code = 500;
-        // }
+        $this->alBannerService->delete($id);
+        return url('al-banner');
     }
 }

@@ -32,9 +32,9 @@
                                     <td >{{ $banner->section_type }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("al-banner/$banner->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        {{-- <a href="#" remove="{{ url("al-banner/destroy/$banner->id") }}" class="border-0 btn-sm btn-outline-danger delete delete_btn" data-id="{{ $banner->id }}" title="Delete">
+                                        <a href="#" remove="{{ url("al-banner/destroy/$banner->id") }}" class="border-0 btn-sm btn-outline-danger delete delete_btn" data-id="{{ $banner->id }}" title="Delete">
                                             <i class="la la-trash"></i>
-                                        </a> --}}
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
