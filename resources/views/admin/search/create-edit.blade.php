@@ -63,7 +63,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
                                     <label> URL English <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" value="{{ $searchSinglePage->url_slug_en ?? "" }}" required name="url_slug_en" placeholder="URL">
+                                    <input type="text" class="form-control" value="{{ $searchSinglePage->url_slug_en ?? "" }}" required name="url_slug_en" placeholder="URL">
                                     <small class="text-info">
                                         <strong>i.e:</strong> apps (no spaces and slash)<br>
                                     </small>
@@ -74,7 +74,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                     <label> URL Bangla <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" value="{{ $searchSinglePage->url_slug_bn ?? "" }}" required name="url_slug_bn" placeholder="URL">
+                                    <input type="text" class="form-control" value="{{ $searchSinglePage->url_slug_bn ?? "" }}" required name="url_slug_bn" placeholder="URL">
                                     <small class="text-info">
                                         <strong>i.e:</strong> অ্যাপ (no spaces and slash)<br>
                                     </small>
@@ -87,7 +87,7 @@
                                     <label></label>
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" {{ (isset($searchSinglePage) && $searchSinglePage->status == 1) ? 'checked' : '' }}>
+                                        <input type="radio" name="status" value="1" id="active" {{ (isset($searchSinglePage) && $searchSinglePage->status == 1) ? 'checked' : '' }} {{ $searchSinglePage ?? 'checked'}}>
                                         <label for="active" class="mr-1">Active</label>
 
                                         <input type="radio" name="status" value="0" id="inactive" {{ (isset($searchSinglePage) && $searchSinglePage->status == 0) ? 'checked' : '' }}>
