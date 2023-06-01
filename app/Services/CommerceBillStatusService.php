@@ -40,11 +40,20 @@ class CommerceBillStatusService
         $builder = new CommerceBillStatus();
         $builder = $builder->latest();
 
+        if ($request->from && $request->to) {
+            $datefrom = $request->from . ' 00:00:00';
+            $dateto = $request->to . ' 23:59:59';
+            $builder = $builder->whereBetween('created_at', [$datefrom, $dateto]);
+        }
+
         if ($request->bill_payment_id) {
             $builder = $builder->where('bill_payment_id', $request->bill_payment_id);
         }
 
         $all_items_count = $builder->count();
+
+        if ($length == -1 ) $length = $all_items_count;
+
         $items = $builder->skip($start)->take($length)->get();
 
         $response = [
