@@ -57,7 +57,7 @@
 {{--                                            // Other Details ==============================================--}}
                                         @if(
                                             $product->offer_category->alias == "others" ||
-                                            $product->offer_category->alias == 'packages' ||
+//                                            $product->offer_category->alias == 'packages' ||
                                             $product->offer_category->alias == 'new_sim_offer' ||
                                             $product->offer_category->alias == 'bondho_sim'
                                         )
