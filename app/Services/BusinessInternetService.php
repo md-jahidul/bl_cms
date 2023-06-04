@@ -113,8 +113,8 @@ class BusinessInternetService {
     {
         $feature = BaseURLLocalization::featureBaseUrl();
         // URL make
-        $urlEn = $feature["business_en"] . "internet" . '/' . $product->url_slug;
-        $urlBn = $feature["business_bn"] . "internet" . '/' . $product->url_slug_bn;
+        $urlEn = $feature["business_en"] . "/" . "internet" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "/" . "internet" . '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,
