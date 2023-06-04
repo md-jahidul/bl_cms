@@ -22,8 +22,8 @@ class BaseURLLocalization
             "postpaid_bn" =>  "postpaid",
 
             // App Service
-            "app_service_en" =>  "TAKE_INTERNET_LOAN",
-            "app_service_bn" =>  "BUY_INTERNET" ,
+            "app_service_en" =>  "apps-and-services",
+            "app_service_bn" =>  "apps-and-services" ,
 
             // Business Packages
             "business_en" =>  "business",
