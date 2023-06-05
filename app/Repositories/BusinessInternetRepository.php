@@ -89,9 +89,7 @@ class BusinessInternetRepository extends BaseRepository {
     }
 
     public function saveInternet($bannerWeb, $bannerMob, $request) {
-
-
-
+        $businessInternet =  $this->model;
         $insertdata = array(
             'type' => $request->type,
             'product_code' => $request->product_code,
@@ -139,11 +137,13 @@ class BusinessInternetRepository extends BaseRepository {
 
         if($request->internet_id){
              $insertdata['updated_by'] = Auth::id();
-             $this->model->where('id', $request->internet_id)->update($insertdata);
+            $businessInternet = $this->model->where('id', $request->internet_id)->first();
+            $businessInternet->update($insertdata);
         }else{
             $insertdata['created_by'] = Auth::id();
-            return $this->model->insert($insertdata);
+           $businessInternet = $this->model->create($insertdata);
         }
+        return $businessInternet;
 
     }
 
@@ -246,39 +246,19 @@ class BusinessInternetRepository extends BaseRepository {
         }
     }
 
-    public function statusChange($packageId) {
-        try {
-
-            $card = $this->model->findOrFail($packageId);
-
-            $status = $card->status == 1 ? 0 : 1;
-            $card->status = $status;
-            $card->save();
-
-            $response = [
-                'success' => 1
-            ];
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-            return response()->json($response, 500);
-        }
-    }
-
     public function deletePackage($packageId) {
         try {
             if ($packageId > 0) {
                 $package = $this->model->findOrFail($packageId);
                 $this->deleteFile($package->banner_photo);
                 $package->delete();
+                $package->searchableFeature()->delete();
             } else {
 
                 $allPack = $this->model->get();
                 foreach($allPack as $int){
                     $this->deleteFile($int->banner_photo);
+                    $int->searchableFeature()->delete();
                 }
                 $this->model->truncate();
             }

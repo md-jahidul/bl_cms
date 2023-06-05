@@ -73,7 +73,7 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
                                 <label>Bangla URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" value="{{ $urlSlugBn }}" name="url_slug_bn"
+                                <input type="text" class="form-control" value="{{ $urlSlugBn }}" name="url_slug_bn"
                                        required placeholder="URL bangla">
                                 <div class="help-block"></div>
                                 <small class="text-info">
@@ -106,6 +106,29 @@
                                 <div class="help-block"></div>
                                 @if ($errors->has('page_content_bn'))
                                     <div class="help-block">{{ $errors->first('page_content_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('tag_en') ? ' error' : '' }}">
+                                <label for="alt_text">Search Special Keyword En</label>
+                                <textarea name="tag_en" id="tag_en" class="form-control" rows="4"
+                                          placeholder="Enter keywords en"
+                                >{{ $page->searchableFeature->tag_en ?? '' }}</textarea>
+                                <small class="warning"><strong>Example: Internet Packs, Tier Based Tenure, Eligible Customers, Point Status</strong></small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('tag_en'))
+                                    <div class="help-block">{{ $errors->first('tag_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('tag_bn') ? ' error' : '' }}">
+                                <label for="alt_text">Search Special Keyword Bn</label>
+                                <textarea type="text" name="tag_bn" id="alt_text" class="form-control" rows="4"
+                                          placeholder="Enter keywords bn">{{ $page->searchableFeature->tag_bn ?? '' }}</textarea>
+                                <small class="warning"><strong>Example: পয়েন্ট স্ট্যাটাস, টিয়ার সিস্টেম, অরেঞ্জ ক্লাব এর সদস্য</strong></small>
+                                <div class="help-block"></div>
+                                @if ($errors->has('tag_bn'))
+                                    <div class="help-block">{{ $errors->first('tag_bn') }}</div>
                                 @endif
                             </div>
 

@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\RoamingOfferRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -37,8 +38,7 @@ class RoamingOfferService {
      * @return Response
      */
     public function getCategories() {
-        $response = $this->offerRepo->getCategoryList();
-        return $response;
+        return $this->offerRepo->getCategoryList();
     }
 
     /**
@@ -107,11 +107,10 @@ class RoamingOfferService {
 
     /**
      * update roaming category
-     * @return Response
+     * @return array
      */
     public function saveOffer($request) {
         try {
-
             //file upload in storege
             $webPath = "";
             if ($request['banner_web'] != "") {
@@ -160,18 +159,49 @@ class RoamingOfferService {
             }
 
             //save data in database
-            $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $cardImagePath, $request);
+            $offer = $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $cardImagePath, $request);
 
+            $searchSpecialKeyword = [
+                'tag_en' => $request['tag_en'],
+                'tag_bn' => $request['tag_bn']
+            ];
+
+            $this->_saveSearchData($offer, $searchSpecialKeyword);
 
             return [
                 'success' => 1,
             ];
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
-                'message' => $e
+                'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product, $searchSpecialKeyword = [])
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['roaming_en'] . "/" . "offer" . '/' . $product->url_slug;
+        $urlBn = $feature['roaming_bn'] . "/" . "offer" . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'roaming-offer',
+            'page_title_en' => $product->name_en,
+            'page_title_bn' => $product->name_bn,
+            'tag_en' => $searchSpecialKeyword['tag_en'],
+            'tag_bn' => $searchSpecialKeyword['tag_bn'],
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 
@@ -269,8 +299,14 @@ class RoamingOfferService {
             }
 
             //save data in database
-            $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $cardImagePath, $request);
+            $offer = $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $cardImagePath, $request);
 
+            $searchSpecialKeyword = [
+                'tag_en' => $request['tag_en'],
+                'tag_bn' => $request['tag_bn']
+            ];
+
+            $this->_saveSearchData($offer, $searchSpecialKeyword);
             return [
                 'success' => 1,
             ];

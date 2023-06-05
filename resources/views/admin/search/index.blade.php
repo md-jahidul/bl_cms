@@ -1,112 +1,57 @@
 @extends('layouts.admin')
-@section('title', 'Search Setup')
-@section('card_name', 'Popular Search')
-
+@section('title', 'Search Data List')
+@section('card_name', 'Search Data List')
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Single Search Data List</li>
+@endsection
+@section('action')
+    <a href="{{ route('search-single-page.create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Page
+    </a>
+@endsection
 @section('content')
-<section>
-
-    <div class="card">
-        <div class="card-content collapse show">
-            <div class="card-body card-dashboard">
-                <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                        <h4 class="pb-1"><strong>Settings</strong></h4>
-                        <table class="table table-striped table-bordered">
+<section id="dom">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><strong>Single Search Page List</strong></h3>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
+                        <table class="table table-striped table-bordered dom-jQuery-events">
                             <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th width="32%">Limit</th>
-
-                                </tr>
+                            <tr>
+                                <td width="3%">#</td>
+                                <th width="25%">Page Title</th>
+                                <th width="25%">Special Keyword</th>
+                                <th width="25%">URL</th>
+                                <th class="">Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($settings as $s)
+                            @foreach($pages as $item)
                                 <tr>
-
-                                    <td>
-                                        {{ $s->type }} 
-
-                                    </td>
-                                    <td class="limit_clmn">
-                                        {{ $s->limit }} 
-                                        <a class="text-info edit_limit" limit="{{$s->limit}}" href="{{$s->id}}">
-                                            <i class="la la-pencil-square"></i>
-                                        </a>
-                                    </td>
-
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-
-
-                    </div>
-                    <div class="col-md-8 col-xs-12">
-                        <h4 class="pb-1"><strong>Popular Search</strong>
-                         <a href="{{ url('popular-search-create') }}" class="btn btn-sm btn-info pull-right">
-                                Add Keyword
-                            </a>
-                        </h4>
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Keyword</th>
-                                    <th>url</th>
-                                    <th width="22%">Status</th>
-                                    <th width="22%">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody class="popular_sortable">
-                                @foreach($popular as $p)
-                                <tr  data-index="{{ $p->id }}" data-position="{{ $p->sort }}">
-                                    <td>
-                                        <i class="icon-cursor-move icons"></i> 
-                                        {{ $p->keyword }} 
-                                    </td>
-                                    <td>
-                                        {{ $p->url }} 
-                                    </td>
-
-                                    <td class="text-center">
-                                        @if($p->status == 1)
-                                        <a href="{{$p->id}}" class="btn btn-sm btn-success popular_status">Active</a>
-                                        @else
-                                        <a href="{{$p->id}}" class="btn btn-sm btn-warning popular_status">Inactive</a>
-                                        @endif
-                                    </td>
-
-                                    <td class="text-center">
-
-                                        <a class="text-info edit_package" href="{{url('search-popular-edit/'.$p->id)}}">
-                                            <i class="la la-pencil-square"></i>
-                                        </a>
-                                        <a class="text-danger delete_keyword" href="{{url('popular-search-delete/'.$p->id)}}">
+                                    <td width="3%">{{ $loop->iteration }}</td>
+                                    <td>{{ $item->page_title_en }} {!! $item->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                    <td>{{ $item->tag_en }}</td>
+                                    <td>{{ $item->url_slug_en }}</td>
+                                    <td width="12%" class="text-center">
+                                        <a href="{{ route('search-single-page.edit', $item->id) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("search-single-page/destroy/$item->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
-
                                     </td>
-
-
-
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
-
-
-
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>
-
-
 </section>
 <section>
         <div class="card">
@@ -347,8 +292,8 @@ if (Session::has('error')) {
         });
 
     });
-    
-    
+
+
     //status change of home showing of category
         $(".table").on('click', '.popular_status', function (e) {
             e.preventDefault();
@@ -398,8 +343,8 @@ if (Session::has('error')) {
             });
 
         });
-        
-        
+
+
          function saveNewPositions(save_url)
         {
             var positions = [];
@@ -439,8 +384,8 @@ if (Session::has('error')) {
                 saveNewPositions(save_url);
             }
         });
-        
-        
+
+
         $('.delete_keyword').on('click', function(){
             var conf = confirm("Do you want to delete this keyword?");
             if(conf){

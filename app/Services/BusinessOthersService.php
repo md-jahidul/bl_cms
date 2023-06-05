@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessAssignedFeaturesRepository;
 use App\Repositories\BusinessRelatedProductRepository;
@@ -81,7 +82,7 @@ class BusinessOthersService {
 
     /**
      * save business other services
-     * @return Response
+     * @return array
      */
     public function saveService($request) {
         try {
@@ -147,41 +148,62 @@ class BusinessOthersService {
 
 
             //save data in database
-            $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
+            $service = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
+
+            $this->_saveSearchData($service);
+
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
 
-            $this->asgnFeatureRepo->assignFeature($serviceId, $parentTypes, $request->feature);
+            $this->asgnFeatureRepo->assignFeature($service->id, $parentTypes, $request->feature);
 
             $parentType = 2;
-            $this->relatedProductRepo->assignRelatedProduct($serviceId, $parentType, $request->realated);
+            $this->relatedProductRepo->assignRelatedProduct($service->id, $parentType, $request->realated);
 
 
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Service Saved",
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature["business_en"] . "business-solution" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "business-solution" . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'business-solution',
+            'page_title_en' => $product->name,
+            'page_title_bn' => $product->name_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 
     /**
      * get related product
-     * @return Response
+     * @return array
      */
     public function relatedProducts($serviceId) {
         $parentType = 2;
-        $response = $this->relatedProductRepo->getRelatedProductList($serviceId, $parentType);
-        return $response;
+        return $this->relatedProductRepo->getRelatedProductList($serviceId, $parentType);
     }
 
     /**
@@ -767,11 +789,34 @@ class BusinessOthersService {
 
     /**
      * Change service active/inactive
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function packageActive($serviceId) {
-        $response = $this->otherRepo->changeStatus($serviceId);
-        return $response;
+        try {
+
+            $package = $this->otherRepo->findOne($serviceId);
+
+            $status = $package->status == 1 ? 0 : 1;
+            $package->status = $status;
+            $package->save();
+
+            $this->_saveSearchData($package);
+
+            $response = [
+                'success' => 1,
+                'status' => $status,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+
+
+        return $this->otherRepo->changeStatus($serviceId);
     }
 
     /**
@@ -808,7 +853,7 @@ class BusinessOthersService {
 
     /**
      * update business landing page news
-     * @return Response
+     * @return array
      */
     public function updateService($request) {
         try {
@@ -905,7 +950,9 @@ class BusinessOthersService {
             }
 
             //save data in database
-            $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
+            $service = $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
+
+            $this->_saveSearchData($service);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
 
@@ -919,24 +966,21 @@ class BusinessOthersService {
             $parentType = 2;
             $this->relatedProductRepo->assignRelatedProduct($request->service_id, $parentType, $request->realated);
 
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Package updated"
             ];
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e
             ];
-            return $response;
         }
     }
 
     /**
      * delete business package
-     * @return Response
+     * @return array
      */
     public function deleteService($serviceId) {
 
@@ -947,17 +991,17 @@ class BusinessOthersService {
             $this->deleteFile($service->icon);
             $service->delete();
 
-            $response = [
+            $service->searchableFeature()->delete();
+
+            return [
                 'success' => 1,
                 'message' => "Package deleted"
             ];
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 

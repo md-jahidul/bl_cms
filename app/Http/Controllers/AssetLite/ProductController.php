@@ -391,21 +391,8 @@ class ProductController extends Controller
      */
 
     public function updateSearchDataTable(){
-        // return $product = $this->productService->findProduct($type, '100MINS100TAKA');
-        $products = $this->productService->findBy();
-
-        foreach ($products as $key => $product) {
-            try {
-                $this->productService->updateSearchData($product);
-            } catch (\Throwable $th) {
-                $response = [
-                    'success' => 'FAILED',
-                    'errors' => $th->getMessage()
-                ];
-                return response()->json($response, 500);
-            }
-        }
-
-        return response()->json(['success' => 'Success'], 200);
+        $response = $this->productService->updateSearchData();
+        Session::flash('message', $response->getContent());
+        return redirect(route('app-service-product.index'));
     }
 }

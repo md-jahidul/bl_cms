@@ -13,4 +13,9 @@ class BusinessOthers extends Model
      * @var string
      */
     protected $table = 'business_other_services';
+
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

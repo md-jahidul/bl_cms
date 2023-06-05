@@ -24,6 +24,9 @@
     <a href="{{ route("product.create", strtolower($type)) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Product
     </a>
+    <a href="{{ url('update-search-datatable') }}" class="btn btn-blue-grey  round btn-glow px-2"><i class="la la-refresh"></i>
+        Sync Search
+    </a>
 @endsection
 @section('content')
     <section>

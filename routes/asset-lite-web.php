@@ -348,6 +348,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
         ->name('partner_offer_update');
+    Route::get('partner-offer/search-data-sync', 'AssetLite\PartnerOfferController@syncSearchData');
 
     #Using this type of route because of this route is overriding by edit route
     Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/destroy/destroy', 'AssetLite\PartnerOfferController@destroy');
@@ -505,10 +506,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::post('search-ad-tech/store', 'AssetLite\SearchController@adTechStore')->name('search.adtech.store');
 
-
+    // Popular Search
     Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange');
     Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
+
+    // Single Search Page
+    Route::resource('search-single-page', 'AssetLite\SearchController');
+    Route::get('search-single-page/destroy/{id}', 'AssetLite\SearchController@destroy');
 
     // Product core ============================================
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
@@ -647,6 +652,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\BusinessInternetController@packageStatusChange');
     Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
+    Route::get('business-internet/search-data-sync', 'AssetLite\BusinessInternetController@searchDataSync');
+
+
 
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
@@ -1020,6 +1028,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // App & Service Product =========================================================
     Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
     Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
+    Route::get('app-service/search-data-sync', 'AssetLite\AppServiceProductController@searchDataSync')
+    ->name('app-service-search-sync');
 
     Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 
@@ -1425,6 +1435,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Blogs Details
     Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
     Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
+
+    // Blog Search Data Sync
+    Route::get('blog-post/search-data-sync', 'AssetLite\BlogController@searchDataSync');
+
     Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
     Route::get('blog-categories/destroy/{id}', 'AssetLite\BlogCategoryController@destroy');
     # Blogs Components

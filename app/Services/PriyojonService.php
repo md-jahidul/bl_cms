@@ -91,7 +91,7 @@ class PriyojonService
             $data['is_images'] = 0;
             $data['banner_image_url'] = null;
         }
-        
+
         $priyojonData->update($data);
         return Response('Priyojon updated successfully');
     }
@@ -115,5 +115,10 @@ class PriyojonService
     public function getPriyojonByType($type)
     {
         return $this->priyojonRepository->findOneByProperties(['component_type' => $type, 'parent_id' => 0]);
+    }
+
+    public function findByAlias($alias)
+    {
+        return $this->priyojonRepository->findOneByProperties(['alias' => $alias]);
     }
 }
