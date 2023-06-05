@@ -46,7 +46,8 @@ class TriviaGamificationRequest extends FormRequest
             'failed_message_en' => 'required|max:200',
             'failed_message_bn' => 'required|max:200',
             'show_answer_btn_en' => 'required|max:200',
-            'show_answer_btn_bn' => 'required|max:200'
+            'show_answer_btn_bn' => 'required|max:200',
+            'type' => 'required'
         ];
     }
 }

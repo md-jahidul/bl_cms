@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', "Add Gamification")
-@section('card_name', "Add Gamification")
+@section('title', "Edit Gamification")
+@section('card_name', "Edit Gamification")
 @section('action')
     <a href="{{route('gamification.index')}}" class="btn btn-primary btn-glow px-2">
         Back To Gamification list
@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-header">
             <h1 class="card-title">
-                Trivia Gamification
+                Edit Gamification
             </h1>
         </div>
 
@@ -19,16 +19,17 @@
         <div class="card-body">
 
             <!-- /short cut add form -->
-            <form novalidate action="{{ route('gamification.store') }}" method="post" enctype="multipart/form-data">
+            <form novalidate action="{{route('gamification.update', $trivia->id)}}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('put')
 
             <div class="row">
-                    <!-- type Label -->
+                    <!-- Type Label -->
                     <div class="form-group col-md-6 mb-2">
                         <label for="type" class="required">Type:</label>
                         <select name="type" class="browser-default custom-select" required>
-                                <option value="trivia"> Trivia </option>
-                                <option value="spin_wheel"> Spin Wheel </option>
+                                <option value="trivia" @if ($trivia->type == 'trivia') selected @endif> Trivia </option>
+                                <option value="spin_wheel" @if ($trivia->type == 'spin_wheel') selected @endif> Spin Wheel </option>
                         </select>
                         <div class="help-block"></div>
                     </div>
@@ -115,7 +116,7 @@
                 </div>
 
                     <!-- Success Left Button -->
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="success_left_btn_en" class="required">Success Left Button EN:</label>
                             <input required
