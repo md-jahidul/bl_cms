@@ -38,6 +38,7 @@
                             <tr>
                                 <th width="3%">#</th>
                                 <th>Type</th>
+                                <th>Rule Name</th>
                                 <th>Pending bottom label</th>
                                 <th>Completed bottom label</th>
                                 <th width="12%">Action</th>
@@ -116,6 +117,13 @@
                         width: "5%",
                         render: function (data, type, row) {
                             return row.type;
+                        }
+                    },
+                    {
+                        name: 'rule_name',
+                        width: "5%",
+                        render: function (data, type, row) {
+                            return row.rule_name;
                         }
                     },
                     {
