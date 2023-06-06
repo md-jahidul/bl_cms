@@ -34,6 +34,26 @@
                         <div class="help-block"></div>
                     </div>
 
+                    <!-- Rule Name -->
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="rule_name" class="required">Rule Name:</label>
+                            <input
+                            required
+                            maxlength="200"
+                            data-validation-required-message="The field is required"
+                            data-validation-maxlength-message = "Max Character: 200"
+                            value="@if(isset($trivia)) {{$trivia->rule_name}} @elseif(old("rule_name")) {{ old("rule_name") }} @endif"
+                            type="text"
+                            name="rule_name"
+                            class="form-control @error('rule_name') is-invalid @enderror"
+                            id="rule_name"
+                            placeholder="Enter Rule Name..">
+                            <small class="text-danger"> @error('rule_name') {{ $message }} @enderror </small>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+
                     <!-- Pending Label -->
                     <div class="col-6">
                         <div class="form-group">
@@ -116,7 +136,7 @@
                 </div>
 
                     <!-- Success Left Button -->
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="success_left_btn_en" class="required">Success Left Button EN:</label>
                             <input required
