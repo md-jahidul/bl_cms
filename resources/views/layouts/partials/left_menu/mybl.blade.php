@@ -594,10 +594,10 @@
         </ul>
     </li>
 
-    <li class="{{ is_active_url('trivia') . is_active_url('trivia/create')}}">
-        <a class="menu-item" href="{{ route('trivia.create') }} "
+    <li class="{{ is_active_url('gamification') . is_active_url('gamification')}}">
+        <a class="menu-item" href="{{ route('gamification.index') }} "
            data-i18n="nav.templates.vert.classic_menu">
-            <i class="la la-gamepad"></i> Trivia Gamification
+            <i class="la la-gamepad"></i>Gamification
         </a>
     </li>
 
