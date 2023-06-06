@@ -38,6 +38,7 @@ class Product extends Model
             'like',
             'validity_postpaid',
             'status',
+            'show_in_multi_cat',
             'display_order',
             'purchase_option',
             'offer_info',
@@ -53,12 +54,12 @@ class Product extends Model
             'special_product',
             'created_by',
             'updated_by',
-
-            'image',
+            'image'
         ];
 
     protected $casts = [
         'offer_info' => 'array',
+        'show_in_multi_cat' => 'array',
     ];
 
 

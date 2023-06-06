@@ -18,6 +18,7 @@ use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -116,12 +117,15 @@ class ProductController extends Controller
      */
     public function create($type)
     {
+        $offerCatAlias = ['internet', 'voice', 'bundles', 'bondho_sim', 'new_sim_offer', 'call_rate', 'recharge_offer'];
+
         $this->info['productCoreCodes'] = $this->productService->unusedProductCore($type);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['type'] = $type;
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offers'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
+        $this->info['offerCatAlias'] = $offerCatAlias;
         $this->info['offerCategory']=$this->alInternetOffersCategoryService->findAll(null,null, [
             'column' => 'sort',
             'direction' => 'ASC'
@@ -192,7 +196,7 @@ class ProductController extends Controller
      *
      * @param $type
      * @param int $id
-     * @return Response
+     * @return Application|Factory|Response|View
      */
     public function show($type, $id)
     {

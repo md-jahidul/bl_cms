@@ -243,6 +243,7 @@ class ProductService
         $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
         $data['product_code'] = strtoupper($data['product_code']);
+        $data['show_in_multi_cat'] = $data['show_in_multi_cat'] ?? null;
 
         if(isset($data['validity_unit'])){
 
