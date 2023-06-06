@@ -142,6 +142,7 @@ class Helper
             "SHARETRIP"                   => 'Sharetrip',
             "CONTENT"                 => 'Content',
             "RABBITHOLE"                   => 'Rabbithole',
+            "BUS"                   => 'Bus',
         ];
     }
 
