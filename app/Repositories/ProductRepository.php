@@ -46,7 +46,8 @@ class ProductRepository extends BaseRepository
     public function relatedProducts($type, $id)
     {
         return $this->model::category($type)
-            ->where('id', '!=', $id)
+            ->where('status', 1)
+            ->whereIn('offer_category_id', [OfferType::INTERNET, OfferType::VOICE, OfferType::BUNDLES])
             ->productCore()
             ->select('id', 'product_code', 'name_en', 'name_bn', 'special_product', 'purchase_option')
             ->get();
