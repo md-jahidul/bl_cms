@@ -22,8 +22,8 @@ class BaseURLLocalization
             "postpaid_bn" =>  "postpaid",
 
             // App Service
-            "app_service_en" =>  "TAKE_INTERNET_LOAN",
-            "app_service_bn" =>  "BUY_INTERNET" ,
+            "app_service_en" =>  "apps-and-services",
+            "app_service_bn" =>  "apps-and-services" ,
 
             // Business Packages
             "business_en" =>  "business",
@@ -47,7 +47,19 @@ class BaseURLLocalization
 
             // Explore C
             "explore_c_en" => "explore-c",
-            "explore_c_bn" => "explore-c"
+            "explore_c_bn" => "explore-c",
+
+            // Roaming Offer
+            "roaming_en" => "roaming",
+            "roaming_bn" => "roaming",
+
+            // Banglalink 4G
+            "bl_4g_en" => "banglalink-4g",
+            "bl_4g_bn" => "banglalink-4g",
+
+            // Banglalink 4G
+            "ethics-compliance_en" => "ethics-compliance",
+            "ethics-compliance_bn" => "ethics-compliance"
         ];
     }
 }

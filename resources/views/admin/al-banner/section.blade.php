@@ -16,8 +16,7 @@
 
                             {{method_field('POST')}}
                         @endif
-                        {{ Form::hidden('section_id', $action['section_id'] ) }}
-                        {{ Form::hidden('section_type', $action['section_type'] ) }}
+
                         <div class="row">
                             <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                 <label for="title_en">Title (English)</label>
@@ -133,6 +132,27 @@
                                 @endif
                             </div>
 
+                            @if (array_key_exists('from_generic', $action) && $action['from_generic'] == true)
+                                <div class="form-group col-md-6 {{ $errors->has('section_type') ? ' error' : '' }}">
+                                    <label for="section_type" class="required">Section Type</label>
+                                    <input type="text" name="section_type" class="form-control slug-convert" required placeholder="Section Type"
+                                        value="{{ old("section_type") ? old("section_type") : (isset($banner) ? $banner->section_type : '') }}">
+                                    <div class="help-block"></div>
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> najat_app (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('section_type'))
+                                    <div class="help-block">{{ $errors->first('section_type') }}</div>
+                                    @endif
+                                </div>
+                                {{ Form::hidden('from_generic', $action['from_generic'] ) }}
+
+                            @else
+                                {{ Form::hidden('section_type', $action['section_type'] ) }}
+                            @endif
+                                {{ Form::hidden('section_id', $action['section_id'] ) }}
+
+
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i
@@ -147,23 +167,24 @@
         </div>
     </div>
 </section>
-
 @push('page-css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 
 @push('page-js')
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script type="text/javascript">
-        // Image Dropify
+    <script>
         $(function () {
+
+            //show dropify for  photo
             $('.dropify').dropify({
                 messages: {
-                    'default': 'Browse for an Image File to upload',
+                    'default': 'Browse for File/Photo',
                     'replace': 'Click to replace',
                     'remove': 'Remove',
                     'error': 'Choose correct file format'
-                },
+                }
             });
         });
     </script>

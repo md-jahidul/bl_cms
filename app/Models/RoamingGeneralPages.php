@@ -13,4 +13,9 @@ class RoamingGeneralPages extends Model
      * @var string
      */
     protected $table = 'roaming_general_pages';
+
+    public function searchableFeature()
+    {
+        return $this->morphOne(SearchableData::class, 'featureable');
+    }
 }

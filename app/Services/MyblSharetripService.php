@@ -23,7 +23,14 @@ class MyblSharetripService
         $length = $request->get('length');
 
         $builder = new SharetripTransactionStatus();
+
         $builder = $builder->latest();
+
+        if ($request->from && $request->to) {
+            $datefrom = $request->from . ' 00:00:00';
+            $dateto = $request->to . ' 23:59:59';
+            $builder = $builder->whereBetween('created_at', [$datefrom, $dateto]);
+        }
 
         if ($request->booking_code) {
             
@@ -31,6 +38,9 @@ class MyblSharetripService
         }
 
         $all_items_count = $builder->count();
+
+        if ($length == -1 ) $length = $all_items_count;
+
         $items = $builder->skip($start)->take($length)->get();
 
         $response = [

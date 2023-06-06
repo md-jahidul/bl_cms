@@ -70,8 +70,8 @@ class ExploreCDetailsService
         $saveSearchData = [
             'product_code' => null,
             'type' => 'explore-c',
-            'page_title_en' => $product->page_name_en . " and " . $product->page_content_en,
-            'page_title_bn' => $product->page_name_bn . " এবং " . $product->page_content_bn,
+            'page_title_en' => $product->page_name_en,
+            'page_title_bn' => $product->page_name_bn,
             'tag_en' => $specialKeyWord['tag_en'],
             'tag_bn' => $specialKeyWord['tag_bn'],
             'url_slug_en' => $urlEn,

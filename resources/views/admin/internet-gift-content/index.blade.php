@@ -20,10 +20,9 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="5%">ID</th>
-                            <th>Icon</th>
-                            <th>Image</th>
                             <th width="30%">Title</th>
-                            <th width="10%">Visibility</th>
+                            <th width="15%">Slug</th>
+                            <th width="5%">Visibility</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -32,11 +31,8 @@
                             <tr data-index="{{ $giftContent->id }}" data-position="{{ $giftContent->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $giftContent->id }}</td>
-                                <td><img class="" src="{{ asset($giftContent->icon) }}" alt="content Icon"
-                                         height="100" width="100"/></td>
-                                <td><img class="" src="{{ asset($giftContent->banner) }}" alt="Content Banner"
-                                         height="100" width="200"/></td>
                                 <td>{{ $giftContent->name_en }}</td>
+                                <td>{{ $giftContent->slug }}</td>
                                 <td>
                                     @if($giftContent->visibilityStatus())
                                         <span class="badge badge-success">Visible</span>

@@ -91,6 +91,8 @@ class GenericSliderImageService
             Redis::del('non_bl_component');
             Redis::del('mybl_commerce_component');
             Redis::del('non_bl_offer');
+            Redis::del('lms_component_prepaid');
+            Redis::del('lms_component_postpaid');
             return true;
         } catch (\Exception $e) {
 
@@ -173,10 +175,13 @@ class GenericSliderImageService
             });
             Redis::del('mybl_home_component');
             Redis::del('content_component');
+            Redis::del('mybl_home_component');
+            Redis::del('content_component');
             Redis::del('non_bl_component');
             Redis::del('mybl_commerce_component');
             Redis::del('non_bl_offer');
-
+            Redis::del('lms_component_prepaid');
+            Redis::del('lms_component_postpaid');
             return true;
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());

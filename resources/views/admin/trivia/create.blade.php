@@ -1,6 +1,11 @@
 @extends('layouts.admin')
-@section('title', "Trivia Gamification")
-@section('card_name', "Trivia Gamification")
+@section('title', "Add Gamification")
+@section('card_name', "Add Gamification")
+@section('action')
+    <a href="{{route('gamification.index')}}" class="btn btn-primary btn-glow px-2">
+        Back To Gamification list
+    </a>
+@endsection
 
 @section('content')
     <div class="card">
@@ -14,11 +19,20 @@
         <div class="card-body">
 
             <!-- /short cut add form -->
-            <form novalidate action="{{ route('trivia.store') }}" method="post" enctype="multipart/form-data">
+            <form novalidate action="{{ route('gamification.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-            @if(isset($banner_info)) @method('put') @else @method('post') @endif
 
             <div class="row">
+                    <!-- type Label -->
+                    <div class="form-group col-md-6 mb-2">
+                        <label for="type" class="required">Type:</label>
+                        <select name="type" class="browser-default custom-select" required>
+                                <option value="trivia"> Trivia </option>
+                                <option value="spin_wheel"> Spin Wheel </option>
+                        </select>
+                        <div class="help-block"></div>
+                    </div>
+
                     <!-- Pending Label -->
                     <div class="col-6">
                         <div class="form-group">
@@ -37,27 +51,27 @@
                             <small class="text-danger"> @error('pending_bottom_label_en') {{ $message }} @enderror </small>
                             <div class="help-block"></div>
                         </div>
-                        <input type="hidden" name="id" value="1"> <!-- as this is single row, we pass ID statically to updateOrCreate -->
+                        {{-- <input type="hidden" name="id" value="1"> <!-- as this is single row, we pass ID statically to updateOrCreate --> --}}
                     </div>
                     <div class="col-6">
-                    <div class="form-group">
-                        <label for="pending_bottom_label_bn" class="required">Pending Bottom Label BN:</label>
-                        <input
-                            required
-                            maxlength="200"
-                            data-validation-required-message="The field is required"
-                            data-validation-maxlength-message = "Max Character: 200"
-                            id="pending_bottom_label_bn"
-                            value="@if(isset($trivia)) {{$trivia->pending_bottom_label_bn}} @elseif(old("pending_bottom_label_bn")) {{ old("pending_bottom_label_bn") }} @endif"
-                            type="text"
-                            name="pending_bottom_label_bn"
-                            class="form-control
-                            @error('pending_bottom_label_bn') is-invalid @enderror"
-                            placeholder="Enter Label Name..">
-                        <small class="text-danger"> @error('pending_bottom_label_bn') {{ $message }} @enderror </small>
-                        <div class="help-block"></div>
+                        <div class="form-group">
+                            <label for="pending_bottom_label_bn" class="required">Pending Bottom Label BN:</label>
+                            <input
+                                required
+                                maxlength="200"
+                                data-validation-required-message="The field is required"
+                                data-validation-maxlength-message = "Max Character: 200"
+                                id="pending_bottom_label_bn"
+                                value="@if(isset($trivia)) {{$trivia->pending_bottom_label_bn}} @elseif(old("pending_bottom_label_bn")) {{ old("pending_bottom_label_bn") }} @endif"
+                                type="text"
+                                name="pending_bottom_label_bn"
+                                class="form-control
+                                @error('pending_bottom_label_bn') is-invalid @enderror"
+                                placeholder="Enter Label Name..">
+                            <small class="text-danger"> @error('pending_bottom_label_bn') {{ $message }} @enderror </small>
+                            <div class="help-block"></div>
+                        </div>
                     </div>
-                </div>
 
                     <!-- Completed Label -->
                     <div class="col-6">

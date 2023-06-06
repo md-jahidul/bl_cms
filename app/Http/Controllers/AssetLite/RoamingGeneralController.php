@@ -22,7 +22,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Display Categories, about page, bill payment page
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 20/03/2020
@@ -36,7 +36,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Get category by ID
-     * 
+     *
      * @param cat ID $catId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 20/03/2020
@@ -49,7 +49,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Update category
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 20/03/2020
@@ -69,7 +69,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Category Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 22/03/2020
@@ -81,7 +81,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Edit form for general page
-     * 
+     *
      * @param $type, $pageId
      * @return Factory|View
      * @Bulbul Mahmud Nito || 20/03/2020
@@ -95,21 +95,24 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Update general page
-     * 
+     *
      * @param Request $request
      * @return Factory|View
      * @Bulbul Mahmud Nito || 23/03/2020
      */
     public function updatePage(Request $request) {
-//        print_r($request->all());die();
-        $page = $this->generalService->updatePage($request);
-
+        $response = $this->generalService->updatePage($request);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Page update successfully!!');
+        } else {
+            Session::flash('error', $response['message']);
+        }
         return redirect('roaming/general-page-component/page/' . $request->page_id);
     }
 
     /**
      * Component delete.
-     * 
+     *
      * @param $pageId, $comId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 25/03/2020
@@ -127,7 +130,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Component Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/03/2020
@@ -139,7 +142,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Home Banner Photo save
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 11/02/2020
@@ -151,7 +154,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Category name Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -163,7 +166,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Category banner photo save
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 15/03/2020
@@ -175,7 +178,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Category home show status Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -189,7 +192,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Save/update sliding speed
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 05/03/2020
@@ -201,7 +204,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Save or Update home news
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -221,7 +224,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * News Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/02/2020
@@ -233,7 +236,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * News status Change.
-     * 
+     *
      * @param $newsId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -246,7 +249,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * News delete.
-     * 
+     *
      * @param $newsId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 12/02/2020
@@ -265,7 +268,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Features Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -277,7 +280,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Features status Change.
-     * 
+     *
      * @param $featureId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -290,7 +293,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Save or Update business feature
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -310,7 +313,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Get feature by ID
-     * 
+     *
      * @param News ID $featureId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020
@@ -323,7 +326,7 @@ class RoamingGeneralController extends Controller {
 
     /**
      * Feature delete.
-     * 
+     *
      * @param $featureId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 13/02/2020

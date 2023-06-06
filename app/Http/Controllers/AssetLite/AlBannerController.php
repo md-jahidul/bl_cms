@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AlBannerService;
@@ -9,15 +10,15 @@ use Illuminate\Support\Facades\Session;
 
 class AlBannerController extends Controller
 {
-    
+
     protected $alBannerService;
 
     public function __construct(AlBannerService $alBannerService)
     {
         $this->alBannerService = $alBannerService;
     }
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +26,9 @@ class AlBannerController extends Controller
      */
     public function index()
     {
-        //
+        $banners = $this->alBannerService->findBy(['section_id' => 0]);
+
+        return view('admin.al-banner.index', compact('banners'));
     }
 
     /**
@@ -35,7 +38,7 @@ class AlBannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.al-banner.create');
     }
 
     /**
@@ -50,8 +53,11 @@ class AlBannerController extends Controller
         $response = $this->alBannerService->alBannerStore($request->all());
         Session::flash('message', $response->getContent());
 
+        if ($request->from_generic == true)
+        {
+            return redirect('al-banner');
+        }
         return redirect()->back();
-        // return redirect('explore-c-component/'.$request->section_id.'/list');
     }
 
     /**
@@ -73,7 +79,8 @@ class AlBannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = $this->alBannerService->findOne($id);
+        return view('admin.al-banner.create', compact('banner'));
     }
 
     /**
@@ -89,19 +96,23 @@ class AlBannerController extends Controller
 
         $response = $this->alBannerService->alBannerUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
-        
+
+        if ($request->from_generic == true)
+        {
+            return redirect('al-banner');
+        }
         return redirect()->back();
-        // return redirect('explore-c-component/'.$request->section_id.'/list');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Http\Response|string
      */
     public function destroy($id)
     {
-        //
+        $this->alBannerService->delete($id);
+        return url('al-banner');
     }
 }

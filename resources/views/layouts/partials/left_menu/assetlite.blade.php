@@ -249,7 +249,7 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-list"></i> Cashback</a>
                 </li>
-                
+
             </ul>
         </li>
     @endif
@@ -633,8 +633,15 @@
                         class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Dynamic Pages</span></a>
             </li>
-            <li class="{{ is_active_url('/popular-search') }} nav-item">
-                <a href="{{ url('popular-search') }}">
+
+            <li class="{{ is_active_url(url('al-banner')) }}">
+                <a class="menu-item" href="{{ url('al-banner') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i> Single Page Banner</a>
+            </li>
+
+            <li class="{{ is_active_url('/search-single-page') }} nav-item">
+                <a href="{{ url('search-single-page') }}">
                     <i class="la la-search"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Search</span>
                 </a>
@@ -901,8 +908,6 @@
                 class="la la-list"></i> Meta Tags</a>
     </li>
 
-
-    <hr>
     <hr>
     <hr>
 

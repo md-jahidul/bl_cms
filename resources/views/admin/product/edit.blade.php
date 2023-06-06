@@ -234,9 +234,13 @@
                                 <div class="col-md-6">
                                     <label>For:</label>
                                     <div class="form-group" id="show_in_home">
-                                        <label for="trending"></label><br>
+{{--                                        <label for="trending"></label><br>--}}
                                         <input type="checkbox" name="show_in_home" value="1" id="trending" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
                                         <label for="trending" class="ml-1"> <strong>Show In Home</strong></label><br>
+
+                                        <input type="checkbox" name="show_in_e_shop" value="1" id="show_in_e_shop" {{ ($product->show_in_e_shop == 1) ? 'checked' : '' }}>
+                                        <label for="show_in_e_shop" class="ml-1"> <strong>Show In E-shop</strong></label><br>
+
                                         <input type="checkbox" name="special_product" value="1" id="special_product" {{ ($product->special_product == 1) ? 'checked' : '' }}>
                                         <label for="special_product" class="ml-1"><strong>Special Product</strong></label><br>
                                         <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter" {{ ($product->rate_cutter_offer == 1) ? 'checked' : '' }}>

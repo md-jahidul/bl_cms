@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Add Content')
-@section('card_name',"Content" )
+@section('card_name',"Add Content" )
 @section('breadcrumb')
     <li class="breadcrumb-item active">Add Content</li>
 @endsection
@@ -72,28 +72,11 @@
                                         </div>
                                     </div>
 
-                                    <div id="link" class="form-group col-md-6">
-                                        <label for="slug" class="required">Slug</label>
-                                        <div class='input-group'>
-                                            <input type='text' class="form-control" name="slug" id="slug"
-                                                data-validation-required-message="Slug is required"
-                                                placeholder="Please enter slug" />
-                                        </div>
-                                        <div class="help-block"></div>
-                                        <small class="text-info">
-                                            <strong>i.e:</strong> sample-name (no spaces)<br>
-                                        </small>
-                                        @if ($errors->has('slug'))
-                                            <div class="help-block">
-                                                <small class="text-danger"> {{ $errors->first('slug') }} </small>
-                                            </div>
-                                        @endif
-                                    </div>
                                     <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
                                         <label for="icon" class="required">Icon</label>
                                         <div class="custom-file">
                                             <input type="file" name="icon" class="custom-file-input dropify"
-                                                    required data-validation-required-message="Icon field is required" data-height="80">
+                                                    required data-validation-required-message="Icon field is required" data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('icon'))
@@ -105,7 +88,7 @@
                                     <div class="form-group col-md-6 {{ $errors->has('banner') ? ' error' : '' }}">
                                         <label for="banner" class="">Banner</label>
                                         <div class="custom-file">
-                                            <input type="file" name="banner" class="custom-file-input dropify" data-height="80">
+                                            <input type="file" name="banner" class="custom-file-input dropify" data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
                                         </div>
                                         <div class="help-block"></div>
                                         @if ($errors->has('banner'))
@@ -162,10 +145,13 @@
 
             $('.dropify').dropify({
                 messages: {
-                    'default': 'Browse for an Excel File to upload',
+                    'default': 'Browse for an Image/Json File to upload',
                     'replace': 'Click to replace',
                     'remove': 'Remove',
-                    'error': 'Choose correct file format'
+                    'error': 'Choose correct Image/Json file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
                 }
             });
         })

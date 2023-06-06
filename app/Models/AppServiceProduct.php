@@ -34,6 +34,6 @@ class AppServiceProduct extends Model
 
     public function searchableFeature()
     {
-        return $this->morphMany(SearchableData::class, 'featureable');
+        return $this->morphOne(SearchableData::class, 'featureable');
     }
 }

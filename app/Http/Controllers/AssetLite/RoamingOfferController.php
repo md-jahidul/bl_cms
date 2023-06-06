@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\RoamingOfferRequest;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\RoamingOfferService;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class RoamingOfferController extends Controller {
 
@@ -25,7 +28,7 @@ class RoamingOfferController extends Controller {
      * Display Categories, about page, bill payment page
      *
      * @param No
-     * @return Factory|View
+     * @return Application|Factory|View
      * @Bulbul Mahmud Nito || 24/03/2020
      */
     public function index() {
@@ -90,7 +93,6 @@ class RoamingOfferController extends Controller {
     public function createOffer() {
 
         $categories = $this->offerService->getCategories();
-
         return view('admin.roaming.create_other_offer', compact('categories'));
     }
 

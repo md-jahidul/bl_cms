@@ -168,6 +168,13 @@ class PartnerOfferController extends Controller {
         return redirect()->route('partner-offer', [$request->partner_id, $partnet]);
     }
 
+    public function syncSearchData()
+    {
+        $response = $this->partnerOfferService->syncSearch();
+        Session::flash('message', $response->getContent());
+        return redirect('partners');
+    }
+
     /**
      * @param $parentId
      * @param $parentName

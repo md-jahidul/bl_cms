@@ -12,6 +12,9 @@
         Cancel
     </a>
 @endsection
+@php
+    $unique = uniqid();
+@endphp
 
 @section('content')
     <section>
@@ -21,7 +24,7 @@
                     <h5 class="menu-title"><strong>Campaign Create Form</strong></h5>
                     <hr>
                     <div class="card-body card-dashboard">
-                        <form id="feed-form" novalidate class="form row"
+                        <form id="form-{{$unique}}" novalidate class="form row"
                               action="{{ (isset($campaign)) ? route('mybl-campaign.update', $campaign->id) : route('mybl-campaign.store')}}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
@@ -129,7 +132,7 @@
 
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
-                                            <button id="save" class="btn btn-primary"><i
+                                            <button id="save-{{$unique}}" type="submit" class="btn btn-primary"><i
                                                     class="la la-check-square-o"></i> Save
                                             </button>
                                         </div>
@@ -165,6 +168,12 @@
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+            
+            $('#form-{{$unique}}').on('submit', function() {
+                // Disable the submit button after click
+                $('#save-{{$unique}}').prop('disabled', true);
+            });
+
             $('.dropify_image').dropify({
                 messages: {
                     'default': 'Browse for an Image to upload',

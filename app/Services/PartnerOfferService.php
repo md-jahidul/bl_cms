@@ -95,8 +95,8 @@ class PartnerOfferService
     {
         $feature = BaseURLLocalization::featureBaseUrl();
 
-        $partnerOfferTitleEn = $product->other_attributes['free_text_value_en'];
-        $partnerOfferTitleBn = $product->other_attributes['free_text_value_bn'];
+        $partnerOfferTitleEn = $product->other_attributes['free_text_value_en'] ?? null;
+        $partnerOfferTitleBn = $product->other_attributes['free_text_value_bn'] ?? null;
 
         $partnerNameEn = $product->partner->company_name_en ?? "";
         $partnerNameBn = $product->partner->company_name_bn ?? "";
@@ -116,8 +116,8 @@ class PartnerOfferService
             'type' => 'partner-offer-details',
             'page_title_en' => $pageInfoEn,
             'page_title_bn' => $pageInfoBn,
-            'tag_en' => $specialKeyWord['tag_en'],
-            'tag_bn' => $specialKeyWord['tag_bn'],
+            'tag_en' => $specialKeyWord['tag_en'] ?? null,
+            'tag_bn' => $specialKeyWord['tag_bn'] ?? null,
             'url_slug_en' => $feature['partner_offer_details_en'] . "/" . $product->url_slug,
             'url_slug_bn' => $feature['partner_offer_details_bn'] . "/" . $product->url_slug_bn,
             'status' => $product->is_active,
@@ -198,6 +198,17 @@ class PartnerOfferService
         $this->_saveSearchData($partnerOffer, $specialKeyWord);
 
         return Response('Partner offer update successfully !');
+    }
+
+    public function syncSearch()
+    {
+        $partnerOffers = $this->findAll();
+        foreach ($partnerOffers as $offer){
+            if ($offer->is_active) {
+                $this->_saveSearchData($offer);
+            }
+        }
+        return Response('Partner offer search data updated successfully !');
     }
 
     /**
