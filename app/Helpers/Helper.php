@@ -143,6 +143,7 @@ class Helper
             "CONTENT"                 => 'Content',
             "RABBITHOLE"                   => 'Rabbithole',
             "BUS"                   => 'Bus',
+            "SUPPORT_EMAIL"           => 'Support Email'
         ];
     }
 
