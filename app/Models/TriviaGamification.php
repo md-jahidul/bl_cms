@@ -32,6 +32,7 @@ class TriviaGamification extends Model
         "show_answer_btn_en",
         "show_answer_btn_bn",
         "type",
-        "rule_name"
+        "rule_name",
+        "content_for"
     ];
 }

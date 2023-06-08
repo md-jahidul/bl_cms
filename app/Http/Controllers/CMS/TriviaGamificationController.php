@@ -59,6 +59,11 @@ class TriviaGamificationController extends Controller
      */
     public function store(TriviaGamificationRequest $request)
     {
+        $content_for_request['home']  = ($request->home) ? true : false;
+        $content_for_request['non_bl']  = ($request->non_bl) ? true : false;
+
+        $request['content_for'] = json_encode($content_for_request);
+
         $this->triviaGamificationService->saveTriviaInfo($request->all());
         Redis::del("mybl_home_component");
         return redirect()->route('gamification.index')->with('success', "Data saved successfully!");
@@ -84,6 +89,7 @@ class TriviaGamificationController extends Controller
     public function edit($id)
     {
         $trivia = $this->triviaGamificationService->findOne($id);
+        $trivia->content_for = json_decode($trivia->content_for);
         return view('admin.trivia.edit', compact('trivia'));
     }
 
@@ -96,6 +102,11 @@ class TriviaGamificationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $content_for_request['home']  = ($request->home) ? true : false;
+        $content_for_request['non_bl']  = ($request->non_bl) ? true : false;
+
+        $request['content_for'] = json_encode($content_for_request);
+        
         $this->triviaGamificationService->updateTriviaInfo($request->all(), $id);
         Redis::del("mybl_home_component");
         return redirect()->route('gamification.index')->with('success', "Data Updated successfully!");
