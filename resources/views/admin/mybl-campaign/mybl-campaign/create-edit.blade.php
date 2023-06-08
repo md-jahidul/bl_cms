@@ -200,6 +200,7 @@
                 element.datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
             }
 
@@ -224,10 +225,12 @@
                 $('.product_start_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
             })
 
