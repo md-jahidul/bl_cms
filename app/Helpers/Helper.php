@@ -143,7 +143,8 @@ class Helper
             "CONTENT"                 => 'Content',
             "RABBITHOLE"                   => 'Rabbithole',
             "BUS"                   => 'Bus',
-            "SUPPORT_EMAIL"           => 'Support Email'
+            "SUPPORT_EMAIL"           => 'Support Email',
+            "SPIN_WHEEL"                   => 'Spin Wheel',
         ];
     }
 
