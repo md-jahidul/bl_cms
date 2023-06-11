@@ -24,7 +24,7 @@
 
             <div class="row">
                     <!-- type Label -->
-                    <div class="form-group col-md-6 mb-2">
+                    <div class="form-group col-md-4 mb-2">
                         <label for="type" class="required">Type:</label>
                         <select name="type" class="browser-default custom-select" required>
                                 <option value="trivia"> Trivia </option>
@@ -34,7 +34,7 @@
                     </div>
 
                     <!-- Rule Name -->
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="rule_name" class="required">Rule Name:</label>
                             <input
@@ -50,6 +50,35 @@
                             placeholder="Enter Rule Name..">
                             <small class="text-danger"> @error('rule_name') {{ $message }} @enderror </small>
                             <div class="help-block"></div>
+                        </div>
+                    </div>
+
+                    <!-- Content For -->
+                    <div class="col-md-4">
+                        <label for="status_input">Component For: </label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="checkbox"
+                                            class=""
+                                            id="home"
+                                            name="home"
+                                            value="true"
+                                            @if(isset($settings->home)) @if($settings->home) checked @endif @endif
+                                            />
+                                    <label for="home">Home</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <input type="checkbox"
+                                            id="non_bl"
+                                            name="non_bl"
+                                            value="true"
+                                            @if(isset($settings->non_bl)) @if($settings->non_bl) checked @endif @endif/>
+                                    <label for="non_bl">Non Bl</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

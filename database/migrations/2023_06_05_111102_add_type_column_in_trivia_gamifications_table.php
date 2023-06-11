@@ -16,6 +16,7 @@ class AddTypeColumnInTriviaGamificationsTable extends Migration
         Schema::table('trivia_gamifications', function (Blueprint $table) {
             $table->string('type')->nullable()->after('show_answer_btn_bn');
             $table->string('rule_name')->nullable()->after('type');
+            $table->json('content_for')->nullable()->after('rule_name');
         });
     }
 
@@ -29,6 +30,7 @@ class AddTypeColumnInTriviaGamificationsTable extends Migration
         Schema::table('trivia_gamifications', function (Blueprint $table) {
             $table->dropColumn('type');
             $table->dropColumn('rule_name');
+            $table->dropColumn('content_for');
         });
     }
 }
