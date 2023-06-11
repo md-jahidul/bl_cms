@@ -66,6 +66,7 @@ class TriviaGamificationController extends Controller
 
         $this->triviaGamificationService->saveTriviaInfo($request->all());
         Redis::del("mybl_home_component");
+        Redis::del("non_bl_component");
         return redirect()->route('gamification.index')->with('success', "Data saved successfully!");
     }
 
@@ -109,6 +110,7 @@ class TriviaGamificationController extends Controller
         
         $this->triviaGamificationService->updateTriviaInfo($request->all(), $id);
         Redis::del("mybl_home_component");
+        Redis::del("non_bl_component");
         return redirect()->route('gamification.index')->with('success', "Data Updated successfully!");
     }
 
@@ -122,6 +124,7 @@ class TriviaGamificationController extends Controller
     {
         session()->flash('error', $this->triviaGamificationService->destroy($id)->getContent());
         Redis::del("mybl_home_component");
+        Redis::del("non_bl_component");
         return redirect(route('gamification.index'));
     }
 }
