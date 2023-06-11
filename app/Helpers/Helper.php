@@ -139,6 +139,7 @@ class Helper
             "WATER"                   => 'Water',
             "SHARETRIP"                   => 'Sharetrip',
             "RABBITHOLE"                   => 'Rabbithole',
+            "SPIN_WHEEL"                   => 'Spin Wheel',
         ];
     }
 
