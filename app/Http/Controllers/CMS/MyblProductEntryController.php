@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Repositories\MyBlProductRepository;
+use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
 use App\Services\FreeProductPurchaseReportService;
+use App\Services\MyBlProductSchedulerService;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
 use Carbon\Carbon;
@@ -15,6 +18,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -33,7 +37,7 @@ class MyblProductEntryController extends Controller
     /**
      * @var ProductTagService
      */
-    private $productTagService;
+    private $productTagService, $myblProductRepository;
     private $baseMsisdnService;
     /**
      * @var FreeProductPurchaseReportService
@@ -45,17 +49,24 @@ class MyblProductEntryController extends Controller
      * @param ProductCoreService $service
      * @param ProductTagService $productTagService
      */
+    private $myblProductScheduleRepository, $myBlProductSchedulerService;
     public function __construct(
         ProductCoreService $service,
         ProductTagService $productTagService,
         BaseMsisdnService $baseMsisdnService,
-        FreeProductPurchaseReportService $freeProductPurchaseReportService
+        FreeProductPurchaseReportService $freeProductPurchaseReportService,
+        MyBlProductSchedulerRepository $myblProductScheduleRepository,
+        MyBlProductSchedulerService $myBlProductSchedulerService,
+        MyBlProductRepository $myblProductRepository
     ) {
         $this->middleware('auth');
         $this->service = $service;
         $this->productTagService = $productTagService;
         $this->baseMsisdnService = $baseMsisdnService;
         $this->freeProductPurchaseReportService = $freeProductPurchaseReportService;
+        $this->myblProductScheduleRepository = $myblProductScheduleRepository;
+        $this->myBlProductSchedulerService = $myBlProductSchedulerService;
+        $this->myblProductRepository = $myblProductRepository;
     }
 
     /**
@@ -92,7 +103,8 @@ class MyblProductEntryController extends Controller
 
         $details = $this->service->getProductDetails($product_code);
 
-        $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
+        $internet_categories = MyBlInternetOffersCategory::where('platform', 'mybl')->pluck('name', 'id')->sortBy('sort');
+
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
@@ -100,10 +112,38 @@ class MyblProductEntryController extends Controller
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
+        $productSchedulerData = $this->myblProductScheduleRepository->findActiveScheduleDataByProductCode($product_code);
+
+        $productScheduleRunning = false;
+        $warningText = "";
+
+        if(!is_null($productSchedulerData)) {
+            $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+//            dd($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel);
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && (!$productSchedulerData->change_state_status || !$productSchedulerData->product_core_change_state_status) && $productSchedulerData->is_cancel == 0)) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule will be start.";
+            }
+
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && ($productSchedulerData->change_state_status || $productSchedulerData->product_core_change_state_status) && $productSchedulerData->is_cancel == 0)) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule is running.";
+            }
+
+            if($productSchedulerData->change_state_status && !$productScheduleRunning && $productSchedulerData->is_cancel == 0) {
+                $productScheduleRunning = true;
+                $warningText = "It has not been reverted yet. ";
+            }
+
+            if ($productSchedulerData->start_date > $currentTime && !$productScheduleRunning && $productSchedulerData->is_cancel == 0) {
+                $productScheduleRunning = true;
+                $warningText = "Schedule will be start.";
+            }
+        }
 
         return view(
             'admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups')
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText')
         );
     }
 
@@ -139,7 +179,7 @@ class MyblProductEntryController extends Controller
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
-        $internet_categories = MyBlInternetOffersCategory::all()->pluck('name', 'id')->sortBy('sort');
+        $internet_categories = MyBlInternetOffersCategory::where('platform', 'mybl')->pluck('name', 'id')->sortBy('sort');
 
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')));
@@ -253,5 +293,74 @@ class MyblProductEntryController extends Controller
         }
         $purchaseProduct = $this->freeProductPurchaseReportService->findOne($purchaseProductId);
         return view('admin.free-product-analytic.purchase-msisdn', compact('purchaseProduct'));
+    }
+
+    public function getScheduleProduct()
+    {
+        $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+        $scheduleProducts = $this->myblProductScheduleRepository->getAllScheduleProducts();
+
+        return view('admin.my-bl-products.schedule-products', compact('scheduleProducts', 'currentTime'));
+    }
+
+    public function getScheduleProductRevert($id)
+    {
+
+        return $this->myBlProductSchedulerService->cancelSchedule($id);
+    }
+
+    public function scheduleProductsView($id)
+    {
+        $scheduleProduct = $this->myblProductScheduleRepository->findOne($id);
+
+        $productCode = $scheduleProduct['product_code'];
+        $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
+        $product = $product->first();
+
+        $productCore = $this->service->findBy(['product_code' => $productCode]);
+        $productCore = $productCore->first();
+
+        $tagTitleForScheduler = null;
+        $baseMsisdnTitleForSchedule = null;
+        $baseMsisdnTitleForProduct = null;
+
+        if(!is_null($scheduleProduct['tags'])) {
+            $tagIds = json_decode($scheduleProduct['tags']);
+            $tag = $this->myBlProductSchedulerService->getTag($tagIds[0]);
+            $tagTitleForScheduler = $tag->title;
+        }
+
+        if(!is_null($scheduleProduct['base_msisdn_group_id'])) {
+            $baseMsisdnTitleForSchedule = $this->baseMsisdnService->getMsisdnGroupTitle($scheduleProduct['base_msisdn_group_id']);
+        }
+
+
+        if(!is_null($product['base_msisdn_group_id'])) {
+
+            $baseMsisdnTitleForProduct = $this->baseMsisdnService->getMsisdnGroupTitle($product['base_msisdn_group_id']);
+        }
+
+        $productScheduleRunning = false;
+
+        $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
+        if (($currentTime >= $scheduleProduct->start_date && $currentTime <= $scheduleProduct->end_date && $scheduleProduct->change_state_status)) {
+            $productScheduleRunning = true;
+        }
+
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning', 'productCore'));
+    }
+
+    public function redisKeyUpdateView()
+    {
+        return view('admin.my-bl-products.new-product-redis-key-update');
+    }
+
+    public function redisKeyUpdate()
+    {
+        Redis::set('new_product_upload_time', Carbon::now()->timestamp);
+        Session::flash('message', 'Redis Key Update');
+
+        return redirect('redis-key-update-view');
+
     }
 }

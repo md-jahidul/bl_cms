@@ -5,7 +5,10 @@ namespace App\Http\Controllers\CMS;
 use App\Models\AgentList;
 use App\Models\AgentDeeplinkDetail;
 use App\Models\MyBlInternetOffersCategory;
+use App\Repositories\FifaDeeplinkRepository;
+use App\Repositories\ContentDeeplinkRepository;
 use App\Repositories\MyblManageItemRepository;
+use App\Repositories\UtilityBillRepository;
 use App\Services\DynamicDeeplinkService;
 use App\Services\FeedCategoryService;
 use App\Services\MyblAppMenuService;
@@ -35,6 +38,8 @@ class DynamicDeeplinkController extends Controller
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
     protected const MyBlCampaignSection = 'mybl_campaign';
+    protected const Fifa = 'fifa';
+    protected const Content = 'content';
     protected const OTHER = 'others';
     /**
      * @var MyBlInternetOffersCategoryService
@@ -59,11 +64,13 @@ class DynamicDeeplinkController extends Controller
     /**
      * @var MyBlCampaignSectionService
      */
-    private $myBlCampaignSectionService;
+    private $myBlCampaignSectionService, $contentDeeplinkRepository;
     /**
      * DynamicDeeplinkService constructor.
      * @param DynamicDeeplinkService $dynamicDeeplinkService
      */
+    protected $fifaDeeplinkRepository;
+    public $utilityBillRepository;
     public function __construct(
         DynamicDeeplinkService $dynamicDeeplinkService,
         MyBlInternetOffersCategoryService $internetOffersCategoryService,
@@ -71,7 +78,10 @@ class DynamicDeeplinkController extends Controller
         StoreCategoryService $storeCategoryService,
         MyblAppMenuService $appMenuService,
         MyblManageItemRepository $manageItemRepository,
-        MyBlCampaignSectionService $myBlCampaignSectionService
+        MyBlCampaignSectionService $myBlCampaignSectionService,
+        ContentDeeplinkRepository $contentDeeplinkRepository,
+        FifaDeeplinkRepository $fifaDeeplinkRepository,
+        UtilityBillRepository $utilityBillRepository
     ) {
         $this->dynamicDeeplinkService = $dynamicDeeplinkService;
         $this->internetOffersCategoryService = $internetOffersCategoryService;
@@ -80,6 +90,9 @@ class DynamicDeeplinkController extends Controller
         $this->appMenuService = $appMenuService;
         $this->manageItemRepository = $manageItemRepository;
         $this->myBlCampaignSectionService = $myBlCampaignSectionService;
+        $this->fifaDeeplinkRepository = $fifaDeeplinkRepository;
+        $this->contentDeeplinkRepository = $contentDeeplinkRepository;
+        $this->utilityBillRepository = $utilityBillRepository;
         $this->middleware('auth');
     }
 
@@ -117,7 +130,9 @@ class DynamicDeeplinkController extends Controller
     public function internetPackDeepLinkCreate(Request $request)
     {
         $internetCat = $this->internetOffersCategoryService->findOne($request->id);
-        return $this->dynamicDeeplinkService->generateDeeplink(self::INTERNET_PACK, $internetCat, $request);
+        $type = $internetCat->product_type ?? self::INTERNET_PACK;
+
+        return $this->dynamicDeeplinkService->generateDeeplink($type, $internetCat, $request);
     }
 
     /**
@@ -145,5 +160,28 @@ class DynamicDeeplinkController extends Controller
         $section = $this->myBlCampaignSectionService->findOne($request->id);
 
         return $this->dynamicDeeplinkService->generateDeeplink(self::MyBlCampaignSection, $section, $request);
+    }
+
+    public function fifaDeepLinkCreate(Request  $request)
+    {
+        $fifaDeeplink = $this->fifaDeeplinkRepository->findOne($request->id);
+
+        return $this->dynamicDeeplinkService->generateDeeplink(self::Fifa, $fifaDeeplink, $request);
+    }
+
+    public function contentDeepLinkCreate(Request  $request)
+    {
+        $contentData = $this->contentDeeplinkRepository->findOne($request->id);
+
+        $sectionType = self::Content;
+        if ($contentData->category_name == 'courses') {
+            $sectionType = 'course';
+        } else if ($contentData->category_name == 'cares') {
+            $sectionType = 'care';
+        } else if($contentData->category_name == 'content' && $contentData->slug == 'content'){
+            $sectionType = 'all';
+        }
+
+        return $this->dynamicDeeplinkService->generateDeeplink($sectionType, $contentData, $request);
     }
 }

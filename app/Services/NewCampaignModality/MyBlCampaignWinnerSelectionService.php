@@ -129,7 +129,7 @@ class MyBlCampaignWinnerSelectionService extends BaseService
                             ]
                         ];
 
-                        $response = PushNotificationService::sendNotification($notification);
+                        $response = PushNotificationService::sendPersistentNotification($notification);
 
                         $notify = json_decode($response);
                         if ($notify->status == "SUCCESS") {

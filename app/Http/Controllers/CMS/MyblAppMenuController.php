@@ -15,6 +15,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use App\Services\MyblSliderImageService;
 
 class MyblAppMenuController extends Controller
 {
@@ -22,14 +23,19 @@ class MyblAppMenuController extends Controller
      * @var MyblAppMenuService
      */
     private $menuService;
+    private $sliderImageService;
+
 
     /**
      * MyblAppMenuController constructor.
      */
     public function __construct(
-        MyblAppMenuService $menuService
+        MyblAppMenuService $menuService,
+        MyblSliderImageService $sliderImageService
     ) {
         $this->menuService = $menuService;
+        $this->sliderImageService = $sliderImageService;
+
     }
 
 //    public function getBreadcrumbInfo($parent_id)
@@ -98,7 +104,8 @@ class MyblAppMenuController extends Controller
         $menu = $this->menuService->findOrFail($id);
         $ctaActions = Helper::navigationActionList();
         $deeplinkActions = Helper::deepLinkList();
-        return view('admin.mybl-menu.edit', compact('menu', 'ctaActions', 'deeplinkActions'));
+        $products = $this->sliderImageService->getActiveProducts();
+        return view('admin.mybl-menu.edit', compact('menu', 'ctaActions', 'deeplinkActions', 'products'));
     }
 
     /**

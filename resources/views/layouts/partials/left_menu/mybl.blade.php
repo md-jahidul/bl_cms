@@ -72,12 +72,31 @@
                         <i class="la la-puzzle-piece"></i>Home Components</a>
                 </li>
             </ul>
-
+            <ul class="menu-content">
+                <li class="{{ is_active_url('content-components') }}">
+                    <a class="menu-item" href="{{ route('content-components') }}">
+                        <i class="la la-puzzle-piece"></i>Content Components</a>
+                </li>
+            </ul>
             <ul class="menu-content">
                 <li class=" {{is_active_url(route('health-hub.index'))}}">
                     <a class="menu-item" href="{{ route('health-hub.index') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-heart"></i>Health Hub
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Home Navigation Rail
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Content Navigation Rail
                     </a>
                 </li>
             </ul>
@@ -129,6 +148,17 @@
                     <a class="menu-item" href="{{ route('product-tags.index') }}">
                         <i class="ft-tag"></i>Product Tags</a>
                 </li>
+                <li class="{{ is_active_match(route('product.schedule'))}}">
+                    <a class="menu-item" href="{{ route('product.schedule') }}">
+                        <i class="la la-history"></i>Schedule Products</a>
+                </li>
+                <li class="{{ is_active_url('redis-key-update-view') }}">
+                    <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
+                        <i class="la la-align-center"></i>Activate New Product Code</a>
+                </li>
+{{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
+{{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
+{{--                </li>--}}
             </ul>
         </li>
     @endif
@@ -253,6 +283,7 @@
 
 
 
+
         <!-- Campaign V2 Menu -->
 
             <li class="nav-item"><a href="#"><i class="la la-users"></i>
@@ -310,7 +341,105 @@
                     <i class="la la-bullhorn"></i> Campaign Winner
                 </a>
             </li>
+
         </ul>
+    </li>
+    <!-- LMS -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">LMS</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_url('lms-components') }}">
+                <a class="menu-item" href="{{ route('lms-components') }}">
+                    <i class="la la-puzzle-piece"></i>Home Components</a>
+            </li>
+            <li class="{{ is_active_url('shortcut-components') }}">
+                <a class="menu-item" href="{{ route('shortcut-components') }}">
+                    <i class="la la-puzzle-piece"></i>Shortcut</a>
+            </li>
+        </ul>
+    </li>
+    <!-- PGW -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">PGW</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('pgw-gateway')}}">
+                <a class="menu-item" href="{{ url('pgw-gateway') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> PGW List</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('payment-gateways')}}">
+                <a class="menu-item" href="{{ url('payment-gateways') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Gateway List V2</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- PGW -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Commerce</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('mybl-commerce-components')}}">
+                <a class="menu-item" href="{{ url('mybl-commerce-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('utility-bill')}}">
+                <a class="menu-item" href="{{ url('utility-bill') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Utility</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('commerce-navigation-rail')}}">
+                <a class="menu-item" href="{{ url('commerce-navigation-rail') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Navigation Rail</a>
+            </li>
+        </ul>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('travel')}}">
+                <a class="menu-item" href="{{ url('travel') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Travel</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- FIFA WC -->
+    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('fifa-content')}}">
+                <a class="menu-item" href="{{ route('fifa-content') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Fifa Content
+                </a>
+            </li>
+            <li class=" {{is_active_url('teams')}}">
+                <a class="menu-item" href="{{ route('teams.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-users"></i> Team
+                </a>
+            </li>
+            <li class=" {{is_active_url('matches')}}">
+                <a class="menu-item" href="{{ route('matches.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Match
+                </a>
+            </li>
+            <li class=" {{is_active_url('signed-cookie')}}">
+                <a class="menu-item" href="{{ route('signed-cookie') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Generate Signed Cookie
+                </a>
+            </li>
+            <li class=" {{is_active_url('fifa-deeplink')}}">
+                <a class="menu-item" href="{{ route('fifa-deeplink') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> Deeplink
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="{{ is_active_url('trivia') . is_active_url('trivia/create')}}">
+        <a class="menu-item" href="{{ route('trivia.create') }} "
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-gamepad"></i> Trivia Gamification
+        </a>
     </li>
 
     <!-- Loyalty Partner Menu -->
@@ -376,6 +505,16 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
                 </li>
+                <li class="{{ is_active_match('generic-slider')}}">
+                    <a class="menu-item" href="{{ url('generic-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Slider</a>
+                </li>
+                <li class="{{ is_active_match('generic-carousel')}}">
+                    <a class="menu-item" href="{{ url('generic-carousel') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Carousel</a>
+                </li>
                 <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
                     <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
@@ -405,11 +544,20 @@
                     <a class="menu-item" href="{{ route('welcome-banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-image"></i>My-BL Welcome Banner</a>
                 </li>
+                <li class="{{is_active_url('popup-banner')}}">
+                    <a class="menu-item" href="{{ route('popup-banner.index') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Popup Banner
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
 
-
+    <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
+                class="la la-fighter-jet"></i>
+            <span class="menu-title" data-i18n="nav.dash.main">Content & Course Deeplink</span></a>
+    </li>
     @if( auth()->user()->can_view('HelpCenter') )
         <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Offers</span></a>
@@ -729,6 +877,43 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Transaction Status Report Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-list"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Transaction Report</span></a>
+        <ul class="menu-content">
+            <li class="{{is_active_url('mybl/course-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.course') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Course Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/music-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.music') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Music Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/sharetrip-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.sharetrip') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>ShareTrip Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('commerce-bill-status-view')}}">
+                <a class="menu-item" href="{{ route('commerce-bill-status-view') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Commerce Bill Status
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/doctime-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.doctime') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>DocTime Transaction
+                </a>
             </li>
         </ul>
     </li>
