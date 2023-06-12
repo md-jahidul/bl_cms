@@ -88,6 +88,6 @@ class UtilityBillController extends Controller
 
     public function getCommerceTransaction(Request $request)
     {
-        return $billStatus = $this->commerceBillStatusService->getCommerceTransaction($request);
+        return $this->commerceBillStatusService->getCommerceTransaction($request);
     }
 }

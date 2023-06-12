@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Course Transaction Status')
-@section('card_name', 'Course Transaction Status')
+@section('title', 'DocTime Transaction Status')
+@section('card_name', 'DocTime Transaction Status')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Course Transaction Status</li>
+    <li class="breadcrumb-item active">DocTime Transaction Status</li>
 @endsection
 @section('content')
     <section>
@@ -12,8 +12,8 @@
                     <div class="col-md-12" style="margin-top: 10px;">
                         <table border="0" cellspacing="5" cellpadding="5" style="float: right">
                             <tr>
-                                <td>Invoice Id:</td>
-                                <td><input type="text" class="form-control" id="invoice_id" name="invoice_id" autocomplete="off"></td>
+                                <td>Transaction Id:</td>
+                                <td><input type="text" class="form-control" id="transaction_id" name="transaction_id" autocomplete="off"></td>
                                 <td>From:</td>
                                 <td><input type="text" class="datepicker form-control" id="from" name="from" autocomplete="off"></td>
                                 <td>To:</td>
@@ -26,18 +26,18 @@
                 <div class="card-body card-dashboard">
                     <div class="col-md-12 mt-3">
                         <table class="table table-striped table-bordered dataTable"
-                            id="transaction_list" role="grid">
+                            id="doctime_transaction_list" role="grid">
                             <thead>
                             <tr>
                                 <th>Sl.</th>
-                                <th>Invoice Id</th>
-                                <th>Contact no</th>
-                                <th>Sub Total</th>
-                                <th>Promo Code</th>
-                                <th>Total Promo Discount</th>
-                                <th>Total Default Discount</th>
-                                <th>Order Total Price</th>
-                                <th>Items</th>
+                                <th>Transaction Id</th>
+                                <th>Contact No</th>
+                                <th>Service</th>
+                                <th>Service Id</th>
+                                <th>Amount</th>
+                                <th>Payment Status</th>
+                                <th>Transaction Time</th>
+                                <th>Remarks</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,9 +71,10 @@
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script>
         $(function () {
+            
             $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
 
-            $("#transaction_list").dataTable({
+            $("#doctime_transaction_list").dataTable({
                 scrollX: true,
                 processing: true,
                 searching: false,
@@ -84,10 +85,10 @@
                 pageLength: 30,
                 lengthChange: true,
                 ajax: {
-                    url: '{{ route('mybl.transaction-status.course.list') }}',
+                    url: '{{ route('mybl.transaction-status.doctime.list') }}',
                     data: {
-                        invoice_id: function () {
-                            return $("#invoice_id").val();
+                        transaction_id: function () {
+                            return $("#transaction_id").val();
                         },
                         from: function () {
                             return $("#from").val();
@@ -107,9 +108,9 @@
                     },
 
                     {
-                        name: 'invoice_id',
+                        name: 'transaction_id',
                         render: function (data, type, row) {
-                            return row.invoice_id;
+                            return row.transaction_id;
                         }
                     },
                     
@@ -121,49 +122,44 @@
                     },
                     
                     {
-                        name: 'sub_total',
+                        name: 'service',
                         render: function (data, type, row) {
-                            return row.sub_total;
+                            return row.service;
                         }
                     },
                     
                     {
-                        name: 'promo_code',
+                        name: 'service_id',
                         render: function (data, type, row) {
-                            return row.promo_code;
+                            return row.service_id;
                         }
                     },
                     
                     {
-                        name: 'total_promo_discount',
+                        name: 'amount',
                         render: function (data, type, row) {
-                            return row.total_promo_discount;
+                            return row.amount;
                         }
                     },
                     
                     {
-                        name: 'total_default_discount',
+                        name: 'payment_status	',
                         render: function (data, type, row) {
-                            return row.total_default_discount;
+                            return row.payment_status	;
                         }
                     },
                     
                     {
-                        name: 'order_total_price	',
+                        name: 'transaction_time	',
                         render: function (data, type, row) {
-                            return row.order_total_price	;
+                            return row.transaction_time	;
                         }
                     },
                     
                     {
-                        name: 'items	',
+                        name: 'remarks	',
                         render: function (data, type, row) {
-                            let itemList = '<ol>';
-                            row.items.forEach((item, index)=>{
-                                itemList += `<li>Catalog Product Id: ${item.catalog_product_id}</li>`
-                            })
-                            itemList += '<ol>';
-                            return itemList;
+                            return row.remarks	;
                         }
                     }
                 ],
@@ -172,13 +168,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7]
+                            columns: [ 1,2,3,4,5,6,7,8]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7]
+                            columns: [ 1,2,3,4,5,6,7,8]
                         }
                     }
                 ],
@@ -189,7 +185,7 @@
             });
 
             $( "#submit" ).click(function() {
-                $('#transaction_list').DataTable().ajax.reload();
+                $('#doctime_transaction_list').DataTable().ajax.reload();
             });
         });
     </script>
