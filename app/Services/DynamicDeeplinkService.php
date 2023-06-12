@@ -80,8 +80,13 @@ class DynamicDeeplinkService
 
         if ($sectionType == "others") {
             $endPointURL = $category;
-        } elseif ($request->category == "content") {
-            $endPointURL = "$category/$sectionType";
+        } elseif ($moduleData->category_name == "content") {
+            if ($sectionType == 'all'){
+                $endPointURL = "$category/$sectionType";
+            } else {
+                $endPointURL = "$request->category";
+            }
+
         } elseif ($moduleData->category_name == "commerce") {
             if($moduleData->slug == 'commerce') {
                 $endPointURL = "commerce/all";

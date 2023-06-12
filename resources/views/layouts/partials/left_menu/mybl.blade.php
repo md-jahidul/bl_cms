@@ -344,7 +344,20 @@
 
         </ul>
     </li>
-
+    <!-- LMS -->
+    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">LMS</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_url('lms-components') }}">
+                <a class="menu-item" href="{{ route('lms-components') }}">
+                    <i class="la la-puzzle-piece"></i>Home Components</a>
+            </li>
+            <li class="{{ is_active_url('shortcut-components') }}">
+                <a class="menu-item" href="{{ route('shortcut-components') }}">
+                    <i class="la la-puzzle-piece"></i>Shortcut</a>
+            </li>
+        </ul>
+    </li>
     <!-- PGW -->
     <li class="nav-item"><a href="#"><i class="la la-users"></i>
         <span class="menu-title" data-i18n="nav.templates.main">PGW</span></a>
@@ -381,11 +394,6 @@
         <ul class="menu-content">
             <li class="{{ is_active_match('travel')}}">
                 <a class="menu-item" href="{{ url('travel') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Travel</a>
-            </li>
-        </ul>
-        <ul class="menu-content">
-            <li class="{{ is_active_match('commerce-bill-status')}}">
-                <a class="menu-item" href="{{ url('commerce-bill-status') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Bill Status</a>
             </li>
         </ul>
     </li>
@@ -501,6 +509,11 @@
                     <a class="menu-item" href="{{ url('generic-slider') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Slider</a>
+                </li>
+                <li class="{{ is_active_match('generic-carousel')}}">
+                    <a class="menu-item" href="{{ url('generic-carousel') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Carousel</a>
                 </li>
                 <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
                     <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"
@@ -864,6 +877,43 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Transaction Status Report Menu -->
+    <li class=" nav-item"><a href="#"><i class="la la-list"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Transaction Report</span></a>
+        <ul class="menu-content">
+            <li class="{{is_active_url('mybl/course-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.course') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Course Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/music-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.music') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Music Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/sharetrip-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.sharetrip') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>ShareTrip Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('commerce-bill-status-view')}}">
+                <a class="menu-item" href="{{ route('commerce-bill-status-view') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Commerce Bill Status
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/doctime-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.doctime') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>DocTime Transaction
+                </a>
             </li>
         </ul>
     </li>

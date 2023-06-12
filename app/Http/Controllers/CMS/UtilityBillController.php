@@ -83,8 +83,11 @@ class UtilityBillController extends Controller
 
     public function showCommerceBill()
     {
-        $billStatus = $this->commerceBillStatusService->getPaginatedBills();
+        return view('admin.commerce.bills');
+    }
 
-        return view('admin.commerce.bills', compact('billStatus'));
+    public function getCommerceTransaction(Request $request)
+    {
+        return $this->commerceBillStatusService->getCommerceTransaction($request);
     }
 }
