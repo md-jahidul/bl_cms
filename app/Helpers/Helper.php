@@ -145,6 +145,7 @@ class Helper
             "BUS"                   => 'Bus',
             "SUPPORT_EMAIL"           => 'Support Email',
             "SPIN_WHEEL"                   => 'Spin Wheel',
+            "COMMUNITY"               => 'Community'
         ];
     }
 
