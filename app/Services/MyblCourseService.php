@@ -41,6 +41,12 @@ class MyblCourseService
         $builder = new CourseTransactionStatus();
         $builder = $builder->latest();
 
+        if ($request->from && $request->to) {
+            $datefrom = $request->from . ' 00:00:00';
+            $dateto = $request->to . ' 23:59:59';
+            $builder = $builder->whereBetween('created_at', [$datefrom, $dateto]);
+        }
+        
         $builder = $builder->whereHas(
             'items',
             function ($q) use ($request) {
@@ -51,6 +57,9 @@ class MyblCourseService
         )->with('items:id,invoice_id,catalog_product_id,catalog_sku_id,actual_price,default_discount,final_price');
 
         $all_items_count = $builder->count();
+
+        if ($length == -1 ) $length = $all_items_count;
+
         $items = $builder->skip($start)->take($length)->get();
 
         $response = [

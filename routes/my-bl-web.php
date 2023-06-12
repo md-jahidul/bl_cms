@@ -1098,6 +1098,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/sharetrip-transaction-status-report-view', 'CMS\MyblTransactionStatusController@sharetripTransactionList')->name('mybl.transaction-status.sharetrip');
     Route::get('mybl/sharetrip-transaction-status-report', 'CMS\MyblTransactionStatusController@getSharetripTransaction')
         ->name('mybl.transaction-status.sharetrip.list');
+
+    #DocTime
+    Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
+    Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
+        ->name('mybl.transaction-status.doctime.list');
         
     /**
      * Generic Carousel

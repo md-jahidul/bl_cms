@@ -6,6 +6,7 @@ use App\Services\MyblCourseService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Controllers\Controller;
+use App\Services\MyblDoctimeService;
 use App\Services\MyblMusicService;
 use App\Services\MyblSharetripService;
 use Illuminate\View\View;
@@ -26,6 +27,11 @@ class MyblTransactionStatusController extends Controller
      * @var MyblSharetripService
      */
     private $sharetripService;
+    
+    /**
+     * @var MyblDoctimeService
+     */
+    private $doctimeService;
 
     /**
      * MyblTransactionStatusController constructor.
@@ -33,11 +39,13 @@ class MyblTransactionStatusController extends Controller
     public function __construct(
         MyblCourseService $courseService,
         MyblMusicService $musicService,
-        MyblSharetripService $sharetripService
+        MyblSharetripService $sharetripService,
+        MyblDoctimeService $doctimeService
     ) {
         $this->courseService = $courseService;
         $this->musicService = $musicService;
         $this->sharetripService = $sharetripService;
+        $this->doctimeService = $doctimeService;
     }
 
     /**
@@ -95,6 +103,25 @@ class MyblTransactionStatusController extends Controller
     public function getSharetripTransaction(Request $request)
     {
         return $this->sharetripService->getSharetripTransaction($request);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function doctimeTransactionList()
+    {
+        return view('admin.transaction-status.doctime_transaction_list');
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getDoctimeTransaction(Request $request)
+    {
+        return $this->doctimeService->getDoctimeTransaction($request);
     }
 
 }
