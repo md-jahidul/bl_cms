@@ -33,8 +33,8 @@ class CreateMyBlCampaignsTable extends Migration
             $table->string('reward_getting_type')->nullable();
             $table->string('bonus_reward_type')->nullable();
             $table->string('bonus_product_code')->nullable();
-            $table->integer('number_of_apply_times')->default(0);
-            $table->integer('max_amount')->default(0);
+            $table->integer('number_of_apply_times')->nullable();
+            $table->integer('max_amount')->nullable();
             $table->string('purchase_eligibility')->nullable();
             $table->json('payment_gateways')->nullable();
             $table->string('payment_channels')->nullable();

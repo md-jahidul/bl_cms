@@ -32,7 +32,7 @@
                             @endif
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label for="title" class="required">Campaign Name</label>
                                         <input required maxlength="250"
                                                data-validation-required-message="Title is required"
@@ -43,8 +43,22 @@
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
-
-                                    <div class="form-group col-md-4 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <div class="form-group col-md-6">
+                                        <label for="user_type">Campaign For</label>
+                                        <div>
+                                            <input type="radio" name="user_type" value="all" id="all"
+                                            @if(!isset($campaign)) {{ 'checked' }}@endif
+                                            @if( isset($campaign) && $campaign->user_type == "all") {{ 'checked' }} @endif>
+                                            <label for="all" class="mr-3 cursor-pointer">All</label>
+                                            <input type="radio" name="user_type" value="prepaid"
+                                                   id="prepaid" @if(isset($campaign) && $campaign->user_type == "prepaid") {{ 'checked' }} @endif>
+                                            <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
+                                            <input type="radio" name="user_type" value="postpaid"
+                                                   id="postpaid" @if(isset($campaign) && $campaign->user_type == "postpaid") {{ 'checked' }} @endif>
+                                            <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                         <label for="start_date">Start Date</label>
                                         <div class='input-group'>
                                             <input type='text' class="form-control" name="start_date" id="start_date"
@@ -58,7 +72,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="form-group col-md-4 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                         <label for="end_date">End Date</label>
                                         <input type="text" name="end_date" id="end_date" class="form-control"
                                                placeholder="Please select end date"
