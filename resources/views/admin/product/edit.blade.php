@@ -243,6 +243,8 @@
                                         <label for="rate_cutter" class="ml-1"><strong>Is Rate Cutter Offer</strong></label> <br>
                                         <input type="checkbox" name="is_four_g_offer" value="1" id="is_four_g_offer" {{ ($product->is_four_g_offer == 1) ? 'checked' : '' }}>
                                         <label for="is_four_g_offer" class="ml-1"><strong>Is 4G Offer</strong></label> <br>
+                                        <input type="checkbox" name="is_recharge" value="1" id="is_recharge" {{ ($product->is_recharge == 1) ? 'checked' : '' }}>
+                                        <label for="is_recharge" class="ml-1"><strong>Is Recharge Offer</strong></label> <br>
                                     </div>
                                 </div>
 

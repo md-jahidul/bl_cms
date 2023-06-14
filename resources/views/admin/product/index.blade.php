@@ -56,6 +56,7 @@
                                     <td>{{ $product->name_en }}
                                         {!! $product->status == 0 ? '<span class="danger pl-1"><strong> (Inactive)</strong></span>' : '' !!}
                                         {!! $product->show_in_home == 1 ? '<span class="success pl-1"><strong> (Show In Home)</strong></span>' : '' !!}
+                                        {!! $product->is_recharge == 1 ? '<span class="primary pl-1"><strong> (Recharge Offer)</strong></span>' : '' !!}
                                     </td>
                                     <td>{{ $product->product_code }}</td>
                                     <td>{{ $product->product_core['activation_ussd'] }}</td>
@@ -63,7 +64,7 @@
                                     <td>{{ $product->url_slug }}</td>
                                     <td>{{ isset($product->product_core['mrp_price']) ? $product->product_core['mrp_price'] : "" }}</td>
                                     <td>
-{{--                                            // Other Details ==============================================--}}
+                                        {{--// Other Details ==============================================--}}
                                         @if(
                                             $product->offer_category->alias == "others" ||
 //                                            $product->offer_category->alias == 'packages' ||
