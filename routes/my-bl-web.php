@@ -997,7 +997,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
 
-    Route::resource('trivia', 'CMS\TriviaGamificationController');
+    Route::resource('gamification', 'CMS\TriviaGamificationController');
+    Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
+
 
 
     //PGW Routes
@@ -1109,6 +1111,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('generic-carousel', 'CMS\GenericCarouselController');
     Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
     Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
+
+
+    /**
+     * Internet Gift content
+     */
+    Route::resource('internet-gift-content', 'CMS\InternetGiftContentController');
+    Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
+    Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
 
 //
