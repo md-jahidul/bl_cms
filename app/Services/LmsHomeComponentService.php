@@ -62,6 +62,8 @@ class LmsHomeComponentService
             }
             Redis::del('lms_component_prepaid');
             Redis::del('lms_component_postpaid');
+            Redis::del('lms_old_user_postpaid');
+            Redis::del('lms_old_user_prepaid');
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -86,6 +88,8 @@ class LmsHomeComponentService
         $component->save();
         Redis::del('lms_component_prepaid');
         Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return response("Successfully status changed");
     }
 
@@ -99,6 +103,8 @@ class LmsHomeComponentService
         $this->save($data);
         Redis::del('lms_component_prepaid');
         Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return response("LMS Component update successfully!");
     }
 
@@ -108,6 +114,8 @@ class LmsHomeComponentService
         $component->update($data);
         Redis::del('lms_component_prepaid');
         Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return response("LMS Component update successfully!");
     }
 
@@ -117,6 +125,8 @@ class LmsHomeComponentService
         $component->delete();
         Redis::del('lms_component_prepaid');
         Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return [
             'message' => 'Component delete successfully',
         ];

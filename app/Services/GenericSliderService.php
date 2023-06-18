@@ -105,6 +105,8 @@ class GenericSliderService
                 $this->lmsHomeComponentService->save($homeComponentData);
                 Redis::del('lms_component_prepaid');
                 Redis::del('lms_component_postpaid');
+                Redis::del('lms_old_user_postpaid');
+                Redis::del('lms_old_user_prepaid');
             }
 
             DB::commit();
@@ -160,6 +162,8 @@ class GenericSliderService
                 $lmsComponent->update($homeComponentData);
                 Redis::del('lms_component_prepaid');
                 Redis::del('lms_component_postpaid');
+                Redis::del('lms_old_user_postpaid');
+                Redis::del('lms_old_user_prepaid');
             }
 
             if (isset($data['icon']) && $data['icon'] != 'not-updated' && $data['icon'] != 'removed') {
@@ -275,6 +279,8 @@ class GenericSliderService
                 $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
                 Redis::del('lms_component_prepaid');
                 Redis::del('lms_component_postpaid');
+                Redis::del('lms_old_user_postpaid');
+                Redis::del('lms_old_user_prepaid');
             }
             $slider->delete();
 

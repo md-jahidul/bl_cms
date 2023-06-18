@@ -139,12 +139,12 @@ class Helper
             "ELECTRICITY"             => 'Electricity',
             "GAS"                     => 'Gas',
             "WATER"                   => 'Water',
-            "SHARETRIP"                   => 'Sharetrip',
+            "SHARETRIP"               => 'Sharetrip',
             "CONTENT"                 => 'Content',
-            "RABBITHOLE"                   => 'Rabbithole',
-            "BUS"                   => 'Bus',
+            "RABBITHOLE"              => 'Rabbithole',
+            "BUS"                     => 'Bus',
             "SUPPORT_EMAIL"           => 'Support Email',
-            "SPIN_WHEEL"                   => 'Spin Wheel',
+            "SPIN_WHEEL"              => 'Spin Wheel',
             "COMMUNITY"               => 'Community'
         ];
     }
