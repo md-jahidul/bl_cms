@@ -132,7 +132,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary" id="submit"></button>
                             <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
@@ -158,6 +157,16 @@
     </style>
 @endpush
 
+@push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #componentSortable tr td{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+    </style>
+@endpush
+
 @push('page-js')
     <script>
         (function () {
@@ -168,6 +177,46 @@
             let enable_yes = $("#can_enable_yes");
             let disable_no = $("#can_disable_no");
 
+            function saveNewPositions()
+            {
+                var positions = [];
+                $('.update').each(function () {
+                    positions.push({
+                        'id' : $(this).attr('data-index'),
+                        'serial' : $(this).attr('data-position'),
+                        'component_id' : $(this).attr('data-component-id')
+                    });
+                })
+                $.ajax({
+                    methods: "POST",
+                    url: "{{ url('non-bl-offers-components-sort') }}",
+                    data: {
+                        position: positions
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if (data.status === "error") {
+                            alert('Opps, something went wrong!!')
+                        }
+                    },
+                    error: function () {
+                        alert('Opps, something went wrong!!')
+                        window.location.replace("{{ url('non-bl-offers') }}");
+                    }
+                });
+            }
+
+            $("#componentSortable").sortable({
+                update: function (event, ui) {
+                    // console.log(auto_save_url)
+                    $(this).children().each(function (index) {
+                        if ($(this).attr('data-position') != (index + 1)) {
+                            $(this).attr('data-position', (index + 1)).addClass('update')
+                        }
+                    });
+                    saveNewPositions();
+                }
+            });
             $('.change_status').click(function (event) {
                 event.preventDefault()
                 let status = $(this).attr('data-value');
