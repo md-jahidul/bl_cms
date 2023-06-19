@@ -1007,6 +1007,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
     Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
+    Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
