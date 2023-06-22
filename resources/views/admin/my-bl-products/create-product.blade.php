@@ -55,6 +55,7 @@
                                         <option value="sms">SMS BUNDLES</option>
                                         <option value="scr">SPECIAL CALL RATE</option>
                                         <option value="recharge_offer">RECHARGE OFFER</option>
+                                        <option value="reactivation">REACTIVATION OFFER</option>
                                         <option value="ma loan">MA LOAN</option>
                                         <option value="data loan">DATA LOAN</option>
                                         <option value="gift">GIFT</option>
@@ -665,11 +666,24 @@
                               <div class="help-block"></div>
                            </div>`
 
+
             let callRateUnit = `<div class="form-group col-md-4">
                                   <label class="required">Call Rate Unit</label>
                                   <input class="form-control" name="call_rate_unit" required>
                                   <div class="help-block"></div>
                                 </div>`
+
+            let reactivationCallRateUnit = `<div class="form-group col-md-4">
+                                  <label>Call Rate Unit</label>
+                                  <input class="form-control" name="call_rate_unit">
+                                  <div class="help-block"></div>
+                                </div>`
+
+            let reactivationCallRate = `<div class="form-group col-md-4">
+                              <label>Call Rate</label>
+                              <input type="number" class="form-control" name="call_rate">
+                              <div class="help-block"></div>
+                           </div>`
 
             let sectionType = `<div class="form-group col-md-4">
                                     <label class="required">Product Categories</label>
@@ -695,6 +709,8 @@
                 type === 'gift'
             ) {
                 offer_types.append(data + dataUnit + sectionType)
+            } else if (type === 'reactivation') {
+                offer_types.append(data + dataUnit + voiceVol + reactivationCallRate + reactivationCallRateUnit)
             } else if (type === 'mix' || type === 'recharge_offer') {
                 offer_types.append(data + dataUnit + voiceVol + smsVol + sectionType)
             } else if (type === 'voice') {
