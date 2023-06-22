@@ -1103,6 +1103,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
+
+    #Bus Ticket
+    /**
+     * Have Plane to put all transaction status under one controller and service
+     * Bus
+     */
+    Route::get('mybl/{type}/transaction-status-report-view', 'CMS\MyblTransactionStatusController@getTransactionList')->name('mybl.transaction-status');
+    Route::get('mybl/{type}/transaction-status-report', 'CMS\MyblTransactionStatusController@getTransaction')
+        ->name('mybl.transaction-status.list');
         
     /**
      * Generic Carousel

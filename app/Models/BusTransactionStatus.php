@@ -24,6 +24,7 @@ class BusTransactionStatus extends Model
         'ticket_no',
         'from_station',
         'to_station',
+        'date',
         'time',
         'bus_name',
         'amount',
