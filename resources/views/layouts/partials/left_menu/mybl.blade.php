@@ -1126,6 +1126,12 @@
                     <i class="la la-list"></i>DocTime Transaction
                 </a>
             </li>
+            <li class="{{is_active_url('mybl/bus/transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status', ['type' => 'bus']) }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Bus Transaction
+                </a>
+            </li>
         </ul>
     </li>
 
