@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Models\SharetripTransactionStatus;
+use App\Models\TransactionStatusDoctime;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MyblSharetripService
+class MyblDoctimeService
 {
     use CrudTrait;
 
@@ -16,13 +16,13 @@ class MyblSharetripService
      * @param Request $request
      * @return array
      */
-    public function getSharetripTransaction(Request $request)
+    public function getDoctimeTransaction(Request $request)
     {
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = new SharetripTransactionStatus();
+        $builder = new TransactionStatusDoctime();
 
         $builder = $builder->latest();
 
@@ -32,9 +32,9 @@ class MyblSharetripService
             $builder = $builder->whereBetween('created_at', [$datefrom, $dateto]);
         }
 
-        if ($request->booking_code) {
+        if ($request->transaction_id) {
             
-            $builder = $builder->where('booking_code', $request->booking_code);
+            $builder = $builder->where('transaction_id', $request->transaction_id);
         }
 
         $all_items_count = $builder->count();
@@ -52,13 +52,14 @@ class MyblSharetripService
 
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
-                'msisdn' => $item->msisdn,
-                'pnr_code' => $item->pnr_code,
-                'booking_code' => $item->booking_code,
-                'booking_status' => $item->booking_status,
-                'payment_status' => $item->payment_status,
+                'contact_no' => $item->contact_no,
+                'service' => $item->service,
+                'service_id' => $item->service_id,
                 'amount' => $item->amount,
-                'createdAt' => $item->createdAt,
+                'payment_status' => $item->payment_status,
+                'transaction_time' => $item->transaction_time,
+                'transaction_id' => $item->transaction_id,
+                'remarks' => $item->remarks,
             ];
         });
         return $response;

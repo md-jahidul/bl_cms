@@ -396,11 +396,6 @@
                 <a class="menu-item" href="{{ url('travel') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Travel</a>
             </li>
         </ul>
-        <ul class="menu-content">
-            <li class="{{ is_active_match('commerce-bill-status-view')}}">
-                <a class="menu-item" href="{{ url('commerce-bill-status-view') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Commerce Bill Status</a>
-            </li>
-        </ul>
     </li>
 
     <!-- FIFA WC -->
@@ -440,10 +435,10 @@
         </ul>
     </li>
 
-    <li class="{{ is_active_url('trivia') . is_active_url('trivia/create')}}">
-        <a class="menu-item" href="{{ route('trivia.create') }} "
+    <li class="{{ is_active_url('gamification') . is_active_url('gamification')}}">
+        <a class="menu-item" href="{{ route('gamification.index') }} "
            data-i18n="nav.templates.vert.classic_menu">
-            <i class="la la-gamepad"></i> Trivia Gamification
+            <i class="la la-gamepad"></i>Gamification
         </a>
     </li>
 
@@ -908,8 +903,34 @@
                     <i class="la la-list"></i>ShareTrip Transaction
                 </a>
             </li>
+            <li class="{{is_active_url('commerce-bill-status-view')}}">
+                <a class="menu-item" href="{{ route('commerce-bill-status-view') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Commerce Bill Status
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/doctime-transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status.doctime') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>DocTime Transaction
+                </a>
+            </li>
         </ul>
     </li>
+
+    <!-- Gift -->
+    <li class=" nav-item"><a href="#"><i class="la la-list"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Gift</span></a>
+        <ul class="menu-content">
+            <li class="{{is_active_url('internet-gift-content')}}">
+                <a class="menu-item" href="{{ url('internet-gift-content') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Internet Gift Content
+                </a>
+            </li>
+        </ul>
+    </li>
+
 @endif
 
 <li class="{{ is_active_url('developer/api/debug') }}">
