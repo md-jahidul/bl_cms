@@ -200,7 +200,7 @@
                 element.datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
-                    minDate: date,
+                    minDate: (element.val() == "") ? date : false,
                 });
             }
 
