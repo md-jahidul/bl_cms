@@ -1001,6 +1001,9 @@
             });
 
             $('.form').submit(function () {
+                // Disable the submit button after click
+                $('.form #save').prop('disabled', true);
+
                 if ($('input[name=recurring_type]:checked').val() != 'none') {
                     let dateRange = $('#display_period').val().split("-");
                     var start = dateRange[0] + ' 12:00 AM';
