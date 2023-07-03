@@ -1316,6 +1316,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
     Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
+    Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
@@ -1429,6 +1430,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
+
+    #Bus Ticket
+    /**
+     * Have Plane to put all transaction status under one controller and service
+     * Bus
+     */
+    Route::get('mybl/{type}/transaction-status-report-view', 'CMS\MyblTransactionStatusController@getTransactionList')->name('mybl.transaction-status');
+    Route::get('mybl/{type}/transaction-status-report', 'CMS\MyblTransactionStatusController@getTransaction')
+        ->name('mybl.transaction-status.list');
         
     /**
      * Internet Gift content

@@ -38,4 +38,32 @@ class NonBlOfferService
         Redis::del('non_bl_offer');
         return response("Successfully status changed");
     }
+
+    public function tableSort($request)
+    {
+        try {
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $menu_id = $position['id'];
+                $new_position = $position['serial'];
+                $componentId = $position['component_id'];
+                if ($componentId == 0) {
+                    $update_menu = $this->findOne($menu_id);
+                    $update_menu['display_order'] = $new_position;
+                    $update_menu->update();
+                }
+            }
+            Redis::del('non_bl_offer');
+            return [
+                'status' => "success",
+                'massage' => "Order Changed successfully"
+            ];
+        } catch (\Exception $exception) {
+            $error = $exception->getMessage();
+            return [
+                'status' => "error",
+                'massage' => $error
+            ];
+        }
+    }
 }

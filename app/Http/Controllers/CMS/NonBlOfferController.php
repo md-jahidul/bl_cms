@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Services\NonBlOfferService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class NonBlOfferController extends Controller
@@ -28,5 +29,10 @@ class NonBlOfferController extends Controller
         $response = $this->nonBlOfferService->changeStatus($id);
         Session::flash('success', $response->getContent());
         return redirect()->route('nonbl.offers');
+    }
+
+    public function componentSort(Request $request)
+    {
+        return $this->nonBlOfferService->tableSort($request);
     }
 }

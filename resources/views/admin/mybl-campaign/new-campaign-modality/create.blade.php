@@ -555,6 +555,7 @@
                 element.datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
             }
 
@@ -934,10 +935,12 @@
                 $('.product_start_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 dropify()
                 dateTime(productStart)
@@ -966,10 +969,12 @@
                 $('.product_start_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
 
                 dateTime(productStart)
@@ -1051,6 +1056,9 @@
             });
 
             $('.form').submit(function () {
+                // Disable the submit button after click
+                $('.form #save').prop('disabled', true);
+
                 if ($('input[name=recurring_type]:checked').val() != 'none') {
                     let dateRange = $('#display_period').val().split("-");
                     var start = dateRange[0] + ' 12:00 AM';
