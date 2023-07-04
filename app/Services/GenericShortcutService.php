@@ -36,6 +36,8 @@ class GenericShortcutService
             ]);
         }
 
+        $data['sort_order'] = $this->genericShortcutRepository->getMaxSortOrder($data) + 1;
+
         return $this->save($data);
     }
 

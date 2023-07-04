@@ -62,7 +62,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
     Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
     Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
-    Route::get('generic-shortcut/update-position', 'CMS\GenericShortcutController@updatePosition');
+    Route::get('generic-shortcut-update-position', 'CMS\GenericShortcutController@updatePosition');
 
     //------ shortcuts -----------//
 
