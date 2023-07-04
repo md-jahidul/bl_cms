@@ -1007,7 +1007,10 @@ class ProductCoreService
             DB::beginTransaction();
 
             $model = MyBlProduct::where('product_code', $product_code);
-
+            $data['pin_to_top_sequence'] = 100000;
+            if ($data['pin_to_top']) {
+                $data['pin_to_top_sequence'] = count(MyBlProduct::where('pin_to_top', true)->get()) + 1;
+            }
             $model->update($data);
 
             $coreProduct = ProductCore::where('product_code', $product_code)->update($coreData);
@@ -1431,5 +1434,11 @@ class ProductCoreService
                 'massage' => $exception->getMessage()
             ];
         }
+    }
+
+    public function findAllPinToTopProducts()
+    {
+        $orderBy = ['column' => 'pin_to_top_sequence', 'direction' => 'ASC'];
+        return $this->myBlProductRepository->findBy(['pin_to_top' => true], null, $orderBy);
     }
 }
