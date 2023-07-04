@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Redis;
 
 class GenericShortcutController extends Controller
 {
+    /**
+     * @var GenericShortcutService
+     */
     protected $genericShortcutService;
 
     protected $genericShortcutMasterService;
@@ -85,12 +88,19 @@ class GenericShortcutController extends Controller
 
     public function updatePosition(Request $request)
     {
-        foreach ($request->position as $position) {
-            $image = GenericShortcut::FindorFail($position[0]);
-            $image->update(['sequence' => $position[1]]);
-        }
+        $data = $request->position;
+
+        $item1 = GenericShortcut::FindorFail($data[0][0]);
+        $item2 = GenericShortcut::FindorFail($data[1][0]);
+
+        $data1['sort_order'] = $item2->sort_order;
+        $data2['sort_order'] = $item1->sort_order;
+
+        $item1->update($data1);
+        $item2->update($data2);
 
         $this->deleteRedisKey();
+
         return "success";
     }
 

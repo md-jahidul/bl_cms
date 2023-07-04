@@ -612,12 +612,12 @@
         }
 
         let checkImageRatio = function ($this) {
-            let size = "<?php echo round($size, 2) ?>";
-            let width = "<?php echo $width ?>";
-            let height = "<?php echo $height ?>";
+            let size = `{{round($size, 2)}}`;
+            let width = `{{$width}}`;
+            let height = `{{$height}}`;
             createImageBitmap($this.files[0]).then((bmp) => {
-
-                if (size != -1 || (bmp.width / bmp.height).toFixed(2) == size) {
+                console.log(size != -1 || (bmp.width / bmp.height).toFixed(2) == size);
+                if (size == -1 || (bmp.width / bmp.height).toFixed(2) == size) {
                     document.getElementById('submitForm').disabled = false;
                     document.getElementById('message').innerHTML = '';
                     document.getElementById('image_input_div').style.border = 'none';

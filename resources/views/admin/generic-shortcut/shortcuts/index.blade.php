@@ -40,9 +40,9 @@
                         </tr>
                         </thead>
                         <tbody id="sortable">
-                        @php $shortcuts = isset($shortcut) ? $shortcut->shortcuts : [] @endphp
-                        @foreach ($shortcuts as $value)
-                            <tr data-index="{{ $value->id }}" data-position="{{ $value->display_order }}">
+                        @php $shortcuts = isset($shortcut) ? $shortcut->shortcuts->sortBy('sort_order') : [] @endphp
+                        @foreach ($shortcuts as $index => $value)
+                            <tr data-index="{{ $value->id }}" data-position="{{ $value->sort_order }}">
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$value->title_en}}</td>
                                 <td>{{$value->title_bn}}</td>
@@ -119,7 +119,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
 
-        let auto_save_url = "{{ url('generic-shortcut/update-position') }}";
+        let auto_save_url = "{{ url('generic-shortcut-update-position') }}";
 
         $(function () {
            var content = "";

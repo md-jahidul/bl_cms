@@ -23,6 +23,7 @@ class CreateGenericShortcutsTable extends Migration
             $table->string('component_identifier');
             $table->text('other_info')->nullable();
             $table->string('deep_link')->nullable();
+            $table->integer('sort_order')->default(1);
             $table->tinyinteger('is_default')->default('0');
             $table->foreign('generic_shortcut_master_id')
                 ->references('id')
