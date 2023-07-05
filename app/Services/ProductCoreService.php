@@ -910,6 +910,7 @@ class ProductCoreService
         $coreData['is_display_title_en_schedule'] = isset($request->is_display_title_en_schedule) ? true : false;
         $coreData['is_display_title_bn_schedule'] = isset($request->is_display_title_bn_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
         $productSchedule = [];
         $isProductSchedule = false;
 
@@ -1153,6 +1154,8 @@ class ProductCoreService
         $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
         $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
+
 
         $productSchedule = [];
         $isProductSchedule = false;

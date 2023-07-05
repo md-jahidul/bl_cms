@@ -277,6 +277,21 @@
                                 </div>
 
                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="special_type">Special Type</label>
+                                        <select name="special_type" required class="form-control">
+                                            <option value=""></option>
+                                            @foreach ($productSpecialTypes as $key => $specialType)
+                                                <option
+                                                    value="{{ $key }}" {{ old("special_type") == $key ? 'selected' : '' }}>  {{$specialType}}
+                                                </option>
+                                            @endforeach
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
                                     <label class="required">Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
