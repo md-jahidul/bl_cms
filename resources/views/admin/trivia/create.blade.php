@@ -24,7 +24,7 @@
 
             <div class="row">
                     <!-- type Label -->
-                    <div class="form-group col-md-4 mb-2">
+                    <div class="form-group col-md-3 mb-2">
                         <label for="type" class="required">Type:</label>
                         <select name="type" class="browser-default custom-select" required>
                                 <option value="trivia"> Trivia </option>
@@ -34,7 +34,7 @@
                     </div>
 
                     <!-- Rule Name -->
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="rule_name" class="required">Rule Name:</label>
                             <input
@@ -54,32 +54,28 @@
                     </div>
 
                     <!-- Content For -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="status_input">Component For: </label>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                            class=""
-                                            id="home"
-                                            name="home"
-                                            value="true"
-                                            @if(isset($settings->home)) @if($settings->home) checked @endif @endif
-                                            />
-                                    <label for="home">Home</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <input type="checkbox"
-                                            id="non_bl"
-                                            name="non_bl"
-                                            value="true"
-                                            @if(isset($settings->non_bl)) @if($settings->non_bl) checked @endif @endif/>
-                                    <label for="non_bl">Non Bl</label>
-                                </div>
-                            </div>
-                        </div>
+                        <select name="content_for" class="browser-default custom-select" required>
+                                <option value="home"> Home </option>
+                                <option value="non_bl"> Non Bl </option>
+                        </select>
+                        @if ($errors->has('content_for'))
+                            <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                        @endif
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-3">
+                        <label for="status">Active Status:</label>
+                        <select class="form-control" id="status"
+                                name="status">
+                            <option value="1"> Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                        @if ($errors->has('status'))
+                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                        @endif
                     </div>
 
                     <!-- Pending Label -->
