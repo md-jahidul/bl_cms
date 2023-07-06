@@ -123,7 +123,10 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
-
+                <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                    <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                        <i class="ft-list"></i>Pin To Top Products</a>
+                </li>
                 <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
                     <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
                         <i class="la la-fire"></i>Free Products Analytic</a>
