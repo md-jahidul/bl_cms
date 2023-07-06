@@ -168,7 +168,7 @@
 
                                     {{--Bondho Sim Offer--}}
                                     <slot id="bondho_sim_offer" data-offer-type="bondho_sim_offer" class="d-none">
-                                        @include('layouts.partials.product-details.component.common-field.related-product')
+                                        @include('layouts.partials.product-details.component.common-field.bondho-sim-offers')
                                     </slot>
 
                                     {{--Startup offer--}}
