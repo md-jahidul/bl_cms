@@ -595,7 +595,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     /**
      * Business package landing components
-     * 
+     *
      */
     Route::get('business-package-component/list', 'AssetLite\BusinessPackageController@index')
         ->name('business-package-component.list');
@@ -610,10 +610,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
         ->name('business-package-component.destroy');
     Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
-    
+
     /**
      * Business package details components
-     * 
+     *
      */
     Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
         ->name('business-package-details-component.list');
@@ -1415,6 +1415,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
     Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
     Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
+    // Ad Tech banner Store
+    Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
 });

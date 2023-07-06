@@ -21,34 +21,34 @@
                         <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                        <div class="row">
-                            <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
-                            <input type="hidden" name="type" value="{{ $type }}">
-                            <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
-                                <label for="offer_category_id" class="required">Offer Type</label>
-                                <select class="form-control" name="offer_category_id" id="offer_type"
-                                        required data-validation-required-message="Please select offer" disabled>
-                                    <option value="">---Select Offer Type---</option>
-                                    @foreach($offersType as $offer)
-                                        <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('offer_category_id'))
-                                    <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
-                                @endif
-                            </div>
+                            <div class="row">
+                                <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
+                                <input type="hidden" name="type" value="{{ $type }}">
+                                <div class="form-group col-md-4 {{ $errors->has('product_type_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+                                    <select class="form-control" name="offer_category_id" id="offer_type"
+                                            required data-validation-required-message="Please select offer">
+                                        <option value="">---Select Offer Type---</option>
+                                        @foreach($offersType as $offer)
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
+                                    @endif
+                                </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                <label for="product_code" class="required">Product Code</label>
-                                <input type="text" class="form-control" name="product_code" placeholder="Enter product code"
-                                       required data-validation-required-message="Enter product code"
-                                       value="{{ $product->product_code }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('product_code'))
-                                    <div class="help-block">{{ $errors->first('product_code') }}</div>
-                                @endif
-                            </div>
+                                <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <input type="text" class="form-control" name="product_code" placeholder="Enter product code"
+                                           required data-validation-required-message="Enter product code"
+                                           value="{{ $product->product_code }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Please Select Category</label>
@@ -250,8 +250,7 @@
                                         </button>
                                     </div>
                                 </div>
-                        </div>
-
+                            </div>
                         </form>
                     </div>
                 </div>

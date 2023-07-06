@@ -88,8 +88,7 @@ class BusinessGeneralController extends Controller {
      * @Dev Bulbul Mahmud Nito || 12/02/2020
      */
     public function categoryNameChange(Request $request) {
-        $nameChange = $this->businessHomeService->changeCategoryName($request);
-        return $nameChange;
+        return $this->businessHomeService->changeCategoryName($request);
     }
 
     /**

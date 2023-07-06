@@ -186,6 +186,7 @@
                                     @include('layouts.partials.products.packages')
                                     @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.common-field.call_rate')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
                                     @include('layouts.partials.products.common-field.minute_volume')
                                     @include('layouts.partials.products.common-field.internet_volume')
                                     @include('layouts.partials.products.common-field.sms_volume')
@@ -219,6 +220,18 @@
 
                                 @include('layouts.partials.products.common-field.search-related-field')
 
+                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
+                                    <label for="mobileImg">Product Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="product_image" data-height="90" class="dropify">
+                                        {{--<!-- data-default-file="{{ config('filesystems.file_base_url') . $menu->icon }}"-->>--}}
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('icon'))
+                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <label>For:</label>
                                     <div class="form-group" id="show_in_home">
@@ -234,20 +247,20 @@
                                     </div>
                                 </div>
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <label></label>--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="special_product" class="mr-1">Is Special Product:</label>--}}
-{{--                                        <input type="checkbox" name="special_product" value="1" id="special_product">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-md-6">--}}
+                                {{--                                    <label></label>--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="special_product" class="mr-1">Is Special Product:</label>--}}
+                                {{--                                        <input type="checkbox" name="special_product" value="1" id="special_product">--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>--}}
-{{--                                        <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-md-6">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>--}}
+                                {{--                                        <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter">--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -262,7 +275,7 @@
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> Save
+                                                class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
                                 </div>

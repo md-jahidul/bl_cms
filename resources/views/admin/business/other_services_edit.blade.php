@@ -7,15 +7,15 @@
         $previousUrl = substr($url, 1);
     @endphp
 
-<li class="breadcrumb-item active"> <a href="{{ url($previousUrl) }}">
-        {{ $previousUrl != "business-other-services" ? 'Slider List' : 'Service List' }}</a></li>
-<li class="breadcrumb-item active"> Edit</li>
+    <li class="breadcrumb-item active"> <a href="{{ url($previousUrl) }}">
+            {{ $previousUrl != "business-other-services" ? 'Slider List' : 'Service List' }}</a></li>
+    <li class="breadcrumb-item active"> Edit</li>
 @endsection
 @section('action')
-<a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
+    <a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 @endsection
 @section('content')
-<section>
+    <section>
 
     <form method="POST" action="{{ route('business.other.update')}}" class="form home_news_form" enctype="multipart/form-data">
         @csrf
@@ -52,11 +52,11 @@
                                 @endif
                             </div>
 
-                            <div class="form-group">
-                                <label for="Banner Photo">Product Photo (Web) <span class="text-danger">*</span></label>
-                                <input type="file" class="dropify_package" name="banner_photo" data-height="70"
-                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                <input type="hidden" name="old_banner" value="{{$service->banner_photo}}">
+                                <div class="form-group">
+                                    <label for="Banner Photo">Product Photo (Web) <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="banner_photo" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    <input type="hidden" name="old_banner" value="{{$service->banner_photo}}">
                                 @if ($errors->has('banner_photo'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('banner_photo') }}
@@ -100,79 +100,80 @@
                                     </div>
                                 @endif
 
-                                <input type="hidden" name="old_banner_mob" value="{{$service->banner_image_mobile}}">
+                                    <input type="hidden" name="old_banner_mob" value="{{$service->banner_image_mobile}}">
 
-                                @if($service->banner_image_mobile != "")
-                                <img src="{{ config('filesystems.file_base_url') . $service->banner_image_mobile }}" width="100%">
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-xs-12">
-                            <div class="form-group">
-                                <label for="Package Name"> Name (BN)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$service->name_bn}}"  required name="name_bn" placeholder="Package Name Bangla">
-                                @if ($errors->has('name_bn'))
-                                    <div class="help-block text-danger">
-                                        {{ $errors->first('name_bn') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="Banner Photo">Icon <span class="text-danger">*</span></label>
-                                <input type="file" class="dropify_package" name="icon" data-height="70"
-                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                @if ($errors->has('icon'))
-                                    <div class="help-block text-danger">
-                                        {{ $errors->first('icon') }}
-                                    </div>
-                                @endif
-                                <input type="hidden" name="old_icon" value="{{$service->icon}}">
-                                <p class="text-center">
-                                    @if($service->icon != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $service->icon }}" height="40px" />
+                                    @if($service->banner_image_mobile != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $service->banner_image_mobile }}" width="100%">
                                     @endif
-                                </p>
+
+                                </div>
+
+
                             </div>
-                            <div class="form-group">
-                                <label>Product Photo Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$service->banner_name}}" required name="banner_name" placeholder="Photo Name">
-                                @if ($errors->has('banner_name'))
-                                    <div class="help-block text-danger">
-                                        {{ $errors->first('banner_name') }}
-                                    </div>
-                                @endif
-                                <input type="hidden" value="{{$service->banner_name}}" name="old_banner_name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> package-banner (no spaces)<br>
-                                </small>
-                                <br>
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control" value="{{$service->alt_text}}" name="alt_text" placeholder="Alt Text">
-                                @if ($errors->has('alt_text'))
-                                    <div class="help-block text-danger">
-                                        {{ $errors->first('alt_text') }}
-                                    </div>
-                                @endif
+
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="Package Name"> Name (BN)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{$service->name_bn}}"  required name="name_bn" placeholder="Package Name Bangla">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Banner Photo">Icon <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="icon" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    <input type="hidden" name="old_icon" value="{{$service->icon}}">
+
+                                    <p class="text-center">
+                                        @if($service->icon != "")
+                                            <img src="{{ config('filesystems.file_base_url') . $service->icon }}" height="40px" />
+                                        @endif
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+
+
+                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{$service->banner_name}}" required name="banner_name" placeholder="Photo Name">
+
+                                    <input type="hidden" value="{{$service->banner_name}}" name="old_banner_name">
+
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+
+                                    <br>
+
+                                    <label>Alt Text</label>
+                                    <input type="text" class="form-control" value="{{$service->alt_text}}" name="alt_text" placeholder="Alt Text">
+
+                                </div>
+
+
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
 
-                    <h4><strong>Details Data</strong></h4>
-                    <hr>
-                    <div class="row">
-                        
-                        <div class="col-md-4 col-xs-12">
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
 
-                            <div class="form-group">
-                                <label for="banner_title_en">Banner Title (EN)<span class="text-danger">*</span></label>
-                                <textarea type="text" name="banner_title_en" required class="form-control">{{$service->banner_title_en}}</textarea>
-                                @if ($errors->has('banner_title_en'))
+                        <h4><strong>Details Data</strong></h4>
+                        <hr>
+                        <div class="row">
+
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <label for="banner_title_en">Banner Title (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_title_en" required class="form-control">{{$service->banner_title_en}}</textarea>
+                                    @if ($errors->has('banner_title_en'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('banner_title_en') }}
                                     </div>
@@ -182,7 +183,7 @@
                             <div class="form-group">
                                 <label for="banner_title_bn">Banner Title (BN)<span class="text-danger">*</span></label>
                                 <textarea type="text" name="banner_title_bn" class="form-control ">{{$service->banner_title_bn}}</textarea>
-                                @if ($errors->has('banner_title_bn'))
+                                    @if ($errors->has('banner_title_bn'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('banner_title_bn') }}
                                     </div>
@@ -193,9 +194,9 @@
                         </div>
                         <div class="col-md-4 col-xs-12">
 
-                            <div class="form-group">
-                                <label for="banner_subtitle_en">Banner Subtitle (EN)<span class="text-danger">*</span></label>
-                                <textarea type="text" name="banner_subtitle_en" required class="form-control">{{$service->banner_subtitle_en}}</textarea>
+                                <div class="form-group">
+                                    <label for="banner_subtitle_en">Banner Subtitle (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="banner_subtitle_en" required class="form-control">{{$service->banner_subtitle_en}}</textarea>
                                 @if ($errors->has('banner_subtitle_en'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('banner_subtitle_en') }}
@@ -255,7 +256,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-group">
+                                <div class="form-group">
 
                                 <label for="Details">Offer Details (BN)</label>
                                 <textarea type="text" name="offer_details_bn" class="form-control summernote_editor">{{$service->offer_details_bn}}</textarea>
@@ -268,7 +269,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
 
                             <div class="form-group">
                                 <label for="Banner Photo">Details Banner (Web)</label>
@@ -315,64 +316,91 @@
                                         {{ $errors->first('details_banner_name') }}
                                     </div>
                                 @endif
-                                <input type="hidden" name="old_details_banner_name" value="{{$service->details_banner_name}}">
+                                    <input type="hidden" name="old_details_banner_name" value="{{$service->details_banner_name}}">
 
-                                <small class="text-info">
-                                    <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
-                                </small>
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> mobile-reporting-service (no spaces)<br>
+                                    </small>
 
-                                <br>
+                                    <br>
 
-                                <label>Banner Alt Text</label>
-                                <input type="text" class="form-control"  name="banner_alt_text" value="{{$service->details_alt_text}}" placeholder="Alt Text">
-                                @if ($errors->has('banner_alt_text'))
-                                    <div class="help-block text-danger">
-                                        {{ $errors->first('banner_alt_text') }}
-                                    </div>
-                                @endif
+                                    <label>Banner Alt Text</label>
+                                    <input type="text" class="form-control"  name="banner_alt_text" value="{{$service->details_alt_text}}" placeholder="Alt Text">
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="details_card_web" data-height="60"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    <input type="hidden" name="old_details_card_web" value="{{$service->details_card_web}}">
+                                    @if($service->details_card_web != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $service->details_card_web }}" width="100%">
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="details_card_mob" data-height="60"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    <input type="hidden" name="old_details_card_mob" value="{{$service->details_card_mob}}">
+                                    @if($service->details_card_mob != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $service->details_card_mob }}" width="100%">
+                                    @endif
+                                </div>
+
+
+
                             </div>
+
+
                         </div>
+
 
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <h4><strong>SEO and Others Data</strong></h4>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-4 col-xs-12">
 
-                            <div class="form-group">
-                                <div class="mb-1">
-                                    <label>URL Slug EN <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
-                                           value="{{ $service->url_slug }}">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> 5gb-hot-offer (no spaces and slash)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug') }}
-                                        </div>
-                                    @endif
+
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
+                        <h4><strong>SEO and Others Data</strong></h4>
+                        <hr>
+
+                        <div class="row">
+
+
+
+                            <div class="col-md-4 col-xs-12">
+
+                                <div class="form-group">
+                                    <div class="mb-1">
+                                        <label>URL Slug EN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
+                                               value="{{ $service->url_slug }}">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> 5gb-hot-offer (no spaces and slash)<br>
+                                        </small>
+                                        @if ($errors->has('url_slug'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('url_slug') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <label>URL Slug BN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN"
+                                               value="{{ $service->url_slug_bn }}">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> ৫জিবি-অফার (no spaces and slash)<br>
+                                        </small>
+                                        @if ($errors->has('url_slug_bn'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('url_slug_bn') }}
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div>
-                                    <label>URL Slug BN <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN"
-                                           value="{{ $service->url_slug_bn }}">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> ৫জিবি-অফার (no spaces and slash)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug_bn'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug_bn') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label>Page Header (HTML)</label>
@@ -407,11 +435,6 @@
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
-                                @if ($errors->has('schema_markup'))
-                                    <div class="help-block text-danger">
-                                        {{ $errors->first('schema_markup') }}
-                                    </div>
-                                @endif
 
                             </div>
                         </div>
@@ -559,7 +582,3 @@ if (Session::has('error')) {
 
 </script>
 @endpush
-
-
-
-

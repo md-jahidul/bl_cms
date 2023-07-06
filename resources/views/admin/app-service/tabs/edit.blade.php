@@ -56,17 +56,12 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <span>Banner image (Web)</span>
-
                                     <div class="custom-file">
-
                                         <input type="hidden" name="old_web_img" value="{{ $appServiceTab->banner_image_url }}">
-
                                         <input type="file" name="banner_image_url" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
                                     @if( !empty($appServiceTab->banner_image_url) )
                                         <img src="{{ config('filesystems.file_base_url') . $appServiceTab->banner_image_url }}" style="width:100%;margin-top:10px;">
                                     @endif
@@ -74,7 +69,6 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
                                     <span>Banner image (Mobile)</span>
-
                                     <div class="custom-file">
                                         <input type="hidden" name="old_mob_img" value="{{ $appServiceTab->banner_image_mobile }}">
 
@@ -82,11 +76,47 @@
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
                                     @if( !empty($appServiceTab->banner_image_url) )
                                         <img src="{{ config('filesystems.file_base_url') . $appServiceTab->banner_image_mobile }}" style="width:100%;margin-top:10px;">
                                     @endif
+                                </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title EN</label>
+                                    <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                           value="{{ $appServiceTab->banner_title_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn_bn">Banner Title BN</label>
+                                    <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                           value="{{ $appServiceTab->banner_title_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn_bn'))
+                                        <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label>Banner Description EN</label>
+                                    <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                              placeholder="Enter Banner short description in English">{{ $appServiceTab->banner_desc_en }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label>Banner Description BN</label>
+                                    <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                              placeholder="Enter Banner short description in Bangla">{{ $appServiceTab->banner_desc_bn }}</textarea>
+                                    <small class="text-info">
+                                        {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                    </small>
                                 </div>
 
                                 <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
@@ -150,7 +180,7 @@
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> UPDATE
+                                                class="la la-check-square-o"></i> UPDATE
                                         </button>
 
                                     </div>
@@ -169,17 +199,3 @@
 @push('page-js')
     <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 @endpush
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -352,18 +352,18 @@
                         <i class="la la-exclamation-circle"></i>About Priyojon
                     </a>
                 </li>
-                <li class="{{ is_active_url('about-page/discount-privilege') }}">
-                    <a class="menu-item" href="{{ url('about-page/discount-privilege') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-exclamation-circle"></i>Discount Privilege
-                    </a>
-                </li>
-                <li class="{{ is_active_url('about-page/benefits-for-you') }}">
-                    <a class="menu-item" href="{{ url('about-page/benefits-for-you') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-exclamation-circle"></i>Benefits For You
-                    </a>
-                </li>
+{{--                <li class="{{ is_active_url('lms-about-page/banner-image') }}">--}}
+{{--                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"--}}
+{{--                       data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                        <i class="la la-exclamation-circle"></i>About Page Banner--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+{{--                <li class="{{ is_active_url('about-page/reward_points')}}">--}}
+{{--                    <a class="menu-item" href="{{ url('about-page/reward_points') }}"--}}
+{{--                       data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                        <i class="la la-exclamation-circle"></i> About Reward Point</a>--}}
+{{--                </li>--}}
 
 {{--                <li class="{{ is_active_url('lms-about-page/banner-image') }}">--}}
 {{--                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"--}}
@@ -448,7 +448,7 @@
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Events section</a>
-                        </li> --}}
+                        </li>
                         <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
@@ -726,7 +726,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
@@ -745,7 +745,7 @@
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
     </li>
 

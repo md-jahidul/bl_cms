@@ -59,44 +59,44 @@
 
                             <div class="form-group">
 
-                               <div class="mb-1">
-                                   <label>URL Slug EN<span class="text-danger">*</span></label>
-                                   <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN" value={{old("url_slug") ? old("url_slug") : ''}}>
-                                   <small class="text-info">
-                                       <strong>i.e:</strong> banglalink-corporate-postpaid (no spaces and slash)<br>
-                                   </small>
-                                   @if ($errors->has('url_slug'))
-                                       <div class="help-block text-danger">
-                                           {{ $errors->first('url_slug') }}
-                                       </div>
-                                   @endif
-                               </div>
+                                    <div class="mb-1">
+                                        <label>URL Slug EN<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN" value={{old("url_slug") ? old("url_slug") : ''}}>
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> banglalink-corporate-postpaid (no spaces and slash)<br>
+                                        </small>
+                                        @if ($errors->has('url_slug'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('url_slug') }}
+                                            </div>
+                                        @endif
+                                    </div>
 
-                                <div>
-                                    <label>URL Slug BN<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN" value={{old("url_slug_bn") ? old("url_slug_bn") : ''}}>
+                                    <div>
+                                        <label>URL Slug BN<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN" value={{old("url_slug_bn") ? old("url_slug_bn") : ''}}>
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> বাংলালিংক-কর্পোরেট-পোস্টপেইড (no spaces and slash)<br>
+                                        </small>
+                                        @if ($errors->has('url_slug_bn'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('url_slug_bn') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <hr>
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header">{{old("page_header") ? old("page_header") : ''}}</textarea>
                                     <small class="text-info">
-                                        <strong>i.e:</strong> বাংলালিংক-কর্পোরেট-পোস্টপেইড (no spaces and slash)<br>
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
-                                    @if ($errors->has('url_slug_bn'))
-                                        <div class="help-block text-danger">
-                                            {{ $errors->first('url_slug_bn') }}
-                                        </div>
-                                    @endif
-                                </div>
-                                <hr>
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header">{{old("page_header") ? old("page_header") : ''}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                                <br>
-                                <br>
-                                <label>Page Header Bangla (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header_bn">{{old("page_header_bn") ? old("page_header_bn") : ''}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
+                                    <br>
+                                    <br>
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header_bn">{{old("page_header_bn") ? old("page_header_bn") : ''}}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
 
 
 
@@ -184,12 +184,50 @@
                                         <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
                                         <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                             data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                        
+
                                         @if ($errors->has('banner_mobile'))
                                             <div class="help-block text-danger">
                                                 {{ $errors->first('banner_mobile') }}
                                             </div>
                                         @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                        <label for="banner_title_en">Banner Title EN</label>
+                                        <input type="text" name="banner_title_en"  class="form-control banner_title_en" placeholder="Enter banner title in English"
+                                               value="">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('banner_title_en'))
+                                            <div class="help-block">  {{ $errors->first('banner_title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                        <label for="banner_title_bn_bn">Banner Title BN</label>
+                                        <input type="text" name="banner_title_bn"  class="form-control banner_title_bn" placeholder="Enter banner title in Bangla"
+                                               value="">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('banner_title_bn_bn'))
+                                            <div class="help-block">  {{ $errors->first('banner_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                        <label>Banner Description EN</label>
+                                        <textarea class="form-control banner_desc_en" rows="3" name="banner_desc_en"
+                                                  placeholder="Enter Banner short description in English"></textarea>
+                                        <small class="text-info">
+                                            {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                        <label>Banner Description BN</label>
+                                        <textarea class="form-control banner_desc_bn" rows="3" name="banner_desc_bn"
+                                                  placeholder="Enter Banner short description in Bangla"></textarea>
+                                        <small class="text-info">
+                                            {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+                                        </small>
                                     </div>
 
                                     <div class="col-md-6 col-xs-12">
@@ -287,7 +325,7 @@
                                     </small>
 
                                 </div>
-                    
+
                             </div>
 
                             <div class="col-md-12 col-xs-12">

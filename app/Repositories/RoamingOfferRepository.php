@@ -80,8 +80,8 @@ class RoamingOfferRepository extends BaseRepository {
 
     public function getOffers() {
         $response = $this->model->select('roaming_other_offer.*', 'c.name_en as category_name')
-                        ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
-                        ->orderBy('roaming_other_offer.id', 'desc')->get();
+            ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
+            ->orderBy('roaming_other_offer.id', 'desc')->get();
         return $response;
     }
 
@@ -90,9 +90,8 @@ class RoamingOfferRepository extends BaseRepository {
         return $response;
     }
 
-    public function saveOffer($webPath, $mobilePath, $request) {
+    public function saveOffer($webPath, $mobilePath, $cardImagePath, $request) {
         try {
-
             if ($request->offer_id == "") {
                 $offer = $this->model;
                 $offer->created_by = Auth::id();
@@ -106,11 +105,16 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->name_bn = $request->name_bn;
             $offer->card_text_en = $request->card_text_en;
             $offer->card_text_bn = $request->card_text_bn;
+            $offer->card_image = $cardImagePath;
             $offer->short_text_en = $request->short_text_en;
             $offer->short_text_bn = $request->short_text_bn;
             $offer->banner_name = $request->banner_name;
             $offer->banner_web = $webPath;
             $offer->banner_mobile = $mobilePath;
+            $offer->banner_title_en = $request->banner_title_en;
+            $offer->banner_title_bn = $request->banner_title_bn;
+            $offer->banner_desc_en = $request->banner_desc_en;
+            $offer->banner_desc_bn = $request->banner_desc_bn;
             $offer->alt_text = $request->alt_text;
             $offer->url_slug = $request->url_slug;
             $offer->url_slug_bn = $request->url_slug_bn;
@@ -168,13 +172,13 @@ class RoamingOfferRepository extends BaseRepository {
 
                 if (isset($request->head_en[$k])) {
 
-                     $tableArrayEn = array(
+                    $tableArrayEn = array(
                         'head_en' => $request->head_en[$k],
                         'rows_en' => $request->col_en[$k]
                     );
                     $tableJsonEn = json_encode($tableArrayEn);
 
-                     $tableArrayBn = array(
+                    $tableArrayBn = array(
                         'head_bn' => $request->head_bn[$k],
                         'rows_bn' => $request->col_bn[$k]
                     );
@@ -208,7 +212,7 @@ class RoamingOfferRepository extends BaseRepository {
                 }
 
 
-                  //accordion component
+                //accordion component
                 if (isset($request->accordion_headline_en[$k])) {
 
                     $arrayEn = array(
@@ -277,7 +281,7 @@ class RoamingOfferRepository extends BaseRepository {
         }
     }
 
-      public function componentDelete($comId) {
+    public function componentDelete($comId) {
 
         try {
             $component = RoamingOtherOfferComponents::findOrFail($comId);

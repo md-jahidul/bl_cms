@@ -163,9 +163,9 @@ class BusinessPackageService {
      * @return Response
      */
     public function getPackageById($packageId) {
-        $response = $this->packageRepo->getPackageById($packageId);
-        return $response;
+        return $this->packageRepo->getPackageById($packageId);
     }
+
 
     /**
      * Get business package by id

@@ -41,15 +41,15 @@
                                 @endif
                             </div>
 
-{{--                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('product_code') ? ' error' : '' }}">--}}
-{{--                                <label for="product_code" class="">Product Code</label>--}}
-{{--                                <input type="text" name="product_code"  class="form-control" placeholder="Enter unique product code"--}}
-{{--                                       value="{{ old("product_code") ? old("product_code") : '' }}">--}}
-{{--                                <div class="help-block"></div>--}}
-{{--                                @if ($errors->has('product_code'))--}}
-{{--                                <div class="help-block">{{ $errors->first('product_code') }}</div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
+                            <div class="form-group col-md-4 col-xs-12 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                <label for="product_code" class="">Product Code</label>
+                                <input type="text" name="product_code"  class="form-control" placeholder="Enter unique product code"
+                                       value="{{ old("product_code") ? old("product_code") : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('product_code'))
+                                <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                @endif
+                            </div>
 
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('area') ? ' error' : '' }}">
                                 <label for="offer_unit" class="required">Area</label>
@@ -154,6 +154,16 @@
 {{--                                <div class="help-block"></div>--}}
 {{--                                @if ($errors->has('offer_scale'))--}}
 {{--                                <div class="help-block">{{ $errors->first('offer_scale') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+
+{{--                            <div id="offer_value" class="form-group col-md-4 col-xs-12 {{ $errors->has('offer_value') ? ' error' : '' }}">--}}
+{{--                                <label for="offer_value" class="required">Offer Value</label>--}}
+{{--                                <input type="number" name="offer_value"  class="form-control" placeholder="Enter offer discount value"--}}
+{{--                                       value="{{ old("offer_value") ? old("offer_value") : '' }}">--}}
+{{--                                <div class="help-block"></div>--}}
+{{--                                @if ($errors->has('offer_value'))--}}
+{{--                                <div class="help-block">  {{ $errors->first('offer_value') }}</div>--}}
 {{--                                @endif--}}
 {{--                            </div>--}}
 

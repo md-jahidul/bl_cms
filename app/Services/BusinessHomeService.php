@@ -41,7 +41,11 @@ class BusinessHomeService {
      * @param BusinessFeaturesRepository $businessFeaturesRepo
      */
     public function __construct(
-    BusinessCategoryRepository $businessCatRepo, BusinessHomeBannerRepository $businessBannerRepo, BusinessSlidingRepository $slidingRepo, BusinessNewsRepository $businessNewsRepo, BusinessFeaturesRepository $businessFeaturesRepo
+        BusinessCategoryRepository $businessCatRepo,
+        BusinessHomeBannerRepository $businessBannerRepo,
+        BusinessSlidingRepository $slidingRepo,
+        BusinessNewsRepository $businessNewsRepo,
+        BusinessFeaturesRepository $businessFeaturesRepo
     ) {
         $this->businessCatRepo = $businessCatRepo;
         $this->businessBannerRepo = $businessBannerRepo;
@@ -70,15 +74,15 @@ class BusinessHomeService {
 
     /**
      * Change category name
-     * @return Response
+     * @return array
      */
-    public function updateCategory($request) {
-
+    public function updateCategory($request)
+    {
         try {
             $status = true;
-        $update = [];
+            $update = [];
 
-        $catId = $request->cat_id;
+            $catId = $request->cat_id;
 
         $update['name'] = $request->name_en;
         $update['name_bn'] = $request->name_bn;
@@ -127,29 +131,24 @@ class BusinessHomeService {
             }
 
 
-        if ($status != false) {
-            $this->businessCatRepo->updateCategory($update, $catId);
-
-            $response = [
-                'success' => 1,
-            ];
-        } else {
-            $response = [
-                'success' => 2,
-            ];
-        }
-
-
+            if ($status) {
+                $this->businessCatRepo->updateCategory($update, $catId);
+                $response = [
+                    'success' => 1,
+                ];
+            } else {
+                $response = [
+                    'success' => 2,
+                ];
+            }
 
             return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
-
     }
 
     /**

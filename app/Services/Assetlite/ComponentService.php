@@ -146,9 +146,9 @@ class ComponentService
         $data['multiple_attributes'] = (count($results) >= 1) ? array_values($results) : null;
         $countComponents = $this->componentRepository->list($sectionId, $pageType);
         $data['component_order'] = count($countComponents) + 1;
-
         $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
+
 
         # other attributes to save
         if (!empty($data['other_attr']) && count($data['other_attr']) > 0) {
@@ -157,9 +157,9 @@ class ComponentService
 
         /**
          * Creator: Shuvo-bs
-         * For Button Component 
+         * For Button Component
          * Genareted Html stored in editor_en & editor_bn column
-         * 
+         *
          */
         // if ($data['component_type'] == 'button_component') {
         //     $check_external = '';
@@ -185,7 +185,7 @@ class ComponentService
 
         //     $data['editor_en'] = $btn_html_en;
         //     $data['editor_bn'] = $btn_html_bn;
-            
+
         // }
 
         $this->save($data);
@@ -214,7 +214,6 @@ class ComponentService
             $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
-                    // print_r($value);
                     $sub_data = [];
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
@@ -228,7 +227,6 @@ class ComponentService
                     }
                 }
             }
-            // return [$results, $data['multi_item']];
         }
 
         // get original data
@@ -269,9 +267,9 @@ class ComponentService
 
         /**
          * Creator: Shuvo-bs
-         * For Button Component 
+         * For Button Component
          * Genareted Html stored in editor_en & editor_bn column
-         * 
+         *
          */
         // if ($data['component_type'] == 'button_component') {
         //     $check_external = '';
@@ -301,7 +299,6 @@ class ComponentService
         // }
 
         $component->update($data);
-        // return $data['multiple_attributes'];
         return response("Component update successfully!!");
     }
 
@@ -446,7 +443,7 @@ class ComponentService
         $component = $this->findOne($id);
 
         if($component) $component->delete();
-        
+
         return Response('Component deleted successfully !');
     }
 

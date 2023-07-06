@@ -6,7 +6,6 @@
     <li class="breadcrumb-item active"> Package Edit</li>
 @endsection
 @section('action')
-    <a href="{{ route('business-package-details-component.list', $package->id)}}" class="btn btn-sm btn-primary btn-glow"><i class="la la-list"></i> Details page Component List</a>
     <a href="{{ url('business-package') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 @endsection
 @section('content')
@@ -43,8 +42,8 @@
 
                                 </div>
 
-                                <!-- Repleased with component-->
-                                {{-- <div class="form-group">
+
+                                <div class="form-group">
 
                                     <label for="Details">Package Details (EN)</label>
                                     <textarea type="text" name="package_details_en" class="form-control summernote_editor">{!! $package->main_details !!}</textarea>
@@ -54,7 +53,7 @@
                                     <label for="Details">Package Details (BN)</label>
                                     <textarea type="text" name="package_details_bn" class="form-control summernote_editor">{!! $package->main_details_bn !!}</textarea>
 
-                                </div> --}}
+                                </div>
 
                                 <div class="form-group">
 
@@ -168,37 +167,6 @@
                                     <div class="col-md-6 col-xs-12">
                                         <label>Card Photo Alt Text</label>
                                         <input type="text" class="form-control" value="{{$package->card_banner_alt_text}}"  name="card_banner_alt_text" placeholder="Alt Text">
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group row">
-
-                                    <div class="col-md-6 col-xs-12">
-                                        <label for="Banner Photo">Icon<span class="text-danger">*</span></label>
-                                        <input type="file" class="dropify_package" name="icon" data-height="70"
-                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
-                                        <input type="hidden" name="old_icon" value="{{$package->icon}}">
-
-                                        <p class="text-center">
-                                            @if($package->icon != "")
-                                                <img src="{{ config('filesystems.file_base_url') . $package->icon }}" alt="Banner Photo" width="100%" />
-                                            @endif
-                                        </p>
-
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
-                                        <label for="Banner Photo">Details Image <span class="text-danger">*</span></label>
-                                        <input type="file" class="dropify_package" name="detail_image" data-height="70"
-                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                        <input type="hidden" name="old_detail_image" value="{{$package->detail_image}}">
-
-                                        <p class="text-center">
-                                            @if($package->detail_image != "")
-                                                <img src="{{ config('filesystems.file_base_url') . $package->detail_image }}" alt="Banner Photo" width="100%" />
-                                            @endif
-                                        </p>
                                     </div>
 
                                 </div>

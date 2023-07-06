@@ -2,18 +2,18 @@
 @section('title', 'Create Business Enterprise Service')
 @section('card_name', 'Enterprise Solution')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
-<li class="breadcrumb-item active"> Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
+    <li class="breadcrumb-item active"> Create</li>
 @endsection
 @section('action')
-<a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
+    <a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 @endsection
 @section('content')
-<section>
-    <form method="POST" action="{{ route('business.other.save')}}" class="form" enctype="multipart/form-data">
-        @csrf
-        <div class="card">
-            <div class="card-content collapse show">
+    <section>
+        <form method="POST" action="{{ route('business.other.save')}}" class="form" enctype="multipart/form-data">
+            @csrf
+            <div class="card">
+                <div class="card-content collapse show">
 
                 <div class="card-body card-dashboard">
                     <h4><strong>Common Data</strong></h4>
@@ -65,9 +65,9 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label for="Short Details">List Page Short Details (BN)</label>
-                                <textarea type="text" name="home_short_details_bn" class="form-control">{{ old('home_short_details_bn') }}</textarea>
+                                <div class="form-group">
+                                    <label for="Short Details">List Page Short Details (BN)</label>
+                                    <textarea type="text" name="home_short_details_bn" class="form-control">{{ old('home_short_details_bn') }}</textarea>
                                 @if ($errors->has('home_short_details_bn'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('home_short_details_bn') }}
@@ -117,8 +117,8 @@
                                     </div>
                                 @endif
                                 <br>
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control"  name="alt_text" value="{{ old('alt_text') }}" placeholder="Alt Text">
+                                    <label>Alt Text</label>
+                                    <input type="text" class="form-control"  name="alt_text" value="{{ old('alt_text') }}" placeholder="Alt Text">
                                 @if ($errors->has('alt_text'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('alt_text') }}
@@ -127,9 +127,9 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
         <div class="card">
             <div class="card-content collapse show">
@@ -178,9 +178,9 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12">
-                            <div class="form-group">
-                                <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
-                                <textarea type="text" name="short_details_en" required class="form-control">{{ old('short_details_en') }}</textarea>
+                                <div class="form-group">
+                                    <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="short_details_en" required class="form-control">{{ old('short_details_en') }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Show in top, after product name
                                 </small>
@@ -190,11 +190,11 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
-                                <textarea type="text" name="short_details_bn" required class="form-control">{{ old('short_details_bn') }}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Show in top, after product name
+                                <div class="form-group">
+                                    <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="short_details_bn" required class="form-control">{{ old('short_details_bn') }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Show in top, after product name
                                 </small>
                                 @if ($errors->has('short_details_bn'))
                                     <div class="help-block text-danger">
@@ -203,12 +203,12 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6 col-xs-12">
+                            <div class="col-md-6 col-xs-12">
                             <div class="form-group">
                                 <label for="Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor">{{ old('offer_details_en') }}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Show in bottom accordion
+                                    <textarea type="text" name="offer_details_en" class="form-control summernote_editor">{{ old('offer_details_en') }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Show in bottom accordion
                                 </small>
                                 @if ($errors->has('offer_details_en'))
                                     <div class="help-block text-danger">
@@ -231,7 +231,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6 col-xs-12">
+                            <div class="col-md-6 col-xs-12">
                             <div class="form-group">
                                 <label for="Banner Photo">Details Banner (Web) <span class="text-danger">*</span></label>
                                 <input type="file" required class="dropify_package" name="details_banner_web" data-height="60"
@@ -266,15 +266,26 @@
                                     </div>
                                 @endif
                                 <br>
-                                <label>Banner Alt Text</label>
-                                <input type="text" class="form-control"  name="banner_alt_text" value="{{ old('banner_alt_text') }}" placeholder="Alt Text">
+                                    <label>Banner Alt Text</label>
+                                    <input type="text" class="form-control"  name="banner_alt_text" value="{{ old('banner_alt_text') }}" placeholder="Alt Text">
                                 @if ($errors->has('banner_alt_text'))
                                     <div class="help-block text-danger">
                                         {{ $errors->first('banner_alt_text') }}
                                     </div>
                                 @endif
                             </div>
-                        </div>
+                                <div class="form-group">
+                                    <label for="Banner Photo">Details Card Image (Web) <span class="text-danger">*</span></label>
+                                    <input type="file" required class="dropify_package" name="details_card_web" data-height="60"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Banner Photo">Details Card Image (Mobile) <span class="text-danger">*</span></label>
+                                    <input type="file" required class="dropify_package" name="details_card_mob" data-height="60"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                </div>
+
+                            </div>
 
                     </div>
 
@@ -417,74 +428,70 @@
 @stop
 
 @push('style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
-<link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 
 @endpush
 @push('page-js')
- <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
-<script>
-$(function () {
+    <script>
+        $(function () {
 
-    //success and error msg
-<?php
-if (Session::has('sussess')) {
-    ?>
-        swal.fire({
-            title: "{{ Session::get('sussess') }}",
-            type: 'success',
-            timer: 2000,
-            showConfirmButton: false
+            //success and error msg
+            <?php
+            if (Session::has('sussess')) {
+                ?>
+            swal.fire({
+                title: "{{ Session::get('sussess') }}",
+                type: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+                <?php
+            }
+            if (Session::has('error')) {
+                ?>
+
+            swal.fire({
+                title: "{{ Session::get('error') }}",
+                type: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            <?php } ?>
+
+            //show dropify for package photo
+            $('.dropify_package').dropify({
+                messages: {
+                    'default': 'Browse for photo',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+
+
+            // text editor for package details
+            // $("textarea.textarea_details").summernote({
+            //     toolbar: [
+            //         ['style', ['bold', 'italic', 'underline', 'clear']],
+            //         ['font', ['strikethrough', 'superscript', 'subscript']],
+            //         ['fontsize', ['fontsize']],
+            //         ['color', ['color']],
+            //         // ['table', ['table']],
+            //         ['para', ['ul', 'ol', 'paragraph']],
+            //         ['view', ['codeview']]
+            //     ],
+            //     height: 170
+            // });
+
         });
-    <?php
-}
-if (Session::has('error')) {
-    ?>
-
-        swal.fire({
-            title: "{{ Session::get('error') }}",
-            type: 'error',
-            timer: 2000,
-            showConfirmButton: false
-        });
-
-<?php } ?>
-
-    //show dropify for package photo
-    $('.dropify_package').dropify({
-        messages: {
-            'default': 'Browse for photo',
-            'replace': 'Click to replace',
-            'remove': 'Remove',
-            'error': 'Choose correct file format'
-        }
-    });
 
 
-    // text editor for package details
-    // $("textarea.textarea_details").summernote({
-    //     toolbar: [
-    //         ['style', ['bold', 'italic', 'underline', 'clear']],
-    //         ['font', ['strikethrough', 'superscript', 'subscript']],
-    //         ['fontsize', ['fontsize']],
-    //         ['color', ['color']],
-    //         // ['table', ['table']],
-    //         ['para', ['ul', 'ol', 'paragraph']],
-    //         ['view', ['codeview']]
-    //     ],
-    //     height: 170
-    // });
-
-});
-
-
-</script>
+    </script>
 @endpush
-
-
-
-
