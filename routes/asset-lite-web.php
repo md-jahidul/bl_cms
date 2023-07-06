@@ -393,18 +393,37 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
-    Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
+
+    #Dynamic Page's Components
+    // Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
+    //     ->name('other-components');
+    // Route::get('dynamic-pages/{pageId}/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
+    //     ->name('other_component_create');
+    // Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
+    //     ->name('other_component_store');
+    // Route::get('dynamic-pages/{pageId}/component/{id}/edit', 'AssetLite\DynamicPageController@componentEditForm')
+    //     ->name('other_component_edit');
+    // Route::put('dynamic-pages/{pageId}/component/{id}/update', 'AssetLite\DynamicPageController@componentUpdate')
+    //     ->name('other_component_update');
+    // Route::get('dynamic-pages/{pageId}/component/{id}/delete', 'AssetLite\DynamicPageController@componentDestroy')
+    //     ->name('other_component_delete');
+    // Route::get('dynamic-pages/component-sortable', 'AssetLite\DynamicPageController@componentSortable');
+
+    Route::get('dynamic-pages/{other_dynamic_page_id}/components', 'AssetLite\DynamicPageController@componentList')
         ->name('other-components');
-    Route::get('dynamic-pages/{pageId}/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
-        ->name('other_component_create');
-    Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
-        ->name('other_component_store');
-    Route::get('dynamic-pages/{pageId}/component/{id}/edit', 'AssetLite\DynamicPageController@componentEditForm')
-        ->name('other_component_edit');
-    Route::put('dynamic-pages/{pageId}/component/{id}/update', 'AssetLite\DynamicPageController@componentUpdate')
-        ->name('other_component_update');
-    Route::get('dynamic-pages/{pageId}/component/{id}/delete', 'AssetLite\DynamicPageController@componentDestroy')
-        ->name('other_component_delete');
+    Route::get('dynamic-pages/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
+        ->name('other-component-create');
+    // Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
+    //     ->name('other_component_store');
+
+    Route::post('dynamic-pages/component/store', 'AssetLite\DynamicPageController@componentStore')
+        ->name('other-component-store');
+    Route::get('dynamic-pages/component/edit/{comId}', 'AssetLite\DynamicPageController@componentEditForm')
+        ->name('other-component-edit');
+    Route::post('dynamic-pages/component/update/{comId}', 'AssetLite\DynamicPageController@componentUpdate')
+        ->name('other-component-update');
+    Route::get('dynamic-pages/component/delete/{comId}', 'AssetLite\DynamicPageController@componentDestroy')
+        ->name('other-component-delete');
     Route::get('dynamic-pages/component-sortable', 'AssetLite\DynamicPageController@componentSortable');
 
 
@@ -565,6 +584,42 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('business-package/update',
         'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
+
+    /**
+     * Business package landing components
+     * 
+     */
+    Route::get('business-package-component/list', 'AssetLite\BusinessPackageController@index')
+        ->name('business-package-component.list');
+    Route::get('business-package-component/create', 'AssetLite\BusinessPackageController@componentCreate')
+        ->name('business-package-component.create');
+    Route::post('business-package-component/store', 'AssetLite\BusinessPackageController@componentStore')
+        ->name('business-package-component.store');
+    Route::get('business-package-component/edit/{comId}', 'AssetLite\BusinessPackageController@componentEdit')
+        ->name('business-package-component.edit');
+    Route::post('business-package-component/update/{comId}', 'AssetLite\BusinessPackageController@componentUpdate')
+        ->name('business-package-component.update');
+    Route::get('business-package-component/destroy/{comId}', 'AssetLite\BusinessPackageController@componentDestroy')
+        ->name('business-package-component.destroy');
+    Route::get('business-package-component-sort', 'AssetLite\BusinessPackageController@componentSortable');
+    
+    /**
+     * Business package details components
+     * 
+     */
+    Route::get('business-package-details-component/{business_package_details_id}/list', 'AssetLite\BusinessPackageDetailsController@index')
+        ->name('business-package-details-component.list');
+    Route::get('business-package-details-component/create', 'AssetLite\BusinessPackageDetailsController@componentCreate')
+        ->name('business-package-details-component.create');
+    Route::post('business-package-details-component/store', 'AssetLite\BusinessPackageDetailsController@componentStore')
+        ->name('business-package-details-component.store');
+    Route::get('business-package-details-component/edit/{comId}', 'AssetLite\BusinessPackageDetailsController@componentEdit')
+        ->name('business-package-details-component.edit');
+    Route::post('business-package-details-component/update/{comId}', 'AssetLite\BusinessPackageDetailsController@componentUpdate')
+        ->name('business-package-details-component.update');
+    Route::get('business-package-details-component/destroy/{comId}', 'AssetLite\BusinessPackageDetailsController@componentDestroy')
+        ->name('business-package-details-component.destroy');
+    Route::get('business-package-details-component-sort', 'AssetLite\BusinessPackageDetailsController@componentSortable');
 
     //__Category Internet Package
     Route::get('business-internet', 'AssetLite\BusinessInternetController@index');
@@ -1325,6 +1380,33 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController')->except('show', 'destroy');
     Route::get('dynamic-routes/destroy/{id}', 'AssetLite\DynamicRouteController@destroy');
 
+    // Blogs
+    Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
+    Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
+    Route::resource('blog-categories', 'AssetLite\BlogCategoryController')->except(['show', 'destroy']);
+    Route::get('blog-categories/destroy/{id}', 'AssetLite\BlogCategoryController@destroy');
+    # Blogs Components
+    Route::get('blog-component/{blog_id}/list', 'AssetLite\BlogDetailsController@index')
+        ->name('blog-component.list');
+    Route::get('blog-component/create', 'AssetLite\BlogDetailsController@componentCreate')
+        ->name('blog-component.create');
+    Route::post('blog-component/store', 'AssetLite\BlogDetailsController@componentStore')
+        ->name('blog-component.store');
+    Route::get('blog-component/edit/{comId}', 'AssetLite\BlogDetailsController@componentEdit')
+        ->name('blog-component.edit');
+    Route::post('blog-component/update/{comId}', 'AssetLite\BlogDetailsController@componentUpdate')
+        ->name('blog-component.update');
+    Route::get('blog-component/destroy/{comId}', 'AssetLite\BlogDetailsController@componentDestroy')
+        ->name('blog-component.destroy');
+    Route::get('blog-component-sort', 'AssetLite\BlogDetailsController@componentSortable');
+
+    Route::post('blog-ad-tech/store', 'AssetLite\BlogDetailsController@adTechStore')->name('blog.adtech.store');
+
+
+    // Blog Landing Page
+    Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
+    Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
+    Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
 });

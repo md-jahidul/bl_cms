@@ -75,6 +75,11 @@ class BusinessOthersRepository extends BaseRepository {
         $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
 
+        $service->banner_title_en = $request->banner_title_en;
+        $service->banner_title_bn = $request->banner_title_bn;
+        $service->banner_subtitle_en = $request->banner_subtitle_en;
+        $service->banner_subtitle_bn = $request->banner_subtitle_bn;
+
         $service->type = $request->type;
         $service->created_by = Auth::id();
         $service->save();
@@ -231,6 +236,12 @@ class BusinessOthersRepository extends BaseRepository {
 
         $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
+
+
+        $service->banner_title_en = $request->banner_title_en;
+        $service->banner_title_bn = $request->banner_title_bn;
+        $service->banner_subtitle_en = $request->banner_subtitle_en;
+        $service->banner_subtitle_bn = $request->banner_subtitle_bn;
 
         $service->type = $request->type;
         $service->updated_by = Auth::id();

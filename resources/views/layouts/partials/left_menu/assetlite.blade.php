@@ -435,7 +435,7 @@
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-safari"></i> Events section</a>
-                        </li>
+                        </li> --}}
                         <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
@@ -625,6 +625,33 @@
 
                     <li class="{{ is_active_url('/landing-page-component') }} nav-item">
                         <a href="{{ url('/landing-page-component') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item"><a href="#"><i class="la la-bold"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Blog</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('blog-categories') . is_active_url('blog-categories/create') }} }} nav-item">
+                        <a href="{{ url('blog-categories') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post Categories</span>
+                        </a>
+                    </li>
+                    <li class="{{ is_active_url('blog-post') . is_active_url('blog-post/create') }} }} nav-item">
+                        <a href="{{ url('blog-post') }}"><i class="la la-send"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Post List</span>
+                        </a>
+                    </li>
+{{--                    <li class="{{ is_active_url('/tvc-video') }} nav-item">--}}
+{{--                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>--}}
+{{--                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+
+                    <li class="{{ is_active_url('blog/landing-page-component') . is_active_url('blog/landing-page-component/create') }} nav-item">
+                        <a href="{{ url('blog/landing-page-component') }}"><i class="la la-futbol-o"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
                         </a>
                     </li>

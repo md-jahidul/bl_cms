@@ -53,7 +53,7 @@
                                             <option value="batch_title">Previus Batch Title</option>
                                         </select>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description')
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
@@ -93,7 +93,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -108,7 +108,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

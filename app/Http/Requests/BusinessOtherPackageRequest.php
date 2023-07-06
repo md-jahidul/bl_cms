@@ -34,8 +34,12 @@ class BusinessOtherPackageRequest extends FormRequest
                 'short_details_bn' => 'required',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_other_services,url_slug,' . $id,
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_other_services,url_slug_bn,' . $id,
-                'banner_name' => 'required|regex:/^\S*$/u',
-                'details_banner_name' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required',
+                #Have to check
+                // 'banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_other_services,banner_name_bn,' . $id,
+                // 'details_banner_name' => 'nullable|regex:/^\S*$/u|unique:business_other_services,details_banner_name,' . $id,
+                #Have to check
+                // 'details_banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_other_services,details_banner_name,' . $id,
             ];
         } else {
             return [
@@ -44,13 +48,16 @@ class BusinessOtherPackageRequest extends FormRequest
                 'name_bn' => 'required',
                 'short_details_en' => 'required',
                 'short_details_bn' => 'required',
-                'banner_photo' => 'required|mimes:jpg,jpeg,png',
-                'icon' => 'required|mimes:jpg,jpeg,png',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_other_services,url_slug',
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_other_services,url_slug_bn',
-                'banner_name' => 'required|regex:/^\S*$/u',
-                'details_banner_name' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required',
+                #Have to check
+                // 'banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_other_services,banner_name_bn',
+                // 'details_banner_name' => 'nullable|regex:/^\S*$/u|unique:business_other_services,details_banner_name',
+                #Have to check
+                // 'details_banner_name_bn' => 'nullable|regex:/^\S*$/u|unique:business_other_services,details_banner_name',
             ];
         }
+        
     }
 }
