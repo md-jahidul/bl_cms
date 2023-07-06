@@ -279,7 +279,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="special_type">Special Type</label>
-                                        <select name="special_type" required class="form-control">
+                                        <select name="special_type" class="form-control">
                                             <option value=""></option>
                                             @foreach ($productSpecialTypes as $key => $specialType)
                                                 <option
@@ -555,6 +555,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script>
         $(function () {
+
+            $('select[name="special_type"]').select2({
+                placeholder: 'Please Select Special Type',
+            });
             // alert(true)
 
             $("#commentForm").validate();
