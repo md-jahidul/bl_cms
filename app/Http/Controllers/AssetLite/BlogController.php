@@ -7,7 +7,7 @@ use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
 use App\Services\MediaPressNewsEventService;
 use App\Services\MediaNewsCategoryService;
-use Bookworm\Bookworm;
+// use Bookworm\Bookworm;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -70,7 +70,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $categories = $this->mediaNewsCategoryService->findAll();
+        $categories = $this->mediaNewsCategoryService->findBy(['section_type' => self::REFERENCE_TYPE, 'status' => 1]);
         return view('admin.blog.post.create',compact('categories'));
     }
 
@@ -96,7 +96,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blogPost = $this->mediaPNE->findOne($id);
-        $categories = $this->mediaNewsCategoryService->findAll();
+        $categories = $this->mediaNewsCategoryService->findBy(['section_type' => self::REFERENCE_TYPE, 'status' => 1]);
         return view('admin.blog.post.edit', compact('blogPost','categories'));
     }
 
@@ -109,7 +109,7 @@ class BlogController extends Controller
      */
     public function update(BlogPostRequest $request, $id)
     {
-        $request['read_time'] = Bookworm::estimate($request->short_details_bn, '');
+        // $request['read_time'] = Bookworm::estimate($request->short_details_bn, '');
         $response = $this->mediaPNE->updatePNE($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('blog-post');
