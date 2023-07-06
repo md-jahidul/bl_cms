@@ -34,7 +34,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $section->title_en }}</td>
                                 <td>{{ $section->slug }}</td>
-                                <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
+                                <td>{{ ($section->is_active == 1) ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("life-at-banglalink/general/$section->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 
