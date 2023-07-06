@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class AlSlider extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'component_id',
         'title_en',
@@ -25,11 +25,15 @@ class AlSlider extends Model
 
     public function type()
     {
-        return $this->belongsTo(AlSliderComponentType::class, 'id');
+        return $this->belongsTo(AlSliderComponentType::class, 'component_id');
     }
 
     public function sliderImages()
     {
         return $this->hasMany(AlSliderImage::class)->orderBy('sequence', 'asc');
+    }
+
+    public function componentTypes(){
+        return $this->belongsTo(AlSliderComponentType::class,'component_id');
     }
 }

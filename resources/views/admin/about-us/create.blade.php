@@ -337,7 +337,23 @@
                                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                                 </small>
                                             </div>
+                                            @include('layouts.partials.common_types.label_with_url')
+                                            <div class="col-md-6">
+                                                <label for="alt_text"></label>
+                                                <div class="form-group">
+                                                    <label for="title" class="required mr-1">Status:</label>
 
+                                                    <input type="radio" name="is_active" value="1" id="input-radio-15"
+                                                    @if(isset($about)){{$about->is_active == 1 ? 'checked' : ''}}  @endif
+                                                    >
+                                                    <label for="input-radio-15" class="mr-1">Active</label>
+
+                                                    <input type="radio" name="is_active" value="0" id="input-radio-16"
+                                                    @if(isset($about)){{$about->is_active == 0 ? 'checked' : ''}}  @endif
+                                                    >
+                                                    <label for="input-radio-16">Inactive</label>
+                                                </div>
+                                            </div>
                                             <div class="form-actions col-md-12 ">
                                                 <div class="pull-right">
                                                     <button type="submit" id="submitForm" style="width:100%"
@@ -347,9 +363,9 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        @csrf
-                                    </form>
+                            </div>
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </div>
@@ -378,8 +394,6 @@
             });
 
         });
-
-
     </script>
 @endpush
 

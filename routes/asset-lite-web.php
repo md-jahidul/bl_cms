@@ -103,7 +103,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\FooterMenuController@index');  // always put it last
     Route::get('sort-autosave/parent-footer-sort', 'AssetLite\FooterMenuController@FooterMenuSortable');
 
-
+    Route::resource('sub-footer', 'AssetLite\SubFooterController');
     // Route::group(['prefix' => 'footer-menu'], function () {
     //     // Route::get('/{id}/child-footer', 'AssetLite\FooterMenuController@index');
     //     Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
@@ -315,6 +315,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
+    //business
+    Route::get('business-home', 'AssetLite\ProductController@trendingOfferHome')->name('business-home');
     //amar offer details......
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
     Route::post('amaroffer/banner-image/upload', 'AssetLite\AmarOfferController@bannerImageUpload')
@@ -454,7 +456,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     // Fixed  ====================================
-    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent');
+    Route::get('home-page/component', 'AssetLite\FixedPageController@homeComponent')->name('home_page.components');
     Route::get('fixed-pages', 'AssetLite\FixedPageController@fixedPageList');
     Route::get('fixed-pages/create', 'AssetLite\FixedPageController@fixedPageCreate');
     Route::post('fixed-pages/store', 'AssetLite\FixedPageController@fixedPageStore');
@@ -463,6 +465,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('fixed-pages/delete/{id}', 'AssetLite\FixedPageController@deleteFixedPage');
 
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
+    Route::get('fixed-page/{id}/components/{short_code}/edit', 'AssetLite\FixedPageController@editComponents')->name('fixed-page-components-edit');
+    Route::patch('fixed-page/{id}/components/{short_code}/update', 'AssetLite\FixedPageController@updateComponents')->name('fixed-page-components-update');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
@@ -1425,4 +1429,36 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    Route::get('component-multiple-data/{imgName}', "AssetLite\ComponentMultiDataController@findSingleData");
+
+    // Ad Tech banner Store
+    Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
+
+    // Business Types
+    Route::resource('business-types', 'AssetLite\BusinessTypesController')->except(['show', 'destroy']);
+    Route::get('business-types-sort', 'AssetLite\BusinessTypesController@typeSort');
+    Route::get('business-types/destroy/{id}', 'AssetLite\BusinessTypesController@destroy');
+
+    // Business Types Items
+    Route::get('business-types-items-sort', 'AssetLite\BusinessTypesDatasController@typeSort');
+    Route::get('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@index');
+    Route::get('business-types-items/{id}/create', 'AssetLite\BusinessTypesDatasController@create');
+    Route::post('business-types-items/{id}', 'AssetLite\BusinessTypesDatasController@store')->name('business-types-datas.store');
+    Route::get('business-types-items/{business_type_id}/{id}/edit', 'AssetLite\BusinessTypesDatasController@edit')->name('business-types-datas.edit');
+    Route::put('business-types-items/{business_type_id}/{id}/update', 'AssetLite\BusinessTypesDatasController@update')->name('business-types-datas.update');
+    Route::get('business-types-items/{business_type_id}/destroy/{id}', 'AssetLite\BusinessTypesDatasController@destroy')->name('business-types-datas.delete');
+
+    // Network Types
+    Route::resource('network-types','AssetLite\NetworkTypesController')->except(['show', 'destroy']);
+    Route::get('network-types-sort', 'AssetLite\NetworkTypesController@typeSort');
+    Route::get('network-types/destroy/{id}', 'AssetLite\NetworkTypesController@destroy');
+    // Blogs
+    Route::resource('blog-post', 'AssetLite\BlogController')->except(['show', 'destroy']);
+    Route::get('blog-post/destroy/{id}', 'AssetLite\BlogController@destroy');
+
+    // Blog Landing Page
+    Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
+    Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
+    Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
 });
