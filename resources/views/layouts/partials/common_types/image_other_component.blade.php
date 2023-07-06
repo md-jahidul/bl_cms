@@ -3,7 +3,7 @@
     <label for="alt_text" >Component Image (Desktop View)</label>
     <div class="custom-file">
         <input type="file" name="image_url" class="custom-file-input dropify"
-                 data-validation-required-message="Slider image field is required" data-height="80" data-default-file="{{  isset($component) && isset($component->image_url) ? config('filesystems.file_base_url') . $component->image_url : ''}}">
+               data-validation-required-message="Slider image field is required" data-height="80" data-default-file="{{  isset($component) && isset($component->image_url) ? config('filesystems.file_base_url') . $component->image_url : ''}}">
     </div>
     <span class="text-primary">Please given file type (.png, .jpg, .svg, .gif)</span>
 
@@ -86,7 +86,7 @@
 @endpush
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
@@ -122,5 +122,4 @@
             });
         })
     </script>
-
 @endpush

@@ -89,6 +89,4 @@ class NetworkTypeService
         $buinessType->delete();
         return Response('Network Types deleted successfully !');
     }
-
-
 }

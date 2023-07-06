@@ -60,7 +60,7 @@
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> SAVE
+                                                class="la la-check-square-o"></i> SAVE
                                         </button>
 
                                     </div>
@@ -74,6 +74,3 @@
         </div>
     </section>
 @stop
-
-
-
