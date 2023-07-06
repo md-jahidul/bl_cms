@@ -1204,6 +1204,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
     Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
 
+    // 4G Devices elegibility Message
+    Route::resource('bl-4g-eligibility-msg', 'AssetLite\FourGEligibilityController')->except(['show', 'destroy']);
+    Route::get('bl-4g-eligibility-msg/destroy/{id}', 'AssetLite\FourGEligibilityController@destroy');
+
     // Banglalink 3G
     Route::resource('bl-3g-landing-page', 'AssetLite\BanglalinkThreeGController')->except(['store', 'show', 'destroy']);
     Route::post('bl-3g-banner-image', 'AssetLite\BanglalinkThreeGController@bannerUpload')
