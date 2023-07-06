@@ -150,6 +150,11 @@
                                     @include('layouts.partials.products.bundle')
                                 </slot>
 
+
+                                <slot id="new_sim_offer" data-offer-type="new_sim_offer" style="display: none">
+                                    @include('layouts.partials.products.bundle')
+                                </slot>
+
                                 <slot id="voice" data-offer-type="voice" style="display: none">
                                     @include('layouts.partials.products.voice')
                                 </slot>

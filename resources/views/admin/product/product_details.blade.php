@@ -80,41 +80,46 @@
                             @endif
 
                             @if($productDetail->offer_category_id == \App\Enums\OfferType::INTERNET)
-                            @include('layouts.partials.product-details.voice')
+                                @include('layouts.partials.product-details.voice')
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::VOICE)
-                            @include('layouts.partials.product-details.voice')
+                                @include('layouts.partials.product-details.voice')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::BUNDLES)
-                            @include('layouts.partials.product-details.voice')
+                                @include('layouts.partials.product-details.voice')
+
+                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::NEW_SIM_OFFER)
+                                @include('layouts.partials.product-details.voice')
+
+                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::CALL_RATE)
+                                @include('layouts.partials.product-details.voice')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
-                            $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::PREPAID_PLANS)
-                            @include('layouts.partials.product-details.packages.prepaid_plan')
+                                $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::PREPAID_PLANS)
+                                @include('layouts.partials.product-details.packages.prepaid_plan')
 
                             @elseif( $productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
-                            $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
+                                $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
 
                             @include('layouts.partials.product-details.packages.startup_offer_details')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::POSTPAID_PLANS)
-                            <div class="col-md-12 text-center">
-                                <h2><strong class="text-danger"> Under Construction</strong></h2>
-                            </div>
+                                <div class="col-md-12 text-center">
+                                    <h2><strong class="text-danger"> Under Construction</strong></h2>
+                                </div>
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::ICON_PLANS)
-                            <div class="col-md-12 text-center">
-                                <h2><strong class="text-danger"> Under Construction</strong></h2>
-                            </div>
+                                <div class="col-md-12 text-center">
+                                    <h2><strong class="text-danger"> Under Construction</strong></h2>
+                                </div>
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::OTHERS &&
-                            $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::BONDHO_SIM_OFFER)
-                            @include('layouts.partials.product-details.other-details.bondho_sim')
+                                $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::BONDHO_SIM_OFFER)
+                                @include('layouts.partials.product-details.other-details.bondho_sim')
 
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::OTHERS &&
-                            $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::FOUR_G_OFFERS)
-                            @include('layouts.partials.product-details.other-details.4g_offer')
+                                $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::FOUR_G_OFFERS)
+                                @include('layouts.partials.product-details.other-details.4g_offer')
                             @endif
-
 
                             <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
                                 <label for="banner_title_en">Banner Title EN</label>
@@ -163,7 +168,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
+                            <div class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
                                 <span>Banner image (Mobile)</span>
 
                                 <div class="custom-file">

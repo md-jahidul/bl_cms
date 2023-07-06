@@ -139,6 +139,10 @@
                                     @include('layouts.partials.products.bundle')
                                 </slot>
 
+                                <slot class="{{ $product->offer_category_id == OfferType::NEW_SIM_OFFER ? '' : 'd-none' }}" id="new_sim_offer" data-offer-type="new_sim_offer">
+                                    @include('layouts.partials.products.bundle')
+                                </slot>
+
                                 <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
