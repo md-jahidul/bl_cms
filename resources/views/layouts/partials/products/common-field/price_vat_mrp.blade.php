@@ -1,3 +1,8 @@
+<div class="col-md-12">
+    <span><h4><strong>Price</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
+
 <div class="form-group col-md-6 ">
     <label for="price">MRP</label>
     <input type="text" name="mrp_price" id="mrp_price"  class="form-control" placeholder="Enter MRP price in taka" step="0.001"

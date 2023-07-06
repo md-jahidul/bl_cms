@@ -7,6 +7,10 @@
     isset($offertype) ? $offertype : $offertype = '';
     isset($product->offer_info) ? $product : $offertype = null
 @endphp
+<div class="col-md-12">
+    <span><h4><strong>Other Info</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
 
 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
     <label for="offer_category_id" class="required">Other Offer Types</label>

@@ -84,6 +84,9 @@
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::VOICE)
                                 @include('layouts.partials.product-details.voice')
 
+                            @elseif($productDetail->offer_category_id == \App\Enums\OfferType::RECHARGE_OFFER)
+                                @include('layouts.partials.product-details.voice')
+
                             @elseif($productDetail->offer_category_id == \App\Enums\OfferType::BUNDLES)
                                 @include('layouts.partials.product-details.voice')
 
@@ -229,6 +232,16 @@
         </div>
     </div>
 </section>
+
+    <!--Banner Section-->
+    @php
+        $action = [
+            'section_id' => $productDetail->id,
+            'section_type' => "product_details"
+        ];
+
+    @endphp
+    @include('admin.al-banner.section', $action)
 @stop
 
 
@@ -254,7 +267,7 @@
 @push('page-js')
 <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
-<script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
 {{--    <script>--}}

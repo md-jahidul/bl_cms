@@ -24,7 +24,16 @@ class OfferCategory extends Model
         'postpaid_page_header_bn',
         'postpaid_url_slug',
         'postpaid_url_slug_bn',
-        'status', 'display_order'
+        'status', 'display_order',
+        'postpaid_url_slug_bn',
+        'prepaid_banner_title_en',
+        'prepaid_banner_title_bn',
+        'prepaid_banner_desc_en',
+        'prepaid_banner_desc_bn',
+        'postpaid_banner_title_en',
+        'postpaid_banner_title_bn',
+        'postpaid_banner_desc_en',
+        'postpaid_banner_desc_bn'
     ];
 
 

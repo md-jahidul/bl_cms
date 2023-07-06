@@ -9,6 +9,11 @@
     isset($product->offer_info) ? $product : $offertype = ''
 @endphp
 
+<div class="col-md-12">
+    <span><h4><strong>Package Info</strong></h4></span>
+    <div class="form-actions col-md-12 mt-0 type-line"></div>
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
     <label for="offer_category_id" class="required">Package Offer Types</label>
     <select class="form-control required" name="offer_info[package_offer_type_id]" id="package_type"
