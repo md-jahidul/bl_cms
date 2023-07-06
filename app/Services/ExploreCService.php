@@ -49,6 +49,31 @@ class ExploreCService
         $data['slug_en'] = Str::slug($data['slug_en']);
         $data['slug_bn'] = Str::slug($data['slug_bn']);
 
+        /**
+         * Multiple btn start
+         * shuvo
+         */
+        $results = [];
+        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+            $request_multi = $data['multi_item'];
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($data['multi_item'] as $key => $value) {
+                    $sub_data = [];
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
+                        $results[$i][$check_index[0]] = $value;
+                    }
+                }
+            }
+        }
+
+        $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
+
+        /**
+         * Multiple btn end
+         */
+
         $this->save($data);
        
         return new Response("Explore C has been successfully created");
@@ -73,14 +98,38 @@ class ExploreCService
         $data['slug_en'] = Str::slug($data['slug_en']);
         $data['slug_bn'] = Str::slug($data['slug_bn']);
 
-        // if ($exploreC->slug_en == $data['slug_en']) {
-        //     unset($data['slug_en']);
-        // }
-        // if ($exploreC->slug_bn == $data['slug_bn']) {
-        //     unset($data['slug_bn']);
-        // }
+        /**
+         * Multiple btn Start
+         * shuvo
+         */
+        $results = [];
+        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+            $request_multi = $data['multi_item'];
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($data['multi_item'] as $key => $value) {
+                    // print_r($value);
+                    $sub_data = [];
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
+                        $results[$i][$check_index[0]] = $value;
+                    }
+                }
+            }
+            // return [$results, $data['multi_item']];
+        }
 
-        // return $data;
+        // get original data
+        $new_multiple_attributes = $exploreC->multiple_attributes ?? null;
+
+        //contains all the inputs from the form as an array
+        $input_multiple_attributes = isset($results) ? array_values($results) : null;
+        // return $data['multi_item'];
+
+        $data['multiple_attributes'] = $input_multiple_attributes;
+        /**
+         * Multiple btn End
+         */
 
         $exploreC->update($data);
 

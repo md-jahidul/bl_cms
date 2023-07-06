@@ -726,15 +726,26 @@
                     </li>
                 </ul>
             </li>
-
+            
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
             </li>
-            <li class="{{ is_active_url('/explore-c') }} nav-item"><a href="{{ url('/explore-c') }}">
-                    <i class="la la-paragraph"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Explore C's</span></a>
+
+            <li class="nav-item"><a href="#"><i class="la la-signal"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Explore C</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('/explore-c') }} nav-item"><a href="{{ url('/explore-c') }}">
+                            <i class="la la-paragraph"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Explore C's Landing</span></a>
+                    </li>
+                    <li class="{{ is_active_url('/explore-c-pages') }} nav-item"><a href="{{ url('/explore-c-pages') }}"><i
+                                class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Explore c's Pages</span></a>
+                    </li>
+                </ul>
             </li>
+            
         </ul>
     </li>
 

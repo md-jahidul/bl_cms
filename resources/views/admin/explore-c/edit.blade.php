@@ -189,6 +189,10 @@
                                 </div>
                             </div>
 
+                            <slot id="explore_c_landing_btn" data-offer-type="" class="">
+                                @include('admin.explore-c.multi_button_section', $exploreC->multiple_attributes ?? [])
+                            </slot>
+
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
                                     <button id="save" class="btn btn-primary"><i

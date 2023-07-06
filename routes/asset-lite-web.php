@@ -36,6 +36,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('explore-c/destroy/{id}', 'AssetLite\ExploreCController@destroy');
     Route::get('explore-c-sort', 'AssetLite\ExploreCController@exploreCSortable');
 
+    Route::get('explore-c-pages/', 'AssetLite\ExploreCDetailsController@pageList');
+    Route::get('explore-c-pages/create', 'AssetLite\ExploreCDetailsController@create');
+    Route::get('explore-c-pages/edit/{id}', 'AssetLite\ExploreCDetailsController@edit');
+    Route::post('explore-c-pages/save', 'AssetLite\ExploreCDetailsController@savePage');
+    Route::get('explore-c-pages/delete/{id}', 'AssetLite\ExploreCDetailsController@deletePage');
 
     Route::get('explore-c-component/{explore_c_id}/list', 'AssetLite\ExploreCDetailsController@index')
         ->name('explore-c-component.list');

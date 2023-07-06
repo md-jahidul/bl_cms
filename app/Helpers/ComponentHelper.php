@@ -14,7 +14,6 @@ class ComponentHelper
      */
     public static function components(): array
     {
-
         return [
             'all' => [
                 'single_image' => 'Single Image',
