@@ -13,6 +13,7 @@ use App\Repositories\ProductRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class ProductService
 {
 
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $partnerOfferRepository
@@ -91,9 +93,27 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+
+        #Image Update
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+        }
+        
         $product = $this->save($data);
-        //save Search Data
-        $this->_saveSearchData($product);
+
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+         $internate_voice_bundles = [1,2,3];
+
+         if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+ 
+             $this->_saveSearchData($product);
+         }
+
         $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
         return new Response('Product added successfully');
     }
@@ -102,7 +122,13 @@ class ProductService
     private function _saveSearchData($product)
     {
         $productId = $product->id;
-        $name = $product->name_en;
+        $name = $product->name_en.' '.$product->name_bn;
+        
+        #Product Code
+        $productCode = $product->product_code;
+
+        #Search Table Status
+        $status = $product->status;
 
         $url = "";
         if ($product->sim_category_id == 1) {
@@ -145,7 +171,7 @@ class ProductService
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
 
-        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status);
     }
 
     public function tableSortable($data)
@@ -204,11 +230,29 @@ class ProductService
         else{
             $data['validity_postpaid'] = null;
         }
+
+        #Image Update
+        if (request()->hasFile('image')) {
+
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/products');
+            $this->deleteFile($product->image);
+        }
         
         $product->update($data);
 
-        //save Search Data
-        $this->_saveSearchData($product);
+        
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+        $internate_voice_bundles = [1,2,3];
+
+        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+            $this->_saveSearchData($product);
+        }
+
         return Response('Product update successfully !');
     }
 
@@ -389,6 +433,23 @@ class ProductService
         }
 
         return $product->internet_volume_mb;
+    }
+
+    public function updateSearchData($product){
+        
+        /**
+         * save Search Data
+         * If product is in offer category: internet, voice, bundles
+         */
+
+        $internate_voice_bundles = [1,2,3];
+        $response = '';
+
+        if (in_array($product->offer_category_id, $internate_voice_bundles)) {
+
+            $response = $this->_saveSearchData($product);
+        }
+        return $response;
     }
 
 }

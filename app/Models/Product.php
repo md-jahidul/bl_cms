@@ -52,6 +52,8 @@ class Product extends Model
             'special_product',
             'created_by',
             'updated_by',
+            
+            'image',
         ];
 
     protected $casts = [
