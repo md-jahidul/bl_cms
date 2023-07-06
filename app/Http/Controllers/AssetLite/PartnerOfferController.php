@@ -5,6 +5,8 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Requests\PartnerOfferDetailsRequest;
 use App\Http\Requests\StorePartnerOfferRequest;
 use App\Models\PartnerOfferDetail;
+use App\Services\LmsOfferCategoryService;
+use App\Services\LmsTierService;
 use App\Services\PartnerOfferDetailService;
 use App\Services\PartnerOfferService;
 use Illuminate\Contracts\View\Factory;
@@ -24,12 +26,25 @@ class PartnerOfferController extends Controller {
      */
     private $partnerOfferService;
     private $partnerOfferDetailService;
+    /**
+     * @var LmsOfferCategoryService
+     */
+    private $lmsOfferCategoryService;
+    /**
+     * @var LmsTierService
+     */
+    private $lmsTierService;
 
     public function __construct(
-    PartnerOfferService $partnerOfferService, PartnerOfferDetailService $partnerOfferDetailService
+        PartnerOfferService $partnerOfferService,
+        PartnerOfferDetailService $partnerOfferDetailService,
+        LmsOfferCategoryService $lmsOfferCategoryService,
+        LmsTierService $lmsTierService
     ) {
         $this->partnerOfferService = $partnerOfferService;
         $this->partnerOfferDetailService = $partnerOfferDetailService;
+        $this->lmsOfferCategoryService = $lmsOfferCategoryService;
+        $this->lmsTierService = $lmsTierService;
     }
 
     /**
@@ -54,7 +69,11 @@ class PartnerOfferController extends Controller {
      */
     public function create($parentId, $partnerName) {
         $areas = $this->partnerOfferService->getAreaList();
-        return view('admin.partner-offer.create', compact('parentId', 'partnerName', 'areas'));
+        $tiers = $this->lmsTierService->findBy(['status' => 1]);
+        $categories = $this->lmsOfferCategoryService->findBy(['status' => 1]);
+        return view('admin.partner-offer.create', compact('parentId',
+            'partnerName', 'areas', 'categories', 'tiers'
+        ));
     }
 
     /**
@@ -102,7 +121,11 @@ class PartnerOfferController extends Controller {
 
         $areas = $this->partnerOfferService->getAreaList();
         $partnerOffer = $this->partnerOfferService->findOne($id);
-        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'areas', 'campaignPath'));
+        $tiers = $this->lmsTierService->findBy(['status' => 1]);
+        $categories = $this->lmsOfferCategoryService->findBy(['status' => 1]);
+        return view('admin.partner-offer.edit', compact('partnerOffer',
+            'partnerId', 'partnerName', 'areas', 'campaignPath', 'tiers', 'categories'
+        ));
     }
 
     /**

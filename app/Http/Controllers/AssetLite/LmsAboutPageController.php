@@ -6,10 +6,12 @@ use App\Helpers\ComponentHelper;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\AboutPageService;
+use App\Services\AlBannerService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
 use App\Services\LmsAboutBannerService;
 use App\Services\LmsBenefitService;
+use App\Services\PriyojonService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,6 +43,12 @@ class LmsAboutPageController extends Controller
      */
     private $lmsAboutBannerService;
 
+    protected $alBannerService;
+
+    private $priyojonService;
+
+
+
     /**
      * EthicsController constructor.
      * @param AboutPageService $aboutPageService
@@ -50,12 +58,17 @@ class LmsAboutPageController extends Controller
         AboutPageService $aboutPageService,
         LmsBenefitService $lmsBenefitService,
         ComponentService $componentService,
-        LmsAboutBannerService $lmsAboutBannerService
+        LmsAboutBannerService $lmsAboutBannerService,
+        PriyojonService $priyojonService,
+        AlBannerService $alBannerService
     ) {
         $this->aboutPageService = $aboutPageService;
         $this->lmsBenefitService = $lmsBenefitService;
         $this->componentService = $componentService;
         $this->lmsAboutBannerService = $lmsAboutBannerService;
+        $this->alBannerService = $alBannerService;
+        $this->priyojonService = $priyojonService;
+
     }
 
     /**
@@ -66,13 +79,40 @@ class LmsAboutPageController extends Controller
      */
     public function index($slug)
     {
-//        $details = $this->aboutPageService->findAboutDetail($slug);
-//        $benefits = $this->lmsBenefitService->getBenefit($slug);
-        $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
-//        dd($aboutLoyaltyBanner);
-        $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
-        $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
-        return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
+        
+        /**
+         * shuvo-bs
+         * We have Plan to merge all the banner in the al_banners table. For this reason we have store discount-privilege's banner in al_banner table
+         */
+        if ($slug == 'benefits-for-you' ) {
+
+            $priyojonLanding = $this->priyojonService->getPriyojonByType('benefits_for_you');
+            $banner = $this->alBannerService->findBanner('benefits_for_you', 0)??null;
+
+            return view('admin.loyalty.about-pages.benefits-for-you', compact('priyojonLanding','banner'));
+
+        }else if ($slug == 'discount-privilege') {
+
+            // $details = $this->aboutPageService->findAboutDetail($slug);
+            // $benefits = $this->lmsBenefitService->getBenefit($slug);
+            $priyojonLanding = $this->priyojonService->getPriyojonByType('discount_privilege');
+            $banner = $this->alBannerService->findBanner('discount_privilege', 0)??null;
+
+            // dd($aboutLoyaltyBanner);
+            // $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+            // $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
+            return view('admin.loyalty.about-pages.discount-privilege', compact('priyojonLanding','banner'));
+
+        }else {
+            // $details = $this->aboutPageService->findAboutDetail($slug);
+            // $benefits = $this->lmsBenefitService->getBenefit($slug);
+            $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
+            // dd($aboutLoyaltyBanner);
+            $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+            $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
+            return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner'));
+        }
+        
     }
 
     public function componentCreate()

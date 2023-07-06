@@ -67,8 +67,11 @@ class PartnerOfferService
         if (request()->hasFile('campaign_img')) {
             $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image');
         }
+        if (request()->hasFile('card_img')) {
+            $data['card_img'] = $this->upload($data['card_img'], 'assetlite/images/partner-offer');
+        }
         $data['display_order'] = ++$count;
-        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+        // $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $data['phone'] = json_encode($data['phone']);
         $data['location'] = json_encode($data['location']);
         $data['created_by'] = Auth::id();
@@ -108,6 +111,11 @@ class PartnerOfferService
         if ($data['is_campaign'] == 0 && !empty($partnerOffer->campaign_img)) {
             $this->deleteFile($partnerOffer->campaign_img);
             $data['campaign_img'] = null;
+        }
+
+        if (request()->hasFile('card_img')) {
+            $data['card_img'] = $this->upload($data['card_img'], 'assetlite/images/partner-offer');
+            $this->deleteFile($partnerOffer->card_img);
         }
 
         $data['phone'] = json_encode($data['phone']);
