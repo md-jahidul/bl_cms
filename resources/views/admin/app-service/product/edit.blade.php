@@ -106,6 +106,34 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('product_img_url') ? ' error' : '' }}">
+                                    <label for="product_img_url">Card Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="product_img_url" class="custom-file-input dropify"
+                                               data-default-file="{{ isset($appServiceProduct->product_img_url) ? config('filesystems.file_base_url') . $appServiceProduct->product_img_url : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_img_url'))
+                                        <div class="help-block">  {{ $errors->first('product_img_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('icon_img_url') ? ' error' : '' }}">
+                                    <label for="icon_img_url">Card Icon</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="icon_img_url" class="custom-file-input dropify"
+                                               data-default-file="{{ isset($appServiceProduct->icon_img_url) ? config('filesystems.file_base_url') . $appServiceProduct->icon_img_url : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('icon_img_url'))
+                                        <div class="help-block">  {{ $errors->first('icon_img_url') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('details_image_url') ? ' error' : '' }}
                                 {{ $appServiceProduct->is_images == 1 ? '' : 'd-none' }}" id="detailsImg">
                                     <label for="mobileImg">Details Image</label>
@@ -138,9 +166,18 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-2 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="is_images">Show in details page:</label>
+                                        <input type="checkbox" name="show_in_details_page" value="1" id="show_in_details_page" {{ $appServiceProduct->show_in_details_page == 1 ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
 
                                 <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
                                     @include('layouts.partials.app-service.app')
+                                    @include('layouts.partials.app-service.referral')
                                 </slot>
 
                                 <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
@@ -236,7 +273,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
@@ -246,7 +282,6 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {
             var date = new Date();
@@ -309,15 +344,13 @@
             fields.val('');
 
             // Image Dropify
-            $(function () {
-                $('.dropify').dropify({
-                    messages: {
-                        'default': 'Browse for an Image File to upload',
-                        'replace': 'Click to replace',
-                        'remove': 'Remove',
-                        'error': 'Choose correct file format'
-                    },
-                });
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                },
             });
 
             var detailsVideo = $('#detailsVideo');

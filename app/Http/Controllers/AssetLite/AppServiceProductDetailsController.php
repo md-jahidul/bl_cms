@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\AppServiceDetailsFixedSectionRequest;
 use App\Models\AppServiceProduct;
 use App\Services\Assetlite\AppServiceProductService;
 use Illuminate\Contracts\Foundation\Application;
@@ -33,12 +34,16 @@ class AppServiceProductDetailsController extends Controller
     protected $componentTypes = [
         'title_text_editor' => 'Title with text editor',
         'accordion_section' => 'Accordion',
+        'table_component' => 'Table Component',
         'text_with_image_right' => 'Text with image right',
         'text_with_image_bottom' => 'Text with image bottom',
         'slider_text_with_image_right' => 'Slider text with image right',
         'video_with_text_right' => 'Video with text right',
         'multiple_image_banner' => 'Multiple image banner',
         'pricing_sections' => 'Pricing Multiple table',
+        'static_easy_payment_card' => 'Static Component - Easy payment card',
+        'image_with_content' => 'Image With Content',
+        'multiple_tab_image' => 'Multiple Tab With Image'
     ];
 
     /**
@@ -85,24 +90,21 @@ class AppServiceProductDetailsController extends Controller
     public function store(Request $request, $tab_type, $product_id)
     {
         $data = $request->all();
-
         // Create new sections
-        if( $request->has('save') ) {
+        if ($request->has('save')) {
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
             Session::flash('message', $response->getContent());
             return redirect(url("app-service/details/$tab_type/$product_id"));
-        }
-        elseif( $request->has('update') ) {
+        } elseif ($request->has('update')) {
             # Update section data
             $section_data = $data['sections'];
-            if( isset($section_data['id']) && !empty($section_data['id']) ){
-//                dd($data);
+            if (isset($section_data['id']) && !empty($section_data['id'])) {
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
                 # Update component data
                 $component_data = $data['component'];
-                if( isset($component_data) && count($component_data) > 0 ){
+                if (isset($component_data) && count($component_data) > 0) {
                     foreach ($component_data as $component_value) {
-                        $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
+                        $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id'], $request->all());
                     }
                 }
             }
@@ -110,10 +112,10 @@ class AppServiceProductDetailsController extends Controller
             Session::flash('message', 'Section component updated successfully');
             return redirect(url("app-service/details/$tab_type/$product_id"));
 
-        } elseif( $request->has('compnent_muti_attr_update') ) {
+        } elseif ($request->has('compnent_muti_attr_update')) {
             # Update component data
             $component_data = $data['component'];
-            if( isset($component_data) && count($component_data) > 0 ) {
+            if (isset($component_data) && count($component_data) > 0) {
                 foreach ($component_data as $key => $component_value) {
                     $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id'], $key);
                 }
@@ -150,25 +152,25 @@ class AppServiceProductDetailsController extends Controller
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
-
-        if ($section['sections']->section_type == 'slider_text_with_image_right' ||
-            $section['sections']->section_type == 'multiple_image_banner' ||
-            $section['sections']->section_type == 'pricing_sections'
-        ) {
-            if (!empty($section) && count($section) > 0) {
-                return response()->json([
-                    'status' => 'SUCCESS',
-                    'message' => 'Data found',
-                    'data' => $section
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => 'FAILED',
-                    'message' => 'Data not found',
-                    'data' => []
-                ], 404);
-            }
-        }
+        //  if (
+        //  $section['sections']->section_type == 'slider_text_with_image_right' ||
+        //  $section['sections']->section_type == 'multiple_image_banner' ||
+        //   $section['sections']->section_type == 'pricing_sections'
+        // ) {
+        //     if (!empty($section) && count($section) > 0) {
+        //         return response()->json([
+        //             'status' => 'SUCCESS',
+        //             'message' => 'Data found',
+        //             'data' => $section
+        //         ], 200);
+        //     } else {
+        //         return response()->json([
+        //             'status' => 'FAILED',
+        //             'message' => 'Data not found',
+        //             'data' => []
+        //         ], 404);
+        //     }
+        // }
 
         $componentTypes = $this->componentTypes;
         $component = $section['component'][0];
@@ -179,8 +181,6 @@ class AppServiceProductDetailsController extends Controller
             'component',
             'componentTypes'
         ));
-
-
     }
 
     /**
@@ -224,8 +224,8 @@ class AppServiceProductDetailsController extends Controller
     }
 
 
-
-    public function sectionsSortable(Request $request){
+    public function sectionsSortable(Request $request)
+    {
         $this->appServiceProductDetailsService->tableSortable($request);
     }
 }
