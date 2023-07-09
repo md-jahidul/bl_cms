@@ -15,6 +15,8 @@
                             <th><i class="icon-cursor-move icons"></i></th>
                             <th>Product Title</th>
                             <th>Product Code</th>
+                            <th>Content Type</th>
+                            <th>Sequence</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
@@ -23,6 +25,8 @@
                                 <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $section->details->name }}</td>
                                 <td>{{ $section->product_code }}</td>
+                                <td>{{ $section->details->content_type }}</td>
+                                <td>{{ $section->pin_to_top_sequence }}</td>
                             </tr>
                         @endforeach
                         </tbody>
