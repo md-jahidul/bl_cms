@@ -732,7 +732,7 @@
 
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
-                maximumSelectionLength: 3
+                maximumSelectionLength: 1
             });
 
             $('select[name="special_type"]').select2({

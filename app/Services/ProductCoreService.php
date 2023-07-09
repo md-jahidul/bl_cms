@@ -892,6 +892,8 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
+        $data['tag_bgd_color'] = isset($firstTag) ? $firstTag->tag_bgd_color : null;
+        $data['tag_text_color'] = isset($firstTag) ? $firstTag->tag_text_color : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -1140,6 +1142,8 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
+        $data['tag_bgd_color'] = isset($firstTag) ? $firstTag->tag_bgd_color : null;
+        $data['tag_text_color'] = isset($firstTag) ? $firstTag->tag_text_color : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
