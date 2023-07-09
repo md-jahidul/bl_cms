@@ -15,6 +15,8 @@ class AddSpecialTypeColumnToMyBlProductsTable extends Migration
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
             $table->string('special_type')->after('description')->nullable();
+            $table->string('tag_bgd_color')->after('tag')->nullable();
+            $table->string('tag_text_color')->after('tag_bgd_color')->nullable();
         });
     }
 
@@ -27,6 +29,8 @@ class AddSpecialTypeColumnToMyBlProductsTable extends Migration
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
             $table->dropColumn('special_type');
+            $table->dropColumn('tag_bgd_color');
+            $table->dropColumn('tag_text_color');
         });
     }
 }
