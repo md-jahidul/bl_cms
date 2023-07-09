@@ -34,7 +34,7 @@
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody>
                         @foreach ($shortcuts as $key => $shortcut)
                             <tr data-index="{{ $shortcut->id }}" data-position="{{ $shortcut->display_order }}">
                                <td>{{ $key + 1 }}</td>
