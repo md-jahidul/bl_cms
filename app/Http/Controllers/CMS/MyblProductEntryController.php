@@ -384,6 +384,6 @@ class MyblProductEntryController extends Controller
 
     public function productSortable(Request $request)
     {
-        return $this->myblProductRepository->productSortable($request);
+        return $this->service->tableSort($request);
     }
 }
