@@ -380,12 +380,9 @@ class ProductCoreService
                                 $core_data['platform'] = 'app';
                             }
 
-
-                            $ass = ProductCore::updateOrCreate([
+                            ProductCore::updateOrCreate([
                                 'product_code' => $product_code
                             ], $core_data);
-
-                            dd($ass);
 
                             MyBlProduct::updateOrCreate([
                                 'product_code' => $product_code
