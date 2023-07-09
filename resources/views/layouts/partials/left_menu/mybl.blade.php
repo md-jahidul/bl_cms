@@ -123,7 +123,10 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
-
+                <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                    <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                        <i class="ft-list"></i>Pin To Top Products</a>
+                </li>
                 <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
                     <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
                         <i class="la la-fire"></i>Free Products Analytic</a>
@@ -169,6 +172,12 @@
 {{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
 {{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
 {{--                </li>--}}
+
+                <li class="{{is_active_url('product-special-types')}}">
+                    <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-tag"></i>Product Special Types
+                    </a>
+                </li>
             </ul>
         </li>
     @endif

@@ -348,6 +348,21 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label for="special_type">Special Type</label>
+                                        <select name="special_type" class="form-control" placeholder="Please Select Special type">
+                                            <option value=""></option>
+                                            @foreach ($productSpecialTypes as $key => $specialType)
+                                                <option
+                                                    value="{{ $key }}" {{ $details->special_type == $key ? 'selected' : '' }}>  {{$specialType}}
+                                                </option>
+                                            @endforeach
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label>Schedule Availability </label>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -726,6 +741,10 @@
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
                 maximumSelectionLength: 3
+            });
+
+            $('select[name="special_type"]').select2({
+                placeholder: 'Please Select Special Type',
             });
         });
 
