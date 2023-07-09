@@ -1459,4 +1459,30 @@ class ProductCoreService
         $orderBy = ['column' => 'pin_to_top_sequence', 'direction' => 'ASC'];
         return $this->myBlProductRepository->findBy(['pin_to_top' => true], null, $orderBy);
     }
+
+    public function tableSort($request)
+    {
+        try {
+            $positions = $request->position;
+
+            foreach ($positions as $position) {
+                $menu_id = $position[0];
+                $new_position = $position[1];
+                $update_menu = $this->myBlProductRepository->findOne($menu_id);
+                $update_menu['pin_to_top_sequence'] = $new_position;
+                $update_menu->update();
+            }
+
+            return [
+                'status' => "success",
+                'massage' => "Order Changed successfully"
+            ];
+        } catch (\Exception $exception) {
+            $error = $exception->getMessage();
+            return [
+                'status' => "error",
+                'massage' => $error
+            ];
+        }
+    }
 }
