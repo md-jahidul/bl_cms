@@ -303,7 +303,8 @@
                                       $details->details->content_type == 'gift' ||
                                       $details->details->content_type == 'voice' ||
                                       $details->details->content_type == 'volume transfer' ||
-                                      $details->details->content_type == 'roam'
+                                      $details->details->content_type == 'roam' ||
+                                      $details->details->content_type == 'reactivation'
                                     )
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
