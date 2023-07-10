@@ -28,6 +28,8 @@ class GenericSliderImage extends Model
         'other_attributes',
         'banner_text_en',
         'banner_text_bn',
+        'subtitle_text_en',
+        'subtitle_text_bn',
         'deeplink'
     ];
 

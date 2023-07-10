@@ -125,6 +125,34 @@
                                     </p>
                                 @endif
                             </div>
+                            <div class="form-group col-md-6">
+                                <label for="subtitle_text_en">Subtitle Text (English)</label>
+                                <input class="form-control"
+                                        name="subtitle_text_en"
+                                        id="subtitle_text_en"
+                                        placeholder="Enter Bangla Banner Text",
+                                        value="{{ $imageInfo->subtitle_text_en }}"
+                                        >
+                                @if($errors->has('subtitle_text_en'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('subtitle_text_en') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="subtitle_text_bn">Subtitle Text (Bangla)</label>
+                                <input class="form-control"
+                                        name="subtitle_text_bn"
+                                        id="subtitle_text_bn"
+                                        placeholder="Enter Bangla Banner Text",
+                                        value="{{ $imageInfo->subtitle_text_bn }}"
+                                        >
+                                @if($errors->has('subtitle_text_bn'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('subtitle_text_bn') }}</small>
+                                    </p>
+                                @endif
+                            </div>
                             @endif
 
                             <div class="col-6">
