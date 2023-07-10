@@ -145,32 +145,32 @@ return [
             'default' => [
                 [
                     'host' => '172.16.191.50',
-                    'port' => 16389,
+                    'port' => 6389,
                     'password' => null,
                 ],
                 [
                     'host' => '172.16.254.18',
-                    'port' => 16389,
+                    'port' => 6389,
                     'password' => null,
                 ],
                 [
                     'host' => '172.16.254.138',
-                    'port' => 16389,
+                    'port' => 6389,
                     'password' => null,
                 ],
                 [
                     'host' => '172.16.11.243',
-                    'port' => 16389,
+                    'port' => 6389,
                     'password' => null,
                 ],
                 [
                     'host' => '172.16.8.160',
-                    'port' => 16389,
+                    'port' => 6389,
                     'password' => null,
                 ],
                 [
                     'host' => '172.16.191.51',
-                    'port' => 16389,
+                    'port' => 6389,
                     'password' => null,
                 ],
                 // Add more nodes if required
