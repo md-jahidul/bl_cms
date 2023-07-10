@@ -404,7 +404,15 @@ class ProductCoreService
                                     }
                                 }
 
-                                $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
+                                #For update the color in my_bl_products table. Only for existing tag
+                                foreach ($existingTags as $key => $value) {
+                                    if($value->title == $tags[0]){
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
+                                    }
+                                }                              
+
+                                #Take the first Element from the tags array
+                                $this->syncProductTags($product_code, array_slice(Arr::flatten($existingTagIds),0,1));
                             }
 
                         } catch (Exception $e) {
