@@ -52,7 +52,6 @@ class MyblCashBackService
                 $product['start_date'] = ($product['start_date'] == null ? $data['start_date'] : $product['start_date']);
                 $product['end_date'] = ($product['end_date'] == null ? $data['end_date'] : $product['end_date']);
                 $product['mybl_cash_back_id'] = $campaign->id;
-                $product['status'] = isset($product['status']) ?? 0;
                 $this->cashBackProductRepo->save($product);
             }
         }

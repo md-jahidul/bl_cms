@@ -58,51 +58,6 @@
 {{--                                        @endif--}}
 {{--                                    </div>--}}
 
-                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
-                                        <label for="url_slug_en" class="required">Url Slug EN</label>
-                                        <input type="text" name="url_slug_en"  required class="form-control" placeholder="Enter Url Slug EN"
-                                        value="{{ $priyojonLanding->url_slug_en }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url_slug_en'))
-                                            <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                        <label for="url" class="required">Url Slug BN</label>
-                                        <input type="text" name="url_slug_bn" required class="form-control" placeholder="Enter Url Slug BN"
-                                         value="{{ $priyojonLanding->url_slug_bn }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('url_slug_bn'))
-                                            <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-12 {{ $errors->has('alias') ? ' error' : '' }}">
-                                        <label for="alias">Alias</label>
-                                        <input type="text" name="alias" required class="form-control" placeholder="Enter alias"
-                                               value="{{ $priyojonLanding->alias }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('alias'))
-                                            <div class="help-block">  {{ $errors->first('alias') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Page Header</label>
-                                        <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonLanding->page_header }}</textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Page Header BN</label>
-                                        <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn }}</textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label>Schema Markup</label>
-                                        <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->schema_markup }}</textarea>
-                                    </div>
-
                                     <div class="col-md-6">
                                         <label></label>
                                         <div class="form-group">
@@ -145,44 +100,73 @@
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image (Desktop)</label>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}
+                                {{ $priyojonLanding->is_images == 1 ? '' : 'd-none' }}" id="banner_image_url">
+                                    <label for="banner_image_url">Banner Image</label>
                                     <div class="custom-file">
-                                        {{--                                        {{ dd($bannerImage->items['banner_image_url']) }}--}}
-                                        {{--                                        <input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
                                         <input type="file" name="banner_image_url" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($priyojonLanding->banner_image_url) ? config('filesystems.file_base_url') . $priyojonLanding->banner_image_url : '' }}">
+                                                data-default-file="{{ config('filesystems.file_base_url') . $priyojonLanding->banner_image_url }}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_image_url'))
                                         <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image (Mobile)</label>
-                                    <div class="custom-file">
-                                        {{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
-                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($priyojonLanding->banner_mobile_view) ? config('filesystems.file_base_url') . $priyojonLanding->banner_mobile_view : '' }}">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
+                                <div class="form-group col-md-6 {{ $errors->has('banner_video_url') ? ' error' : '' }}
+                                {{ $priyojonLanding->is_images == 1 ? 'd-none' : '' }}" id="banner_video_url">
+                                    <label for="banner_video_url" class="required">Banner Video URL</label>
+                                    <input type="text" name="banner_video_url" class="form-control" placeholder="Enter URL"
+                                            value="{{ $priyojonLanding->banner_video_url }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_mobile_view'))
-                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
+                                    @if ($errors->has('banner_video_url'))
+                                        <div class="help-block">  {{ $errors->first('banner_video_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($priyojonLanding->alt_text_en) ? $priyojonLanding->alt_text_en : '' }}">
+                                <div class="col-md-2 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="is_images">Is Images:</label>
+                                        <input type="checkbox" name="is_images" value="1" id="is_images" {{ $priyojonLanding->is_images == 1 ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label>Banner Name EN</label>
+                                    <input type="text" name="banner_name" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('banner_name') ? old('banner_name') : $priyojonLanding->banner_name }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                    <label>Banner Name BN</label>
+                                    <input type="text" name="banner_name_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('banner_name_bn') ? old('banner_name_bn') : $priyojonLanding->banner_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en">Alt Text EN</label>
+                                    <input type="text" name="alt_text_en" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('alt_text_en') ? old('alt_text_en') : $priyojonLanding->alt_text_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_en'))
+                                        <div class="help-block">{{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ old('alt_text_bn') ? old('alt_text_bn') : $priyojonLanding->alt_text_bn }}">
                                 </div>
 
                                 <div class="form-actions col-md-12">
@@ -217,6 +201,19 @@
                     'remove': 'Remove',
                     'error': 'Choose correct file format'
                 },
+            });
+
+            var banner_video_url = $('#banner_video_url');
+            var banner_image_url = $('#banner_image_url');
+
+            $('#is_images').click(function () {
+                if($(this).prop("checked") == true){
+                    banner_video_url.addClass('d-none');
+                    banner_image_url.removeClass('d-none');
+                }else{
+                    banner_image_url.addClass('d-none')
+                    banner_video_url.removeClass('d-none')
+                }
             });
         });
     </script>

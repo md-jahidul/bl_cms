@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=>$sections])
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -96,7 +96,7 @@
 
 
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -111,7 +111,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

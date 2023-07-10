@@ -94,6 +94,8 @@ class DynamicDeeplinkService
                 $endPointURL = "$moduleData->slug";
             }
 
+        } elseif ($moduleData->category_name == "ott") {
+            $endPointURL = "$moduleData->slug";
         } elseif ($moduleData->category_name == "connect") {
             if($moduleData->slug == 'connect') {
                 $endPointURL = "connect/all";

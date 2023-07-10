@@ -14,29 +14,27 @@
                         @if( auth()->user()->can_view('User') )
                             <li class="{{ is_active_url('authorize/users')}}">
                                 <a class="menu-item" href="{{ url('authorize/users') }}"
-                                   data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-user"></i> User</a>
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> User</a>
                             </li>
                         @endif
                         @if( auth()->user()->can_view('Roles') )
                             <li class="{{ is_active_url('authorize/roles')}}">
                                 <a class="menu-item" href="{{ url('authorize/roles') }}"
-                                   data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-cubes"></i> Role</a>
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Role</a>
                             </li>
                         @endif
                         @if( auth()->user()->can_view('Permissions') )
                             <li class="{{ is_active_url('authorize/permissions')}}">
                                 <a class="menu-item" href="{{ url('authorize/permissions') }}"
-                                   data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-check-square"></i> Permission</a>
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-check-square"></i>
+                                    Permission</a>
                             </li>
                         @endif
                         @if( auth()->user()->can_view('AccessLog') )
                             <li class="{{ is_active_url('access-logs')}}">
                                 <a class="menu-item" href="{{ url('access-logs') }}"
-                                   data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-lock"></i> Access Logs</a>
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-lock"></i> Access
+                                    Logs</a>
                             </li>
                         @endif
                         @if( auth()->user()->can_view('AccessLog') )
@@ -52,8 +50,7 @@
 
             <ul class="menu-content">
                 <li class=" {{ is_active_url('mybl-menu') }}">
-                    <a class="menu-item" href="{{ url('mybl-menu') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ url('mybl-menu') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-ellipsis-v"></i> Menu List
                     </a>
                 </li>
@@ -70,6 +67,12 @@
                 <li class="{{ is_active_url('mybl-home-components') }}">
                     <a class="menu-item" href="{{ route('mybl.home.components') }}">
                         <i class="la la-puzzle-piece"></i>Home Components</a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('mybl-commerce-components') }}">
+                    <a class="menu-item" href="{{ route('mybl.commerce.components') }}">
+                        <i class="la la-puzzle-piece"></i>Commerce Components</a>
                 </li>
             </ul>
             <ul class="menu-content">
@@ -120,7 +123,10 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
-
+                <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                    <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                        <i class="ft-list"></i>Pin To Top Products</a>
+                </li>
                 <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
                     <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
                         <i class="la la-fire"></i>Free Products Analytic</a>
@@ -129,6 +135,13 @@
                 <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
                     <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
                         <i class="ft-x-square"></i>Inactive Products</a>
+                </li>
+
+                <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                    <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-align-center"></i> Data Pack Category
+                    </a>
                 </li>
 
                 <li class="{{ is_active_match(route('product-activities.history')) }}">
@@ -159,6 +172,12 @@
 {{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
 {{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
 {{--                </li>--}}
+
+                <li class="{{is_active_url('product-special-types')}}">
+                    <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-tag"></i>Product Special Types
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
@@ -179,6 +198,9 @@
                     <a class="menu-item" href="{{ route('app-launch.report') }}">
                         <i class="ft-list"></i>Purchase Report</a>
                 </li>
+                <li class="{{ is_active_match('event-base-bonus/analytics')}}">
+                    <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-briefcase"></i> Analytics</a>
+                </li>
             </ul>
         </li>
     @endif
@@ -195,14 +217,18 @@
                     </a>
                 </li>
                 <li class="{{ is_active_url('feeds') }}{{ is_active_url('feeds/create') }}">
-                    <a class="menu-item" href="{{ route('feeds.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('feeds.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-feed"></i>Feed List</a>
                 </li>
             </ul>
         </li>
     @endif
-
+    <li class="{{ is_active_url('digital-service') }}">
+        <a class="menu-item" href="{{ route('digital-service.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
@@ -232,10 +258,9 @@
                  </li>--}}
 
                 {{-- <li class="{{ is_active_url('notification-report')}}">
-                    <a class="menu-item" href="{{ url('notification-report') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-comment-o"></i>Notification Report</a>
-                </li> --}}
+                <a class="menu-item" href="{{ url('notification-report') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-comment-o"></i>Notification Report</a>
+        </li> --}}
                 <li class="{{ is_active_url('target-wise-notification-report') }}">
                     <a class="menu-item" href="{{ route('target-wise-notification-report.report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
@@ -246,22 +271,52 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Purchase Report</a>
                 </li>
+                <li class="{{ is_active_url('guest.user.track')}}">
+                    <a class="menu-item" href="{{ route('guest.user.track') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i>Guest User Tracking</a>
+                </li>
 
             </ul>
         </li>
     @endif
 
+    @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
+        <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Notification V2</span></a>
+            <ul class="menu-content">
+                {{--page--}}
 
-    <!-- Campaign Menu -->
-    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
-            <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
-        <ul class="menu-content">
-            <li class=" {{is_active_url('mybl-refer-and-earn')}}">
-                <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-list"></i> Refer And Earn
-                </a>
-            </li>
+                <li class="{{ is_active_url('notificationCategory-v2') }}{{ is_active_url('notificationCategory-v2/create') }}">
+                    <a class="menu-item" href="{{ route('notificationCategory-v2.index') }}"
+                    data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Category List v2
+                    </a>
+                </li>
+                <li class="{{ is_active_url('notification-v2') }}{{ is_active_url('notification-v2/create') }}">
+                    <a class="menu-item" href="{{ route('notification-v2.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification List V2</a>
+                </li>
+                <li class="{{ is_active_url('target-wise-notification-report-v2') }}">
+                    <a class="menu-item" href="{{ route('target-wise-notification-report-v2.report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification Report V2</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+
+<!-- Campaign Menu -->
+<li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Campaigns</span></a>
+    <ul class="menu-content">
+        <li class=" {{is_active_url('mybl-refer-and-earn')}}">
+            <a class="menu-item" href="{{ route('mybl-refer-and-earn.index') }} " data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-list"></i> Refer And Earn
+            </a>
+        </li>
 
 {{--            <li class="nav-item"><a href="#"><i class="la la-users"></i>--}}
 {{--                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>--}}
@@ -311,28 +366,28 @@
                 </a>
             </li>
 
-            <li class="{{is_active_url('mybl-campaign')}}">
-                <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-bullhorn"></i> Mybl Campaign
-                </a>
-            </li>
             <li class="{{is_active_url('cash-back-campaign')}}">
                 <a class="menu-item" href="{{ route('cash-back-campaign.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-dollar"></i> Cash Back
                 </a>
             </li>
-            <li class="{{is_active_url('new-campaign-modality')}}">
-                <a class="menu-item" href="{{ route('new-campaign-modality.index') }} "
+            <li class="{{is_active_url('mybl-campaign')}}">
+                <a class="menu-item" href="{{ route('mybl-campaign.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-bullhorn"></i> New Campaign Modality
+                    <i class="la la-bullhorn"></i> Mybl Campaign
                 </a>
             </li>
             <li class="{{is_active_url('mybl-campaign-section')}}">
                 <a class="menu-item" href="{{ route('mybl-campaign-section.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-bullhorn"></i> Sections
+                </a>
+            </li>
+            <li class="{{is_active_url('new-campaign-modality')}}">
+                <a class="menu-item" href="{{ route('new-campaign-modality.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-bullhorn"></i> New Campaign Modality
                 </a>
             </li>
             <li class="{{is_active_url('mybl-campaign-winners')}}">
@@ -344,6 +399,93 @@
 
         </ul>
     </li>
+        <!-- Campaign Menu -->
+        <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Own Recharge</span></a>
+        <ul class="menu-content">
+            <li class="{{is_active_url('own-recharge-inventory')}}">
+                <a class="menu-item" href="{{ route('own-recharge-inventory.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-dollar"></i> Own Recharge Inventory
+                </a>
+            </li>
+{{--            <li class="{{is_active_url('new-campaign-modality')}}">--}}
+{{--                <a class="menu-item" href="{{ route('new-campaign-modality.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> New Campaign Modality--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="{{is_active_url('mybl-campaign-section')}}">--}}
+{{--                <a class="menu-item" href="{{ route('mybl-campaign-section.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> Sections--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="{{is_active_url('mybl-campaign-winners')}}">--}}
+{{--                <a class="menu-item" href="{{ route('mybl-campaign-winners.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> Campaign Winner--}}
+{{--                </a>--}}
+{{--            </li>--}}
+        </ul>
+    </li>
+
+     <!-- Health Hub New Journey -->
+    <li class=" nav-item"><a href="#"><i class="la la-h-square"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Health Hub Journey</span></a>
+        <ul class="menu-content">
+            {{--page--}}
+            <li class="{{is_active_url('health-hub-feature-dashboard')}}">
+                <a class="menu-item" href="{{ route('health-hub-feature-dashboard.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i> Dashboard
+                </a>
+            </li>
+            {{-- <li class="{{is_active_url('health-hub-feature-service')}}">
+                <a class="menu-item" href="{{ route('health-hub-feature-service.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i> Services
+                </a>
+            </li> --}}
+            <li class="{{is_active_url('health-hub-feature-partner')}}">
+                <a class="menu-item" href="{{ route('health-hub-feature-partner.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-user"></i> Partners
+                </a>
+            </li>
+            <li class="{{is_active_url('health-hub-feature-package')}}">
+                <a class="menu-item" href="{{ route('health-hub-feature-package.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i> Packges
+                </a>
+            </li>
+            {{-- <li class="{{is_active_url('health-hub-feature-plan')}}">
+                <a class="menu-item" href="{{ route('health-hub-feature-plan.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i> Plans
+                </a>
+            </li> --}}
+        </ul>
+    </li>
+
+    <!-- Campaign Menu -->
+{{--    <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>--}}
+{{--            <span class="menu-title" data-i18n="nav.templates.main">Commerce</span></a>--}}
+{{--        <ul class="menu-content">--}}
+{{--            <li class="{{is_active_url('commerce-bill-category')}}">--}}
+{{--                <a class="menu-item" href="{{ route('commerce-bill-category.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> Bill Category--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="{{is_active_url('commerce-bill-utility')}}">--}}
+{{--                <a class="menu-item" href="{{ route('commerce-bill-utility.index') }} "--}}
+{{--                   data-i18n="nav.templates.vert.classic_menu">--}}
+{{--                    <i class="la la-bullhorn"></i> Bill Utility--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        </ul>--}}
+{{--    </li>--}}
     <!-- LMS -->
     <li class="nav-item"><a href="#"><i class="la la-users"></i>
             <span class="menu-title" data-i18n="nav.templates.main">LMS</span></a>
@@ -394,6 +536,32 @@
         <ul class="menu-content">
             <li class="{{ is_active_match('travel')}}">
                 <a class="menu-item" href="{{ url('travel') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Travel</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Groups -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Group Components</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Show</a>
+            </li>
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components/create') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Create Group</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Non Bl -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Non Bl</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('non-bl-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>
+            </li>
+            <li class="{{ is_active_match('non-bl-offers')}}">
+                <a class="menu-item" href="{{ url('non-bl-offers') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Offer</a>
             </li>
         </ul>
     </li>
@@ -457,17 +625,16 @@
     </li>
     @endif
 
-    @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
-        <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>
-            <ul class="menu-content">
-                {{--page--}}
-                <li class="{{ is_active_url('storeCategory') }}{{ is_active_url('storeCategory/create') }}">
-                    <a class="menu-item" href="{{ route('storeCategory.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-server"></i>Category List
-                    </a>
-                </li>
+@if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
+<li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>
+    <ul class="menu-content">
+        {{--page--}}
+        <li class="{{ is_active_url('storeCategory') }}{{ is_active_url('storeCategory/create') }}">
+            <a class="menu-item" href="{{ route('storeCategory.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-server"></i>Category List
+            </a>
+        </li>
 
                 <li class="{{ is_active_url('subStore') }}{{ is_active_url('subStore/create') }}">
                     <a class="menu-item" href="{{ route('subStore.index') }}"
@@ -488,14 +655,13 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>App List</a>
                 </li>
-
             </ul>
         </li>
     @endif
 
 
     @if( auth()->user()->can_view('Banner') || auth()->user()->can_view('WelcomeInfo') || auth()->user()->can_view('MyblSlider')
-         || auth()->user()->can_view('MyblSliderImage')  || auth()->user()->can_view('ContextualCard')    )
+    || auth()->user()->can_view('MyblSliderImage') || auth()->user()->can_view('ContextualCard') )
         <li class=" nav-item"><a href="#"><i class="la la-puzzle-piece"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Component</span></a>
             <ul class="menu-content">
@@ -509,6 +675,10 @@
                     <a class="menu-item" href="{{ url('generic-slider') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Slider</a>
+                <li class="@if(is_active_match('generic-shortcut-master')) {{ is_active_match('generic-shortcut-master') }} @else {{ is_active_match('generic-shortcut') }}  @endif">
+                    <a class="menu-item" href="{{ route('generic-shortcut-master.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Shortcut</a>
                 </li>
                 <li class="{{ is_active_match('generic-carousel')}}">
                     <a class="menu-item" href="{{ url('generic-carousel') }}"
@@ -534,6 +704,11 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                 </li>
+                <li class="{{ is_active_url('contextualcard-icons') . is_active_url('contextualcard/create')}}">
+                    <a class="menu-item" href="{{ route('contextualcard-icons.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-external-link-square"></i>Contextual Card Icons</a>
+                </li>
 
                 <li class="{{ is_active_url('banner-analytic')}}">
                     <a class="menu-item" href="{{ route('banner-analytic.index') }}"
@@ -553,7 +728,24 @@
             </ul>
         </li>
     @endif
-
+    <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Orange Club</span></a>
+        <ul class="menu-content">
+            {{--page--}}
+            <li class="{{ is_active_url('orange-club-redeem') }}">
+                <a class="menu-item" href="{{ route('orange-club-redeem.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Redeem Detail
+                </a>
+            </li>
+            <li class="{{ is_active_url('orange-club') }}">
+                <a class="menu-item" href="{{ route('orange-club.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Banner
+                </a>
+            </li>
+        </ul>
+    </li>
     <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
                 class="la la-fighter-jet"></i>
             <span class="menu-title" data-i18n="nav.dash.main">Content & Course Deeplink</span></a>
@@ -598,7 +790,11 @@
         </li>
     @endif
 
-
+    <li class="{{is_active_url('ad-tech')}}">
+        <a class="menu-item" href="{{ route('ad-tech.index') }}"
+           data-i18n="nav.templates.vert.bullhorn">
+            <i class="la la-globe"></i>Ad Tech</a>
+    </li>
     @if( auth()->user()->can_view('MixedBundleFilter') )
         <li class=" nav-item"><a href="#"><i class="la la-flask"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
@@ -631,6 +827,11 @@
                     </a>
                 </li>
 
+                <li class="{{ is_active_url('internetOffer')}} {{is_active_url('recharge-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('recharge-pack.filter.create') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-globe"></i> Recharge Offer</a>
+                </li>
                 <li class="{{is_active_url('special-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('special-pack.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
@@ -738,6 +939,20 @@
         <li class="{{ is_active_url('app-version') . is_active_url('app-version/create')}}">
             <a class="menu-item" href="{{ route('app-version.index') }}" data-i18n="nav.templates.vert.classic_menu">
                 <i class="la la-code-fork"></i>App Version</a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('AppLaunch') )
+        <li class="{{ is_active_url('app-launch')}}">
+            <a class="menu-item" href="{{ route('app-launch.index') }}">
+                <i class="ft-alert-triangle"></i>App Launch Popup</a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('RemoveMsisdn') )
+        <li class="{{ is_active_url('remove-msisdn')}}">
+            <a class="menu-item" href="{{ route('remove-msisdn.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-code-fork"></i>Remove MSISDN</a>
         </li>
     @endif
 
@@ -881,6 +1096,11 @@
         </ul>
     </li>
 
+    <li class="{{ is_active_url('developer/api/debug') }}">
+        <a class="menu-item" href="{{ route('support-message') }}">
+            <i class="la la-code-fork"></i>Support Messages</a>
+    </li>
+    
     <!-- Transaction Status Report Menu -->
     <li class=" nav-item"><a href="#"><i class="la la-list"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Transaction Report</span></a>
@@ -915,6 +1135,12 @@
                     <i class="la la-list"></i>DocTime Transaction
                 </a>
             </li>
+            <li class="{{is_active_url('mybl/bus/transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status', ['type' => 'bus']) }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Bus Transaction
+                </a>
+            </li>
         </ul>
     </li>
 
@@ -933,10 +1159,7 @@
 
 @endif
 
-<li class="{{ is_active_url('developer/api/debug') }}">
-    <a class="menu-item" href="{{ route('support-message') }}">
-        <i class="la la-code-fork"></i>Support Messages</a>
-</li>
+
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------My-BL App End----------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}

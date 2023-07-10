@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Helpers\ComponentHelper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\AboutPageService;
+use App\Services\AlBannerService;
+use App\Services\Assetlite\ComponentService;
 use App\Services\EthicsService;
+use App\Services\LmsAboutBannerService;
 use App\Services\LmsBenefitService;
+use App\Services\PriyojonService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,8 +19,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Session;
 
 class LmsAboutPageController extends Controller
 {
@@ -26,6 +32,22 @@ class LmsAboutPageController extends Controller
      * @var LmsBenefitService
      */
     private $lmsBenefitService;
+    /**
+     * @var ComponentService
+     */
+    private $componentService;
+
+    protected const PAGE_TYPE = "about_loyalty";
+    /**
+     * @var LmsAboutBannerService
+     */
+    private $lmsAboutBannerService;
+
+    protected $alBannerService;
+
+    private $priyojonService;
+
+
 
     /**
      * EthicsController constructor.
@@ -34,10 +56,19 @@ class LmsAboutPageController extends Controller
      */
     public function __construct(
         AboutPageService $aboutPageService,
-        LmsBenefitService $lmsBenefitService
+        LmsBenefitService $lmsBenefitService,
+        ComponentService $componentService,
+        LmsAboutBannerService $lmsAboutBannerService,
+        PriyojonService $priyojonService,
+        AlBannerService $alBannerService
     ) {
         $this->aboutPageService = $aboutPageService;
         $this->lmsBenefitService = $lmsBenefitService;
+        $this->componentService = $componentService;
+        $this->lmsAboutBannerService = $lmsAboutBannerService;
+        $this->alBannerService = $alBannerService;
+        $this->priyojonService = $priyojonService;
+
     }
 
     /**
@@ -48,9 +79,80 @@ class LmsAboutPageController extends Controller
      */
     public function index($slug)
     {
-        $details = $this->aboutPageService->findAboutDetail($slug);
-        $benefits = $this->lmsBenefitService->getBenefit($slug);
-        return view('admin.loyalty.about-pages.index', compact('benefits', 'details', 'slug'));
+
+        /**
+         * shuvo-bs
+         * We have Plan to merge all the banner in the al_banners table. For this reason we have store discount-privilege's banner in al_banner table
+         */
+        if ($slug == 'benefits-for-you' ) {
+
+            $priyojonLanding = $this->priyojonService->getPriyojonByType('benefits_for_you');
+            $banner = $this->alBannerService->findBanner('benefits_for_you', 0)??null;
+
+            return view('admin.loyalty.about-pages.benefits-for-you', compact('priyojonLanding','banner'));
+
+        }else if ($slug == 'discount-privilege') {
+
+            // $details = $this->aboutPageService->findAboutDetail($slug);
+            // $benefits = $this->lmsBenefitService->getBenefit($slug);
+            $priyojonLanding = $this->priyojonService->getPriyojonByType('discount_privilege');
+            $banner = $this->alBannerService->findBanner('discount_privilege', 0)??null;
+
+            // dd($aboutLoyaltyBanner);
+            // $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+            // $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
+            return view('admin.loyalty.about-pages.discount-privilege', compact('priyojonLanding','banner'));
+
+        }else {
+            // $details = $this->aboutPageService->findAboutDetail($slug);
+            // $benefits = $this->lmsBenefitService->getBenefit($slug);
+            $aboutLoyaltyBanner = $this->lmsAboutBannerService->getBannerImgByPageType('about_loyalty');
+
+            $searchTag = $aboutLoyaltyBanner->searchableFeature()->first();
+            $orderBy = ['column' => 'component_order', 'direction' => 'asc'];
+            $components = $this->componentService->findBy(['page_type' => 'about_loyalty'], '', $orderBy);
+            $priyojonMenu = $this->priyojonService->findByAlias("about-priyojon");
+            return view('admin.loyalty.about-pages.index', compact('components', 'aboutLoyaltyBanner', 'searchTag', 'priyojonMenu'));
+        }
+
+    }
+
+    public function componentCreate()
+    {
+        $componentList = ComponentHelper::components()['all'];
+        return view('admin.components.create', compact('componentList'));
+    }
+
+    public function componentStore(Request $request)
+    {
+        $response = $this->componentService->componentStore($request->all(), 0, self::PAGE_TYPE);
+        Session::flash('success', $response->getContent());
+        return redirect('about-page/priyojon');
+    }
+
+    public function componentEdit(Request $request, $id)
+    {
+        $component = $this->componentService->findOne($id);
+        $componentList = ComponentHelper::components()['all'];
+        return view('admin.components.create', compact('component', 'componentList'));
+    }
+
+    public function componentUpdate(Request $request, $id)
+    {
+        $response = $this->componentService->componentUpdate($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
+    }
+
+    public function componentSortable(Request $request): Response
+    {
+        return $this->componentService->tableSortable($request->all());
+    }
+
+    public function componentDestroy($id)
+    {
+        $this->componentService->deleteComponent($id);
+        return url('about-page/priyojon');
     }
 
     /**
@@ -69,8 +171,15 @@ class LmsAboutPageController extends Controller
      */
     public function aboutPageUpdate(Request $request)
     {
+        $request->validate([
+            'left_img_name_en' => 'unique:about_pages,left_img_name_en,' . $request->about_page_id,
+            'left_img_name_bn' => 'unique:about_pages,left_img_name_bn,' . $request->about_page_id,
+            'right_img_name_en' => 'unique:about_pages,right_img_name_en,' . $request->about_page_id,
+            'right_img_name_bn' => 'unique:about_pages,right_img_name_bn,' . $request->about_page_id,
+        ]);
+
         $response = $this->aboutPageService->updateAboutPage($request->all());
-        \Illuminate\Support\Facades\Session::flash('message', $response->getContent());
+        Session::flash('message', $response->getContent());
         return redirect(route('about-page', $request->slug));
     }
 
@@ -149,12 +258,11 @@ class LmsAboutPageController extends Controller
         return $this->lmsBenefitService->findOne($id);
     }
 
-
     /**
      * file delete.
      *
      * @param $fileId
-     * @return JsonResponse|Application|RedirectResponse|Redirector
+     * @return Application|Redirector|RedirectResponse
      * @Dev Bulbul Mahmud Nito || 24/06/2020
      */
     public function fileDelete($slug, $fileId)
@@ -166,5 +274,12 @@ class LmsAboutPageController extends Controller
             Session::flash('error', 'File deleting process failed!');
         }
         return redirect("/about-page/$slug");
+    }
+
+    public function bannerUpload(Request $request)
+    {
+        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect('about-page/priyojon');
     }
 }

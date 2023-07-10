@@ -55,6 +55,7 @@
                                         <option value="sms">SMS BUNDLES</option>
                                         <option value="scr">SPECIAL CALL RATE</option>
                                         <option value="recharge_offer">RECHARGE OFFER</option>
+                                        <option value="reactivation">REACTIVATION OFFER</option>
                                         <option value="ma loan">MA LOAN</option>
                                         <option value="data loan">DATA LOAN</option>
                                         <option value="gift">GIFT</option>
@@ -244,11 +245,11 @@
                                 </div>
 
 {{--                                <div class="form-group col-md-4">--}}
-{{--                                    <label>Select Product Category</label>--}}
+{{--                                    <label>Select Data Section</label>--}}
 {{--                                    <select multiple--}}
 {{--                                            class="form-control data-section"--}}
 {{--                                            name="offer_section_slug[]" required>--}}
-{{--                                        <option value="">Please Selcet Product Category</option>--}}
+{{--                                        <option value="">Please Select Data Section</option>--}}
 {{--                                            @foreach ($internet_categories as $key => $category)--}}
 {{--                                                <option--}}
 {{--                                                    value="{{ $key }}">  {{$category}}--}}
@@ -272,6 +273,21 @@
                                                 </option>
                                             @endforeach
 
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="special_type">Special Type</label>
+                                        <select name="special_type" class="form-control">
+                                            <option value=""></option>
+                                            @foreach ($productSpecialTypes as $key => $specialType)
+                                                <option
+                                                    value="{{ $key }}" {{ old("special_type") == $key ? 'selected' : '' }}>  {{$specialType}}
+                                                </option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -374,7 +390,13 @@
                                         <label for="is_rate_cutter_offer">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_favorite" value="1"
+                                               name="is_favorite">
+                                        <label for="is_favorite">Is Favorite</label>
+                                    </fieldset>
+                                </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack">
@@ -540,6 +562,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script>
         $(function () {
+
+            $('select[name="special_type"]').select2({
+                placeholder: 'Please Select Special Type',
+            });
             // alert(true)
 
             $("#commentForm").validate();
@@ -550,7 +576,7 @@
             });
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
-                maximumSelectionLength: 3
+                maximumSelectionLength: 1
             });
         });
 
@@ -665,11 +691,24 @@
                               <div class="help-block"></div>
                            </div>`
 
+
             let callRateUnit = `<div class="form-group col-md-4">
                                   <label class="required">Call Rate Unit</label>
                                   <input class="form-control" name="call_rate_unit" required>
                                   <div class="help-block"></div>
                                 </div>`
+
+            let reactivationCallRateUnit = `<div class="form-group col-md-4">
+                                  <label>Call Rate Unit</label>
+                                  <input class="form-control" name="call_rate_unit">
+                                  <div class="help-block"></div>
+                                </div>`
+
+            let reactivationCallRate = `<div class="form-group col-md-4">
+                              <label>Call Rate</label>
+                              <input type="number" class="form-control" name="call_rate">
+                              <div class="help-block"></div>
+                           </div>`
 
             let sectionType = `<div class="form-group col-md-4">
                                     <label class="required">Product Categories</label>
@@ -688,13 +727,14 @@
             console.log(type)
             if (
                 type === 'data' ||
-                type === 'mix' ||
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||
                 type === 'gift'
             ) {
                 offer_types.append(data + dataUnit + sectionType)
+            } else if (type === 'reactivation') {
+                offer_types.append(data + dataUnit + voiceVol + reactivationCallRate + reactivationCallRateUnit)
             } else if (type === 'mix' || type === 'recharge_offer') {
                 offer_types.append(data + dataUnit + voiceVol + smsVol + sectionType)
             } else if (type === 'voice') {

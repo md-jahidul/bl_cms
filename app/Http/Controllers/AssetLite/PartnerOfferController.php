@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\PartnerOfferDetailRequest;
 use App\Http\Requests\PartnerOfferDetailsRequest;
 use App\Http\Requests\StorePartnerOfferRequest;
 use App\Models\PartnerOfferDetail;
+use App\Services\LmsOfferCategoryService;
+use App\Services\LmsTierService;
 use App\Services\PartnerOfferDetailService;
 use App\Services\PartnerOfferService;
 use Illuminate\Contracts\View\Factory;
@@ -24,12 +27,25 @@ class PartnerOfferController extends Controller {
      */
     private $partnerOfferService;
     private $partnerOfferDetailService;
+    /**
+     * @var LmsOfferCategoryService
+     */
+    private $lmsOfferCategoryService;
+    /**
+     * @var LmsTierService
+     */
+    private $lmsTierService;
 
     public function __construct(
-    PartnerOfferService $partnerOfferService, PartnerOfferDetailService $partnerOfferDetailService
+        PartnerOfferService $partnerOfferService,
+        PartnerOfferDetailService $partnerOfferDetailService,
+        LmsOfferCategoryService $lmsOfferCategoryService,
+        LmsTierService $lmsTierService
     ) {
         $this->partnerOfferService = $partnerOfferService;
         $this->partnerOfferDetailService = $partnerOfferDetailService;
+        $this->lmsOfferCategoryService = $lmsOfferCategoryService;
+        $this->lmsTierService = $lmsTierService;
     }
 
     /**
@@ -54,7 +70,11 @@ class PartnerOfferController extends Controller {
      */
     public function create($parentId, $partnerName) {
         $areas = $this->partnerOfferService->getAreaList();
-        return view('admin.partner-offer.create', compact('parentId', 'partnerName', 'areas'));
+        $tiers = $this->lmsTierService->findBy(['status' => 1]);
+        $categories = $this->lmsOfferCategoryService->findBy(['status' => 1]);
+        return view('admin.partner-offer.create', compact('parentId',
+            'partnerName', 'areas', 'categories', 'tiers'
+        ));
     }
 
     /**
@@ -102,7 +122,11 @@ class PartnerOfferController extends Controller {
 
         $areas = $this->partnerOfferService->getAreaList();
         $partnerOffer = $this->partnerOfferService->findOne($id);
-        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'areas', 'campaignPath'));
+        $tiers = $this->lmsTierService->findBy(['status' => 1]);
+        $categories = $this->lmsOfferCategoryService->findBy(['status' => 1]);
+        return view('admin.partner-offer.edit', compact('partnerOffer',
+            'partnerId', 'partnerName', 'areas', 'campaignPath', 'tiers', 'categories'
+        ));
     }
 
     /**
@@ -130,26 +154,25 @@ class PartnerOfferController extends Controller {
         return view('admin.partner-offer.offer_details', compact('partner', 'partnerOfferDetail'));
     }
 
-    public function offerDetailsUpdate(Request $request, $partnet)
+    public function offerDetailsUpdate(PartnerOfferDetailRequest $request, $partnet)
     {
-        $image_upload_size = ConfigController::adminImageUploadSize();
-        $image_upload_type = ConfigController::adminImageUploadType();
-
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-            'banner_image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size, // 2M
-            'url_slug' => 'required|regex:/^\S*$/u|unique:partner_offer_details,url_slug,' . $request->offer_details_id,
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect()->back();
-        }
+//        if ($validator->fails()) {
+//            Session::flash('error', $validator->messages()->first());
+//            return redirect()->back()->withInput();
+//        }
 
 
         $response = $this->partnerOfferDetailService
                 ->updatePartnerOfferDetails($request->all(), $request->offer_details_id);
         Session::flash('message', $response->getContent());
         return redirect()->route('partner-offer', [$request->partner_id, $partnet]);
+    }
+
+    public function syncSearchData()
+    {
+        $response = $this->partnerOfferService->syncSearch();
+        Session::flash('message', $response->getContent());
+        return redirect('partners');
     }
 
     /**

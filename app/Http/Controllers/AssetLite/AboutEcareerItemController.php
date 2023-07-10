@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Services\AboutUsEcareerItemService;
-use App\Services\AboutUsEcareerService;
+use App\Services\Assetlite\AboutUsEcareerItemService;
+use App\Services\Assetlite\AboutUsEcareerService;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -71,6 +71,11 @@ class AboutEcareerItemController extends Controller
      */
     public function store(Request $request, $careerId)
     {
+        $request->validate([
+           'image_name' => 'unique:about_us_ecareer_items,image_name',
+           'image_name_bn' => 'unique:about_us_ecareer_items,image_name_bn',
+        ]);
+
         $response = $this->aboutUsEcareerItemService->storeAboutCareerItems($request->all(), $careerId);
         Session::flash('message', $response->getContent());
         return redirect(route('career-item.list', $careerId));
@@ -109,6 +114,11 @@ class AboutEcareerItemController extends Controller
      */
     public function update(Request $request, $careerId, $id)
     {
+        $request->validate([
+            'image_name' => 'unique:about_us_ecareer_items,image_name,' . $id,
+            'image_name_bn' => 'unique:about_us_ecareer_items,image_name_bn,' . $id,
+        ]);
+
         $response = $this->aboutUsEcareerItemService->updateAboutCareerItems($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('career-item.list', $careerId));

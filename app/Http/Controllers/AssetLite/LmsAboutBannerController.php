@@ -32,18 +32,18 @@ class LmsAboutBannerController extends Controller
         $this->lmsAboutBannerService = $lmsAboutBannerService;
     }
 
-    public function viewBannerImage()
-    {
-        $images = $this->lmsAboutBannerService->findAll();
-        $aboutLoyalty = isset($images[0]) ? $images[0] : null;
-        $aboutReward = isset($images[1]) ? $images[1] : null;
-        return view('admin.loyalty.banner-image.index', compact('aboutLoyalty', 'aboutReward'));
-    }
-
-    public function bannerUpload(Request $request)
-    {
-        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect('lms-about-page/banner-image');
-    }
+//    public function viewBannerImage()
+//    {
+//        $images = $this->lmsAboutBannerService->findAll();
+//        $aboutLoyalty = isset($images[0]) ? $images[0] : null;
+//        $aboutReward = isset($images[1]) ? $images[1] : null;
+//        return view('admin.loyalty.banner-image.index', compact('aboutLoyalty', 'aboutReward'));
+//    }
+//
+//    public function bannerUpload(Request $request)
+//    {
+//        $response = $this->lmsAboutBannerService->bannerImageUpload($request->all());
+//        Session::flash('message', $response->getContent());
+//        return redirect('lms-about-page/banner-image');
+//    }
 }

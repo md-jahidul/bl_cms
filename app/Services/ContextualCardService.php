@@ -11,7 +11,10 @@ namespace App\Services;
 
 use App\Repositories\ContextualCardRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use DataTables;
 
 class ContextualCardService
 {
@@ -50,7 +53,7 @@ class ContextualCardService
      */
     public function updateContextualCard($data, $id)
     {
-        
+
         $contextualCard = $this->findOne($id);
         if (isset($data['image_url'])) {
             $data['image_url'] = 'storage/' . $data['image_url']->store('contextualCard');
@@ -60,7 +63,7 @@ class ContextualCardService
             $data['image_url'] = $contextualCard->image_url;
             $contextualCard->update($data);
         }
-        
+
         return Response('Contextual Card has been successfully updated');
     }
 
@@ -75,5 +78,13 @@ class ContextualCardService
         unlink($contextualCard->image_url);
         $contextualCard->delete();
         return Response('Contextual Card has been successfully deleted');
+    }
+
+    public function prepareDataForDatatable(Request $request)
+    {
+        $items = $this->contextualCardRepository->findAll();
+
+        return Datatables::collection($items)->addIndexColumn()
+            ->make(true);
     }
 }

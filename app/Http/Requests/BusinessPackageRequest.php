@@ -33,7 +33,7 @@ class BusinessPackageRequest extends FormRequest
                 'short_details_bn' => 'required',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_packages,url_slug,' . $id,
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_packages,url_slug_bn,' . $id,
-                'banner_name' => 'required|regex:/^\S*$/u',
+//                'banner_name' => 'required|regex:/^\S*$/u',
             ];
         } else {
             return [
@@ -41,10 +41,10 @@ class BusinessPackageRequest extends FormRequest
                 'name_bn' => 'required',
                 'short_details_en' => 'required',
                 'short_details_bn' => 'required',
-                'banner_photo' => 'required|mimes:jpg,jpeg,png',
+//                'banner_photo' => 'required|mimes:jpg,jpeg,png',
                 'url_slug' => 'required|regex:/^\S*$/u|unique:business_packages,url_slug',
                 'url_slug_bn' => 'required|regex:/^\S*$/u|unique:business_packages,url_slug_bn',
-                'banner_name' => 'required|regex:/^\S*$/u',
+//                'banner_name' => 'required|regex:/^\S*$/u',
             ];
         }
     }

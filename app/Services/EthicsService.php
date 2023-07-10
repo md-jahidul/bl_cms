@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\EthicsRepository;
 use App\Repositories\EthicsFilesRepository;
 use App\Traits\CrudTrait;
@@ -47,7 +48,7 @@ class EthicsService {
 
     /**
      * update ethics page info
-     * @return Response
+     * @return array
      */
     public function updatePageInfo($request) {
         try {
@@ -80,24 +81,19 @@ class EthicsService {
                 }
             }
 
-            //save data in database 
-            $this->pageRepo->updatePageInfo($webPath, $mobilePath, $request);
+            //save data in database
+            $ethicsData = $this->pageRepo->updatePageInfo($webPath, $mobilePath, $request);
 
-
-
-            $response = [
+            $this->_saveSearchData($ethicsData);
+            return [
                 'success' => 1,
                 'message' => "Page info updated"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
@@ -112,21 +108,19 @@ class EthicsService {
 
     /**
      * update ethics page info
-     * @return Response
+     * @return array
      */
     public function saveFile($request) {
         try {
-
-            $request->validate([
-                'file_name_en' => 'required',
-                'file_name_bn' => 'required',
-            ]);
-
+            //dd($request->all());
             //file upload in storege
 
             $fileDir = 'assetlite/images/ethics/files';
+            $imageDir = 'assetlite/images/ethics/images';
 
             $filePath = $request['old_path'];
+            $imgPath = $request['old_path_image_url'];
+            $mobImgPath = $request['old_path_mobile_view_img'];
             if ($request['file_path'] != "") {
                 $filePath = $this->upload($request['file_path'], $fileDir);
 
@@ -135,26 +129,61 @@ class EthicsService {
                     $this->deleteFile($request['old_path']);
                 }
             }
+            if ($request['image_url'] != "") {
+                $imgPath = $this->upload($request['image_url'], $imageDir);
 
+                //delete old web photo
+                if ($request['old_path_image_url']) {
+                    $this->deleteFile($request['old_path_image_url']);
+                }
+            }
+            if ($request['mobile_view_img'] != "") {
+                $mobImgPath = $this->upload($request['mobile_view_img'], $imageDir);
 
-            //save data in database 
-            $this->fileRepo->saveFileData($filePath, $request);
+                //delete old web photo
+                if ($request['old_path_mobile_view_img']) {
+                    $this->deleteFile($request['old_path_mobile_view_img']);
+                }
+            }
 
+            //save data in database
+            $fileData = $this->fileRepo->saveFileData($filePath,$imgPath,$mobImgPath, $request);
 
+            $this->_saveSearchData($fileData, 'file_info');
 
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Page info updated"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product, $reqType = null)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['ethics-compliance_en'];
+        $urlBn = $feature['ethics-compliance_bn'];
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'ethics-compliance',
+            'page_title_en' => $reqType == "file_info" ? $product['file_name_en'] : $product['page_name_en'],
+            'page_title_bn' => $reqType == "file_info" ? $product['file_name_bn'] : $product['page_name_bn'],
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product['status'] ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 
@@ -197,7 +226,7 @@ class EthicsService {
             $this->fileRepo->deleteFile($fileId);
 
             if ($filePath != "") {
-               
+
                 $this->deleteFile($filePath);
             }
 

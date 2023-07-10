@@ -36,7 +36,7 @@
                                     @endif
                                 </div>
 
-                                
+
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required1">Title (Bangla)</label>
@@ -51,12 +51,12 @@
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs tab</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap">Strategic Assistant Program</option>
-                                            <option value="ennovators">Ennovators</option>
-                                            <option value="aip">Advanced Internship Program</option>
-                                        </select>
+                                        @foreach ($program_lists as $program)
+                                            <option value="{{$program->slug}}">{{$program->title_en}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                
+
                                 @if( $sections_type == 'news_section' )
                                     {!! Form::hidden('programs_sections', 'programs_news_section') !!}
                                 @elseif( $sections_type == 'steps' )
@@ -65,6 +65,13 @@
                                     {!! Form::hidden('programs_sections', 'programs_events') !!}
                                 @elseif( $sections_type == 'testimonial' )
                                     {!! Form::hidden('programs_sections', 'programs_testimonial') !!}
+                                @elseif( $sections_type == 'video' )
+                                    {!! Form::hidden('programs_sections', 'programs_video') !!}
+                                    <div class="form-group col-md-6">
+                                        <label for="embed">Video Embed Code</label>
+                                        <textarea name="video" class="form-control" aria-invalid="false"></textarea>
+                                        <small class="text-info">If you have banner type component then it'll work</small>
+                                    </div>
                                 @endif
 
                                 {{-- <div class="form-group col-md-6">
@@ -76,7 +83,7 @@
                                             <option value="programs_testimonial">Programs testimonial section</option>
                                         </select>
                                 </div> --}}
-                                
+
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -90,7 +97,8 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.call_to_actions')
+                                @include('admin.ecarrer-items.additional.description')
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -132,7 +140,7 @@
             // console.log(sectionNameRemoveSpace);
         });
 
-        
+
 
     });
 </script>

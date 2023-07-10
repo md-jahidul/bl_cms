@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\RoamingOfferRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -27,7 +28,7 @@ class RoamingOfferService {
      * @param RoamingOfferRepository $offerRepo
      */
     public function __construct(
-    RoamingOfferRepository $offerRepo
+        RoamingOfferRepository $offerRepo
     ) {
         $this->offerRepo = $offerRepo;
     }
@@ -37,8 +38,7 @@ class RoamingOfferService {
      * @return Response
      */
     public function getCategories() {
-        $response = $this->offerRepo->getCategoryList();
-        return $response;
+        return $this->offerRepo->getCategoryList();
     }
 
     /**
@@ -61,7 +61,7 @@ class RoamingOfferService {
                 'name_en' => 'required',
                 'name_bn' => 'required',
             ]);
-            //save data in database 
+            //save data in database
             $this->offerRepo->updateCategory($request);
 
             $response = [
@@ -107,11 +107,10 @@ class RoamingOfferService {
 
     /**
      * update roaming category
-     * @return Response
+     * @return array
      */
     public function saveOffer($request) {
         try {
-
             //file upload in storege
             $webPath = "";
             if ($request['banner_web'] != "") {
@@ -121,8 +120,13 @@ class RoamingOfferService {
 
             $mobilePath = "";
             if ($request['banner_mobile'] != "") {
-
                 $mobilePath = $this->upload($request['banner_mobile'], 'assetlite/images/roaming');
+            }
+
+
+            $cardImagePath = "";
+            if ($request['card_image'] != "") {
+                $cardImagePath = $this->upload($request['card_image'], 'assetlite/images/roaming');
             }
 
             //web rename
@@ -154,34 +158,60 @@ class RoamingOfferService {
                 rename($encodeImgWeb, $seoImgMob);
             }
 
+            //save data in database
+            $offer = $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $cardImagePath, $request);
 
-            //save data in database 
-            $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $request);
+            $searchSpecialKeyword = [
+                'tag_en' => $request['tag_en'],
+                'tag_bn' => $request['tag_bn']
+            ];
 
+            $this->_saveSearchData($offer, $searchSpecialKeyword);
 
-
-            $response = [
+            return [
                 'success' => 1,
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
-                'message' => $e
+                'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product, $searchSpecialKeyword = [])
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['roaming_en'] . "/" . "offer" . '/' . $product->url_slug;
+        $urlBn = $feature['roaming_bn'] . "/" . "offer" . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'roaming-offer',
+            'page_title_en' => $product->name_en,
+            'page_title_bn' => $product->name_bn,
+            'tag_en' => $searchSpecialKeyword['tag_en'],
+            'tag_bn' => $searchSpecialKeyword['tag_bn'],
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 
     /**
      * update roaming category
-     * @return Response
+     * @return int[]
      */
     public function updateOffer($request) {
         try {
-           
+
             //file upload in storege
             $seoNameWeb = $request['old_web'];
             if ($request['banner_web'] != "") {
@@ -263,17 +293,23 @@ class RoamingOfferService {
                 }
             }
 
-            //save data in database 
-            $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $request);
+            $cardImagePath = "";
+            if ($request['card_image'] != "") {
+                $cardImagePath = $this->upload($request['card_image'], 'assetlite/images/roaming');
+            }
 
+            //save data in database
+            $offer = $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $cardImagePath, $request);
 
-
-            $response = [
-                'success' => 1,
+            $searchSpecialKeyword = [
+                'tag_en' => $request['tag_en'],
+                'tag_bn' => $request['tag_bn']
             ];
 
-
-            return $response;
+            $this->_saveSearchData($offer, $searchSpecialKeyword);
+            return [
+                'success' => 1,
+            ];
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
@@ -300,7 +336,7 @@ class RoamingOfferService {
                 $this->deleteFile($offer->banner_mobile);
             }
 
-            //delete data 
+            //delete data
             $this->offerRepo->deleteOffer($offerId);
 
 
@@ -319,8 +355,8 @@ class RoamingOfferService {
             return $response;
         }
     }
-    
-        /**
+
+    /**
      * Get Roaming offers
      * @return Response
      */
@@ -328,9 +364,9 @@ class RoamingOfferService {
         $response = $this->offerRepo->getOfferComponents($offerId);
         return $response;
     }
-    
-    
-     /**
+
+
+    /**
      * update roaming category
      * @return Response
      */
@@ -338,8 +374,8 @@ class RoamingOfferService {
         try {
 
 
-            //save data in database 
-        $this->offerRepo->saveComponents($request);
+            //save data in database
+            $this->offerRepo->saveComponents($request);
 
             $response = [
                 'success' => 1,
@@ -355,8 +391,8 @@ class RoamingOfferService {
             return $response;
         }
     }
-    
-         /**
+
+    /**
      * Change component sorting
      * @return Response
      */
@@ -364,9 +400,9 @@ class RoamingOfferService {
         $response = $this->offerRepo->changeComponentSorting($request);
         return $response;
     }
-    
-         /**
-     * delete component 
+
+    /**
+     * delete component
      * @return Response
      */
     public function componentDelete($comId) {

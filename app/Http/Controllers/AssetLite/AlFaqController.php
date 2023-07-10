@@ -66,7 +66,16 @@ class AlFaqController extends Controller
     public function index($slug)
     {
         $faqs = $this->faq->getFaqs($slug);
-        return view('admin.al-faq.index', compact('faqs', 'slug'));
+        $category = $this->alFaqCategoryService->getFaqsCategory(['slug' => $slug]);
+        $for = [];
+        if ($category->model != null && $slug == 'explore_c') {
+
+            $allPages = $category->model::where('type','explore_c')->get();
+            foreach ($allPages as $key => $value) {
+                $for[$value->id] = $value->page_name_en;
+            }
+        }
+        return view('admin.al-faq.index', compact('faqs', 'slug', 'for'));
     }
 
     /**
@@ -77,7 +86,16 @@ class AlFaqController extends Controller
      */
     public function create($slug)
     {
-        return view('admin.al-faq.create', compact('slug'));
+        $category = $this->alFaqCategoryService->getFaqsCategory(['slug' => $slug]);
+
+        $for = null;
+
+        if ($category->model != null && $slug == 'explore_c') {
+
+            $for = $category->model::where('type','explore_c')->get();
+        }
+
+        return view('admin.al-faq.create', compact('slug', 'for'));
     }
 
     /**
@@ -104,8 +122,16 @@ class AlFaqController extends Controller
      */
     public function edit($slug, $id)
     {
+        $category = $this->alFaqCategoryService->getFaqsCategory(['slug' => $slug]);
+
+        $for = null;
+
+        if ($category->model != null && $slug == 'explore_c') {
+            $for = $category->model::where('type','explore_c')->get();
+        }
+
         $faq = $this->faq->findOne($id);
-        return view('admin.al-faq.edit', compact('faq', 'slug'));
+        return view('admin.al-faq.edit', compact('faq', 'slug', 'for'));
     }
 
     /**
@@ -135,5 +161,11 @@ class AlFaqController extends Controller
     {
         $this->faq->deleteFaq($id);
         return url("faq/$slug");
+    }
+
+    public function faqSortable(Request $request)/*: Response*/
+    {
+        return $this->faq->tableSortable($request->all());
+        
     }
 }

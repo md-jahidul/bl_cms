@@ -71,122 +71,132 @@
         </div>
     </section>
 
+    @php
+        $action = [
+            'section_id' => $productDetailsId,
+            'section_type' => "product_other_details"
+        ];
+    @endphp
+    @include('admin.al-banner.section', $action)
+{{--    <section>--}}
+{{--        <div class="card">--}}
+{{--            <div class="card-content collapse show">--}}
+{{--                <div class="card-body card-dashboard">--}}
+{{--                    <h4 class="menu-title"><strong>Banner And Related Product</strong></h4><hr>--}}
+{{--                    <div class="card-body card-dashboard">--}}
+{{--                        <form role="form" action="{{ route('bannerImg-relatedPro',[$simType, $productDetailsId]) }}" method="POST" novalidate enctype="multipart/form-data">--}}
+{{--                            @csrf--}}
+{{--                            {{method_field('POST')}}--}}
+{{--                            <div class="row">--}}
 
-    <section>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Banner And Related Product</strong></h4><hr>
-                    <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('bannerImg-relatedPro',[$simType, $productDetailsId]) }}" method="POST" novalidate enctype="multipart/form-data">
-                            @csrf
-                            {{method_field('POST')}}
-                            <div class="row">
+{{--                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">--}}
+{{--                                    <label for="mobileImg">Desktop View Image</label>--}}
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input type="hidden" name="old_web_img" value="{{ isset($bannerRelatedProduct->banner_image_url) ? $bannerRelatedProduct->banner_image_url : null }}">--}}
+{{--                                        <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"--}}
+{{--                                               data-default-file="{{ isset($bannerRelatedProduct->banner_image_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->banner_image_url : null  }}">--}}
+{{--                                    </div>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label for="mobileImg">Desktop View Image</label>
-                                    <div class="custom-file">
-                                        <input type="hidden" name="old_web_img" value="{{ isset($bannerRelatedProduct->banner_image_url) ? $bannerRelatedProduct->banner_image_url : null }}">
-                                        <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
-                                               data-default-file="{{ isset($bannerRelatedProduct->banner_image_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->banner_image_url : null  }}">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('banner_image_url'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_url'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img_url') ? ' error' : '' }}">--}}
+{{--                                    <label for="mobileImg">Mobile View Image</label>--}}
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input type="hidden" name="old_mob_img" value="{{ isset($bannerRelatedProduct->mobile_view_img_url) ? $bannerRelatedProduct->mobile_view_img_url : null }}">--}}
+{{--                                        <input type="file" name="mobile_view_img_url" class="dropify" data-height="80" id="image"--}}
+{{--                                               data-default-file="{{ isset($bannerRelatedProduct->mobile_view_img_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->mobile_view_img_url : null  }}">--}}
+{{--                                    </div>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img_url') ? ' error' : '' }}">
-                                    <label for="mobileImg">Mobile View Image</label>
-                                    <div class="custom-file">
-                                        <input type="hidden" name="old_mob_img" value="{{ isset($bannerRelatedProduct->mobile_view_img_url) ? $bannerRelatedProduct->mobile_view_img_url : null }}">
-                                        <input type="file" name="mobile_view_img_url" class="dropify" data-height="80" id="image"
-                                               data-default-file="{{ isset($bannerRelatedProduct->mobile_view_img_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->mobile_view_img_url : null  }}">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('mobile_view_img_url'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('mobile_view_img_url') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('mobile_view_img_url'))
-                                        <div class="help-block">  {{ $errors->first('mobile_view_img_url') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
+{{--                                    <label for="alt_text">Alt Text</label>--}}
+{{--                                    <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter offer name in English"--}}
+{{--                                           value="{{ isset($bannerRelatedProduct->alt_text) ? $bannerRelatedProduct->alt_text : null }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('alt_text'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter offer name in English"
-                                               value="{{ isset($bannerRelatedProduct->alt_text) ? $bannerRelatedProduct->alt_text : null }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
+{{--                                    <label>Banner Photo Name</label>--}}
+{{--                                    <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">--}}
+{{--                                    <input type="text" class="form-control" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"--}}
+{{--                                           placeholder="Photo Name">--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>--}}
+{{--                                        <strong>Note: </strong> Don't need MIME type like jpg,png--}}
+{{--                                    </small>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Banner Photo Name</label>
-                                    <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">
-                                    <input type="text" class="form-control" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
-                                           placeholder="Photo Name">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
-                                        <strong>Note: </strong> Don't need MIME type like jpg,png
-                                    </small>
-                                </div>
+{{--                                @php--}}
+{{--                                    $arrayVal = ['others', 'packages', 'new_sim_offer', 'bondho_sim'];--}}
+{{--                                @endphp--}}
+{{--                                --}}{{-- @if($productType !== \App\Enums\OfferType::OTHERS) --}}
+{{--                                @if(!in_array($productType->alias, $arrayVal))--}}
+{{--                                    <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">--}}
+{{--                                        <label for="component_title_en">Related Product Section Title (English)</label>--}}
+{{--                                        <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"--}}
+{{--                                               value="{{ isset($bannerRelatedProduct->component_title_en) ? $bannerRelatedProduct->component_title_en : null }}">--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('component_title_en'))--}}
+{{--                                            <div class="help-block">{{ $errors->first('component_title_en') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
 
-                                @if($productType !== \App\Enums\OfferType::OTHERS)
-                                    <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
-                                        <label for="component_title_en">Related Product Section Title (English)</label>
-                                        <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
-                                               value="{{ isset($bannerRelatedProduct->component_title_en) ? $bannerRelatedProduct->component_title_en : null }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('component_title_en'))
-                                            <div class="help-block">{{ $errors->first('component_title_en') }}</div>
-                                        @endif
-                                    </div>
+{{--                                    <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">--}}
+{{--                                        <label for="component_title_bn">Related Product Section Title (Bangla)</label>--}}
+{{--                                        <input type="text" name="component_title_bn" id="component_title_bn" class="form-control" placeholder="Enter offer name in Bangla"--}}
+{{--                                               value="{{ isset($bannerRelatedProduct->component_title_bn) ? $bannerRelatedProduct->component_title_bn : null }}">--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('component_title_bn'))--}}
+{{--                                            <div class="help-block">{{ $errors->first('component_title_bn') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
 
-                                    <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
-                                        <label for="component_title_bn">Related Product Section Title (Bangla)</label>
-                                        <input type="text" name="component_title_bn" id="component_title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                               value="{{ isset($bannerRelatedProduct->component_title_bn) ? $bannerRelatedProduct->component_title_bn : null }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('component_title_bn'))
-                                            <div class="help-block">{{ $errors->first('component_title_bn') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">
-                                        <label for="related_product_id">Related Product</label>
-                                        <div class="role-select">
-                                            <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
-                                                @foreach($products as $product)
-                                                    <option value="{{ $product->id }}" {{ match($product->id, $bannerRelatedProduct['related_product_id']) ? 'selected' : '' }}>{{$product->name_en."/ ".$product->product_code}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('related_product_id'))
-                                            <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
-                                        @endif
-                                    </div>
-                                @endif
+{{--                                    <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">--}}
+{{--                                        <label for="related_product_id">Related Product</label>--}}
+{{--                                        <div class="role-select">--}}
+{{--                                            <select class="select2 form-control" multiple="multiple" name="related_product_id[]">--}}
+{{--                                                @foreach($products as $product)--}}
+{{--                                                    <option value="{{ $product->id }}" {{ match($product->id, $bannerRelatedProduct['related_product_id']) ? 'selected' : '' }}>{{$product->name_en."/ ".$product->product_code}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('related_product_id'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('related_product_id') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
 
 
-                                <div class="form-actions col-md-12">
-                                    <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
-                                        </button>
-                                    </div>
-                                </div>
+{{--                                <div class="form-actions col-md-12">--}}
+{{--                                    <div class="pull-right">--}}
+{{--                                        <button type="submit" class="btn btn-primary"><i--}}
+{{--                                                class="la la-check-square-o"></i> Save--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{{--                            </div>--}}
+{{--                        </form>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 @stop
 
 @push('page-css')

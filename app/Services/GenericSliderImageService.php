@@ -60,6 +60,8 @@ class GenericSliderImageService
                 $image['image_url'] = 'storage/' . $image['image_url']->store('generic-slider');
                 $image['sequence'] = $i;
                 $image['generic_slider_id'] = $image['slider_id'];
+                $image['banner_text_en'] = $image['banner_text_en'] ?? null;
+                $image['banner_text_bn'] = $image['banner_text_bn'] ?? null;
                 if (isset($image['other_attributes'])) {
                     if ($image['redirect_url'] == "FEED_CATEGORY") {
                         $other_attributes = $image['other_attributes'];

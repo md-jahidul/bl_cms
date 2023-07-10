@@ -59,6 +59,7 @@ class CorpInitiativeTabComponentController extends Controller
     public function componentCreateForm($tabId)
     {
         $componentTypes = $this->componentTypes;
+
         return view('admin.corporate-responsibility.initiative.components.create', compact('componentTypes', 'tabId'));
     }
 
@@ -73,8 +74,9 @@ class CorpInitiativeTabComponentController extends Controller
     public function componentEditForm($tabId, $id)
     {
         $componentTypes = $this->componentTypes;
-        $component = $this->initiativeTabComponentService->findOne($id);
+        $component = $this->initiativeTabComponentService->findComponent($id);
         $multipleItem = $component['multiple_attributes'];
+//        dd($component['multiComponent']);
         return view('admin.corporate-responsibility.initiative.components.edit', compact('component', 'multipleItem', 'componentTypes', 'tabId'));
     }
 

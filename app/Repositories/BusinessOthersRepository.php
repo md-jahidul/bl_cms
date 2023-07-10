@@ -32,7 +32,7 @@ class BusinessOthersRepository extends BaseRepository {
         return $data;
     }
 
-    public function saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request) {
+    public function saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData) {
         $service = $this->model;
 
         if ($iconPath != "") {
@@ -52,6 +52,13 @@ class BusinessOthersRepository extends BaseRepository {
         if ($bannerMob != "") {
             $service->details_banner_mobile = $bannerMob;
         }
+        if ($cardData['cardWeb'] != "") {
+            $service->details_card_web = $cardData['cardWeb'];
+        }
+        if ($cardData['cardMob'] != "") {
+            $service->details_card_mob = $cardData['cardMob'];
+        }
+
         $service->details_banner_name = $request->details_banner_name;
         $service->details_alt_text = $request->banner_alt_text;
 
@@ -75,10 +82,15 @@ class BusinessOthersRepository extends BaseRepository {
         $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
 
+        $service->banner_title_en = $request->banner_title_en;
+        $service->banner_title_bn = $request->banner_title_bn;
+        $service->banner_subtitle_en = $request->banner_subtitle_en;
+        $service->banner_subtitle_bn = $request->banner_subtitle_bn;
+
         $service->type = $request->type;
         $service->created_by = Auth::id();
         $service->save();
-        return $service->id;
+        return $service;
     }
 
     public function changeHomeShowStatus($serviceId) {
@@ -186,7 +198,7 @@ class BusinessOthersRepository extends BaseRepository {
         return $service;
     }
 
-    public function updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request) {
+    public function updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData) {
         $serviceId = $request->service_id;
         $service = $this->model->findOrFail($serviceId);
 
@@ -209,6 +221,14 @@ class BusinessOthersRepository extends BaseRepository {
         if ($bannerMob != "") {
             $service->details_banner_mobile = $bannerMob;
         }
+
+        if ($cardData['cardWeb'] != "") {
+            $service->details_card_web = $cardData['cardWeb'];
+        }
+        if ($cardData['cardMob'] != "") {
+            $service->details_card_mob = $cardData['cardMob'];
+        }
+
         $service->details_banner_name = $request->details_banner_name;
         $service->details_alt_text = $request->banner_alt_text;
 
@@ -232,9 +252,16 @@ class BusinessOthersRepository extends BaseRepository {
         $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
 
+
+        $service->banner_title_en = $request->banner_title_en;
+        $service->banner_title_bn = $request->banner_title_bn;
+        $service->banner_subtitle_en = $request->banner_subtitle_en;
+        $service->banner_subtitle_bn = $request->banner_subtitle_bn;
+
         $service->type = $request->type;
         $service->updated_by = Auth::id();
-        return $service->save();
+        $service->save();
+        return $service;
     }
 
     public function getEnterEnterpriseSol($id = null)

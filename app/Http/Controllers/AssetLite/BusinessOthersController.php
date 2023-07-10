@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BusinessOtherPackageRequest;
 use App\Services\BusinessOthersService;
 use App\Services\BusinessPackageService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 use Session;
 
 class BusinessOthersController extends Controller {
@@ -28,15 +32,15 @@ class BusinessOthersController extends Controller {
      * List of business other services.
      *
      * @param No
-     * @return Factory|View
+     * @return Application|Factory|View
      * @Bulbul Mahmud Nito || 18/02/2020
      */
     public function index() {
         $businessSolution = $this->othersService->getOtherService('business-solution');
-        $iot = $this->othersService->getOtherService('iot');
-        $others = $this->othersService->getOtherService('others');
-        $corona = $this->othersService->getOtherService('');
-        return view('admin.business.other_services', compact("businessSolution", "iot", "others", "corona"));
+//        $iot = $this->othersService->getOtherService('iot');
+//        $others = $this->othersService->getOtherService('others');
+//        $corona = $this->othersService->getOtherService('');
+        return view('admin.business.other_services', compact("businessSolution"));
     }
 
 
@@ -238,8 +242,7 @@ class BusinessOthersController extends Controller {
      */
     public function activationStatus($serviceId) {
 
-        $response = $this->othersService->packageActive($serviceId);
-        return $response;
+        return $this->othersService->packageActive($serviceId);
     }
 
     /**
@@ -282,11 +285,7 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 20/02/2020
      */
     public function update(BusinessOtherPackageRequest $request) {
-
-//        print_r($request->all()); die();
-
         $response = $this->othersService->updateService($request);
-
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is updated!');
         } else {

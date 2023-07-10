@@ -5,8 +5,11 @@
     <li class="breadcrumb-item active">Partner List</li>
 @endsection
 @section('action')
-    <a href="{{ route('campaign-offers.list') }}" class="btn btn-warning  round btn-glow px-2"><i class="la la-bullhorn"></i>
-        Campaign
+{{--    <a href="{{ route('campaign-offers.list') }}" class="btn btn-warning  round btn-glow px-2"><i class="la la-bullhorn"></i>--}}
+{{--        Campaign--}}
+{{--    </a>--}}
+    <a href="{{ url('partner-offer/search-data-sync') }}" class="btn btn-blue-grey  round btn-glow px-2"><i class="la la-refresh"></i>
+        Sync Search
     </a>
 
     <a href="{{ route('partner-offer-home') }}" class="btn btn-instagram  round btn-glow px-2"><i class="la la-list"></i>
@@ -29,7 +32,7 @@
                             <th>SL</th>
                             <th>Company Logo</th>
                             <th>Company Name</th>
-                            <th>Category</th>
+{{--                            <th>Category</th>--}}
                             <th width="12%">Contact Parson Mobile</th>
                             <th>Address</th>
                             <th>Offer</th>
@@ -43,7 +46,7 @@
                                 <td class="pt-2">{{ ++$key }}</td>
                                 <td><img src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="50" width="50"></td>
                                 <td class="pt-2">{{ $partner->company_name_en }}</td>
-                                <td class="pt-2">{{ $partner->partnerCategory->name_en }}</td>
+{{--                                <td class="pt-2">{{ $partner->partnerCategory->name_en }}</td>--}}
                                 <td class="pt-2">{{ $partner->contact_person_mobile }}</td>
                                 <td class="pt-2">{{ $partner->company_address }}</td>
                                 <td>

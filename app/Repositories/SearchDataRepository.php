@@ -13,7 +13,7 @@ class SearchDataRepository extends BaseRepository {
 
     public $modelName = SearchData::class;
 
-    public function saveData($productId, $keywordType, $name, $url, $type, $tag) {
+    public function saveData($productId, $keywordType, $name, $url, $type, $tag, $productCode, $status) {
         $previous = $this->model->where('keyword_id', $productId);
         if ($previous->count() > 0) {
            $save = $previous->update(
@@ -23,6 +23,8 @@ class SearchDataRepository extends BaseRepository {
                         'url' => $url,
                         'type' => $type,
                         'tag' => $tag,
+                        'product_code' => $productCode,
+                        'status' => $status,
                     )
             );
         } else {
@@ -34,6 +36,8 @@ class SearchDataRepository extends BaseRepository {
                         'url' => $url,
                         'type' => $type,
                         'tag' => $tag,
+                        'product_code' => $productCode,
+                        'status' => $status,
                     )
             );
         }
@@ -44,10 +48,12 @@ class SearchDataRepository extends BaseRepository {
     {
         $keywords = $this->model->where('keyword_type', $keywordType)->first();
 //        foreach($keywords as $val){
-        $kwUrl = $keywords->url;
-        $urlArray = explode('/', $kwUrl);
-        $newUrl = $urlArray[0] . '/' . $categoryUrl . '/' . $urlArray[2] . '/' . $urlArray[3];
-        $this->model->where('id', $keywords->id)->update(['url' => $newUrl]);
+        if ($keywords){
+            $kwUrl = $keywords->url;
+            $urlArray = explode('/', $kwUrl);
+            $newUrl = $urlArray[0] . '/' . $categoryUrl . '/' . $urlArray[2] . '/' . $urlArray[3];
+            $this->model->where('id', $keywords->id)->update(['url' => $newUrl]);
+        }
 //        }
     }
 

@@ -163,6 +163,14 @@
                                             <small id="massage"></small>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="winning_massage_en" >Partner Details:</label>
+                                        <textarea
+                                            class="form-control @error('partner_details') is-invalid @enderror" placeholder="Enter Partner Details....." id="partner_details"
+                                            name="partner_details" rows="5">@if(old('body')){{old('body')}}@endif</textarea>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('partner_details') {{ $message }} @enderror </small>
+                                    </div>
                                     {{--<div id="link" class="form-group col-md-6">
                                         <label id="label_link" for="numbers">Web or Deep Link</label>
                                         <div class='input-group'>

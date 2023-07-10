@@ -36,7 +36,9 @@ class AlFaqService
 
     public function getFaqs($slug)
     {
-        return $this->alFaqRepository->findByProperties(['slug' => $slug]);
+        // return $this->alFaqRepository->findByProperties(['slug' => $slug]);
+        $orderBy = ['column' => 'display_order', 'direction' => 'asc'];
+        return $this->alFaqRepository->findBy(['slug' => $slug],'',$orderBy);
     }
 
     /**
@@ -50,6 +52,10 @@ class AlFaqService
         $data['created_by'] = Auth::id();
         $data['slug'] = $slug;
         unset($data['files']);
+
+        $countFaqs = $this->alFaqRepository->findAll();
+        $data['display_order'] = count($countFaqs) + 1;
+        
         $this->save($data);
         return new Response("Banner has been successfully created");
     }
@@ -78,5 +84,17 @@ class AlFaqService
         $faq = $this->findOne($id);
         $faq->delete();
         return Response('Faq has been successfully deleted');
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($data)
+    {
+        // return new Response($data['position']);
+        
+        $this->alFaqRepository->faqTableSort($data);
+        return new Response('update successfully');
     }
 }

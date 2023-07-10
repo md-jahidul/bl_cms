@@ -16,6 +16,7 @@ use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DynamicPageService
 {
@@ -56,45 +57,21 @@ class DynamicPageService
     public function savePage($data)
     {
         try {
-            if (!empty($data['banner_image_url'])) {
-                //delete old web photo
-                if ($data['old_web_img'] != "") {
-                    $this->deleteFile($data['old_web_img']);
-                }
-                $photoName = $data['banner_name'] . '-web';
-                $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/dynamic_page', $photoName);
-            }
-
-            if (!empty($data['banner_mobile_view'])) {
-                //delete old web photo
-                if ($data['old_mob_img'] != "") {
-                    $this->deleteFile($data['old_mob_img']);
-                }
-                $photoName = $data['banner_name'] . '-mobile';
-                $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], 'assetlite/images/banner/dynamic_page', $photoName);
-            }
-
-            //only rename
-            if ($data['old_banner_name'] != $data['banner_name']) {
-                if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
-                    $fileName = $data['banner_name'] . '-web';
-                    $directoryPath = 'assetlite/images/banner/dynamic_page';
-                    $data['banner_image_url'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
-                }
-                if (empty($data['banner_mobile_view']) && $data['old_mob_img'] != "") {
-                    $fileName = $data['banner_name'] . '-mobile';
-                    $directoryPath = 'assetlite/images/banner/dynamic_page';
-                    $data['banner_mobile_view'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
-                }
-            }
             unset($data['_token']);
-            unset($data['old_web_img']);
-            unset($data['old_mob_img']);
-            unset($data['old_banner_name']);
             $data['url_slug'] = str_replace(str_split('\/:*?" _<>|'), '-', strtolower($data['url_slug']));
-            $this->pageRepo->savePage($data);
+
+            if (isset($data['page_id'])) {
+                $page = $this->pageRepo->findOrFail($data['page_id']);
+                $page->update($data);
+                $this->_saveSearchData($page, 'update');
+            } else {
+                $page = $this->save($data);
+                $this->_saveSearchData($page, 'create');
+            }
+
             $response = [
                 'success' => 1,
+                'message' => 'Page added successfully!'
             ];
         } catch (\Exception $e) {
             $response = [
@@ -105,6 +82,34 @@ class DynamicPageService
         return $response;
     }
 
+    private function _saveSearchData($page, $requestType)
+    {
+        $titleEn = $page->page_name_en;
+        $titleBn = $page->page_name_bn;
+
+        #Search Table Status
+        $status = 1;
+
+        $urlEn = $page->url_slug;
+        $urlBn = $page->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'dynamic-page',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $status,
+        ];
+
+        if (!$page->searchableFeature()->first() || $requestType == "create") {
+            $page->searchableFeature()->create($saveSearchData);
+        }else {
+            $page->searchableFeature()->update($saveSearchData);
+        }
+    }
+
     public function getComponents($pageId)
     {
         return $this->componentRepository->list($pageId, self::PageType);
@@ -113,7 +118,9 @@ class DynamicPageService
     public function deletePage($id)
     {
         try {
-            $this->pageRepo->findOrFail($id)->delete();
+            $page = $this->pageRepo->findOrFail($id);
+            $page->delete();
+            $page->searchableFeature()->delete();
             $response = [
                 'success' => 1,
             ];

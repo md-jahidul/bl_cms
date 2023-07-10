@@ -5,10 +5,10 @@ namespace App\Http\Controllers\AssetLite;
 use App\Repositories\AlReferralInfoRepository;
 use App\Repositories\AppServiceCategoryRepository;
 use App\Repositories\AppServiceTabRepository;
-use App\Services\AppServiceCategoryService;
-use App\Services\AppServiceProductService;
-use App\Services\AppServiceTabService;
-use App\Services\AppServiceVendorApiService;
+use App\Services\Assetlite\AppServiceCategoryService;
+use App\Services\Assetlite\AppServiceProductService;
+use App\Services\Assetlite\AppServiceTabService;
+use App\Services\Assetlite\AppServiceVendorApiService;
 use App\Services\TagCategoryService;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
@@ -155,6 +155,13 @@ class AppServiceProductController extends Controller
     {
         return $this->appServiceCategoryRepository
             ->findByProperties(['app_service_tab_id' => $tabId], ['id', 'title_en', 'alias']);
+    }
+
+    public function searchDataSync()
+    {
+        $response = $this->appServiceProductService->syncSearchData();
+        Session::flash('message', $response->getContent());
+        return redirect(route('app-service-product.index'));
     }
 
     /**

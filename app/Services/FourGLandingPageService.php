@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AlFaqRepository;
 use App\Repositories\FourGCampaignRepository;
 use App\Repositories\FourGLandingPageRepository;
@@ -66,6 +67,8 @@ class FourGLandingPageService
         $component = $this->findOne($id);
         $data['updated_by'] = Auth::id();
         $component->update($data);
+
+        $this->_saveSearchData($component);
         return Response('Component has been successfully updated');
     }
 
@@ -79,12 +82,25 @@ class FourGLandingPageService
         $comType = $data['component_type'];
         $bannerImage = $this->fourGLandingPageRepository->findOneByProperties(['component_type' => $comType]);
 
+        $data['banner_image_url'] =  $bannerImage->items['banner_image_url'] ?? null;
+        $data['banner_mobile_view'] = $bannerImage->items['banner_mobile_view'] ?? null;
+
         $dirPath = 'assetlite/images/banner/four-g';
         if (!empty($data['items']['banner_image_url'])) {
             $data['items']['banner_image_url'] = $this->upload($data['items']['banner_image_url'], $dirPath);
+            $data['banner_image_url'] = $data['items']['banner_image_url'];
         }
         if (!empty($data['items']['banner_mobile_view'])) {
             $data['items']['banner_mobile_view'] = $this->upload($data['items']['banner_mobile_view'], $dirPath);
+            $data['banner_mobile_view'] = $data['items']['banner_mobile_view'];
+        }
+
+        if(!empty($data['items']['banner_name_en'])) {
+            $data['banner_name_en'] = $data['items']['banner_name_en'];
+        }
+
+        if(!empty($data['items']['banner_name_bn'])) {
+            $data['banner_name_bn'] = $data['items']['banner_name_bn'];
         }
 
         if (!$bannerImage) {
@@ -111,5 +127,27 @@ class FourGLandingPageService
         return Response('Banner Image update successfully!!');
     }
 
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['bl_4g_en'];
+        $urlBn = $feature['bl_4g_bn'];
 
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'banglalink-4g',
+            'page_title_en' => $product->title_en,
+            'page_title_bn' => $product->title_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
+    }
 }

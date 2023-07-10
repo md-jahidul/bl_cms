@@ -86,6 +86,12 @@ class PriyojonService
         if (request()->has('banner_mobile_view')) {
             $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
         }
+
+        if (!request()->has('is_images')) {
+            $data['is_images'] = 0;
+            $data['banner_image_url'] = null;
+        }
+
         $priyojonData->update($data);
         return Response('Priyojon updated successfully');
     }
@@ -100,5 +106,19 @@ class PriyojonService
         $priyojon = $this->findOne($id);
         $priyojon->delete();
         return Response('Priyojon delete successfully');
+    }
+
+    /**
+     * @param $parent_id
+     * @return mixed
+     */
+    public function getPriyojonByType($type)
+    {
+        return $this->priyojonRepository->findOneByProperties(['component_type' => $type, 'parent_id' => 0]);
+    }
+
+    public function findByAlias($alias)
+    {
+        return $this->priyojonRepository->findOneByProperties(['alias' => $alias]);
     }
 }

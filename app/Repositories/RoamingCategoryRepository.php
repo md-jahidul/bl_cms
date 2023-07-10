@@ -25,39 +25,34 @@ class RoamingCategoryRepository extends BaseRepository {
     }
 
     public function updateCategory($webPath, $mobilePath, $request) {
-        try {
-
             $category = $this->model->findOrFail($request->cat_id);
 
             $category->name_en = $request->name_en;
             $category->name_bn = $request->name_bn;
             $category->banner_web = $webPath;
             $category->banner_mobile = $mobilePath;
+
+            $category->banner_title_en = $request->banner_title_en;
+            $category->banner_title_bn = $request->banner_title_bn;
+            $category->banner_desc_en = $request->banner_desc_en;
+            $category->banner_desc_bn = $request->banner_desc_bn;
+
             $category->alt_text = $request->alt_text;
             $category->alt_text_bn = $request->alt_text_bn;
             $category->url_slug = $request->page_url;
             $category->url_slug_bn = $request->page_url_bn;
-            $category->banner_name = $request->banner_name;
-            $category->banner_name_web_bn = $request->banner_name_web_bn;
-            $category->banner_name_mobile_en = $request->banner_name_mobile_en;
-            $category->banner_name_mobile_bn = $request->banner_name_mobile_bn;
+//            $category->banner_name = $request->banner_name;
+//            $category->banner_name_web_bn = $request->banner_name_web_bn;
+//            $category->banner_name_mobile_en = $request->banner_name_mobile_en;
+//            $category->banner_name_mobile_bn = $request->banner_name_mobile_bn;
             $category->page_header = $request->html_header;
             $category->page_header_bn = $request->page_header_bn;
             $category->schema_markup = $request->schema_markup;
             $category->status = $request->status;
             $category->updated_by = Auth::id();
-            $category->save();
 
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
+            $category->save();
+            return $category;
     }
 
 

@@ -36,7 +36,7 @@
 
                                         <p class="text-bold-500 text-info">
                                             <i class="icon-cursor-move icons"></i> &nbsp; {{ $bs->name }}
-                                        </p> 
+                                        </p>
 
                                     </td>
                                     <td>
@@ -120,235 +120,235 @@
     </div>
 
 
-    <div class="card">
-        <div class="card-content collapse show">
-            <div class="card-body card-dashboard">
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <h4 class="pb-1"><strong>IOT</strong></h4>
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th width="20%">Name</th>
-                                    <th width="20%">Product Photo</th>
-                                    <th class="text-center" width="10%">Component</th>
-                                    <th class="text-center" width="8%">Home Top</th>
-                                    <th class="text-center" width="8%">Home Slider</th>
-                                    <th class="text-center" width="8%">Status</th>
-                                    <th class="text-center" width="8%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="service_sortable cursor-move">
+{{--    <div class="card">--}}
+{{--        <div class="card-content collapse show">--}}
+{{--            <div class="card-body card-dashboard">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-md-12 col-xs-12">--}}
+{{--                        <h4 class="pb-1"><strong>IOT</strong></h4>--}}
+{{--                        <table class="table table-striped table-bordered">--}}
+{{--                            <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th width="20%">Name</th>--}}
+{{--                                    <th width="20%">Product Photo</th>--}}
+{{--                                    <th class="text-center" width="10%">Component</th>--}}
+{{--                                    <th class="text-center" width="8%">Home Top</th>--}}
+{{--                                    <th class="text-center" width="8%">Home Slider</th>--}}
+{{--                                    <th class="text-center" width="8%">Status</th>--}}
+{{--                                    <th class="text-center" width="8%">Action</th>--}}
+{{--                                </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody class="service_sortable cursor-move">--}}
 
-                                @foreach($iot as $i)
-                                <tr data-index="{{ $i->id }}" data-position="{{ $i->sort }}">
+{{--                                @foreach($iot as $i)--}}
+{{--                                <tr data-index="{{ $i->id }}" data-position="{{ $i->sort }}">--}}
 
-                                    <td class="category_name">
+{{--                                    <td class="category_name">--}}
 
-                                        <p class="text-bold-500 text-info">
-                                            <i class="icon-cursor-move icons"></i> &nbsp; {{ $i->name }}
-                                        </p> 
+{{--                                        <p class="text-bold-500 text-info">--}}
+{{--                                            <i class="icon-cursor-move icons"></i> &nbsp; {{ $i->name }}--}}
+{{--                                        </p> --}}
 
-                                    </td>
+{{--                                    </td>--}}
 
-                                    <td>
-                                        <img src="{{ config('filesystems.file_base_url') . $i->banner_photo }}" alt="Banner Photo" height="40px" />
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        <img src="{{ config('filesystems.file_base_url') . $i->banner_photo }}" alt="Banner Photo" height="40px" />--}}
+{{--                                    </td>--}}
 
-                                  
-                                    
-                                     <td class="text-center">
-                                        <a href="{{ url('business-others-components-list/'.$i->id) }}" title="View List" class="btn btn-sm btn-info">
-                                            <i class="la la-eye"></i>
-                                        </a>
-                                        <a href="{{ url('business-others-components/'.$i->id) }}" title="Add Component" class="btn btn-sm btn-primary">
-                                            <i class="la la-plus"></i>
-                                        </a>
-                                    </td>
+{{--                                  --}}
+{{--                                    --}}
+{{--                                     <td class="text-center">--}}
+{{--                                        <a href="{{ url('business-others-components-list/'.$i->id) }}" title="View List" class="btn btn-sm btn-info">--}}
+{{--                                            <i class="la la-eye"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <a href="{{ url('business-others-components/'.$i->id) }}" title="Add Component" class="btn btn-sm btn-primary">--}}
+{{--                                            <i class="la la-plus"></i>--}}
+{{--                                        </a>--}}
+{{--                                    </td>--}}
 
-                                    
-                                    <td class="text-center">
+{{--                                    --}}
+{{--                                    <td class="text-center">--}}
 
-                                        @if($i->home_show == 1)
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_home_show">
-                                            <i class="la la-check-square"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_home_show">
-                                            <i class="la la-remove"></i>
-                                        </a>
-                                        @endif
+{{--                                        @if($i->home_show == 1)--}}
+{{--                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_home_show">--}}
+{{--                                            <i class="la la-check-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @else--}}
+{{--                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_home_show">--}}
+{{--                                            <i class="la la-remove"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @endif--}}
 
-                                    </td>
-                                    
-                                    
-                                    <td class="text-center">
+{{--                                    </td>--}}
+{{--                                    --}}
+{{--                                    --}}
+{{--                                    <td class="text-center">--}}
 
-                                        @if($i->in_home_slider == 1)
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_home_slider">
-                                            <i class="la la-check-square"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_home_slider">
-                                            <i class="la la-remove"></i>
-                                        </a>
-                                        @endif
+{{--                                        @if($i->in_home_slider == 1)--}}
+{{--                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_home_slider">--}}
+{{--                                            <i class="la la-check-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @else--}}
+{{--                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_home_slider">--}}
+{{--                                            <i class="la la-remove"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @endif--}}
 
-                                    </td>
+{{--                                    </td>--}}
 
-                                    <td class="text-center">
+{{--                                    <td class="text-center">--}}
 
-                                        @if($i->status == 1)
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_status">
-                                            <i class="la la-check-square"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_status">
-                                            <i class="la la-remove"></i>
-                                        </a>
-                                        @endif
+{{--                                        @if($i->status == 1)--}}
+{{--                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_status">--}}
+{{--                                            <i class="la la-check-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @else--}}
+{{--                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_status">--}}
+{{--                                            <i class="la la-remove"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @endif--}}
 
-                                    </td>
+{{--                                    </td>--}}
 
-                                  
-                                    <td class="text-center">
+{{--                                  --}}
+{{--                                    <td class="text-center">--}}
 
-                                        <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$i->id)}}">
-                                            <i class="la la-pencil-square"></i>
-                                        </a>
-                                        <a class="text-danger delete_package" href="{{url('business-others-service-delete/'.$i->id)}}">
-                                            <i class="la la-trash"></i>
-                                        </a>
+{{--                                        <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$i->id)}}">--}}
+{{--                                            <i class="la la-pencil-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <a class="text-danger delete_package" href="{{url('business-others-service-delete/'.$i->id)}}">--}}
+{{--                                            <i class="la la-trash"></i>--}}
+{{--                                        </a>--}}
 
-                                    </td>
-
-
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+{{--                                    </td>--}}
 
 
-    <div class="card">
-        <div class="card-content collapse show">
-            <div class="card-body card-dashboard">
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <h4 class="pb-1"><strong>Others</strong></h4>
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th width="20%">Name</th>
-                                    <th width="20%">Product Photo</th>
-                                    <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Top</th>
-                                    <th class="text-center" width="10%">Home Slider</th>
-                                    <th class="text-center" width="10%">Status</th>
-                                    <th class="text-center" width="10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="service_sortable cursor-move">
+{{--                                </tr>--}}
+{{--                                @endforeach--}}
 
-                                @foreach($others as $o)
-                                <tr data-index="{{ $o->id }}" data-position="{{ $o->sort }}">
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
 
-                                    <td class="category_name">
+{{--                </div>--}}
 
-                                        <p class="text-bold-500 text-info">
-                                            <i class="icon-cursor-move icons"></i> &nbsp; {{ $o->name }}
-                                        </p> 
-
-                                    </td>
-                                    <td>
-                                        <img src="{{ config('filesystems.file_base_url') . $o->banner_photo }}" alt="Banner Photo" height="40px" />
-                                    </td>
-                                    
-                                     <td class="text-center">
-                                        <a href="{{ url('business-others-components-list/'.$o->id) }}" title="View List" class="btn btn-sm btn-info">
-                                            <i class="la la-eye"></i>
-                                        </a>
-                                        <a href="{{ url('business-others-components/'.$o->id) }}" title="Add Component" class="btn btn-sm btn-primary">
-                                            <i class="la la-plus"></i>
-                                        </a>
-                                    </td>
-
-                                    
-                                    <td class="text-center">
-
-                                        @if($o->home_show == 1)
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_show">
-                                            <i class="la la-check-square"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_show">
-                                            <i class="la la-remove"></i>
-                                        </a>
-                                        @endif
-
-                                    </td>
-                                    
-                                    
-                                    <td class="text-center">
-
-                                        @if($o->in_home_slider == 1)
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_slider">
-                                            <i class="la la-check-square"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_slider">
-                                            <i class="la la-remove"></i>
-                                        </a>
-                                        @endif
-
-                                    </td>
-
-                                    <td class="text-center">
-
-                                        @if($o->status == 1)
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_status">
-                                            <i class="la la-check-square"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_status">
-                                            <i class="la la-remove"></i>
-                                        </a>
-                                        @endif
-
-                                    </td>
-                                    
-                                    <td class="text-center">
-
-                                        <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$o->id)}}">
-                                            <i class="la la-pencil-square"></i>
-                                        </a>
-                                        <a class="text-danger delete_package" href="{{url('business-others-service-delete/'.$o->id)}}">
-                                            <i class="la la-trash"></i>
-                                        </a>
-
-                                    </td>
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 
-                                </tr>
-                                @endforeach
+{{--    <div class="card">--}}
+{{--        <div class="card-content collapse show">--}}
+{{--            <div class="card-body card-dashboard">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-md-12 col-xs-12">--}}
+{{--                        <h4 class="pb-1"><strong>Others</strong></h4>--}}
+{{--                        <table class="table table-striped table-bordered">--}}
+{{--                            <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th width="20%">Name</th>--}}
+{{--                                    <th width="20%">Product Photo</th>--}}
+{{--                                    <th class="text-center" width="15%">Component</th>--}}
+{{--                                    <th class="text-center" width="10%">Home Top</th>--}}
+{{--                                    <th class="text-center" width="10%">Home Slider</th>--}}
+{{--                                    <th class="text-center" width="10%">Status</th>--}}
+{{--                                    <th class="text-center" width="10%">Action</th>--}}
+{{--                                </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody class="service_sortable cursor-move">--}}
 
-                            </tbody>
-                        </table>
-                    </div>
+{{--                                @foreach($others as $o)--}}
+{{--                                <tr data-index="{{ $o->id }}" data-position="{{ $o->sort }}">--}}
 
-                </div>
+{{--                                    <td class="category_name">--}}
 
-            </div>
-        </div>
-    </div>
-    
+{{--                                        <p class="text-bold-500 text-info">--}}
+{{--                                            <i class="icon-cursor-move icons"></i> &nbsp; {{ $o->name }}--}}
+{{--                                        </p> --}}
+
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <img src="{{ config('filesystems.file_base_url') . $o->banner_photo }}" alt="Banner Photo" height="40px" />--}}
+{{--                                    </td>--}}
+{{--                                    --}}
+{{--                                     <td class="text-center">--}}
+{{--                                        <a href="{{ url('business-others-components-list/'.$o->id) }}" title="View List" class="btn btn-sm btn-info">--}}
+{{--                                            <i class="la la-eye"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <a href="{{ url('business-others-components/'.$o->id) }}" title="Add Component" class="btn btn-sm btn-primary">--}}
+{{--                                            <i class="la la-plus"></i>--}}
+{{--                                        </a>--}}
+{{--                                    </td>--}}
+
+{{--                                    --}}
+{{--                                    <td class="text-center">--}}
+
+{{--                                        @if($o->home_show == 1)--}}
+{{--                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_show">--}}
+{{--                                            <i class="la la-check-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @else--}}
+{{--                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_show">--}}
+{{--                                            <i class="la la-remove"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @endif--}}
+
+{{--                                    </td>--}}
+{{--                                    --}}
+{{--                                    --}}
+{{--                                    <td class="text-center">--}}
+
+{{--                                        @if($o->in_home_slider == 1)--}}
+{{--                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_slider">--}}
+{{--                                            <i class="la la-check-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @else--}}
+{{--                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_slider">--}}
+{{--                                            <i class="la la-remove"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @endif--}}
+
+{{--                                    </td>--}}
+
+{{--                                    <td class="text-center">--}}
+
+{{--                                        @if($o->status == 1)--}}
+{{--                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_status">--}}
+{{--                                            <i class="la la-check-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @else--}}
+{{--                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_status">--}}
+{{--                                            <i class="la la-remove"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @endif--}}
+
+{{--                                    </td>--}}
+{{--                                    --}}
+{{--                                    <td class="text-center">--}}
+
+{{--                                        <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$o->id)}}">--}}
+{{--                                            <i class="la la-pencil-square"></i>--}}
+{{--                                        </a>--}}
+{{--                                        <a class="text-danger delete_package" href="{{url('business-others-service-delete/'.$o->id)}}">--}}
+{{--                                            <i class="la la-trash"></i>--}}
+{{--                                        </a>--}}
+
+{{--                                    </td>--}}
+
+
+{{--                                </tr>--}}
+{{--                                @endforeach--}}
+
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
 
 </section>
 

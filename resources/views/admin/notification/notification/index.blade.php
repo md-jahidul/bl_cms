@@ -179,7 +179,6 @@
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
-
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -210,15 +209,12 @@
                 })
             })
         })
-
-
         // $(".showButton").click(function(){
         //     $('#sendUser').modal()
         //     $('#title').html($(this).attr('data-original-title'))
         //     $('#category').html($(this).attr('data-original-category'))
         //     $('#discription').html($(this).attr('data-original-discription'))
         // })
-
         $(document).ready(function () {
             $('#Example1').DataTable({
                 //dom: 'Bfrtip',
@@ -230,6 +226,5 @@
                 "order": [],
             });
         });
-
     </script>
 @endpush

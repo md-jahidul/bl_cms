@@ -53,6 +53,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
     Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
 
+    Route::resource('generic-shortcut-master', 'CMS\GenericShortcutMasterController');
+    Route::get('generic-shortcut-master/destroy/{id}', 'CMS\GenericShortcutMasterController@destroy');
+
+    Route::get('generic-shortcut/{id}', 'CMS\GenericShortcutController@index')->name('generic-shortcut');
+    Route::get('generic-shortcut/{id}/create', 'CMS\GenericShortcutController@create')->name('generic-shortcut.create');
+    Route::post('generic-shortcut/store', 'CMS\GenericShortcutController@store')->name('generic-shortcut.store');
+    Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
+    Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
+    Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+    Route::get('generic-shortcut-update-position', 'CMS\GenericShortcutController@updatePosition');
+
     //------ shortcuts -----------//
 
     // Banner
@@ -71,8 +82,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     // Logde a Complain
     Route::get('mybl/settings/lodge/complaints', 'CMS\SettingController@lodgeComplain')->name('lodge_complaints');
-    Route::Post('mybl/settings/lodge/complain/store',
-        'CMS\SettingController@sotreLodgeComplain')->name('store_lodge_complaints');
+    Route::Post(
+        'mybl/settings/lodge/complain/store',
+        'CMS\SettingController@sotreLodgeComplain'
+    )->name('store_lodge_complaints');
 
 
     //App Version
@@ -197,10 +210,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // contextual cards
     Route::resource('contextualcard', 'CMS\ContextualCardController');
     Route::get('card/destroy/{id}', 'CMS\ContextualCardController@destroy');
+    Route::resource('contextualcardicon', 'CMS\ContextualCardIconController');
+    Route::get('contextualcard-icons', 'CMS\ContextualCardIconController@index')->name('contextualcard-icons.index');
+    Route::get('contextualcard-icons/create', 'CMS\ContextualCardIconController@create')->name('contextual.card.icons.create');
+    Route::POST('contextualcard-icons/store', 'CMS\ContextualCardIconController@store')->name('contextualcard.icons.store');
+    Route::get('contextualcard-icons/edit/{id}', 'CMS\ContextualCardIconController@edit')->name('contextualcard.icons.edit');
+    Route::PUT('contextualcard-icons/update/{id}', 'CMS\ContextualCardIconController@update')->name('contextualcard.icon.update');
 
     // Notification categorys
     Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
     Route::get('notificationCategory/destroy/{id}', 'CMS\NotificationCategoryController@destroy');
+
+    // Notification categorys V2
+    Route::resource('notificationCategory-v2', 'CMS\NotificationV2\NotificationCategoryV2Controller');
+    Route::get('notificationCategory-v2/destroy/{id}', 'CMS\NotificationV2\NotificationCategoryV2Controller@destroy');
 
     // Notification
     Route::resource('notification', 'CMS\NotificationController');
@@ -215,28 +238,73 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
+    Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
+    // Notification V2
+    Route::resource('notification-v2', 'CMS\NotificationV2\NotificationV2Controller');
+
+    Route::get('notification-v2/productlist/dropdown', 'CMS\NotificationV2\NotificationV2Controller@getProductList')->name('notification-v2.productlist.dropdown');
+    Route::get('notification-v2/destroy/{id}', 'CMS\NotificationV2\NotificationV2Controller@destroy');
+    Route::post('notification-v2/notificationData', 'CMS\NotificationV2\NotificationV2Controller@notificationData')->name('notification-v2.notificationData');
+    Route::get('notification-v2/all/{id}', 'CMS\NotificationV2\NotificationV2Controller@showAll')->name('notification-v2.show-all');
+    Route::get('notification-report-v2', 'CMS\NotificationV2\NotificationV2Controller@getNotificationReport')->name('notification-v2.report');
+    Route::post('target-wise-push-notification-v2',
+    'CMS\NotificationV2\NotificationV2Controller@targetWiseNotificationSend')->name('target_wise_notification-v2.send');
+
+    Route::get('target-wise-notification-report-v2',
+    'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReport')->name('target-wise-notification-report-v2.report');
+
+    Route::get('target-wise-notification-report-details-v2/{notificationId}',
+    'CMS\NotificationV2\NotificationV2Controller@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report-v2.report-details');
+
+    // Customer Sync
+    Route::get('/fresh-sync', 'CMS\NotificationV2\NotificationV2Controller@freshSync')->name('fresh-sync');
+
+    Route::get('/test', 'CMS\NotificationV2\NotificationV2Controller@test')->name('test');
+
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
     Route::post('push-notification-schedule', 'CMS\PushNotificationController@sendScheduledNotification')
         ->name('notification-schedule.send');
-    Route::post('target-wise-push-notification',
-        'CMS\PushNotificationController@targetWiseNotificationSend')->name('target_wise_notification.send');
-    Route::get('target-wise-notification-report',
-        'CMS\NotificationController@getTargetWiseNotificationReport')->name('target-wise-notification-report.report');
-    Route::get('target-wise-notification-report-details/{titel}',
-        'CMS\NotificationController@getTargetWiseNotificationReportDetails')->name('target-wise-notification-report.report-details');
+    Route::get('push-notification-schedule/stop/{id}', 'CMS\PushNotificationController@stopSchedule')
+        ->name('notification-schedule.stop');
+    Route::get('push-notification-schedule/download/{id}', 'CMS\PushNotificationController@downloadCustomerFile')
+        ->name('notification-schedule.download');
+    Route::post(
+        'target-wise-push-notification',
+        'CMS\PushNotificationController@targetWiseNotificationSend'
+    )->name('target_wise_notification.send');
+    Route::get(
+        'target-wise-notification-report',
+        'CMS\NotificationController@getTargetWiseNotificationReport'
+    )->name('target-wise-notification-report.report');
+    Route::get(
+        'target-wise-notification-report-details/{titel}',
+        'CMS\NotificationController@getTargetWiseNotificationReportDetails'
+    )->name('target-wise-notification-report.report-details');
 
     // Get push notification purchase report
-    Route::get('purchase/from-notification/list',
-        'CMS\PushNotificationProductPurchaseController@index')->name('purchase.from_notification.list');
-    Route::get('purchase/from-notification/details/{id}',
-        'CMS\PushNotificationProductPurchaseController@details')->name('push.notification.purchase.report.details');
+    Route::get(
+        'purchase/from-notification/list',
+        'CMS\PushNotificationProductPurchaseController@index'
+    )->name('purchase.from_notification.list');
+    Route::get(
+        'purchase/from-notification/details/{id}',
+        'CMS\PushNotificationProductPurchaseController@details'
+    )->name('push.notification.purchase.report.details');
 
 
     Route::post(
         'push-notification-all',
         'CMS\PushNotificationController@sendNotificationToAll'
     )->name('notification.send-all');
+
+    /**
+     * Guest User Tracking
+     */
+    Route::get(
+        'guest-user-tracking',
+        'CMS\NotificationController@getGuestUserList'
+    )->name('guest.user.track');
 
     // Store category
     Route::resource('storeCategory', 'CMS\StoreCategoryController');
@@ -267,20 +335,30 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Store App Slider Image
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');
     Route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
-    Route::get('appslider/addImage/{sliderId}',
-        'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
+    Route::get(
+        'appslider/addImage/{sliderId}',
+        'CMS\StoreAppSliderImageController@index'
+    )->name('appsliderImage.index');
 
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index')->name('appslider.images.index');
-    Route::get('appslider/{id}/images/create',
-        'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
+    Route::get(
+        'appslider/{id}/images/create',
+        'CMS\StoreAppSliderImageController@create'
+    )->name('appslider.images.create');
     Route::post('appslider/images/store', 'CMS\StoreAppSliderImageController@store')->name('appslider.images.store');
     Route::get('appslider/images/{id}/edit', 'CMS\StoreAppSliderImageController@edit')->name('appslider.images.edit');
-    Route::put('appslider/images/{id}/update',
-        'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
-    Route::put('appslider/images/{id}/update',
-        'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
-    Route::delete('appslider/images/{id}/delete',
-        'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
+    Route::put(
+        'appslider/images/{id}/update',
+        'CMS\StoreAppSliderImageController@update'
+    )->name('appslider.images.update');
+    Route::put(
+        'appslider/images/{id}/update',
+        'CMS\StoreAppSliderImageController@update'
+    )->name('appslider.images.update');
+    Route::delete(
+        'appslider/images/{id}/delete',
+        'CMS\StoreAppSliderImageController@destroy'
+    )->name('appslider.images.destroy');
 
 
     /*
@@ -315,7 +393,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
     Route::get('mybl/core-product/create', 'CMS\MyblProductEntryController@create')->name('mybl.product.create');
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
-    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
+
+    /**
+     * Redis reset schedule routes
+     */
+    Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')
+        ->name('mybl.product.redis');
+    Route::resource('redis-reset-schedules', 'CMS\RedisResetScheduleController');
+    Route::get('redis-reset-schedules/toggle-status/{id}', 'CMS\RedisResetScheduleController@toggleStatus')
+        ->name('redis-reset-schedules.toggle-status');
+
 
     Route::post(
         'mybl/core-product/download',
@@ -343,6 +430,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
 
+    Route::get('pin-to-top-products', 'CMS\MyblProductEntryController@pinToTopProducts')->name('pin-to-top.products');
+    Route::get('pin-to-top-products/sort-auto-save', 'CMS\MyblProductEntryController@productSortable');
     /*
      * Product Tags Routes
      */
@@ -353,12 +442,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
-    Route::get('mybl-products-deep-link-create/{product_code}',
-        'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
+    Route::get(
+        'mybl-products-deep-link-create/{product_code}',
+        'CMS\ProductDeepLinkController@create'
+    )->name('mybl-products-deep-link-create');
     Route::get('product-deep-link-report', 'CMS\ProductDeepLinkController@index')->name('products-deep-link-report');
     Route::get('product-deeplink-list', 'CMS\ProductDeepLinkController@data')->name('product-deeplink-list');
-    Route::get('deeplink-product-purchase-details',
-        'CMS\ProductDeepLinkController@getDetails')->name('deeplink-product-purchase-details');
+    Route::get(
+        'deeplink-product-purchase-details',
+        'CMS\ProductDeepLinkController@getDetails'
+    )->name('deeplink-product-purchase-details');
     Route::get('deeplink-product-purchase-details/{product_purchase_id}', 'CMS\ProductDeepLinkController@getDetails');
 
 
@@ -601,10 +694,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     */
     Route::resource('bandhosimimage', 'CMS\BandhoSimImageController');
     Route::get('bandhosim/index', 'CMS\BandhoSimImageController@index')->name('bandhosim.index');
-    Route::post('mybl/settings/bandhosimimage/Store',
-        'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
-    Route::post('mybl/settings/bandhosimimage/update/{id}',
-        'CMS\BandhoSimImageController@update')->name('mybl.settings.bandho.sim.image.update');
+    Route::post(
+        'mybl/settings/bandhosimimage/Store',
+        'CMS\BandhoSimImageController@store'
+    )->name('mybl.settings.bandho.sim.image.store');
+    Route::post(
+        'mybl/settings/bandhosimimage/update/{id}',
+        'CMS\BandhoSimImageController@update'
+    )->name('mybl.settings.bandho.sim.image.update');
 
     /*
      *  API Debug For Developer
@@ -616,8 +713,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
         ->name('mybl.api.debug.balance-details');
 
-    Route::get('developer/api/debug/product/log/{number}',
-        'CMS\ApiDebugController@getProductLogs')->name('product.api.log');
+    Route::get(
+        'developer/api/debug/product/log/{number}',
+        'CMS\ApiDebugController@getProductLogs'
+    )->name('product.api.log');
 
     Route::get('developer/api/debug/audit_logs/{number}', 'CMS\ApiDebugController@getBrowseHistory');
     Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
@@ -631,6 +730,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('developer/api/debug/usage-details/{number}/{type}', 'CMS\ApiDebugController@getUsageDetails');
     Route::get('developer/api/debug/contact-restore-logs/{number}', 'CMS\ApiDebugController@getContactRestoreLogs');
+
+    Route::get('developer/api/debug/header-enrichment-logs', 'CMS\ApiDebugController@getHeaderEnrichmentLogs')
+            ->name('header-enrichment-logs');
+
+
+    Route::get('developer/api/debug/non-bl-request-logs', 'CMS\ApiDebugController@getNonBlNumberLogs')
+        ->name('non-bl-request-logs');
 
     // Agent Deeplink
     //    Route::resource('deeplink/agent', 'CMS\AgentListController');
@@ -681,7 +787,31 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('mybl-refer-and-earn/referee-details/{id}', 'CMS\MyBlReferAndEarnController@refereeDetails');
 
+    /*
+    * Event Base bonus
+    */
+    Route::get('event-base-bonus/tasks-del/{id}', 'CMS\EventBaseTaskController@delete');
+    Route::resource('event-base-bonus/tasks', 'CMS\EventBaseTaskController')->except(['show']);
+    Route::resource('event-base-bonus/campaigns', 'CMS\EventBaseCampaignController')->except(['show']);
+    Route::get('event-base-bonus/analytics', 'CMS\EventBaseTaskAnalyticController@index');
+    Route::post('event-base-bonus/analytics/find', 'CMS\EventBaseTaskAnalyticController@analytics');
+    Route::post('event-base-bonus/analytics/search', 'CMS\EventBaseTaskAnalyticController@analyticsUserDetails');
+    Route::get('event-base-bonus/analytics/{campaign}/{task}', 'CMS\EventBaseTaskAnalyticController@viewDetails');
 
+    /*
+    * Event Base bonus V2
+    */
+    Route::get('event-base-bonus/v2/tasks-del/{id}', 'CMS\EventBaseTaskV2Controller@delete');
+    Route::resource('event-base-bonus/v2/tasks', 'CMS\EventBaseTaskV2Controller')->except(['show']);
+    Route::resource('event-base-bonus/v2/campaigns', 'CMS\EventBaseCampaignV2Controller')->except(['show']);
+    Route::get('event-base-bonus/v2/analytics', 'CMS\EventBaseTaskAnalyticV2Controller@index');
+    Route::post('event-base-bonus/v2/analytics/find', 'CMS\EventBaseTaskAnalyticV2Controller@analytics');
+    Route::post('event-base-bonus/v2/analytics/search', 'CMS\EventBaseTaskAnalyticV2Controller@analyticsUserDetails');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallenges');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTasks');
+    Route::get('event-base-bonus/v2/analytics/{campaign}/{challenge}/{task}/{msisdn?}', 'CMS\EventBaseTaskAnalyticV2Controller@viewCampaignChallengeTaskMsisdnList');
+    Route::resource('event-base-bonus/v2/challenges', 'CMS\EventBaseChallengeV2Controller')->except(['show']);
+    Route::get('event-base-bonus/v2/campaign-del/{id}', 'CMS\EventBaseCampaignV2Controller@delete');
     /*
      *  Feed Routes
      */
@@ -689,8 +819,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
         // Category resource
         Route::resource('categories', 'FeedCategoryController')->except('show');
-        Route::get('categories/update-position',
-            'FeedCategoryController@updatePosition')->name('categories.update_position');
+        Route::get(
+            'categories/update-position',
+            'FeedCategoryController@updatePosition'
+        )->name('categories.update_position');
     });
     Route::get('feed-list', 'CMS\FeedController@getFeedForAjax')->name('feed.ajax.request');
 
@@ -702,6 +834,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-activities-details/{id}', 'CMS\ProductActivityController@show')
         ->name('product-activities.details');
 
+    /*
+     * Dynamic Deeplink
+     */
+    Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
+    Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
+    Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
+    Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
     //App MENU  ====================================
     Route::get('mybl-menu/create', 'CMS\MyblAppMenuController@create');
     Route::get('mybl-menu/{id}/child-menu/create', 'CMS\MyblAppMenuController@create');
@@ -715,13 +854,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('store-deeplink/create', 'CMS\DynamicDeeplinkController@storeDeepLinkCreate');
     Route::get('feed-deeplink/create', 'CMS\DynamicDeeplinkController@feedDeepLinkCreate');
     Route::get('mybl-campaign-section-deeplink/create', 'CMS\DynamicDeeplinkController@myblCampaignSectionDeepLinkCreate');
+    Route::get('commerce-bill-category-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillCategoryDeepLinkCreate');
+    Route::get('commerce-bill-utility-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
     Route::get('internet-pack-deeplink/create', 'CMS\DynamicDeeplinkController@internetPackDeepLinkCreate');
     Route::get('menu-deeplink/create', 'CMS\DynamicDeeplinkController@menuDeepLinkCreate');
     Route::get('manage-deeplink/create', 'CMS\DynamicDeeplinkController@manageDeepLinkCreate');
     Route::get('deeplink-analytic', 'CMS\DynamicDeeplinkController@analyticData');
+    Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
     Route::get('fifa-deeplink/create', 'CMS\DynamicDeeplinkController@fifaDeepLinkCreate');
 
-    Route::get('content-deeplink/create', 'CMS\DynamicDeeplinkController@contentDeepLinkCreate');
     //App Manage  ====================================
     Route::resource('manage-category', 'CMS\MyblManageController')->except('show', 'destroy');
     Route::get('manage-category/destroy/{id}', 'CMS\MyblManageController@destroy')
@@ -748,6 +889,22 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
+    Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
+        ->name('mybl.home.components.destroy');
+
+    //Commerce Component
+    Route::get('mybl-commerce-components', 'CMS\MyblCommerceComponentController@index')->name('mybl.commerce.components');
+    Route::get('mybl-commerce-components/edit/{id}', 'CMS\MyblCommerceComponentController@edit')
+        ->name('mybl.commerce.components.edit');
+    Route::post('mybl-commerce-components/store', 'CMS\MyblCommerceComponentController@store')
+        ->name('mybl.commerce.components.store');
+    Route::post('mybl-commerce-components/update', 'CMS\MyblCommerceComponentController@update')
+        ->name('mybl.commerce.components.update');
+    Route::get('mybl-commerce-components-sort', 'CMS\MyblCommerceComponentController@componentSort');
+    Route::get('commerce-components-status-update/{id}', 'CMS\MyblCommerceComponentController@componentStatusUpdate')
+        ->name('commerce-components.status.update');
+    Route::get('mybl-commerce-components/destroy/{id}', 'CMS\MyblCommerceComponentController@destroy')
+        ->name('mybl.commerce.components.destroy');
 
     //Content Component
     Route::get('content-components', 'CMS\ContentComponentController@index')->name('content-components');
@@ -825,6 +982,27 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('cash-back-campaign', 'CMS\MyBlCashBackController')->except(['show', 'destroy']);
     Route::get('cash-back-campaign/destroy/{id}', 'CMS\MyBlCashBackController@destroy');
 
+    //    Free Product Purchase Report
+    Route::get('free-product-purchase-report', 'CMS\MyblProductEntryController@freeProductPurchaseReport')
+        ->name('free-product.purchase.report');
+
+    Route::get('free-product-purchase-msisdn/{id}', 'CMS\MyblProductEntryController@purchaseDetails')
+        ->name('free-product-purchase-msisdn.list');
+
+    //Loyality Image Upload
+    Route::resource('loyalty-partner-image', 'CMS\LoyaltyPartnerImageController')->except(['show']);
+    Route::get('loyalty-partner-images/filter', 'CMS\LoyaltyPartnerImageController@filter');
+    Route::get('loyalty-partner-images/report', 'CMS\LoyaltyPartnerImageController@report');
+
+    //Mybl Welcome Banner
+    Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
+    /*
+     * Own Recharge Inventory
+     */
+
+    Route::resource('own-recharge-inventory', 'CMS\MyBlOwnRechargeInvertoryController')->except(['show', 'destroy']);
+    Route::get('own-recharge-inventory/destroy/{id}', 'CMS\MyBlOwnRechargeInvertoryController@destroy');
+
     /*
      * Event Base bonus
      */
@@ -880,6 +1058,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('usim-eligibility-massage-save', 'CMS\MyblUsimEligibilityController@saveMassage')
         ->name('usim-eligibility.save.massage');
 
+    /*
+     * Remove MSISDN
+     */
+    Route::get('remove-msisdn', 'CMS\RemoveMsisdnController@index')->name('remove-msisdn.index');
+    Route::post('remove-msisdn/remove', 'CMS\RemoveMsisdnController@removeMsisdn')->name('remove-msisdn.remove');
     //Mybl Welcome Banner
     Route::resource('welcome-banner', 'CMS\WelcomeBannerController')->except(['show']);
     Route::post('welcome-banner/set-order', 'CMS\WelcomeBannerController@order');
@@ -890,12 +1073,33 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
     Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
     Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
+
     Route::get('health-hub-deeplink/analytic', 'CMS\HealthHubController@deeplinkAnalytic')
         ->name('health-hub-deeplink.analytic');
     Route::get('health-hub-deeplink/analytic-details/{dynamic_deeplink_id}', 'CMS\HealthHubController@deeplinkAnalyticDetails')
         ->name('health-hub-deeplink-analytic-details');
 
+    Route::get('health-hub-category/in-app-analytic', 'CMS\HealthHubController@categoryInAppAnalytic')
+        ->name('health_hub.in_app.analytic');
+    Route::get('health-hub-category/in-app-analytic-details/{feed_cat_id}', 'CMS\HealthHubController@categoryInAppAnalyticDetails')
+        ->name('health_hub.in_app.analytic.details');
 
+
+    // Health Hub New Journey
+    Route::resource('health-hub-feature-dashboard', 'CMS\HealthHubNewJourney\HealthHubDashboardController');
+    Route::get('health-hub-feature-dashboard/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubDashboardController@destroy')->name('health-hub-feature-dashboard.destroy');
+    Route::resource('health-hub-feature-service', 'CMS\HealthHubNewJourney\HealthHubServiceController');
+    Route::get('health-hub-feature-service/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@destroy');
+    Route::get('health-hub-feature-service/update-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@updateDashboardId');
+    Route::get('health-hub-feature-service/delete-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubServiceController@deleteDashboardId');
+    Route::resource('health-hub-feature-partner', 'CMS\HealthHubNewJourney\HealthHubPartnerController');
+    Route::get('health-hub-feature-partner/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubPartnerController@destroy');
+    Route::resource('health-hub-feature-package', 'CMS\HealthHubNewJourney\HealthHubPackageController');
+    Route::get('health-hub-feature-package/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubPackageController@destroy');
+    Route::get('health-hub-feature-package/update-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubPackageController@updateDashboardId');
+    Route::get('health-hub-feature-package/delete-dashboard-id/{id}', 'CMS\HealthHubNewJourney\HealthHubPackageController@deleteDashboardId');
+    Route::resource('health-hub-feature-plan', 'CMS\HealthHubNewJourney\HealthHubPlanController');
+    Route::get('health-hub-feature-plan/destroy/{id}', 'CMS\HealthHubNewJourney\HealthHubPlanController@destroy');
 
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
@@ -908,6 +1112,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('guest-user-show-data');
     Route::get('guest-user-data-download', 'CMS\GuestUserTrackController@downloadFile');
 
+//    Route::get('non-bl-request-logs', 'CMS\GuestUserTrackController@getNonBlNumberLogs')
+//        ->name('non-bl-request-logs');
+
+    // Health Hub
+    Route::resource('health-hub', 'CMS\HealthHubController')->except(['show', 'destroy']);
+    Route::get('health-hub-auto-save', 'CMS\HealthHubController@itemSortable');
+    Route::get('health-hub/destroy/{id}', 'CMS\HealthHubController@destroy')->name('healthHubItem.destroy');
+    Route::get('health-hub-analytic-data', 'CMS\HealthHubController@analyticData')->name('health-hub.analytics');
+    Route::get('health-hub-item-details/{itemId}', 'CMS\HealthHubController@analyticReportsItem');
+
+//    Route::get('health-hub-item-details-export', 'CMS\HealthHubController@itemDetailsExport');
+
+
+
+    Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
     //Loyality Image Upload
     Route::resource('loyalty-partner-image', 'CMS\LoyaltyPartnerImageController')->except(['show']);
     Route::get('loyalty-partner-images/filter', 'CMS\LoyaltyPartnerImageController@filter');
@@ -947,6 +1166,44 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
         ->name('heme-navigation-rail.destroy');
 
+    Route::resource('mybl-campaign-winners', 'CMS\NewCampaignModality\MyBlCampaignWinnerController')->except(['show', 'destroy']);
+    Route::get('mybl-campaign-winners/destroy/{id}', 'CMS\NewCampaignModality\MyBlCampaignWinnerController@destroy')->name('mybl-campaign-winner.destroy');
+    /**
+     * Orange CLub Banner
+     */
+    Route::resource('orange-club', 'CMS\MyblOrangeClubBannerController');
+    Route::resource('orange-club-redeem', 'CMS\MyblOrangeClubRedeemDetailController');
+    Route::delete('orange-club/{id}/delete', 'CMS\MyblOrangeClubBannerController@destroy')->name('orange-club.destroy');
+    Route::get('orange-club/addImage/update-position', 'CMS\MyblOrangeClubBannerController@updatePosition');
+    /**
+     * Ad Tech
+     */
+    Route::resource('ad-tech', 'CMS\MyblAdTechController');
+    Route::delete('ad-tech/{id}/delete', 'CMS\MyblAdTechController@destroy')->name('orange-club.destroy');
+    Route::get('ad-tech/addImage/update-position', 'CMS\MyblAdTechController@updatePosition');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('commerce-bill-category', 'CMS\CommerceBillCategoryController')->except(['show', 'destroy']);
+    Route::get('commerce-bill-category/destroy/{id}', 'CMS\CommerceBillCategoryController@destroy')->name('commerce-bill-category.destroy');
+    Route::get('commerce-bill-category/sort-auto-save', 'CMS\CommerceBillCategoryController@categorySortable');
+
+    /**
+     * Commerce Bill Category
+     */
+    Route::resource('commerce-bill-utility', 'CMS\CommerceBillUtilityController')->except(['show', 'destroy']);
+    Route::get('commerce-bill-utility/destroy/{id}', 'CMS\CommerceBillUtilityController@destroy')->name('commerce-bill-utility.destroy');
+    Route::get('commerce-bill-utility/sort-auto-save', 'CMS\CommerceBillUtilityController@categorySortable');
+    /**
+     * Home Navigation Rail
+     */
+    Route::resource('heme-navigation-rail', 'CMS\HomeNavigationRailController');
+    Route::get('heme-navigation-rail-sortable', 'CMS\HomeNavigationRailController@navigationMenuSortable')
+        ->name('navigation-rail.sort');
+    Route::get('heme-navigation-rail/destroy/{id}', 'CMS\HomeNavigationRailController@destroy')
+        ->name('heme-navigation-rail.destroy');
+
     /**
      * Content Deeplink
      */
@@ -963,6 +1220,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('content-navigation-rail.sort');
     Route::get('content-navigation-rail/destroy/{id}', 'CMS\ContentNavigationRailController@destroy')
         ->name('content-navigation-rail.destroy');
+
 
     /**
      * FIFA WC
@@ -1002,9 +1260,65 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 
 
-    //PGW Routes
+    // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    //Payment Gateway
+    Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
+    Route::get('payment-gateways/destroy/{id}', 'CMS\PaymentGatewayController@destroy')->name('payment-gateways.destroy');
+    Route::get('payment-gateways/sort-auto-save', 'CMS\PaymentGatewayController@categorySortable');
+
+    Route::resource('generic-slider', 'CMS\GenericSliderController');
+    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+    Route::get(
+        'generic-slider/{slider_id}/images/create',
+        'CMS\GenericSliderImageController@create'
+    )->name('generic-slider.images.create');
+    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
+    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::delete(
+        'generic-slider/images/{id}/delete',
+        'CMS\GenericSliderImageController@destroy'
+    )->name('generic-slider.images.destroy');
+    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+    //Active new Product Code
+    Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
+    Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
+
+
+    // Group Components
+    Route::get('group-components', 'CMS\GroupComponentController@index')->name('group.components');
+    Route::get('group-components/create', 'CMS\GroupComponentController@create')->name('group.components.create');
+    Route::post('group-components/store', 'CMS\GroupComponentController@store')->name('group.components.store');
+    Route::get('group-components/edit{id}', 'CMS\GroupComponentController@edit')->name('group.components.edit');
+    Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
+    Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
+    Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
+
+
+    // Non Bl Components
+    Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
+    Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');
+    Route::get('non-bl-components-status-update/{id}', 'CMS\NonBlComponentController@componentStatusUpdate')->name('nonbl.components.status.update');
+    Route::post('non-bl-components/store', 'CMS\NonBlComponentController@store')->name('nonbl.components.store');
+    Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
+    Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
+    Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
+    Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
+    Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
@@ -1056,28 +1370,43 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('commerce-navigation-rail/destroy/{id}', 'CMS\CommerceNavigationRailController@destroy')
         ->name('commerce-navigation-rail.destroy');
 
-    Route::resource('generic-slider', 'CMS\GenericSliderController');
-    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
-    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
-    Route::get(
-        'generic-slider/{slider_id}/images/create',
-        'CMS\GenericSliderImageController@create'
-    )->name('generic-slider.images.create');
-    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
-    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
-    Route::put(
-        'generic-slider/images/{id}/update',
-        'CMS\GenericSliderImageController@update'
-    )->name('generic-slider.images.update');
-    Route::put(
-        'generic-slider/images/{id}/update',
-        'CMS\GenericSliderImageController@update'
-    )->name('generic-slider.images.update');
-    Route::delete(
-        'generic-slider/images/{id}/delete',
-        'CMS\GenericSliderImageController@destroy'
-    )->name('generic-slider.images.destroy');
-    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+//    Route::resource('generic-slider', 'CMS\GenericSliderController');
+//    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+//    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+//    Route::get(
+//        'generic-slider/{slider_id}/images/create',
+//        'CMS\GenericSliderImageController@create'
+//    )->name('generic-slider.images.create');
+//    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
+//    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+//    Route::put(
+//        'generic-slider/images/{id}/update',
+//        'CMS\GenericSliderImageController@update'
+//    )->name('generic-slider.images.update');
+//    Route::put(
+//        'generic-slider/images/{id}/update',
+//        'CMS\GenericSliderImageController@update'
+//    )->name('generic-slider.images.update');
+//    Route::delete(
+//        'generic-slider/images/{id}/delete',
+//        'CMS\GenericSliderImageController@destroy'
+//    )->name('generic-slider.images.destroy');
+//    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
+
+    /* * Generic Carousel
+     * Live content
+     */
+    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
+    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
+    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
+
 
 
     /*
@@ -1088,7 +1417,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
     Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
         ->name('mybl.transaction-status.course.list');
-        
+
     #Music
     Route::get('mybl/music-transaction-status-report-view', 'CMS\MyblTransactionStatusController@musicTransactionList')->name('mybl.transaction-status.music');
     Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
@@ -1103,15 +1432,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
-        
-    /**
-     * Generic Carousel
-     * Live content
-     */
-    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
-    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
-    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
 
+
+    #Bus Ticket
+    /**
+     * Have Plane to put all transaction status under one controller and service
+     * Bus
+     */
+    Route::get('mybl/{type}/transaction-status-report-view', 'CMS\MyblTransactionStatusController@getTransactionList')->name('mybl.transaction-status');
+    Route::get('mybl/{type}/transaction-status-report', 'CMS\MyblTransactionStatusController@getTransaction')
+        ->name('mybl.transaction-status.list');
 
     /**
      * Internet Gift content
@@ -1120,12 +1450,36 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
+    /**
+     * Product Special Type
+     */
+    Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
+    Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
+    Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
+
 
 //
 });
 
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
+
+Route::get( 'winner-test', function() {
+    $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
+    return $myBlCampaignWinnerSelectionService->processCampaignWinner();
+  });
+
+
+Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {
+    if (isset($request->phone)) {
+        $customer = \App\Models\Customer::where('phone', $request->phone)->first();
+        if ($customer) {
+            $customer->delete();
+            return "Customer deleted successfully!";
+        }
+        return "Customer not found";
+    }
+});
 
 Route::get( 'winner-test', function() {
     $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);

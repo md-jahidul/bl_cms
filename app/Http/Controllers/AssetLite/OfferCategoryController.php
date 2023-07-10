@@ -111,6 +111,7 @@ class OfferCategoryController extends Controller
         $data['type'] = $request->type;
         $data['name_en'] = $request->name_en;
         $data['name_bn'] = $request->name_bn;
+        $data['status'] = $request->status;
         $data['updated_by'] = Auth::id();
 
         $offer->update($data);

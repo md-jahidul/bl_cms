@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Models\PartnerCategory;
 use App\Models\PartnerArea;
 use App\Models\PartnerOfferDetail;
@@ -67,15 +68,66 @@ class PartnerOfferService
         if (request()->hasFile('campaign_img')) {
             $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image');
         }
+        if (request()->hasFile('card_img')) {
+            $data['card_img'] = $this->upload($data['card_img'], 'assetlite/images/partner-offer');
+        }
         $data['display_order'] = ++$count;
-        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+        // $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $data['phone'] = json_encode($data['phone']);
         $data['location'] = json_encode($data['location']);
         $data['created_by'] = Auth::id();
-        $offerId = $this->save($data);
+        $partnerOffer = $this->save($data);
 
-        $this->partnerOfferDetailRepository->insertOfferDetail($offerId->id);
+        $specialKeyWord = [
+            'tag_en' => $data['tag_en'],
+            'tag_bn' => $data['tag_bn'],
+        ];
+
+        if ($partnerOffer->is_active) {
+            $this->_saveSearchData($partnerOffer, $specialKeyWord);
+        }
+
+        $this->partnerOfferDetailRepository->insertOfferDetail($partnerOffer->id);
         return new Response('Partner offer added successfully');
+    }
+
+    private function _saveSearchData($product, $specialKeyWord = [])
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        $partnerOfferTitleEn = $product->other_attributes['free_text_value_en'] ?? null;
+        $partnerOfferTitleBn = $product->other_attributes['free_text_value_bn'] ?? null;
+
+        $partnerNameEn = $product->partner->company_name_en ?? "";
+        $partnerNameBn = $product->partner->company_name_bn ?? "";
+
+        $partnerCatEn = $product->partnerCategory->name_en ?? "";
+        $partnerCatBn = $product->partnerCategory->name_bn ?? "";
+
+        $pageInfoEn = "";
+        $pageInfoBn = "";
+        if (isset($product->other_attributes['free_text_value_en'])) {
+           $pageInfoEn = $partnerOfferTitleEn . " " . $partnerNameEn . " " . $partnerCatEn;
+           $pageInfoBn = $partnerOfferTitleBn . " " . $partnerNameBn . " " . $partnerCatBn;
+        }
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'partner-offer-details',
+            'page_title_en' => $pageInfoEn,
+            'page_title_bn' => $pageInfoBn,
+            'tag_en' => $specialKeyWord['tag_en'] ?? null,
+            'tag_bn' => $specialKeyWord['tag_bn'] ?? null,
+            'url_slug_en' => $feature['partner_offer_details_en'] . "/" . $product->url_slug,
+            'url_slug_bn' => $feature['partner_offer_details_bn'] . "/" . $product->url_slug_bn,
+            'status' => $product->is_active,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
     }
 
     public function partnerOfferSortable($data)
@@ -110,6 +162,11 @@ class PartnerOfferService
             $data['campaign_img'] = null;
         }
 
+        if (request()->hasFile('card_img')) {
+            $data['card_img'] = $this->upload($data['card_img'], 'assetlite/images/partner-offer');
+            $this->deleteFile($partnerOffer->card_img);
+        }
+
         $data['phone'] = json_encode($data['phone']);
         $data['location'] = json_encode($data['location']);
 
@@ -132,7 +189,26 @@ class PartnerOfferService
 
         $data['updated_by'] = Auth::id();
         $partnerOffer->update($data);
+
+        $specialKeyWord = [
+            'tag_en' => $data['tag_en'],
+            'tag_bn' => $data['tag_bn'],
+        ];
+
+        $this->_saveSearchData($partnerOffer, $specialKeyWord);
+
         return Response('Partner offer update successfully !');
+    }
+
+    public function syncSearch()
+    {
+        $partnerOffers = $this->findAll();
+        foreach ($partnerOffers as $offer){
+            if ($offer->is_active) {
+                $this->_saveSearchData($offer);
+            }
+        }
+        return Response('Partner offer search data updated successfully !');
     }
 
     /**
@@ -145,6 +221,8 @@ class PartnerOfferService
         $partnerOffer = $this->findOne($id);
         $this->deleteFile($partnerOffer->campaign_img);
         $partnerOffer->delete();
+
+        $partnerOffer->searchableFeature()->delete();
         return Response('Partner offer delete successfully');
     }
 }

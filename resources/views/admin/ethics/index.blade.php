@@ -24,15 +24,30 @@
                                         <input type="text" class="form-control" required name="page_name_en" value="{{ $pageInfo->page_name_en }}" placeholder="Page Name EN">
                                     </div>
                                     <div class="form-group">
+                                        <label>Banner Description (EN) <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="7" required name="banner_desc_en">{{ $pageInfo->banner_desc_en }}</textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <label>Banner (Web)</label>
                                         <input type="file" class="dropify" name="banner_web" data-height="70"
                                                data-default-file="{{ isset($pageInfo->banner_web) ? config('filesystems.file_base_url') . $pageInfo->banner_web : '' }}"
                                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
+
+                                    <div class="form-group {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                        <label for="banner_name">Banner Name EN</label>
+                                        <input type="text" name="banner_name" id="banner_name" class="form-control"
+                                               placeholder="Enter banner name en" value="{{ isset($pageInfo->banner_name) ? $pageInfo->banner_name : '' }}">
+                                        @if ($errors->has('banner_name'))
+                                            <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="form-group">
                                         <label>Alt Text English</label>
                                         <input type="text" class="form-control" name="alt_text" value="{{ $pageInfo->alt_text }}" placeholder="Alt Text">
                                     </div>
+
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
@@ -40,13 +55,26 @@
                                         <label>Page Name (BN) <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" required name="page_name_bn" value="{{ $pageInfo->page_name_bn }}"  placeholder="Page Name BN">
                                     </div>
-
+                                    <div class="form-group">
+                                        <label>Banner Description (BN) <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" rows="7" required name="banner_desc_bn">{{ $pageInfo->banner_desc_bn }}</textarea>
+                                    </div>
                                     <div class="form-group">
                                         <label>Banner (Mobile)</label>
                                         <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                                data-default-file="{{ isset($pageInfo->banner_mobile) ? config('filesystems.file_base_url') . $pageInfo->banner_mobile : '' }}"
                                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                     </div>
+
+                                    <div class="form-group {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
+                                        <label for="banner_name_bn">Banner Name BN</label>
+                                        <input type="text" name="banner_name_bn" id="banner_name_bn" class="form-control"
+                                               placeholder="Enter banner name bn" value="{{ isset($pageInfo->banner_name_bn) ? $pageInfo->banner_name_bn : '' }}">
+                                        @if ($errors->has('banner_name_bn'))
+                                            <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="form-group">
                                         <label>Alt Text Bangla</label>
                                         <input type="text" class="form-control" name="alt_text" value="{{ $pageInfo->alt_text }}" placeholder="Alt Text">
@@ -160,19 +188,103 @@
                         <form method="POST" action="{{ url('ethics/save-ethics-file') }}" class="form" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="file_id" class="file_id">
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('title_en') ? ' error' : '' }}">
+                                <label for="title_en" class="required">Title (English)</label>
+                                <input type="text" name="title_en"  class="form-control title_en" placeholder="Enter english title"
+                                       value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter english title">
+                                <div class="help-block"></div>
+                                @if ($errors->has('title_en'))
+                                    <div class="help-block">{{ $errors->first('title_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group  {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                <label for="title_en" class="required">Title (Bangla)</label>
+                                <input type="text" name="title_bn"  class="form-control title_bn" placeholder="Enter bangla title"
+                                       value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter bangla title">
+                                <div class="help-block"></div>
+                                @if ($errors->has('title_bn'))
+                                    <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group  {{ $errors->has('description_en') ? ' error' : '' }}">
+                                <label for="description_en">Description</label>
+                                <textarea type="text" name="description_en" rows="5" id=""
+                                          class="form-control description_en" placeholder="Enter description">{{ (!empty($component->description_en)) ? $component->description_en : old("description_en") ?? '' }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('description_en'))
+                                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group  {{ $errors->has('description_bn') ? ' error' : '' }}">
+                                <label for="description_bn">Description (bangla)</label>
+                                <textarea type="text" name="description_bn" rows="5" id=""
+                                          class="form-control description_bn" placeholder="Enter description (bangla)">{{ (!empty($component->description_bn)) ? $component->description_bn : old("description_bn") ?? '' }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('description_bn'))
+                                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group {{ $errors->has('file_name_en') ? ' error' : '' }}">
                                 <label>File Name (EN) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control file_name_en" required name="file_name_en"   placeholder="File Name EN">
+                                @if ($errors->has('file_name_en'))
+                                    <div class="help-block text-danger">{{ $errors->first('file_name_en') }}</div>
+                                 @endif
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('file_name_bn') ? ' error' : '' }}">
                                 <label>File Name (BN) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control file_name_bn" required name="file_name_bn"   placeholder="File Name BN">
+                                @if ($errors->has('file_name_bn'))
+                                    <div class="help-block text-danger">{{ $errors->first('file_name_bn') }}</div>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label>File</label>
                                 <input type="file" class="dropify" name="file_path" data-height="70"
                                        data-allowed-file-extensions='["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"]'>
                                 <input type="hidden" name="old_path" class="old_path">
+                            </div>
+                            <div class="form-group">
+                                <label>Image Url</label>
+                                <input type="file" class="dropify" name="image_url" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "png", "svg"]'>
+                                <input type="hidden" name="old_path_image_url" class="old_path_image_url">
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile View Img</label>
+                                <input type="file" id="mobile_view_img"class="dropify" name="mobile_view_img" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "png", "svg"]'>
+                                <input type="hidden" name="old_path_mobile_view_img" class="old_path_mobile_view_img">
+                            </div>
+
+                            <div class="form-group  {{ $errors->has('image_name_en') ? ' error' : '' }}">
+                                <label>Image Name EN</label>
+                                <input type="text" name="image_name_en"  class="form-control image_name_en" placeholder="Image Name EN"
+                                       value="{{ old("image_name_en") ? old("image_name_en") : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('image_name_en'))
+                                    <div class="help-block">  {{ $errors->first('image_name_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group {{ $errors->has('image_name_bn') ? ' error' : '' }}">
+                                <label>Image Name BN</label>
+                                <input type="text" name="image_name_bn"  class="form-control image_name_bn" placeholder="Image Name BN"
+                                       value="{{ old("image_name_bn") ? old("image_name_bn") : '' }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('image_name_bn'))
+                                    <div class="help-block">  {{ $errors->first('image_name_bn') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Alt Text English</label>
+                                <input type="text" class="form-control file_alt_text" name="alt_text" id="file_alt_text" placeholder="Alt Text EN">
+                            </div>
+                            <div class="form-group">
+                                <label>Alt Text Bangla</label>
+                                <input type="text" class="form-control file_alt_text_bn" name="alt_text_bn" id="file_alt_text_bn" placeholder="Alt Text BN">
                             </div>
 
                             <div class="form-group">
@@ -210,7 +322,7 @@
 <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 
 @endpush
-@push('page-js')
+@push('page-js')old_path_image_url
 <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
@@ -219,9 +331,10 @@
 
 <script>
 $(function () {
-
+let serverUrl = "{{config('filesystems.file_base_url')}}"
 //success and error msg
 <?php
+
 if (Session::has('sussess')) {
     ?>
         swal.fire({
@@ -340,8 +453,19 @@ if (Session::has('error')) {
                $('.file_id').val(data['id']);
                $('.file_name_en').val(data['file_name_en']);
                $('.file_name_bn').val(data['file_name_bn']);
+               $('.title_en').val(data['title_en']);
+               $('.title_bn').val(data['title_bn']);
+               $('.description_bn').val(data['description_bn']);
+               $('.description_en').val(data['description_en']);
+               $('.image_name_en').val(data['image_name_en']);
+               $('.image_name_bn').val(data['image_name_bn']);
+               $('.file_alt_text').val(data['alt_text']);
+               $('.file_alt_text_bn').val(data['alt_text_bn']);
                $('.old_path').val(data['file_path']);
-
+               $('.old_path_image_url').val(data['image_url']);
+               $('.old_path_mobile_view_img').val(data['mobile_view_img']);
+                // $('#mobile_view_img').attr('data-default-file',serverUrl+data['mobile_view_img']);
+                // $('.dropify').dropify();
                var status = parseInt(data['status']);
 
                if(status === 1){

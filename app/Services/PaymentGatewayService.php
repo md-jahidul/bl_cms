@@ -27,7 +27,7 @@ class PaymentGatewayService
             if ($data['gateway_id'] == 101) {
                 $data['gateway_name'] = 'Visa/Master';
                 $data['type'] = 'card';
-            } else if ($data['gateway_id'] == 201) {
+            } else if ($data['gateway_id'] == 201 || $data['gateway_id'] == 211) {
                 $data['gateway_name'] = 'bKash';
                 $data['type'] = 'mfs';
             } else {
@@ -68,7 +68,7 @@ class PaymentGatewayService
             $data['gateway_name'] = null;
             if ($data['gateway_id'] == 101) {
                 $data['gateway_name'] = 'Visa/Master';
-            } else if ($data['gateway_id'] == 201) {
+            } else if ($data['gateway_id'] == 201 || $data['gateway_id'] == 211) {
                 $data['gateway_name'] = 'bKash';
             } else {
                 $data['gateway_name'] = 'ssl';

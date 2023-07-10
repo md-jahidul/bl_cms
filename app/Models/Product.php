@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable =
         [
             'product_code',
@@ -31,6 +31,7 @@ class Product extends Model
             'point',
             'is_recharge',
             'show_in_home',
+            'show_in_e_shop',
             'tag_category_id',
             'sim_category_id',
             'offer_category_id',
@@ -38,9 +39,11 @@ class Product extends Model
             'like',
             'validity_postpaid',
             'status',
+            'show_in_multi_cat',
             'display_order',
             'purchase_option',
             'offer_info',
+            'product_image',
             'is_four_g_offer',
             'is_amar_offer',
             'is_social_pack',
@@ -52,10 +55,12 @@ class Product extends Model
             'special_product',
             'created_by',
             'updated_by',
+            'image'
         ];
 
     protected $casts = [
         'offer_info' => 'array',
+        'show_in_multi_cat' => 'array',
     ];
 
 
@@ -119,5 +124,8 @@ class Product extends Model
         return $this->hasMany(OtherRelatedProduct::class);
     }
 
-
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

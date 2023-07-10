@@ -72,11 +72,11 @@
                                     <div class="form-group">
                                         <label for="title" class="required">Title:</label>
                                         <input
-                                            required
-                                            data-validation-required-message="Title is required"
-                                            maxlength="200"
-                                            data-validation-maxlength-message = "Title name can not be more then 200 characters"
-                                            type="text" max="200" value="@if(old('name')){{old('name')}}@endif" id="title" class="form-control @error('name') is-invalid @enderror" placeholder="Enter title...." name="name">
+                                        required
+                                        data-validation-required-message="Title is required"
+                                        maxlength="200"
+                                        data-validation-maxlength-message = "Title name can not be more then 200 characters"
+                                        type="text" max="200" value="@if(old('name')){{old('name')}}@endif" id="title" class="form-control @error('name') is-invalid @enderror" placeholder="Enter title...." name="name">
                                         <div class="help-block">
                                             <small id="minutes" class="form-text text-info">Title name can not be more then 200 characters.</small>
                                         </div>

@@ -7,10 +7,12 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\RoamingCategoryRepository;
 use App\Repositories\RoamingPagesRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class RoamingGeneralService {
@@ -31,7 +33,7 @@ class RoamingGeneralService {
      * @param RoamingPagesRepository $pagesRepo
      */
     public function __construct(
-    RoamingCategoryRepository $catRepo, RoamingPagesRepository $pagesRepo
+        RoamingCategoryRepository $catRepo, RoamingPagesRepository $pagesRepo
     ) {
         $this->catRepo = $catRepo;
         $this->pagesRepo = $pagesRepo;
@@ -57,7 +59,7 @@ class RoamingGeneralService {
 
     /**
      * update roaming category
-     * @return Response
+     * @return array
      */
     public function updateCategory($request) {
         try {
@@ -82,23 +84,25 @@ class RoamingGeneralService {
             }
 
             //save data in database
-            $this->catRepo->updateCategory($webPath, $mobilePath, $request);
+            $category = $this->catRepo->updateCategory($webPath, $mobilePath, $request);
 
+            $slug = [
+                'slug_en' => $category->page_url,
+                'slug_bn' => $category->page_url_bn
+            ];
 
+            $this->_saveSearchData($category, $slug, "category");
 
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "News Saved"
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            dd($e->getMessage());
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
@@ -108,8 +112,7 @@ class RoamingGeneralService {
      * @return Response
      */
     public function changeCategorySort($request) {
-        $response = $this->catRepo->changeCategorySorting($request);
-        return $response;
+        return $this->catRepo->changeCategorySorting($request);
     }
 
 
@@ -118,67 +121,54 @@ class RoamingGeneralService {
      * @return Response
      */
     public function getPages() {
-        $response = $this->pagesRepo->getPageList();
-        return $response;
+        return $this->pagesRepo->getPageList();
     }
     /**
      * Get Roaming general page by ID
      * @return Response
      */
     public function getPageById($pageId) {
-        $response = $this->pagesRepo->getPage($pageId);
-        return $response;
+        return $this->pagesRepo->getPage($pageId);
     }
     /**
      * Get Roaming general page components
      * @return Response
      */
     public function getPageComponents($pageId) {
-        $response = $this->pagesRepo->getPageComponents($pageId);
-        return $response;
+        return $this->pagesRepo->getPageComponents($pageId);
     }
 
-       /**
+    /**
      * Change category sorting
-     * @return Response
+     * @return JsonResponse
      */
     public function changeComponentSort($request) {
-        $response = $this->pagesRepo->changeComponentSorting($request);
-        return $response;
+        return $this->pagesRepo->changeComponentSorting($request);
     }
-       /**
+    /**
      * Change category sorting
-     * @return Response
+     * @return int[]
      */
     public function deleteComponent($comId) {
-
-         try {
-
-            $response = $this->pagesRepo->deleteComponent($comId);
-
-            $response = [
+        try {
+            $this->pagesRepo->deleteComponent($comId);
+            return [
                 'success' => 1,
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
-
     /**
      * update roaming category
-     * @return Response
+     * @return array
      */
     public function updatePage($request) {
         try {
-
             $request->validate([
                 'title_en' => 'required',
                 'title_bn' => 'required',
@@ -186,24 +176,57 @@ class RoamingGeneralService {
                 'page_type' => 'required',
             ]);
 
-
-            //save data in database
-            $update = $this->pagesRepo->updatePage($request);
-
-
-            $response = [
-                'success' => 1,
+            $searchSpecialKeyword = [
+                'tag_en' => $request->tag_en,
+                'tag_bn' => $request->tag_bn
             ];
 
+            unset($request['tag_en']);
+            unset($request['tag_bn']);
 
-            return $response;
+            //save data in database
+            $aboutPage = $this->pagesRepo->updatePage($request);
+
+            $slug = [
+                'slug_en' => 'international-roaming',
+                'slug_bn' => 'international-roaming'
+            ];
+            $this->_saveSearchData($aboutPage, $slug, 'page', $searchSpecialKeyword);
+            return [
+                'success' => 1,
+            ];
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
+    private function _saveSearchData($product, $slug, $type, $searchSpecialKeyword = [])
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        // URL make
+        $urlEn = $feature['roaming_en'] . "/" . $slug['slug_en'];
+        $urlBn = $feature['roaming_bn'] . "/" . $slug['slug_bn'];
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => ($type == "category") ? "roaming-category" : 'about-roaming',
+            'page_title_en' => ($type == "category") ? $product->banner_title_en : $product->name_en,
+            'page_title_bn' => ($type == "category") ? $product->banner_title_bn : $product->name_bn,
+            'tag_en' => $searchSpecialKeyword['tag_en'] ?? null,
+            'tag_bn' => $searchSpecialKeyword['tag_bn'] ?? null,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
+    }
 }

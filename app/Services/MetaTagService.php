@@ -36,7 +36,6 @@ class MetaTagService
     public function storeFixedPageTag($data)
     {
         $data['page_id'] = 0;
-//        dd($data);
         $this->save($data);
         return Response('Fixed page tag add successfully');
     }

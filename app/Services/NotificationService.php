@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\NotificationSchedule;
-use App\Repositories\NotificationScheduleRepository;
+
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use Illuminate\Notifications\Notification;
@@ -11,10 +10,12 @@ use Carbon\Carbon;
 use App\Traits\FileTrait;
 use App\Models\MyBlProduct;
 use App\Models\NotificationDraft;
+use App\Models\NotificationSchedule;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\NotificationRequest;
 use App\Repositories\NotificationRepository;
 use App\Repositories\NotificationDraftRepository;
+use App\Repositories\NotificationScheduleRepository;
 
 class NotificationService
 {
@@ -61,7 +62,7 @@ class NotificationService
     public function storeNotification(NotificationRequest $request)
     {
         $data = $request->all();
-
+        
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
         unset($data['display_period']);
 
@@ -82,11 +83,11 @@ class NotificationService
 
         }
 
-
-        $this->save($data);
+        $data = $this->save($data);
+        
         return new Response("Notification has been successfully created");
+    
     }
-
 
     public function storeDuplicateNotification($data)
     {
@@ -165,6 +166,16 @@ class NotificationService
         $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $notification->update($data);
+        $schedule = $notification->schedule ?? null;
+        if ($schedule && $schedule->status == 'active') {
+            $payload = [
+                'title' => $data['title'],
+                'message' => $data['body'],
+            ];
+
+            NotificationSchedule::where('id', $schedule->id)->update($payload);
+        }
+
         return Response('Notification has been successfully updated');
     }
 
@@ -338,5 +349,10 @@ class NotificationService
         }
 
         return $data;
+    }
+
+    public function  findOneById($id){
+
+        return $this->findOne($id);
     }
 }

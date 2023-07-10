@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\AboutUsManagementRequest;
 use App\Models\AboutUsManagement;
+use App\Repositories\AboutUsLandingRepository;
 use App\Services\ManagementService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,14 +20,21 @@ class ManagementController extends Controller
      * @var $managementService
      */
     protected $managementService;
+    /**
+     * @var AboutUsLandingRepository
+     */
+    private $aboutUsLandingRepository;
 
     /**
      * QuickLaunchController constructor.
      * @param ManagementService $managementService
      */
-    public function __construct(ManagementService $managementService)
-    {
+    public function __construct(
+        ManagementService $managementService,
+        AboutUsLandingRepository $aboutUsLandingRepository
+    ) {
         $this->managementService = $managementService;
+        $this->aboutUsLandingRepository = $aboutUsLandingRepository;
     }
 
 
@@ -37,7 +46,8 @@ class ManagementController extends Controller
     public function index()
     {
         $management = $this->managementService->getManagementInfo();
-        return view('admin.management.index', compact('management'));
+        $componentData = $this->aboutUsLandingRepository->findOneByProperties(['component_type' => "management"]);
+        return view('admin.management.index', compact('management', 'componentData'));
     }
 
     /**
@@ -54,7 +64,7 @@ class ManagementController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(AboutUsManagementRequest $request)
     {
         $response = $this->managementService->storeManagementInfo($request->all());
         Session::flash('message', $response->getContent());
@@ -80,7 +90,7 @@ class ManagementController extends Controller
      * @param AboutUsManagement $management
      * @return void
      */
-    public function update(Request $request, AboutUsManagement $management)
+    public function update(AboutUsManagementRequest $request, AboutUsManagement $management)
     {
         $response = $this->managementService->updateManagementInfo($request, $management);
 
@@ -117,5 +127,12 @@ class ManagementController extends Controller
     public function managementSortable(Request $request)
     {
         $this->managementService->tableSortable($request);
+    }
+
+    public function managementComponentSave(Request $request)
+    {
+        $this->managementService->landingComponentSave($request->all());
+        session()->flash('success', "Save successfully");
+        return redirect()->back();
     }
 }

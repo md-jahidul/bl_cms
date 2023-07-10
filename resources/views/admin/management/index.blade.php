@@ -13,6 +13,67 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Management Section</strong></h4>
+                    <hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form"
+                              action="{{ url('management-component') }}"
+                              method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en">Title (English)</label>
+                                    <input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter explore name in English"
+                                           value="{{ old("title_en") ? old("title_en") : (isset($componentData) ? $componentData->title_en : '') }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">{{ $errors->first('title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn">Title (Bangla)</label>
+                                    <input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter explore name in Bangla"
+                                           value="{{ old("title_bn") ? old("title_bn") : (isset($componentData) ? $componentData->title_bn : '') }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 ">
+                                    <label for="description_en">Description (English)</label>
+                                    <textarea type="text" name="description_en" id="" class="form-control" placeholder="Enter description in English"
+                                    >{{ (isset($componentData) ? $componentData->description_en : null) }}</textarea>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="description_bn">Description (Bangla)</label>
+                                    <textarea type="text" name="description_bn" id="" class="form-control" placeholder="Enter description in Bangla"
+                                    >{{ $componentData->description_bn ?? null }}</textarea>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
@@ -59,7 +120,7 @@
                                             <i class="la la-pencil"></i>
                                         </a>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 ml-1">
                                         <button data-id="{{$manage->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                     </div>
                                 </div>

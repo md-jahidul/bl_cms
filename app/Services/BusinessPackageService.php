@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\BusinessFeaturesRepository;
 use App\Repositories\BusinessAssignedFeaturesRepository;
@@ -66,11 +67,10 @@ class BusinessPackageService {
 
     /**
      * save business landing page news
-     * @return Response
+     * @return array
      */
     public function savePackage($request) {
         try {
-
             //file upload in storege
             $directoryPath = 'assetlite/images/business-images';
 
@@ -99,28 +99,58 @@ class BusinessPackageService {
                 $photoName = $request['banner_name'] . '-mobile';
                 $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoName);
             }
+            $cardIcon = null;
+            if (!empty($request['icon'])) {
+                $cardIcon = $this->upload($request['icon'], $directoryPath);
+            }
 
+            $cardDetail = null;
+            if (!empty($request['detail_image'])) {
+                $cardDetail = $this->upload($request['detail_image'], $directoryPath);
+            }
             //save data in database
-            $packageId = $this->packageRepo->savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request);
+            $package = $this->packageRepo->savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $cardIcon, $cardDetail, $request);
+
+            $this->_saveSearchData($package);
+
             $parentType = 1;
-            $this->asgnFeatureRepo->assignFeature($packageId, $parentType, $request->feature);
-            $this->relatedProductRepo->assignRelatedProduct($packageId, $parentType, $request->realated);
+            $this->asgnFeatureRepo->assignFeature($package->id, $parentType, $request->feature);
+            $this->relatedProductRepo->assignRelatedProduct($package->id, $parentType, $request->realated);
 
-
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Package Saved",
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature["business_en"] . "packages" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "packages" . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'business-packages',
+            'page_title_en' => $product->name,
+            'page_title_bn' => $product->name_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 
@@ -157,9 +187,9 @@ class BusinessPackageService {
      * @return Response
      */
     public function getPackageById($packageId) {
-        $response = $this->packageRepo->getPackageById($packageId);
-        return $response;
+        return $this->packageRepo->getPackageById($packageId);
     }
+
 
     /**
      * Get business package by id
@@ -173,7 +203,7 @@ class BusinessPackageService {
 
     /**
      * update business landing page news
-     * @return Response
+     * @return array
      */
     public function updatePackage($data) {
         try {
@@ -182,6 +212,8 @@ class BusinessPackageService {
 
             $cardWeb = "";
             $cardMob = "";
+            $cardIcon = "";
+            $cardDetail = "";
             if (!empty($data['card_banner_web'])) {
 
                 $data['old_card_banner_web'] != "" ? $this->deleteFile($data['old_card_banner_web']) : "";
@@ -192,6 +224,18 @@ class BusinessPackageService {
 
                 $data['old_card_banner_mobile'] != "" ? $this->deleteFile($data['old_card_banner_mobile']) : "";
                 $cardMob = $this->upload($data['card_banner_mobile'], $directoryPath);
+            }
+
+            if (!empty($data['icon'])) {
+
+                $data['old_icon'] != "" ? $this->deleteFile($data['old_icon']) : "";
+                $cardIcon = $this->upload($data['icon'], $directoryPath);
+            }
+
+            if (!empty($data['detail_image'])) {
+
+                $data['old_detail_image'] != "" ? $this->deleteFile($data['old_detail_image']) : "";
+                $cardDetail = $this->upload($data['detail_image'], $directoryPath);
             }
 
             $photoNameWeb = $data['banner_name'] . '-web';
@@ -223,53 +267,47 @@ class BusinessPackageService {
                     $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
                 }
             }
-
             //save data in database
-            $this->packageRepo->updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $data);
+            $package = $this->packageRepo->updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $cardIcon, $cardDetail, $data);
+
+            $this->_saveSearchData($package);
+
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($data->package_id, $parentType, $data->feature);
 
             $this->relatedProductRepo->assignRelatedProduct($data->package_id, $parentType, $data->realated);
 
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Package updated"
             ];
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
     /**
      * delete business package
-     * @return Response
+     * @return array
      */
     public function deletePackage($packageId) {
-
         try {
-
             $package = $this->findOne($packageId);
             $this->deleteFile($package->banner_photo);
             $package->delete();
-
-            $response = [
+            $package->searchableFeature()->delete();
+            return [
                 'success' => 1,
                 'message' => "Package deleted"
             ];
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 

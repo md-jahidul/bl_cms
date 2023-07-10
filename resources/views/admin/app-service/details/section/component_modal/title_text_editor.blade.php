@@ -1,6 +1,6 @@
 {{ Form::hidden('sections[section_name]', 'Title with Text Editor' ) }}
 {{ Form::hidden('sections[section_type]', 'title_text_editor' ) }}
-{{ Form::hidden('sections[tab_type]', $tab_type ) }}
+{{--{{ Form::hidden('sections[tab_type]', $tab_type ) }}--}}
 {{ Form::hidden('sections[category]', 'component_sections' ) }}
 {{ Form::hidden('component[0][component_type]', 'title_text_editor' ) }}
 

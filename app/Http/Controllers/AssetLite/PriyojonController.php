@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class PriyojonController extends Controller
@@ -56,6 +57,14 @@ class PriyojonController extends Controller
     public function index($parent_id = 0)
     {
         $priyojons = $this->priyojonService->priyojonList($parent_id);
+        foreach ($priyojons as $key => $priyojon) {
+            /**
+             * If type is discount_privilege and is parent then unset this
+             */
+            if (in_array($priyojon->component_type, ['discount_privilege', 'benefits_for_you']) && $priyojon->parent_id == 0) {
+                unset($priyojons[$key]);
+            }
+        }
         $menu_id = $parent_id;
         while ($menu_id != 0) {
             $menu_id = $this->getBreadcrumbInfo($menu_id);
@@ -119,6 +128,11 @@ class PriyojonController extends Controller
 
     public function landingPageBanner(Request $request, $id)
     {
+        $request->validate([
+            'banner_name' => 'unique:priyojons,banner_name,' . $id,
+            'banner_name_bn' => 'unique:priyojons,banner_name_bn,' . $id,
+        ]);
+
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->bannerUpload($request->all(), $id);
         Session::flash('message', $response->getContent());

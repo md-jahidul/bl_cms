@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessAssignedFeaturesRepository;
 use App\Repositories\BusinessRelatedProductRepository;
@@ -55,7 +56,7 @@ class BusinessOthersService {
      * @param BusinessRelatedProductRepository $relatedProductRepo
      */
     public function __construct(
-    BusinessOthersRepository $otherRepo, BusinessComPhotoTextRepository $photoTextRepo, BusinessComPkOneRepository $pkOneRepo, BusinessComPkTwoRepository $pkTwoRepo, BusinessComFeaturesRepository $featureRepo, BusinessComPriceTableRepository $priceTableRepo, BusinessComVideoRepository $videoRepo, BusinessComPhotoRepository $photoRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo
+        BusinessOthersRepository $otherRepo, BusinessComPhotoTextRepository $photoTextRepo, BusinessComPkOneRepository $pkOneRepo, BusinessComPkTwoRepository $pkTwoRepo, BusinessComFeaturesRepository $featureRepo, BusinessComPriceTableRepository $priceTableRepo, BusinessComVideoRepository $videoRepo, BusinessComPhotoRepository $photoRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo
     ) {
         $this->otherRepo = $otherRepo;
         $this->photoTextRepo = $photoTextRepo;
@@ -81,11 +82,10 @@ class BusinessOthersService {
 
     /**
      * save business other services
-     * @return Response
+     * @return array
      */
     public function saveService($request) {
         try {
-
             //file upload in storege
 
             $directoryPath = 'assetlite/images/business-images';
@@ -128,44 +128,82 @@ class BusinessOthersService {
                 $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
             }
 
+            // details Card photo
+            $cardNameWeb = $request['details_banner_name'] .'-card_web';
+            $cardNameMob = $request['details_banner_name'] .'-card_mob';
+            $cardWeb = "";
+            $cardMob = "";
+            $cardData = [];
+            if (!empty($request['details_card_web'])) {
+
+                $cardWeb = $this->upload($request['details_card_web'], $directoryPath, $cardNameWeb);
+            }
+
+            if (!empty($request['details_card_mob'])) {
+
+                $cardMob = $this->upload($request['details_card_mob'], $directoryPath, $cardNameMob);
+            }
+            $cardData['cardWeb'] = $cardWeb;
+            $cardData['cardMob'] = $cardMob;
 
 
             //save data in database
-            $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
+            $service = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
+
+            $this->_saveSearchData($service);
+
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
 
-            $this->asgnFeatureRepo->assignFeature($serviceId, $parentTypes, $request->feature);
+            $this->asgnFeatureRepo->assignFeature($service->id, $parentTypes, $request->feature);
 
             $parentType = 2;
-            $this->relatedProductRepo->assignRelatedProduct($serviceId, $parentType, $request->realated);
+            $this->relatedProductRepo->assignRelatedProduct($service->id, $parentType, $request->realated);
 
 
-
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Service Saved",
             ];
-
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
+        }
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature["business_en"] . "business-solution" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "business-solution" . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'business-solution',
+            'page_title_en' => $product->name,
+            'page_title_bn' => $product->name_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status ?? 1,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
         }
     }
 
     /**
      * get related product
-     * @return Response
+     * @return array
      */
     public function relatedProducts($serviceId) {
         $parentType = 2;
-        $response = $this->relatedProductRepo->getRelatedProductList($serviceId, $parentType);
-        return $response;
+        return $this->relatedProductRepo->getRelatedProductList($serviceId, $parentType);
     }
 
     /**
@@ -751,11 +789,34 @@ class BusinessOthersService {
 
     /**
      * Change service active/inactive
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function packageActive($serviceId) {
-        $response = $this->otherRepo->changeStatus($serviceId);
-        return $response;
+        try {
+
+            $package = $this->otherRepo->findOne($serviceId);
+
+            $status = $package->status == 1 ? 0 : 1;
+            $package->status = $status;
+            $package->save();
+
+            $this->_saveSearchData($package);
+
+            $response = [
+                'success' => 1,
+                'status' => $status,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+
+
+        return $this->otherRepo->changeStatus($serviceId);
     }
 
     /**
@@ -792,7 +853,7 @@ class BusinessOthersService {
 
     /**
      * update business landing page news
-     * @return Response
+     * @return array
      */
     public function updateService($request) {
         try {
@@ -813,12 +874,12 @@ class BusinessOthersService {
             }
 
             //product photo
-            $photoNameWeb = $request['banner_name'] . '-web';
+
             $photoNameMob = $request['banner_name'] . '-mobile';
             $photoWeb = "";
             $photoMob = "";
             if (!empty($request['banner_photo'])) {
-
+                $photoNameWeb = $request['banner_name'] . '-web.' .pathinfo($request->file('banner_photo')->getClientOriginalName(), PATHINFO_EXTENSION);;
                 $request['old_banner'] != "" ? $this->deleteFile($request['old_banner']) : "";
                 $photoWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
             }
@@ -858,6 +919,24 @@ class BusinessOthersService {
                 $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
             }
 
+            // details Card photo
+            $cardNameWeb = $request['details_banner_name'] .'-card_web';
+            $cardNameMob = $request['details_banner_name'] .'-card_mob';
+            $cardWeb = "";
+            $cardMob = "";
+            $cardData = [];
+            if (!empty($request['details_card_web'])) {
+                $request['old_details_card_web'] != "" ? $this->deleteFile($request['old_details_card_web']) : "";
+                $cardWeb = $this->upload($request['details_card_web'], $directoryPath, $cardNameWeb);
+            }
+
+            if (!empty($request['details_card_mob'])) {
+                $request['old_details_card_mob'] != "" ? $this->deleteFile($request['old_details_card_mob']) : "";
+                $cardMob = $this->upload($request['details_card_mob'], $directoryPath, $cardNameMob);
+            }
+            $cardData['cardWeb'] = $cardWeb;
+            $cardData['cardMob'] = $cardMob;
+
             //details banner rename
             if ($request['old_details_banner_name'] != $request['details_banner_name']) {
 
@@ -871,12 +950,14 @@ class BusinessOthersService {
             }
 
             //save data in database
-            $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
+            $service = $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request,$cardData);
+
+            $this->_saveSearchData($service);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
-            
+
             if(isset($types[$request->type])){
-            $parentTypes = $types[$request->type];
+                $parentTypes = $types[$request->type];
             }else{
                 $parentTypes = $request->type;
             }
@@ -885,24 +966,21 @@ class BusinessOthersService {
             $parentType = 2;
             $this->relatedProductRepo->assignRelatedProduct($request->service_id, $parentType, $request->realated);
 
-            $response = [
+            return [
                 'success' => 1,
                 'message' => "Package updated"
             ];
-
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e
             ];
-            return $response;
         }
     }
 
     /**
      * delete business package
-     * @return Response
+     * @return array
      */
     public function deleteService($serviceId) {
 
@@ -913,17 +991,17 @@ class BusinessOthersService {
             $this->deleteFile($service->icon);
             $service->delete();
 
-            $response = [
+            $service->searchableFeature()->delete();
+
+            return [
                 'success' => 1,
                 'message' => "Package deleted"
             ];
-            return $response;
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 

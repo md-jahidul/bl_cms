@@ -11,6 +11,9 @@
     <a href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Product
     </a>
+    <a href="{{ route("app-service-search-sync") }}" class="btn btn-blue-grey  round btn-glow px-2"><i class="la la-refresh"></i>
+        Sync Search
+    </a>
 @endsection
 @section('content')
     <section>

@@ -303,7 +303,8 @@
                                       $details->details->content_type == 'gift' ||
                                       $details->details->content_type == 'voice' ||
                                       $details->details->content_type == 'volume transfer' ||
-                                      $details->details->content_type == 'roam'
+                                      $details->details->content_type == 'roam' ||
+                                      $details->details->content_type == 'reactivation'
                                     )
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
@@ -341,6 +342,21 @@
                                                     value="{{ $key }}">  {{$tag}}
                                                 </option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="special_type">Special Type</label>
+                                        <select name="special_type" class="form-control" placeholder="Please Select Special type">
+                                            <option value=""></option>
+                                            @foreach ($productSpecialTypes as $key => $specialType)
+                                                <option
+                                                    value="{{ $key }}" {{ $details->special_type == $key ? 'selected' : '' }}>  {{$specialType}}
+                                                </option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -455,7 +471,14 @@
                                         <label for="show_in_home">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_favorite" value="1"
+                                               name="is_favorite"
+                                               @if($details->is_favorite) checked @endif>
+                                        <label for="is_favorite">Is Favorite</label>
+                                    </fieldset>
+                                </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack"
@@ -717,7 +740,11 @@
 
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
-                maximumSelectionLength: 3
+                maximumSelectionLength: 1
+            });
+
+            $('select[name="special_type"]').select2({
+                placeholder: 'Please Select Special Type',
             });
         });
 

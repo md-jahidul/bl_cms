@@ -53,7 +53,8 @@ class FourGLandingPageController extends Controller
     {
         $componentList = $this->fourGLandingPageService->findWithoutBanner();
         $bannerImage = $this->fourGLandingPageService->getBannerImage();
-        return view('admin.banglalink-4g.landing-page.component_list', compact('componentList', 'bannerImage'));
+        $pageType = 'banglalink-4g';
+        return view('admin.banglalink-4g.landing-page.component_list', compact('componentList', 'bannerImage', 'pageType'));
     }
 
     /**

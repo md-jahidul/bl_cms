@@ -25,20 +25,20 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endsection
 @section('content')
     <section>
-    <!-- include tab wise product details -->
-    @if($tab_type == "app")
-        @include('admin.app-service.details.section.tab-details.app_tab_details')
-    @elseif($tab_type == "vas")
-        @include('admin.app-service.details.section.tab-details.vas_tab_details')
-    @elseif($tab_type == "financial")
-        @include('admin.app-service.details.section.tab-details.financial_tab_details')
-    @elseif($tab_type == "others")
-        @include('admin.app-service.details.section.tab-details.others_tab_details')
-    @endif
+        <!-- include tab wise product details -->
+        @if($tab_type == "app")
+            @include('admin.app-service.details.section.tab-details.app_tab_details')
+        @elseif($tab_type == "vas")
+            @include('admin.app-service.details.section.tab-details.vas_tab_details')
+        @elseif($tab_type == "financial")
+            @include('admin.app-service.details.section.tab-details.financial_tab_details')
+        @elseif($tab_type == "others")
+            @include('admin.app-service.details.section.tab-details.others_tab_details')
+        @endif
 
-    @yield('component_type_selector')
+        @yield('component_type_selector')
 
-    <!-- # Section list with component card -->
+        <!-- # Section list with component card -->
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -141,7 +141,7 @@ function matchRelatedProduct($id, $relatedProductIds)
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Banner And Related Product</strong></h4>
+                    <h4 class="menu-title"><strong>Banner</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
@@ -171,13 +171,12 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 <div class="form-group col-md-2">
                                     @if(isset($fixedSectionData['image']))
                                         <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}"
-                                            height="100" width="200" class="imgDisplay img-fluid">
+                                             height="100" width="200" class="imgDisplay img-fluid">
                                     @else
                                         <img height="100" width="200" class="imgDisplay img-fluid"
                                              style="display: none">
                                     @endif
                                 </div>
-
 
                                 <div class="form-group col-md-4 {{ $errors->has('image_mobile') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Mobile)</label>
@@ -228,49 +227,94 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_en') ? ' error' : '' }}">
+                                    <label for="banner_title_en">Banner Title En</label>
+                                    <input type="text" name="banner_title_en" id="banner_title_en" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_title_en']) ? $fixedSectionData['banner_title_en'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_en'))
+                                        <div class="help-block">{{ $errors->first('banner_title_en') }}</div>
+                                    @endif
+                                </div>
 
-                                @if($tab_type == "app" || $tab_type == "vas")
-                                    <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                        <label for="title_en">Title (English)</label>
-                                        <input type="text" name="title_en" id="title_en" class="form-control"
-                                               placeholder="Enter offer name in English"
-                                               value="{{ isset($fixedSectionData['title_en']) ? $fixedSectionData['title_en'] : '' }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('title_en'))
-                                            <div class="help-block">{{ $errors->first('title_en') }}</div>
-                                        @endif
+                                <div class="form-group col-md-6 {{ $errors->has('banner_title_bn') ? ' error' : '' }}">
+                                    <label for="banner_title_bn">Banner Title Bn</label>
+                                    <input type="text" name="banner_title_bn" id="banner_title_bn" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_title_bn']) ? $fixedSectionData['banner_title_bn'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_title_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_en') ? ' error' : '' }}">
+                                    <label for="banner_desc_en">Banner Description En</label>
+                                    <textarea rows="5" name="banner_desc_en" id="banner_desc_en" class="form-control"
+                                              placeholder="Enter offer name in English">{{ isset($fixedSectionData['banner_desc_en']) ? $fixedSectionData['banner_desc_en'] : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_desc_en'))
+                                        <div class="help-block">{{ $errors->first('banner_desc_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_desc_bn') ? ' error' : '' }}">
+                                    <label for="banner_desc_bn">Banner Description Bn</label>
+                                    <textarea rows="5" name="banner_desc_bn" id="banner_desc_bn" class="form-control"
+                                              placeholder="Enter offer name in English">{{ isset($fixedSectionData['banner_desc_bn']) ? $fixedSectionData['banner_desc_bn'] : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_desc_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_desc_bn') }}</div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <h5 class="menu-title"><strong>Related Product</strong></h5>
+                            <hr>
+
+                            <div class="row">
+                                {{--                                @if($tab_type == "app" || $tab_type == "vas")--}}
+                                <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en">Title (English)</label>
+                                    <input type="text" name="title_en" id="title_en" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['title_en']) ? $fixedSectionData['title_en'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">{{ $errors->first('title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn">Title (Bangla)</label>
+                                    <input type="text" name="title_bn" id="title_bn" class="form-control"
+                                           placeholder="Enter offer name in Bangla"
+                                           value="{{ isset($fixedSectionData['title_bn']) ? $fixedSectionData['title_bn'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
+                                    <label for="role_id">Related Product</label>
+                                    <div class="role-select">
+                                        <select class="select2 form-control" multiple="multiple"
+                                                name="other_attributes[related_product_id][]">
+                                            @foreach($products as $product)
+                                                <option
+                                                    value="{{ $product->id }}" {{ isset($fixedSectionData['other_attributes']['related_product_id']) && matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                    <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                        <label for="title_bn">Title (Bangla)</label>
-                                        <input type="text" name="title_bn" id="title_bn" class="form-control"
-                                               placeholder="Enter offer name in Bangla"
-                                               value="{{ isset($fixedSectionData['title_bn']) ? $fixedSectionData['title_bn'] : '' }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('title_bn'))
-                                            <div class="help-block">{{ $errors->first('title_bn') }}</div>
-                                        @endif
-                                    </div>
-
-                                    <div
-                                        class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
-                                        <label for="role_id">Related Product</label>
-                                        <div class="role-select">
-                                            <select class="select2 form-control" multiple="multiple"
-                                                    name="other_attributes[related_product_id][]">
-                                                @foreach($products as $product)
-                                                    <option
-                                                        value="{{ $product->id }}" {{ isset($fixedSectionData['other_attributes']['related_product_id']) && matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
-
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('role_id'))
-                                            <div class="help-block">  {{ $errors->first('role_id') }}</div>
-                                        @endif
-                                    </div>
-                                @endif
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('role_id'))
+                                        <div class="help-block">  {{ $errors->first('role_id') }}</div>
+                                    @endif
+                                </div>
+                                {{--                                @endif--}}
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -279,7 +323,6 @@ function matchRelatedProduct($id, $relatedProductIds)
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
                     </div>
@@ -296,7 +339,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 
 @push('page-css')
     {{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
-{{--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">--}}
+    {{--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">--}}
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td {
@@ -324,8 +367,8 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endpush
 
 @push('page-js')
-{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>--}}
-{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>--}}
+    {{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>--}}
+    {{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>--}}
     <script type="text/javascript">
 
         // $("textarea.js_editor_box").summernote({
@@ -773,71 +816,71 @@ function matchRelatedProduct($id, $relatedProductIds)
                             var leftTitleEn = (tableParseEn.left_table_title_en) ? tableParseEn.left_table_title_en : '';
                             var leftTitleBn = (tableParseBn.left_table_title_bn) ? tableParseBn.left_table_title_bn : '';
 
-                                leftTable += '<div class="col-md-6 mt-1">' +
-                                             '<label><b>Left Table Title English</b></label>' +
-                                             '<input type="text" class="form-control" value="'+leftTitleEn+'" name="left_table_title_en">' +
-                                             '</div>';
+                            leftTable += '<div class="col-md-6 mt-1">' +
+                                '<label><b>Left Table Title English</b></label>' +
+                                '<input type="text" class="form-control" value="'+leftTitleEn+'" name="left_table_title_en">' +
+                                '</div>';
 
 
-                                leftTable += '<div class="col-md-6 mt-1">' +
-                                             '<label><b>Left Table Title Bangla</b></label>' +
-                                             '<input type="text" class="form-control" value="'+leftTitleBn+'" name="left_table_title_bn">' +
-                                             '</div>';
+                            leftTable += '<div class="col-md-6 mt-1">' +
+                                '<label><b>Left Table Title Bangla</b></label>' +
+                                '<input type="text" class="form-control" value="'+leftTitleBn+'" name="left_table_title_bn">' +
+                                '</div>';
 
-                                // left table Head En
-                                leftTable += '<div class="col-md-12">\n' +
-                                             '<label class="label pt-2"><b>Left Table (English)</b></label>\n' +
-                                             '<table class="table table-bordered">\n' +
-                                             '<thead>\n' +
-                                             '<tr>';
-                                $.each(tableParseEn.left_head_en, function (k, v) {
-                                    var value = (v !== null) ? v : "";
-                                    // leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+value+'" name="left_head_en[2][]" width="33.333333333333336%">'
-                                    leftTable += '<th><input type="text" class="form-control" value="'+value+'" placeholder="Table head English" name="left_head_en[2][]"></th>';
+                            // left table Head En
+                            leftTable += '<div class="col-md-12">\n' +
+                                '<label class="label pt-2"><b>Left Table (English)</b></label>\n' +
+                                '<table class="table table-bordered">\n' +
+                                '<thead>\n' +
+                                '<tr>';
+                            $.each(tableParseEn.left_head_en, function (k, v) {
+                                var value = (v !== null) ? v : "";
+                                // leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+value+'" name="left_head_en[2][]" width="33.333333333333336%">'
+                                leftTable += '<th><input type="text" class="form-control" value="'+value+'" placeholder="Table head English" name="left_head_en[2][]"></th>';
+                            });
+                            leftTable += "</tr>\n" +
+                                "</thead>";
+
+                            // left table Row En
+                            leftTable += "<tbody>";
+
+                            $.each(tableParseEn.left_rows_en, function (k, v) {
+                                leftTable += "<tr>";
+                                $.each(v, function (ckey, childData) {
+                                    var value = (childData !== null) ? childData : "";
+                                    leftTable += '<td><input type="text" class="form-control" name="left_col_en[2]['+k+'][]" value="'+value+'"></td>';
                                 });
-                                leftTable += "</tr>\n" +
-                                            "</thead>";
+                                leftTable += "<tr>";
+                            });
+                            leftTable += "</tbody><table><div>";
 
-                                // left table Row En
-                                leftTable += "<tbody>";
+                            //========= left table BN head ===============
+                            leftTable += '<div class="col-md-12 pl-0">\n' +
+                                '<label class="label"><b>Left Table (Bangla)</b></label>\n' +
+                                '<table class="table table-bordered">\n' +
+                                '<thead>\n' +
+                                '<tr>';
 
-                                $.each(tableParseEn.left_rows_en, function (k, v) {
-                                    leftTable += "<tr>";
-                                    $.each(v, function (ckey, childData) {
-                                        var value = (childData !== null) ? childData : "";
-                                        leftTable += '<td><input type="text" class="form-control" name="left_col_en[2]['+k+'][]" value="'+value+'"></td>';
-                                    });
-                                    leftTable += "<tr>";
+                            $.each(tableParseBn.left_head_bn, function (k, v) {
+                                var value = (v !== null) ? v : "";
+                                leftTable += '<th><input type="text" class="form-control" placeholder="Table head Bangla" value="'+value+'" name="left_head_bn[2][]"></th>';
+                            });
+                            leftTable += "</tr>\n" +
+                                "</thead>";
+                            // left table BN head
+
+                            // left table BN Row
+                            leftTable += "<tbody>";
+                            $.each(tableParseBn.left_rows_bn, function (k, v) {
+                                leftTable += '<tr>';
+                                $.each(v, function (ckey, childData) {
+                                    var value = (childData !== null) ? childData : "";
+                                    leftTable += '<td><input type="text" class="form-control" name="left_col_bn[2]['+k+'][]" value="'+value+'"></td>'
                                 });
-                                leftTable += "</tbody><table><div>";
-
-                                //========= left table BN head ===============
-                                leftTable += '<div class="col-md-12 pl-0">\n' +
-                                             '<label class="label"><b>Left Table (Bangla)</b></label>\n' +
-                                             '<table class="table table-bordered">\n' +
-                                             '<thead>\n' +
-                                             '<tr>';
-
-                                $.each(tableParseBn.left_head_bn, function (k, v) {
-                                    var value = (v !== null) ? v : "";
-                                    leftTable += '<th><input type="text" class="form-control" placeholder="Table head Bangla" value="'+value+'" name="left_head_bn[2][]"></th>';
-                                });
-                                leftTable += "</tr>\n" +
-                                             "</thead>";
-                                // left table BN head
-
-                                // left table BN Row
-                                leftTable += "<tbody>";
-                                $.each(tableParseBn.left_rows_bn, function (k, v) {
-                                    leftTable += '<tr>';
-                                    $.each(v, function (ckey, childData) {
-                                        var value = (childData !== null) ? childData : "";
-                                        leftTable += '<td><input type="text" class="form-control" name="left_col_bn[2]['+k+'][]" value="'+value+'"></td>'
-                                    });
-                                    leftTable += '</tr>';
-                                });
-                                leftTable += "</tbody><table><div>"
-                                // left table BN Row
+                                leftTable += '</tr>';
+                            });
+                            leftTable += "</tbody><table><div>"
+                            // left table BN Row
                             $(".left_table").html(leftTable);
 
 
@@ -849,20 +892,20 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 var rightTitleBn = (tableParseBn.right_table_title_bn) ? tableParseBn.right_table_title_bn : '';
 
                                 rightTable += '<div class="col-md-6 mt-1">' +
-                                              '<label><b>Right Table Title English</b></label>' +
-                                              '<input type="text" class="form-control" value="'+rightTitleEn+'" name="right_table_title_en">' +
-                                              '</div>';
+                                    '<label><b>Right Table Title English</b></label>' +
+                                    '<input type="text" class="form-control" value="'+rightTitleEn+'" name="right_table_title_en">' +
+                                    '</div>';
 
                                 rightTable += "<div class='col-md-6 mt-1'>" +
-                                              '<label>Right Table Title Bangla</label>' +
-                                              '<input type="text" class="form-control" value="'+rightTitleBn+'" name="right_table_title_bn">' +
-                                              '</div>';
+                                    '<label>Right Table Title Bangla</label>' +
+                                    '<input type="text" class="form-control" value="'+rightTitleBn+'" name="right_table_title_bn">' +
+                                    '</div>';
 
                                 rightTable += '<div class="col-md-12">\n' +
-                                              '<label class="label pt-2"><b>Right Table (English)</b></label>\n' +
-                                              '<table class="table table-bordered">\n' +
-                                              '<thead>\n' +
-                                              '<tr>';
+                                    '<label class="label pt-2"><b>Right Table (English)</b></label>\n' +
+                                    '<table class="table table-bordered">\n' +
+                                    '<thead>\n' +
+                                    '<tr>';
                                 $.each(tableParseEn.right_head_en, function (k, v) {
                                     var value = (v !== null) ? v : "";
                                     rightTable += '<th><input type="text" class="form-control" placeholder="Table head English" value="'+value+'" name="right_head_en[2][]"></th>'
@@ -884,10 +927,10 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 //========= Right table BN head ===============
                                 rightTable += '<div class="col-md-12 pl-0">\n' +
-                                              '<label class="label"><b>Right Table (Bangla)</b></label>\n' +
-                                              '<table class="table table-bordered">\n' +
-                                              '<thead>\n' +
-                                              '<tr>';
+                                    '<label class="label"><b>Right Table (Bangla)</b></label>\n' +
+                                    '<table class="table table-bordered">\n' +
+                                    '<thead>\n' +
+                                    '<tr>';
                                 $.each(tableParseBn.right_head_bn, function (k, v) {
                                     var value = (v !== null) ? v : "";
                                     rightTable += '<th><input type="text" class="form-control" placeholder="Table head English" value="'+value+'" name="right_head_bn[2][]"></th>';

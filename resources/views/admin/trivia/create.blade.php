@@ -487,7 +487,7 @@
                                     accept="image/*"
                                     onchange="
                                     createImageBitmap(this.files[0]).then((bmp) => {
-                                        if(Math.floor(bmp.width/bmp.height).toFixed(2) == Math.floor(16/9).toFixed(2)){
+                                        if(bmp.width/bmp.height == 16/9){
                                             document.getElementById('submitForm').disabled = false;
                                             document.getElementById('massage').innerHTML = '';
                                             this.style.border = 'none';

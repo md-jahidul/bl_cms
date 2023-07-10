@@ -4,14 +4,22 @@ namespace App\Models;
 
 use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PartnerOffer extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'partner_id',
+        'partner_category_id',
+        'loyalty_tier_id',
         'product_code',
+        'card_img',
+        'card_img_name_en',
+        'card_img_name_bn',
+        'card_alt_text_en',
+        'card_alt_text_bn',
         'validity_en',
         'validity_bn',
         'start_date',
@@ -58,4 +66,14 @@ class PartnerOffer extends Model
     protected $casts = [
         'other_attributes' => 'array'
     ];
+
+    public function partnerCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PartnerCategory::class);
+    }
+
+    public function searchableFeature()
+    {
+        return $this->morphOne(SearchableData::class, 'featureable');
+    }
 }

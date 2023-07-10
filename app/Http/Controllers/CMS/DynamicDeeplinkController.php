@@ -5,9 +5,11 @@ namespace App\Http\Controllers\CMS;
 use App\Models\AgentList;
 use App\Models\AgentDeeplinkDetail;
 use App\Models\MyBlInternetOffersCategory;
-use App\Repositories\FifaDeeplinkRepository;
 use App\Repositories\ContentDeeplinkRepository;
+use App\Repositories\FifaDeeplinkRepository;
 use App\Repositories\MyblManageItemRepository;
+use App\Services\CommerceBillCategoryService;
+use App\Services\CommerceBillUtilityService;
 use App\Repositories\UtilityBillRepository;
 use App\Services\DynamicDeeplinkService;
 use App\Services\FeedCategoryService;
@@ -38,8 +40,10 @@ class DynamicDeeplinkController extends Controller
     protected const FEED = 'feed';
     protected const INTERNET_PACK = 'internet_pack';
     protected const MyBlCampaignSection = 'mybl_campaign';
-    protected const Fifa = 'fifa';
     protected const Content = 'content';
+    protected const CommerceBillCategory = 'bill_category';
+    protected const CommerceBillUtility = 'bill_utility';
+    protected const Fifa = 'fifa';
     protected const OTHER = 'others';
     /**
      * @var MyBlInternetOffersCategoryService
@@ -64,7 +68,7 @@ class DynamicDeeplinkController extends Controller
     /**
      * @var MyBlCampaignSectionService
      */
-    private $myBlCampaignSectionService, $contentDeeplinkRepository;
+    private $myBlCampaignSectionService, $commerceBillCategoryService, $commerceBillUtilityService, $contentDeeplinkRepository;
     /**
      * DynamicDeeplinkService constructor.
      * @param DynamicDeeplinkService $dynamicDeeplinkService
@@ -79,6 +83,8 @@ class DynamicDeeplinkController extends Controller
         MyblAppMenuService $appMenuService,
         MyblManageItemRepository $manageItemRepository,
         MyBlCampaignSectionService $myBlCampaignSectionService,
+        CommerceBillCategoryService $commerceBillCategoryService,
+        CommerceBillUtilityService $commerceBillUtilityService,
         ContentDeeplinkRepository $contentDeeplinkRepository,
         FifaDeeplinkRepository $fifaDeeplinkRepository,
         UtilityBillRepository $utilityBillRepository
@@ -90,6 +96,8 @@ class DynamicDeeplinkController extends Controller
         $this->appMenuService = $appMenuService;
         $this->manageItemRepository = $manageItemRepository;
         $this->myBlCampaignSectionService = $myBlCampaignSectionService;
+        $this->commerceBillCategoryService = $commerceBillCategoryService;
+        $this->commerceBillUtilityService = $commerceBillUtilityService;
         $this->fifaDeeplinkRepository = $fifaDeeplinkRepository;
         $this->contentDeeplinkRepository = $contentDeeplinkRepository;
         $this->utilityBillRepository = $utilityBillRepository;
@@ -155,18 +163,25 @@ class DynamicDeeplinkController extends Controller
         return $this->dynamicDeeplinkService->generateDeeplink(self::OTHER, $manage, $request);
     }
 
-    public  function  myblCampaignSectionDeepLinkCreate(Request $request)
+    public  function myblCampaignSectionDeepLinkCreate(Request $request)
     {
         $section = $this->myBlCampaignSectionService->findOne($request->id);
 
         return $this->dynamicDeeplinkService->generateDeeplink(self::MyBlCampaignSection, $section, $request);
     }
 
-    public function fifaDeepLinkCreate(Request  $request)
+    public  function commerceBillCategoryDeepLinkCreate(Request $request)
     {
-        $fifaDeeplink = $this->fifaDeeplinkRepository->findOne($request->id);
+        $billCategory = $this->commerceBillCategoryService->findOne($request->id);
 
-        return $this->dynamicDeeplinkService->generateDeeplink(self::Fifa, $fifaDeeplink, $request);
+        return $this->dynamicDeeplinkService->generateDeeplink(self::CommerceBillCategory, $billCategory, $request);
+    }
+
+    public  function commerceBillUtilityDeepLinkCreate(Request $request)
+    {
+        $billUtility = $this->commerceBillUtilityService->findOne($request->id);
+
+        return $this->dynamicDeeplinkService->generateDeeplink(self::CommerceBillUtility, $billUtility, $request);
     }
 
     public function contentDeepLinkCreate(Request  $request)
@@ -180,10 +195,18 @@ class DynamicDeeplinkController extends Controller
             $sectionType = 'care';
         } else if($contentData->category_name == 'content' && $contentData->slug == 'content'){
             $sectionType = 'all';
+        } else if($contentData->category_name == 'ott'){
+            $sectionType = 'ott';
         } else if($contentData->category_name == 'connect'){
             $sectionType = 'connect';
         }
-
         return $this->dynamicDeeplinkService->generateDeeplink($sectionType, $contentData, $request);
+    }
+
+    public function fifaDeepLinkCreate(Request  $request)
+    {
+        $fifaDeeplink = $this->fifaDeeplinkRepository->findOne($request->id);
+
+        return $this->dynamicDeeplinkService->generateDeeplink(self::Fifa, $fifaDeeplink, $request);
     }
 }

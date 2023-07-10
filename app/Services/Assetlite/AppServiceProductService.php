@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AlReferralInfoRepository;
 use App\Repositories\AppServiceProductRepository;
 use App\Traits\CrudTrait;
@@ -66,16 +67,57 @@ class AppServiceProductService
         if (request()->hasFile('product_img_url')) {
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
         }
+
+        if (request()->hasFile('icon_img_url')) {
+            $data['icon_img_url'] = $this->upload($data['icon_img_url'], 'assetlite/images/app-service/product/icon');
+        }
+
+        if (request()->hasFile('details_image_url')) {
+            $data['details_image_url'] = $this->upload($data['details_image_url'], 'assetlite/images/app-service/product');
+        }
+
         $data['created_by'] = Auth::id();
+        $data['is_images'] = isset($data['is_images']) ? 1 : 0;
+        $data['show_in_details_page'] = isset($data['show_in_details_page']) ? 1 : 0;
+
         unset($data['referral']);
+
         $app = $this->save($data);
+        $this->_saveSearchData($app);
 
         // Referral Info Store
         if ($referralInfo) {
+            if (isset($referralInfo['referral_image'])) {
+                $referralInfo['referral_image'] = $this->upload($referralInfo['referral_image'], 'assetlite/images/app-service/product');
+            }
             $referralInfo['app_id'] = $app->id;
             $this->alReferralInfoRepository->save($referralInfo);
         }
         return new Response('App Service Category added successfully');
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        // URL make
+        $urlEn = $feature['app_service_en'] . "/" . $product->appServiceTab->url_slug . '/' . $product->url_slug;
+        $urlBn = $feature['app_service_bn'] . "/" . $product->appServiceTab->url_slug_bn . '/' . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => null,
+            'type' => 'app-and-service',
+            'page_title_en' => $product->name_en,
+            'page_title_bn' => $product->name_bn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $product->status,
+        ];
+
+        if ($product->searchableFeature()->first()) {
+            $product->searchableFeature()->update($saveSearchData);
+        } else {
+            $product->searchableFeature()->create($saveSearchData);
+        }
     }
 
     /**
@@ -91,6 +133,18 @@ class AppServiceProductService
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
             $this->deleteFile($appServiceProduct->product_img_url);
         }
+
+        if (request()->hasFile('icon_img_url')) {
+            $data['icon_img_url'] = $this->upload($data['icon_img_url'], 'assetlite/images/app-service/product/icon');
+            $this->deleteFile($appServiceProduct->icon_img_url);
+        }
+
+        if (request()->hasFile('details_image_url')) {
+            $data['details_image_url'] = $this->upload($data['details_image_url'], 'assetlite/images/app-service/product');
+            $this->deleteFile($appServiceProduct->details_image_url);
+        }
+        $data['show_in_details_page'] = isset($data['show_in_details_page']) ? 1 : 0;
+        $data['is_images'] = isset($data['is_images']) ? 1 : 0;
         $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
         $data['show_in_vas'] = (isset($data['show_in_vas']) ? 1 : 0);
         $data['show_ussd'] = (isset($data['show_ussd']) ? 1 : 0);
@@ -99,8 +153,15 @@ class AppServiceProductService
         unset($data['referral']);
         $appServiceProduct->update($data);
 
+        $this->_saveSearchData($appServiceProduct);
+
         if ($referralData) {
             $referralInfo = $this->alReferralInfoRepository->findOneByProperties(['app_id' => $id]);
+
+            if (isset($referralData['referral_image'])) {
+                $referralData['referral_image'] = $this->upload($referralData['referral_image'], 'assetlite/images/app-service/product');
+            }
+
             if ($referralInfo) {
                 $referralInfo->update($referralData);
             } else {
@@ -122,6 +183,7 @@ class AppServiceProductService
         $appServiceProduct = $this->findOne($id);
         $this->deleteFile($appServiceProduct->product_img_url);
         $appServiceProduct->delete();
+        $appServiceProduct->searchableFeature()->delete();
         return Response('App Service Product deleted successfully !');
     }
 
@@ -133,5 +195,16 @@ class AppServiceProductService
     public function detailsProduct($id)
     {
         return $this->appServiceProductRepository->findOne(['id' => $id]);
+    }
+
+    public function syncSearchData()
+    {
+        $allProducts = $this->findAll();
+        foreach ($allProducts as $product) {
+            if ($product->status) {
+                $this->_saveSearchData($product);
+            }
+        }
+        return Response('App service product search data sync successfully !');
     }
 }

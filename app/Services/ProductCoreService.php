@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use App\Models\ProductDeepLink;
 
 /**
  * Class ProductCoreService
@@ -288,6 +289,9 @@ class ProductCoreService
                                     if ($data_volume == '') {
                                         $data_volume = 0;
                                     }
+                                    elseif (strtolower($data_volume) == 'unlimited' || $data_volume == -1) {
+                                        $data_volume = -1;
+                                    }
                                     $core_data [$field] = $data_volume;
                                     break;
                                 case "sms_volume":
@@ -295,6 +299,9 @@ class ProductCoreService
                                     $volume = $cells [$index]->getValue();
                                     if ($volume == '') {
                                         $volume = 0;
+                                    }
+                                    elseif (strtolower($volume) == 'unlimited' || $volume == -1) {
+                                        $volume = -1;
                                     }
                                     $core_data [$field] = $volume;
                                     break;
@@ -321,6 +328,7 @@ class ProductCoreService
 
                                         if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
+
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
                                                 ->get()
@@ -361,6 +369,7 @@ class ProductCoreService
 
                         try {
                             $product_code = $core_data['product_code'];
+
                             $core_product = ProductCore::where('product_code', $product_code)->first();
 
                             if ($core_product) {
@@ -404,7 +413,8 @@ class ProductCoreService
                                     }
                                 }
 
-                                $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
+                                $productTagIds = ProductTag::whereIn('title', $tags)->pluck('id')->toArray();
+                                $this->syncProductTags($product_code, Arr::flatten($productTagIds));
                             }
 
                         } catch (Exception $e) {
@@ -503,17 +513,17 @@ class ProductCoreService
             $response['data'][] = [
                 'product_code' => $item->product_code,
                 'pin_to_top' => $item->pin_to_top,
-                'renew_product_code' => $item->details->renew_product_code,
-                'recharge_product_code' => $item->details->recharge_product_code,
-                'connection_type' => $item->details->sim_type,
-                'name' => $item->details->name,
-                'description' => $item->details->short_description,
-                'content_type' => ucfirst($item->details->content_type),
-                'family_name' => ucfirst($item->details->family_name),
+                'renew_product_code' => optional($item->details)->renew_product_code ?? "",
+                'recharge_product_code' => optional($item->details)->recharge_product_code ?? "",
+                'connection_type' => optional($item->details)->sim_type ?? "",
+                'name' => optional($item->details)->name ?? "",
+                'description' => optional($item->details)->short_description ?? "",
+                'content_type' => ucfirst(optional($item->details)->content_type ?? ""),
+                'family_name' => ucfirst(optional($item->details)->family_name ?? ""),
                 'offer_section' => ucfirst($item->offer_section_title),
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
-                'status' => $item->details->status,
+                'status' => optional($item->details)->status ?? "",
                 'is_visible' => $item->is_visible ? $activeSchedule : 'Hidden',
                 'show_from' => $item->show_from ? Carbon::parse($item->show_from)->format('d-m-Y h:i A') : '',
                 'hide_from' => $item->hide_from ? Carbon::parse($item->hide_from)->format('d-m-Y h:i A') : '',
@@ -892,8 +902,11 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
+        $data['tag_bgd_color'] = isset($firstTag) ? $firstTag->tag_bgd_color : null;
+        $data['tag_text_color'] = isset($firstTag) ? $firstTag->tag_text_color : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['is_favorite'] = isset($request->is_favorite) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
@@ -910,6 +923,7 @@ class ProductCoreService
         $coreData['is_display_title_en_schedule'] = isset($request->is_display_title_en_schedule) ? true : false;
         $coreData['is_display_title_bn_schedule'] = isset($request->is_display_title_bn_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
         $productSchedule = [];
         $isProductSchedule = false;
 
@@ -1007,7 +1021,10 @@ class ProductCoreService
             DB::beginTransaction();
 
             $model = MyBlProduct::where('product_code', $product_code);
-
+            $data['pin_to_top_sequence'] = 100000;
+            if ($data['pin_to_top']) {
+                $data['pin_to_top_sequence'] = count(MyBlProduct::where('pin_to_top', true)->get()) + 1;
+            }
             $model->update($data);
 
             $coreProduct = ProductCore::where('product_code', $product_code)->update($coreData);
@@ -1139,8 +1156,11 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
+        $data['tag_bgd_color'] = isset($firstTag) ? $firstTag->tag_bgd_color : null;
+        $data['tag_text_color'] = isset($firstTag) ? $firstTag->tag_text_color : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['is_favorite'] = isset($request->is_favorite) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
         $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
@@ -1153,6 +1173,8 @@ class ProductCoreService
         $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
         $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
+
 
         $productSchedule = [];
         $isProductSchedule = false;
@@ -1429,6 +1451,38 @@ class ProductCoreService
             return [
                 'status' => "failed",
                 'massage' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function findAllPinToTopProducts()
+    {
+        $orderBy = ['column' => 'pin_to_top_sequence', 'direction' => 'ASC'];
+        return $this->myBlProductRepository->findBy(['pin_to_top' => true], null, $orderBy);
+    }
+
+    public function tableSort($request)
+    {
+        try {
+            $positions = $request->position;
+
+            foreach ($positions as $position) {
+                $menu_id = $position[0];
+                $new_position = $position[1];
+                $update_menu = $this->myBlProductRepository->findOne($menu_id);
+                $update_menu['pin_to_top_sequence'] = $new_position;
+                $update_menu->update();
+            }
+
+            return [
+                'status' => "success",
+                'massage' => "Order Changed successfully"
+            ];
+        } catch (\Exception $exception) {
+            $error = $exception->getMessage();
+            return [
+                'status' => "error",
+                'massage' => $error
             ];
         }
     }

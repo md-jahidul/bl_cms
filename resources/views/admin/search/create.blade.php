@@ -6,29 +6,34 @@
 @endsection
 @section('content')
 <section>
-
     <div class="card">
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
-
-                <form method="POST" action="{{ route('popular.search.save')}}" class="form" enctype="multipart/form-data">
-                    <div class="row">
-
-                        <div class="col-md-6 col-xs-12">
-
-                            @csrf
-
-                            <div class="form-group">
-
-                                <label>Keyword<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="keyword" placeholder="Popular Keyword">
-
+                <div class="card-body card-dashboard">
+                    <form method="POST" action="{{ route('popular.search.save')}}"
+                          class="form" enctype="multipart/form-data" novalidate>
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label>Keyword (English)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required
+                                           name="keyword" placeholder="Popular Keyword in English">
+                                </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label>Keyword (Bangla)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="keyword_bn"
+                                           placeholder="Popular Keyword in Bangla">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 col-xs-12">
                                 <label>Type<span class="text-danger">*</span></label>
-                                <select name="type" required name="type" class="form-control keyword_type">
-                                    <option value="">Select Type</option>
+                                <select name="type" required class="form-control keyword_type">
+                                    <option value="">--Select Type--</option>
                                     <option value="prepaid-internet">Prepaid Internet</option>
                                     <option value="prepaid-voice">Prepaid Voice</option>
                                     <option value="prepaid-bundle">Prepaid Bundle</option>
@@ -36,36 +41,28 @@
                                 </select>
                             </div>
 
-                        </div>
-
-                        <div class="col-md-6 col-xs-12">
-                            <div class="form-group">
-
-                                <label>Product<span class="text-danger">*</span></label>
-                                <select required name="product" class="form-control product_list">
-
-                                </select>
-
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label>Product<span class="text-danger">*</span></label>
+                                    <select required name="product" class="form-control product_list">
+                                    </select>
+                                </div>
                             </div>
 
-                            
+                            <div class="form-actions col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary"><i
+                                            class="la la-check-square-o"></i> Save
+                                    </button>
 
-                            <div class="form-group text-right">
-                                <button class="btn btn-sm btn-info news_submit" type="submit">Save Package</button>
+                                </div>
                             </div>
-
                         </div>
-
-                    </div>
                 </form>
-
-
-
+                </div>
             </div>
         </div>
     </div>
-
-
 </section>
 
 @stop

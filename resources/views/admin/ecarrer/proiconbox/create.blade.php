@@ -24,6 +24,15 @@
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Please enter Section name">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
                                     <label for="slug" class="required">Slug</label>
@@ -48,10 +57,10 @@
                                 <div class="form-group col-md-6">
                                     <label for="category_type">Select Programs category</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="sap">Strategic Assistant Program</option>
-                                            <option value="ennovators">Ennovators</option>
-                                            <option value="aip">Advanced Internship Program</option>
-                                        </select>
+                                        @foreach ($program_lists as $program)
+                                            <option value="{{$program->slug}}">{{$program->title_en}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="col-md-6">
@@ -66,7 +75,7 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
+                                @include('admin.ecarrer-items.additional.description')
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -93,7 +102,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    
+
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
@@ -108,7 +117,7 @@
                 // console.log(sectionNameRemoveSpace);
             });
 
-            
+
 
         });
     </script>

@@ -20,30 +20,22 @@ class EthicsRepository extends BaseRepository {
 
 
     public function updatePageInfo($webPath, $mobilePath, $request) {
-        try {
-
             $page = $this->model->findOrFail($request->page_id);
-
             $page->page_name_en = $request->page_name_en;
             $page->page_name_bn = $request->page_name_bn;
+            $page->banner_desc_en = $request->banner_desc_en;
+            $page->banner_desc_bn = $request->banner_desc_bn;
             $page->banner_web = $webPath;
             $page->banner_mobile = $mobilePath;
+            $page->banner_name = $request->banner_name;
+            $page->banner_name_bn = $request->banner_name_bn;
             $page->alt_text = $request->alt_text;
+            $page->alt_text_bn = $request->alt_text_bn;
             $page->page_header = $request->page_header;
             $page->page_header_bn = $request->page_header_bn;
             $page->schema_markup = $request->schema_markup;
             $page->save();
-
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
+            return $page;
     }
 
 
