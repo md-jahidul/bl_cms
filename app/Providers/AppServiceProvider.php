@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->environment('production')) {
-            URL::forceScheme('https');
         }
+        URL::forceScheme('https');
 
         $mainPath = database_path('migrations');
         $directories = glob($mainPath . '/*', GLOB_ONLYDIR);
