@@ -140,7 +140,13 @@ return [
     */
 
     'redis' => [
-        'cluster' => true,
+        'client' => env('REDIS_CLIENT', 'predis'),
+        'options' => [
+            'cluster' => env('REDIS_CLUSTER', 'predis'),
+            'prefix' => Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_',
+            'replication' => true
+        ],
+//        'cluster' => true,
         'clusters' => [
             'default' => [
                 [
@@ -176,8 +182,6 @@ return [
                 // Add more nodes if required
             ],
         ],
-
-//        'client' => env('REDIS_CLIENT', 'predis'),
 //
 //        'options' => [
 //            'cluster' => env('REDIS_CLUSTER', 'predis'),
