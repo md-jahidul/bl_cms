@@ -148,37 +148,39 @@ return [
         ],
 //        'cluster' => true,
         'clusters' => [
-            [
-                'host' => '172.16.191.50',
-                'port' => 6389,
-                'password' => null,
+            'default' => [
+                [
+                    'host' => '172.16.191.50',
+                    'port' => 6389,
+                    'password' => null,
+                ]
+//                [
+//                    'host' => '172.16.254.18',
+//                    'port' => 6389,
+//                    'password' => null,
+//                ],
+//                [
+//                    'host' => '172.16.254.138',
+//                    'port' => 6389,
+//                    'password' => null,
+//                ],
+//                [
+//                    'host' => '172.16.11.243',
+//                    'port' => 6389,
+//                    'password' => null,
+//                ],
+//                [
+//                    'host' => '172.16.8.160',
+//                    'port' => 6389,
+//                    'password' => null,
+//                ],
+//                [
+//                    'host' => '172.16.191.51',
+//                    'port' => 6389,
+//                    'password' => null,
+//                ],
+                // Add more nodes if required
             ],
-            [
-                'host' => '172.16.254.18',
-                'port' => 6389,
-                'password' => null,
-            ],
-            [
-                'host' => '172.16.254.138',
-                'port' => 6389,
-                'password' => null,
-            ],
-            [
-                'host' => '172.16.11.243',
-                'port' => 6389,
-                'password' => null,
-            ],
-            [
-                'host' => '172.16.8.160',
-                'port' => 6389,
-                'password' => null,
-            ],
-            [
-                'host' => '172.16.191.51',
-                'port' => 6389,
-                'password' => null,
-            ],
-            // Add more nodes if required
         ],
 //
 //        'options' => [
