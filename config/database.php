@@ -142,45 +142,43 @@ return [
     'redis' => [
         'client' => env('REDIS_CLIENT', 'predis'),
         'options' => [
-            'cluster' => env('REDIS_CLUSTER', 'predis'),
+            'cluster' => env('REDIS_CLUSTER', 'redis'),
             'prefix' => Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_',
             'replication' => true
         ],
 //        'cluster' => true,
         'clusters' => [
-            'default' => [
-                [
-                    'host' => '172.16.191.50',
-                    'port' => 6389,
-                    'password' => null,
-                ],
-                [
-                    'host' => '172.16.254.18',
-                    'port' => 6389,
-                    'password' => null,
-                ],
-                [
-                    'host' => '172.16.254.138',
-                    'port' => 6389,
-                    'password' => null,
-                ],
-                [
-                    'host' => '172.16.11.243',
-                    'port' => 6389,
-                    'password' => null,
-                ],
-                [
-                    'host' => '172.16.8.160',
-                    'port' => 6389,
-                    'password' => null,
-                ],
-                [
-                    'host' => '172.16.191.51',
-                    'port' => 6389,
-                    'password' => null,
-                ],
-                // Add more nodes if required
+            [
+                'host' => '172.16.191.50',
+                'port' => 6389,
+                'password' => null,
             ],
+            [
+                'host' => '172.16.254.18',
+                'port' => 6389,
+                'password' => null,
+            ],
+            [
+                'host' => '172.16.254.138',
+                'port' => 6389,
+                'password' => null,
+            ],
+            [
+                'host' => '172.16.11.243',
+                'port' => 6389,
+                'password' => null,
+            ],
+            [
+                'host' => '172.16.8.160',
+                'port' => 6389,
+                'password' => null,
+            ],
+            [
+                'host' => '172.16.191.51',
+                'port' => 6389,
+                'password' => null,
+            ],
+            // Add more nodes if required
         ],
 //
 //        'options' => [
