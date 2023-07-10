@@ -576,7 +576,7 @@
             });
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
-                maximumSelectionLength: 3
+                maximumSelectionLength: 1
             });
         });
 
