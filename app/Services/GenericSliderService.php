@@ -33,6 +33,7 @@ class GenericSliderService
     protected $commerceComponentRepository;
     protected $commerceComponentService;
     protected $nonBlOfferService;
+    protected $nonBLComponentService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
@@ -42,7 +43,8 @@ class GenericSliderService
         SliderRepository $sliderRepository,
         MyBlCommerceComponentRepository $commerceComponentRepository,
         MyBlCommerceComponentService  $commerceComponentService,
-        NonBlOfferService $nonBlOfferService
+        NonBlOfferService $nonBlOfferService,
+        NonBlComponentService $nonBlComponentService
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
@@ -53,6 +55,7 @@ class GenericSliderService
         $this->commerceComponentRepository = $commerceComponentRepository;
         $this->commerceComponentService = $commerceComponentService;
         $this->nonBlOfferService = $nonBlOfferService;
+        $this->nonBLComponentService = $nonBlComponentService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -242,11 +245,11 @@ class GenericSliderService
             }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->nonBlComponentRepository->delete($nonBlComponent);
+                $this->nonBLComponentService->deleteComponent($nonBlComponent);
             }
             else if ($componentFor == 'non_bl_offer') {
                 $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->nonBlOfferService->delete($nonBlOffer);
+                $this->nonBlOfferService->deleteComponent($nonBlOffer);
             }
 
             $slider->delete();
