@@ -269,11 +269,11 @@ class GenericSliderService
             }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->nonBLComponentService->deleteComponent($nonBlComponent);
+                $this->nonBLComponentService->deleteComponent($nonBlComponent->id);
             }
             else if ($componentFor == 'non_bl_offer') {
                 $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->nonBlOfferService->deleteComponent($nonBlOffer);
+                $this->nonBlOfferService->deleteComponent($nonBlOffer->id);
             }
 
             else if ($componentFor == 'lms') {
