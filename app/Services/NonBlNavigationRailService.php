@@ -13,7 +13,7 @@ class NonBlNavigationRailService
     use CrudTrait;
     private $nonblNavigationRailRepository;
 
-    protected const REDIS_KEY = "nonbl_content_navigation_rail";
+    protected const REDIS_KEY = "non_bl_component";
 
     public function __construct(NonBlNavigationRailRepository $nonblNavigationRailRepository)
     {
