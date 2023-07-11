@@ -66,4 +66,14 @@ class NonBlOfferService
             ];
         }
     }
+
+    public function deleteComponent($id)
+    {
+        $component = $this->findOne($id);
+        $component->delete();
+        Redis::del('non_bl_offer');
+        return [
+            'message' => 'Component delete successfully',
+        ];
+    }
 }

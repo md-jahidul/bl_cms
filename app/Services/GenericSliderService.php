@@ -33,6 +33,7 @@ class GenericSliderService
     protected $commerceComponentRepository;
     protected $commerceComponentService;
     protected $nonBlOfferService;
+    protected $nonBLComponentService;
 
     protected $lmsHomeComponentService;
     public function __construct(
@@ -45,8 +46,8 @@ class GenericSliderService
         MyBlCommerceComponentRepository $commerceComponentRepository,
         MyBlCommerceComponentService  $commerceComponentService,
         NonBlOfferService $nonBlOfferService,
-        LmsHomeComponentService $lmsHomeComponentService
-
+        LmsHomeComponentService $lmsHomeComponentService,
+        NonBlComponentService $nonBlComponentService
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
@@ -58,6 +59,7 @@ class GenericSliderService
         $this->commerceComponentService = $commerceComponentService;
         $this->nonBlOfferService = $nonBlOfferService;
         $this->lmsHomeComponentService = $lmsHomeComponentService;
+        $this->nonBLComponentService = $nonBlComponentService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -267,11 +269,11 @@ class GenericSliderService
             }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->nonBlComponentRepository->delete($nonBlComponent);
+                $this->nonBLComponentService->deleteComponent($nonBlComponent);
             }
             else if ($componentFor == 'non_bl_offer') {
                 $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->nonBlOfferService->delete($nonBlOffer);
+                $this->nonBlOfferService->deleteComponent($nonBlOffer);
             }
 
             else if ($componentFor == 'lms') {
