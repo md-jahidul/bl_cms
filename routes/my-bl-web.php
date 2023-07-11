@@ -1320,6 +1320,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
     Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
 
+    Route::resource('nonbl-navigation-rail', 'CMS\NonBlNavigationRailController');
+    Route::get('nonbl-navigation-rail-sortable', 'CMS\NonBlNavigationRailController@navigationMenuSortable')
+        ->name('nonbl-navigation-rail.sort');
+    Route::get('nonbl-navigation-rail/destroy/{id}', 'CMS\NonBlNavigationRailController@destroy')
+        ->name('nonbl-navigation-rail.destroy');
+
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
     Route::get('payment-gateways/destroy/{id}', 'CMS\PaymentGatewayController@destroy')->name('payment-gateways.destroy');
