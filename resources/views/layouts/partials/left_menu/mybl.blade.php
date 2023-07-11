@@ -413,6 +413,12 @@
             <li class="{{ is_active_match('non-bl-offers')}}">
                 <a class="menu-item" href="{{ url('non-bl-offers') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Offer</a>
             </li>
+
+            <li class=" {{is_active_url(route('nonbl-navigation-rail.index'))}}">
+                <a class="menu-item" href="{{ route('nonbl-navigation-rail.index') }}">
+                    <i class="la la-paper-plane"></i>NonBl Navigation Rail
+                </a>
+            </li>
         </ul>
     </li>
 
