@@ -412,7 +412,7 @@ class ProductCoreService
                                 }                              
 
                                 #Take the first Element from the tags array
-                                $this->syncProductTags($product_code, array_slice(Arr::flatten($existingTagIds),0,1));
+                                $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
                             }
 
                         } catch (Exception $e) {
