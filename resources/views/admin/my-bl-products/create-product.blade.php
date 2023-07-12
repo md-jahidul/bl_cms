@@ -558,6 +558,7 @@
 
             $('select[name="special_type"]').select2({
                 placeholder: 'Please Select Special Type',
+                allowClear: true
             });
             // alert(true)
 
