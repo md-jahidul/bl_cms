@@ -24,6 +24,30 @@
                             @method('PUT')
                             <div class="form-body">
                                 <div class="offset-2">
+                                    <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
+                                        <label for="title" class="required">Choose User Type</label><hr class="mt-0">
+                                        <div class="row skin skin-square">
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="type" value="all" id="all"
+                                                    {{ $menu->type == "all" ? 'checked' : '' }}>
+                                                <label for="all">All</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="type" value="prepaid" id="prepaid"
+                                                    {{ $menu->type == "prepaid" ? 'checked' : '' }}>
+                                                <label for="prepaid">Prepaid</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="type" value="postpaid" id="postpaid"
+                                                {{ $menu->type == "postpaid" ? 'checked' : '' }}>
+                                                <label for="postpaid">Postpaid</label>
+                                            </div>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('type'))
+                                            <div class="help-block">  {{ $errors->first('type') }}</div>
+                                        @endif
+                                    </div>
                                     <div class="form-group col-md-10 {{ $errors->has('title_en') ? ' error' : '' }}">
                                         <label for="title" class="required">English Label</label>
                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter english label"
