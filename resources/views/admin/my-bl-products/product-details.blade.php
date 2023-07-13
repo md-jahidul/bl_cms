@@ -303,7 +303,8 @@
                                       $details->details->content_type == 'gift' ||
                                       $details->details->content_type == 'voice' ||
                                       $details->details->content_type == 'volume transfer' ||
-                                      $details->details->content_type == 'roam'
+                                      $details->details->content_type == 'roam' ||
+                                      $details->details->content_type == 'scr'
                                     )
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
@@ -355,7 +356,7 @@
                                                     value="{{ $key }}" {{ $details->special_type == $key ? 'selected' : '' }}>  {{$specialType}}
                                                 </option>
                                             @endforeach
-                                            
+
                                         </select>
                                     </div>
                                 </div>
