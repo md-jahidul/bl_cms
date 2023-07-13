@@ -213,7 +213,7 @@
                                                            data-validation-required-message="Image is required"
                                                            onchange="createImageBitmap(this.files[0]).then((bmp) => {
 
-                                                    if (`{{$size}}` == -1 || (bmp.width/bmp.height).toFixed(2) == `{{round($size, 2)}}`){
+                                                    if (`{{$size}}` == -1 || (bmp.width/bmp.height).toFixed(2) == {{number_format($size, 2, '.', '')}}){
                                                         document.getElementById('submitForm').disabled = false;
                                                         document.getElementById('massage').innerHTML = '';
                                                         this.style.border = 'none';

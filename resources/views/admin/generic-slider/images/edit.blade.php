@@ -640,7 +640,7 @@
         }
 
         let checkImageRatio = function ($this) {
-            let size = `{{round($size, 2)}}`;
+            let size = `{{number_format($size, 2, '.', '')}}`;
             let width = `{{$width}}`;
             let height = `{{$height}}`;
             createImageBitmap($this.files[0]).then((bmp) => {
