@@ -75,10 +75,33 @@
                                     <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
                                         <label for="icon" class="required">Icon</label>
                                         <div class="custom-file">
-                                            <input type="file" name="icon" class="custom-file-input dropify"
+                                            <input 
+                                                accept="image/*"
+                                                onchange="createImageBitmap(this.files[0]).then((bmp) => {
+
+                                                    if(bmp.width/bmp.height == 1/1){
+                                                        console.log('yes')
+                                                        document.getElementById('submitForm').disabled = false;
+                                                        document.getElementById('massage').innerHTML = '';
+                                                        this.style.border = 'none';
+                                                        // this.nextElementSibling.innerHTML = '';
+                                                    }else{
+                                                        console.log('no')
+                                                        this.style.border = '1px solid red';
+                                                        document.getElementById('massage').innerHTML = '<b>Image aspect ratio must be 1:1(change the picture to enable button)</b>';
+                                                        document.getElementById('massage').classList.add('text-danger');
+                                                        document.getElementById('submitForm').disabled = true;
+                                                    }
+                                                })"
+                                                type="file" name="icon" class="custom-file-input dropify"
                                                     required data-validation-required-message="Icon field is required" data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
                                         </div>
+                                        <div class="help-block">
+                                            <small class="text-info"> Image aspect ratio should be in
+                                                1:1 </small><br>
+                                        </div>
                                         <div class="help-block"></div>
+                                        <small id="massage"></small>
                                         @if ($errors->has('icon'))
                                             <div class="help-block">
                                                 <small class="text-danger"> {{ $errors->first('icon') }} </small>
