@@ -125,7 +125,7 @@ class TriviaGamificationService
                     "show_answer_btn_bn" => $item->show_answer_btn_bn,
                     "type" => $item->type,
                     "rule_name" => $item->rule_name,
-                    "content_for" => ($item->content_for == 'home') ? 'Home' : 'Non Bl',
+                    "content_for" => $item->content_for,
                     "status" => ($item->status == '1') ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>InActive</span>",
                 ];
             });
