@@ -17,7 +17,12 @@ class CreateBlLabUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('provider')->nullable();
+            $table->integer('provider_id')->nullable();
+            $table->string('provider_token')->nullable();
             $table->string('password')->nullable();
+            $table->string('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
