@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Services\FreeProductDisburseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class MyBlFreeProductDisburseController extends Controller
 {
-    public function __construct()
+    public $freeProductDisburseService;
+    public function __construct(FreeProductDisburseService $freeProductDisburseService)
     {
-
+        $this->freeProductDisburseService = $freeProductDisburseService;
     }
 
     public function freeProductDisburseUploadPanel()
@@ -20,26 +23,18 @@ class MyBlFreeProductDisburseController extends Controller
 
     public function uploadFreeProductDisburseExcel(Request $request)
     {
-        $validate = Validator::make(
-            $request->all(),
-            [
-                'free_product_disburse_file' => 'required|file|mimes:xlsx',
-            ]
-        );
-
-        if ($validate->fails()) {
-            $response = [
-                'success' => 'FAILED',
-                'errors' => $validate->errors()->first()
-            ];
-            return response()->json($response, 422);
-        }
-
         try {
-            $path = $request->file('free_product_disburse_file')->store(
-                'free_product_disburse_file/' . date('y-m-d'),
+            $file = $request->file('free_product_disburse_file');
+
+            $path = $file->storeAs(
+                'free_product_disburse/' . strtotime(now() . '/'),
+                "free_product_disburse" . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
+
+            $path = Storage::disk('public')->path($path);
+
+            $this->freeProductDisburseService->saveMsisdns($path);
 
             $response = [
                 'success' => 'SUCCESS'

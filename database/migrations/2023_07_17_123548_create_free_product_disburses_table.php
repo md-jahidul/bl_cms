@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMyBlFreeProductDisburseTable extends Migration
+class CreateFreeProductDisbursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateMyBlFreeProductDisburseTable extends Migration
      */
     public function up()
     {
-        Schema::create('my_bl_free_product_disburse', function (Blueprint $table) {
+        Schema::create('free_product_disburses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('file_id')->nullable();
             $table->string('msisdn')->nullable();
             $table->string('product_code')->nullable();
+            $table->boolean('is_disburse')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateMyBlFreeProductDisburseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('my_bl_free_product_disburse');
+        Schema::dropIfExists('free_product_disburses');
     }
 }
