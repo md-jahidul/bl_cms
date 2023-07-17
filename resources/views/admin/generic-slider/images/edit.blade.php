@@ -644,8 +644,7 @@
             let width = `{{$width}}`;
             let height = `{{$height}}`;
             createImageBitmap($this.files[0]).then((bmp) => {
-                console.log(size != -1 || (bmp.width / bmp.height).toFixed(2) == size);
-                if (size == -1 || (bmp.width / bmp.height).toFixed(2) == size) {
+                if (size == -1 || Number((bmp.width / bmp.height).toFixed(2)) == Number(size)) {
                     document.getElementById('submitForm').disabled = false;
                     document.getElementById('message').innerHTML = '';
                     document.getElementById('image_input_div').style.border = 'none';
