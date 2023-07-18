@@ -1125,6 +1125,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
     Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');
     Route::post('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@uploadFreeProductDisburseExcel')->name('free-product-disburse.save');
+    Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
+    Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
 
 
 

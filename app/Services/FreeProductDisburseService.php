@@ -14,6 +14,7 @@ use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
@@ -176,5 +177,50 @@ class FreeProductDisburseService
 
         return $header;
 
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getFreeProductDisburseData(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $builder = new FreeProductDisburse();
+
+        $builder = $builder->latest();
+
+        if ($request->from && $request->to) {
+            $datefrom = $request->from . ' 00:00:00';
+            $dateto = $request->to . ' 23:59:59';
+            $builder = $builder->whereBetween('created_at', [$datefrom, $dateto]);
+        }
+
+        $all_items_count = $builder->count();
+
+        if ($length == -1 ) $length = $all_items_count;
+
+        $items = $builder->skip($start)->take($length)->get();
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'file_id' => $item->file_id,
+                'msisdn' => $item->msisdn,
+                'product_code' => $item->product_code,
+                'is_disburse' => ($item->is_disburse)? 'Disbursed' : 'Not Disbursed',
+                'created_at' => date('Y-m-d H:i:s', strtotime($item->created_at)),
+            ];
+        });
+        return $response;
     }
 }
