@@ -18,7 +18,7 @@ class MyBlFreeProductDisburseController extends Controller
 
     public function freeProductDisburseUploadPanel()
     {
-        return view('admin.free-product-disburse');
+        return view('admin.free-product-disburse.free-product-disburse');
     }
 
     public function uploadFreeProductDisburseExcel(Request $request)
@@ -47,5 +47,19 @@ class MyBlFreeProductDisburseController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+
+    public function freeProductDisburseReportView()
+    {
+        return view('admin.free-product-disburse.disburse-report');
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function freeProductDisburseReport(Request $request)
+    {
+        return $this->freeProductDisburseService->getFreeProductDisburseData($request);
     }
 }
