@@ -259,7 +259,9 @@ class GenericSliderService
                 $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->nonBlOfferService->deleteComponent($nonBlOffer->id);
             }
-
+            elseif ($componentFor == 'toffee') {
+                Redis::del('toffee_banner');
+            }
             $slider->delete();
 
             return [
