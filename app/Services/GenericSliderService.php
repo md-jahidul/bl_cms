@@ -100,6 +100,10 @@ class GenericSliderService
                 Redis::del('non_bl_offer');
             }
 
+            elseif ($data['component_for'] == 'toffee') {
+                Redis::del('toffee_banner');
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -148,6 +152,10 @@ class GenericSliderService
                 $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $nonBlComponent->update($homeComponentData);
                 Redis::del('non_bl_offer');
+            }
+
+            elseif ($data['component_for'] == 'toffee') {
+                Redis::del('toffee_banner');
             }
 
             if (isset($data['icon']) && $data['icon'] != 'not-updated' && $data['icon'] != 'removed') {
