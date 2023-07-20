@@ -19,6 +19,7 @@ class CreateBlLabApplicationsTable extends Migration
             $table->string('id_number');
             $table->string('application_status')->nullable();
             $table->string('step_completed')->nullable();
+            $table->date('submitted_at')->nullable();
             $table->timestamps();
         });
     }
