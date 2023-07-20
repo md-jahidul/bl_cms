@@ -113,7 +113,7 @@ class MyblProductEntryController extends Controller
             ->pluck('title', 'id');
 
         $productSpecialTypes = $this->productSpecialTypeService
-            ->findAll(null, null, ['column' => 'display_order', 'direction' => 'asc'])
+            ->findBy(['status' => 1], null, ['column' => 'display_order', 'direction' => 'asc'])
             ->pluck('name_en', 'slug');
 
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
@@ -187,7 +187,7 @@ class MyblProductEntryController extends Controller
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
         $productSpecialTypes = $this->productSpecialTypeService
-            ->findAll(null, null, ['column' => 'display_order', 'direction' => 'asc'])
+            ->findBy(['status' => 1], null, ['column' => 'display_order', 'direction' => 'asc'])
             ->pluck('name_en', 'slug');
         $internet_categories = MyBlInternetOffersCategory::where('platform', 'mybl')->pluck('name', 'id')->sortBy('sort');
 
