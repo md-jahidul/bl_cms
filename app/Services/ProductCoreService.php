@@ -1465,7 +1465,7 @@ class ProductCoreService
     public function findAllPinToTopProducts()
     {
         $orderBy = ['column' => 'pin_to_top_sequence', 'direction' => 'ASC'];
-        return $this->myBlProductRepository->findBy(['pin_to_top' => true], null, $orderBy);
+        return $this->myBlProductRepository->findBy(['pin_to_top' => true, 'status' => true], null, $orderBy);
     }
 
     public function tableSort($request)
