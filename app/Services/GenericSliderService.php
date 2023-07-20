@@ -111,6 +111,10 @@ class GenericSliderService
                 Redis::del('lms_old_user_prepaid');
             }
 
+            elseif ($data['component_for'] == 'toffee') {
+                Redis::del('toffee_banner');
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -166,6 +170,10 @@ class GenericSliderService
                 Redis::del('lms_component_postpaid');
                 Redis::del('lms_old_user_postpaid');
                 Redis::del('lms_old_user_prepaid');
+            }
+
+            elseif ($data['component_for'] == 'toffee') {
+                Redis::del('toffee_banner');
             }
 
             if (isset($data['icon']) && $data['icon'] != 'not-updated' && $data['icon'] != 'removed') {
@@ -283,6 +291,9 @@ class GenericSliderService
                 Redis::del('lms_component_postpaid');
                 Redis::del('lms_old_user_postpaid');
                 Redis::del('lms_old_user_prepaid');
+            }
+            elseif ($componentFor == 'toffee') {
+                Redis::del('toffee_banner');
             }
             $slider->delete();
 

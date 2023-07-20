@@ -95,6 +95,7 @@ class GenericSliderImageService
             Redis::del('lms_component_postpaid');
             Redis::del('lms_old_user_postpaid');
             Redis::del('lms_old_user_prepaid');
+            Redis::del('toffee_banner');
             return true;
         } catch (\Exception $e) {
 
@@ -186,6 +187,8 @@ class GenericSliderImageService
             Redis::del('lms_component_postpaid');
             Redis::del('lms_old_user_postpaid');
             Redis::del('lms_old_user_prepaid');
+            Redis::del('toffee_banner');
+
             return true;
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
