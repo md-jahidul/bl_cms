@@ -4,6 +4,8 @@ namespace App\Services;
 
 
 use App\Enums\HttpStatusCode;
+use App\Exceptions\BLServiceException;
+use App\Exceptions\CurlRequestException;
 use App\Jobs\FreeProductDisburseJob;
 use App\Models\FreeProductDisburse;
 use App\Models\MasterLog;
@@ -97,86 +99,93 @@ class FreeProductDisburseService
     {
         $param = [ "MobileAppAndroid"] + $param;
 
-        return $this->postV2(self::PURCHASE_ENDPOINT, $param);
+        return $this->post(self::PURCHASE_ENDPOINT, $param);
     }
 
-    protected function postV2($url, $body = [], $headers = null, $skip_service_exception = false)
+    protected function post($url, $body = [], $headers = null, $skip_service_exception = false)
     {
-        return $this->makeMethodV2('post', $url, $body, $headers, $skip_service_exception);
+        return $this->makeMethod('post', $url, $body, $headers, $skip_service_exception);
     }
 
-    protected function makeMethodV2(
+    protected function makeMethod(
         $method,
         $url,
         $body = [],
         $headers = null,
         $skip_service_exception = false
     ) {
-
-        $headers = $headers ?: $this->makeHeaderV2();
-        $client = new Client(['base_uri' => $this->getHost()]);
-        $responseData = [];
-        $statusCode = 500;
-        try {
-
-            $response = $client->request(
-                strtoupper($method),
-                $url,
-                [
-                    'connect_timeout' => 5,
-                    'headers' => $headers,
-                    'json' => $body
-                ]
-            );
-
-
-        } catch (RequestException $e) {
-
-            Log::channel('apihub-error')->info('Request body : ' . json_encode($body));
-
-            if ($e->hasResponse() && ($e->getResponse()->getStatusCode() >= 400 || !$e->getResponse()->getBody())) {
-                $exception = (string)$e->getResponse()->getBody();
-                $exception = json_decode($exception);
-                if ($url == '/otp/one-time-passwords') {
-                    $message = ['status' => $exception->status, 'error' => $exception->error, 'message' => $exception->message, 'url' => $exception->path];
-                    Log::channel('apihub-error')->error('ApiHub  Exception1 (OTP):' .json_encode($message));
-                } else {
-                    // Log::channel('apihub-error')->error('ApiHUb  Exception1:' . $e->getResponse()->getBody(), $exception ? [$exception] : []);
-                    Log::channel('apihub-error')->error('ApiHUb  Exception1: ' . $e->getMessage(), $exception ? [$exception] : []);
-                }
-
+            //$start_time = microtime(true);
+    
+            $ch = curl_init();
+            $headers = $headers ?: $this->makeHeader();
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+            static::makeRequest($ch, $url, $body, $headers);
+            $result = curl_exec($ch);
+    
+            //$end_time = microtime(true);
+    
+            $curl_info = curl_getinfo($ch);
+    
+    
+            if ($result != '' && !$result) {
+                throw new CurlRequestException(curl_getinfo($ch));
             }
-            else {
-                Log::channel('apihub-error')->error('ApiHUb Exception2: ' . $e->getTraceAsString());
+            $httpCode = $curl_info['http_code'];
+    
+            if ($httpCode >= 500 && !$skip_service_exception) {
+                throw new BLServiceException($result);
             }
-
-            return ['response' => $e->getMessage(),'status_code' => $e->getResponse()->getStatusCode()];
-
-        }
-
-        $returned_data = [];
-        if ($response->getStatusCode() == 200) {
-            $body = $response->getBody();
-            $returned_data = json_decode($body, true);
-        }
-
-        return ['response' => json_encode($returned_data, true), 'status_code' => $response->getStatusCode()];
+    
+            /*        try {
+                        $this->logToApiPerformance([
+                            'url' => $curl_info['url'],
+                            'start_time' => $start_time,
+                            'end_time' => $end_time,
+                            'response_time' => $end_time - $start_time,
+                            'response' => $result
+                        ]);
+                    } catch (Exception $e) {
+                    }*/
+    
+        return ['response' => $result, 'status_code' => $httpCode];
     }
 
-    protected function makeHeaderV2()
+    /**
+     * Make CURL object for HTTP request verbs.
+     *
+     * @param  curl_init() $ch
+     * @param  string  $url
+     * @param  array  $body
+     * @param  array  $headers
+     * @return string
+     */
+    protected function makeRequest($ch, $url, $body, $headers)
+    {
+        $url = $this->getHost() . $url;
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
+    }
+
+    protected function makeHeader()
     {
         $client_token = Redis::get(self::IDP_TOKEN_REDIS_KEY);
         $customer_token = app('request')->bearerToken();
 
         $header = [
-            'Accept' => 'application/vnd.banglalink.apihub-v1.0+json',
-            'Content-Type' => 'application/vnd.banglalink.apihub-v1.0+json',
-            'client_authorization' => $client_token,
-            'customer_authorization' => $customer_token
+            'Accept: application/vnd.banglalink.apihub-v1.0+json',
+            'Content-Type: application/vnd.banglalink.apihub-v1.0+json',
+            'client_authorization:' . $client_token,
+            'customer_authorization:' . $customer_token
         ];
 
         return $header;
-
     }
 
     /**
