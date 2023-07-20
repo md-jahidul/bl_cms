@@ -15,7 +15,7 @@ class AddSpecialTypeColumnToMyBlProductsTable extends Migration
     {
         Schema::table('my_bl_products', function (Blueprint $table) {
             $table->string('special_type')->after('description')->nullable();
-            $table->string('tag_id')->after('tag')->nullable();
+            $table->integer('tag_id')->after('tag')->nullable();
         });
     }
 
