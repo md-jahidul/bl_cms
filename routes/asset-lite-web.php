@@ -1279,5 +1279,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {
         Route::resource('program', 'AssetLite\BlLab\BlLabProgramController')->except('show', 'destroy');
+        Route::get('program/destroy/{id}', 'AssetLite\BlLab\BlLabProgramController@destroy');
+
+        Route::resource('industry', 'AssetLite\BlLab\BlLabIndustryController')->except('show', 'destroy');
+        Route::get('industry/destroy/{id}', 'AssetLite\BlLab\BlLabIndustryController@destroy');
     });
 });

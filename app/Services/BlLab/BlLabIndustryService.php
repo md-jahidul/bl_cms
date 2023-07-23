@@ -9,6 +9,7 @@
 
 namespace App\Services\BlLab;
 
+use App\Repositories\BlLab\BlLabIndustryRepository;
 use App\Repositories\BlLab\BlLabProgramRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -16,24 +17,24 @@ use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class BlLabProgramService
+class BlLabIndustryService
 {
     use CrudTrait;
     use FileTrait;
 
     /**
-     * @var BlLabProgramRepository
+     * @var BlLabIndustryRepository
      */
-    private $applyingForRepository;
+    private $blLabIndustryRepository;
 
     /**
-     * BlLabProgramService constructor.
-     * @param BlLabProgramRepository $applyingForRepository
+     * BlLabIndustryService constructor.
+     * @param BlLabIndustryRepository $blLabIndustryRepository
      */
-    public function __construct(BlLabProgramRepository $applyingForRepository)
+    public function __construct(BlLabIndustryRepository $blLabIndustryRepository)
     {
-        $this->applyingForRepository = $applyingForRepository;
-        $this->setActionRepository($applyingForRepository);
+        $this->blLabIndustryRepository = $blLabIndustryRepository;
+        $this->setActionRepository($blLabIndustryRepository);
     }
 
     /**
@@ -42,13 +43,7 @@ class BlLabProgramService
      */
     public function store($data)
     {
-        if (request()->hasFile('icon')) {
-            $data['icon'] = $this->upload($data['icon'],'assetlite/images/bl-lab');
-        }
-
-        $data['display_order'] = $this->findAll()->count() + 1;
         $data['slug'] = str_replace(" ", "_", strtolower($data['name_en']));
-
         $this->save($data);
         return new Response('Added successfully');
     }
@@ -61,10 +56,6 @@ class BlLabProgramService
     public function update($data, $id)
     {
         $item = $this->findOne($id);
-        if (request()->hasFile('icon')) {
-            $data['icon'] = $this->upload($data['icon'],'assetlite/images/bl-lab');
-            $this->deleteFile($item->icon);
-        }
         $item->update($data);
         return Response('Updated successfully');
     }

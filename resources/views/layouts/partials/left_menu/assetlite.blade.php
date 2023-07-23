@@ -758,16 +758,16 @@
     <li class="nav-item"><a href="#"><i class="la la-flask"></i>
             <span class="menu-title" data-i18n="nav.templates.main">BL Lab</span></a>
         <ul class="menu-content">
-            <li class="{{ is_active_url('corporate-resp-section') }}">
+            <li class="{{ is_active_url('bl-labs/program') }}">
                 <a class="menu-item" href="{{ url('bl-labs/program') }}"
                    data-i18n="nav.templates.vert.classic_menu"><i
                         class="la la-list"></i>Program</a>
             </li>
-{{--            <li class="{{ is_active_url(route('cr-strategy-section.index')) }}">--}}
-{{--                <a class="menu-item" href="{{ route('cr-strategy-section.index') }}"--}}
-{{--                   data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                        class="la la-list"></i> CR Strategy</a>--}}
-{{--            </li>--}}
+            <li class="{{ is_active_url('bl-labs/industry') }}">
+                <a class="menu-item" href="{{ url('bl-labs/industry') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Industry</a>
+            </li>
         </ul>
     </li>
     {{--    @endif--}}

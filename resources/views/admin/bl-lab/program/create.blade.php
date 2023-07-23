@@ -15,36 +15,60 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url('bl-labs/program') }}" method="POST" novalidate enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Name (English)</label>
-                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter program name"
-                                           value="{{ old("name_en") ? old("name_en") : '' }}" required data-validation-required-message="Enter program name in english">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name_en'))
-                                        <div class="help-block">  {{ $errors->first('name_en') }}</div>
-                                    @endif
-                                </div>
+                            <div class="form-body">
+                                <div class="offset-2">
+                                    <div class="col-md-10 row">
+                                        <div class="form-group col-md-12 {{ $errors->has('name_en') ? ' error' : '' }}">
+                                            <label for="name_en" class="required">Name (English)</label>
+                                            <input type="text" name="name_en"  class="form-control" placeholder="Enter duration name in english"
+                                                   required data-validation-required-message="Enter duration name in english">
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('name_en'))
+                                                <div class="help-block">  {{ $errors->first('name_en') }}</div>
+                                            @endif
+                                        </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Icon</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="icon" class="custom-file-input dropify"
-                                               required data-validation-required-message="Icon field is required" data-height="70">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('icon'))
-                                        <div class="help-block">  {{ $errors->first('icon') }}</div>
-                                    @endif
-                                </div>
+                                        <div id="image" class="form-group col-md-12 {{ $errors->has('icon') ? ' error' : '' }}">
+                                            <label for="alt_text">Icon</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
+                                                       data-max-file-size="50K"
+                                                       data-allowed-file-extensions='["png", "jpg", "jpeg", "gif"]'>
+                                            </div>
+                                            <span class="text-primary">Please given file type (.png, .jpg, .jpeg, GIF) </span>|
+                                            <span class="text-danger"> Icon upload maximum 50KB</span>
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('icon'))
+                                                <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                                <label for="title" class="required mr-1">Is clickable:</label>
 
-                                <div class="form-actions col-md-12 ">
-                                    <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> SAVE
-                                        </button>
+                                                <input type="radio" name="is_clickable" value="1" id="input-radio-15" checked>
+                                                <label for="input-radio-15" class="mr-1">Yes</label>
+
+                                                <input type="radio" name="is_clickable" value="0" id="input-radio-16">
+                                                <label for="input-radio-16">No</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                                <label for="title" class="required mr-1">Status:</label>
+
+                                                <input type="radio" name="status" value="1" id="Active" checked>
+                                                <label for="Active" class="mr-1">Active</label>
+
+                                                <input type="radio" name="status" value="0" id="Inactive">
+                                                <label for="Inactive">Inactive</label>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="form-actions right">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="la la-check-square-o"></i> SAVE</button>
                                 </div>
                             </div>
                             @csrf

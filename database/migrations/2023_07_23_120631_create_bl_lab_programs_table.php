@@ -18,6 +18,8 @@ class CreateBlLabProgramsTable extends Migration
             $table->string('name_en')->nullable();
             $table->string('icon')->nullable();
             $table->string('slug')->nullable();
+            $table->boolean('is_clickable')->nullable();
+            $table->boolean('status')->nullable();
             $table->string('display_order')->default(0);
             $table->timestamps();
         });
