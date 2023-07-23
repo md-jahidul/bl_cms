@@ -96,6 +96,10 @@ class MyblManageService
     public function storeCategory($data)
     {
         $data['display_order'] = $this->findAll()->count() + 1;
+
+        if (request()->hasFile('icon')) {
+            $data['icon'] = 'storage/' . $data['icon']->store('manage_image');
+        }
         $this->save($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
@@ -220,6 +224,12 @@ class MyblManageService
     public function updateCategory($data, $id)
     {
         $category = $this->findOne($id);
+        if (request()->hasFile('icon')) {
+            $data['icon'] = 'storage/' . $data['icon']->store('manage_image');
+            if (!empty($menu->icon)) {
+                unlink($menu->icon);
+            }
+        }
         $category->update($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
