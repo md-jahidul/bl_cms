@@ -9,19 +9,20 @@
 
 namespace App\Repositories\BlLab;
 
+use App\Models\BlLabProgram;
 use App\Models\TagCategory;
 use App\Repositories\BaseRepository;
 
-class BlLabApplyingForRepository extends BaseRepository
+class BlLabProgramRepository extends BaseRepository
 {
-    public $modelName = TagCategory::class;
+    public $modelName = BlLabProgram::class;
 
-    public function getTags() {
-        $response = $this->model->get();
-        return $response;
-    }
-    public function getTagById($tagId) {
-        $response = $this->model->findOrFail($tagId);
-        return $response->name_en;
-    }
+//    public function getTags() {
+//        $response = $this->model->get();
+//        return $response;
+//    }
+//    public function getTagById($tagId) {
+//        $response = $this->model->findOrFail($tagId);
+//        return $response->name_en;
+//    }
 }

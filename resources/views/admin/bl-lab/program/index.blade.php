@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Tag Category List')
-@section('card_name', 'Tag Category List')
+@section('title', 'Program List')
+@section('card_name', 'Program List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ url('tag-category') }}"> Tag Categories List</a></li>
+    <li class="breadcrumb-item "><a href="{{ url('bl-labs/program') }}"> Program List</a></li>
 @endsection
 @section('action')
-    <a href="{{ url("tag-category/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url("bl-labs/program/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New
     </a>
 @endsection
@@ -24,14 +24,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach($tags as $tag)
+                            @foreach($items as $item)
                                 @php $path = 'partner-offers-home'; @endphp
-                                <tr data-index="{{ $tag->id }}" data-position="{{ $tag->display_order }}">
+                                <tr data-index="{{ $item->id }}" data-position="{{ $item->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td style="color: {{ $tag->tag_color }}">{{ $tag->name_en }}</td>
+                                    <td style="color: {{ $item->tag_color }}">{{ $item->name_en }}</td>
                                     <td width="12%" class="text-center">
-                                        <a href="{{ url("tag-category/$tag->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("tag-category/destroy/$tag->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $tag->id }}" title="Delete">
+                                        <a href="{{ url("bl-labs/program/$item->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("bl-labs/program/destroy/$item->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>

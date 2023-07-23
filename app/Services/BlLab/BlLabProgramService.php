@@ -9,26 +9,28 @@
 
 namespace App\Services\BlLab;
 
-use App\Repositories\BlLab\BlLabApplyingForRepository;
+use App\Repositories\BlLab\BlLabProgramRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class BlLabApplyingForService
+class BlLabProgramService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
-     * @var BlLabApplyingForRepository
+     * @var BlLabProgramRepository
      */
     private $applyingForRepository;
 
     /**
-     * BlLabApplyingForService constructor.
-     * @param BlLabApplyingForRepository $applyingForRepository
+     * BlLabProgramService constructor.
+     * @param BlLabProgramRepository $applyingForRepository
      */
-    public function __construct(BlLabApplyingForRepository $applyingForRepository)
+    public function __construct(BlLabProgramRepository $applyingForRepository)
     {
         $this->applyingForRepository = $applyingForRepository;
         $this->setActionRepository($applyingForRepository);
@@ -40,7 +42,14 @@ class BlLabApplyingForService
      */
     public function store($data)
     {
-        $data['alias'] = str_replace(" ", "_", strtolower($data['name_en']));
+        if (request()->hasFile('icon')) {
+            $data['icon'] = $this->upload($data['icon'],'assetlite/images/bl-lab');
+        }
+
+        $data['display_order'] = $this->findAll()->count() + 1;
+        $data['slug'] = str_replace(" ", "_", strtolower($data['name_en']));
+
+        dd($data['icon']);
         $this->save($data);
         return new Response('Added successfully');
     }

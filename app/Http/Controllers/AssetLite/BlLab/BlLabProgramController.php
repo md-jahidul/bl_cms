@@ -3,26 +3,32 @@
 namespace App\Http\Controllers\AssetLite\BlLab;
 
 use App\Http\Controllers\Controller;
-use App\Models\BlLab\BlLabApplyingFor;
-use App\Services\BlLab\BlLabApplyingForService;
+use App\Services\BlLab\BlLabProgramService;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
+use Illuminate\View\Factory;
 
-class BlLabEventListController extends Controller
+class BlLabProgramController extends Controller
 {
     /**
-     * @var BlLabApplyingForService
+     * @var BlLabProgramService
      */
-    private $applyingForService;
+    private $blLabProgramService;
 
     /**
-     * BlLabEventListController constructor.
-     * @param BlLabApplyingForService $applyingForService
+     * BlLabProgramController constructor.
+     * @param BlLabProgramService $blLabProgramService
      */
     public function __construct(
-        BlLabApplyingForService $applyingForService
+        BlLabProgramService $blLabProgramService
     ) {
-        $this->applyingForService = $applyingForService;
+        $this->blLabProgramService = $blLabProgramService;
     }
 
     /**
@@ -32,8 +38,8 @@ class BlLabEventListController extends Controller
      */
     public function index()
     {
-        $tags = $this->tagCategoryService->findAll();
-        return view('admin.category.tag.index', compact('tags'));
+        $items = $this->blLabProgramService->findAll();
+        return view('admin.bl-lab.program.index', compact('items'));
     }
 
     /**
@@ -43,7 +49,7 @@ class BlLabEventListController extends Controller
      */
     public function create()
     {
-        return view('admin.category.tag.create');
+        return view('admin.bl-lab.program.create');
     }
 
     /**
@@ -54,21 +60,21 @@ class BlLabEventListController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->tagCategoryService->storeTagCategory($request->all());
+        $response = $this->blLabProgramService->store($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('/tag-category');
+        return redirect('/bl-labs/program');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return Factory|View
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
-        $tag = $this->tagCategoryService->findOne($id);
-        return view('admin.category.tag.edit', compact('tag'));
+        $data = $this->blLabProgramService->findOne($id);
+        return view('admin.bl-lab.program.edit', compact('data'));
     }
 
     /**
@@ -76,13 +82,13 @@ class BlLabEventListController extends Controller
      *
      * @param Request $request
      * @param  int  $id
-     * @return RedirectResponse|Redirector
+     * @return Application|RedirectResponse|Redirector
      */
     public function update(Request $request, $id)
     {
-        $response = $this->tagCategoryService->updateTagCategory($request->all(), $id);
+        $response = $this->blLabProgramService->update($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('/tag-category');
+        return redirect('/bl-labs/program');
     }
 
     /**
@@ -92,8 +98,8 @@ class BlLabEventListController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->tagCategoryService->deleteTagCategory($id);
+        $response = $this->blLabProgramService->delete($id);
         Session::flash('message', $response->getContent());
-        return url('/tag-category');
+        return url('/bl-labs/program');
     }
 }
