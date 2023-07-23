@@ -122,8 +122,29 @@
                                             </select>
                                             <div class="help-block"></div>
                                         </div>
+                                        <div class="form-group col-md-10 {{ $errors->has('deeplink') ? ' error' : '' }}">
+                                            <label for="title" >Deeplink</label>
+                                            <input type="text" name="deeplink"  class="form-control" placeholder="Enter Deeplink"
+                                                   value="{{ old("deeplink") ? old("deeplink") : '' }}">
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('deeplink'))
+                                                <div class="help-block">  {{ $errors->first('deeplink') }}</div>
+                                            @endif
+                                        </div>
                                     @endif
-
+                                    @if($parent_id == 0)
+                                        <div class="form-group col-md-10 {{ $errors->has('parent_icon') ? ' error' : '' }}">
+                                            <label for="alt_text" class="required">Icon</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="parent_icon" class="custom-file-input dropify"
+                                                        data-height="80">
+                                            </div>
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('parent_icon'))
+                                                <div class="help-block">  {{ $errors->first('parent_icon') }}</div>
+                                            @endif
+                                        </div>
+                                    @endif
                                     <div class="col-md-10">
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                             <label for="title" class="required mr-1">Status:</label>
