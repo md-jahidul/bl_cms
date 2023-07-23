@@ -1008,8 +1008,10 @@ class ProductCoreService
 
             $model = MyBlProduct::where('product_code', $product_code);
             $data['pin_to_top_sequence'] = 100000;
-            if ($data['pin_to_top']) {
-                $data['pin_to_top_sequence'] = count(MyBlProduct::where('pin_to_top', true)->get()) + 1;
+            if ($data['pin_to_top'] || $model->pin_to_top == 1) {
+                if ($model->pin_to_top != 1) {
+                    $data['pin_to_top_sequence'] = count(MyBlProduct::where('pin_to_top', true)->get()) + 1;
+                }
             }
             $model->update($data);
 
