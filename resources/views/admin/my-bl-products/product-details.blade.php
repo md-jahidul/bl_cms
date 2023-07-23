@@ -314,7 +314,7 @@
                                             <label>Product Categories</label>
                                             <select multiple
                                                     class="form-control data-section"
-                                                    name="offer_section_slug[]" required>
+                                                    name="offer_section_slug[]">
                                                 <option value="">Please Select Product Category</option>
 
                                                 @foreach ($internet_categories as $key => $category)
