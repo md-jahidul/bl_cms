@@ -1065,6 +1065,10 @@ class ProductCoreService
 
                     $model_tab->updateOrCreate($data_section_slug);
                 }
+            }else{
+                if(MyBlProductTab::where('product_code', $product_code)->exists()){
+                    MyBlProductTab::where('product_code', $product_code)->delete();
+                }
             }
 
             $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
