@@ -1029,7 +1029,8 @@ class ProductCoreService
         try {
             DB::beginTransaction();
 
-            $model = MyBlProduct::where('product_code', $product_code);
+            $model = MyBlProduct::where('product_code', $product_code)->first();
+
             $data['pin_to_top_sequence'] = 100000;
             if ($data['pin_to_top'] || $model->pin_to_top == 1) {
                 if ($model->pin_to_top != 1) {
