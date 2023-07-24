@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlLabApplicationsTable extends Migration
+class CreateBlLabIndustriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBlLabApplicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bl_lab_applications', function (Blueprint $table) {
+        Schema::create('bl_lab_industries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('bl_lab_user_id');
-            $table->string('id_number');
-            $table->string('application_status')->nullable();
-            $table->string('step_completed')->nullable();
+            $table->string('name_en');
+            $table->string('slug');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBlLabApplicationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bl_lab_applications');
+        Schema::dropIfExists('bl_lab_industries');
     }
 }

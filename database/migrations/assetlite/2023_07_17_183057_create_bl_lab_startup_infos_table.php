@@ -29,7 +29,7 @@ class CreateBlLabStartupInfosTable extends Migration
             $table->boolean('exist_product_service')->nullable();
             $table->string('exist_product_service_details')->nullable();
             $table->string('exist_product_service_diff')->nullable();
-            $table->string('receive_fund')->nullable();
+            $table->boolean('receive_fund')->nullable();
             $table->string('receive_fund_source')->nullable();
             $table->string('startup_current_stage')->nullable();
             $table->string('status')->nullable();

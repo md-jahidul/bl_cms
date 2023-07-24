@@ -896,10 +896,35 @@
 
 
     {{--    @if( auth()->user()->can_view('LeadManagement') )--}}
-    <li class="{{ is_active_url(route('dynamic-routes.index')) }}">
-        <a class="menu-item" href="{{ route('dynamic-routes.index') }}"
-           data-i18n="nav.templates.vert.classic_menu"><i
-                class="la la-list"></i> Dynamic Routes</a>
+    <li class="nav-item"><a href="#"><i class="la la-flask"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">BL Lab</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_url('bl-labs/program') }}">
+                <a class="menu-item" href="{{ url('bl-labs/program') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Program</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/industry') }}">
+                <a class="menu-item" href="{{ url('bl-labs/industry') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Industry</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/profession') }}">
+                <a class="menu-item" href="{{ url('bl-labs/profession') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Profession</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/institute-or-org') }}">
+                <a class="menu-item" href="{{ url('bl-labs/institute-or-org') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Institute-or-ORG</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/education') }}">
+                <a class="menu-item" href="{{ url('bl-labs/education') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Education</a>
+            </li>
+        </ul>
     </li>
     {{--    @endif--}}
     <li class="{{ is_active_url(route('meta-tag.index')) }}">
@@ -910,47 +935,6 @@
 
     <hr>
     <hr>
-
-
-
-
-
-
-
-
-    {{--        TODO:: Quiz Management using 3nd priority  --}}
-    {{--        @if( auth()->user()->can_view('Tag') || auth()->user()->can_view('Campaign') || auth()->user()->can_view('Question') || auth()->user()->can_view('Prize'))--}}
-    {{--            <li class="nav-item"><a href="#"><i class="la la-question"></i>--}}
-    {{--                    <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>--}}
-    {{--                <ul class="menu-content">--}}
-    {{--                    --}}{{--Tag--}}
-    {{--                    @if( auth()->user()->can_view('Tag') )--}}
-    {{--                        <li class="{{ is_active_url('tags') . is_active_url('tags/create')}}">--}}
-    {{--                            <a class="menu-item" href="{{ url('tags') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
-    {{--                                    class="la la-tags"></i> Tag</a>--}}
-    {{--                        </li>--}}
-    {{--                    @endif--}}
-    {{--                    @if( auth()->user()->can_view('Campaign') )--}}
-    {{--                        <li class="{{ is_active_url('campaigns') . is_active_url('campaigns/create')}}">--}}
-    {{--                            <a class="menu-item" href="{{ url('campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
-    {{--                                    class="la la-bullhorn"></i> Campaign</a>--}}
-    {{--                        </li>--}}
-    {{--                    @endif--}}
-    {{--                    @if( auth()->user()->can_view('Question') )--}}
-    {{--                        <li class="{{ is_active_url('questions') . is_active_url('questions/create')}}">--}}
-    {{--                            <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
-    {{--                                    class="la la-question"></i> Question</a>--}}
-    {{--                        </li>--}}
-    {{--                    @endif--}}
-    {{--                    @if( auth()->user()->can_view('Prize') )--}}
-    {{--                        <li class="{{ is_active_url('prizes') . is_active_url('prizes/create')}}">--}}
-    {{--                            <a class="menu-item" href="{{ url('prizes') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
-    {{--                                    class="la la-trophy"></i> Prize</a>--}}
-    {{--                        </li>--}}
-    {{--                    @endif--}}
-    {{--                </ul>--}}
-    {{--            </li>--}}
-    {{--        @endif--}}
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------Asset Lite End---------------------------------------------}}
