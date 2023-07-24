@@ -9,11 +9,11 @@
 
 namespace App\Repositories\BlLab;
 
-use App\Models\BlLabInstittuteOrOrg;
+use App\Models\BlLab\BlLabInstituteOrOrg;
 use App\Repositories\BaseRepository;
 
 class
-BlLabInstittuteOrgRepository extends BaseRepository
+BlLabInstituteOrgRepository extends BaseRepository
 {
-    public $modelName = BlLabInstittuteOrOrg::class;
+    public $modelName = BlLabInstituteOrOrg::class;
 }

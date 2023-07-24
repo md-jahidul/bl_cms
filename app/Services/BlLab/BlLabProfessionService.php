@@ -10,6 +10,7 @@
 namespace App\Services\BlLab;
 
 use App\Repositories\BlLab\BlLabIndustryRepository;
+use App\Repositories\BlLab\BlLabProfessionRepository;
 use App\Repositories\BlLab\BlLabProgramRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -20,21 +21,20 @@ use Illuminate\Http\Response;
 class BlLabProfessionService
 {
     use CrudTrait;
-    use FileTrait;
 
     /**
-     * @var BlLabIndustryRepository
+     * @var BlLabProfessionRepository
      */
-    private $blLabIndustryRepository;
+    private $blLabProfessionRepository;
 
     /**
-     * BlLabIndustryService constructor.
-     * @param BlLabIndustryRepository $blLabIndustryRepository
+     * BlLabProfessionService constructor.
+     * @param BlLabProfessionRepository $blLabProfessionRepository
      */
-    public function __construct(BlLabIndustryRepository $blLabIndustryRepository)
+    public function __construct(BlLabProfessionRepository $blLabProfessionRepository)
     {
-        $this->blLabIndustryRepository = $blLabIndustryRepository;
-        $this->setActionRepository($blLabIndustryRepository);
+        $this->blLabProfessionRepository = $blLabProfessionRepository;
+        $this->setActionRepository($blLabProfessionRepository);
     }
 
     /**

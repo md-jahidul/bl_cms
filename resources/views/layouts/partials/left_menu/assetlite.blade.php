@@ -768,6 +768,21 @@
                    data-i18n="nav.templates.vert.classic_menu"><i
                         class="la la-list"></i>Industry</a>
             </li>
+            <li class="{{ is_active_url('bl-labs/profession') }}">
+                <a class="menu-item" href="{{ url('bl-labs/profession') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Profession</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/institute-or-org') }}">
+                <a class="menu-item" href="{{ url('bl-labs/institute-or-org') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Institute-or-ORG</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/education') }}">
+                <a class="menu-item" href="{{ url('bl-labs/education') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Education</a>
+            </li>
         </ul>
     </li>
     {{--    @endif--}}

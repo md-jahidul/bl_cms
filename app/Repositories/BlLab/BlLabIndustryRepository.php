@@ -9,7 +9,7 @@
 
 namespace App\Repositories\BlLab;
 
-use App\Models\BlLabIndustry;
+use App\Models\BlLab\BlLabIndustry;
 use App\Repositories\BaseRepository;
 
 class

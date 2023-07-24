@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Profession Create')
-@section('card_name', 'Profession Edit')
+@section('title', 'Institute/Organization Create')
+@section('card_name', 'Institute/Organization Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('bl-labs/profession') }}">Profession List</a></li>
-    <li class="breadcrumb-item active"> Profession Edit</li>
+    <li class="breadcrumb-item active"><a href="{{ url('bl-labs/institute-or-org') }}">Institute/Organization List</a></li>
+    <li class="breadcrumb-item active"> Institute/Organization Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('bl-labs/profession') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('bl-labs/institute-or-org') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("bl-labs/profession/$data->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ url("bl-labs/institute-or-org/$data->id") }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('PUT')}}
                             <div class="form-body">

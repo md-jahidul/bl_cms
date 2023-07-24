@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\AssetLite\BlLab;
 
 use App\Http\Controllers\Controller;
-use App\Models\BlLabIndustry;
 use App\Services\BlLab\BlLabIndustryService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;

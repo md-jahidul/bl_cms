@@ -10,6 +10,7 @@
 namespace App\Services\BlLab;
 
 use App\Repositories\BlLab\BlLabIndustryRepository;
+use App\Repositories\BlLab\BlLabInstituteOrgRepository;
 use App\Repositories\BlLab\BlLabProfessionRepository;
 use App\Repositories\BlLab\BlLabProgramRepository;
 use App\Traits\CrudTrait;
@@ -18,23 +19,23 @@ use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class BlLabInstittuteOrgService
+class BlLabInstituteOrgService
 {
     use CrudTrait;
 
     /**
-     * @var BlLabProfessionRepository
+     * @var BlLabInstituteOrgRepository
      */
-    private $blLabProfessionRepository;
+    private $labInstituteOrgRepository;
 
     /**
-     * BlLabProfessionService constructor.
-     * @param BlLabProfessionRepository $blLabProfessionRepository
+     * BlLabInstituteOrgService constructor.
+     * @param BlLabInstituteOrgRepository $labInstituteOrgRepository
      */
-    public function __construct(BlLabProfessionRepository $blLabProfessionRepository)
+    public function __construct(BlLabInstituteOrgRepository $labInstituteOrgRepository)
     {
-        $this->blLabProfessionRepository = $blLabProfessionRepository;
-        $this->setActionRepository($blLabProfessionRepository);
+        $this->labInstituteOrgRepository = $labInstituteOrgRepository;
+        $this->setActionRepository($labInstituteOrgRepository);
     }
 
     /**

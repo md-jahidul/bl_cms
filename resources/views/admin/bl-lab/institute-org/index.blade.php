@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Profession List')
-@section('card_name', 'Profession List')
+@section('title', 'Institute/Organization List')
+@section('card_name', 'Institute/Organization List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ url('bl-labs/profession') }}"> Profession List</a></li>
+    <li class="breadcrumb-item "><a href="{{ url('bl-labs/institute-or-org') }}"> Institute/Organization List</a></li>
 @endsection
 @section('action')
-    <a href="{{ url("bl-labs/profession/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url("bl-labs/institute-or-org/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New
     </a>
 @endsection
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Profession List</strong></h4>
+                    <h4 class="pb-1"><strong>Institute/Organization List</strong></h4>
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
@@ -30,8 +30,8 @@
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $item->name_en }} {!! $item->status == 0 ? '<span class="text-danger"> ( Inactive )</span> <br>' : '' !!}</td>
                                     <td width="12%" class="text-center">
-                                        <a href="{{ url("bl-labs/profession/$item->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("bl-labs/profession/destroy/$item->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
+                                        <a href="{{ url("bl-labs/institute-or-org/$item->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("bl-labs/institute-or-org/destroy/$item->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>

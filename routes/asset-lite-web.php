@@ -1278,10 +1278,20 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {
+        // Program
         Route::resource('program', 'AssetLite\BlLab\BlLabProgramController')->except('show', 'destroy');
         Route::get('program/destroy/{id}', 'AssetLite\BlLab\BlLabProgramController@destroy');
-
+        // Industry
         Route::resource('industry', 'AssetLite\BlLab\BlLabIndustryController')->except('show', 'destroy');
         Route::get('industry/destroy/{id}', 'AssetLite\BlLab\BlLabIndustryController@destroy');
+        // Profession
+        Route::resource('profession', 'AssetLite\BlLab\BlLabProfessionController')->except('show', 'destroy');
+        Route::get('profession/destroy/{id}', 'AssetLite\BlLab\BlLabProfessionController@destroy');
+        // Institute/Organization
+        Route::resource('institute-or-org', 'AssetLite\BlLab\BlLabInstituteOrgController')->except('show', 'destroy');
+        Route::get('institute-or-org/destroy/{id}', 'AssetLite\BlLab\BlLabInstituteOrgController@destroy');
+        // Education
+        Route::resource('education', 'AssetLite\BlLab\BlLabEducationController')->except('show', 'destroy');
+        Route::get('education/destroy/{id}', 'AssetLite\BlLab\BlLabEducationController@destroy');
     });
 });

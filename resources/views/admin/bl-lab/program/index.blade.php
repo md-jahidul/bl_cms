@@ -31,7 +31,7 @@
                                 <tr data-index="{{ $item->id }}" data-position="{{ $item->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td><img class="" src="{{ config('filesystems.file_base_url') . $item->icon }}" alt="Slider Image" height="50" width="60" /></td>
-                                    <td>{{ $item->name_en }} {!! $data->status == 0 ? '<span class="text-danger"> ( Inactive )</span> <br>' : '' !!}</td>
+                                    <td>{{ $item->name_en }} {!! $item->status == 0 ? '<span class="text-danger"> ( Inactive )</span> <br>' : '' !!}</td>
                                     <td>{{ $item->is_clickable ? "Yes" : "No" }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("bl-labs/program/$item->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

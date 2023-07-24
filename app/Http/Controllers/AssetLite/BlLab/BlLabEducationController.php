@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\AssetLite\BlLab;
 
 use App\Http\Controllers\Controller;
-use App\Models\BlLabIndustry;
-use App\Services\BlLab\BlLabIndustryService;
-use App\Services\BlLab\BlLabProfessionService;
+use App\Services\BlLab\BlLabEducationService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -19,18 +17,18 @@ use Illuminate\View\Factory;
 class BlLabEducationController extends Controller
 {
     /**
-     * @var BlLabProfessionService
+     * @var BlLabEducationService
      */
-    private $blLabProfessionService;
+    private $blLabEducationService;
 
     /**
-     * BlLabProfessionController constructor.
-     * @param BlLabProfessionService $blLabProfessionService
+     * BlLabEducationController constructor.
+     * @param BlLabEducationService $blLabEducationService
      */
     public function __construct(
-        BlLabProfessionService $blLabProfessionService
+        BlLabEducationService $blLabEducationService
     ) {
-        $this->blLabProfessionService = $blLabProfessionService;
+        $this->blLabEducationService = $blLabEducationService;
     }
 
     /**
@@ -40,8 +38,8 @@ class BlLabEducationController extends Controller
      */
     public function index()
     {
-        $items = $this->blLabProfessionService->findAll();
-        return view('admin.bl-lab.institute-org.index', compact('items'));
+        $items = $this->blLabEducationService->findAll();
+        return view('admin.bl-lab.education.index', compact('items'));
     }
 
     /**
@@ -51,7 +49,7 @@ class BlLabEducationController extends Controller
      */
     public function create()
     {
-        return view('admin.bl-lab.institute-org.create');
+        return view('admin.bl-lab.education.create');
     }
 
     /**
@@ -62,9 +60,9 @@ class BlLabEducationController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->blLabProfessionService->store($request->all());
+        $response = $this->blLabEducationService->store($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('/bl-labs/institute-or-org');
+        return redirect('/bl-labs/education');
     }
 
     /**
@@ -75,8 +73,8 @@ class BlLabEducationController extends Controller
      */
     public function edit($id)
     {
-        $data = $this->blLabProfessionService->findOne($id);
-        return view('admin.bl-lab.institute-org.edit', compact('data'));
+        $data = $this->blLabEducationService->findOne($id);
+        return view('admin.bl-lab.education.edit', compact('data'));
     }
 
     /**
@@ -88,9 +86,9 @@ class BlLabEducationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->blLabProfessionService->update($request->all(), $id);
+        $response = $this->blLabEducationService->update($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('/bl-labs/institute-or-org');
+        return redirect('/bl-labs/education');
     }
 
     /**
@@ -100,8 +98,8 @@ class BlLabEducationController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->blLabProfessionService->delete($id);
+        $response = $this->blLabEducationService->delete($id);
         Session::flash('message', $response->getContent());
-        return url('/bl-labs/institute-or-org');
+        return url('/bl-labs/education');
     }
 }

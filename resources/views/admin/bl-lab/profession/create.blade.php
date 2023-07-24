@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Industry Create')
-@section('card_name', 'Industry Create')
+@section('title', 'Profession Create')
+@section('card_name', 'Profession Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('bl-labs/industry') }}">Industry List</a></li>
-    <li class="breadcrumb-item active"> Industry Create</li>
+    <li class="breadcrumb-item active"><a href="{{ url('bl-labs/profession') }}">Profession List</a></li>
+    <li class="breadcrumb-item active"> Profession Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('bl-labs/industry') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('bl-labs/profession') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,14 +14,14 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url('bl-labs/industry') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ url('bl-labs/profession') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="offset-2">
                                     <div class="col-md-10 row">
                                         <div class="form-group col-md-12 {{ $errors->has('name_en') ? ' error' : '' }}">
                                             <label for="name_en" class="required">Name (English)</label>
-                                            <input type="text" name="name_en"  class="form-control" placeholder="Enter industry name"
-                                                   value="{{ old("name_en") ? old("name_en") : '' }}" required data-validation-required-message="Enter industry name in english">
+                                            <input type="text" name="name_en"  class="form-control" placeholder="Enter profession name"
+                                                   value="{{ old("name_en") ? old("name_en") : '' }}" required data-validation-required-message="Enter profession name in english">
                                             <div class="help-block"></div>
                                             @if ($errors->has('name_en'))
                                                 <div class="help-block">  {{ $errors->first('name_en') }}</div>

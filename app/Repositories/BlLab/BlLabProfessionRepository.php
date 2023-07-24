@@ -9,11 +9,11 @@
 
 namespace App\Repositories\BlLab;
 
-use App\Models\BlLabIndustry;
+use App\Models\BlLab\BlLabProfession;
 use App\Repositories\BaseRepository;
 
 class
 BlLabProfessionRepository extends BaseRepository
 {
-    public $modelName = BlLabIndustry::class;
+    public $modelName = BlLabProfession::class;
 }

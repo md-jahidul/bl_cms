@@ -9,8 +9,7 @@
 
 namespace App\Repositories\BlLab;
 
-use App\Models\BlLabProgram;
-use App\Models\TagCategory;
+use App\Models\BlLab\BlLabProgram;
 use App\Repositories\BaseRepository;
 
 class BlLabProgramRepository extends BaseRepository

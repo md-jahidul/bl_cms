@@ -9,6 +9,7 @@
 
 namespace App\Services\BlLab;
 
+use App\Repositories\BlLab\BlLabEducationRepository;
 use App\Repositories\BlLab\BlLabIndustryRepository;
 use App\Repositories\BlLab\BlLabProfessionRepository;
 use App\Repositories\BlLab\BlLabProgramRepository;
@@ -23,18 +24,18 @@ class BlLabEducationService
     use CrudTrait;
 
     /**
-     * @var BlLabProfessionRepository
+     * @var BlLabEducationRepository
      */
-    private $blLabProfessionRepository;
+    private $blLabEducationRepository;
 
     /**
-     * BlLabProfessionService constructor.
-     * @param BlLabProfessionRepository $blLabProfessionRepository
+     * BlLabEducationService constructor.
+     * @param BlLabEducationRepository $blLabEducationRepository
      */
-    public function __construct(BlLabProfessionRepository $blLabProfessionRepository)
+    public function __construct(BlLabEducationRepository $blLabEducationRepository)
     {
-        $this->blLabProfessionRepository = $blLabProfessionRepository;
-        $this->setActionRepository($blLabProfessionRepository);
+        $this->blLabEducationRepository = $blLabEducationRepository;
+        $this->setActionRepository($blLabEducationRepository);
     }
 
     /**
