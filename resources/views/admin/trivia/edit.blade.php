@@ -25,7 +25,7 @@
 
             <div class="row">
                     <!-- Type Label -->
-                    <div class="form-group col-md-4 mb-2">
+                    <div class="form-group col-md-3 mb-2">
                         <label for="type" class="required">Type:</label>
                         <select name="type" class="browser-default custom-select" required>
                                 <option value="trivia" @if ($trivia->type == 'trivia') selected @endif> Trivia </option>
@@ -35,7 +35,7 @@
                     </div>
 
                     <!-- Rule Name -->
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="rule_name" class="required">Rule Name:</label>
                             <input
@@ -55,32 +55,28 @@
                     </div>
 
                     <!-- Content For -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="status_input">Component For: </label>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                            class=""
-                                            id="home"
-                                            name="home"
-                                            value="true"
-                                            @if(isset($trivia->content_for->home)) @if($trivia->content_for->home) checked @endif @endif
-                                            />
-                                    <label for="home">Home</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <input type="checkbox"
-                                            id="non_bl"
-                                            name="non_bl"
-                                            value="true"
-                                            @if(isset($trivia->content_for->non_bl)) @if($trivia->content_for->non_bl) checked @endif @endif/>
-                                    <label for="non_bl">Non Bl</label>
-                                </div>
-                            </div>
-                        </div>
+                        <select name="content_for" class="browser-default custom-select" required>
+                                <option value="home" @if ($trivia->content_for == 'home') selected @endif> Home </option>
+                                <option value="non_bl" @if ($trivia->content_for == 'non_bl') selected @endif> Non Bl </option>
+                        </select>
+                        @if ($errors->has('content_for'))
+                            <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                        @endif
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-3">
+                        <label for="status">Active Status:</label>
+                        <select class="form-control" id="status"
+                                name="status">
+                            <option value="1" @if ($trivia->status == '1') selected @endif> Active</option>
+                            <option value="0" @if ($trivia->status == '0') selected @endif>Inactive</option>
+                        </select>
+                        @if ($errors->has('status'))
+                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                        @endif
                     </div>
 
                     <!-- Pending Label -->
@@ -488,7 +484,7 @@
                                     accept="image/*"
                                     onchange="
                                     createImageBitmap(this.files[0]).then((bmp) => {
-                                        if(Math.floor(bmp.width/bmp.height).toFixed(2) == Math.floor(16/9).toFixed(2)){
+                                        if(bmp.width/bmp.height == 16/9){
                                             document.getElementById('submitForm').disabled = false;
                                             document.getElementById('massage').innerHTML = '';
                                             this.style.border = 'none';
