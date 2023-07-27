@@ -26,8 +26,6 @@ Route::get('/users/change-password', 'AssetLite\UserController@changePasswordFor
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 //Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
-
-
     # Al Banner =========================================================
     Route::resource('al-banner', 'AssetLite\AlBannerController')->except('show');
     Route::get('al-banner/destroy/{id}', 'AssetLite\AlBannerController@destroy');
@@ -1470,6 +1468,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');
 
+
     // CSR Page
     Route::resource('csr-landing-page-component', 'AssetLite\CSRLandingPageController')->except(['show', 'destroy']);
     Route::get('csr-landing-page-component/destroy/{id}', 'AssetLite\CSRLandingPageController@destroy');
@@ -1509,6 +1508,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {
+        // Application List
+        Route::get('application-list', 'AssetLite\BlLab\BlLabApplicationController@applicationList')->name('application.list');
+
+        Route::get('banners', 'AssetLite\BlLab\BlLabApplicationController@banner');
+
         // Program
         Route::resource('program', 'AssetLite\BlLab\BlLabProgramController')->except('show', 'destroy');
         Route::get('program/destroy/{id}', 'AssetLite\BlLab\BlLabProgramController@destroy');

@@ -899,6 +899,16 @@
     <li class="nav-item"><a href="#"><i class="la la-flask"></i>
             <span class="menu-title" data-i18n="nav.templates.main">BL Lab</span></a>
         <ul class="menu-content">
+            <li class="{{ is_active_url('bl-labs/banners') }}">
+                <a class="menu-item" href="{{ url('bl-labs/banners') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-image"></i>Banners</a>
+            </li>
+            <li class="{{ is_active_url('bl-labs/application-list') }}">
+                <a class="menu-item" href="{{ url('bl-labs/application-list') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-paste"></i>Application List</a>
+            </li>
             <li class="{{ is_active_url('bl-labs/program') }}">
                 <a class="menu-item" href="{{ url('bl-labs/program') }}"
                    data-i18n="nav.templates.vert.classic_menu"><i

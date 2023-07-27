@@ -49,10 +49,10 @@
                                             <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                                 <label for="title" class="required mr-1">Is clickable:</label>
 
-                                                <input type="radio" name="is_clickable" value="1" id="input-radio-15" checked>
+                                                <input type="radio" name="is_clickable" value="1" id="input-radio-15" {{ $data->is_clickable == 1 ? "checked" : '' }}>
                                                 <label for="input-radio-15" class="mr-1">Yes</label>
 
-                                                <input type="radio" name="is_clickable" value="0" id="input-radio-16">
+                                                <input type="radio" name="is_clickable" value="0" id="input-radio-16" {{ $data->is_clickable == 0 ? "checked" : '' }}>
                                                 <label for="input-radio-16">No</label>
                                             </div>
                                         </div>
