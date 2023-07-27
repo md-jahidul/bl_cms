@@ -1331,6 +1331,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         // Application List
         Route::get('application-list', 'AssetLite\BlLab\BlLabApplicationController@applicationList')->name('application.list');
 
+        Route::get('banners', 'AssetLite\BlLab\BlLabApplicationController@banner');
+
         // Program
         Route::resource('program', 'AssetLite\BlLab\BlLabProgramController')->except('show', 'destroy');
         Route::get('program/destroy/{id}', 'AssetLite\BlLab\BlLabProgramController@destroy');

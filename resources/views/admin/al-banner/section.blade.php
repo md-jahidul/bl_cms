@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
-                <h4 class="menu-title"><strong>Banner Section</strong></h4>
+                <h4 class="menu-title"><strong>{{ $action['section_name'] ?? "" }} Banner Section</strong></h4>
                 <hr>
                 <div class="card-body card-dashboard">
                     <form role="form"
@@ -89,34 +89,37 @@
                                 <div class="help-block">{{ $errors->first('image_name_bn') }}</div>
                                 @endif
                             </div>
-                            <div class="form-group col-md-6 {{ $errors->has('button_label_en') ? ' error' : '' }}">
-                                <label for="button_label_en">Button Label (English)</label>
-                                <input type="text" name="other_attributes[button_label_en]" id="button_label_en" class="form-control" placeholder="Enter Image name in Bangla"
-                                    value="{{ (!empty($banner->other_attributes['button_label_en'])) ? $banner->other_attributes['button_label_en'] : old("other_attributes.button_label_en") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('button_label_en'))
-                                <div class="help-block">{{ $errors->first('button_label_en') }}</div>
-                                @endif
-                            </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('button_label_bn') ? ' error' : '' }}">
-                                <label for="button_label_bn">Button Label (Bangla)</label>
-                                <input type="text" name="other_attributes[button_label_bn]" id="button_label_bn" class="form-control" placeholder="Enter Image name in Bangla"
-                                    value="{{ (!empty($banner->other_attributes['button_label_bn'])) ? $banner->other_attributes['button_label_bn'] : old("other_attributes.button_label_bn") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('button_label_bn'))
-                                <div class="help-block">{{ $errors->first('button_label_bn') }}</div>
-                                @endif
-                            </div>
-                            <div class="form-group col-md-6 {{ $errors->has('button_url') ? ' error' : '' }}">
-                                <label for="button_url">Button Url</label>
-                                <input type="text" name="other_attributes[button_url]" id="button_url" class="form-control" placeholder="Enter Image name in Bangla"
-                                    value="{{ (!empty($banner->other_attributes['button_url'])) ? $banner->other_attributes['button_url'] : old("other_attributes.button_url") ?? '' }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('button_url'))
-                                <div class="help-block">{{ $errors->first('button_url') }}</div>
-                                @endif
-                            </div>
+                            @if(isset($action['show_button']))
+                                <div class="form-group col-md-6 {{ $errors->has('button_label_en') ? ' error' : '' }}">
+                                    <label for="button_label_en">Button Label (English)</label>
+                                    <input type="text" name="other_attributes[button_label_en]" id="button_label_en" class="form-control" placeholder="Enter Image name in Bangla"
+                                           value="{{ (!empty($banner->other_attributes['button_label_en'])) ? $banner->other_attributes['button_label_en'] : old("other_attributes.button_label_en") ?? '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('button_label_en'))
+                                        <div class="help-block">{{ $errors->first('button_label_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('button_label_bn') ? ' error' : '' }}">
+                                    <label for="button_label_bn">Button Label (Bangla)</label>
+                                    <input type="text" name="other_attributes[button_label_bn]" id="button_label_bn" class="form-control" placeholder="Enter Image name in Bangla"
+                                           value="{{ (!empty($banner->other_attributes['button_label_bn'])) ? $banner->other_attributes['button_label_bn'] : old("other_attributes.button_label_bn") ?? '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('button_label_bn'))
+                                        <div class="help-block">{{ $errors->first('button_label_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('button_url') ? ' error' : '' }}">
+                                    <label for="button_url">Button Url</label>
+                                    <input type="text" name="other_attributes[button_url]" id="button_url" class="form-control" placeholder="Enter Image name in Bangla"
+                                           value="{{ (!empty($banner->other_attributes['button_url'])) ? $banner->other_attributes['button_url'] : old("other_attributes.button_url") ?? '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('button_url'))
+                                        <div class="help-block">{{ $errors->first('button_url') }}</div>
+                                    @endif
+                                </div>
+                            @endif
+
                             <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }}">
                                 <label for="mobileImg">Banner Image</label>
                                 <div class="custom-file">
@@ -131,7 +134,7 @@
                                     <div class="help-block">  {{ $errors->first('image') }}</div>
                                 @endif
                             </div>
-                            
+
                             @if (array_key_exists('from_generic', $action) && $action['from_generic'] == true)
                                 <div class="form-group col-md-6 {{ $errors->has('section_type') ? ' error' : '' }}">
                                     <label for="section_type" class="required">Section Type</label>
@@ -151,7 +154,7 @@
                                 {{ Form::hidden('section_type', $action['section_type'] ) }}
                             @endif
                                 {{ Form::hidden('section_id', $action['section_id'] ) }}
-                            
+
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
@@ -176,7 +179,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
         $(function () {
-            
+
             //show dropify for  photo
             $('.dropify').dropify({
                 messages: {

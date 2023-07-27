@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite\BlLab;
 
 use App\Http\Controllers\Controller;
+use App\Services\AlBannerService;
 use App\Services\BlLab\BlLabApplicationService;
 use App\Services\BlLab\BlLabEducationService;
 use App\Services\BlLab\BlLabProgramService;
@@ -26,6 +27,10 @@ class BlLabApplicationController extends Controller
      * @var BlLabProgramService
      */
     private $blLabProgramService;
+    /**
+     * @var AlBannerService
+     */
+    private $alBannerService;
 
     /**
      * BlLabApplicationController constructor.
@@ -33,10 +38,12 @@ class BlLabApplicationController extends Controller
      */
     public function __construct(
         BlLabApplicationService $labApplicationService,
-        BlLabProgramService $blLabProgramService
+        BlLabProgramService $blLabProgramService,
+        AlBannerService $alBannerService
     ) {
         $this->labApplicationService = $labApplicationService;
         $this->blLabProgramService = $blLabProgramService;
+        $this->alBannerService = $alBannerService;
     }
 
     /**
@@ -51,5 +58,12 @@ class BlLabApplicationController extends Controller
         }
         $programs = $this->blLabProgramService->findAll();
         return view('admin.bl-lab.applications.index', compact('programs'));
+    }
+
+    public function banner()
+    {
+        $bannerMyIdea = $this->alBannerService->findBanner('bl_lab_my_idea', 0);
+        $bannerApplication = $this->alBannerService->findBanner('bl_lab_application', 0);
+        return view('admin.bl-lab.banner.index', compact('bannerMyIdea', 'bannerApplication'));
     }
 }
