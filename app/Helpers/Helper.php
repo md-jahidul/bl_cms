@@ -141,6 +141,7 @@ class Helper
             "RABBITHOLE"              => 'Rabbithole',
             "SPIN_WHEEL"              => 'Spin Wheel',
             "BUS"                     => 'Bus',
+            "TOFFEE"                  => 'Toffee'
         ];
     }
 
