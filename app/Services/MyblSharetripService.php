@@ -59,6 +59,7 @@ class MyblSharetripService
                 'payment_status' => $item->payment_status,
                 'amount' => $item->amount,
                 'createdAt' => $item->createdAt,
+                'date' => $item->created_at->format('Y-m-d'),
             ];
         });
         return $response;
