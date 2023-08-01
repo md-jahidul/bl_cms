@@ -47,6 +47,7 @@
                                 <th>Confirmed At</th>
                                 <th>Cancelled At</th>
                                 <th>Expiry Time</th>
+                                <th>Data</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -61,6 +62,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
     <style>
         table.dataTable tbody td {
             max-height: 40px;
@@ -78,11 +80,15 @@
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script>
         $(function () {
+            $('.datepicker').datetimepicker({
+                format : 'YYYY-MM-DD',
+                showClose: true,
+            });
             
-            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
-
             $("#bus_transaction_list").dataTable({
                 scrollX: true,
                 processing: true,
@@ -212,6 +218,12 @@
                         render: function (data, type, row) {
                             return row.expiry_time	;
                         }
+                    },
+                    {
+                        name: 'date',
+                        render: function (data, type, row) {
+                            return row.date	;
+                        }
                     }
                 ],
                 dom: 'Blfrtip',
@@ -219,13 +231,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
                         }
                     }
                 ],
