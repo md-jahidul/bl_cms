@@ -79,6 +79,7 @@ class MyblCourseService
                 'total_default_discount' => $item->total_default_discount,
                 'order_total_price' => $item->order_total_price,
                 'items' => collect($item->items),
+                'date' => $item->created_at->format('Y-m-d'),
             ];
         });
         return $response;
