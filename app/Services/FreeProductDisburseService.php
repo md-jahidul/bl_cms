@@ -90,6 +90,8 @@ class FreeProductDisburseService
 
             MasterLog::create($saveLogData);
             return true;
+        } else {
+            Log::channel('apihub-error')->info('Msisdn: '. $mobile. ' Product Code: '. $product_code . ' Response : '.json_encode($result));
         }
 
         return false;
@@ -115,7 +117,7 @@ class FreeProductDisburseService
         $skip_service_exception = false
     ) {
             //$start_time = microtime(true);
-    
+
             $ch = curl_init();
             $headers = $headers ?: $this->makeHeader();
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
@@ -123,21 +125,21 @@ class FreeProductDisburseService
             curl_setopt($ch, CURLOPT_TIMEOUT, 5);
             static::makeRequest($ch, $url, $body, $headers);
             $result = curl_exec($ch);
-    
+
             //$end_time = microtime(true);
-    
+
             $curl_info = curl_getinfo($ch);
-    
-    
+
+
             if ($result != '' && !$result) {
                 throw new CurlRequestException(curl_getinfo($ch));
             }
             $httpCode = $curl_info['http_code'];
-    
+
             if ($httpCode >= 500 && !$skip_service_exception) {
                 throw new BLServiceException($result);
             }
-    
+
             /*        try {
                         $this->logToApiPerformance([
                             'url' => $curl_info['url'],
@@ -148,7 +150,7 @@ class FreeProductDisburseService
                         ]);
                     } catch (Exception $e) {
                     }*/
-    
+
         return ['response' => $result, 'status_code' => $httpCode];
     }
 
