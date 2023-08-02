@@ -200,6 +200,7 @@ class GenericSliderImageService
     {
         $sliderImage = $this->findOne($id);
         $sliderImage->delete();
+        Redis::del('toffee_banner');
         /**
          * Removing redis cache for segment banner to impact the change
          */
