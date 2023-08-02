@@ -67,6 +67,7 @@ class GenericSliderImageController extends Controller
             $image->update(['sequence' => $position[1]]);
             Redis::del('mybl_home_component');
             Redis::del('content_component');
+            Redis::del('toffee_banner');
         }
         return "success";
     }
