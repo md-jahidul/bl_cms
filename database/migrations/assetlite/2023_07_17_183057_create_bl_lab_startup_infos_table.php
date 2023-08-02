@@ -15,7 +15,7 @@ class CreateBlLabStartupInfosTable extends Migration
     {
         Schema::create('bl_lab_startup_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('bl_lab_app_id');
+            $table->unsignedBigInteger('bl_lab_app_id');
             $table->mediumText('problem_identification')->nullable();
             $table->string('big_idea')->nullable();
             $table->string('target_group')->nullable();
@@ -34,6 +34,11 @@ class CreateBlLabStartupInfosTable extends Migration
             $table->string('startup_current_stage')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
+            $table->foreign('bl_lab_app_id')
+                ->references('id')
+                ->on('bl_lab_applications')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
