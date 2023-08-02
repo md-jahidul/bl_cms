@@ -39,8 +39,10 @@
                                 <th width="3%">#</th>
                                 <th>Type</th>
                                 <th>Rule Name</th>
+                                <th>Content For</th>
                                 <th>Pending bottom label</th>
                                 <th>Completed bottom label</th>
+                                <th>Status</th>
                                 <th width="12%">Action</th>
                             </tr>
                         </thead>
@@ -127,6 +129,13 @@
                         }
                     },
                     {
+                        name: 'content_for',
+                        width: "5%",
+                        render: function (data, type, row) {
+                            return row.content_for;
+                        }
+                    },
+                    {
                         name: 'pending_bottom_label_en',
                         width: "10%",
                         render: function (data, type, row) {
@@ -138,6 +147,13 @@
                         width: "10%",
                         render: function (data, type, row) {
                             return row.completed_bottom_label_en;
+                        }
+                    },
+                    {
+                        name: 'status',
+                        width: "10%",
+                        render: function (data, type, row) {
+                            return row.status;
                         }
                     },
 
