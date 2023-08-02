@@ -15,13 +15,18 @@ class CreateBlLabSummariesTable extends Migration
     {
         Schema::create('bl_lab_summaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('bl_lab_app_id');
+            $table->unsignedBigInteger('bl_lab_app_id');
             $table->string('idea_title')->nullable();
             $table->text('idea_details')->nullable();
             $table->string('industry')->nullable();
             $table->string('apply_for')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
+            $table->foreign('bl_lab_app_id')
+                ->references('id')
+                ->on('bl_lab_applications')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

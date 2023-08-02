@@ -15,12 +15,17 @@ class CreateBlLabApplicationsTable extends Migration
     {
         Schema::create('bl_lab_applications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('bl_lab_user_id');
-            $table->string('id_number');
+            $table->unsignedBigInteger('bl_lab_user_id');
+            $table->string('application_id');
             $table->string('application_status')->nullable();
             $table->string('step_completed')->nullable();
             $table->date('submitted_at')->nullable();
             $table->timestamps();
+            $table->foreign('bl_lab_user_id')
+                ->references('id')
+                ->on('bl_lab_users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
