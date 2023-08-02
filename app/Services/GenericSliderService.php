@@ -137,7 +137,7 @@ class GenericSliderService
                 Redis::del('lms_old_user_postpaid');
                 Redis::del('lms_old_user_prepaid');
             }
-            elseif ($data['component_for'] == 'toffee' || $data['component_for'] == 'toffee_section') {
+            elseif ($slider['component_for'] == 'toffee' || $slider['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
             }
 
