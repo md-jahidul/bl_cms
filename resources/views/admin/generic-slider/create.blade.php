@@ -63,6 +63,12 @@
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'lms') ? 'checked' : '' }}
                                             {{ isset($single_slider->component_for) ? '' : 'checked' }}>
                                         <label for="campaignStatusInactive" class="mr-3">LMS</label>
+                                        <input type="radio" name="component_for" value="toffee" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'toffee') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Toffee Home</label>
+                                        <input type="radio" name="component_for" value="toffee_section" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'toffee_section') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Toffee Section</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
