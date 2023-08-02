@@ -101,7 +101,8 @@ class MyblSliderImageService
             return new Response("Image has been successfully added");
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
-            return $e->getMessage();
+            // return $e->getMessage();
+            return \response($e->getMessage(), 500);
         }
     }
 
