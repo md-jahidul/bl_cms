@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'DocTime Transaction Status')
-@section('card_name', 'DocTime Transaction Status')
+@section('title', 'Free Product Disburse Report')
+@section('card_name', 'Free Product Disburse Report')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">DocTime Transaction Status</li>
+    <li class="breadcrumb-item active">Free Product Disburse Report</li>
 @endsection
 @section('content')
     <section>
@@ -12,8 +12,6 @@
                     <div class="col-md-12" style="margin-top: 10px;">
                         <table border="0" cellspacing="5" cellpadding="5" style="float: right">
                             <tr>
-                                <td>Transaction Id:</td>
-                                <td><input type="text" class="form-control" id="transaction_id" name="transaction_id" autocomplete="off"></td>
                                 <td>From:</td>
                                 <td><input type="text" class="datepicker form-control" id="from" name="from" autocomplete="off"></td>
                                 <td>To:</td>
@@ -26,20 +24,16 @@
                 <div class="card-body card-dashboard">
                     <div class="col-md-12 mt-3">
                         <table class="table table-striped table-bordered dataTable"
-                            id="doctime_transaction_list" role="grid">
+                            id="free_product_disburse_report" role="grid">
                             <thead>
-                            <tr>
-                                <th>Sl.</th>
-                                <th>Transaction Id</th>
-                                <th>Contact No</th>
-                                <th>Service</th>
-                                <th>Service Id</th>
-                                <th>Amount</th>
-                                <th>Payment Status</th>
-                                <th>Promo Code</th>
-                                <th>Transaction Time</th>
-                                <th>Remarks</th>
-                            </tr>
+                                <tr>
+                                    <th>Sl.</th>
+                                    <th>File Id</th>
+                                    <th>msisdn</th>
+                                    <th>product_code</th>
+                                    <th>Disburse Status</th>
+                                    <th>Created At</th>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -75,7 +69,7 @@
             
             $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
 
-            $("#doctime_transaction_list").dataTable({
+            $("#free_product_disburse_report").dataTable({
                 scrollX: true,
                 processing: true,
                 searching: false,
@@ -86,11 +80,8 @@
                 pageLength: 30,
                 lengthChange: true,
                 ajax: {
-                    url: '{{ route('mybl.transaction-status.doctime.list') }}',
+                    url: '{{ route('free-product-disburse-report.list') }}',
                     data: {
-                        transaction_id: function () {
-                            return $("#transaction_id").val();
-                        },
                         from: function () {
                             return $("#from").val();
                         },
@@ -109,80 +100,37 @@
                     },
 
                     {
-                        name: 'transaction_id',
+                        name: 'file_id',
                         render: function (data, type, row) {
-                            return row.transaction_id;
+                            return row.file_id;
                         }
                     },
                     
                     {
-                        name: 'contact_no',
+                        name: 'msisdn',
                         render: function (data, type, row) {
-                            return row.contact_no;
+                            return row.msisdn;
                         }
                     },
                     
                     {
-                        name: 'service',
+                        name: 'product_code',
                         render: function (data, type, row) {
-                            return row.service;
+                            return row.product_code;
                         }
                     },
                     
                     {
-                        name: 'service_id',
+                        name: 'is_disburse',
                         render: function (data, type, row) {
-                            return row.service_id;
+                            return row.is_disburse;
                         }
                     },
                     
                     {
-                        name: 'amount',
+                        name: 'created_at	',
                         render: function (data, type, row) {
-                            return row.amount;
-                        }
-                    },
-                    
-                    {
-                        name: 'payment_status	',
-                        render: function (data, type, row) {
-                            return row.payment_status	;
-                        }
-                    },
-
-                    {
-                        name: 'promo_code	',
-                        render: function (data, type, row) {
-                            return row.promo_code	;
-                        }
-                    },
-                    
-                    {
-                        name: 'transaction_time	',
-                        render: function (data, type, row) {
-                            return row.transaction_time	;
-                        }
-                    },
-                    
-                    {
-                        name: 'remarks	',
-                        render: function (data, type, row) {
-                            return row.remarks	;
-                        }
-                    }
-                ],
-                dom: 'Blfrtip',
-                buttons:  [
-                    {
-                        extend: 'csv',
-                        exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8]
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8]
+                            return row.created_at	;
                         }
                     }
                 ],
@@ -193,7 +141,7 @@
             });
 
             $( "#submit" ).click(function() {
-                $('#doctime_transaction_list').DataTable().ajax.reload();
+                $('#free_product_disburse_report').DataTable().ajax.reload();
             });
         });
     </script>
