@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeRefreshTokensTable extends Migration
+class CreateRefreshTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class ChangeRefreshTokensTable extends Migration
      */
     public function up()
     {
-        Schema::table('refresh_tokens', function (Blueprint $table) {
+        Schema::create('refresh_tokens', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('token')->nullable();
             $table->string('msisdn')->nullable();
@@ -31,8 +31,6 @@ class ChangeRefreshTokensTable extends Migration
      */
     public function down()
     {
-        Schema::table('refresh_tokens', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('refresh_tokens');
     }
 }

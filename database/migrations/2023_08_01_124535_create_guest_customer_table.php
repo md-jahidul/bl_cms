@@ -15,7 +15,7 @@ class CreateGuestCustomerTable extends Migration
     {
         Schema::create('guest_customer', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('uid')->nullable();
+            $table->uuid('uid')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('gender')->nullable();
