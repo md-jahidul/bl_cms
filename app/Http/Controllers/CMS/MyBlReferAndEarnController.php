@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\MyBlProduct;
+use App\Services\BaseMsisdnService;
 use App\Services\MyBlProductService;
 use App\Services\MyblReferAndEarnService;
 use App\Services\ProductCoreService;
@@ -15,6 +16,7 @@ use Illuminate\View\View;
 
 class MyBlReferAndEarnController extends Controller
 {
+    protected $baseMsisdnService;
     /**
      * @var \App\Services\MyblReferAndEarnService
      */
@@ -30,10 +32,12 @@ class MyBlReferAndEarnController extends Controller
      */
     public function __construct(
         MyblReferAndEarnService $referAndEarnService,
-        ProductCoreService $productCoreService
+        ProductCoreService $productCoreService,
+        BaseMsisdnService $baseMsisdnService
     ) {
         $this->referAndEarnService = $referAndEarnService;
         $this->productCoreService = $productCoreService;
+        $this->baseMsisdnService = $baseMsisdnService;
     }
 
     /**
@@ -56,7 +60,8 @@ class MyBlReferAndEarnController extends Controller
     public function create()
     {
         $products = $this->productCoreService->findAll();
-        return view('admin.mybl-campaign.refer-and-earn.create-edit', compact('products'));
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+        return view('admin.mybl-campaign.refer-and-earn.create-edit', compact('products', 'baseMsisdnGroups'));
     }
 
     /**
@@ -82,7 +87,8 @@ class MyBlReferAndEarnController extends Controller
     {
         $products = $this->productCoreService->findAll();
         $campaign = $this->referAndEarnService->findOne($id);
-        return view('admin.mybl-campaign.refer-and-earn.create-edit', compact('products', 'campaign'));
+        $baseMsisdnGroups = $this->baseMsisdnService->findAll();
+        return view('admin.mybl-campaign.refer-and-earn.create-edit', compact('products', 'campaign', 'baseMsisdnGroups'));
     }
 
     /**

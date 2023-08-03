@@ -32,6 +32,8 @@ class GenericSliderService
     protected $contentComponentService;
     protected $commerceComponentRepository;
     protected $commerceComponentService;
+
+    protected $lmsHomeComponentService;
     protected $nonBlOfferService;
     protected $nonBLComponentService;
     public function __construct(
@@ -43,6 +45,7 @@ class GenericSliderService
         SliderRepository $sliderRepository,
         MyBlCommerceComponentRepository $commerceComponentRepository,
         MyBlCommerceComponentService  $commerceComponentService,
+        LmsHomeComponentService $lmsHomeComponentService,
         NonBlOfferService $nonBlOfferService,
         NonBlComponentService $nonBlComponentService
     ) {
@@ -56,6 +59,7 @@ class GenericSliderService
         $this->commerceComponentService = $commerceComponentService;
         $this->nonBlOfferService = $nonBlOfferService;
         $this->nonBLComponentService = $nonBlComponentService;
+        $this->lmsHomeComponentService = $lmsHomeComponentService;
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -91,6 +95,14 @@ class GenericSliderService
                 $this->commerceComponentRepository->save($homeComponentData);
                 Redis::del('mybl_commerce_component');
             }
+            elseif ($data['component_for'] == 'lms') {
+                $this->lmsHomeComponentService->save($homeComponentData);
+                Redis::del('lms_component_prepaid');
+                Redis::del('lms_component_postpaid');
+                Redis::del('lms_old_user_postpaid');
+                Redis::del('lms_old_user_prepaid');
+            }
+
             elseif ($data['component_for'] == 'non_bl') {
                 $this->nonBlComponentRepository->save($homeComponentData);
                 Redis::del('non_bl_component');
@@ -138,6 +150,15 @@ class GenericSliderService
                 $commerceComponent->update($homeComponentData);
                 Redis::del('mybl_commerce_component');
             }
+            elseif ($slider['component_for'] == 'lms') {
+                $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' =>'generic-' . $slider->id])[0];
+                $lmsComponent->update($homeComponentData);
+                Redis::del('lms_component_prepaid');
+                Redis::del('lms_component_postpaid');
+                Redis::del('lms_old_user_postpaid');
+                Redis::del('lms_old_user_prepaid');
+            }
+
             elseif ($slider['component_for'] == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $nonBlComponent->update($homeComponentData);
@@ -206,6 +227,12 @@ class GenericSliderService
 
             return $contentSecondarySliderCount + $commerceComponentCount + 1;
         }
+        elseif ($type == 'lms')
+        {
+            $lmsHomeComponentCount = $this->lmsHomeComponentService->findAll()->count();
+
+            return $lmsHomeComponentCount + 1;
+        }
         elseif ($type == 'non_bl')
         {
             $nonBlComponentCount = $this->nonBlComponentRepository->findAll()->count();
@@ -241,6 +268,14 @@ class GenericSliderService
             else if ($componentFor == 'commerce') {
                 $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->commerceComponentService->deleteComponent($commerceComponent->id);
+            }
+            else if ($componentFor == 'lms') {
+                $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic-' . $slider->id])->first();
+                $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
+                Redis::del('lms_component_prepaid');
+                Redis::del('lms_component_postpaid');
+                Redis::del('lms_old_user_postpaid');
+                Redis::del('lms_old_user_prepaid');
             }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();

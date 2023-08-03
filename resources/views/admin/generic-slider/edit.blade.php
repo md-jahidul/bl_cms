@@ -98,6 +98,10 @@
                                         <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
                                             {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }} disabled>
                                         <label for="campaignStatusInactive" class="mr-3">Home</label>
+                                        <input type="radio" name="component_for" value="lms" id="campaignStatusInactive"
+                                            {{ (isset($slider->component_for) && $slider->component_for == 'lms') ? 'checked' : '' }}
+                                            {{ isset($slider->component_for) ? '' : 'checked' }} disabled>
+                                        <label for="campaignStatusInactive" class="mr-3">LMS</label>
                                         <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
                                             {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>
                                         <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
