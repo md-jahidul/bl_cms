@@ -91,7 +91,6 @@ class GenericSliderImageService
             Redis::del('non_bl_component');
             Redis::del('mybl_commerce_component');
             Redis::del('non_bl_offer');
-            Redis::del('toffee_banner');
             return true;
         } catch (\Exception $e) {
 
@@ -177,7 +176,6 @@ class GenericSliderImageService
             Redis::del('non_bl_component');
             Redis::del('mybl_commerce_component');
             Redis::del('non_bl_offer');
-            Redis::del('toffee_banner');
 
             return true;
         } catch (\Exception $e) {
