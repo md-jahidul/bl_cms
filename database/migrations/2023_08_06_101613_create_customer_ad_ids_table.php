@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomerDigitalServiceTable extends Migration
+class CreateCustomerAdIdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCustomerDigitalServiceTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_digital_services', function (Blueprint $table) {
+        Schema::create('customer_ad_ids', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->json('subscribed_services')->nullable();
-            $table->unsignedBigInteger('guest_customer_id');
+            $table->string('ad_id');
+            $table->string('phone')->index();
             $table->timestamps();
-            $table->foreign('guest_customer_id')->references('id')->on('guest_customer');
-
         });
     }
 
@@ -30,6 +28,6 @@ class CreateCustomerDigitalServiceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_digital_services');
+        Schema::dropIfExists('customer_ad_ids');
     }
 }
