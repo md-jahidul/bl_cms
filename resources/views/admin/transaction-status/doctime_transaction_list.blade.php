@@ -36,6 +36,7 @@
                                 <th>Service Id</th>
                                 <th>Amount</th>
                                 <th>Payment Status</th>
+                                <th>Promo Code</th>
                                 <th>Transaction Time</th>
                                 <th>Remarks</th>
                             </tr>
@@ -146,6 +147,13 @@
                         name: 'payment_status	',
                         render: function (data, type, row) {
                             return row.payment_status	;
+                        }
+                    },
+
+                    {
+                        name: 'promo_code	',
+                        render: function (data, type, row) {
+                            return row.promo_code	;
                         }
                     },
                     

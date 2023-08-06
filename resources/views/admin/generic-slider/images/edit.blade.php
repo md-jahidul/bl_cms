@@ -26,15 +26,16 @@
                                     <input type="radio" name="user_type" value="all" id="all"
                                     @if($imageInfo->user_type == "all") {{ 'checked' }} @endif>
                                     <label for="all" class="mr-3 cursor-pointer">All</label>
+                                    @if(!($imageInfo->slider->component_for == 'non_bl' || $imageInfo->slider->component_for == 'non_bl_offer'))
                                     <input type="radio" name="user_type" value="prepaid"
                                            id="prepaid" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
                                     <label for="prepaid" class="mr-3 cursor-pointer">Prepaid</label>
                                     <input type="radio" name="user_type" value="postpaid"
                                            id="postpaid" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
                                     <label for="postpaid" class="mr-3 cursor-pointer">Postpaid</label>
-{{--                                    <input type="radio" name="user_type" value="segment_wise_banner"--}}
-{{--                                           id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>--}}
-{{--                                    <label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>--}}
+                                    @endif
+                                {{--<input type="radio" name="user_type" value="segment_wise_banner" id="segment_wise_banner" @if($imageInfo->user_type == "segment_wise_banner") {{ 'checked' }} @endif>--}}
+                                {{--<label for="segment_wise_banner" class="mr-3 cursor-pointer">Segment wise banner</label>--}}
                                 </div>
                             </div>
 
@@ -96,6 +97,64 @@
                                 @endif
                             </div>
 
+                            @if($imageInfo->slider->component_type == "swipe_banner" ||
+                                $imageInfo->slider->component_type == "category_banner")
+                            <div class="form-group col-md-6">
+                                <label for="banner_text_en">Banner Text English</label>
+                                <input class="form-control"
+                                        name="banner_text_en"
+                                        id="banner_text_en"
+                                        placeholder="Enter English Banner Text"
+                                        value="{{ $imageInfo->banner_text_en }}">
+                                @if($errors->has('banner_text_en'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="banner_text_bn">Banner Text Bangla</label>
+                                <input class="form-control"
+                                        name="banner_text_bn"
+                                        id="banner_text_bn"
+                                        placeholder="Enter Bangla Banner Text"
+                                        value="{{ $imageInfo->banner_text_bn }}">
+                                @if($errors->has('banner_text_bn'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="subtitle_text_en">Subtitle Text (English)</label>
+                                <input class="form-control"
+                                        name="subtitle_text_en"
+                                        id="subtitle_text_en"
+                                        placeholder="Enter Bangla Banner Text",
+                                        value="{{ $imageInfo->subtitle_text_en }}"
+                                        >
+                                @if($errors->has('subtitle_text_en'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('subtitle_text_en') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="subtitle_text_bn">Subtitle Text (Bangla)</label>
+                                <input class="form-control"
+                                        name="subtitle_text_bn"
+                                        id="subtitle_text_bn"
+                                        placeholder="Enter Bangla Banner Text",
+                                        value="{{ $imageInfo->subtitle_text_bn }}"
+                                        >
+                                @if($errors->has('subtitle_text_bn'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('subtitle_text_bn') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                            @endif
+
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="status">Active Status:</label>
@@ -113,7 +172,13 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Deeplink</label>
+                                    <input type="text" name="deeplink" class="form-control" value="{{ $imageInfo->deeplink }}" placeholder="Enter Valid Deeplink" >
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
 
                             @php
                                 $actionList = Helper::navigationActionList();
@@ -136,6 +201,17 @@
                             </div>
 
 
+                            @php
+                                if (isset($imageInfo->slider->component_size) && $imageInfo->slider->component_size !=null){
+                                        $width = explode('x', $imageInfo->slider->component_size)[0];
+                                        $height = explode('x', $imageInfo->slider->component_size)[1];
+                                        $size = $width/$height;
+                                    } else {
+                                        $size = - 1;
+                                        $width = -1;
+                                        $height = -1;
+                                    }
+                            @endphp
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="image">Upload Image :</label>
@@ -151,9 +227,6 @@
                                                    for="image_url">Upload Image...</label>
                                         </div>
                                     </div>
-                                    <small class="text-info" id="ratio_info">
-                                        Shortcut icon should be in
-                                        16:9 aspect ratio</small><br>
                                     <small
                                         class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
@@ -209,7 +282,7 @@
                             </div>
 
                             {{-- <div class="col-2">
-                                 <button type="submit" style="width:100%" id="submitForm"
+                                 <button type="submit" style="width:100%"
                                          class=" btn btn-success">Submit
                                  </button>
                              </div>--}}
@@ -567,9 +640,11 @@
         }
 
         let checkImageRatio = function ($this) {
+            let size = `{{number_format($size, 2, '.', '')}}`;
+            let width = `{{$width}}`;
+            let height = `{{$height}}`;
             createImageBitmap($this.files[0]).then((bmp) => {
-
-                if (bmp.width / bmp.height == 16 / 9) {
+                if (size == -1 || Number((bmp.width / bmp.height).toFixed(2)) == Number(size)) {
                     document.getElementById('submitForm').disabled = false;
                     document.getElementById('message').innerHTML = '';
                     document.getElementById('image_input_div').style.border = 'none';
@@ -578,11 +653,11 @@
                     imageURL($this, 'img_display');
 
                 } else {
+                    document.getElementById("submitForm").disabled = true;
                     document.getElementById('image_input_div').style.border = '1px solid red';
-                    document.getElementById('message').innerHTML = '<b>image aspact ratio must 16:9(change the picture to enable button)</b>';
+                    document.getElementById('message').innerHTML = `<b style="color: red">image size must be ${width} x ${height} pixel (change the picture to enable button)</b>`;
                     document.getElementById('ratio_info').innerHTML = '';
                     document.getElementById('message').classList.add('text-danger');
-                    document.getElementById('submitForm').disabled = true;
                 }
             })
         };
