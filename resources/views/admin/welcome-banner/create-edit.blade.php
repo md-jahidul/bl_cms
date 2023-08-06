@@ -124,14 +124,14 @@
                                             <label for="image_url">Upload Welcome Banner </label>
                                             <input type="file" id="image_url" name="banner_img" class="dropify_image" required
                                                    data-width="800"
-                                                   data-min-width="799" data-min-height="799"
-                                                   data-max-width="801" data-max-height="801"
+                                                   data-min-width="599" data-min-height="799"
+                                                   data-max-width="601" data-max-height="801"
                                                    data-validation-required-message="Banner Image required"
                                                    data-default-file="{{ isset($welcome_banner) ? asset($welcome_banner->banner_img) : ''}}"
                                                    data-allowed-file-extensions="png jpg gif"/>
                                             <small class="text-danger"> @error('banner_img') {{ $message }} @enderror </small>
                                             <div class="help-block">
-                                                <small class="text-warning">Banner image dimension must be <strong>800 X 800</strong> and size must not exceed <strong>100
+                                                <small class="text-warning">Banner image dimension must be <strong>600 X 800</strong> and size must not exceed <strong>100
                                                         kb</strong></small>
                                             </div>
                                         </div>
