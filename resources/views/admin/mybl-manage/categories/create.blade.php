@@ -81,6 +81,17 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
+                                    <div class="form-group col-md-10 {{ $errors->has('icon') ? ' error' : '' }}">
+                                        <label for="alt_text" >Icon</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="icon" class="custom-file-input dropify"
+                                                   data-height="80">
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('icon'))
+                                            <div class="help-block">  {{ $errors->first('icon') }}</div>
+                                        @endif
+                                    </div>
 
                                     <div class="col-md-10">
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">

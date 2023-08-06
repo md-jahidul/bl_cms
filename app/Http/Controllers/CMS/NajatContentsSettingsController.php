@@ -6,6 +6,7 @@ use App\Enums\MyBlAppSettingsKey;
 use App\Models\MyBlAppSettings;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * Class NajatContentsSettingsController
@@ -39,6 +40,9 @@ class NajatContentsSettingsController extends Controller
                 ['key' => MyBlAppSettingsKey::NAJAT_CONTENTS_SETTINGS],
                 ['value' => json_encode($data)]
             );
+
+            Redis::del("najat_content_settings");
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

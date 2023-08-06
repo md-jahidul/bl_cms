@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class MyblCashBack extends Model
 {
     use LogModelAction;
-    
-    protected $fillable = ['title', 'start_date', 'end_date', 'status'];
+
+    protected $fillable = ['title', 'start_date', 'end_date', 'status', 'user_type'];
 
     public function cashBackProducts(): HasMany
     {

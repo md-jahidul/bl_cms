@@ -127,8 +127,25 @@
                                             </select>
                                             <div class="help-block"></div>
                                         </div>
+                                        <div class="form-group col-md-10 {{ $errors->has('deeplink') ? ' error' : '' }}">
+                                            <label for="title" >Deeplink</label>
+                                            <input type="text" name="deeplink"  class="form-control" placeholder="Enter Deeplink"
+                                            value="{{$menu->deeplink ?? ''}}">
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('deeplink'))
+                                                <div class="help-block">  {{ $errors->first('deeplink') }}</div>
+                                            @endif
+                                        </div>
                                     @endif
-
+                                    @if($menu->parent_id == 0)
+                                        <div class="form-group col-md-10 {{ $errors->has('parent_icon') ? ' error' : '' }}">
+                                            <label for="alt_text">Icon</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="parent_icon" class="custom-file-input dropify" data-height="80"
+                                                       data-default-file="{{ asset($menu->parent_icon ?? "") }}">
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">Status:</label>
