@@ -354,6 +354,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
 
+    Route::get('pin-to-top-products', 'CMS\MyblProductEntryController@pinToTopProducts')->name('pin-to-top.products');
+    Route::get('pin-to-top-products/sort-auto-save', 'CMS\MyblProductEntryController@productSortable');
     /*
      * Product Tags Routes
      */
