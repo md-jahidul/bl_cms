@@ -1348,5 +1348,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         // Education
         Route::resource('education', 'AssetLite\BlLab\BlLabEducationController')->except('show', 'destroy');
         Route::get('education/destroy/{id}', 'AssetLite\BlLab\BlLabEducationController@destroy');
+        // Startup-Stage
+        Route::resource('startup-stage', 'AssetLite\BlLab\BlLabStartupStageController')->except('show', 'destroy');
+        Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
     });
 });
