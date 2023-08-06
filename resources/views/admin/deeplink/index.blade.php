@@ -38,6 +38,7 @@
                                 <option value="cares">Cares</option>
                                 <option value="content">Content</option>
                                 <option value="commerce">Commerce</option>
+                                <option value="connect">Connect</option>
                             </select>
                         </div>
 {{--                        <div class="form-group">--}}

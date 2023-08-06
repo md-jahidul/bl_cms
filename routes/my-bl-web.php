@@ -51,7 +51,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('shortcuts/create', 'CMS\ShortCutController@create')->name('short_cuts.create');
     Route::get('shortcuts/{short_cut}/edit', 'CMS\ShortCutController@edit')->name('short_cuts.edit');
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
-    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');;
+    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
+
+    Route::resource('generic-shortcut-master', 'CMS\GenericShortcutMasterController');
+    Route::get('generic-shortcut-master/destroy/{id}', 'CMS\GenericShortcutMasterController@destroy');
+
+    Route::get('generic-shortcut/{id}', 'CMS\GenericShortcutController@index')->name('generic-shortcut');
+    Route::get('generic-shortcut/{id}/create', 'CMS\GenericShortcutController@create')->name('generic-shortcut.create');
+    Route::post('generic-shortcut/store', 'CMS\GenericShortcutController@store')->name('generic-shortcut.store');
+    Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
+    Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
+    Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+    Route::get('generic-shortcut-update-position', 'CMS\GenericShortcutController@updatePosition');
 
     //------ shortcuts -----------//
 
@@ -763,6 +774,35 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('content-components/destroy/{id}', 'CMS\ContentComponentController@destroy')
         ->name('content-components.destroy');
 
+    //LMS Component
+    Route::get('lms-components', 'CMS\LMS\LmsController@index')->name('lms-components');
+    Route::get('lms-components/edit/{id}', 'CMS\LMS\LmsController@edit')
+        ->name('lms.components.edit');
+    Route::post('lms-components/store', 'CMS\LMS\LmsController@store')
+        ->name('lms-components.store');
+    Route::post('lms-components/update', 'CMS\LMS\LmsController@update')
+        ->name('lms-components.update');
+    Route::get('lms-components-sort', 'CMS\LMS\LmsController@componentSort');
+    Route::get('lms-components-status-update/{id}', 'CMS\LMS\LmsController@componentStatusUpdate')
+        ->name('lms-components.status.update');
+    Route::get('lms-components/destroy/{id}', 'CMS\LMS\LmsController@destroy')
+        ->name('lms-components.destroy');
+
+    //LMS Shortcut
+    Route::get('shortcut-components', 'CMS\LMS\ShortcutController@index')->name('shortcut-components');
+    Route::get('shortcut-component-create', 'CMS\LMS\ShortcutController@create')
+        ->name('shortcut-component.create');
+    Route::get('shortcut-component/edit/{id}', 'CMS\LMS\ShortcutController@edit')
+        ->name('shortcut-component.edit');
+    Route::post('shortcut-component/store', 'CMS\LMS\ShortcutController@store')
+        ->name('shortcut-component.store');
+    Route::put('shortcut-component/update/{id}', 'CMS\LMS\ShortcutController@update')
+        ->name('shortcut-component.update');
+    Route::get('shortcut-components-sort', 'CMS\LMS\ShortcutController@componentSort');
+    Route::get('shortcut-status-update/{id}', 'CMS\LMS\ShortcutController@componentStatusUpdate')
+        ->name('shortcut-components.status.update');
+    Route::get('shortcut-components/destroy/{id}', 'CMS\LMS\ShortcutController@destroy')
+        ->name('shortcut-components.destroy');
 
     // Flash Hour
     Route::resource('flash-hour-campaign', 'CMS\MyBlFlashHourController')->except(['show', 'destroy']);
@@ -968,12 +1008,43 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
 
-    Route::resource('trivia', 'CMS\TriviaGamificationController');
+    Route::resource('gamification', 'CMS\TriviaGamificationController');
+    Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
 
 
-    //PGW Routes
+
+    // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    // Group Components
+    Route::get('group-components', 'CMS\GroupComponentController@index')->name('group.components');
+    Route::get('group-components/create', 'CMS\GroupComponentController@create')->name('group.components.create');
+    Route::post('group-components/store', 'CMS\GroupComponentController@store')->name('group.components.store');
+    Route::get('group-components/edit{id}', 'CMS\GroupComponentController@edit')->name('group.components.edit');
+    Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
+    Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
+    Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
+
+
+    // Non Bl Components
+    Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
+    Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');
+    Route::get('non-bl-components-status-update/{id}', 'CMS\NonBlComponentController@componentStatusUpdate')->name('nonbl.components.status.update');
+    Route::post('non-bl-components/store', 'CMS\NonBlComponentController@store')->name('nonbl.components.store');
+    Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
+    Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
+    Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
+    Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
+    Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
+
+    Route::resource('nonbl-navigation-rail', 'CMS\NonBlNavigationRailController');
+    Route::get('nonbl-navigation-rail-sortable', 'CMS\NonBlNavigationRailController@navigationMenuSortable')
+        ->name('nonbl-navigation-rail.sort');
+    Route::get('nonbl-navigation-rail/destroy/{id}', 'CMS\NonBlNavigationRailController@destroy')
+        ->name('nonbl-navigation-rail.destroy');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
@@ -1006,7 +1077,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('utility-bill/destroy/{id}', 'CMS\UtilityBillController@destroy')->name('utility-bill.destroy');
     Route::get('utility-bill/sort-auto-save', 'CMS\UtilityBillController@categorySortable');
     Route::get('utility-bill-deeplink/create', 'CMS\DynamicDeeplinkController@commerceBillUtilityDeepLinkCreate');
-    Route::get('commerce-bill-status', 'CMS\UtilityBillController@showCommerceBill');
+    Route::get('commerce-bill-status-view', 'CMS\UtilityBillController@showCommerceBill')->name('commerce-bill-status-view');
+    Route::get('commerce-bill-status', 'CMS\UtilityBillController@getCommerceTransaction')->name('commerce-bill-status');
 
     /**
      * Commerce Bill Category
@@ -1046,6 +1118,64 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'CMS\GenericSliderImageController@destroy'
     )->name('generic-slider.images.destroy');
     Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+
+    /*
+     *  Transaction status report
+     */
+
+    #Course
+    Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
+    Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
+        ->name('mybl.transaction-status.course.list');
+
+    #Music
+    Route::get('mybl/music-transaction-status-report-view', 'CMS\MyblTransactionStatusController@musicTransactionList')->name('mybl.transaction-status.music');
+    Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
+        ->name('mybl.transaction-status.music.list');
+
+    #ShareTrip
+    Route::get('mybl/sharetrip-transaction-status-report-view', 'CMS\MyblTransactionStatusController@sharetripTransactionList')->name('mybl.transaction-status.sharetrip');
+    Route::get('mybl/sharetrip-transaction-status-report', 'CMS\MyblTransactionStatusController@getSharetripTransaction')
+        ->name('mybl.transaction-status.sharetrip.list');
+
+    #DocTime
+    Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
+    Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
+        ->name('mybl.transaction-status.doctime.list');
+
+    /**
+     * Generic Carousel
+     * Live content
+     */
+    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
+    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
+    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
+
+
+    /**
+     * Internet Gift content
+     */
+    Route::resource('internet-gift-content', 'CMS\InternetGiftContentController');
+    Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
+    Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
+
+    /**
+     * Product Special Type
+     */
+    Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
+    Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
+    Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
+
+    /**
+     * Free Product Disburse file Upload
+     */
+    Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');
+    Route::post('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@uploadFreeProductDisburseExcel')->name('free-product-disburse.save');
+    Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
+    Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
+
+
 
     /**
      * Digital Services

@@ -75,7 +75,7 @@ class MyBlProductSchedulerService
                 continue;
             }
 
-            if ($currentTime >= $productSchedule['start_date'] && $currentTime <= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
+            if ($currentTime >= $productSchedule['start_date'] && $currentTime < $productSchedule['end_date'] && $productSchedule['change_state_status'] == 0) {
 
                 $productData = [];
                 $productScheduleData = [];
@@ -91,6 +91,7 @@ class MyBlProductSchedulerService
                     $productData['tag'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
+                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
                     if ($productScheduleData['tags'] != null && $productSchedule->tags != null) {
 
@@ -112,17 +113,18 @@ class MyBlProductSchedulerService
                             $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                             $tag = $firstTag->title;
                             $productData['tag'] = $tag;
+                            $tags = [];
+
+                            foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
+
+                                $data['product_code'] = $product['product_code'];
+                                $data['product_tag_id'] = $productScheduleTag;
+
+                                $tags [] = $data;
+                            }
+
+                            $this->myblProductTagRepository->insert($tags);
                         }
-
-                        $tags = [];
-                        foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
-
-                            $data['product_code'] = $product['product_code'];
-                            $data['product_tag_id'] = $productScheduleTag;
-
-                            $tags [] = $data;
-                        }
-                        $this->myblProductTagRepository->insert($tags);
                     }
                 }
 
@@ -155,7 +157,9 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
-            } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
+            } elseif ($currentTime >= $productSchedule['end_date'] && $productSchedule['change_state_status'] == 1) {
 
                 $productData = [];
                 $productScheduleData = [];
@@ -172,12 +176,15 @@ class MyBlProductSchedulerService
                     $productData['tag'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
+
+                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
-                    if ($productScheduleData['tags'] != null && $productSchedule->tags != null) {
+
+                    if ($productSchedule->tags != null) {
                         $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                         $tag = $firstTag->title;
                         $productData['tag'] = $tag;
-                        $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
+
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
 
@@ -187,7 +194,8 @@ class MyBlProductSchedulerService
                             $tags [] = $data;
                         }
                         $this->myblProductTagRepository->insert($tags);
-                    } else {
+                    }
+                    else {
                         $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                     }
                 }
@@ -224,6 +232,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             }
         }
 
@@ -275,6 +285,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             } elseif ($currentTime > $productSchedule['end_date'] && $productSchedule['product_core_change_state_status'] == 1) {
 
                 $productData = [];
@@ -317,6 +329,8 @@ class MyBlProductSchedulerService
                     DB::rollback();
                     Log::info($e->getMessage());
                 }
+                Redis::del('prepaid_popular_pack');
+                Redis::del('postpaid_popular_pack');
             }
         }
     }
@@ -427,6 +441,8 @@ class MyBlProductSchedulerService
             DB::rollback();
             Log::info($e->getMessage());
         }
+        Redis::del('prepaid_popular_pack');
+        Redis::del('postpaid_popular_pack');
     }
 
     public function getTag($tagId) {

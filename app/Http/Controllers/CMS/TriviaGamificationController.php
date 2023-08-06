@@ -32,7 +32,13 @@ class TriviaGamificationController extends Controller
      */
     public function index()
     {
-        //
+        $gamifications = $this->triviaGamificationService->findAll();
+        return view('admin.trivia.index', compact('gamifications'));
+    }
+
+    public function getGamificationForAjax(Request $request)
+    {
+        return $this->triviaGamificationService->getDataGamification($request);
     }
 
     /**
@@ -42,8 +48,7 @@ class TriviaGamificationController extends Controller
      */
     public function create()
     {
-        $trivia = $this->triviaGamificationService->findAll()->first();
-        return view('admin.trivia.create', compact('trivia'));
+        return view('admin.trivia.create');
     }
 
     /**
@@ -56,7 +61,10 @@ class TriviaGamificationController extends Controller
     {
         $this->triviaGamificationService->saveTriviaInfo($request->all());
         Redis::del("mybl_home_component");
-        return redirect()->route('trivia.create')->with('success', "Data saved successfully!");
+        Redis::del("content_component");
+        Redis::del("mybl_commerce_component");
+        Redis::del("non_bl_component");
+        return redirect()->route('gamification.index')->with('success', "Data saved successfully!");
     }
 
     /**
@@ -76,9 +84,10 @@ class TriviaGamificationController extends Controller
      * @param  \App\Models\TriviaGamification  $triviaGamification
      * @return Response
      */
-    public function edit(TriviaGamification $triviaGamification)
+    public function edit($id)
     {
-        //
+        $trivia = $this->triviaGamificationService->findOne($id);
+        return view('admin.trivia.edit', compact('trivia'));
     }
 
     /**
@@ -88,9 +97,14 @@ class TriviaGamificationController extends Controller
      * @param  \App\Models\TriviaGamification  $triviaGamification
      * @return Response
      */
-    public function update(Request $request, TriviaGamification $triviaGamification)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+        $this->triviaGamificationService->updateTriviaInfo($request->all(), $id);
+        Redis::del("mybl_home_component");
+        Redis::del("content_component");
+        Redis::del("mybl_commerce_component");
+        Redis::del("non_bl_component");
+        return redirect()->route('gamification.index')->with('success', "Data Updated successfully!");
     }
 
     /**
@@ -99,8 +113,13 @@ class TriviaGamificationController extends Controller
      * @param  \App\Models\TriviaGamification  $triviaGamification
      * @return Response
      */
-    public function destroy(TriviaGamification $triviaGamification)
+    public function destroy($id)
     {
-        //
+        session()->flash('error', $this->triviaGamificationService->destroy($id)->getContent());
+        Redis::del("mybl_home_component");
+        Redis::del("content_component");
+        Redis::del("mybl_commerce_component");
+        Redis::del("non_bl_component");
+        return redirect(route('gamification.index'));
     }
 }
