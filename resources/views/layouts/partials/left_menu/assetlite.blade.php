@@ -934,6 +934,11 @@
                    data-i18n="nav.templates.vert.classic_menu"><i
                         class="la la-list"></i>Education</a>
             </li>
+            <li class="{{ is_active_url('bl-labs/startup-stage') }}">
+                <a class="menu-item" href="{{ url('bl-labs/startup-stage') }}"
+                   data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-list"></i>Startup Stage</a>
+            </li>
         </ul>
     </li>
     {{--    @endif--}}
