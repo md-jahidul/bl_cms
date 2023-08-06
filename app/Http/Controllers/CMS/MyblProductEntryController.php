@@ -374,4 +374,16 @@ class MyblProductEntryController extends Controller
         return redirect('redis-key-update-view');
 
     }
+
+    public function pinToTopProducts()
+    {
+        $products = $this->service->findAllPinToTopProducts();
+
+         return view('admin.my-bl-products.pin-to-top-product', compact('products'));
+    }
+
+    public function productSortable(Request $request)
+    {
+        return $this->service->tableSort($request);
+    }
 }

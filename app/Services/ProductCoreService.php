@@ -1019,8 +1019,16 @@ class ProductCoreService
         try {
             DB::beginTransaction();
 
-            $model = MyBlProduct::where('product_code', $product_code);
+            $model = MyBlProduct::where('product_code', $product_code)->first();
 
+            $data['pin_to_top_sequence'] = 100000;
+            if ($data['pin_to_top'] || $model->pin_to_top == 1) {
+                if ($model->pin_to_top != 1) {
+                    $data['pin_to_top_sequence'] = count(MyBlProduct::where('pin_to_top', true)->get()) + 1;
+                } else {
+                    $data['pin_to_top_sequence'] = $model->pin_to_top_sequence;
+                }
+            }
             $model->update($data);
 
             $coreProduct = ProductCore::where('product_code', $product_code)->update($coreData);
@@ -1449,6 +1457,38 @@ class ProductCoreService
             return [
                 'status' => "failed",
                 'massage' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function findAllPinToTopProducts()
+    {
+        $orderBy = ['column' => 'pin_to_top_sequence', 'direction' => 'ASC'];
+        return $this->myBlProductRepository->findBy(['pin_to_top' => true, 'status' => true], null, $orderBy);
+    }
+
+    public function tableSort($request)
+    {
+        try {
+            $positions = $request->position;
+
+            foreach ($positions as $position) {
+                $menu_id = $position[0];
+                $new_position = $position[1];
+                $update_menu = $this->myBlProductRepository->findOne($menu_id);
+                $update_menu['pin_to_top_sequence'] = $new_position;
+                $update_menu->update();
+            }
+
+            return [
+                'status' => "success",
+                'massage' => "Order Changed successfully"
+            ];
+        } catch (\Exception $exception) {
+            $error = $exception->getMessage();
+            return [
+                'status' => "error",
+                'massage' => $error
             ];
         }
     }

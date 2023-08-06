@@ -120,7 +120,10 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
-
+                <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                    <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                        <i class="ft-list"></i>Pin To Top Products</a>
+                </li>
                 <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
                     <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
                         <i class="la la-fire"></i>Free Products Analytic</a>
@@ -208,7 +211,12 @@
             </ul>
         </li>
     @endif
-
+    <li class="{{ is_active_url('digital-service') }}">
+        <a class="menu-item" href="{{ route('digital-service.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>

@@ -354,6 +354,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
 
+    Route::get('pin-to-top-products', 'CMS\MyblProductEntryController@pinToTopProducts')->name('pin-to-top.products');
+    Route::get('pin-to-top-products/sort-auto-save', 'CMS\MyblProductEntryController@productSortable');
     /*
      * Product Tags Routes
      */
@@ -1128,7 +1130,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
     Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
         ->name('mybl.transaction-status.course.list');
-        
+
     #Music
     Route::get('mybl/music-transaction-status-report-view', 'CMS\MyblTransactionStatusController@musicTransactionList')->name('mybl.transaction-status.music');
     Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
@@ -1143,7 +1145,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
-        
+
     /**
      * Generic Carousel
      * Live content
@@ -1166,9 +1168,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
     Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
     Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
-    
+
     /**
-     * Free Product Disburse file Upload 
+     * Free Product Disburse file Upload
      */
     Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');
     Route::post('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@uploadFreeProductDisburseExcel')->name('free-product-disburse.save');
@@ -1177,6 +1179,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
 
 
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
 //
 });
 
