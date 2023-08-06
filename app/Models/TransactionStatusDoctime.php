@@ -27,6 +27,7 @@ class TransactionStatusDoctime extends Model
         'payment_status',
         'transaction_time',
         'transaction_id',
-        'remarks'
+        'remarks',
+        'promo_code'
     ];
 }

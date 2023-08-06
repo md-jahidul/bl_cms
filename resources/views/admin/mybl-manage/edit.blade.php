@@ -188,7 +188,16 @@
                                                 <div class="help-block"></div>
                                             </div>
                                         @endif
-
+                                        <div class="form-group col-md-6 {{ $errors->has('deeplink') ? ' error' : '' }}">
+                                            <label for="deeplink" >Deeplink</label>
+                                            <input type="text" name="deeplink"  class="form-control" placeholder="Enter Deeplink"
+                                                   value="{{ $item->deeplink ??  '' }}"
+                                            >
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('deeplink'))
+                                                <div class="help-block">  {{ $errors->first('deeplink') }}</div>
+                                            @endif
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="title" class="required mr-1">Status:</label>
