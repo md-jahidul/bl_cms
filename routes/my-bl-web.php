@@ -1161,6 +1161,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
     /**
+     * Product Special Type
+     */
+    Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
+    Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
+    Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
+    
+    /**
      * Free Product Disburse file Upload 
      */
     Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');

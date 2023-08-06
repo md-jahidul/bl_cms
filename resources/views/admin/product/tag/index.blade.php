@@ -20,7 +20,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="tag_bgd_color" class="control-label">Background Color</label>
+                                    <input type="color" name="tag_bgd_color" class="form-control" placeholder="Background Color" value={{ old("tag_bgd_color") ? old("tag_bgd_color") : '#000000' }} required>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="tag_text_color" class="control-label">Text Color</label>
+                                    <input type="color" name="tag_text_color" class="form-control" placeholder="Color" value={{ old("tag_text_color") ? old("tag_text_color") : '#ffffff'}} required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="priority" class="control-label">Order Sequence</label>
                                     <input type="number" name="priority" class="form-control" placeholder="Priority"
@@ -28,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <br>
                                 <button class="btn btn-success" type="submit">+ Add New Tag</button>
                             </div>
