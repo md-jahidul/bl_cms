@@ -556,6 +556,18 @@
                         <i class="la la-list"></i> Popup Banner
                     </a>
                 </li>
+                <li class="{{is_active_url('free-product-disburse')}}">
+                    <a class="menu-item" href="{{ route('free-product-disburse') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Free Product Disburse
+                    </a>
+                </li>
+                <li class="{{is_active_url('free-product-disburse-report-view')}}">
+                    <a class="menu-item" href="{{ route('free-product-disburse-report') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Free Product Disburse Report
+                    </a>
+                </li>
             </ul>
         </li>
     @endif

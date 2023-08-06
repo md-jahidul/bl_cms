@@ -1126,6 +1126,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
     Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
     Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
+    
+    /**
+     * Free Product Disburse file Upload 
+     */
+    Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');
+    Route::post('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@uploadFreeProductDisburseExcel')->name('free-product-disburse.save');
+    Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
+    Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
+
 
 
 //

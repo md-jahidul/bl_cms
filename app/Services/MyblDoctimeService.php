@@ -60,6 +60,7 @@ class MyblDoctimeService
                 'transaction_time' => $item->transaction_time,
                 'transaction_id' => $item->transaction_id,
                 'remarks' => $item->remarks,
+                'promo_code' => $item->promo_code,
             ];
         });
         return $response;
