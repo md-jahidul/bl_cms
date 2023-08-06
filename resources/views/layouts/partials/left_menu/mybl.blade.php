@@ -208,7 +208,12 @@
             </ul>
         </li>
     @endif
-
+    <li class="{{ is_active_url('digital-service') }}">
+        <a class="menu-item" href="{{ route('digital-service.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
