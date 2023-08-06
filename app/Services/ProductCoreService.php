@@ -393,16 +393,27 @@ class ProductCoreService
                             if (count($tags)) {
                                 $existingTags = ProductTag::whereIn('title', $tags)->get();
                                 $existingTagTitles = $existingTags->pluck('title')->toArray();
+                                $existingTagTitles = array_map('strtolower', $existingTagTitles);
                                 $existingTagIds = $existingTags->pluck('id')->toArray();
 
+
                                 foreach ($tags as $tag) {
-                                    if (!in_array($tag, Arr::flatten($existingTagTitles)) && $tag != "") {
+                                    if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
                                         $tagInsert = new ProductTag();
                                         $tagInsert->title = $tag;
                                         $tagInsert->priority = rand(5, 10);
                                         $tagInsert->save();
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
                                     }
                                 }
+
+                                #For update the id in my_bl_products table. Only for existing tag
+                                foreach ($existingTags as $key => $value) {
+                                    if($value->title == $tags[0]){
+                                        // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
+                                    }
+                                }                              
 
                                 $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
                             }
@@ -892,6 +903,7 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
+        $data['tag_id'] = isset($firstTag) ? $firstTag->id : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -910,6 +922,7 @@ class ProductCoreService
         $coreData['is_display_title_en_schedule'] = isset($request->is_display_title_en_schedule) ? true : false;
         $coreData['is_display_title_bn_schedule'] = isset($request->is_display_title_bn_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
         $productSchedule = [];
         $isProductSchedule = false;
 
@@ -1034,6 +1047,10 @@ class ProductCoreService
 
                     $model_tab->updateOrCreate($data_section_slug);
                 }
+            }else{
+                if(MyBlProductTab::where('product_code', $product_code)->exists()){
+                    MyBlProductTab::where('product_code', $product_code)->delete();
+                }
             }
 
             $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
@@ -1139,6 +1156,7 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
+        $data['tag_id'] = isset($firstTag->id) ? $firstTag->id : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
@@ -1153,6 +1171,8 @@ class ProductCoreService
         $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
         $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
+
 
         $productSchedule = [];
         $isProductSchedule = false;

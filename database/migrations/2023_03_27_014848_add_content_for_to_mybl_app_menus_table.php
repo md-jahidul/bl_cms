@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeUidTypeToGuestCustomerTable extends Migration
+class AddContentForToMyblAppMenusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeUidTypeToGuestCustomerTable extends Migration
      */
     public function up()
     {
-        Schema::table('guest_customer', function (Blueprint $table) {
-            $table->uuid('uid')->change();
+        Schema::table('mybl_app_menus', function (Blueprint $table) {
+            $table->string('content_for')->default('bl')->nullable()->after('status');
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeUidTypeToGuestCustomerTable extends Migration
      */
     public function down()
     {
-        Schema::table('guest_customer', function (Blueprint $table) {
-            //
+        Schema::table('mybl_app_menus', function (Blueprint $table) {
+            $table->dropColumn('content_for');
         });
     }
 }
