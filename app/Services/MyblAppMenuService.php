@@ -58,7 +58,7 @@ class MyblAppMenuService
             $data['icon'] = 'storage/' . $data['icon']->store('menu_icon');
         }
         if (request()->hasFile('parent_icon')) {
-            $data['icon'] = 'storage/' . $data['parent_icon']->store('menu_icon');
+            $data['parent_icon'] = 'storage/' . $data['parent_icon']->store('menu_icon');
         }
 
         $this->save($data);
