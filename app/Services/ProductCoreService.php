@@ -404,6 +404,9 @@ class ProductCoreService
                                         $tagInsert->priority = rand(5, 10);
                                         $tagInsert->save();
                                         $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
+
+                                        #for push newly created tag's id to sync product tag in my_bl_product_tags table
+                                        $existingTagIds[] = $tagInsert->id;
                                     }
                                 }
 
