@@ -160,7 +160,7 @@ class AlCoreProductService
     public function updateProductCore($data, $id)
     {
         $product = $this->alCoreProductRepository->findOneProductCore($id);
-    
+
         if (!$product) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = strtoupper($data['product_code']);
@@ -170,25 +170,24 @@ class AlCoreProductService
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
             $data['sim_type'] = (strtolower($data['type']) == 'prepaid') ? 1 : 2;
-            
-            if(isset($data['validity_unit'])){
-                
-                $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
-            }
-            else $data['validity'] = null;
-            
-            $this->save($data);
-        } else {
-            $data['product_code'] = strtoupper($data['product_code']);
-            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
-            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
-            
+
             if(isset($data['validity_unit'])){
 
                 $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
             }
             else $data['validity'] = null;
-            
+            $this->save($data);
+        } else {
+            $data['product_code'] = strtoupper($data['product_code']);
+            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
+            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
+
+            if(isset($data['validity_unit'])){
+
+                $data['validity'] = ($data['validity_unit'] == "bill_period") ? null : $data['validity'];
+            }
+            else $data['validity'] = null;
+
             $product->update($data);
         }
     }
@@ -976,14 +975,14 @@ class AlCoreProductService
                                 'message' => 'Failed to upload excel'
                             ], 500);
                         }
-                        
+
                         ++$row_number;
                         continue;
                     }
                     $cells          = $row->getCells();
                     $productCode    = $cells[0]->getValue();
                     $slugs          = (explode(",",$cells[1]->getValue()));
-                    
+
                     if(!isset($productCodes[$productCode])){
                         $findProduct = $this->alCoreProductRepository->findWithProduct($productCode);
                         if($findProduct == null)continue;
