@@ -89,6 +89,7 @@ class MyBlProductSchedulerService
 
                     $productScheduleData['tags'] = null;
                     $productData['tag'] = null;
+                    $productData['tag_id'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
                         $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
@@ -98,6 +99,7 @@ class MyBlProductSchedulerService
                         $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                         $tag = $firstTag->title;
                         $productData['tag'] = $tag;
+                        $productData['tag_id'] = $firstTag->id;
                         $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
@@ -113,6 +115,7 @@ class MyBlProductSchedulerService
                             $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                             $tag = $firstTag->title;
                             $productData['tag'] = $tag;
+                            $productData['tag_id'] = $firstTag->id;
                             $tags = [];
 
                             foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
@@ -174,6 +177,7 @@ class MyBlProductSchedulerService
 
                     $productScheduleData['tags'] = null;
                     $productData['tag'] = null;
+                    $productData['tag_id'] = null;
                     if(!$productTags->isEmpty()) {
                         $productScheduleData['tags'] = $productTags;
 
@@ -184,7 +188,7 @@ class MyBlProductSchedulerService
                         $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                         $tag = $firstTag->title;
                         $productData['tag'] = $tag;
-
+                        $productData['tag_id'] = $firstTag->id;
                         $tags = [];
                         foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
 
@@ -356,6 +360,8 @@ class MyBlProductSchedulerService
 
             $productScheduleData['tags'] = null;
             $productData['tag'] = null;
+            $productData['tag_id'] = null;
+
             if(!$productTags->isEmpty()) {
                 $productScheduleData['tags'] = $productTags;
             }
@@ -363,6 +369,7 @@ class MyBlProductSchedulerService
                 $firstTag = ProductTag::where('id', json_decode($productSchedule->tags)[0])->first();
                 $tag = $firstTag->title;
                 $productData['tag'] = $tag;
+                $productData['tag_id'] = $firstTag->id;
                 $this->myblProductTagRepository->deleteByProductCode($product['product_code']);
                 $tags = [];
                 foreach (json_decode($productSchedule->tags) as $productScheduleTag) {
