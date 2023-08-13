@@ -33,6 +33,13 @@ class GenericSliderController extends Controller
     public function store(Request $request)
     {
         $flag = $this->genericSliderService->storeSlider($request->all());
+        
+        if($request->input('component_type') != 'carousel') {
+            $request->merge([
+                'scrollable' => false,
+            ]);
+        }
+
         if ($flag) {
             Session::flash('success', 'Slider Created Successfully');
         } else {
@@ -52,23 +59,27 @@ class GenericSliderController extends Controller
     public function edit($sliderId)
     {
         $slider = $this->genericSliderService->findOne($sliderId);
-
         return view('admin.generic-slider.edit', compact('slider'));
     }
 
 
     public function update(Request $request, $sliderId)
     {
-
-        $flag = $this->genericSliderService->updateSlider($request->all(), $sliderId);
-        if ($flag) {
+        if($request->input('component_type') != 'carousel' && $request->input('component_type') != null) {
+            $request->merge([
+                'scrollable' => false,
+            ]);
+        }
+        
+        $success = $this->genericSliderService->updateSlider($request->all(), $sliderId);
+        
+        if ($success) {
             Session::flash('success', 'Slider Updtaed Successfully');
         } else {
             Session::flash('error', 'Slider Updated Failed');
         }
 
         return redirect('generic-slider');
-
     }
 
 

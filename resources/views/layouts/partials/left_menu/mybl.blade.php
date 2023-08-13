@@ -120,7 +120,10 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
-
+                <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                    <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                        <i class="ft-list"></i>Pin To Top Products</a>
+                </li>
                 <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
                     <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
                         <i class="la la-fire"></i>Free Products Analytic</a>
@@ -159,6 +162,12 @@
 {{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
 {{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
 {{--                </li>--}}
+
+                <li class="{{is_active_url('product-special-types')}}">
+                    <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-tag"></i>Product Special Types
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
@@ -202,7 +211,12 @@
             </ul>
         </li>
     @endif
-
+    <li class="{{ is_active_url('digital-service') }}">
+        <a class="menu-item" href="{{ route('digital-service.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
@@ -398,6 +412,38 @@
         </ul>
     </li>
 
+    <!-- Groups -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Group Components</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Show</a>
+            </li>
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components/create') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Create Group</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Non Bl -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Non Bl</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('non-bl-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>
+            </li>
+            <li class="{{ is_active_match('non-bl-offers')}}">
+                <a class="menu-item" href="{{ url('non-bl-offers') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Offer</a>
+            </li>
+
+            <li class=" {{is_active_url(route('nonbl-navigation-rail.index'))}}">
+                <a class="menu-item" href="{{ route('nonbl-navigation-rail.index') }}">
+                    <i class="la la-paper-plane"></i>NonBl Navigation Rail
+                </a>
+            </li>
+        </ul>
+    </li>
+
     <!-- FIFA WC -->
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
             <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
@@ -509,6 +555,10 @@
                     <a class="menu-item" href="{{ url('generic-slider') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Slider</a>
+                <li class="@if(is_active_match('generic-shortcut-master')) {{ is_active_match('generic-shortcut-master') }} @else {{ is_active_match('generic-shortcut') }}  @endif">
+                    <a class="menu-item" href="{{ route('generic-shortcut-master.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Shortcut</a>
                 </li>
                 <li class="{{ is_active_match('generic-carousel')}}">
                     <a class="menu-item" href="{{ url('generic-carousel') }}"
