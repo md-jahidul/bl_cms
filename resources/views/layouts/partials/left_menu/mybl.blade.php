@@ -65,41 +65,6 @@
                         <i class="la la-medium"></i>Explore</a>
                 </li>
             </ul>
-
-            <ul class="menu-content">
-                <li class="{{ is_active_url('mybl-home-components') }}">
-                    <a class="menu-item" href="{{ route('mybl.home.components') }}">
-                        <i class="la la-puzzle-piece"></i>Home Components</a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('content-components') }}">
-                    <a class="menu-item" href="{{ route('content-components') }}">
-                        <i class="la la-puzzle-piece"></i>Content Components</a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class=" {{is_active_url(route('health-hub.index'))}}">
-                    <a class="menu-item" href="{{ route('health-hub.index') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-heart"></i>Health Hub
-                    </a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
-                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
-                        <i class="la la-paper-plane"></i>Home Navigation Rail
-                    </a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
-                    <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
-                        <i class="la la-paper-plane"></i>Content Navigation Rail
-                    </a>
-                </li>
-            </ul>
         </li>
     @endif
 
@@ -610,6 +575,30 @@
                     <a class="menu-item" href="{{ route('free-product-disburse-report') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-list"></i> Free Product Disburse Report
+                    </a>
+                </li>
+                <li class="{{ is_active_url('mybl-home-components') }}">
+                    <a class="menu-item" href="{{ route('mybl.home.components') }}">
+                        <i class="la la-puzzle-piece"></i>Home Components</a>
+                </li>
+                <li class="{{ is_active_url('content-components') }}">
+                    <a class="menu-item" href="{{ route('content-components') }}">
+                        <i class="la la-puzzle-piece"></i>Content Components</a>
+                </li>
+                <li class=" {{is_active_url(route('health-hub.index'))}}">
+                    <a class="menu-item" href="{{ route('health-hub.index') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-heart"></i>Health Hub
+                    </a>
+                </li>
+                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Home Navigation Rail
+                    </a>
+                </li>
+                <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Content Navigation Rail
                     </a>
                 </li>
             </ul>
