@@ -146,7 +146,8 @@ class Helper
             "SUPPORT_EMAIL"           => 'Support Email',
             "SPIN_WHEEL"              => 'Spin Wheel',
             "COMMUNITY"               => 'Community',
-            "TOFFEE"                  => 'Toffee'
+            "TOFFEE"                  => 'Toffee',
+            "TOFFEE_LIVE"             => 'Toffee_Live'
         ];
     }
 
