@@ -27,6 +27,7 @@ class TermsAndConditionsController extends Controller
         TermsConditions::updateOrCreate(
             ['platform' => 'website', 'feature_name' => $request->feature_name],
             [
+                'platform' => 'website',
                 'terms_conditions' => $request->terms_conditions,
                 'feature_name' => $request->feature_name,
                 'terms_conditions_bn' => $request->terms_conditions_bn
