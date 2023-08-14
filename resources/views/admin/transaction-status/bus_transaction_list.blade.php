@@ -47,7 +47,7 @@
                                 <th>Confirmed At</th>
                                 <th>Cancelled At</th>
                                 <th>Expiry Time</th>
-                                <th>Data</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
                             <tbody>
