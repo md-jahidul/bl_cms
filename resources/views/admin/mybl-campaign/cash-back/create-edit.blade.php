@@ -12,6 +12,9 @@
         Cancel
     </a>
 @endsection
+@php
+    $unique = uniqid();
+@endphp
 
 @section('content')
     <section>
@@ -132,7 +135,7 @@
 
                                     <div class="form-actions col-md-12">
                                         <div class="pull-right">
-                                            <button id="save" class="btn btn-primary"><i
+                                            <button id="save-{{$unique}}" class="btn btn-primary"><i
                                                     class="la la-check-square-o"></i> Save
                                             </button>
                                         </div>
@@ -168,6 +171,11 @@
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+            $('#form-{{$unique}}').on('submit', function() {
+                // Disable the submit button after click
+                $('#save-{{$unique}}').prop('disabled', true);
+            });
+
             $(".product-list").select2()
             $('.report-repeater').repeater();
             let campaignStart = $('#start_date');
@@ -180,6 +188,7 @@
                 element.datetimepicker({
                     format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
+                    minDate: (element.val() == "") ? date : false,
                 });
             }
             $('#repeater-button').click(function (){
@@ -189,10 +198,12 @@
                 $('.date_time').datetimepicker({
                     format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:00:00',
                     showClose: true,
+                    minDate: date,
                 });
             })
             dateTime(campaignStart)

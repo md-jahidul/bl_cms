@@ -265,7 +265,8 @@
 @endpush
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
@@ -276,8 +277,8 @@
 @push('page-js')
 {{--        <script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
+    {{-- <script src="{{ asset('js/custom-js/start-end.js')}}"></script> --}}
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
@@ -288,7 +289,39 @@
     <script>
 
         $(function () {
+            // Date & Time
+            var date = new Date();
+            date.setDate(date.getDate());
 
+            $('#start_date').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                timePickerIncrement: 1,
+                startDate: '{{date('Y-m-d H:i:s')}}',
+                minDate: date,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            });
+
+            $('#end_date').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                timePickerIncrement: 1,
+                endDate: '{{date('Y-m-d H:i:s', strtotime('+ 6 hours'))}}',
+                minDate: date,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            });
+            
+            $('#start_date').val("");
+            $('#end_date').val("");
+
+            $('#start_date,#end_date').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+            
             $("input[name=user_type]").click(function () {
                 if ($(this).val() === "segment_wise_banner") {
                     $("#BannerSegmentWiseDiv").addClass('show').removeClass('hidden');

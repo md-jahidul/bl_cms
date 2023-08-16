@@ -295,7 +295,6 @@
                                     </div>
                                 </div>
 
-{{--                                {{ dd($details->details->content_type) }}--}}
                                 @if(  $details->details->content_type == 'data' ||
                                       $details->details->content_type == 'mix' ||
                                       $details->details->content_type == 'data loan' ||

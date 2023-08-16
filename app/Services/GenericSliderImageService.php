@@ -90,6 +90,7 @@ class GenericSliderImageService
             Redis::del('content_component');
             Redis::del('non_bl_component');
             Redis::del('mybl_commerce_component');
+            Redis::del('non_bl_component');
             Redis::del('non_bl_offer');
             Redis::del('lms_component_prepaid');
             Redis::del('lms_component_postpaid');
@@ -176,8 +177,6 @@ class GenericSliderImageService
                     BaseImageCta::where('banner_id', $id)->delete();
                 }
             });
-            Redis::del('mybl_home_component');
-            Redis::del('content_component');
             Redis::del('mybl_home_component');
             Redis::del('content_component');
             Redis::del('non_bl_component');
