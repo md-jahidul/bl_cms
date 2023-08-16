@@ -121,9 +121,9 @@ class BlLabApplicationService
         return [
             'application_id' => $application->application_id,
             'submitted_date' => date_format(date_create($application->submitted_at),"F, d, Y l"),
-            'summary' => $application->summary->toArray(),
-            'personal' => $application->personal->toArray(),
-            'startup' => $application->startup->toArray(),
+            'summary' => isset($application->summary) ? $application->summary->toArray() : null,
+            'personal' => isset($application->personal) ? $application->personal->toArray() : null,
+            'startup' => isset($application->startup) ? $application->startup->toArray() : null,
             'attachments' => $attachmentArr
         ];
     }
