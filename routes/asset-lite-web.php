@@ -1509,7 +1509,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {
         // Application List
-        Route::get('application-list', 'AssetLite\BlLab\BlLabApplicationController@applicationList')->name('application.list');
+        Route::get('application-list', 'AssetLite\BlLab\BlLabApplicationController@applicationList')
+            ->name('application.list');
+        Route::get('application-details/{application_id}', 'AssetLite\BlLab\BlLabApplicationController@applicationDetails')
+            ->name('application.details');
 
         Route::get('banners', 'AssetLite\BlLab\BlLabApplicationController@banner');
 
