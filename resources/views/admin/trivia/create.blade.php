@@ -58,6 +58,8 @@
                         <label for="status_input">Component For: </label>
                         <select name="content_for" class="browser-default custom-select" required>
                                 <option value="home"> Home </option>
+                                <option value="commerce"> Commerce </option>
+                                <option value="content"> Content </option>
                                 <option value="non_bl"> Non Bl </option>
                         </select>
                         @if ($errors->has('content_for'))
