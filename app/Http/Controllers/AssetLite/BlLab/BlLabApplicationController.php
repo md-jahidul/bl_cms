@@ -60,6 +60,18 @@ class BlLabApplicationController extends Controller
         return view('admin.bl-lab.applications.index', compact('programs'));
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return array|Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function applicationDetails($applicationId)
+    {
+        $data = $this->labApplicationService->getApplicationsDetails($applicationId);
+
+        return view('admin.bl-lab.applications.view_details', compact('data'));
+    }
+
     public function banner()
     {
         $bannerMyIdea = $this->alBannerService->findBanner('bl_lab_my_idea', 0);

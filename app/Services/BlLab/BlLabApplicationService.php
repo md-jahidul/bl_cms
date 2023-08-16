@@ -45,15 +45,12 @@ class BlLabApplicationService
      */
     public function getApplications($request)
     {
-//        dd($request->all());
         try {
             $draw = $request->get('draw');
             $start = $request->get('start');
             $length = $request->get('length');
 
             $builder = new BlLabApplication();
-
-
 
 //            if ($request->star_count) {
 //                $builder = $builder->where('rating', $request->star_count);
@@ -63,12 +60,15 @@ class BlLabApplicationService
                 if ($request->program) {
                     $q->where('apply_for', "$request->program");
                 }
+                if ($request->application_status) {
+                    $q->where('application_status', "$request->application_status");
+                }
             })->with('summary');
 
-            if ($request->id_number != null) {
-                $builder = $builder->where('id_number', $request->id_number);
+            if ($request->application_id != null) {
+                $builder = $builder->where('application_id', $request->application_id);
             }
-//
+
             if ($request->submitted_at != null) {
                 $date = explode('-', $request->submitted_at);
                 $from = str_replace('/', '-', $date[0]);
@@ -81,6 +81,7 @@ class BlLabApplicationService
             $data = $builder->skip($start)->take($length)
                 ->orderBy('created_at', 'DESC')
                 ->get();
+
             return [
                 'data' => $data,
                 'draw' => $draw,
@@ -94,5 +95,36 @@ class BlLabApplicationService
                 'message' => $e->getMessage()
             ];
         }
+    }
+
+    public function getApplicationsDetails($applicationId)
+    {
+        $application = $this->labApplicationRepository->findOneByProperties(['application_id' => $applicationId]);
+
+        $attachmentArr = [];
+        if (!empty($application->personal['cv'])){
+            $attachmentArr[] = $application->personal['cv'];
+        }
+        if (!empty($application->personal['team_members'])){
+            $attachmentArr = array_merge($attachmentArr, $application->personal['team_members']);
+        }
+        if (!empty($application->startup['business_model_file'])){
+            $attachmentArr[] = $application->startup['business_model_file'];
+        }
+        if (!empty($application->startup['gtm_plan_file'])){
+            $attachmentArr[] = $application->startup['gtm_plan_file'];
+        }
+        if (!empty($application->startup['financial_metrics_file'])){
+            $attachmentArr[] = $application->startup['financial_metrics_file'];
+        }
+
+        return [
+            'application_id' => $application->application_id,
+            'submitted_date' => date_format(date_create($application->submitted_at),"F, d, Y l"),
+            'summary' => $application->summary->toArray(),
+            'personal' => $application->personal->toArray(),
+            'startup' => $application->startup->toArray(),
+            'attachments' => $attachmentArr
+        ];
     }
 }
