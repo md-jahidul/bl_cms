@@ -18,6 +18,19 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6">
+                                    <label for="title" class="required">Title</label>
+                                    <input class="form-control"
+                                           name="title"
+                                           id="title"
+                                           placeholder="Title"
+                                           required>
+                                    @if($errors->has('title'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('title') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label for="header_title_en" class="required">Commercial Name En</label>
                                     <input class="form-control"
                                            name="commercial_name_en"

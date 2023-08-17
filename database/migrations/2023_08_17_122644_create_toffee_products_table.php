@@ -16,6 +16,7 @@ class CreateToffeeProductsTable extends Migration
         Schema::create('toffee_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type')->default('data');
+            $table->string('title');
             $table->string('commercial_name_en');
             $table->string('commercial_name_bn');
             $table->integer('internet')->default(0);

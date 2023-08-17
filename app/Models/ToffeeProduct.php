@@ -23,6 +23,7 @@ class ToffeeProduct extends Model
             'is_recharge',
             'image',
             'status',
-            'connection_type'
+            'connection_type',
+            'title'
         ];
 }
