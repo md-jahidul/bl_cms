@@ -1185,6 +1185,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
     Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
         ->name('digital-service.destroy');
+
+    /**
+     * Toffee Product
+     */
+
+    Route::resource('toffee-product', 'CMS\ToffeeProductController');
+    Route::get('toffee-product/destroy/{id}', 'CMS\ToffeeProductController@destroy')
+        ->name('toffee-product.destroy');
 //
 });
 

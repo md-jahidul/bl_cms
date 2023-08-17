@@ -133,6 +133,11 @@
                         <i class="ft-tag"></i>Product Special Types
                     </a>
                 </li>
+
+                <li class="{{ is_active_match(route('toffee-product.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-product.index') }}">
+                        <i class="ft-list"></i>Toffee Products</a>
+                </li>
             </ul>
         </li>
     @endif
