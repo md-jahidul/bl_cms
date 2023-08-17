@@ -21,6 +21,7 @@
                             <th>Sl</th>
                             <th>Commercial Name(en)</th>
                             <th>Product</th>
+                            <th>Connection Type</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -31,6 +32,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $product->commercial_name_en }}</td>
                                 <td>{{ $product->product_code }}</td>
+                                <td>{{ ucfirst($product->connection_type) }}</td>
                                 <td>{{ $product->status ? 'Active':'Inactive' }}</td>
                                 <td>
                                     <a href="{{ route('toffee-product.edit', $product->id) }}" role="button"

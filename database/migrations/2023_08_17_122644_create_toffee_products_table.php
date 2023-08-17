@@ -27,6 +27,7 @@ class CreateToffeeProductsTable extends Migration
             $table->string('offer_breakdown_bn');
             $table->string('display_sd_vat_tax');
             $table->string('product_code');
+            $table->string('connection_type')->default('prepaid');
             $table->boolean('has_autorenew')->default(0);
             $table->boolean('is_recharge')->default(0);
             $table->string('image')->nullable();

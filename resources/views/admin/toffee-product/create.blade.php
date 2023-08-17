@@ -186,6 +186,15 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eventInput3">Connection Type</label>
+                                        <select name="connection_type" class="form-control">
+                                            <option value="prepaid" >Prepaid</option>
+                                            <option value="postpaid">Postpaid</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div id="image-input" class="form-group col-md-6 mb-2">
                                     <div class="form-group">
                                         <label for="image_url">Image</label>

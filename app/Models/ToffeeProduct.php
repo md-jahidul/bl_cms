@@ -22,6 +22,7 @@ class ToffeeProduct extends Model
             'has_autorenew',
             'is_recharge',
             'image',
-            'status'
+            'status',
+            'connection_type'
         ];
 }
