@@ -19,6 +19,7 @@
                 <option value="sms">SMS BUNDLES</option>
                 <option value="scr">SPECIAL CALL RATE</option>
                 <option value="recharge_offer">RECHARGE OFFER</option>
+                <option value="reactivation">REACTIVATION OFFER</option>
                 <option value="ma loan">MA LOAN</option>
                 <option value="data loan">DATA LOAN</option>
                 <option value="gift">GIFT</option>

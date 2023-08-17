@@ -137,10 +137,13 @@ class Helper
             "ELECTRICITY"             => 'Electricity',
             "GAS"                     => 'Gas',
             "WATER"                   => 'Water',
+            "SUPPORT_EMAIL"           => 'Support Email',
             "SHARETRIP"               => 'Sharetrip',
             "RABBITHOLE"              => 'Rabbithole',
             "SPIN_WHEEL"              => 'Spin Wheel',
             "BUS"                     => 'Bus',
+            "CONTENT"                 => 'Content',
+            "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live'
         ];
