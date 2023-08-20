@@ -215,21 +215,39 @@
                             <td style="float:right;">
                                 <h1 class="heading">Submitted Idea</h1>
                                 <div style="float:right; width: 410px;">
-                                    <span style="float: left;border-right: 1px solid #E0E0E0; text-align: right; padding-right: 20px;">
-                                        <span style="
-                                          display: block;
-                                          font-size: 17px;
-                                          font-style: normal;
-                                          font-weight: 400;
-                                          color: #757575;
-                                          line-height: 125%; /* 12.5px */
-                                          letter-spacing: 0.2px;">Submitted on</span>
-                                        <span style="
-                                          font-size: 17px;
-                                          font-weight: 600;
-                                          line-height: 130%;">{{ $data['submitted_date'] ?? null }}</span>
-                                    </span>
-                                                            <span style="float:right; padding-left: 16px; text-align: right;">
+                                    @if(!empty($data['submitted_date']))
+                                        <span style="float: left;border-right: 1px solid #E0E0E0; text-align: right; padding-right: 20px;">
+                                            <span style="
+                                              display: block;
+                                              font-size: 17px;
+                                              font-style: normal;
+                                              font-weight: 400;
+                                              color: #757575;
+                                              line-height: 125%; /* 12.5px */
+                                              letter-spacing: 0.2px;">Submitted on</span>
+                                            <span style="
+                                              font-size: 17px;
+                                              font-weight: 600;
+                                              line-height: 130%;">{{ $data['submitted_date'] ?? null }}</span>
+                                        </span>
+                                    @else
+                                        <span style="float: left;border-right: 1px solid #E0E0E0; text-align: right; padding-right: 20px;">
+                                            <span style="
+                                              display: block;
+                                              font-size: 17px;
+                                              font-style: normal;
+                                              font-weight: 400;
+                                              color: #757575;
+                                              line-height: 125%; /* 12.5px */
+                                              letter-spacing: 0.2px;">Application Status: </span>
+                                            <span style="
+                                              font-size: 17px;
+                                              font-weight: 600;
+                                              line-height: 130%;"><strong>Draft</strong></span>
+                                        </span>
+                                    @endif
+
+                                    <span style="float:right; padding-left: 16px; text-align: right;">
                                         <span style="
                                           display: block;
                                           font-size: 17px;

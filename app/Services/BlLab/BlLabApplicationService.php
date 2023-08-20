@@ -120,7 +120,7 @@ class BlLabApplicationService
 
         return [
             'application_id' => $application->application_id,
-            'submitted_date' => date_format(date_create($application->submitted_at),"F, d, Y l"),
+            'submitted_date' => $application->submitted_at ? date_format(date_create($application->submitted_at),"F, d, Y l") : null,
             'summary' => isset($application->summary) ? $application->summary->toArray() : null,
             'personal' => isset($application->personal) ? $application->personal->toArray() : null,
             'startup' => isset($application->startup) ? $application->startup->toArray() : null,

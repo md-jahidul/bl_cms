@@ -68,7 +68,6 @@ class BlLabApplicationController extends Controller
     public function applicationDetails($applicationId)
     {
         $data = $this->labApplicationService->getApplicationsDetails($applicationId);
-
         return view('admin.bl-lab.applications.view_details', compact('data'));
     }
 
