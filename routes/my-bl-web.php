@@ -1193,6 +1193,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('toffee-product', 'CMS\ToffeeProductController');
     Route::get('toffee-product/destroy/{id}', 'CMS\ToffeeProductController@destroy')
         ->name('toffee-product.destroy');
+
+    Route::resource('toffee-subscription-types', 'CMS\ToffeeSubscriptionTypeController');
+    Route::get('toffee-subscription-types/destroy/{id}', 'CMS\ToffeeSubscriptionTypeController@destroy');
+
+    Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
+    Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
 //
 });
 

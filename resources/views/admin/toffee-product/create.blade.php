@@ -208,6 +208,21 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="content_ids" class="">Content Ids</label>
+                                    <input class="form-control"
+                                           name="content_ids"
+                                           id="content_ids"
+                                           placeholder="Enter Content Ids with comma-separated value"
+                                           required>
+                                    @if($errors->has('content_ids'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('content_ids') }}</small>
+                                        </p>
+                                    @endif
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Enter Content Ids with comma-separated value</span>
+                                    <div class="help-block"></div>
+                                </div>
                                 <div id="image-input" class="form-group col-md-6 mb-2">
                                     <div class="form-group">
                                         <label for="image_url">Image</label>
