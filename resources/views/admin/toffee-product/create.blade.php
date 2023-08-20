@@ -75,7 +75,7 @@
                                            type="number"
                                            name="internet"
                                            id="internet"
-                                           placeholder="Enter Internet Amount."
+                                           placeholder="Enter MB."
                                            required>
                                     @if($errors->has('internet'))
                                         <p class="text-left">
@@ -101,8 +101,8 @@
                                     <div class="form-group">
                                         <label for="eventInput3">Validity Unit</label>
                                         <select name="validity_unit" class="form-control">
-                                            <option value="mb">MB</option>
-                                            <option value="gb" >GB</option>
+                                            <option value="hours">Hours</option>
+                                            <option value="days" >Days</option>
                                         </select>
                                     </div>
                                 </div>

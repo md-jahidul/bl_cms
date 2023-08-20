@@ -108,8 +108,8 @@
                                     <div class="form-group">
                                         <label for="eventInput3">Validity Unit</label>
                                         <select name="validity_unit" class="form-control">
-                                            <option value="mb" {{ $product->validity_unit=='mb' ? 'selected':''}}>MB</option>
-                                            <option value="gb" {{  $product->validity_unit=='gb' ? 'selected':''}}>GB</option>
+                                            <option value="hours" {{ $product->validity_unit=='hours' ? 'selected':''}}>Hours</option>
+                                            <option value="days" {{  $product->validity_unit=='days' ? 'selected':''}}>Days</option>
                                         </select>
                                     </div>
                                 </div>

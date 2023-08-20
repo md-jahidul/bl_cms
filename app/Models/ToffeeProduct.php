@@ -24,6 +24,7 @@ class ToffeeProduct extends Model
             'image',
             'status',
             'connection_type',
-            'title'
+            'title',
+            'content_ids'
         ];
 }

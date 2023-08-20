@@ -33,6 +33,7 @@ class CreateToffeeProductsTable extends Migration
             $table->boolean('is_recharge')->default(0);
             $table->string('image')->nullable();
             $table->boolean('status')->default(0);
+            $table->string('content_ids')->nullable();
             $table->timestamps();
         });
     }
