@@ -425,9 +425,12 @@ class ProductCoreService
                                         // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
                                         $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
                                     }
-                                }                              
+                                }
 
                                 $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
+                            }
+                            if (count($tags) == 0) {
+                                MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
                             }
 
                         } catch (Exception $e) {
