@@ -234,7 +234,7 @@ class MyblProductEntryController extends Controller
             /**
              * Commenting reset redis key code according to BL requirement on 24 June 2021
              */
-            //$this->service->resetProductRedisKeys();
+            $this->service->resetProductRedisKeys();
             $this->service->syncSearch();
 
             $response = [
