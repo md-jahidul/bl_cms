@@ -28,14 +28,15 @@ class ToffeePremiumProductService
         return $this->toffeePremiumProductRepository->findAll();
     }
 
-    public function storeToffeePremiumProduct($premiumProduct)
+    public function storeToffeePremiumProduct($request)
     {
         try {
-            DB::transaction(function () use ($premiumProduct) {
-                $data['toffee_subscription_type_id'] = $premiumProduct['toffee_subscription_type_id'];
-                $data['prepaid_product_codes'] = implode(', ', $premiumProduct['prepaid_product_codes']);
-                $data['postpaid_product_codes'] = implode(', ', $premiumProduct['postpaid_product_codes']);
-                $data['available_for_bl_users'] = isset($premiumProduct['available_for_bl_users'])? true : false;
+            DB::transaction(function () use ($request) {
+                $data = [];
+                $data['toffee_subscription_type_id'] = $request->toffee_subscription_type_id;
+                $data['prepaid_product_codes'] = ($request->has('prepaid_product_codes') && $request->prepaid_product_codes != null) ? implode(',', $request->prepaid_product_codes) : null;
+                $data['postpaid_product_codes'] = ($request->has('prepaid_product_codes') && $request->postpaid_product_codes != null) ? implode(',', $request->postpaid_product_codes) : null;
+                $data['available_for_bl_users'] = isset($request->available_for_bl_users)? true : false;
                 $premiumProduct = $this->save($data);
             });
             return true;
@@ -46,16 +47,21 @@ class ToffeePremiumProductService
         }
     }
 
-    public function updateToffeePremiumProduct($data, $id)
+    public function updateToffeePremiumProduct($request, $id)
     {
         try {
-            $productSpecialType = $this->findOne($id);
-            DB::transaction(function () use ($data, $id, $productSpecialType) {              
-                $productSpecialType->update($data);
+            $toffeePremiumProduct = $this->findOne($id);
+            DB::transaction(function () use ($request, $id, $toffeePremiumProduct) {    
+                $data = [];
+                $data['toffee_subscription_type_id'] = $request->toffee_subscription_type_id;
+                $data['prepaid_product_codes'] = ($request->has('prepaid_product_codes') && $request->prepaid_product_codes != null) ? implode(',', $request->prepaid_product_codes) : null;
+                $data['postpaid_product_codes'] = ($request->has('postpaid_product_codes') && $request->postpaid_product_codes != null) ? implode(',', $request->postpaid_product_codes) : null;
+                $data['available_for_bl_users'] = isset($request->available_for_bl_users)? true : false;          
+                $toffeePremiumProduct->update($data);
             });
             return true;
         } catch (\Exception $e) {
-            Log::error('Toffee Premium Product store failed' . $e->getMessage());
+            Log::error('Toffee Premium Product Update failed' . $e->getMessage());
             return false;
         }
     }
@@ -63,8 +69,8 @@ class ToffeePremiumProductService
 
     public function deleteToffeePremiumProduct($id)
     {
-        $productSpecialType = $this->findOne($id);
-        $productSpecialType->delete();
+        $toffeePremiumProduct = $this->findOne($id);
+        $toffeePremiumProduct->delete();
         return Response('Toffee Premium Product has been successfully deleted');
     }
 

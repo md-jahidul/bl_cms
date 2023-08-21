@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 
-use App\ToffeePremiumProduct;
+use App\Models\ToffeePremiumProduct;
 
 class ToffeePremiumProductRepository extends BaseRepository
 {

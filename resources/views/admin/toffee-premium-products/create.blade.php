@@ -29,15 +29,19 @@
                                 <div class="row mb-1">
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="toffee_subscription_type_id" class="required">Subscription Type:</label>
-                                        <select name="toffee_subscription_type_id" class="form-control">
+                                        <select name="toffee_subscription_type_id" class="form-control"
+                                            required data-validation-required-message="Please select Subscription Type">
                                             <option value=""></option>
                                             @foreach ($toffeeSubscriptionTypes as $key => $subscriptionTypes)
                                                 <option
                                                     value="{{ $key }}" {{ old("toffee_subscription_type_id") == $key ? 'selected' : '' }}>  {{$subscriptionTypes}}
                                                 </option>
                                             @endforeach
-                                            
                                         </select>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('toffee_subscription_type_id'))
+                                            <div class="help-block">{{ $errors->first('toffee_subscription_type_id') }}</div>
+                                        @endif
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="prepaid_product_codes" class="">Prepaid Product Codes:</label>

@@ -68,7 +68,7 @@ class ToffeeSubscriptionTypeController extends Controller
         $toffeeSubscriptionType = $this->toffeeSubscriptionTypeService->findOne($toffeeSubscriptionType);
 
         if ($toffeeSubscriptionType) {
-            $this->toffeeSubscriptionTypeService->deleteToffeeSubscriptionType($toffeeSubscriptionType);
+            $this->toffeeSubscriptionTypeService->deleteToffeeSubscriptionType($toffeeSubscriptionType->id);
             
             session()->flash('error', 'Toffee Subscription Type Deleted Successfully');
         } else {

@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Edit Toffee Subscription Type')
-@section('card_name', 'Edit Toffee Subscription Type')
+@section('title', 'Edit Toffee Premium Product')
+@section('card_name', 'Edit Toffee Premium Product')
 
 @section('action')
-    <a href="{{route('toffee-subscription-types.index')}}" class="btn btn-info btn-glow px-2">
+    <a href="{{route('toffee-premium-products.index')}}" class="btn btn-info btn-glow px-2">
         Back
     </a>
 @endsection
@@ -14,68 +14,55 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form novalidate class="form row"
-                              action="{{ route("toffee-subscription-types.update",$toffeeSubscriptionType->id) }}"
+                              action="{{ route("toffee-premium-products.update",$toffeePremiumProduct->id) }}"
                               enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('put')
 
                             <div class="form-group col-md-6">
-                                <label for="subscription_type">Subscription Type: <small
-                                        class="text-danger">*</small> </label>
-                                <input
-                                    maxlength="200"
-                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                    data-validation-required-message="Title is required"
-                                    data-validation-regex-message="Title must start with alphabets"
-                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                    value="{{old('subscription_type')?old('subscription_type'):$toffeeSubscriptionType->subscription_type}}" required id="subscription_type"
-                                    type="text"
-                                    class="form-control @error('subscription_type') is-invalid @enderror"
-                                    placeholder="Title" name="subscription_type">
-                                <small
-                                    class="text-danger"> @error('subscription_type') {{ $message }} @enderror </small>
-                                <div class="help-block"></div>
-                                @if ($errors->has('subscription_type'))
-                                    <div class="help-block">
-                                        <small class="text-danger"> {{ $errors->first('subscription_type') }} </small>
-                                    </div>
-                                @endif
+                                <label for="toffee_subscription_type_id" class="required">Subscription Type:</label>
+                                <select name="toffee_subscription_type_id" class="form-control">
+                                    <option value=""></option>
+                                    @foreach ($toffeeSubscriptionTypes as $key => $subscriptionTypes)
+                                        <option
+                                            value="{{ $key }}" {{ $toffeePremiumProduct->toffee_subscription_type_id == $key ? 'selected' : '' }}>  {{$subscriptionTypes}}
+                                        </option>
+                                    @endforeach
+                                    
+                                </select>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="content_ids" class="">Content Ids</label>
-                                <input class="form-control"
-                                    name="content_ids"
-                                    value="{{old('content_ids') ? old('content_ids') : $toffeeSubscriptionType->content_ids}}"
-                                    id="content_ids"
-                                    placeholder="Enter Content Ids with comma-separated value"
-                                    required>
-                                @if($errors->has('content_ids'))
-                                    <p class="text-left">
-                                        <small class="danger text-muted">{{ $errors->first('content_ids') }}</small>
-                                    </p>
-                                @endif
-                                <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Enter Content Ids with comma-separated value</span>
-                                <div class="help-block"></div>
+                                <label for="prepaid_product_codes" class="">Prepaid Product Codes:</label>
+                                <select multiple name="prepaid_product_codes[]" class="form-control prepaid_product_codes">
+                                    <option value=""></option>
+                                    @foreach ($toffeePrepaidProductCodes as $key => $prepaidProductCode)
+                                        <option {{ in_array($key, $toffeePremiumProduct->prepaid_product_codes, false) ? 'selected' : '' }}
+                                            value="{{ $key }}" >  {{$prepaidProductCode}}
+                                        </option>
+                                    @endforeach
+                                    
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6 mb-2">
+                                <label for="postpaid_product_codes" class="">Postpaid Product Codes:</label>
+                                <select multiple name="postpaid_product_codes[]" class="form-control postpaid_product_codes">
+                                    <option value=""></option>
+                                    @foreach ($toffeePostpaidProductCodes as $key => $postpaidProductCode)
+                                        <option {{ in_array($key, $toffeePremiumProduct->postpaid_product_codes, false) ? 'selected' : '' }}
+                                            value="{{ $key }}">  {{$postpaidProductCode}}
+                                        </option>
+                                    @endforeach
+                                    
+                                </select>
                             </div>
 
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="status">Active Status:</label>
-                                    <select value="{{$toffeeSubscriptionType->status}}"
-                                            class="form-control" id="status"
-                                            name="status">
-                                        <option value="1"
-                                                @if($toffeeSubscriptionType->status == "1") selected @endif>
-                                            Active
-                                        </option>
-                                        <option value="0"
-                                                @if($toffeeSubscriptionType->status == "0") selected @endif>
-                                            InActive
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
+                            <div class="col-md-2 icheck_minimal skin mt-2">
+                                <fieldset>
+                                    <input type="checkbox" id="available_for_bl_users" value="1" @if($toffeePremiumProduct->available_for_bl_users) checked @endif name="available_for_bl_users">
+                                    <label for="available_for_bl_users">Available for BL Users</label>
+                                </fieldset>
+                            </div> 
                             <div class="form-group col-md-12">
                                 <button style="float: right" type="submit" id="submitForm"
                                         class="btn btn-success round px-2">
@@ -90,7 +77,7 @@
         </div>
     </section>
 
-    @if(!$toffeeSubscriptionType)
+    @if(!$toffeePremiumProduct)
         <h1>
             No Subscription Type Available
         </h1>
@@ -128,7 +115,20 @@
     <script>
 
         $(function () {
+            $('select[name="toffee_subscription_type_id"]').select2({
+                placeholder: 'Please Select Subscription Type',
+                allowClear: true
+            });
 
+            $('.prepaid_product_codes').select2({
+                placeholder: 'Please Select Prepaid Product codes',
+                allowClear: true
+            });
+
+            $('.postpaid_product_codes').select2({
+                placeholder: 'Please Select Postpaid Product Codes',
+                allowClear: true
+            });
         });
 
     </script>

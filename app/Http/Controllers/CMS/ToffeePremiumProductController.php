@@ -47,7 +47,7 @@ class ToffeePremiumProductController extends Controller
 
     public function store(Request $request)
     {
-        if($this->toffeePremiumProductService->storeToffeePremiumProduct($request->all())) {
+        if($this->toffeePremiumProductService->storeToffeePremiumProduct($request)) {
             session()->flash('message', 'Premium Product Created Successfully');
         } else {
             session()->flash('error', 'Premium Product Created Failed');
@@ -61,14 +61,33 @@ class ToffeePremiumProductController extends Controller
     {
         $toffeePremiumProduct = $this->toffeePremiumProductService->findOne($premiumProductId);
 
-        return view('admin.toffee-premium-products.edit', compact('toffeePremiumProduct'));
+        if ($toffeePremiumProduct) {
+            $toffeePremiumProduct->prepaid_product_codes = $toffeePremiumProduct->prepaid_product_codes ? explode(',', $toffeePremiumProduct->prepaid_product_codes ) : [];
+            $toffeePremiumProduct->postpaid_product_codes = $toffeePremiumProduct->postpaid_product_codes ? explode(',', $toffeePremiumProduct->postpaid_product_codes ) : [];
+        }
+
+        $toffeeSubscriptionTypes = $this->toffeeSubscriptionTypeService
+            ->findBy(['status' => 1], null, ['column' => 'created_at', 'direction' => 'asc'])
+            ->pluck('subscription_type', 'id');
+
+        $toffeePrepaidProductCodes = ToffeeProduct::where(['connection_type' => 'prepaid', 'status' => 1])->pluck('product_code', 'product_code')->sortBy('sort');
+
+        $toffeePostpaidProductCodes = ToffeeProduct::where(['connection_type' => 'postpaid', 'status' => 1])->pluck('product_code', 'product_code')->sortBy('sort');
+
+
+        return view('admin.toffee-premium-products.edit', compact(
+            'toffeePremiumProduct',
+            'toffeeSubscriptionTypes',
+            'toffeePrepaidProductCodes',
+            'toffeePostpaidProductCodes'
+        ));
     }
 
 
     public function update(Request $request, $toffeePremiumProduct)
     {
 
-        if($this->toffeePremiumProductService->updateToffeePremiumProduct($request->all(), $toffeePremiumProduct)) {
+        if($this->toffeePremiumProductService->updateToffeePremiumProduct($request, $toffeePremiumProduct)) {
             session()->flash('message', 'Premium Product Updated Successfully');
         } else {
             session()->flash('error', 'Premium Product Updated Failed');
@@ -84,11 +103,11 @@ class ToffeePremiumProductController extends Controller
         $toffeePremiumProduct = $this->toffeePremiumProductService->findOne($toffeePremiumProduct);
 
         if ($toffeePremiumProduct) {
-            $this->toffeePremiumProductService->deleteToffeePremiumProduct($toffeePremiumProduct);
+            $this->toffeePremiumProductService->deleteToffeePremiumProduct($toffeePremiumProduct->id);
             
-            session()->flash('error', 'Toffee Subscription Type Deleted Successfully');
+            session()->flash('error', 'Premium Product Deleted Successfully');
         } else {
-            session()->flash('error', 'Toffee Subscription Type Deleted Failed');
+            session()->flash('error', 'Premium Product Deleted Failed');
         }
 
         return redirect()->back();

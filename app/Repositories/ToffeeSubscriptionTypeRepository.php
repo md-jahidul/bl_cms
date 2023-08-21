@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 
-use App\ToffeeSubscriptionType;
+use App\Models\ToffeeSubscriptionType;
 
 class ToffeeSubscriptionTypeRepository extends BaseRepository
 {
