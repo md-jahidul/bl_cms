@@ -32,6 +32,7 @@ class CreateBlLabStartupInfosTable extends Migration
             $table->boolean('receive_fund')->nullable();
             $table->string('receive_fund_source')->nullable();
             $table->string('startup_current_stage')->nullable();
+            $table->mediumText('other_attr')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
             $table->foreign('bl_lab_app_id')

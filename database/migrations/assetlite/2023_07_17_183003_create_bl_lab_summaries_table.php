@@ -20,6 +20,7 @@ class CreateBlLabSummariesTable extends Migration
             $table->text('idea_details')->nullable();
             $table->string('industry')->nullable();
             $table->string('apply_for')->nullable();
+            $table->mediumText('other_attr')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
             $table->foreign('bl_lab_app_id')

@@ -13,9 +13,12 @@ use App\Models\BlLab\BlLabApplication;
 use App\Repositories\BlLab\BlLabApplicationRepository;
 use App\Repositories\BlLab\BlLabEducationRepository;
 use App\Traits\CrudTrait;
+//use Barryvdh\DomPDF\Facade\Pdf;
+use PDF;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
 
