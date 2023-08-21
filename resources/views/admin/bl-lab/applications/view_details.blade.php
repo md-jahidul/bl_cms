@@ -293,7 +293,7 @@
                             </td>
                             <td>
                                 <div class="txt-1">Designation</div>
-                                <div class="txt-2">Developer</div>
+                                <div class="txt-2">{{ $data['personal']['designation'] ?? null }}</div>
                             </td>
                         </tr>
 

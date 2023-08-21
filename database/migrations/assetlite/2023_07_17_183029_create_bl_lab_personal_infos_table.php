@@ -18,6 +18,7 @@ class CreateBlLabPersonalInfosTable extends Migration
             $table->unsignedBigInteger('bl_lab_app_id');
             $table->string('name')->nullable();
             $table->string('gender')->nullable();
+            $table->string('designation')->nullable();
             $table->string('email')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('profession')->nullable();
