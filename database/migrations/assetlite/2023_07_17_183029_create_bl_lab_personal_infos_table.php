@@ -28,6 +28,7 @@ class CreateBlLabPersonalInfosTable extends Migration
             $table->text('team_members')->nullable();
             $table->boolean('applicant_agree')->nullable();
             $table->string('status')->nullable();
+            $table->mediumText('other_attr')->nullable();
             $table->timestamps();
             $table->foreign('bl_lab_app_id')
                 ->references('id')
