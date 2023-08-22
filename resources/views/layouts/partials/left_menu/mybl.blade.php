@@ -182,6 +182,29 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('MyblProductEntry') )
+        <li class="{{ is_active_match(route('toffee-product.index')) }} nav-item"><a href="{{route('toffee-product.index')}}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">Toffee</span></a>
+
+            <ul class="menu-content">
+
+                <li class="{{ is_active_match(route('toffee-product.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-product.index') }}">
+                        <i class="ft-list"></i>Toffee Products</a>
+                </li>
+                <li class="{{ is_active_match(route('toffee-subscription-types.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-subscription-types.index') }}">
+                        <i class="ft-list"></i>Subscription Types</a>
+                </li>
+                <li class="{{ is_active_match(route('toffee-premium-products.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-premium-products.index') }}">
+                        <i class="ft-list"></i>Premium Products</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('AppLaunch') )
         <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>
