@@ -67,7 +67,7 @@
                                            id="product_code"
                                            value="{{ $product->product_code }}"
                                            placeholder="Enter Product Code"
-                                           required>
+                                           required readonly>
                                     @if($errors->has('product_code'))
                                         <p class="text-left">
                                             <small class="danger text-muted">{{ $errors->first('product_code') }}</small>

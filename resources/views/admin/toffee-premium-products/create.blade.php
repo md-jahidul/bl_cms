@@ -72,7 +72,11 @@
                                             <input type="checkbox" id="available_for_bl_users" value="1" name="available_for_bl_users">
                                             <label for="available_for_bl_users">Available for BL Users</label>
                                         </fieldset>
-                                    </div>                                    
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <span class="text-warning"><strong><i class="la la-warning"></i></strong> You have to fill at least one field from <b>Prepaid Product Codes, Postpaid Product Codes and Available for BL Users</b></span>
+                                        <div class="help-block"></div>
+                                    </div>                                 
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
                                                 class="btn btn-success round px-2">

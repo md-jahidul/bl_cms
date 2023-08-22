@@ -47,6 +47,11 @@ class ToffeePremiumProductController extends Controller
 
     public function store(Request $request)
     {
+        if (!$request->prepaid_product_codes && !$request->postpaid_product_codes && !$request->available_for_bl_users) {
+            session()->flash('error', 'You have to fill at least one field from <b>Prepaid Product Codes, Postpaid Product Codes and Available for BL Users</b>');
+            return redirect()->back();
+        }
+
         if($this->toffeePremiumProductService->storeToffeePremiumProduct($request)) {
             session()->flash('message', 'Premium Product Created Successfully');
         } else {
@@ -86,7 +91,11 @@ class ToffeePremiumProductController extends Controller
 
     public function update(Request $request, $toffeePremiumProduct)
     {
-
+        if (!$request->prepaid_product_codes && !$request->postpaid_product_codes && !$request->available_for_bl_users) {
+            session()->flash('error', 'You have to fill at least one field from <b>Prepaid Product Codes, Postpaid Product Codes and Available for BL Users</b>');
+            return redirect()->back();
+        }
+        
         if($this->toffeePremiumProductService->updateToffeePremiumProduct($request, $toffeePremiumProduct)) {
             session()->flash('message', 'Premium Product Updated Successfully');
         } else {
