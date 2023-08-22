@@ -143,28 +143,6 @@
                                     {{--                                    <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
                                 </small>
                             </div>
-
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
-
-                            {{--                                    <input type="hidden" class="old_banner_name" name="old_banner_name">--}}
-
-                            {{--                                    <small class="text-info">--}}
-                            {{--                                        <strong>i.e:</strong> package-banner (no spaces)<br>--}}
-                            {{--                                    </small>--}}
-                            {{--                                </div>--}}
-                        </div>
-
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Alt Text</label>
-                                    <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
-                                </div>
-
-
-
-                            <div class="form-group row">
-
                                 <div class="col-md-12 col-xs-12">
                                     <label>Schema Markup</label>
                                     <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
@@ -189,14 +167,13 @@
                                     </small>
                                 </div>
 
-                            <div class="col-md-4 col-xs-12">
-                                <label>Page Header Bangla (HTML)</label>
-                                <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
                         </div>
 
                         <input type="hidden" class="old_web" name="old_web">

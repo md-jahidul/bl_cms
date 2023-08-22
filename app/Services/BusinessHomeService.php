@@ -123,22 +123,22 @@ class BusinessHomeService {
             }
 
             //only rename
-            if ($request['old_banner_name'] != $request['banner_name']) {
-
-                if (empty($request['banner_web']) && $request['old_web_img'] != "") {
-                    $fileName = $request['banner_name'] . '-web';
-                    $directoryPath = 'assetlite/images/business-images';
-                    $update['banner_photo'] = $this->rename($request['old_web_img'], $fileName, $directoryPath);
-                    $status = $update['banner_photo'];
-                }
-
-                if (empty($request['banner_mobile']) && $request['old_mob_img'] != "") {
-                    $fileName = $request['banner_name'] . '-mobile';
-                    $directoryPath = 'assetlite/images/business-images';
-                    $update['banner_image_mobile'] = $this->rename($request['old_mob_img'], $fileName, $directoryPath);
-                    $status = $update['banner_image_mobile'];
-                }
-            }
+//            if ($request['old_banner_name'] != $request['banner_name']) {
+//
+//                if (empty($request['banner_web']) && $request['old_web_img'] != "") {
+//                    $fileName = $request['banner_name'] . '-web';
+//                    $directoryPath = 'assetlite/images/business-images';
+//                    $update['banner_photo'] = $this->rename($request['old_web_img'], $fileName, $directoryPath);
+//                    $status = $update['banner_photo'];
+//                }
+//
+//                if (empty($request['banner_mobile']) && $request['old_mob_img'] != "") {
+//                    $fileName = $request['banner_name'] . '-mobile';
+//                    $directoryPath = 'assetlite/images/business-images';
+//                    $update['banner_image_mobile'] = $this->rename($request['old_mob_img'], $fileName, $directoryPath);
+//                    $status = $update['banner_image_mobile'];
+//                }
+//            }
 
             if ($status) {
                 $this->businessCatRepo->updateCategory($update, $catId);
