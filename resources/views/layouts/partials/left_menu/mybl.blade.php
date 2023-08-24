@@ -51,6 +51,15 @@
             </ul>
 
             <ul class="menu-content">
+                <li class=" {{ is_active_url('mybl-menu') }}">
+                    <a class="menu-item" href="{{ url('mybl-menu') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-ellipsis-v"></i> Menu List
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="menu-content">
                 <li class="{{ is_active_url('global-settings') }}">
                     <a class="menu-item" href="{{ route('global-settings.index') }}">
                         <i class="la la-medium"></i>Global Settings</a>
@@ -136,9 +145,6 @@
                     <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
                         <i class="la la-align-center"></i>Activate New Product Code</a>
                 </li>
-{{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
-{{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
-{{--                </li>--}}
 
                 <li class="{{is_active_url('product-special-types')}}">
                     <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
@@ -167,6 +173,20 @@
                 <li class="{{ is_active_match(route('toffee-premium-products.index')) }}">
                     <a class="menu-item" href="{{ route('toffee-premium-products.index') }}">
                         <i class="ft-list"></i>Premium Products</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('MyblPlanProduct') )
+        <li class="{{ is_active_url('mybl-plan') }} nav-item"><a href="{{ route('mybl-plan.products') }}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">MyBl Plan</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(route('mybl-plan.products')) }}">
+                    <a class="menu-item" href="{{ route('mybl-plan.products') }}">
+                        <i class="ft-list"></i>Products</a>
                 </li>
             </ul>
         </li>
