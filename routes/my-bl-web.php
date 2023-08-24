@@ -1185,7 +1185,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
     Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
         ->name('digital-service.destroy');
-//
+
+    /**
+     * MyBL Plan Routes
+     */
+    Route::get('mybl-plan/products', 'CMS\MyBlPlan\MyBlPlanProductController@index')->name('mybl-plan.products');
+    Route::get('mybl-plan/products/create', 'CMS\MyBlPlan\MyBlPlanProductController@create')->name("mybl-plan.products.create");
+    Route::get('mybl-plan/products/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@edit')->name("mybl-plan.products.edit");
+    Route::post('mybl-plan/products/store', 'CMS\MyBlPlan\MyBlPlanProductController@store')->name("mybl-plan.products.store");
+    Route::put('mybl-plan/products/update/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@update')->name("mybl-plan.products.update");
+    Route::post('mybl-plan/upload-products', 'CMS\MyBlPlan\MyBlPlanProductController@uploadPlanProductExcel')->name("mybl-plan.upload-products");
+    Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
+
 });
 
 // 4G Map View Route
