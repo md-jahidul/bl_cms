@@ -37,6 +37,7 @@
                                 <th>Payment Status</th>
                                 <th>Amount</th>
                                 <th>Created At</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,6 +52,8 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
     <style>
         table.dataTable tbody td {
             max-height: 40px;
@@ -68,10 +71,15 @@
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+
     <script>
         $(function () {
-            
-            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            $('.datepicker').datetimepicker({
+                format : 'YYYY-MM-DD',
+                showClose: true,
+            });            
 
             $("#sharetrip_transaction_list").dataTable({
                 scrollX: true,
@@ -153,6 +161,13 @@
                         render: function (data, type, row) {
                             return row.createdAt	;
                         }
+                    },
+                    
+                    {
+                        name: 'date	',
+                        render: function (data, type, row) {
+                            return row.date	;
+                        }
                     }
                 ],
                 dom: 'Blfrtip',
@@ -160,13 +175,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7]
+                            columns: [ 1,2,3,4,5,6,7,8]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7]
+                            columns: [ 1,2,3,4,5,6,7,8]
                         }
                     }
                 ],
