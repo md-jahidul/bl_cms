@@ -102,6 +102,9 @@ class GenericSliderService
                 Redis::del('lms_old_user_postpaid');
                 Redis::del('lms_old_user_prepaid');
             }
+            elseif ($data['component_for'] == 'toffee' || $data['component_for'] == 'toffee_section') {
+                Redis::del('toffee_banner');
+            }
 
             elseif ($data['component_for'] == 'non_bl') {
                 $this->nonBlComponentRepository->save($homeComponentData);
@@ -157,6 +160,9 @@ class GenericSliderService
                 Redis::del('lms_component_postpaid');
                 Redis::del('lms_old_user_postpaid');
                 Redis::del('lms_old_user_prepaid');
+            }
+            elseif ($slider['component_for'] == 'toffee' || $slider['component_for'] == 'toffee_section') {
+                Redis::del('toffee_banner');
             }
 
             elseif ($slider['component_for'] == 'non_bl') {
@@ -284,6 +290,9 @@ class GenericSliderService
             else if ($componentFor == 'non_bl_offer') {
                 $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->nonBlOfferService->deleteComponent($nonBlOffer->id);
+            }
+            elseif ($componentFor == 'toffee' || $componentFor == 'toffee_section') {
+                Redis::del('toffee_banner');
             }
             $slider->delete();
 
