@@ -1433,7 +1433,7 @@ class ProductCoreService
     public function resetProductRedisKeys(): void
     {
         $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-        $keys = Redis::keys('available_products:*');
+        $keys = Redis::keys('a_p:*');
         $values = [];
 
         foreach ($keys as $key) {

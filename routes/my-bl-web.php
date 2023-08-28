@@ -435,11 +435,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
      * Product Tags Routes
      */
-    Route::get('mybl/product/tags', 'ProductTagController@index')->name('product-tags.index');
-    Route::get('mybl/product/tags/{tag}/edit', 'ProductTagController@edit')->name('product-tags.edit');
-    Route::put('mybl/product/tags/{id}', 'ProductTagController@update')->name('product-tags.update');
-    Route::post('mybl/product/tags', 'ProductTagController@store')->name('product-tags.store');
-    Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
+    Route::get('mybl/product/tags', 'CMS\ProductTagController@index')->name('product-tags.index');
+    Route::get('mybl/product/tags/{tag}/edit', 'CMS\ProductTagController@edit')->name('product-tags.edit');
+    Route::put('mybl/product/tags/{id}', 'CMS\ProductTagController@update')->name('product-tags.update');
+    Route::post('mybl/product/tags', 'CMS\ProductTagController@store')->name('product-tags.store');
+    Route::delete('mybl/product/tags/{id}', 'CMS\ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
     Route::get(
@@ -1493,7 +1493,19 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
     Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
-//
+
+    /**
+     * MyBL Plan Routes
+     */
+     
+    Route::get('mybl-plan/products', 'CMS\MyBlPlan\MyBlPlanProductController@index')->name('mybl-plan.products');
+    Route::get('mybl-plan/products/create', 'CMS\MyBlPlan\MyBlPlanProductController@create')->name("mybl-plan.products.create");
+    Route::get('mybl-plan/products/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@edit')->name("mybl-plan.products.edit");
+    Route::post('mybl-plan/products/store', 'CMS\MyBlPlan\MyBlPlanProductController@store')->name("mybl-plan.products.store");
+    Route::put('mybl-plan/products/update/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@update')->name("mybl-plan.products.update");
+    Route::post('mybl-plan/upload-products', 'CMS\MyBlPlan\MyBlPlanProductController@uploadPlanProductExcel')->name("mybl-plan.upload-products");
+    Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
+
 });
 
 // 4G Map View Route
