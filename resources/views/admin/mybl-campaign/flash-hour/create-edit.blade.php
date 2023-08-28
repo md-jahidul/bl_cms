@@ -13,6 +13,10 @@
     </a>
 @endsection
 
+@php
+    $unique = uniqid();
+@endphp
+
 @section('content')
     <section>
         <div class="card">
@@ -161,7 +165,7 @@
                                         <div class="pull-right">
                                             @if(isset($campaign) && $campaign->checkCampaignExpire())
                                             @else
-                                                <button id="save" class="btn btn-primary"><i
+                                                <button id="save-{{$unique}}" class="btn btn-primary"><i
                                                         class="la la-check-square-o"></i>Save
                                                 </button>
                                             @endif
@@ -199,6 +203,11 @@
 
     <script>
         $(document).ready(function () {
+            $('#form-{{$unique}}').on('submit', function() {
+                // Disable the submit button after click
+                $('#save-{{$unique}}').prop('disabled', true);
+            }); 
+
             $('.dropify_image').dropify({
                 messages: {
                     'default': 'Browse for an Image to upload',
@@ -224,6 +233,7 @@
                 element.datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: (element.val() == "") ? date : false,
                 });
             }
 
@@ -248,10 +258,12 @@
                 $('.product_start_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
             })
 

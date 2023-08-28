@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Http\Requests\ProductTagRequest;
 use App\Services\ProductTagService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductTagRequest;
 
 class ProductTagController extends Controller
 {

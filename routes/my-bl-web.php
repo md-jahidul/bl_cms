@@ -359,11 +359,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
      * Product Tags Routes
      */
-    Route::get('mybl/product/tags', 'ProductTagController@index')->name('product-tags.index');
-    Route::get('mybl/product/tags/{tag}/edit', 'ProductTagController@edit')->name('product-tags.edit');
-    Route::put('mybl/product/tags/{id}', 'ProductTagController@update')->name('product-tags.update');
-    Route::post('mybl/product/tags', 'ProductTagController@store')->name('product-tags.store');
-    Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
+    Route::get('mybl/product/tags', 'CMS\ProductTagController@index')->name('product-tags.index');
+    Route::get('mybl/product/tags/{tag}/edit', 'CMS\ProductTagController@edit')->name('product-tags.edit');
+    Route::put('mybl/product/tags/{id}', 'CMS\ProductTagController@update')->name('product-tags.update');
+    Route::post('mybl/product/tags', 'CMS\ProductTagController@store')->name('product-tags.store');
+    Route::delete('mybl/product/tags/{id}', 'CMS\ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
     Route::get('mybl-products-deep-link-create/{product_code}',
