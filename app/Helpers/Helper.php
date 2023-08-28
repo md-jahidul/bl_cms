@@ -143,7 +143,8 @@ class Helper
             "SPIN_WHEEL"              => 'Spin Wheel',
             "BUS"                     => 'Bus',
             "CONTENT"                 => 'Content',
-            "COMMUNITY"               => 'Community'
+            "COMMUNITY"               => 'Community',
+            "VOLTE"                   => 'Volte'
         ];
     }
 
