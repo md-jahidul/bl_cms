@@ -148,7 +148,8 @@ class Helper
             "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
-            "VOLTE"                   => 'Volte'
+            "VOLTE"                   => 'Volte',
+            "AMAR_PLAN"               => 'Amar Plan'
         ];
     }
 
