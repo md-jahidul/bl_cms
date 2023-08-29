@@ -26,5 +26,6 @@ class MyBlPlanProduct extends Model
         'discount_price',
         'discount_percentage',
         'is_active',
+        'is_default',
     ];
 }
