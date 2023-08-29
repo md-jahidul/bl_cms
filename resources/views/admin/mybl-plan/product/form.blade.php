@@ -37,12 +37,12 @@
                                     <div class="form-group">
                                         <label for="sim_type" class="required">SIM Type</label>
                                         <select name="sim_type" required class="form-control">
-                                            <option value="prepaid" @if($page == "edit") selected @endif>PREPAID</option>
-                                            <option value="postpaid"@if($page == "edit") selected @endif>POSTPAID</option>
+                                            <option value="prepaid" @if($page == "edit" && $product->sim_type == "prepaid") selected @endif>PREPAID</option>
+                                            <option value="postpaid" @if($page == "edit" && $product->sim_type == "postpaid") selected @endif>POSTPAID</option>
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 @php $types = ['data', 'mix', 'voice', 'sms']; @endphp
 
                                 <div class="form-group col-md-4 {{ $errors->has('content_type') ? ' error' : '' }}">
@@ -50,7 +50,7 @@
                                     <select name="content_type" class="form-control filter" id="content_type">
                                         <option value="">---Select Content Type---</option>
                                         @foreach ($types as $type)
-                                        <option value="{{$type}}" 
+                                        <option value="{{$type}}"
                                             @if($page == "edit" && $product->content_type == $type) selected @endif>
                                             {{strtoupper($type)}}
                                         </option>
@@ -67,7 +67,7 @@
                                     <input class="form-control" name="product_code" required
                                            data-validation-required-message="Please enter product code",
                                            placeholder="Enter Product Code"
-                                           value="@if($page == "edit"){{ $product->product_code}}@else{{ 
+                                           value="@if($page == "edit"){{ $product->product_code}}@else{{
                                                     old("product_code") ? old("product_code") : '' }}@endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
@@ -79,9 +79,9 @@
                                     <label for="renew_product_code">Renew Product Code</label>
                                     <input class="form-control" name="renew_product_code"
                                            placeholder="Enter Renew Product Code"
-                                           value="@if($page == "edit"){{ $product->renew_product_code }}@else{{ 
+                                           value="@if($page == "edit"){{ $product->renew_product_code }}@else{{
                                                     old("renew_product_code") ? old("renew_product_code") : '' }}@endif">
-                                    
+
                                     <div class="help-block"></div>
                                     @if ($errors->has('renew_product_code'))
                                         <div class="help-block">{{ $errors->first('renew_product_code') }}</div>
@@ -92,9 +92,9 @@
                                     <label for="recharge_product_code">Recharge Product Code</label>
                                     <input class="form-control" name="recharge_product_code"
                                              placeholder="Enter Recharge Product Code"
-                                           value="@if($page == "edit"){{$product->recharge_product_code}}@else{{ 
+                                           value="@if($page == "edit"){{$product->recharge_product_code}}@else{{
                                                     old("recharge_product_code") ? old("recharge_product_code") : '' }}@endif">
-                                    
+
                                     <div class="help-block"></div>
                                     @if ($errors->has('recharge_product_code'))
                                         <div class="help-block">{{ $errors->first('recharge_product_code') }}</div>
@@ -106,7 +106,7 @@
                                         <label>SMS Volume</label>
                                         <input type="number" class="form-control" name="sms_volume"
                                         placeholder="Enter SMS Volume"
-                                        value="@if($page == "edit"){{ $product->sms_volume }}@else{{ 
+                                        value="@if($page == "edit"){{ $product->sms_volume }}@else{{
                                                     old("sms_volume") ? old("sms_volume") : '' }}@endif">
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                         <label>Minute Volume</label>
                                         <input type="number" class="form-control" name="minute_volume"
                                         placeholder="Enter Minute Volume"
-                                               value="@if($page == "edit"){{ $product->minute_volume}}@else{{ 
+                                               value="@if($page == "edit"){{ $product->minute_volume}}@else{{
                                                 old("minute_volume") ? old("minute_volume") : '' }} @endif">
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                                         <label>Data Volume</label>
                                         <input type="number" class="form-control" name="data_volume"
                                         placeholder="Enter Data Volume"
-                                               value="@if($page == "edit"){{ $product->data_volume}}@else {{ 
+                                               value="@if($page == "edit"){{ $product->data_volume}}@else {{
                                                     old("data_volume") ? old("data_volume") : '' }} @endif">
                                     </div>
                                 </div>
@@ -148,14 +148,14 @@
                                         <input type="number" required data-validation-required-message="Please enter validity"
                                          class="form-control" name="validity"
                                         placeholder="Enter Validity"
-                                               value="@if($page == "edit"){{ $product->validity}}@else{{ 
+                                               value="@if($page == "edit"){{ $product->validity}}@else{{
                                                     old("validity") ? old("validity") : '' }}@endif">
                                         <div class="help-block"></div>
                                         @if ($errors->has('validity'))
                                             <div class="help-block">{{ $errors->first('validity') }}</div>
                                         @endif
                                     </div>
-                                   
+
                                 </div>
 
                                 @php
@@ -164,12 +164,12 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('validity_unit') ? ' error' : '' }}">
                                     <label for="validity_unit" class="validity_unit required">Validity Unit</label>
-                                    <select class="form-control required duration_categories" required 
+                                    <select class="form-control required duration_categories" required
                                         data-validation-required-message="Please select validity unit" name="validity_unit"
                                             id="validity_unit" required>
                                         <option value="">---Select Validity Unit---</option>
                                         @foreach($validityUnits as $value)
-                                            <option value="{{ $value }}" @if ($page == "edit" && $product->validity_unit == $value) selected 
+                                            <option value="{{ $value }}" @if ($page == "edit" && $product->validity_unit == $value) selected
                                                         @else {{ old("validity_unit") == $value ? 'selected' : '' }} @endif>
                                                         {{ ucfirst($value) }}
                                             </option>
@@ -184,10 +184,10 @@
                                 <div class="form-group col-md-4">
                                     <div class="form-group">
                                         <label class="required">Market Price</label>
-                                        <input type="number" class="form-control" required 
+                                        <input type="number" class="form-control" required
                                         data-validation-required-message="Please enter market price" name="market_price"
                                         placeholder="Enter MRP Price"
-                                               value="@if($page == "edit"){{ $product->market_price}}@else{{ 
+                                               value="@if($page == "edit"){{ $product->market_price}}@else{{
                                                     old("market_price") ? old("market_price") : '' }} @endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('market_price'))
@@ -199,10 +199,10 @@
                                 <div class="form-group col-md-4">
                                     <div class="form-group">
                                         <label class="required">Discount Price</label>
-                                        <input type="number" class="form-control" required 
+                                        <input type="number" class="form-control" required
                                         data-validation-required-message="Please enter discount price" name="discount_price"
                                         placeholder="Enter Discount Price"
-                                               value="@if($page == "edit"){{ $product->discount_price}}@else{{ 
+                                               value="@if($page == "edit"){{ $product->discount_price}}@else{{
                                                     old("discount_price") ? old("discount_price") : '' }}@endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('discount_price'))
@@ -213,10 +213,10 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('discount_percentage') ? ' error' : '' }}">
                                     <label class="required">Discount Percentage (%)</label>
-                                    <input type="number" class="form-control" required 
+                                    <input type="number" class="form-control" required
                                      name="discount_percentage" data-validation-required-message="Please enter discount percentage"
                                     placeholder="Enter Discount Percentage"
-                                           value="@if($page == "edit"){{ $product->discount_percentage}}@else{{ 
+                                           value="@if($page == "edit"){{ $product->discount_percentage}}@else{{
                                                 old("discount_percentage") ? old("discount_percentage") : '' }}@endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('discount_percentage'))
@@ -249,9 +249,9 @@
                                 <div class="form-group col-md-4 {{ $errors->has('display_sd_vat_tax_en') ? ' error' : '' }}">
                                     <label class="required">Display SD Vat Tax EN</label>
                                     <input class="form-control" name="display_sd_vat_tax_en"
-                                        placeholder="Enter Display SD Vat Tax EN" 
+                                        placeholder="Enter Display SD Vat Tax EN"
                                         required data-validation-required-message="Please enter discount percentage en"
-                                        value="@if($page == "edit"){{ $product->display_sd_vat_tax_en}}@else{{ 
+                                        value="@if($page == "edit"){{ $product->display_sd_vat_tax_en}}@else{{
                                                     old("display_sd_vat_tax_en") ? old("display_sd_vat_tax_en") : '' }}@endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('display_sd_vat_tax_en'))
@@ -261,10 +261,10 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('display_sd_vat_tax_bn') ? ' error' : '' }}">
                                     <label class="required">Display SD Vat Tax BN</label>
-                                    <input class="form-control" name="display_sd_vat_tax_bn" required 
+                                    <input class="form-control" name="display_sd_vat_tax_bn" required
                                         data-validation-required-message="Please enter discount percentage bn"
                                         placeholder="Enter Display SD Vat Tax BN"
-                                        value="@if($page == "edit"){{ $product->display_sd_vat_tax_bn }}@else{{ 
+                                        value="@if($page == "edit"){{ $product->display_sd_vat_tax_bn }}@else{{
                                                 old("display_sd_vat_tax_bn") ? old("display_sd_vat_tax_bn") : '' }}@endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('display_sd_vat_tax_bn'))
@@ -276,7 +276,7 @@
                                     <label>Status</label>
                                     <select class="form-control" name="is_active">
                                         <option value="">---Select Status---</option>
-                                        <option value="1" @if($page == "create") selected @endif 
+                                        <option value="1" @if($page == "create") selected @endif
                                                 @if($page == "edit" && $product->is_active == 1) selected @endif>Active</option>
                                         <option value="0" @if($page == "edit" && $product->is_active == 0) selected @endif>Inactive</option>
                                     </select>
@@ -284,6 +284,13 @@
                                     @if ($errors->has('status'))
                                         <div class="help-block">{{ $errors->first('status') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-4 icheck_minimal skin mt-2">
+                                    <fieldset style='margin-top: 15px'>
+                                        <input type="checkbox" @if($page == "edit" && $product->is_default == 1) checked @endif id="is_default" value="1" name="is_default">
+                                        <label for="is_default">Is Default Product?</label>
+                                    </fieldset>
                                 </div>
 
                                 <div class="form-actions col-md-12">
