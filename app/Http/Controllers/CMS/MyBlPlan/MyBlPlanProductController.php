@@ -31,8 +31,9 @@ class MyBlPlanProductController extends Controller
     public function index()
     {
         $myBlPlanProducts = $this->myBlPlanProductService->findAll(null, null, ['column' => 'id', 'direction' => 'desc']);
+        $defaultProduct = $myBlPlanProducts->where('is_default', 1)->first();
 
-        return view('admin.mybl-plan.product.index', compact('myBlPlanProducts'));
+        return view('admin.mybl-plan.product.index', compact('myBlPlanProducts', 'defaultProduct'));
     }
 
     public function create()
@@ -55,6 +56,13 @@ class MyBlPlanProductController extends Controller
             'display_sd_vat_tax_bn' => 'required',
             'is_active' => 'required',
         ]);
+
+        if ($request->has("is_default")) {
+            $default = $this->myBlPlanProductService->findBy(['is_default' => 1])->first();
+            if ($default) {
+                $default->update(['is_default' => 0]);
+            }
+        }
 
         $this->myBlPlanProductService->save($request->all());
 
@@ -81,6 +89,13 @@ class MyBlPlanProductController extends Controller
             'validity_unit' => 'required',
             'is_active' => 'required',
         ]);
+
+        if ($request->has("is_default")) {
+            $default = $this->myBlPlanProductService->findBy(['is_default' => 1])->first();
+            if ($default) {
+                $default->update(['is_default' => 0]);
+            }
+        }
 
         $this->myBlPlanProductService->findOne($id)->update($request->all());
 
