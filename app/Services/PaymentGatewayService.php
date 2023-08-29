@@ -44,9 +44,14 @@ class PaymentGatewayService
                 $data['logo_mobile'] = 'storage/' . $request['logo_mobile']->store('payment-gateways');
             }
 
+            if (!empty($request['logo_mobile_v2'])) {
+                $data['logo_mobile_v2'] = 'storage/' . $request['logo_mobile_v2']->store('payment-gateways');
+            }
+
             $this->paymentGatewayRepository->save($data);
 
             Redis::del('PaymentGatewayListV2');
+            Redis::del('PaymentGatewayListV3');
             return new Response("Payment gateway has been successfully created");
         } catch (\Exception $e) {
             return response()->json([
@@ -81,10 +86,14 @@ class PaymentGatewayService
             if (isset($request['logo_mobile'])) {
                 $data['logo_mobile'] = 'storage/' . $request['logo_mobile']->store('gateways');
             }
+            if (isset($request['logo_mobile_v2'])) {
+                $data['logo_mobile_v2'] = 'storage/' . $request['logo_mobile_v2']->store('gateways');
+            }
             $pgw = $this->paymentGatewayRepository->findOne($id);
             $pgw->update($data);
             // Delete Redis Data
             Redis::del('PaymentGatewayListV2');
+            Redis::del('PaymentGatewayListV3');
 
             return new Response("Payment Gateway has been successfully updated");
         } catch (\Exception $e) {
@@ -98,6 +107,7 @@ class PaymentGatewayService
     public function delete($id)
     {
         Redis::del('PaymentGatewayListV2');
+        Redis::del('PaymentGatewayListV3');
         return $this->paymentGatewayRepository->destroy($id);
     }
 
@@ -105,6 +115,7 @@ class PaymentGatewayService
     {
         $this->paymentGatewayRepository->manageTableSort($data);
         Redis::del('PaymentGatewayListV2');
+        Redis::del('PaymentGatewayListV3');
         return new Response('Sorted successfully');
     }
 }
