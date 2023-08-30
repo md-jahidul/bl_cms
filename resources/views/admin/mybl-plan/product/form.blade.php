@@ -4,7 +4,7 @@
 @section('card_name', "Product Create")
 
 @section('action')
-    <a href="{{ route('mybl.product.index') }}" class="btn btn-info btn-sm btn-glow px-2">
+    <a href="{{ route('mybl-plan.products') }}" class="btn btn-info btn-sm btn-glow px-2">
         Back To Product List
     </a>
 @endsection
