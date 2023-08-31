@@ -82,6 +82,7 @@
                             <th>ID</th>
                             <th>Slug</th>
                             <th>Dynamic Link</th>
+                            <th>Deep Link</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -105,6 +106,14 @@
                                                 title="Click for deep link">
                                             <i class="la icon-link"></i>
                                         </button>
+                                    @endif
+                                </td>
+                                <td class="">
+                                    @if(isset($item->dynamicLinks))
+                                        <button class="btn-sm btn-outline-default copy-deeplink cursor-pointer" type="button"
+                                                data-toggle="tooltip" data-placement="button"
+                                                data-value="{{ $item->dynamicLinks->deep_link }}"
+                                                title="Copy to Clipboard">Copy</button>                                        
                                     @endif
                                 </td>
                                 <td>
