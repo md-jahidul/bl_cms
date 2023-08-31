@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Services\MetaTagService;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -117,11 +118,11 @@ class MetaTagController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Http\Response|string
      */
     public function destroy($id)
     {
         session()->flash('message', $this->metaTagService->deleteFixedPage($id)->getContent());
-        return redirect(route('meta-tag.index'));
+        return url(route('meta-tag.index'));
     }
 }

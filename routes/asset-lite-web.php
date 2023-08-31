@@ -171,7 +171,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
     # META TAG  ====================================
-    Route::resource('meta-tag', 'AssetLite\MetaTagController')->except(['create']);
+    Route::resource('meta-tag', 'AssetLite\MetaTagController');
     Route::get('meta-tag/destroy/{id}', 'AssetLite\MetaTagController@destroy');
 
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
