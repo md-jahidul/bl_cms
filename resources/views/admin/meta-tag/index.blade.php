@@ -5,9 +5,9 @@
     <li class="breadcrumb-item "><a href="{{ url('meta-tag') }}"> Meta Tag List</a></li>
 @endsection
 @section('action')
-    {{-- <a href="{{route('meta-tag.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+     <a href="{{route('meta-tag.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Create Meta Tag
-    </a> --}}
+    </a>
 @endsection
 @section('content')
     <section>
@@ -20,6 +20,7 @@
                             <tr>
                                 <td width="3%">#</td>
                                 <th width="25%">Title</th>
+                                <th width="25%">Key</th>
                                 <th class="text-center" width="12%">Action</th>
                             </tr>
                         </thead>
@@ -28,6 +29,7 @@
                                 <tr>
                                     <td >{{ $loop->iteration }}</td>
                                     <td >{{ $metaTag->title }}</td>
+                                    <td >{{ $metaTag->dynamic_route_key }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("meta-tag/$metaTag->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("meta-tag/destroy/$metaTag->id") }}" class="border-0 btn-sm btn-outline-danger delete delete_btn" data-id="{{ $metaTag->id }}" title="Delete">
