@@ -121,7 +121,7 @@ return [
             'sim_type'              => 0,
             'content_type'          => 1,
             'product_code'          => 2,
-            'renew_product_code'       => 3,
+            'renew_product_code'    => 3,
             'recharge_product_code' => 4,
             'sms_volume'            => 5,
             'minute_volume'         => 6,
@@ -136,7 +136,8 @@ return [
             'market_price'          => 15,
             'discount_price'        => 16,
             'discount_percentage'   => 17,
-            'is_active'             => 18,
+            'savings_amount'        => 18,
+            'is_active'             => 19,
             ]
         ]
 ];
