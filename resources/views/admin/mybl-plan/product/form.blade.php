@@ -224,6 +224,19 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-4 {{ $errors->has('savings_amount') ? ' error' : '' }}">
+                                    <label class="required">Savings Amount</label>
+                                    <input type="number" class="form-control" required
+                                     name="savings_amount" data-validation-required-message="Please enter savings amount"
+                                    placeholder="Enter Savings Amount"
+                                           value="@if($page == "edit"){{ $product->savings_amount}}@else{{
+                                                old("savings_amount") ? old("savings_amount") : '' }}@endif">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('savings_amount'))
+                                        <div class="help-block">{{ $errors->first('savings_amount') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-4 {{ $errors->has('points') ? ' error' : '' }}">
                                     <label>Points</label>
                                     <input type="number" class="form-control" name="points"

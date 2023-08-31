@@ -24,6 +24,7 @@ class MyBlPlanProduct extends Model
         'points',
         'market_price',
         'discount_price',
+        'savings_amount',
         'discount_percentage',
         'is_active',
         'is_default',
