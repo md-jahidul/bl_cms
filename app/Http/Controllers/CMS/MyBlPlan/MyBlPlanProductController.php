@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MyBlPlanProductRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Services\MyBlPlan\MyBlPlanProductService;
 
@@ -42,21 +43,8 @@ class MyBlPlanProductController extends Controller
         return view('admin.mybl-plan.product.form', compact('page'));
     }
 
-    public function store(Request $request)
+    public function store(MyBlPlanProductRequest $request)
     {
-        $request->validate([
-            'sim_type' => 'required',
-            'product_code' => 'required',
-            'market_price' => 'required',
-            'discount_price' => 'required',
-            'discount_percentage' => 'required',
-            'validity' => 'required',
-            'validity_unit' => 'required',
-            'display_sd_vat_tax_en' => 'required',
-            'display_sd_vat_tax_bn' => 'required',
-            'is_active' => 'required',
-        ]);
-
         if ($request->has("is_default")) {
             $default = $this->myBlPlanProductService->findBy(['is_default' => 1])->first();
             if ($default) {
@@ -77,19 +65,8 @@ class MyBlPlanProductController extends Controller
         return view('admin.mybl-plan.product.form', compact('product', 'page'));
     }
 
-    public function update(Request $request, $id)
+    public function update(MyBlPlanProductRequest $request, $id)
     {
-        $request->validate([
-            'sim_type' => 'required',
-            'product_code' => 'required',
-            'market_price' => 'required',
-            'discount_price' => 'required',
-            'discount_percentage' => 'required',
-            'validity' => 'required',
-            'validity_unit' => 'required',
-            'is_active' => 'required',
-        ]);
-
         if ($request->has("is_default")) {
             $default = $this->myBlPlanProductService->findBy(['is_default' => 1])->first();
             if ($default) {
