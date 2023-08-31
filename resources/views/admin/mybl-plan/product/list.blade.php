@@ -12,6 +12,7 @@
             <th>Market Price</th>
             <th>Price</th>
             <th>Discount(%)</th>
+            <th>Savings Amount</th>
             <th>Status</th>
             <th class="filter_data">Actions</th>
         </tr>
@@ -29,6 +30,7 @@
             <td>{{ $defaultProduct->market_price }} (BDT)</td>
             <td>{{ $defaultProduct->discount_price }} (BDT)</td>
             <td>{{ $defaultProduct->discount_percentage }}%</td>
+            <td>{{ $defaultProduct->savings_amount }} (BDT)</td>
             <td><span class="badge @if($defaultProduct->is_active == 1) badge-success @else badge-warning @endif">
                         {{ $defaultProduct->is_active == 1 ? "Active" : "Inactive" }}</span>
             </td>
@@ -47,6 +49,7 @@
             <td>{{ $product->market_price }} (BDT)</td>
             <td>{{ $product->discount_price }} (BDT)</td>
             <td>{{ $product->discount_percentage }}%</td>
+            <td>{{ $product->savings_amount }} (BDT)</td>
             <td><span class="badge @if($product->is_active == 1) badge-success @else badge-warning @endif">
                 {{ $product->is_active == 1 ? "Active" : "Inactive" }}</span>
             </td>
