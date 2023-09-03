@@ -50,32 +50,31 @@ class MyBlPlanProductService
                     foreach ($config as $field => $index) {
                         switch ($field) {
                             case "sim_type":
-                            case "data_volume_unit":
-                            case "validity_unit":
-                                $core_data[$field] = strtolower($cells[$index]->getValue());
-                                break;
                             case "display_sd_vat_tax_en":
                             case "display_sd_vat_tax_bn":
-                            case "tag":
-                            case "content_type":
-                                $core_data[$field] = strtolower($cells[$index]->getValue()) ?: null;
-                                break;
                             case "validity":
                             case "product_code":
+                            case "market_price":
+                            case "discount_percentage":
+                            case "discount_price":
+                            case "savings_amount":
                                 $core_data[$field] = $cells[$index]->getValue();
                                 break;
+                            case "content_type":
+                            case "tag":
+                            case "data_volume_unit":
+                            case "validity_unit":
+                                $core_data[$field] = strtolower($cells[$index]->getValue()) ?: null;
+                                break;
                             case "recharge_code":
-                            case "points":
-                            case "market_price":
-                            case "discount_price":
                             case "renew_product_code":
                                 $core_data[$field] = $cells[$index]->getValue() ?: null;
                                 break;
                             case "minute_volume":
-                            case "discount_percentage":
                             case "data_volume":
                             case "sms_volume":
-                                $core_data[$field] = $cells[$index]->getValue() ?: 0;
+                            case "points":
+                                $core_data[$field] = $cells[$index]->getValue() ?: null;
                                 break;
                             case "is_active":
                                 $status = strtolower($cells[$index]->getValue()) ?: 'yes';
@@ -140,7 +139,8 @@ class MyBlPlanProductService
                     $product['id'],
                     $product['created_at'],
                     $product['updated_at'],
-                    $product['deleted_at']
+                    $product['deleted_at'],
+                    $product['is_default']
                 );
                 $product['is_active'] = ($product['is_active'] == 1) ? 'Yes' : 'No';
                 $row = WriterEntityFactory::createRowFromArray($product, $data_style);
