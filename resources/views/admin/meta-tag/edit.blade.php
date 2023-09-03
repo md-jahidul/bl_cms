@@ -32,7 +32,7 @@
 
                             <div class="form-group col-md-6 {{ $errors->has('dynamic_route_key') ? ' error' : '' }}">
                                 <label class="required"> Key</label>
-                                <input type="text" class="form-control slug-convert required" name="dynamic_route_key" readonly placeholder="Key" value="{{ old("dynamic_route_key") ? old("dynamic_route_key") : $metaTag->dynamic_route_key }}">
+                                <input type="text" class="form-control slug-convert required" name="dynamic_route_key" placeholder="Key" value="{{ old("dynamic_route_key") ? old("dynamic_route_key") : $metaTag->dynamic_route_key }}">
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
