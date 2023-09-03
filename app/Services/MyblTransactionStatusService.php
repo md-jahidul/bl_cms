@@ -63,7 +63,7 @@ class MyblTransactionStatusService
                 'confirmed_at' => $item->confirmed_at,
                 'cancelled_at' => $item->cancelled_at,
                 'expiry_time' => $item->expiry_time,
-                'date' => $item->created_at->format('Y-m-d'),
+                'date' => $item->created_at->format('Y-m-d H:i:s'),
             ];
         });
         return $response;
