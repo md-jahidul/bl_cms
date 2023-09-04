@@ -30,10 +30,10 @@ class CreateMyblPlanProductsTable extends Migration
             $table->string("display_sd_vat_tax_en")->nullable();
             $table->string("display_sd_vat_tax_bn")->nullable();
             $table->string("points")->nullable();
-            $table->integer("market_price");
-            $table->integer("discount_price");
-            $table->integer("savings_amount");
-            $table->integer("discount_percentage");
+            $table->float("market_price");
+            $table->float("discount_price");
+            $table->float("savings_amount");
+            $table->float("discount_percentage");
             $table->tinyInteger("is_active")->default(1);
             $table->tinyInteger("is_default")->default(0);
             $table->timestamps();

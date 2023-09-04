@@ -159,20 +159,16 @@
                                 </div>
 
                                 @php
-                                   $validityUnits = ['day', 'days', 'hour', 'hours', 'month', 'months', 'year', 'years'];
+                                   $validityUnits = ['days'];
                                 @endphp
 
                                 <div class="form-group col-md-4 {{ $errors->has('validity_unit') ? ' error' : '' }}">
                                     <label for="validity_unit" class="validity_unit required">Validity Unit</label>
-                                    <select class="form-control required duration_categories" required
+                                    <select class="form-control required duration_categories" required readonly
                                         data-validation-required-message="Please select validity unit" name="validity_unit"
                                             id="validity_unit" required>
-                                        <option value="">---Select Validity Unit---</option>
                                         @foreach($validityUnits as $value)
-                                            <option value="{{ $value }}" @if ($page == "edit" && $product->validity_unit == $value) selected
-                                                        @else {{ old("validity_unit") == $value ? 'selected' : '' }} @endif>
-                                                        {{ ucfirst($value) }}
-                                            </option>
+                                            <option value="{{ $value }}" selected> {{ ucfirst($value) }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -184,7 +180,7 @@
                                 <div class="form-group col-md-4">
                                     <div class="form-group">
                                         <label class="required">Market Price</label>
-                                        <input type="number" class="form-control" required
+                                        <input type="number" class="form-control" step=".01" required
                                         data-validation-required-message="Please enter market price" name="market_price"
                                         placeholder="Enter MRP Price"
                                                value="@if($page == "edit"){{ $product->market_price}}@else{{
@@ -199,7 +195,7 @@
                                 <div class="form-group col-md-4">
                                     <div class="form-group">
                                         <label class="required">Discount Price</label>
-                                        <input type="number" class="form-control" required
+                                        <input type="number" class="form-control" step=".01" required
                                         data-validation-required-message="Please enter discount price" name="discount_price"
                                         placeholder="Enter Discount Price"
                                                value="@if($page == "edit"){{ $product->discount_price}}@else{{
@@ -213,7 +209,7 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('discount_percentage') ? ' error' : '' }}">
                                     <label class="required">Discount Percentage (%)</label>
-                                    <input type="number" class="form-control" required
+                                    <input type="number" class="form-control" required step=".01"
                                      name="discount_percentage" data-validation-required-message="Please enter discount percentage"
                                     placeholder="Enter Discount Percentage"
                                            value="@if($page == "edit"){{ $product->discount_percentage}}@else{{
@@ -226,7 +222,7 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('savings_amount') ? ' error' : '' }}">
                                     <label class="required">Savings Amount</label>
-                                    <input type="number" class="form-control" required
+                                    <input type="number" class="form-control" required step=".01"
                                      name="savings_amount" data-validation-required-message="Please enter savings amount"
                                     placeholder="Enter Savings Amount"
                                            value="@if($page == "edit"){{ $product->savings_amount}}@else{{
