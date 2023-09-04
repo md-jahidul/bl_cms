@@ -12,6 +12,7 @@ class LmsHomeComponent extends Model
         'title_bn',
         'display_order',
         'is_api_call_enable',
-        'is_eligible'
+        'is_eligible',
+        'version_code'
     ];
 }

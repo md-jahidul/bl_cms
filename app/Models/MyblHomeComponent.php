@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class MyblHomeComponent extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'component_key',
         'title_en',
         'title_bn',
         'is_api_call_enable',
         'display_order',
-        'is_eligible'
+        'is_eligible',
+        'version_code'
     ];
 }
