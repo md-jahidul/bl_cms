@@ -15,6 +15,7 @@ class ContentComponent extends Model
         'title_bn',
         'is_api_call_enable',
         'display_order',
-        'is_eligible'
+        'is_eligible',
+        'version_code'
     ];
 }
