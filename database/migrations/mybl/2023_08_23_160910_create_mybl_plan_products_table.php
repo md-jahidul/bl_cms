@@ -33,7 +33,7 @@ class CreateMyblPlanProductsTable extends Migration
             $table->integer("market_price");
             $table->integer("discount_price");
             $table->integer("savings_amount");
-            $table->integer("discount_percentage");
+            $table->float("discount_percentage");
             $table->tinyInteger("is_active")->default(1);
             $table->tinyInteger("is_default")->default(0);
             $table->timestamps();
