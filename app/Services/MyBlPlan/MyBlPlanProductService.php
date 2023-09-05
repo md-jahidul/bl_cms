@@ -74,7 +74,7 @@ class MyBlPlanProductService
                             case "data_volume":
                             case "sms_volume":
                             case "points":
-                                $core_data[$field] = $cells[$index]->getValue() ?: null;
+                                $core_data[$field] = $cells[$index]->getValue() ?: 0;
                                 break;
                             case "is_active":
                                 $status = strtolower($cells[$index]->getValue()) ?: 'yes';
