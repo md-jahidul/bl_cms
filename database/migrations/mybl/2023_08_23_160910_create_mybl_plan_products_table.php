@@ -22,7 +22,7 @@ class CreateMyblPlanProductsTable extends Migration
             $table->string("recharge_product_code")->nullable();
             $table->integer("sms_volume")->nullable();
             $table->integer("minute_volume")->nullable();
-            $table->integer("data_volume")->nullable();
+            $table->float("data_volume")->nullable();
             $table->string("data_volume_unit")->nullable();
             $table->integer("validity")->nullable();
             $table->string("validity_unit")->nullable();
