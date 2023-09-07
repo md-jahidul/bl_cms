@@ -241,7 +241,7 @@
                                     <label>Points</label>
                                     <input type="number" class="form-control" name="points"
                                     placeholder="Enter Points"
-                                        value="@if($page == "edit"){{ $product->points}}@else {{ old("points") ? old("points") : '' }}@endif"
+                                        value="@if($page == "edit"){{ $product->points}}@else {{ old("points") ? old("points") : '' }}@endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('points'))
                                         <div class="help-block">{{ $errors->first('points') }}</div>
