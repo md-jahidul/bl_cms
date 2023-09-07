@@ -57,7 +57,7 @@ class CommerceNavigationRailController extends Controller
     public function edit($id)
     {
         $navigationMenus = $this->commerceNavigationRailService->getNavigationRail();
-        $navigationMenu = $this->commerceNavigationRailService->findOne($id);
+        $navigationMenu = $this->commerceNavigationRailService->editNavigationMenu($id);
         return view('admin.mybl-home-components.commerce-navigation-rails.index')
             ->with('navigationMenus', $navigationMenus)
             ->with('navigationMenu', $navigationMenu);

@@ -43,7 +43,7 @@ class ContentComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->findOne($id);
+        return $this->componentService->editComponent($id);
     }
 
     public function update(Request $request)

@@ -80,7 +80,7 @@ class ContentNavigationRailController extends Controller
     public function edit($id)
     {
         $navigationMenus = $this->contentNavigationRailService->getNavigationRail();
-        $navigationMenu = $this->contentNavigationRailService->findOne($id);
+        $navigationMenu = $this->contentNavigationRailService->editNavigationMenu($id);
         return view('admin.mybl-home-components.content-navigation-rails.index')
             ->with('navigationMenus', $navigationMenus)
             ->with('navigationMenu', $navigationMenu);

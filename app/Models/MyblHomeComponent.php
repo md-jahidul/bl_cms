@@ -16,6 +16,9 @@ class MyblHomeComponent extends Model
         'is_api_call_enable',
         'display_order',
         'is_eligible',
-        'version_code'
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
     ];
 }
