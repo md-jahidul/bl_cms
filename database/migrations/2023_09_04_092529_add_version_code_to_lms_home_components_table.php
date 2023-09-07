@@ -14,7 +14,10 @@ class AddVersionCodeToLmsHomeComponentsTable extends Migration
     public function up()
     {
         Schema::table('lms_home_components', function (Blueprint $table) {
-            $table->bigInteger('version_code')->default(0)->after('is_eligible');
+            $table->bigInteger('android_version_code_min')->default(0)->after('is_eligible');
+            $table->bigInteger('android_version_code_max')->default(999999999)->after('android_version_code_min');
+            $table->bigInteger('ios_version_code_min')->default(0)->after('android_version_code_max');
+            $table->bigInteger('ios_version_code_max')->default(999999999)->after('ios_version_code_min');
         });
     }
 
@@ -26,7 +29,10 @@ class AddVersionCodeToLmsHomeComponentsTable extends Migration
     public function down()
     {
         Schema::table('lms_home_components', function (Blueprint $table) {
-            $table->dropColumn('version_code');
+            $table->dropColumn('android_version_code_min');
+            $table->dropColumn('android_version_code_max');
+            $table->dropColumn('ios_version_code_min');
+            $table->dropColumn('ios_version_code_max');
         });
     }
 }
