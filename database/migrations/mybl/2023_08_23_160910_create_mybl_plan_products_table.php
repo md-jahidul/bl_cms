@@ -22,7 +22,7 @@ class CreateMyblPlanProductsTable extends Migration
             $table->string("recharge_product_code")->nullable();
             $table->integer("sms_volume")->nullable();
             $table->integer("minute_volume")->nullable();
-            $table->integer("data_volume")->nullable();
+            $table->float("data_volume")->nullable();
             $table->string("data_volume_unit")->nullable();
             $table->integer("validity")->nullable();
             $table->string("validity_unit")->nullable();
@@ -30,9 +30,9 @@ class CreateMyblPlanProductsTable extends Migration
             $table->string("display_sd_vat_tax_en")->nullable();
             $table->string("display_sd_vat_tax_bn")->nullable();
             $table->string("points")->nullable();
-            $table->float("market_price");
-            $table->float("discount_price");
-            $table->float("savings_amount");
+            $table->integer("market_price");
+            $table->integer("discount_price");
+            $table->integer("savings_amount");
             $table->float("discount_percentage");
             $table->tinyInteger("is_active")->default(1);
             $table->tinyInteger("is_default")->default(0);
