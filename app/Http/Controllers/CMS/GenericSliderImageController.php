@@ -84,7 +84,7 @@ class GenericSliderImageController extends Controller
 
     public function edit($imageId)
     {
-        $imageInfo = $this->genericSliderImagesService->findOne($imageId);
+        $imageInfo = $this->genericSliderImagesService->editSliderImage($imageId);
         $products  = $this->genericSliderImagesService->getActiveProducts();
         $baseGroups = $this->baseMsisdnService->findAll();
         $feedCategories = $this->feedCategoryService->findAll();

@@ -75,6 +75,17 @@ class GenericSliderImageService
                     $image['other_attributes'] = $other_attributes;
                 }
 
+                $android_version_code = explode('-', $image['android_version_code']);
+                $ios_version_code = explode('-', $image['ios_version_code']);
+                
+                $image['android_version_code_min'] = $android_version_code[0] ?? 0;
+                $image['android_version_code_max'] = $android_version_code[1]?? 999999999;
+                $image['ios_version_code_min'] = $ios_version_code[0] ?? 0;
+                $image['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
+
+                unset($image['android_version_code'], $image['ios_version_code']);
+
+
                 $sliderImg = $this->save($image);
                 if (!empty($image['segment_wise_cta'][0]['group_id']) &&
                     !empty($image['segment_wise_cta'][0]['action_name'])
@@ -135,6 +146,17 @@ class GenericSliderImageService
         return new Response('Sequence has been successfully update');
     }
 
+    public function editSliderImage($id)
+    {
+        $sliderImage = $this->findOne($id);
+        $android_version_code = implode('-', [$sliderImage['android_version_code_min'], $sliderImage['android_version_code_max']]);
+        $ios_version_code = implode('-', [$sliderImage['ios_version_code_min'], $sliderImage['ios_version_code_max']]);
+        $sliderImage->android_version_code = $android_version_code;
+        $sliderImage->ios_version_code = $ios_version_code;
+
+        return $sliderImage;
+    }
+
     public function updateSliderImage($data, $id)
     {
         try {
@@ -155,6 +177,14 @@ class GenericSliderImageService
                     }
                     $data['other_attributes'] = $other_attributes;
                 }
+
+                $android_version_code = explode('-', $data['android_version_code']);
+                $ios_version_code = explode('-', $data['ios_version_code']);
+
+                $data['android_version_code_min'] = $android_version_code[0] ?? 0;
+                $data['android_version_code_max'] = $android_version_code[1]?? 999999999;
+                $data['ios_version_code_min'] = $ios_version_code[0] ?? 0;
+                $data['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
 
                 $sliderImage->update($data);
 
