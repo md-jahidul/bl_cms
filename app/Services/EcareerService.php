@@ -430,4 +430,25 @@ class EcareerService {
         }
     }
 
+    public function getSeoData()
+    {
+        return $this->ecarrerPortalRepository->findOneByProperties(['category_type' => 'life_at_banglalink']);
+    }
+
+    public function getSeoForDetails()
+    {
+        return $this->ecarrerPortalRepository->findOneByProperties(['category_type' => 'life_at_banglalink']);
+    }
+
+    public function seoSaveOrUpdate($data)
+    {
+        $careerSeoLandingPg = $this->getSeoData();
+        if ($careerSeoLandingPg) {
+            $careerSeoLandingPg->update($data);
+        } else {
+            $data['category_type'] = 'life_at_banglalink';
+            $this->save($data);
+        }
+        return new Response('SEO data save successfully');
+    }
 }

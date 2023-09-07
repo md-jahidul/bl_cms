@@ -408,7 +408,7 @@
                         <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-safari"></i> General</a>
+                                    class="la la-safari"></i> Landing Page</a>
                         </li>
                         <li class="{{ request()->is('life-at-banglalink/teams*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
@@ -768,7 +768,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
@@ -787,7 +787,7 @@
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
     </li>
 
