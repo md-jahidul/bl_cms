@@ -84,7 +84,7 @@ class HomeNavigationRailController extends Controller
     public function edit($id)
     {
         $navigationMenus = $this->homeNavigationRailService->getNavigationRail();
-        $navigationMenu = $this->homeNavigationRailService->findOne($id);
+        $navigationMenu = $this->homeNavigationRailService->editNavigationMenu($id);
         return view('admin.mybl-home-components.navigation-rails.index')
                     ->with('navigationMenus', $navigationMenus)
                     ->with('navigationMenu', $navigationMenu);
