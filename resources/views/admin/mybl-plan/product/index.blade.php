@@ -37,7 +37,7 @@
                                     <label for="message">Upload Product List</label>
                                     <p class="text-left">
                                         <small class="warning text-muted">
-                                            Please download the format and upload in a specific format.
+                                            Please download the format (using export product option) and upload in a specific format.
                                         </small>
                                     </p>
                                     <input type="file" class="dropify" name="product_file" data-height="80"
