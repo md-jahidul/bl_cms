@@ -94,6 +94,11 @@ return [
             'path' => storage_path('logs/RetailerLog/retailer.log'),
             'level' => 'debug'
         ],
+        'myblPlanLog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/myblPlanLog/mybl_plan.log'),
+            'level' => 'debug'
+        ],
 
         'event-based-bonus-v2' => [
             'driver' => 'daily',
