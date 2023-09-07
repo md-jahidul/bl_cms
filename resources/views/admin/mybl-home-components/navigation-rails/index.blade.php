@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6" id="action_div">
+                    <div class="col-md-4" id="action_div">
                         @php
                             $actionList = Helper::navigationActionList();
                         @endphp
@@ -101,6 +101,17 @@
                             </select>
                             <div class="help-block"></div>
                         </div>
+                    </div>
+                    <div class="form-group col-md-4 {{ $errors->has('version_code') ? ' error' : '' }}">
+                        <label for="title" class="required">Version Code</label>
+                        <input type="number" name="version_code"  class="form-control" placeholder="Enter Version Code"
+                               required data-validation-required-message="Enter Version Code"
+{{--                               value="{{ isset($navigationMenu) ? $navigationMenu->version_code : '' }}"--}}
+                        >
+                        <div class="help-block"></div>
+                        @if ($errors->has('version_code'))
+                            <div class="help-block">  {{ $errors->first('version_code') }}</div>
+                        @endif
                     </div>
 
                     <div class="col-md-3">
