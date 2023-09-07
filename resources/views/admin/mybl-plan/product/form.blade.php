@@ -36,10 +36,10 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="sim_type" class="required">SIM Type</label>
-                                        <select name="sim_type" required class="form-control">
+                                        <select name="sim_type" class="form-control">
                                             <option value="prepaid" @if($page == "edit" && $product->sim_type == "prepaid") selected @endif>PREPAID</option>
-                                            <option value="postpaid" @if($page == "edit" && $product->sim_type == "postpaid") selected @endif>POSTPAID</option>
-                                        </select>
+                                            {{-- <option value="postpaid" @if($page == "edit" && $product->sim_type == "postpaid") selected @endif>POSTPAID</option> --}}
+                                        </select>   
                                     </div>
                                 </div>
 
@@ -47,7 +47,7 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('content_type') ? ' error' : '' }}">
                                     <label for="content_type">Content Type</label>
-                                    <select name="content_type" class="form-control filter" id="content_type">
+                                    <select name="content_type" class="form-control filter" @if($page == "edit" && $product->content_type) disabled @endif id="content_type">
                                         <option value="">---Select Content Type---</option>
                                         @foreach ($types as $type)
                                         <option value="{{$type}}"
@@ -65,6 +65,7 @@
                                 <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <input class="form-control" name="product_code" required
+                                            @if($page == "edit") readonly @endif
                                            data-validation-required-message="Please enter product code",
                                            placeholder="Enter Product Code"
                                            value="@if($page == "edit"){{ $product->product_code}}@else{{
@@ -167,7 +168,6 @@
                                     <select class="form-control required duration_categories" required readonly
                                         data-validation-required-message="Please select validity unit" name="validity_unit"
                                             id="validity_unit" required>
-                                        <option value="">---Select Validity Unit---</option>
                                         @foreach($validityUnits as $value)
                                             <option value="{{ $value }}" @if ($page == "edit" && $product->validity_unit == $value) selected
                                                         @else {{ old("validity_unit") == $value ? 'selected' : '' }} @endif>
