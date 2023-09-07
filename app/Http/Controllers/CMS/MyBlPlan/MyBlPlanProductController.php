@@ -85,7 +85,7 @@ class MyBlPlanProductController extends Controller
             $file = $request->file('product_file');
             $path = $file->storeAs(
                 'mybl-plan-products/' . strtotime(now() . '/'),
-                "products" . '.' . $file->getClientOriginalExtension(),
+                "products_" . now() . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
@@ -102,7 +102,7 @@ class MyBlPlanProductController extends Controller
                 'success' => 'FAILED',
                 'errors' => $e->getMessage()
             ];
-            Log::info("MyBL Plan Product Upload Failed: " . $e->getMessage());
+            Log::channel('myblPlanLog')->info("MyBL Plan Product Upload Failed: " . $e->getMessage());
             return response()->json($response, 500);
         }
     }
