@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\ContentNavigationRailRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -37,14 +38,11 @@ class ContentNavigationRailService
     {
         $data['display_order'] = $this->findAll()->count() + 1;
 
-        $android_version_code = explode('-', $data['android_version_code']);
-        $ios_version_code = explode('-', $data['ios_version_code']);
-        
-        $data['android_version_code_min'] = $android_version_code[0] ?? 0;
-        $data['android_version_code_max'] = $android_version_code[1]?? 999999999;
-        $data['ios_version_code_min'] = $ios_version_code[0] ?? 0;
-        $data['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
-
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
@@ -73,14 +71,11 @@ class ContentNavigationRailService
     {
         $navigationMenu = $this->findOne($id);
 
-        $android_version_code = explode('-', $request['android_version_code']);
-        $ios_version_code = explode('-', $request['ios_version_code']);
-
-        $request['android_version_code_min'] = $android_version_code[0] ?? 0;
-        $request['android_version_code_max'] = $android_version_code[1]?? 999999999;
-        $request['ios_version_code_min'] = $ios_version_code[0] ?? 0;
-        $request['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
-
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
+        $request = array_merge($request, $version_code); 
         unset($request['android_version_code'], $request['ios_version_code']);
         
         $navigationMenu->update($request);
