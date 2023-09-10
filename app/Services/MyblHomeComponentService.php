@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\AboutUsRepository;
 use App\Repositories\MyblHomeComponentRepository;
 use App\Repositories\MyblSliderRepository;
@@ -109,19 +110,18 @@ class MyblHomeComponentService
     {
         $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
         $homeComponentCount = $this->findAll()->count();
-
-        $android_version_code = explode('-', $data['android_version_code']);
-        $ios_version_code = explode('-', $data['ios_version_code']);
         
-        $data['android_version_code_min'] = $android_version_code[0] ?? 0;
-        $data['android_version_code_max'] = $android_version_code[1]?? 999999999;
-        $data['ios_version_code_min'] = $ios_version_code[0] ?? 0;
-        $data['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+       
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
         $data['display_order'] = $homeComponentCount + $homeSecondarySliderCount + 1;
 
-        unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
         Redis::del(self::REDIS_KEY);
@@ -143,13 +143,12 @@ class MyblHomeComponentService
     {
         $component = $this->findOne($data['id']);
 
-        $android_version_code = explode('-', $data['android_version_code']);
-        $ios_version_code = explode('-', $data['ios_version_code']);
-
-        $data['android_version_code_min'] = $android_version_code[0] ?? 0;
-        $data['android_version_code_max'] = $android_version_code[1]?? 999999999;
-        $data['ios_version_code_min'] = $ios_version_code[0] ?? 0;
-        $data['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
 
         $component->update($data);
         Redis::del(self::REDIS_KEY);

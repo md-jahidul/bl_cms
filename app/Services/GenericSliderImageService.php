@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Models\BaseImageCta;
 use App\Models\MyBlProduct;
 use App\Repositories\GenericSliderImageRepository;
@@ -75,14 +76,12 @@ class GenericSliderImageService
                     $image['other_attributes'] = $other_attributes;
                 }
 
-                $android_version_code = explode('-', $image['android_version_code']);
-                $ios_version_code = explode('-', $image['ios_version_code']);
                 
-                $image['android_version_code_min'] = $android_version_code[0] ?? 0;
-                $image['android_version_code_max'] = $android_version_code[1]?? 999999999;
-                $image['ios_version_code_min'] = $ios_version_code[0] ?? 0;
-                $image['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
-
+                /**
+                 * Version Control
+                 */
+                $version_code = Helper::versionCode($image['android_version_code'], $image['ios_version_code']);
+                $image = array_merge($image, $version_code); 
                 unset($image['android_version_code'], $image['ios_version_code']);
 
 
@@ -178,13 +177,12 @@ class GenericSliderImageService
                     $data['other_attributes'] = $other_attributes;
                 }
 
-                $android_version_code = explode('-', $data['android_version_code']);
-                $ios_version_code = explode('-', $data['ios_version_code']);
-
-                $data['android_version_code_min'] = $android_version_code[0] ?? 0;
-                $data['android_version_code_max'] = $android_version_code[1]?? 999999999;
-                $data['ios_version_code_min'] = $ios_version_code[0] ?? 0;
-                $data['ios_version_code_max'] = $ios_version_code[1] ?? 999999999;
+                /**
+                 * Version Control
+                 */
+                $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+                $data = array_merge($data, $version_code); 
+                unset($data['android_version_code'], $data['ios_version_code']);
 
                 $sliderImage->update($data);
 
