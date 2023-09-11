@@ -177,8 +177,8 @@ class BusinessOthersService {
     {
         $feature = BaseURLLocalization::featureBaseUrl();
         // URL make
-        $urlEn = $feature["business_en"] . "business-solution" . '/' . $product->url_slug;
-        $urlBn = $feature["business_bn"] . "business-solution" . '/' . $product->url_slug_bn;
+        $urlEn = $feature["business_en"] . "/" . "business-solution" . '/' . $product->url_slug;
+        $urlBn = $feature["business_bn"] . "/" . "business-solution" . '/' . $product->url_slug_bn;
 
         $saveSearchData = [
             'product_code' => null,
