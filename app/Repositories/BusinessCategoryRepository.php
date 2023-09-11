@@ -23,10 +23,6 @@ class BusinessCategoryRepository extends BaseRepository {
         return $cat;
     }
 
-    public function updateCategory($data, $catId){
-        return $this->model::where('id', $catId)->update($data);
-    }
-
     public function saveBannerPhoto($filePath, $altText, $catId) {
         $update = [];
         $update['alt_text'] = $altText;

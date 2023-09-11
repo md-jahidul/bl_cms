@@ -32,4 +32,9 @@ class AppServiceTab extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

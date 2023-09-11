@@ -9,6 +9,7 @@
 
 namespace App\Services\Assetlite;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AppServiceTabRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -85,7 +86,48 @@ class AppServiceTabService
         $data['updated_by'] = Auth::id();
 
         $appServiceTabs->update($data);
+        $this->_saveSearchData($appServiceTabs);
         return Response('App Service Tab updated successfully');
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        $titleEn = $product->name_en;
+        $titleBn = $product->name_bn;
+        $productCode = null;
+
+        #Search Table Status
+        $status = $product->status;
+
+        $urlEn = "";
+        $urlBn = "";
+
+        $urlEn .= $feature['app_service_en'];
+        $urlBn .= $feature['app_service_bn'];
+
+        // Category url
+        $urlEn .= "/" . $product->url_slug;
+        $urlBn .= "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => $productCode,
+            'type' => 'app-service-tab',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => $status,
+        ];
+
+        if ($status) {
+            if (!$product->searchableFeature()->first()) {
+                $product->searchableFeature()->create($saveSearchData);
+            }else {
+                $product->searchableFeature()->update($saveSearchData);
+            }
+        }
     }
 
     /**
