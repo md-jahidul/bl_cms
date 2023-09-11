@@ -45,6 +45,49 @@
         </div>
     </section>
 
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>SEO Info</strong></h4>
+                    <hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ route('blog-lending-pg-seo') }}"
+                              method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header" class="form-control" rows="4">{{ isset($seoData) ? $seoData->page_header : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea name="page_header_bn" class="form-control" rows="4">{{ isset($seoData) ? $seoData->page_header_bn : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea name="schema_markup" class="form-control" rows="4">{{ isset($seoData) ? $seoData->schema_markup : '' }}</textarea>
+                                </div>
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Fixed sections -->
 {{--    <section>--}}
 {{--        <div class="card">--}}
