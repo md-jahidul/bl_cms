@@ -6,8 +6,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MyBlPlanProductRequest;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\MyBlPlanProductRequest;
 use App\Services\MyBlPlan\MyBlPlanProductService;
 
 class MyBlPlanProductController extends Controller
@@ -54,6 +55,8 @@ class MyBlPlanProductController extends Controller
 
         $this->myBlPlanProductService->save($request->all());
 
+        Redis::del("mybl_plan_prepaid_products");
+
         return redirect()->route('mybl-plan.products')->with('success', 'Product created successfully');
     }
 
@@ -76,6 +79,8 @@ class MyBlPlanProductController extends Controller
 
         $this->myBlPlanProductService->findOne($id)->update($request->all());
 
+        Redis::del("mybl_plan_prepaid_products");
+
         return redirect()->route('mybl-plan.products')->with('success', 'Product updated successfully');
     }
 
@@ -92,6 +97,8 @@ class MyBlPlanProductController extends Controller
             $path = Storage::disk('public')->path($path);
 
             $this->myBlPlanProductService->uploadProductExcel($path);
+
+            Redis::del("mybl_plan_prepaid_products");
 
             $response = [
                 'success' => 'SUCCESS'
