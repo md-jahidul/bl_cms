@@ -1488,4 +1488,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
+
+    // Site Map Generator
+    Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');
+    Route::get('generate-sitemap', 'AssetLite\SitemapController@generateSitemap');
 });
