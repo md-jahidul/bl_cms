@@ -153,55 +153,31 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 <input type="hidden" name="category" value="app_banner_fixed_section"
                                        class="custom-file-input" id="imgTwo">
 
-                                <div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image (Desktop)</label>
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text">Banner Image (Desktop)</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_web_img" value="{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}">
-                                        <input type="file" name="image" class="custom-file-input image_with_preview">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" name="image" class="custom-file-input dropify" data-height="80"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_image'))
-                                        <div class="help-block">  {{ $errors->first('image') }}</div>
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-2">
-                                    @if(isset($fixedSectionData['image']))
-                                        <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}"
-                                             height="100" width="200" class="imgDisplay img-fluid">
-                                    @else
-                                        <img height="100" width="200" class="imgDisplay img-fluid"
-                                             style="display: none">
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-4 {{ $errors->has('image_mobile') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image (Mobile)</label>
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text">Banner Image (Mobile)</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_mob_img" value="{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}">
-                                        <input type="file" name="banner_image_mobile"
-                                               class="custom-file-input image_with_preview">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" name="banner_image_mobile" class="custom-file-input dropify" data-height="80"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $fixedSectionData['banner_image_mobile'] }}">
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
 
                                     <div class="help-block"></div>
-                                    @if ($errors->has('image_mobile'))
-                                        <div class="help-block">  {{ $errors->first('image_mobile') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    @if( isset($fixedSectionData['banner_image_mobile']) )
-                                        <img
-                                            src="{{ config('filesystems.file_base_url') . $fixedSectionData['banner_image_mobile'] }}"
-                                            height="100" width="200" class="imgDisplay img-fluid">
-                                    @else
-                                        <img height="100" width="200" class="imgDisplay img-fluid"
-                                             style="display: none">
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
                                     @endif
                                 </div>
 
@@ -217,7 +193,6 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                     <label for="banner_name">Banner Name</label>
-                                    <input type="hidden" name="old_banner_name" value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
                                     <input type="text" name="banner_name" id="banner_name" class="form-control"
                                            placeholder="Enter offer name in English"
                                            value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
@@ -1201,6 +1176,14 @@ function matchRelatedProduct($id, $relatedProductIds)
 
         }
 
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
 
         // Image with Preview
         $(document).on('change', '.image_with_preview', function () {
@@ -1216,10 +1199,7 @@ function matchRelatedProduct($id, $relatedProductIds)
             }
             // console.log(input.files[0]);
         });
-
-
     </script>
-
 @endpush
 
 

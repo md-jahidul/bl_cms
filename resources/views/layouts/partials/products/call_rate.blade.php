@@ -6,6 +6,10 @@
     }
 @endphp
 
+@include('layouts.partials.products.common-field.renew_code')
+
+@include('layouts.partials.products.common-field.recharge_code')
+
 @include('layouts.partials.products.common-field.price_vat_mrp')
 
 @include('layouts.partials.products.common-field.call_rate')

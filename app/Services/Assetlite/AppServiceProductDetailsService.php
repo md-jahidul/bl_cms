@@ -140,7 +140,7 @@ class AppServiceProductDetailsService
             if (!empty($component_data) && count($component_data) > 0) {
                 foreach ($component_data as $key => $value) {
 
-                    
+
                     $value['section_details_id'] = $sections_saved_data->id;
                     $value['page_type'] = self::PAGE_TYPE;
 
@@ -149,8 +149,8 @@ class AppServiceProductDetailsService
                         if (request()->hasFile('component.' . $key . '.image_url')) {
                             $value['image'] = $this->upload($data['component'][$key]['image_url'], 'assetlite/images/app-service/product-details');
                         }
-    
-    
+
+
                         # get video url
                         if (isset($value['video_url']) && is_object($value['video_url'])) {
                             $value['video'] = $this->upload($value['video_url'], 'assetlite/images/app-service/product/details');
@@ -175,14 +175,14 @@ class AppServiceProductDetailsService
                                             $m_value = $this->upload($data['component'][$key]['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
                                         }
                                         $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-    
+
                                     }
                                 }
                             }
                             $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
                         }
-    
-    
+
+
                         # Image With Content Component ====
                         if(isset($value['image_with_content_item'])){
                             $request_multi = $value['image_with_content_item'];
@@ -200,14 +200,14 @@ class AppServiceProductDetailsService
                                             $m_value = $this->upload($data['component'][$key]['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
                                         }
                                         $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-    
+
                                     }
                                 }
                             }
                             $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
                         }
                     } else {
-                        
+
                         # Multi Tab With Image Component ====
                         if(isset($value['multi_tab_item']) && !empty($value['multi_tab_item'])){
                             $tabData = [];
@@ -227,11 +227,11 @@ class AppServiceProductDetailsService
                                                 $image_array['title_bn'] = $image_array_value['title_bn'];
                                                 $image_array['alt_text'] = $image_array_value['alt_text'];
                                                 $image_array['image_url'] = $image_array_value['image_url'];
-                                                
+
                                                 if (request()->hasFile('component.0.multi_tab_item.image_array-1.1.image_url')) {
                                                     $image_array['image_url'] = $this->upload($image_array_value['image_url'], 'assetlite/images/app-service/product/details');
                                                 }
-                                                
+
                                                 $image_array_all[] = $image_array;
                                             }
 
@@ -242,7 +242,7 @@ class AppServiceProductDetailsService
                                 }
                             }
                             $tabData = $results;
-                            $value['multiple_attributes'] = (count($tabData) >= 1) ? array_values($tabData) : null;    
+                            $value['multiple_attributes'] = (count($tabData) >= 1) ? array_values($tabData) : null;
                         }
                     }
 
@@ -318,11 +318,11 @@ class AppServiceProductDetailsService
             if (isset($data['image_url']) && !empty($data['image_url'])) {
                 $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product-details');
             }
-    
+
             if (isset($data['other_attr']) && !empty($data['other_attr'])) {
                 $data['other_attributes'] = json_encode($data['other_attr']);
             }
-    
+
             if (isset($data['multi_item']) && !empty($data['multi_item'])) {
                 $request_multi = $data['multi_item'];
                 $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
@@ -331,50 +331,50 @@ class AppServiceProductDetailsService
                     foreach ($request_multi as $m_key => $m_value) {
                         $sub_data = [];
                         $check_index = explode('-', $m_key);
-    
+
                         if ($check_index[1] == $i) {
                             if (request()->hasFile('component.' . $key . '.multi_item.' . $m_key)) {
                                 $m_value = $this->upload($data['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
                             }
-    
+
                             $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-    
+
                         }
                     }
                 }
-    
+
                 if (request()->input('update') == 'full_update_multi_attr') {
                     $final_results = $results;
                 } else {
                     # get existing multiattr data
                     $existing_multi_data = $component->multiple_attributes;
-    
+
                     if (!empty($existing_multi_data)) {
                         $existing_multi_data = json_decode($existing_multi_data, true);
-    
+
                         $last_array_id = end($existing_multi_data)['id'];
                         $last_display_order_id = end($existing_multi_data)['display_order'];
-    
+
                         $new_results = array_map(function ($value) use ($last_array_id, $last_display_order_id) {
-    
+
                             $value['id'] = ($value['id'] + $last_array_id);
                             $value['display_order'] = $value['id'];
-    
+
                             return $value;
-    
+
                         }, $results);
-    
+
                     }
-    
+
                     $final_results = array_merge($existing_multi_data, $new_results);
                 }
-    
+
                 $data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
             }
-    
+
             # Image With Content Component ====
             if(isset($data['image_with_content_item'])){
-    
+
                 $request_multi = $data['image_with_content_item'];
                 if (!isset($request_multi['status-1'])) {
                     $request_multi['status-1'] = "1";
@@ -390,7 +390,7 @@ class AppServiceProductDetailsService
                                 $m_value = $this->upload($data['image_with_content_item'][$m_key], 'assetlite/images/app-service/product/details');
                             }
                             $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-    
+
                             if(!isset($request_multi['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
                                 $results[$i]['image_url'] = $data['image_with_content_item']['prev_image_url-'.$i];
                             }
@@ -419,19 +419,19 @@ class AppServiceProductDetailsService
             //                         $m_value = $this->upload($data['multi_tab_item'][$k][$m_key], 'assetlite/images/app-service/product/details');
             //                     }
             //                     $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
-    
+
             //                     if(!isset($tab['image_url-'.$i]) && $m_key == 'prev_image_url-'.$i) {
             //                         $results[$i]['image_url'] = $data['multi_tab_item'][$k]['prev_image_url-'.$i];
             //                     }
             //                 }
             //             }
-    
+
             //         }
             //         $tabData[$k] = $results;
             //     }
             //     // $data['multiple_attributes'] = !empty($tabData) ? json_encode($tabData) : null;
             //     $data['multiple_attributes'] = !empty($tabData) ? array_values($tabData) : null;
-    
+
             // }
 
 
@@ -454,7 +454,7 @@ class AppServiceProductDetailsService
                                     $image_array['title_bn'] = $image_array_value['title_bn'];
                                     $image_array['alt_text'] = $image_array_value['alt_text'];
                                     $image_array['image_url'] = $image_array_value['prev_image_url'] ?? '';
-                                    
+
                                     if (request()->hasFile('component.0.multi_tab_item.image_array-'.$i.'.'.$image_array_key.'.image_url')) {
                                         $image_array['image_url'] = $this->upload($image_array_value['image_url'], 'assetlite/images/app-service/product/details');
                                         #TODO:: NEED To Delete Previous IMAGE;
@@ -470,7 +470,7 @@ class AppServiceProductDetailsService
                     }
                 }
                 $tabData = $results;
-                $data['multiple_attributes'] = (count($tabData) >= 1) ? array_values($tabData) : null;    
+                $data['multiple_attributes'] = (count($tabData) >= 1) ? array_values($tabData) : null;
             }
         }
 
@@ -561,56 +561,16 @@ class AppServiceProductDetailsService
     public function fixedSectionUpdate($data, $tab_type, $product_id)
     {
         if (!empty($data['image'])) {
-            //delete old web photo
-            if ($data['old_web_img'] != "") {
-                $this->deleteFile($data['old_web_img']);
-            }
-            $photoName = $data['banner_name'] . '-web';
-            $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details', $photoName);
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
         }
 
         if (!empty($data['banner_image_mobile'])) {
-            //delete old mob photo
-            if ($data['old_mob_img'] != "") {
-                $this->deleteFile($data['old_mob_img']);
-            }
-            $photoName = $data['banner_name'] . '-mobile';
-            $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/app-service/product-details', $photoName);
+            $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/app-service/product-details');
         }
-
-        //only rename
-        if ($data['old_banner_name'] != $data['banner_name']) {
-//            dd($data);
-            if (empty($data['image']) && $data['old_web_img'] != "") {
-                $fileName = $data['banner_name'] . '-web';
-                $directoryPath = 'assetlite/images/app-service/product-details';
-                $data['image'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
-            }
-            if (empty($data['banner_image_mobile']) && $data['old_mob_img'] != "") {
-                $fileName = $data['banner_name'] . '-mobile';
-                $directoryPath = 'assetlite/images/app-service/product-details';
-                $data['banner_image_mobile'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
-            }
-        }
-
-        unset($data['old_web_img']);
-        unset($data['old_mob_img']);
-        unset($data['old_banner_name']);
-
-//        dd($data);
-//        if (request()->hasFile('image')) {
-//            $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
-//        }
-//        if (request()->hasFile('other_attributes.image_mobile')) {
-//            $data['other_attributes']['image_mobile'] = $this->upload($data['other_attributes']['image_mobile'], 'assetlite/images/app-service/product-details');
-//        }
-
 
         $data['tab_type'] = $tab_type;
         $data['product_id'] = $product_id;
-
         $findFixedSection = $this->appServiceProductDetailsRepository->checkFixedSection($product_id);
-
 
         if (!$findFixedSection) {
             $this->save($data);
@@ -618,9 +578,6 @@ class AppServiceProductDetailsService
             if (!isset($data['other_attributes'])) {
                 $data['other_attributes'] = null;
             }
-
-//            dd($data);
-
             $findFixedSection->update($data);
         }
         return Response('App Service Section Update Successfully');
@@ -649,13 +606,13 @@ class AppServiceProductDetailsService
                     if ($value->component_type != 'multiple_tab_image') {
                         # code...
                         $res = json_decode($value->multiple_attributes, true);
-    
+
                         usort($res, function ($a, $b) {
                             if(isset($a["display_order"]) && isset($b["display_order"])){
                                 return strcmp($a["display_order"], $b["display_order"]);
                             }
                         });
-    
+
                         $results['component'][$key]['multiple_attributes'] = json_encode($res);
                     }
                 }

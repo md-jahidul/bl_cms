@@ -55,4 +55,8 @@ class OfferCategory extends Model
         return $this->hasMany(OfferCategory::class, 'parent_id', 'id');
     }
 
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }

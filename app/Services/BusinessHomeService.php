@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessCategoryRepository;
 use App\Repositories\BusinessHomeBannerRepository;
 use App\Repositories\BusinessSlidingRepository;
@@ -141,7 +142,9 @@ class BusinessHomeService {
 //            }
 
             if ($status) {
-                $this->businessCatRepo->updateCategory($update, $catId);
+                $businessCat = $this->businessCatRepo->findOne($catId);
+                $businessCat->update($update);
+                $this->_saveSearchData($businessCat);
                 $response = [
                     'success' => 1,
                 ];
@@ -157,6 +160,38 @@ class BusinessHomeService {
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
+        }
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        $titleEn = $product->name;
+        $titleBn = $product->name_bn;
+        $productCode = null;
+
+        $urlEn = "";
+        $urlBn = "";
+        $urlEn .= $feature['business_en'];
+        $urlBn .= $feature['business_bn'];
+        // Category url
+        $urlEn .= "/" . $product->url_slug;
+        $urlBn .= "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => $productCode,
+            'type' => 'business-category',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => 1,
+        ];
+
+        if (!$product->searchableFeature()->first()) {
+            $product->searchableFeature()->create($saveSearchData);
+        }else {
+            $product->searchableFeature()->update($saveSearchData);
         }
     }
 

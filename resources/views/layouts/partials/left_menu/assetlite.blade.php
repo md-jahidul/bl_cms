@@ -830,6 +830,10 @@
                     </ul>
                 </li>
 {{--            @endif--}}
+            <li class="{{ is_active_url('/sitemap') }} nav-item"><a href="{{ url('/sitemap') }}">
+                    <i class="la la-paragraph"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Sitemap Generate</span></a>
+            </li>
         </ul>
     </li>
 
