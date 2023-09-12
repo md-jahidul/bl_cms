@@ -58,7 +58,7 @@ class GenericShortcutController extends Controller
 
     public function edit($id)
     {
-        $shortcut = $this->genericShortcutService->findOne($id);
+        $shortcut = $this->genericShortcutService->editGenericShortcut($id);
 
         return view('admin.generic-shortcut.shortcuts.create', compact('shortcut'));
     }
