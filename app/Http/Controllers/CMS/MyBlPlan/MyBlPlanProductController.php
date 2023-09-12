@@ -6,8 +6,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MyBlPlanProductRequest;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\MyBlPlanProductRequest;
 use App\Services\MyBlPlan\MyBlPlanProductService;
 
 class MyBlPlanProductController extends Controller
@@ -54,6 +55,8 @@ class MyBlPlanProductController extends Controller
 
         $this->myBlPlanProductService->save($request->all());
 
+        Redis::del("mybl_plan_prepaid_products");
+
         return redirect()->route('mybl-plan.products')->with('success', 'Product created successfully');
     }
 
@@ -76,6 +79,8 @@ class MyBlPlanProductController extends Controller
 
         $this->myBlPlanProductService->findOne($id)->update($request->all());
 
+        Redis::del("mybl_plan_prepaid_products");
+
         return redirect()->route('mybl-plan.products')->with('success', 'Product updated successfully');
     }
 
@@ -85,13 +90,15 @@ class MyBlPlanProductController extends Controller
             $file = $request->file('product_file');
             $path = $file->storeAs(
                 'mybl-plan-products/' . strtotime(now() . '/'),
-                "products" . '.' . $file->getClientOriginalExtension(),
+                "products_" . now() . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
             $path = Storage::disk('public')->path($path);
 
             $this->myBlPlanProductService->uploadProductExcel($path);
+
+            Redis::del("mybl_plan_prepaid_products");
 
             $response = [
                 'success' => 'SUCCESS'
@@ -102,7 +109,7 @@ class MyBlPlanProductController extends Controller
                 'success' => 'FAILED',
                 'errors' => $e->getMessage()
             ];
-            Log::info("MyBL Plan Product Upload Failed: " . $e->getMessage());
+            Log::channel('myblPlanLog')->info("MyBL Plan Product Upload Failed: " . $e->getMessage());
             return response()->json($response, 500);
         }
     }
