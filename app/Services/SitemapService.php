@@ -17,6 +17,7 @@ use App\Traits\FileTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 
 class SitemapService
@@ -49,28 +50,47 @@ class SitemapService
      */
     public function generateSitemapFile()
     {
-        $date = Carbon::now()->toDateString();
-        $urls = '';
-        // All Details Page URL
-        $searchableData = $this->searchableDataRepository->findByProperties(['status' => 1], ['url_slug_en', 'url_slug_bn']);
-        foreach ($searchableData as $item) {
-            if ($item->url_slug_en != $item->url_slug_bn){
-                $urls .= $this->urlTag($item, $date);
+        try {
+            $date = Carbon::now()->toDateString();
+            $urls = '';
+            // All Site URL
+            $searchableData = $this->searchableDataRepository->findByProperties(['status' => 1], ['url_slug_en', 'url_slug_bn']);
+            foreach ($searchableData as $item) {
+                if ($item->url_slug_en != $item->url_slug_bn){
+                    $urls .= $this->urlTag($item, $date);
+                }
             }
-        }
 
-
-        // Product Category
-
-        $sitemapTags =
-        '<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">&lt';
-        $sitemapTags .= $urls;
-        $sitemapTags .= "
+            $sitemapTags =
+                '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+            $sitemapTags .= "
+     <url>
+        <loc>https://www.banglalink.net</loc>
+        <lastmod>$date</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>";
+            $sitemapTags .= $urls;
+            $sitemapTags .= "
 </urlset>";
 
+            $this->put('/sitemap/sitemap.xml', $sitemapTags);
+            Redis::del('sitemap_gen_date');
+            Redis::set('sitemap_gen_date', $date);
 
-        Storage::disk("local")->put('example.txt', $sitemapTags);
+            return [
+                "message" => "File Generated Successfully!",
+                "updated_at" => Redis::get('sitemap_gen_date'),
+                "status" => true
+            ];
+        }catch (\Exception $exception) {
+            return [
+                "message" => $exception->getMessage(),
+                "updated_at" => null,
+                "status" => false
+            ];
+        }
     }
 
     public function urlTag($item, $date): string

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Services\SitemapService;
+use Illuminate\Support\Facades\Redis;
 
 class SitemapController extends Controller
 {
@@ -28,7 +29,7 @@ class SitemapController extends Controller
 
     public function generateSitemap()
     {
-        $this->sitemapService->generateSitemapFile();
-        dd('success');
+        $response = $this->sitemapService->generateSitemapFile();
+        return response()->json($response, 200);
     }
 }

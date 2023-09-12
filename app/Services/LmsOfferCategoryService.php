@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\AlSliderRepository;
 use App\Repositories\LmsOfferCategoryRepository;
 use App\Repositories\SliderRepository;
@@ -44,7 +45,8 @@ class LmsOfferCategoryService
      */
     public function storeLmsOfferCat($data)
     {
-        $this->save($data);
+        $cat = $this->save($data);
+        $this->_saveSearchData($cat);
         return new Response('Lms offer category added successfully');
     }
 
@@ -55,9 +57,48 @@ class LmsOfferCategoryService
      */
     public function updateLmsOfferCat($data, $id)
     {
-        $slider = $this->findOne($id);
-        $slider->update($data);
+        $cat = $this->findOne($id);
+        $cat->update($data);
+        $this->_saveSearchData($cat);
         return Response('Slider updated successfully !');
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        $titleEn = $product->name_en;
+        $titleBn = $product->name_bn;
+        $productCode = null;
+
+        #Search Table Status
+        $status = $product->status;
+
+        $urlEn = "";
+        $urlBn = "";
+
+        $urlEn .= $feature['loyalty_discount_privilege_en'];
+        $urlBn .= $feature['loyalty_discount_privilege_bn'];
+
+        // Category url
+        $urlEn .= "/" . $product->url_slug_en;
+        $urlBn .= "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => $productCode,
+            'type' => 'loyalty-discount-privilege',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => 1,
+        ];
+
+        if (!$product->searchableFeature()->first()) {
+            $product->searchableFeature()->create($saveSearchData);
+        }else {
+            $product->searchableFeature()->update($saveSearchData);
+        }
     }
 
     /**
