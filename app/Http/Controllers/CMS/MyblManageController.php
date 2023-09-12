@@ -142,7 +142,8 @@ class MyblManageController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->manageService->findOrFail($id);
+        $category = $this->manageService->editCategory($id);
+
         return view('admin.mybl-manage.categories.edit', compact('category'));
     }
 
@@ -155,7 +156,7 @@ class MyblManageController extends Controller
     public function editItem($parent_id, $id)
     {
         $manageCategory = $this->manageService->findOne($parent_id);
-        $item = $this->manageItemRepository->findOrFail($id);
+        $item = $this->manageService->editItem($id);
         $deeplinkActions = Helper::deepLinkList();
         $actionList = Helper::navigationActionList();
         return view('admin.mybl-manage.edit', compact('item', 'manageCategory', 'deeplinkActions', 'actionList'));

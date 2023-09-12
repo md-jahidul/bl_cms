@@ -101,7 +101,7 @@ class MyblAppMenuController extends Controller
      */
     public function edit($id)
     {
-        $menu = $this->menuService->findOrFail($id);
+        $menu = $this->menuService->editMenu($id);
         $ctaActions = Helper::navigationActionList();
         $deeplinkActions = Helper::deepLinkList();
         $products = $this->sliderImageService->getActiveProducts();
