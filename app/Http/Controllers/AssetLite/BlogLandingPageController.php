@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Repositories\MediaTvcVideoRepository;
+use App\Repositories\MetaTagRepository;
 use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
 use App\Services\MediaLandingPageService;
@@ -35,11 +36,16 @@ class BlogLandingPageController extends Controller
     protected const MODULE_TYPE = "landing_page";
     protected const REFERENCE_TYPE = "blog";
     protected const LANDING_REFERENCE_TYPE = "blog_landing_page";
+    protected const BLOG_ARCHIVE_SEO = "blog_archive_seo";
 
     /**
      * @var MediaPressNewsEventService
      */
     private $mediaPressNewsEventService;
+    /**
+     * @var MetaTagRepository
+     */
+    private $metaTagRepository;
 
     /**
      * RolesController constructor.
@@ -49,11 +55,13 @@ class BlogLandingPageController extends Controller
     public function __construct(
         MediaPressNewsEventService $mediaPressNewsEventService,
         MediaLandingPageService $mediaLandingPageService,
-        MediaBannerImageService $mediaBannerImageService
+        MediaBannerImageService $mediaBannerImageService,
+        MetaTagRepository $metaTagRepository
     ) {
         $this->mediaPressNewsEventService = $mediaPressNewsEventService;
         $this->mediaLandingPageService = $mediaLandingPageService;
         $this->mediaBannerImageService = $mediaBannerImageService;
+        $this->metaTagRepository = $metaTagRepository;
     }
 
 
@@ -64,7 +72,8 @@ class BlogLandingPageController extends Controller
     {
         $orderBy = ['column' => "display_order", 'direction' => 'ASC'];
         $componentList = $this->mediaLandingPageService->findBy(['reference_type' => self::LANDING_REFERENCE_TYPE], '', $orderBy);
-        return view('admin.blog.landing-page.component_list', compact('componentList'));
+        $seoData = $this->metaTagRepository->findOneByProperties(['dynamic_route_key' => self::LANDING_REFERENCE_TYPE]);
+        return view('admin.blog.landing-page.component_list', compact('componentList', 'seoData'));
     }
 
     /**
@@ -137,6 +146,27 @@ class BlogLandingPageController extends Controller
     public function landingPageSortable(Request $request)
     {
         $this->mediaLandingPageService->tableSortable($request);
+    }
+
+    public function landingPageSeoDataSave(Request $request)
+    {
+        $response = $this->mediaLandingPageService->seoDataSave($request->all(),self::LANDING_REFERENCE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('blog/landing-page-component');
+    }
+
+
+    public function getArchiveSEO(Request $request)
+    {
+        $seoData = $this->metaTagRepository->findOneByProperties(['dynamic_route_key' => self::BLOG_ARCHIVE_SEO]);
+        return view('admin.blog.archive-seo', compact('seoData'));
+    }
+
+    public function storeArchiveSEO(Request $request)
+    {
+        $response = $this->mediaLandingPageService->seoDataSave($request->all(),self::BLOG_ARCHIVE_SEO);
+        Session::flash('message', $response->getContent());
+        return redirect(route('blog.archive-seo'));
     }
 
     /**

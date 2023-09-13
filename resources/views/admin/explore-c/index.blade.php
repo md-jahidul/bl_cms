@@ -53,8 +53,15 @@
                 </div>
             </div>
         </div>
-
     </section>
+
+    @php
+        $action = [
+            'dynamic_route_key' => "explore_c",
+            'redirect_to' => route('explore-c.index'),
+        ];
+    @endphp
+    @include('admin.meta-tag.create-or-update', $action)
 
 @stop
 

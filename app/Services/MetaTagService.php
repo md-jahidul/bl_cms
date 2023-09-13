@@ -33,6 +33,11 @@ class MetaTagService
         return $this->metaTagRepository->metaTag($id);
     }
 
+    public function findMetaTagByKey($key)
+    {
+        return $this->metaTagRepository->findOneByProperties(['dynamic_route_key' => $key]);
+    }
+
     public function storeFixedPageTag($data)
     {
         $data['page_id'] = 0;

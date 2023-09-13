@@ -2,49 +2,12 @@
 @section('title', 'Blog Landing Page Component')
 @section('card_name', 'Blog Landing Page')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Blog Landing Page Component</li>
+    <li class="breadcrumb-item ">Blog Archive SEO</li>
 @endsection
 @section('action')
-    <a href="{{ url("blog/landing-page-component/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add New
-    </a>
+
 @endsection
 @section('content')
-    <section>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Components List</strong></h4>
-                    <table class="table table-striped table-bordered"> <!--Datatable class: zero-configuration-->
-                        <thead>
-                        <tr>
-                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th width="10%">Title</th>
-                            <th width="8%">Component Type</th>
-                            <th width="3%" class="text-right">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody id="sortable">
-                        @foreach($componentList as $data)
-                            <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
-                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                <td>{{ str_replace('_', ' ', ucwords($data->component_type)) }}</td>
-                                <td width="12%" class="text-right">
-                                    <a href="{{ url("blog/landing-page-component/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("blog/landing-page-component/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
-                                        <i class="la la-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section>
         <div class="card">
             <div class="card-content collapse show">
@@ -52,7 +15,7 @@
                     <h4 class="menu-title"><strong>SEO Info</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('blog-lending-pg-seo') }}"
+                        <form role="form" action="{{ route('blog.archive-seo-store') }}"
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}

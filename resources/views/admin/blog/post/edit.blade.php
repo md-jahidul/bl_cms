@@ -173,6 +173,21 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea name="page_header" class="form-control" rows="4">{{ isset($blogPost) ? $blogPost->page_header : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea name="page_header_bn" class="form-control" rows="4">{{ isset($blogPost) ? $blogPost->page_header_bn : '' }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea name="schema_markup" class="form-control" rows="4">{{ isset($blogPost) ? $blogPost->schema_markup : '' }}</textarea>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group" id="show_in_home">
                                         <label for="trending"></label><br>
