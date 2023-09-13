@@ -6,6 +6,7 @@ use App\Models\BaseMsisdn;
 use App\Models\BaseMsisdnFile;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -25,7 +26,7 @@ class BaseMsisdnFileUpload implements ShouldQueue
 
     public $timeout = 1800;
     public $retryAfter = 1860;
-   
+
 
     /**
      * Create a new job instance.
@@ -62,7 +63,8 @@ class BaseMsisdnFileUpload implements ShouldQueue
                             $temp[$index] = [
                                 'group_id' => $this->baseFileData['base_msisdn_group_id'],
                                 'base_msisdn_file_id' => $this->baseFileInfo->id,
-                                'msisdn' => $value
+                                'msisdn' => $value,
+                                'created_at'   => Carbon::now()->toDateTimeString(),
                             ];
                         }
                         BaseMsisdn::insert($temp);
@@ -76,7 +78,8 @@ class BaseMsisdnFileUpload implements ShouldQueue
                     $temp[] = [
                         'group_id' => $this->baseFileData['base_msisdn_group_id'],
                         'base_msisdn_file_id' => $this->baseFileInfo->id,
-                        'msisdn' => $value
+                        'msisdn' => $value,
+                        'created_at'   => Carbon::now()->toDateTimeString(),
                     ];
             }
             BaseMsisdn::insert($temp);
