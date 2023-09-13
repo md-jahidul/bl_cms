@@ -55,6 +55,11 @@ class ContentNavigationRailController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+
         $response = $this->contentNavigationRailService->storeNavigationMenu($request->all());
         session()->flash('message', $response->getContent());
         return redirect(route('content-navigation-rail.index'));
@@ -95,6 +100,11 @@ class ContentNavigationRailController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->contentNavigationRailService->updateNavigationMenu($request->all(), $id);
         session()->flash('success', $response->getContent());
         return redirect(route('content-navigation-rail.index'));
