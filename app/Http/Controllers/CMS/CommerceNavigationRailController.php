@@ -42,6 +42,11 @@ class CommerceNavigationRailController extends Controller
 
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->commerceNavigationRailService->storeNavigationMenu($request->all());
         session()->flash('message', $response->getContent());
         return redirect(route('commerce-navigation-rail.index'));
@@ -66,6 +71,11 @@ class CommerceNavigationRailController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+
         $response = $this->commerceNavigationRailService->updateNavigationMenu($request->all(), $id);
         session()->flash('success', $response->getContent());
         return redirect(route('commerce-navigation-rail.index'));

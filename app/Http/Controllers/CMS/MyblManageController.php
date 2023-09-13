@@ -111,6 +111,11 @@ class MyblManageController extends Controller
      */
     public function storeItem(Request $request, $parent_id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->manageService->storeItem($request->all());
         Session::flash('success', $response->getContent());
         return redirect(route("mybl-manage-items.index", $parent_id));
@@ -185,6 +190,11 @@ class MyblManageController extends Controller
      */
     public function updateItem(Request $request, $parent_id, $id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->manageService->updateItem($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route("mybl-manage-items.index", $parent_id));

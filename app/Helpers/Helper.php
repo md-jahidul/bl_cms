@@ -337,12 +337,13 @@ class Helper
     {
         $android_version_code_array = explode('-', $android_version_code);
         $ios_version_code_array = explode('-', $ios_version_code);
-        
+
         return [
-            'android_version_code_min' => $android_version_code_array[0] ?? 0,
-            'android_version_code_max' => $android_version_code_array[1]?? 999999999,
-            'ios_version_code_min' => $ios_version_code_array[0] ?? 0,
-            'ios_version_code_max' => $ios_version_code_array[1] ?? 999999999
+            'android_version_code_min' => $android_version_code ? $android_version_code_array[0] : 0,
+            'android_version_code_max' => $android_version_code ? $android_version_code_array[1]: 999999999,
+            'ios_version_code_min' => $ios_version_code ? $ios_version_code_array[0] : 0,
+            'ios_version_code_max' => $ios_version_code ? $ios_version_code_array[1] : 999999999
         ];
+
     }
 }
