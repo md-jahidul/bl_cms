@@ -47,7 +47,9 @@ class GenericShortcutController extends Controller
            'title_bn' =>  'required|max:200',
            'customer_type' => 'required',
            'component_identifier' => 'required',
-           'icon' => 'required'
+           'icon' => 'required',
+           'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+           'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
         ]);
 
         $this->genericShortcutService->saveGenericShortcut($request->all());
@@ -69,7 +71,9 @@ class GenericShortcutController extends Controller
             'title_en' => 'required|max:50',
             'title_bn' =>  'required|max:50',
             'customer_type' => 'required',
-            'component_identifier' => 'required'
+            'component_identifier' => 'required',
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
         ]);
 
         $this->genericShortcutService->updateGenericShortcut($request->all(), $id);
