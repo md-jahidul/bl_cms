@@ -47,12 +47,23 @@
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
                                             <label for="image_url">Thumbnail Image</label>
-                                            <input type="file"
-                                                   id="image_url"
-                                                   name="icon"
-                                                   class="dropify_image"
-                                                   data-default-file="{{ isset($component) ? asset($component->icon) : ''}}"
-                                                   data-allowed-file-extensions="png jpg jpeg gif"/>
+                                            @if(!isset($component))
+                                                <input  required
+                                                        type="file"
+                                                        id="image_url"
+                                                        name="icon"
+                                                        class="dropify_image"
+                                                        data-default-file="{{ isset($component) ? asset($component->icon) : ''}}"
+                                                        data-allowed-file-extensions="png jpg jpeg gif"/>
+                                            @else
+                                                <input
+                                                    type="file"
+                                                    id="image_url"
+                                                    name="icon"
+                                                    class="dropify_image"
+                                                    data-default-file="{{ isset($component) ? asset($component->icon) : ''}}"
+                                                    data-allowed-file-extensions="png jpg jpeg gif"/>
+                                            @endif
                                             <div class="help-block"></div>
                                             <small
                                                 class="text-danger"> @error('icon') {{ $message }} @enderror </small>

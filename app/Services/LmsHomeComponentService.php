@@ -60,7 +60,10 @@ class LmsHomeComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del(self::REDIS_KEY);
+            Redis::del('lms_component_prepaid');
+            Redis::del('lms_component_postpaid');
+            Redis::del('lms_old_user_postpaid');
+            Redis::del('lms_old_user_prepaid');
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -83,7 +86,10 @@ class LmsHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del(self::REDIS_KEY);
+        Redis::del('lms_component_prepaid');
+        Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return response("Successfully status changed");
     }
 
@@ -95,7 +101,10 @@ class LmsHomeComponentService
         $data['display_order'] = $msComponentCount + 1;
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del('lms_component_prepaid');
+        Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return response("LMS Component update successfully!");
     }
 
@@ -103,7 +112,10 @@ class LmsHomeComponentService
     {
         $component = $this->findOne($data['id']);
         $component->update($data);
-        Redis::del(self::REDIS_KEY);
+        Redis::del('lms_component_prepaid');
+        Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return response("LMS Component update successfully!");
     }
 
@@ -111,7 +123,10 @@ class LmsHomeComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del(self::REDIS_KEY);
+        Redis::del('lms_component_prepaid');
+        Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         return [
             'message' => 'Component delete successfully',
         ];
