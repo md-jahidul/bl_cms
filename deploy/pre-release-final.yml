@@ -1,11 +1,12 @@
 variables:
-  SERVER_IP: 172.16.8.97
+  SERVER_IP: "172.16.8.97"
   BUILD_LOCATION: "/app/assetlite/src/projects_uat/gitlab_uat"
 stages:
   - cms_backup
   - clone
   - build
   - deploy
+  - svc-restart
 
 .job_template: &template
     tags:
@@ -24,7 +25,8 @@ tar_backup:
   #   - if: ($CI_COMMIT_BRANCH == "develop" || $NPM_VERSION == "$NPM_VERSION")
   script:
     - echo "Starting backup"
-    - sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
+    - sh /app/script/bl-web-cms-bak.sh
+    #- sudo tar -czvf /mybl/backup/"$CI_PROJECT_NAME"-"$CI_PIPELINE_ID"_`date +"%d-%m-%Y-%H:%M:%S"`.tar.gz $data_location
 
 repo_clone:
   <<: *template
@@ -34,7 +36,6 @@ repo_clone:
   when: manual
   variables:
     BRANCH: pre-release-final
-  #  BUILD_LOCATION: "/home/gitlab-runner/app"
   script:
     - echo "Clonging repo"
     #- cd $STG_BUILD_LOCATION
@@ -43,30 +44,10 @@ repo_clone:
     #- sudo git checkout develop
     - git pull origin $BRANCH
 
-# build:
-#   <<: *template
-#   stage: build
-#   when: manual
-#   # rules:
-#   #   - if: ($CI_COMMIT_BRANCH == "develop" || $NPM_VERSION == "$NPM_VERSION")
-#   script:
-#     - echo "Buliding with NPM"
-#     - cd $STG_BUILD_LOCATION/$CI_PROJECT_NAME
-#     - npm run build
-#   artifacts:
-#     name: build_artifacts
-#     paths:
-#       - ./
-#     exclude:
-#       - ".gitlab-ci.yml"
-#       - "README.md"
-#       - ".git"
-
 deploy_ubuntu:
   <<: *template
   variables:
-    #path_1: "/home/bs1048/artifacts"
-    PATH: "/app/blcms/www/bl_cms"
+    DEST_PATH: "/app/blcms/www/bl_cms"
   stage: deploy
   when: manual
   # rules:
@@ -75,9 +56,19 @@ deploy_ubuntu:
     - eval $(ssh-agent -s)
   script:
     - echo "Copying build artifacts to live server"
-    - ssh-add <(echo "$STAGING_PRIVATE_KEY")
-   # - rsync -avzt ./* bs1048@192.168.56.1:$path
+    - ssh-add <(echo "$KEY_STAGING")
     #- rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/$SOURCE/ bs1048@192.168.56.1:$path_1/$DEST
-    - rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/ usrdev@SERVER_IP:$PATH
-    #- cd $BUILD_LOCATION/$CI_PROJECT_NAME
-    #- scp -r $BUILD_LOCATION/$CI_PROJECT_NAME/app/* bs1048@192.168.56.1:$path_1
+    - rsync -avzt $BUILD_LOCATION/$CI_PROJECT_NAME/ --exclude .git/ --exclude .gitlab-ci.yml --exclude .gitignore --exclude .gitattributes usrdev@$SERVER_IP:$DEST_PATH
+
+service_restart:
+  stage: svc-restart
+  variables:
+    ANSIBLE_PATH: "/app/mybl/ansible/ansible-mybl-app-deploy/ENV/PROD/WEB-CMS"
+  when: manual
+  tags:
+    - bl-cms
+  script:
+    #- echo $ANSIBLE_PATH
+    #- cp -r /home/usrdev/config /home/usrdev/builds/BErMj8E2/0/bl-front/bl-web-frontend/.git/config
+    - cd $ANSIBLE_PATH && ansible-playbook service-manage.yml
+    - echo 1>/app/mybl/runner/stdout

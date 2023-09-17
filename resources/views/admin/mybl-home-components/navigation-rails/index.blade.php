@@ -139,6 +139,7 @@
                             <th width='5%'><i class="icon-cursor-move icons"></i></th>
                             <th>Title</th>
                             <th>Navigate Action</th>
+                            <th>Component Identifier</th>
                             <th>Customer Type</th>
                             <th class="float-right">Action</th>
                         </tr>
@@ -152,6 +153,7 @@
                                 <td>
                                     {{ isset($actionList [$data->component_identifier])?$actionList [$data->component_identifier] : '' }}
                                 </td>
+                                <td>{{ $data->component_identifier }}</td>
                                 <td width="10%">
                                     {{ $data->customer_type }}
                                 </td>

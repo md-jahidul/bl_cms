@@ -242,7 +242,7 @@
                                         </table>
                                     </div>
 
-                                    
+
 
                                     <div class="form-group col-md-12">
                                         <button style="float: right" type="submit" id="submitForm"
@@ -368,7 +368,7 @@
 
                                     <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="message_en" class="required">Message En:</label>
-                                        <textarea 
+                                        <textarea
                                             maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Message En is required"
@@ -382,7 +382,7 @@
                                     </div>
                                     <div class="form-group col-md-12 mb-2 other-info-div">
                                         <label for="message_bn" class="required">Message Bn:</label>
-                                        <textarea 
+                                        <textarea
                                             maxlength="250"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Message Bn is required"

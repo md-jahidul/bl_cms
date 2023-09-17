@@ -37,7 +37,10 @@ class MyBlCampaignDetail extends Model
             'show_product_as',
             'start_date',
             'end_date',
-            'status'
+            'status',
+            'max_recharge_amount',
+            'bonus_product_code',
+            'numbers_of_get_bonus'
         ];
 
         public function campaign()

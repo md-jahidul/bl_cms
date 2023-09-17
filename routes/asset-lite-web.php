@@ -26,8 +26,6 @@ Route::get('/users/change-password', 'AssetLite\UserController@changePasswordFor
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 //Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
-
-
     # Al Banner =========================================================
     Route::resource('al-banner', 'AssetLite\AlBannerController')->except('show');
     Route::get('al-banner/destroy/{id}', 'AssetLite\AlBannerController@destroy');
@@ -655,8 +653,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
     Route::get('business-internet/search-data-sync', 'AssetLite\BusinessInternetController@searchDataSync');
-
-
 
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
@@ -1490,4 +1486,34 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
+
+    // BL Lab
+    Route::group(['prefix' => 'bl-labs' ], function () {
+        // Application List
+        Route::get('application-list', 'AssetLite\BlLab\BlLabApplicationController@applicationList')
+            ->name('application.list');
+        Route::get('application-details/{application_id}', 'AssetLite\BlLab\BlLabApplicationController@applicationDetails')
+            ->name('application.details');
+
+        Route::get('banners', 'AssetLite\BlLab\BlLabApplicationController@banner');
+
+        // Program
+        Route::resource('program', 'AssetLite\BlLab\BlLabProgramController')->except('show', 'destroy');
+        Route::get('program/destroy/{id}', 'AssetLite\BlLab\BlLabProgramController@destroy');
+        // Industry
+        Route::resource('industry', 'AssetLite\BlLab\BlLabIndustryController')->except('show', 'destroy');
+        Route::get('industry/destroy/{id}', 'AssetLite\BlLab\BlLabIndustryController@destroy');
+        // Profession
+        Route::resource('profession', 'AssetLite\BlLab\BlLabProfessionController')->except('show', 'destroy');
+        Route::get('profession/destroy/{id}', 'AssetLite\BlLab\BlLabProfessionController@destroy');
+        // Institute/Organization
+        Route::resource('institute-or-org', 'AssetLite\BlLab\BlLabInstituteOrgController')->except('show', 'destroy');
+        Route::get('institute-or-org/destroy/{id}', 'AssetLite\BlLab\BlLabInstituteOrgController@destroy');
+        // Education
+        Route::resource('education', 'AssetLite\BlLab\BlLabEducationController')->except('show', 'destroy');
+        Route::get('education/destroy/{id}', 'AssetLite\BlLab\BlLabEducationController@destroy');
+        // Startup-Stage
+        Route::resource('startup-stage', 'AssetLite\BlLab\BlLabStartupStageController')->except('show', 'destroy');
+        Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
+    });
 });

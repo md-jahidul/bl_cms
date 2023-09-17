@@ -133,8 +133,17 @@ class Helper
             "GIFT_PACKS"              => "Gift Packs",
             "ROAMING_PACKS"           => "Roaming Packs",
             "ROAMING_DETAILS"         => "Roaming Details",
-            "USSD_CODE"               => "USSD code",
+            "USSD"                    => "USSD code",
             "CARE"                    => "Care",
+            "COMMERCE"                => 'Commerce',
+            "UTILITY"                 => 'Utility',
+            "ELECTRICITY"             => 'Electricity',
+            "GAS"                     => 'Gas',
+            "WATER"                   => 'Water',
+            "SHARETRIP"               => 'Sharetrip',
+            "RABBITHOLE"              => 'Rabbithole',
+            "SPIN_WHEEL"              => 'Spin Wheel',
+            "BUS"                     => 'Bus',
         ];
     }
 

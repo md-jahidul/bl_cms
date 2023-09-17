@@ -900,7 +900,7 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
-        $firstTag = ProductTag::where('id', $request->tags[0])->first();
+        $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
@@ -916,6 +916,10 @@ class ProductCoreService
         $data['is_visible_schedule'] = isset($request->is_visible_schedule) ? true : false;
         $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
         $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
+        $coreData['is_commercial_name_en_schedule'] = isset($request->is_commercial_name_en_schedule) ? true : false;
+        $coreData['is_commercial_name_bn_schedule'] = isset($request->is_commercial_name_bn_schedule) ? true : false;
+        $coreData['is_display_title_en_schedule'] = isset($request->is_display_title_en_schedule) ? true : false;
+        $coreData['is_display_title_bn_schedule'] = isset($request->is_display_title_bn_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
         $productSchedule = [];
         $isProductSchedule = false;
@@ -933,13 +937,16 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['media'] = null;
+            unset($data['is_banner_schedule']);
         }
 
         if ($data['is_tags_schedule'] == true) {
-            $productSchedule['tags'] = json_encode($request->schedule_tags);
+            if ($request->schedule_tags !=null) {
+                $productSchedule['tags'] = json_encode($request->schedule_tags);
+            }
             $isProductSchedule = true;
         } else {
-            $productSchedule['tags'] = null;
+            unset($data['is_tags_schedule']);
         }
 
         if ($data['is_visible_schedule'] == true) {
@@ -947,6 +954,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['is_visible'] = 0;
+            unset($data['is_visible_schedule']);
         }
 
         if ($data['is_pin_to_top_schedule'] == true) {
@@ -954,6 +962,7 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['pin_to_top'] = 0;
+            unset($data['is_pin_to_top_schedule']);
         }
 
         if ($data['is_base_msisdn_group_id_schedule'] == true) {
@@ -961,7 +970,41 @@ class ProductCoreService
             $isProductSchedule = true;
         } else {
             $productSchedule['base_msisdn_group_id'] = null;
+            unset($data['is_base_msisdn_group_id_schedule']);
         }
+
+        if ($coreData['is_commercial_name_en_schedule']) {
+            $productSchedule['commercial_name_en'] = $request->schedule_commercial_name_en;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['commercial_name_en'] = null;
+            unset($coreData['is_commercial_name_en_schedule']);
+        }
+
+        if ($coreData['is_commercial_name_bn_schedule']) {
+            $productSchedule['commercial_name_bn'] = $request->schedule_commercial_name_bn;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['commercial_name_bn'] = null;
+            unset($coreData['is_commercial_name_bn_schedule']);
+        }
+
+        if ($coreData['is_display_title_en_schedule']) {
+            $productSchedule['display_title_en'] = $request->schedule_display_title_en;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['display_title_en'] = null;
+            unset($coreData['is_display_title_en_schedule']);
+        }
+
+        if ($coreData['is_display_title_bn_schedule']) {
+            $productSchedule['display_title_bn'] = $request->schedule_display_title_bn;
+            $isProductSchedule = true;
+        } else {
+            $productSchedule['display_title_bn'] = null;
+            unset($coreData['is_display_title_bn_schedule']);
+        }
+
 
         if($isProductSchedule == true) {
             $productSchedule['start_date'] = Carbon::parse($request->start_date)->format('Y-m-d H:i:s');
@@ -978,9 +1021,13 @@ class ProductCoreService
 
             $model->update($data);
 
+            $coreProduct = ProductCore::where('product_code', $product_code)->update($coreData);
+
             $productSchedule['product_code'] = $request->product_code;
 
-            $this->myblProductScheduleRepository->createProductSchedule($productSchedule);
+            if ($isProductSchedule == true) {
+                $this->myblProductScheduleRepository->createProductSchedule($productSchedule);
+            }
 
             if ($request->has('tags')) {
                 $this->syncProductTags($product_code, $request->tags);
@@ -1308,7 +1355,7 @@ class ProductCoreService
                 $insert_data[21] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
                 // $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
                 //     ',',
-                //     $product->detailTabs->pluck('name')->toArray()
+                //     $product->detailTabs->pluck('name')->where('platform', 'mybl')->toArray()
                 // ) ?: $product->offer_section_title);
                 $insert_data[22] = implode(',',$product->detailTabs->pluck('name')->toArray());
                 $productTags = $product->tags;

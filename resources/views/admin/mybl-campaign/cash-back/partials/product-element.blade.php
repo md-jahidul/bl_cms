@@ -27,9 +27,8 @@
         <label for="redirect_url">Cashback Status</label>
         <select id="navigate_action" name="status"
                 class="browser-default custom-select">
-            <option value="">Select Status</option>
-            <option class="text-success" value="1" {{ isset($product) && $product->status == 1 ? 'selected' : '' }}>Enable</option>
             <option class="text-danger" value="0" {{ isset($product) && $product->status == 0 ? 'selected' : '' }}>Disable</option>
+            <option class="text-success" value="1" {{ isset($product) && $product->status == 1 ? 'selected' : '' }}>Enable</option>
         </select>
         <div class="help-block"></div>
     </div>

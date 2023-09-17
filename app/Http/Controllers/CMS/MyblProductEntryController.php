@@ -18,6 +18,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -119,12 +120,12 @@ class MyblProductEntryController extends Controller
         if(!is_null($productSchedulerData)) {
             $currentTime = Carbon::parse()->format('Y-m-d H:i:s');
 //            dd($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel);
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && !$productSchedulerData->change_state_status && $productSchedulerData->is_cancel == 0)) {
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && (!$productSchedulerData->change_state_status || !$productSchedulerData->product_core_change_state_status) && $productSchedulerData->is_cancel == 0)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule will be start.";
             }
 
-            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && $productSchedulerData->change_state_status && $productSchedulerData->is_cancel == 0)) {
+            if(($currentTime >= $productSchedulerData->start_date && $currentTime <= $productSchedulerData->end_date && ($productSchedulerData->change_state_status || $productSchedulerData->product_core_change_state_status) && $productSchedulerData->is_cancel == 0)) {
                 $productScheduleRunning = true;
                 $warningText = "Schedule is running.";
             }
@@ -316,6 +317,9 @@ class MyblProductEntryController extends Controller
         $product = $this->myblProductRepository->findByProperties(['product_code' => $productCode], ['media', 'show_in_home', 'pin_to_top', 'base_msisdn_group_id', 'tag', 'is_visible']);
         $product = $product->first();
 
+        $productCore = $this->service->findBy(['product_code' => $productCode]);
+        $productCore = $productCore->first();
+
         $tagTitleForScheduler = null;
         $baseMsisdnTitleForSchedule = null;
         $baseMsisdnTitleForProduct = null;
@@ -343,6 +347,20 @@ class MyblProductEntryController extends Controller
             $productScheduleRunning = true;
         }
 
-        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning'));
+        return view('admin.my-bl-products.schedule-product-view', compact('scheduleProduct', 'product', 'tagTitleForScheduler', 'baseMsisdnTitleForSchedule', 'baseMsisdnTitleForProduct', 'productScheduleRunning', 'productCore'));
+    }
+
+    public function redisKeyUpdateView()
+    {
+        return view('admin.my-bl-products.new-product-redis-key-update');
+    }
+
+    public function redisKeyUpdate()
+    {
+        Redis::set('new_product_upload_time', Carbon::now()->timestamp);
+        Session::flash('message', 'Redis Key Update');
+
+        return redirect('redis-key-update-view');
+
     }
 }
