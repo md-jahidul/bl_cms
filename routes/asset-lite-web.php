@@ -1487,6 +1487,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 
+    /*
+     * terms and conditions
+     */
+    Route::get('al-terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('al-terms-conditions.show');
+    Route::post('al-terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('al-terms-conditions.store');
+
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {
         // Application List
