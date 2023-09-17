@@ -28,8 +28,10 @@ Route::post('/users/password-update', 'AssetLite\UserController@changePassword')
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
 
-    // Explore C's =========================================================
-    Route::resource('al-banner', 'AssetLite\AlBannerController')->except('index','create','edit','show', 'destroy');
+    # Al Banner =========================================================
+    Route::resource('al-banner', 'AssetLite\AlBannerController')->except('show');
+    Route::get('al-banner/destroy/{id}', 'AssetLite\AlBannerController@destroy');
+
 
     // Explore C's =========================================================
     Route::resource('explore-c', 'AssetLite\ExploreCController');
