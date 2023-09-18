@@ -654,8 +654,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
     Route::get('business-internet/search-data-sync', 'AssetLite\BusinessInternetController@searchDataSync');
 
-
-
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
     Route::get('business-others/create', 'AssetLite\BusinessOthersController@create');
@@ -1488,6 +1486,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('csr-component/destroy/{comId}', 'AssetLite\CsrDetailsController@componentDestroy')
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
+
+    /*
+     * terms and conditions
+     */
+    Route::get('al-terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('al-terms-conditions.show');
+    Route::post('al-terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('al-terms-conditions.store');
 
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {
