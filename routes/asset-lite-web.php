@@ -1487,6 +1487,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 
+    #Emergency Balance
+    Route::get('emergency-balance', 'AssetLite\EmergencyBalanceController@index');
+
+
     /*
      * terms and conditions
      */
