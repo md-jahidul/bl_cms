@@ -9,7 +9,9 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\OfferCategoryRepository;
+use App\Repositories\SearchableDataRepository;
 use App\Repositories\SearchDataRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -26,19 +28,23 @@ class OfferCategoryService
 
     /**
      * @var $offerCategoryRepository
-     * @var $searchRepository
      */
     protected $offerCategoryRepository;
-    protected $searchRepository;
+    /**
+     * @var SearchableDataRepository
+     */
+    private $searchableDataRepository;
 
     /**
      * OfferCategoryService constructor.
      * @param OfferCategoryRepository $offerCategoryRepository
      */
-    public function __construct(OfferCategoryRepository $offerCategoryRepository, SearchDataRepository $searchRepository)
-    {
+    public function __construct(
+        OfferCategoryRepository $offerCategoryRepository,
+        SearchableDataRepository $searchableDataRepository
+    ) {
         $this->offerCategoryRepository = $offerCategoryRepository;
-        $this->searchRepository = $searchRepository;
+        $this->searchableDataRepository = $searchableDataRepository;
         $this->setActionRepository($offerCategoryRepository);
     }
 
@@ -130,7 +136,7 @@ class OfferCategoryService
 
             if ($offerCategory) {
                 $offerCategory->update($data);
-                $this->_updateSearchCategorySlug($id);
+                $this->_saveSearchData($offerCategory);
                 $response = ['success' => 1];
             } else {
                 $response = ['success' => 2];
@@ -145,11 +151,75 @@ class OfferCategoryService
         }
     }
 
-    private function _updateSearchCategorySlug($catId)
+//    private function _updateSearchCategorySlug($catId)
+//    {
+//        $category = $this->findOrFail($catId);
+//        $keywordType = "offer-" . $category->alias;
+//        $this->searchRepository->updateByCategory($keywordType, $category->url_slug);
+//    }
+
+    private function _saveSearchData($product)
     {
-        $category = $this->findOrFail($catId);
-        $keywordType = "offer-" . $category->alias;
-        $this->searchRepository->updateByCategory($keywordType, $category->url_slug);
+        $feature = BaseURLLocalization::featureBaseUrl();
+
+        $titleEn = $product->name_en;
+        $titleBn = $product->name_bn;
+
+        $productCode = null;
+
+        #Search Table Status
+        $status = $product->status;
+
+        $urlEnPostpaid = "";
+        $urlBnPostpaid = "";
+        $urlEnPrepaid = "";
+        $urlBnPrepaid = "";
+
+        $urlEnPrepaid .= $feature['prepaid_en'];
+        $urlBnPrepaid .= $feature['prepaid_bn'];
+
+        $urlEnPostpaid .= $feature['postpaid_en'];
+        $urlBnPostpaid .= $feature['postpaid_bn'];
+
+        // Category url
+        $urlEnPrepaid .= "/" . $product->url_slug;
+        $urlBnPrepaid .= "/" . $product->url_slug_bn;
+        $urlEnPostpaid .= "/" . $product->url_slug;
+        $urlBnPostpaid .= "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            [
+                'product_code' => $productCode,
+                'type' => 'offer-category-prepaid-' . $titleEn,
+                'page_title_en' => $titleEn,
+                'page_title_bn' => $titleBn,
+                'url_slug_en' => $urlEnPrepaid,
+                'url_slug_bn' => $urlBnPrepaid,
+                'status' => $status,
+            ],
+            [
+                'product_code' => $productCode,
+                'type' => 'offer-category-postpaid-' . $titleEn,
+                'page_title_en' => $titleEn,
+                'page_title_bn' => $titleBn,
+                'url_slug_en' => $urlEnPostpaid,
+                'url_slug_bn' => $urlBnPostpaid,
+                'status' => $status,
+            ]
+        ];
+
+        if ($status) {
+            if (!$product->searchableFeature()->first()) {
+                foreach ($saveSearchData as $data) {
+                    $product->searchableFeature()->create($data);
+                }
+            }else {
+                foreach ($saveSearchData as $data) {
+                    $searchableData = $this->searchableDataRepository->findOneByProperties(['type' => $data['type']]);
+                    $searchableData->update($data);
+                }
+            }
+        }
     }
 
     public function getRelatedProducts()

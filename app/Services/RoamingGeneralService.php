@@ -87,18 +87,15 @@ class RoamingGeneralService {
             $category = $this->catRepo->updateCategory($webPath, $mobilePath, $request);
 
             $slug = [
-                'slug_en' => $category->page_url,
-                'slug_bn' => $category->page_url_bn
+                'slug_en' => $category->url_slug,
+                'slug_bn' => $category->url_slug_bn
             ];
-
             $this->_saveSearchData($category, $slug, "category");
-
             return [
                 'success' => 1,
                 'message' => "News Saved"
             ];
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return [
                 'success' => 0,
                 'message' => $e->getMessage()
@@ -214,8 +211,8 @@ class RoamingGeneralService {
         $saveSearchData = [
             'product_code' => null,
             'type' => ($type == "category") ? "roaming-category" : 'about-roaming',
-            'page_title_en' => ($type == "category") ? $product->banner_title_en : $product->name_en,
-            'page_title_bn' => ($type == "category") ? $product->banner_title_bn : $product->name_bn,
+            'page_title_en' => ($type == "category") ? $product->name_en : $product->banner_title_en,
+            'page_title_bn' => ($type == "category") ? $product->name_bn : $product->banner_title_bn,
             'tag_en' => $searchSpecialKeyword['tag_en'] ?? null,
             'tag_bn' => $searchSpecialKeyword['tag_bn'] ?? null,
             'url_slug_en' => $urlEn,

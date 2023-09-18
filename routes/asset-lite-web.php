@@ -1522,4 +1522,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         Route::resource('startup-stage', 'AssetLite\BlLab\BlLabStartupStageController')->except('show', 'destroy');
         Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
     });
+
+    // Site Map Generator
+    Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');
+    Route::get('generate-sitemap', 'AssetLite\SitemapController@generateSitemap');
 });

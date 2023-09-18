@@ -7,6 +7,7 @@
 
 namespace App\Services;
 
+use App\Helpers\BaseURLLocalization;
 use App\Repositories\BusinessCategoryRepository;
 use App\Repositories\BusinessHomeBannerRepository;
 use App\Repositories\BusinessSlidingRepository;
@@ -123,25 +124,27 @@ class BusinessHomeService {
             }
 
             //only rename
-            if ($request['old_banner_name'] != $request['banner_name']) {
-
-                if (empty($request['banner_web']) && $request['old_web_img'] != "") {
-                    $fileName = $request['banner_name'] . '-web';
-                    $directoryPath = 'assetlite/images/business-images';
-                    $update['banner_photo'] = $this->rename($request['old_web_img'], $fileName, $directoryPath);
-                    $status = $update['banner_photo'];
-                }
-
-                if (empty($request['banner_mobile']) && $request['old_mob_img'] != "") {
-                    $fileName = $request['banner_name'] . '-mobile';
-                    $directoryPath = 'assetlite/images/business-images';
-                    $update['banner_image_mobile'] = $this->rename($request['old_mob_img'], $fileName, $directoryPath);
-                    $status = $update['banner_image_mobile'];
-                }
-            }
+//            if ($request['old_banner_name'] != $request['banner_name']) {
+//
+//                if (empty($request['banner_web']) && $request['old_web_img'] != "") {
+//                    $fileName = $request['banner_name'] . '-web';
+//                    $directoryPath = 'assetlite/images/business-images';
+//                    $update['banner_photo'] = $this->rename($request['old_web_img'], $fileName, $directoryPath);
+//                    $status = $update['banner_photo'];
+//                }
+//
+//                if (empty($request['banner_mobile']) && $request['old_mob_img'] != "") {
+//                    $fileName = $request['banner_name'] . '-mobile';
+//                    $directoryPath = 'assetlite/images/business-images';
+//                    $update['banner_image_mobile'] = $this->rename($request['old_mob_img'], $fileName, $directoryPath);
+//                    $status = $update['banner_image_mobile'];
+//                }
+//            }
 
             if ($status) {
-                $this->businessCatRepo->updateCategory($update, $catId);
+                $businessCat = $this->businessCatRepo->findOne($catId);
+                $businessCat->update($update);
+                $this->_saveSearchData($businessCat);
                 $response = [
                     'success' => 1,
                 ];
@@ -157,6 +160,38 @@ class BusinessHomeService {
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
+        }
+    }
+
+    private function _saveSearchData($product)
+    {
+        $feature = BaseURLLocalization::featureBaseUrl();
+        $titleEn = $product->name;
+        $titleBn = $product->name_bn;
+        $productCode = null;
+
+        $urlEn = "";
+        $urlBn = "";
+        $urlEn .= $feature['business_en'];
+        $urlBn .= $feature['business_bn'];
+        // Category url
+        $urlEn .= "/" . $product->url_slug;
+        $urlBn .= "/" . $product->url_slug_bn;
+
+        $saveSearchData = [
+            'product_code' => $productCode,
+            'type' => 'business-category',
+            'page_title_en' => $titleEn,
+            'page_title_bn' => $titleBn,
+            'url_slug_en' => $urlEn,
+            'url_slug_bn' => $urlBn,
+            'status' => 1,
+        ];
+
+        if (!$product->searchableFeature()->first()) {
+            $product->searchableFeature()->create($saveSearchData);
+        }else {
+            $product->searchableFeature()->update($saveSearchData);
         }
     }
 

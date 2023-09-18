@@ -31,7 +31,7 @@ class BaseURLLocalization
 
             // Blogs
             "blog_en" =>  "blogs",
-            "blog_bn" =>  "blogs" ,
+            "blog_bn" =>  "blogs",
 
             // CSR
             "csr_en" =>  "corporate-social-responsibility",
@@ -44,6 +44,10 @@ class BaseURLLocalization
             // About Loyalty
             "about_loyalty_en" => "loyalty/life-style",
             "about_loyalty_bn" => "loyalty/life-style",
+
+            // Loyalty
+            "loyalty_discount_privilege_en" => "loyalty/life-style/discount-privilege",
+            "loyalty_discount_privilege_bn" => "loyalty/life-style/discount-privilege",
 
             // Explore C
             "explore_c_en" => "explore-c",

@@ -12,4 +12,9 @@ class PartnerCategory extends Model
     {
         return $this->hasOne(Partner::class);
     }
+
+    public function searchableFeature()
+    {
+        return $this->morphMany(SearchableData::class, 'featureable');
+    }
 }
