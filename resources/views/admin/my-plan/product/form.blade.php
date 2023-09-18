@@ -4,7 +4,7 @@
 @section('card_name', "Product Create")
 
 @section('action')
-    <a href="{{ route('mybl-plan.products') }}" class="btn btn-info btn-sm btn-glow px-2">
+    <a href="{{ route('my-plan.products') }}" class="btn btn-info btn-sm btn-glow px-2">
         Back To Product List
     </a>
 @endsection
@@ -18,7 +18,7 @@
                     <div class="card-body card-dashboard">
                         @if ($page == "edit")
                             <form class="form"
-                                  action="{{ route('mybl-plan.products.update', $product->id)}}"
+                                  action="{{ route('my-plan.products.update', $product->id)}}"
                                   enctype="multipart/form-data"
                                   method="POST"
                                   id="commentForm">
@@ -26,7 +26,7 @@
                                 @method('PUT')
                         @else
                             <form class="form"
-                                action="{{ route('mybl-plan.products.store')}}"
+                                action="{{ route('my-plan.products.store')}}"
                                 enctype="multipart/form-data"
                                 method="POST"
                                 id="commentForm">
@@ -39,7 +39,7 @@
                                         <select name="sim_type" class="form-control">
                                             <option value="prepaid" @if($page == "edit" && $product->sim_type == "prepaid") selected @endif>PREPAID</option>
                                             {{-- <option value="postpaid" @if($page == "edit" && $product->sim_type == "postpaid") selected @endif>POSTPAID</option> --}}
-                                        </select>   
+                                        </select>
                                     </div>
                                 </div>
 

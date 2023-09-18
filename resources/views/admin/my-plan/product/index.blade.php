@@ -8,12 +8,12 @@
     <table>
         <tr>
             <td>
-                <a href="{{ route('mybl-plan.products.create') }}" type="submit" class="btn btn-info">
+                <a href="{{ route('my-plan.products.create') }}" type="submit" class="btn btn-info">
                     <i class="la la-save"></i>Create Product
                 </a>
             </td>
             <td>
-                <form method="post" action="{{route('mybl-plan.products.download')}}">
+                <form method="post" action="{{route('my-plan.products.download')}}">
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-info"><i class="la la-download"></i>Export Current
                         Products
@@ -37,7 +37,8 @@
                                     <label for="message">Upload Product List</label>
                                     <p class="text-left">
                                         <small class="warning text-muted">
-                                            Please download the format (using export product option) and upload in a specific format.
+                                            Please download the format (using export product option) and upload in a
+                                            specific format.
                                         </small>
                                     </p>
                                     <input type="file" class="dropify" name="product_file" data-height="80"
@@ -53,7 +54,7 @@
                             </form>
                         </div>
                     </div>
-                    @include('admin.mybl-plan.product.list')
+                    @include('admin.my-plan.product.list')
                 </div>
             </div>
         </div>
@@ -100,7 +101,7 @@
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route('mybl-plan.upload-products')}}',
+                    url: '{{ route('my-plan.upload-products')}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
@@ -118,7 +119,7 @@
                             $('#product_list').DataTable();
                             setTimeout(() => {
                                 location.reload()
-                            }, 2000); 
+                            }, 2000);
                         } else {
                             swal.close();
                             swal.fire({

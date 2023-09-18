@@ -135,13 +135,13 @@
     @endif
 
     @if( auth()->user()->can_view('MyblPlanProduct') )
-        <li class="{{ is_active_url('mybl-plan') }} nav-item"><a href="{{ route('mybl-plan.products') }}"><i
+        <li class="{{ is_active_url('my-plan') }} nav-item"><a href="{{ route('my-plan.products') }}"><i
                     class="la la-list"></i>
                 <span class="menu-title">MyBl Plan</span></a>
 
             <ul class="menu-content">
-                <li class="{{ is_active_match(route('mybl-plan.products')) }}">
-                    <a class="menu-item" href="{{ route('mybl-plan.products') }}">
+                <li class="{{ is_active_match(route('my-plan.products')) }}">
+                    <a class="menu-item" href="{{ route('my-plan.products') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
             </ul>

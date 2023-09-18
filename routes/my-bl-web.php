@@ -1189,13 +1189,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /**
      * MyBL Plan Routes
      */
-    Route::get('mybl-plan/products', 'CMS\MyBlPlan\MyBlPlanProductController@index')->name('mybl-plan.products');
-    Route::get('mybl-plan/products/create', 'CMS\MyBlPlan\MyBlPlanProductController@create')->name("mybl-plan.products.create");
-    Route::get('mybl-plan/products/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@edit')->name("mybl-plan.products.edit");
-    Route::post('mybl-plan/products/store', 'CMS\MyBlPlan\MyBlPlanProductController@store')->name("mybl-plan.products.store");
-    Route::put('mybl-plan/products/update/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@update')->name("mybl-plan.products.update");
-    Route::post('mybl-plan/upload-products', 'CMS\MyBlPlan\MyBlPlanProductController@uploadPlanProductExcel')->name("mybl-plan.upload-products");
-    Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
+    Route::get('my-plan/products', 'CMS\MyBlPlan\MyBlPlanProductController@index')->name('my-plan.products');
+    Route::get('my-plan/products/create', 'CMS\MyBlPlan\MyBlPlanProductController@create')->name("my-plan.products.create");
+    Route::get('my-plan/products/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@edit')->name("my-plan.products.edit");
+    Route::post('my-plan/products/store', 'CMS\MyBlPlan\MyBlPlanProductController@store')->name("my-plan.products.store");
+    Route::put('my-plan/products/update/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@update')->name("my-plan.products.update");
+    Route::post('my-plan/upload-products', 'CMS\MyBlPlan\MyBlPlanProductController@uploadPlanProductExcel')->name("my-plan.upload-products");
+    Route::post('my-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('my-plan.products.download');
 
 });
 

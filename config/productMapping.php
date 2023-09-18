@@ -116,7 +116,7 @@ return [
 //            'validity_in_days'     => 31,
         ]
     ],
-    'mybl_plan' => [
+    'my_plan' => [
         'columns' => [
             'sim_type'              => 0,
             'content_type'          => 1,
@@ -138,6 +138,6 @@ return [
             'discount_percentage'   => 17,
             'savings_amount'        => 18,
             'is_active'             => 19,
-            ]
         ]
+    ]
 ];

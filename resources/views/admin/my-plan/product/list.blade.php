@@ -34,7 +34,7 @@
             <td><span class="badge @if($defaultProduct->is_active == 1) badge-success @else badge-warning @endif">
                         {{ $defaultProduct->is_active == 1 ? "Active" : "Inactive" }}</span>
             </td>
-            <td><a href="{{ route('mybl-plan.products.edit', $defaultProduct->id) }}" class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a></td>
+            <td><a href="{{ route('my-plan.products.edit', $defaultProduct->id) }}" class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a></td>
         </tr>
     @endif
     @foreach($myBlPlanProducts as $key => $product)
@@ -53,7 +53,7 @@
             <td><span class="badge @if($product->is_active == 1) badge-success @else badge-warning @endif">
                 {{ $product->is_active == 1 ? "Active" : "Inactive" }}</span>
             </td>
-            <td><a href="{{ route('mybl-plan.products.edit', $product->id) }}" class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a></td>
+            <td><a href="{{ route('my-plan.products.edit', $product->id) }}" class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a></td>
         </tr>
     @endforeach
     </tbody>

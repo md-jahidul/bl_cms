@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\MyBlPlan;
+namespace App\Services\MyPlan;
 
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -13,7 +13,7 @@ use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 
-class MyBlPlanProductService
+class MyPlanProductService
 {
     use CrudTrait;
     use FileTrait;

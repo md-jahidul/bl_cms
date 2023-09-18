@@ -1518,4 +1518,15 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         Route::resource('startup-stage', 'AssetLite\BlLab\BlLabStartupStageController')->except('show', 'destroy');
         Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
     });
+
+    /**
+     * MyBL Plan Routes
+     */
+    Route::get('web-my-plan/products', 'CMS\MyBlPlan\MyPlanProductController@index')->name('web-my-plan.products');
+    Route::get('web-my-plan/products/create', 'CMS\MyBlPlan\MyPlanProductController@create')->name("web-my-plan.products.create");
+    Route::get('web-my-plan/products/{id}', 'CMS\MyBlPlan\MyPlanProductController@edit')->name("web-my-plan.products.edit");
+    Route::post('web-my-plan/products/store', 'CMS\MyBlPlan\MyPlanProductController@store')->name("web-my-plan.products.store");
+    Route::put('web-my-plan/products/update/{id}', 'CMS\MyBlPlan\MyPlanProductController@update')->name("web-my-plan.products.update");
+    Route::post('web-my-plan/upload-products', 'CMS\MyBlPlan\MyPlanProductController@uploadPlanProductExcel')->name("web-my-plan.upload-products");
+    Route::post('web-my-plan/products/download', 'CMS\MyBlPlan\MyPlanProductController@downloadPlanProducts')->name('web-my-plan.products.download');
 });

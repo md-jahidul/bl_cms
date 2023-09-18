@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\MyPlanProduct;
 
-class MyBlPlanProductRepository extends BaseRepository
+class MyPlanProductRepository extends BaseRepository
 {
     public $modelName = MyPlanProduct::class;
 
