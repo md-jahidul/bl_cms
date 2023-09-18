@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\CMS\MyBlPlan;
+namespace App\Http\Controllers\AssetLite\MyPlan;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MyBlPlanProductRequest;
+use App\Services\MyBlPlan\MyBlPlanProductService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\MyBlPlanProductRequest;
-use App\Services\MyBlPlan\MyBlPlanProductService;
 
 class MyBlPlanProductController extends Controller
 {
@@ -121,6 +121,6 @@ class MyBlPlanProductController extends Controller
         } catch (Exception $e) {
             Log::info("MyBL Plan Product Download Failed: " . $e->getMessage());
         }
-        
+
     }
 }

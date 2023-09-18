@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\MyBlPlanProduct;
+use App\Models\MyPlanProduct;
 
 class MyBlPlanProductRepository extends BaseRepository
 {
-    public $modelName = MyBlPlanProduct::class;
+    public $modelName = MyPlanProduct::class;
 
     public function updateOrCreateProduct($core_product)
     {

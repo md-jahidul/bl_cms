@@ -8,7 +8,7 @@ use Box\Spout\Common\Type;
 use Illuminate\Support\Facades\Log;
 use Box\Spout\Common\Entity\Style\Color;
 use App\Repositories\AboutPageRepository;
-use App\Repositories\MyBlPlanProductRepository;
+use App\Repositories\MyPlanProductRepository;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
@@ -19,15 +19,15 @@ class MyBlPlanProductService
     use FileTrait;
 
     /**
-     * @var MyBlPlanProductRepository
+     * @var MyPlanProductRepository
      */
     protected $myBlPlanProductRepository;
 
     /**
      * AboutPageService constructor.
-     * @param MyBlPlanProductRepository $myBlPlanProductRepository
+     * @param MyPlanProductRepository $myBlPlanProductRepository
      */
-    public function __construct(MyBlPlanProductRepository $myBlPlanProductRepository)
+    public function __construct(MyPlanProductRepository $myBlPlanProductRepository)
     {
         $this->myBlPlanProductRepository = $myBlPlanProductRepository;
         $this->setActionRepository($myBlPlanProductRepository);
@@ -108,7 +108,7 @@ class MyBlPlanProductService
 
         $writer = WriterEntityFactory::createXLSXWriter();
 
-        $writer->openToBrowser('mybl-plan-active-products-' . date('Y-m-d') . '.xlsx');
+        $writer->openToBrowser('my-plan-active-products-' . date('Y-m-d') . '.xlsx');
 
         // header Style
         $header_style = (new StyleBuilder())

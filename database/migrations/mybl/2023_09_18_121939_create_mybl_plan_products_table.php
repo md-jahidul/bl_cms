@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMyblPlanProductsTable extends Migration
+class CreateMyPlanProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMyblPlanProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('my_bl_plan_products', function (Blueprint $table) {
+        Schema::create('my_plan_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('sim_type');
             $table->string('content_type')->nullable();
@@ -47,6 +47,6 @@ class CreateMyblPlanProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('my_bl_plan_products');
+        Schema::dropIfExists('my_plan_products');
     }
 }
