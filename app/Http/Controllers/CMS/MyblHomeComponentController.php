@@ -5,14 +5,19 @@ namespace App\Http\Controllers\CMS;
 use App\Services\DynamicRouteService;
 use App\Services\MetaTagService;
 use App\Services\MyblHomeComponentService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\ShortCode;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class MyblHomeComponentController extends Controller
 {
@@ -59,7 +64,7 @@ class MyblHomeComponentController extends Controller
             $response = $this->componentService->storeComponent($request->all());
             Session::flash('success', $response->getContent());
         }
-        
+
         return redirect()->route('mybl.home.components');
     }
 
@@ -97,7 +102,7 @@ class MyblHomeComponentController extends Controller
             Session::flash('message', $response->getContent());
         }
 
-        
+
         return redirect()->route('mybl.home.components');
     }
 
@@ -110,5 +115,19 @@ class MyblHomeComponentController extends Controller
     {
         $this->componentService->deleteComponent($id);
         return url(route('mybl.home.components'));
+    }
+
+    public function removeVersionControlRedisKey()
+    {
+        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
+        $keys = Redis::keys('mybl_component_:*');
+        $values = [];
+
+        foreach ($keys as $key) {
+            $values [] = str_replace($pattern, '', $key);
+        }
+        if (!empty($values)) {
+            Redis::del($values);
+        }
     }
 }
