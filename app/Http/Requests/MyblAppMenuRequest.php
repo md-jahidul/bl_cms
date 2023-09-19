@@ -27,6 +27,8 @@ class MyblAppMenuRequest extends FormRequest
             'title_en' => 'required',
             'title_bn' => 'required',
             'status' => 'required',
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
         ];
     }
 

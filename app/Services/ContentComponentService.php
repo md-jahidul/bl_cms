@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\MyblSliderRepository;
 use App\Traits\CrudTrait;
@@ -99,6 +100,13 @@ class ContentComponentService
         $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
         $contentComponentCount = $this->findAll()->count();
 
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
         $data['display_order'] = $contentComponentCount + $homeSecondarySliderCount + 1;
 
@@ -107,9 +115,28 @@ class ContentComponentService
         return response("Component update successfully!");
     }
 
+    public function editComponent($id)
+    {
+        $component = $this->findOne($id);
+        $android_version_code = implode('-', [$component['android_version_code_min'], $component['android_version_code_max']]);
+        $ios_version_code = implode('-', [$component['ios_version_code_min'], $component['ios_version_code_max']]);
+        $component->android_version_code = $android_version_code;
+        $component->ios_version_code = $ios_version_code;
+
+        return $component;
+    }
+
     public function updateComponent($data)
     {
         $component = $this->findOne($data['id']);
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $component->update($data);
         Redis::del(self::REDIS_KEY);
         return response("Component update successfully!");

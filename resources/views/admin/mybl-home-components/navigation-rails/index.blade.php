@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6" id="action_div">
+                    <div class="col-md-4" id="action_div">
                         @php
                             $actionList = Helper::navigationActionList();
                         @endphp
@@ -101,6 +101,28 @@
                             </select>
                             <div class="help-block"></div>
                         </div>
+                    </div>
+                    <div class="form-group col-md-4 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                        <label for="title" class="required">Android Version Code</label>
+                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code"
+                                required data-validation-required-message="Enter Version Code" value="@if(isset($navigationMenu)){{$navigationMenu->android_version_code}} @elseif(old("android_version_code")) {{old("android_version_code")}} @endif">
+                        <div class="help-block"></div>
+                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                        <div class="help-block"></div>
+                        @if ($errors->has('android_version_code'))
+                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                        @endif
+                    </div>
+                    <div class="form-group col-md-4 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                        <label for="title" class="required">iOS Version Code</label>
+                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code"
+                                required data-validation-required-message="Enter Version Code" value="@if(isset($navigationMenu)){{$navigationMenu->ios_version_code}} @elseif(old("ios_version_code")) {{old("ios_version_code")}} @endif">
+                        <div class="help-block"></div>
+                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                        <div class="help-block"></div>
+                        @if ($errors->has('ios_version_code'))
+                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                        @endif
                     </div>
 
                     <div class="col-md-3">

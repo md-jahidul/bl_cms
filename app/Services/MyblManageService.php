@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\MenuRepository;
 use App\Repositories\MyblAppMenuRepository;
 use App\Repositories\MyblManageItemRepository;
@@ -100,6 +101,14 @@ class MyblManageService
         if (request()->hasFile('icon')) {
             $data['icon'] = 'storage/' . $data['icon']->store('manage_image');
         }
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $this->save($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
@@ -134,6 +143,15 @@ class MyblManageService
 
         $data['display_order'] = $this->manageItemRepository
                 ->findByProperties(['manage_categories_id' => $data['manage_categories_id']], ['id'])->count() + 1;
+        
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
+        
         $this->manageItemRepository->save($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
@@ -141,6 +159,17 @@ class MyblManageService
             self::REDIS_POSTPAID_USER_KEY
         ]);
         return new Response('Category added successfully!');
+    }
+
+    public function editItem($id)
+    {
+        $item = $this->manageItemRepository->findOne($id);
+        $android_version_code = implode('-', [$item['android_version_code_min'], $item['android_version_code_max']]);
+        $ios_version_code = implode('-', [$item['ios_version_code_min'], $item['ios_version_code_max']]);
+        $item->android_version_code = $android_version_code;
+        $item->ios_version_code = $ios_version_code;
+
+        return $item;
     }
 
     /**
@@ -177,6 +206,13 @@ class MyblManageService
             }
             $data['show_for_guest'] = isset($data['show_for_guest']) ? 1 : 0;
         }
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $item->update($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
@@ -216,6 +252,17 @@ class MyblManageService
         return new Response('Sorted successfully');
     }
 
+    public function editCategory($id)
+    {
+        $category = $this->findOne($id);
+        $android_version_code = implode('-', [$category['android_version_code_min'], $category['android_version_code_max']]);
+        $ios_version_code = implode('-', [$category['ios_version_code_min'], $category['ios_version_code_max']]);
+        $category->android_version_code = $android_version_code;
+        $category->ios_version_code = $ios_version_code;
+
+        return $category;
+    }
+
     /**
      * @param $data
      * @param $id
@@ -230,6 +277,14 @@ class MyblManageService
                 unlink($menu->icon);
             }
         }
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $category->update($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
