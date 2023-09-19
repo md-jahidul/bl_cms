@@ -84,6 +84,19 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">
+                                    <label for="header_title_en" class="">Recharge Product Code</label>
+                                    <input class="form-control"
+                                           name="recharge_product_code"
+                                           id="recharge_product_code"
+                                           placeholder="Enter Product Code"
+                                           required>
+                                    @if($errors->has('recharge_product_code'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('recharge_product_code') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label for="validity" class="required">Validity</label>
                                     <input class="form-control"
                                            type="number"

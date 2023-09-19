@@ -802,6 +802,11 @@
                         <i class="la la-paper-plane"></i>Content Navigation Rail
                     </a>
                 </li>
+                <li class=" {{is_active_url(route('popup-sequence.index'))}}">
+                    <a class="menu-item" href="{{ route('popup-sequence.index') }}">
+                        <i class="la la-paper-plane"></i>Popup Sequence
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
