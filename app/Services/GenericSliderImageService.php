@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Models\BaseImageCta;
 use App\Models\MyBlProduct;
 use App\Repositories\GenericSliderImageRepository;
@@ -75,6 +76,15 @@ class GenericSliderImageService
                     $image['other_attributes'] = $other_attributes;
                 }
 
+                
+                /**
+                 * Version Control
+                 */
+                $version_code = Helper::versionCode($image['android_version_code'], $image['ios_version_code']);
+                $image = array_merge($image, $version_code); 
+                unset($image['android_version_code'], $image['ios_version_code']);
+
+
                 $sliderImg = $this->save($image);
                 if (!empty($image['segment_wise_cta'][0]['group_id']) &&
                     !empty($image['segment_wise_cta'][0]['action_name'])
@@ -135,6 +145,17 @@ class GenericSliderImageService
         return new Response('Sequence has been successfully update');
     }
 
+    public function editSliderImage($id)
+    {
+        $sliderImage = $this->findOne($id);
+        $android_version_code = implode('-', [$sliderImage['android_version_code_min'], $sliderImage['android_version_code_max']]);
+        $ios_version_code = implode('-', [$sliderImage['ios_version_code_min'], $sliderImage['ios_version_code_max']]);
+        $sliderImage->android_version_code = $android_version_code;
+        $sliderImage->ios_version_code = $ios_version_code;
+
+        return $sliderImage;
+    }
+
     public function updateSliderImage($data, $id)
     {
         try {
@@ -155,6 +176,13 @@ class GenericSliderImageService
                     }
                     $data['other_attributes'] = $other_attributes;
                 }
+
+                /**
+                 * Version Control
+                 */
+                $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+                $data = array_merge($data, $version_code); 
+                unset($data['android_version_code'], $data['ios_version_code']);
 
                 $sliderImage->update($data);
 

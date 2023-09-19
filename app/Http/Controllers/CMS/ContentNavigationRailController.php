@@ -55,6 +55,11 @@ class ContentNavigationRailController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+
         $response = $this->contentNavigationRailService->storeNavigationMenu($request->all());
         session()->flash('message', $response->getContent());
         return redirect(route('content-navigation-rail.index'));
@@ -80,7 +85,7 @@ class ContentNavigationRailController extends Controller
     public function edit($id)
     {
         $navigationMenus = $this->contentNavigationRailService->getNavigationRail();
-        $navigationMenu = $this->contentNavigationRailService->findOne($id);
+        $navigationMenu = $this->contentNavigationRailService->editNavigationMenu($id);
         return view('admin.mybl-home-components.content-navigation-rails.index')
             ->with('navigationMenus', $navigationMenus)
             ->with('navigationMenu', $navigationMenu);
@@ -95,6 +100,11 @@ class ContentNavigationRailController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->contentNavigationRailService->updateNavigationMenu($request->all(), $id);
         session()->flash('success', $response->getContent());
         return redirect(route('content-navigation-rail.index'));

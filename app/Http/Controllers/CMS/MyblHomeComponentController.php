@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\ShortCode;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class MyblHomeComponentController extends Controller
 {
@@ -44,8 +45,21 @@ class MyblHomeComponentController extends Controller
 
     public function store(Request $request)
     {
-        $response = $this->componentService->storeComponent($request->all());
-        Session::flash('success', $response->getContent());
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+                'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            ]
+        );
+
+        if ($validate->fails()) {
+            Session::flash('error', 'Component update Faild');
+        }else{
+            $response = $this->componentService->storeComponent($request->all());
+            Session::flash('success', $response->getContent());
+        }
+        
         return redirect()->route('mybl.home.components');
     }
 
@@ -63,13 +77,27 @@ class MyblHomeComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->findOne($id);
+        return $this->componentService->editComponent($id);
     }
 
     public function update(Request $request)
     {
-        $response = $this->componentService->updateComponent($request->all());
-        Session::flash('message', $response->getContent());
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+                'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            ]
+        );
+
+        if ($validate->fails()) {
+            Session::flash('error', 'Component update Faild');
+        }else{
+            $response = $this->componentService->updateComponent($request->all());
+            Session::flash('message', $response->getContent());
+        }
+
+        
         return redirect()->route('mybl.home.components');
     }
 

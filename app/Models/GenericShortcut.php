@@ -16,7 +16,11 @@ class GenericShortcut extends Model
         'customer_type',
         'sort_order',
         'other_info',
-        'deep_link'
+        'deep_link',
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
     ];
 }
 

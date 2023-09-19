@@ -51,6 +51,11 @@ class GenericSliderImageController extends Controller
 
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+
         if($this->genericSliderImagesService->storeSliderImage($request->all())) {
             session()->flash('message', 'Image Created Successfully');
         } else {
@@ -84,7 +89,7 @@ class GenericSliderImageController extends Controller
 
     public function edit($imageId)
     {
-        $imageInfo = $this->genericSliderImagesService->findOne($imageId);
+        $imageInfo = $this->genericSliderImagesService->editSliderImage($imageId);
         $products  = $this->genericSliderImagesService->getActiveProducts();
         $baseGroups = $this->baseMsisdnService->findAll();
         $feedCategories = $this->feedCategoryService->findAll();
@@ -94,6 +99,11 @@ class GenericSliderImageController extends Controller
 
     public function update(Request $request, $imageId)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         if($this->genericSliderImagesService->updateSliderImage($request->all(), $imageId)) {
             session()->flash('message', 'Image Updated Successfully');
         } else {
