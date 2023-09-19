@@ -105,9 +105,7 @@ class MyPlanProductService
     public function downloadPlanProducts()
     {
         $products = $this->findAll(null, null, ['column' => 'id', 'direction' => 'desc']);
-
         $writer = WriterEntityFactory::createXLSXWriter();
-
         $writer->openToBrowser('my-plan-active-products-' . date('Y-m-d') . '.xlsx');
 
         // header Style
@@ -122,7 +120,6 @@ class MyPlanProductService
             ->build();
 
         $header = config('productMapping.mybl_plan.columns');
-
         $headers = array_map(function ($val) {
             return str_replace('_', ' ', ucwords($val));
         }, array_keys($header));
@@ -131,7 +128,6 @@ class MyPlanProductService
         $writer->addRow($row);
 
         $problem = [];
-
         foreach ($products as $product) {
             if (!empty($product)) {
                 $product = $product->toArray();
@@ -150,11 +146,9 @@ class MyPlanProductService
                 $problem[] = $product;
             }
         }
-
         if (count($problem)) {
             Log::info(json_encode($problem));
         }
-
         $writer->close();
     }
 }

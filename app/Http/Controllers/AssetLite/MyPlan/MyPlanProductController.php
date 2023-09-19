@@ -52,11 +52,8 @@ class MyPlanProductController extends Controller
                 $default->update(['is_default' => 0]);
             }
         }
-
         $this->myBlPlanProductService->save($request->all());
-
-        Redis::del("mybl_plan_prepaid_products");
-
+        Redis::del("my_plan_prepaid_products");
         return redirect()->route('my-plan.products')->with('success', 'Product created successfully');
     }
 
@@ -64,7 +61,6 @@ class MyPlanProductController extends Controller
     {
         $page = "edit";
         $product = $this->myBlPlanProductService->findOne($id);
-
         return view('admin.my-plan.product.form', compact('product', 'page'));
     }
 
@@ -76,11 +72,8 @@ class MyPlanProductController extends Controller
                 $default->update(['is_default' => 0]);
             }
         }
-
         $this->myBlPlanProductService->findOne($id)->update($request->all());
-
-        Redis::del("mybl_plan_prepaid_products");
-
+        Redis::del("my_plan_prepaid_products");
         return redirect()->route('my-plan.products')->with('success', 'Product updated successfully');
     }
 
@@ -93,13 +86,9 @@ class MyPlanProductController extends Controller
                 "products_" . now() . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
-
             $path = Storage::disk('public')->path($path);
-
             $this->myBlPlanProductService->uploadProductExcel($path);
-
-            Redis::del("mybl_plan_prepaid_products");
-
+            Redis::del("my_plan_prepaid_products");
             $response = [
                 'success' => 'SUCCESS'
             ];
