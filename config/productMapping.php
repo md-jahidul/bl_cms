@@ -116,6 +116,31 @@ return [
 //            'validity_in_days'     => 31,
         ]
     ],
+    'mybl_plan' => [
+        'columns' => [
+            'sim_type'              => 0,
+            'content_type'          => 1,
+            'product_code'          => 2,
+            'renew_product_code'    => 3,
+            'recharge_product_code' => 4,
+            'sms_volume'            => 5,
+            'minute_volume'         => 6,
+            'data_volume'           => 7,
+            'data_volume_unit'      => 8,
+            'validity'              => 9,
+            'validity_unit'         => 10,
+            'tag'                   => 11,
+            'display_sd_vat_tax_en' => 12,
+            'display_sd_vat_tax_bn' => 13,
+            'points'                => 14,
+            'market_price'          => 15,
+            'discount_price'        => 16,
+            'discount_percentage'   => 17,
+            'savings_amount'        => 18,
+            'is_active'             => 19,
+        ]
+    ],
+    // Website My Plan
     'my_plan' => [
         'columns' => [
             'sim_type'              => 0,

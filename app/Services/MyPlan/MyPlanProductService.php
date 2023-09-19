@@ -35,7 +35,7 @@ class MyPlanProductService
 
     public function uploadProductExcel($excel_path)
     {
-        $config = config('productMapping.mybl_plan.columns');
+        $config = config('productMapping.my_plan.columns');
         $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
         $file_path = $excel_path;
         $reader->open($file_path);

@@ -137,6 +137,14 @@
                     </a>
                 </li>
 
+                <li class="{{ is_active_url('my-plan/products') }}">
+                    <a class="menu-item" href="{{ route('my-plan.products') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-play"></i> My Plan
+
+                    </a>
+                </li>
+
                 <li class="{{ is_active_url('offers/prepaid') . is_active_url('offers/prepaid/create') }}">
                     <a class="menu-item" href="{{ route('product.list','prepaid') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i

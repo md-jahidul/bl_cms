@@ -1522,11 +1522,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     /**
      * MyBL Plan Routes
      */
-    Route::get('web-my-plan/products', 'CMS\MyBlPlan\MyPlanProductController@index')->name('web-my-plan.products');
-    Route::get('web-my-plan/products/create', 'CMS\MyBlPlan\MyPlanProductController@create')->name("web-my-plan.products.create");
-    Route::get('web-my-plan/products/{id}', 'CMS\MyBlPlan\MyPlanProductController@edit')->name("web-my-plan.products.edit");
-    Route::post('web-my-plan/products/store', 'CMS\MyBlPlan\MyPlanProductController@store')->name("web-my-plan.products.store");
-    Route::put('web-my-plan/products/update/{id}', 'CMS\MyBlPlan\MyPlanProductController@update')->name("web-my-plan.products.update");
-    Route::post('web-my-plan/upload-products', 'CMS\MyBlPlan\MyPlanProductController@uploadPlanProductExcel')->name("web-my-plan.upload-products");
-    Route::post('web-my-plan/products/download', 'CMS\MyBlPlan\MyPlanProductController@downloadPlanProducts')->name('web-my-plan.products.download');
+    Route::get('my-plan/products', 'AssetLite\MyPlan\MyPlanProductController@index')->name('my-plan.products');
+    Route::get('my-plan/products/create', 'AssetLite\MyPlan\MyPlanProductController@create')->name("my-plan.products.create");
+    Route::get('my-plan/products/{id}', 'AssetLite\MyPlan\MyPlanProductController@edit')->name("my-plan.products.edit");
+    Route::post('my-plan/products/store', 'AssetLite\MyPlan\MyPlanProductController@store')->name("my-plan.products.store");
+    Route::put('my-plan/products/update/{id}', 'AssetLite\MyPlan\MyPlanProductController@update')->name("my-plan.products.update");
+    Route::post('my-plan/upload-products', 'AssetLite\MyPlan\MyPlanProductController@uploadPlanProductExcel')->name("my-plan.upload-products");
+    Route::post('my-plan/products/download', 'AssetLite\MyPlan\MyPlanProductController@downloadPlanProducts')->name('my-plan.products.download');
 });
