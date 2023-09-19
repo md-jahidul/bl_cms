@@ -1497,7 +1497,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /**
      * MyBL Plan Routes
      */
-     
+
     Route::get('mybl-plan/products', 'CMS\MyBlPlan\MyBlPlanProductController@index')->name('mybl-plan.products');
     Route::get('mybl-plan/products/create', 'CMS\MyBlPlan\MyBlPlanProductController@create')->name("mybl-plan.products.create");
     Route::get('mybl-plan/products/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@edit')->name("mybl-plan.products.edit");

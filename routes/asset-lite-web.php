@@ -1542,4 +1542,15 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     // Site Map Generator
     Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');
     Route::get('generate-sitemap', 'AssetLite\SitemapController@generateSitemap');
+
+    /**
+     * MyBL Plan Routes
+     */
+    Route::get('my-plan/products', 'AssetLite\MyPlan\MyPlanProductController@index')->name('my-plan.products');
+    Route::get('my-plan/products/create', 'AssetLite\MyPlan\MyPlanProductController@create')->name("my-plan.products.create");
+    Route::get('my-plan/products/{id}', 'AssetLite\MyPlan\MyPlanProductController@edit')->name("my-plan.products.edit");
+    Route::post('my-plan/products/store', 'AssetLite\MyPlan\MyPlanProductController@store')->name("my-plan.products.store");
+    Route::put('my-plan/products/update/{id}', 'AssetLite\MyPlan\MyPlanProductController@update')->name("my-plan.products.update");
+    Route::post('my-plan/upload-products', 'AssetLite\MyPlan\MyPlanProductController@uploadPlanProductExcel')->name("my-plan.upload-products");
+    Route::post('my-plan/products/download', 'AssetLite\MyPlan\MyPlanProductController@downloadPlanProducts')->name('my-plan.products.download');
 });
