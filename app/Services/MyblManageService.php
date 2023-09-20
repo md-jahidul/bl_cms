@@ -30,6 +30,7 @@ class MyblManageService
      * @var MyblManageItemRepository
      */
     private $manageItemRepository;
+    private $myblHomeComponentService;
 
     /**
      * MenuService constructor.
@@ -37,10 +38,12 @@ class MyblManageService
      */
     public function __construct(
         MyblManageRepository $manageRepository,
-        MyblManageItemRepository $manageItemRepository
+        MyblManageItemRepository $manageItemRepository,
+        MyblHomeComponentService  $myblHomeComponentService
     ) {
         $this->manageRepository = $manageRepository;
         $this->manageItemRepository = $manageItemRepository;
+        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($manageRepository);
     }
 
@@ -106,7 +109,7 @@ class MyblManageService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
@@ -115,6 +118,7 @@ class MyblManageService
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
         return new Response('Category added successfully!');
     }
 
@@ -143,21 +147,23 @@ class MyblManageService
 
         $data['display_order'] = $this->manageItemRepository
                 ->findByProperties(['manage_categories_id' => $data['manage_categories_id']], ['id'])->count() + 1;
-        
+
         /**
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
-        
+
         $this->manageItemRepository->save($data);
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+
         return new Response('Category added successfully!');
     }
 
@@ -210,7 +216,7 @@ class MyblManageService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $item->update($data);
@@ -219,6 +225,8 @@ class MyblManageService
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+
         return new Response('Item update successfully!');
     }
 
@@ -229,6 +237,7 @@ class MyblManageService
     public function tableSort($data)
     {
         $this->manageRepository->manageTableSort($data);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
@@ -244,6 +253,7 @@ class MyblManageService
     public function itemTableSort($data)
     {
         $this->manageItemRepository->itemTableSort($data);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
@@ -282,10 +292,11 @@ class MyblManageService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $category->update($data);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
@@ -303,6 +314,7 @@ class MyblManageService
     {
         $category = $this->findOne($id);
         $category->delete();
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
@@ -325,6 +337,7 @@ class MyblManageService
             unlink($item->image_url);
         }
         $item->delete();
+        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
