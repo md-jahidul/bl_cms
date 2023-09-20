@@ -116,18 +116,4 @@ class MyblHomeComponentController extends Controller
         $this->componentService->deleteComponent($id);
         return url(route('mybl.home.components'));
     }
-
-    public function removeVersionControlRedisKey()
-    {
-        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-        $keys = Redis::keys('mybl_component_:*');
-        $values = [];
-
-        foreach ($keys as $key) {
-            $values [] = str_replace($pattern, '', $key);
-        }
-        if (!empty($values)) {
-            Redis::del($values);
-        }
-    }
 }

@@ -12,6 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class MyblHomeComponentService
 {
@@ -79,7 +80,7 @@ class MyblHomeComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del(self::REDIS_KEY);
+            $this->removeVersionControlRedisKey('home');
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -102,7 +103,7 @@ class MyblHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del(self::REDIS_KEY);
+        $this->removeVersionControlRedisKey('home');
         return response("Successfully status changed");
     }
 
@@ -110,21 +111,21 @@ class MyblHomeComponentService
     {
         $homeSecondarySliderCount = $this->sliderRepository->findByProperties(['component_id' => 18])->count();
         $homeComponentCount = $this->findAll()->count();
-        
+
         /**
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
-       
+
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
         $data['display_order'] = $homeComponentCount + $homeSecondarySliderCount + 1;
 
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        $this->removeVersionControlRedisKey('home');
         return response("Component update successfully!");
     }
 
@@ -147,11 +148,11 @@ class MyblHomeComponentService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $component->update($data);
-        Redis::del(self::REDIS_KEY);
+        $this->removeVersionControlRedisKey('home');
         return response("Component update successfully!");
     }
 
@@ -159,9 +160,23 @@ class MyblHomeComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del(self::REDIS_KEY);
+        $this->removeVersionControlRedisKey('home');
         return [
             'message' => 'Component delete successfully',
         ];
+    }
+
+    public function removeVersionControlRedisKey($keyName)
+    {
+        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
+        $keys = Redis::keys('mybl_component_' . $keyName . '_*');
+        $values = [];
+
+        foreach ($keys as $key) {
+            $values [] = str_replace($pattern, '', $key);
+        }
+        if (!empty($values)) {
+            Redis::del($values);
+        }
     }
 }
