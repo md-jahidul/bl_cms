@@ -22,15 +22,18 @@ class MyBlCommerceComponentService
      * @var MyblSliderRepository
      */
     private $sliderRepository;
+    private $myblHomeComponentService;
 
     protected const REDIS_KEY = "mybl_commerce_component";
 
     public function __construct(
         MyblCommerceComponentRepository $componentRepository,
-        MyblSliderRepository $sliderRepository
+        MyblSliderRepository $sliderRepository,
+        MyblHomeComponentService $myblHomeComponentService
     ) {
         $this->componentRepository = $componentRepository;
         $this->sliderRepository = $sliderRepository;
+        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($componentRepository);
     }
 
@@ -71,7 +74,7 @@ class MyBlCommerceComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del(self::REDIS_KEY);
+            $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -94,7 +97,7 @@ class MyBlCommerceComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
         return response("Successfully status changed");
     }
 
@@ -107,14 +110,14 @@ class MyBlCommerceComponentService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));;
         $data['display_order'] = $commerceComponentCount + $homeSecondarySliderCount + 1;
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
         return response("Component update successfully!");
     }
 
@@ -137,11 +140,11 @@ class MyBlCommerceComponentService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
-        
+
         $component->update($data);
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
         return response("Component update successfully!");
     }
 
@@ -149,7 +152,7 @@ class MyBlCommerceComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
         return [
             'message' => 'Component delete successfully',
         ];

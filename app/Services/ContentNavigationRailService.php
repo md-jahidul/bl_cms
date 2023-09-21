@@ -20,12 +20,13 @@ class ContentNavigationRailService
 {
     use CrudTrait;
     private $contentNavigationRailRepository;
-
+    private $myblHomeComponentService;
     protected const REDIS_KEY = "mybl_content_navigation_rail";
 
-    public function __construct(ContentNavigationRailRepository $contentNavigationRailRepository)
+    public function __construct(ContentNavigationRailRepository $contentNavigationRailRepository, MyblHomeComponentService $myblHomeComponentService)
     {
         $this->contentNavigationRailRepository = $contentNavigationRailRepository;
+        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($contentNavigationRailRepository);
     }
 
@@ -42,11 +43,11 @@ class ContentNavigationRailService
          * Version Control
          */
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code); 
+        $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
         return new Response("Navigation rail has been successfully created");
     }
 
@@ -75,11 +76,11 @@ class ContentNavigationRailService
          * Version Control
          */
         $version_code = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
-        $request = array_merge($request, $version_code); 
+        $request = array_merge($request, $version_code);
         unset($request['android_version_code'], $request['ios_version_code']);
-        
+
         $navigationMenu->update($request);
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
         return new Response("Navigation rail has been successfully updated");
     }
 
@@ -92,7 +93,7 @@ class ContentNavigationRailService
     {
         $navigationRail = $this->findOne($id);
         $navigationRail->delete();
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
         return Response('Navigation rail has been successfully deleted');
     }
 
@@ -104,7 +105,7 @@ class ContentNavigationRailService
     public function tableSortable($request)
     {
         $this->contentNavigationRailRepository->sortData($request->position);
-        Redis::del(self::REDIS_KEY);
+        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
         return new Response('update successfully');
     }
 }
