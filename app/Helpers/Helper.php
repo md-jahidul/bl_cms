@@ -145,7 +145,8 @@ class Helper
             "CONTENT"                 => 'Content',
             "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
-            "TOFFEE_LIVE"             => 'Toffee_Live'
+            "TOFFEE_LIVE"             => 'Toffee_Live',
+            "DEEN"                    => 'Deen'
         ];
     }
 
