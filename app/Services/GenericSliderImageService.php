@@ -20,10 +20,12 @@ class GenericSliderImageService
     use FileTrait;
 
     protected $sliderImageRepository;
+    private $myblHomeComponentService;
 
-    public function __construct(GenericSliderImageRepository $sliderImageRepository)
+    public function __construct(GenericSliderImageRepository $sliderImageRepository, MyblHomeComponentService $myblHomeComponentService)
     {
         $this->sliderImageRepository = $sliderImageRepository;
+        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($sliderImageRepository);
     }
 
@@ -76,12 +78,12 @@ class GenericSliderImageService
                     $image['other_attributes'] = $other_attributes;
                 }
 
-                
+
                 /**
                  * Version Control
                  */
                 $version_code = Helper::versionCode($image['android_version_code'], $image['ios_version_code']);
-                $image = array_merge($image, $version_code); 
+                $image = array_merge($image, $version_code);
                 unset($image['android_version_code'], $image['ios_version_code']);
 
 
@@ -96,11 +98,15 @@ class GenericSliderImageService
                 }
 
             });
-            Redis::del('mybl_home_component');
-            Redis::del('content_component');
-            Redis::del('non_bl_component');
-            Redis::del('mybl_commerce_component');
-            Redis::del('non_bl_component');
+//            Redis::del('mybl_home_component');
+//            Redis::del('content_component');
+//            Redis::del('non_bl_component');
+//            Redis::del('mybl_commerce_component');
+//            Redis::del('non_bl_component');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('home');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
             Redis::del('non_bl_offer');
             Redis::del('lms_component_prepaid');
             Redis::del('lms_component_postpaid');
@@ -181,7 +187,7 @@ class GenericSliderImageService
                  * Version Control
                  */
                 $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-                $data = array_merge($data, $version_code); 
+                $data = array_merge($data, $version_code);
                 unset($data['android_version_code'], $data['ios_version_code']);
 
                 $sliderImage->update($data);
@@ -205,10 +211,14 @@ class GenericSliderImageService
                     BaseImageCta::where('banner_id', $id)->delete();
                 }
             });
-            Redis::del('mybl_home_component');
-            Redis::del('content_component');
-            Redis::del('non_bl_component');
-            Redis::del('mybl_commerce_component');
+//            Redis::del('mybl_home_component');
+//            Redis::del('content_component');
+//            Redis::del('non_bl_component');
+//            Redis::del('mybl_commerce_component');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('home');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+            $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
             Redis::del('non_bl_offer');
             Redis::del('lms_component_prepaid');
             Redis::del('lms_component_postpaid');
@@ -227,6 +237,15 @@ class GenericSliderImageService
     {
         $sliderImage = $this->findOne($id);
         $sliderImage->delete();
+        $this->myblHomeComponentService->removeVersionControlRedisKey('home');
+        $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+        $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
+        Redis::del('non_bl_offer');
+        Redis::del('lms_component_prepaid');
+        Redis::del('lms_component_postpaid');
+        Redis::del('lms_old_user_postpaid');
+        Redis::del('lms_old_user_prepaid');
         Redis::del('toffee_banner');
         /**
          * Removing redis cache for segment banner to impact the change
