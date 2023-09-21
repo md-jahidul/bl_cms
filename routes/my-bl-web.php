@@ -889,7 +889,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl-home-components-sort', 'CMS\MyblHomeComponentController@componentSort');
     Route::get('components-status-update/{id}', 'CMS\MyblHomeComponentController@componentStatusUpdate')
         ->name('components.status.update');
-    Route::get('version-check-redis-key', 'CMS\MyblHomeComponentController@removeVersionControlRedisKey')->name('version-check-redis-key.index');
     Route::get('mybl-home-components/destroy/{id}', 'CMS\MyblHomeComponentController@destroy')
         ->name('mybl.home.components.destroy');
 
