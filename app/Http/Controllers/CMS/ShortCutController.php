@@ -86,9 +86,16 @@ class ShortCutController extends Controller
      */
     public function edit($id)
     {
+        $short_cut_info = $this->shortCutService->findOne($id);
+        $android_version_code = implode('-', [$short_cut_info['android_version_code_min'], $short_cut_info['android_version_code_max']]);
+        $ios_version_code = implode('-', [$short_cut_info['ios_version_code_min'], $short_cut_info['ios_version_code_max']]);
+        $short_cut_info->android_version_code = $android_version_code;
+        $short_cut_info->ios_version_code = $ios_version_code;
+
+
         return view('admin.short_cuts.index')
                     ->with('short_cuts', $this->shortCutService->findAll())
-                    ->with('short_cut_info', $this->shortCutService->findOne($id));
+                    ->with('short_cut_info', $short_cut_info);
     }
 
     /**
