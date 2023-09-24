@@ -30,7 +30,6 @@ class MyblManageService
      * @var MyblManageItemRepository
      */
     private $manageItemRepository;
-    private $myblHomeComponentService;
 
     /**
      * MenuService constructor.
@@ -38,12 +37,10 @@ class MyblManageService
      */
     public function __construct(
         MyblManageRepository $manageRepository,
-        MyblManageItemRepository $manageItemRepository,
-        MyblHomeComponentService  $myblHomeComponentService
+        MyblManageItemRepository $manageItemRepository
     ) {
         $this->manageRepository = $manageRepository;
         $this->manageItemRepository = $manageItemRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($manageRepository);
     }
 
@@ -118,7 +115,9 @@ class MyblManageService
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return new Response('Category added successfully!');
     }
 
@@ -162,7 +161,7 @@ class MyblManageService
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
 
         return new Response('Category added successfully!');
     }
@@ -225,7 +224,7 @@ class MyblManageService
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
 
         return new Response('Item update successfully!');
     }
@@ -237,12 +236,13 @@ class MyblManageService
     public function tableSort($data)
     {
         $this->manageRepository->manageTableSort($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+
         return new Response('Sorted successfully');
     }
 
@@ -253,12 +253,13 @@ class MyblManageService
     public function itemTableSort($data)
     {
         $this->manageItemRepository->itemTableSort($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+
         return new Response('Sorted successfully');
     }
 
@@ -296,12 +297,13 @@ class MyblManageService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $category->update($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+
         return Response('Explore category updated successfully');
     }
 
@@ -314,12 +316,13 @@ class MyblManageService
     {
         $category = $this->findOne($id);
         $category->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+
         return [
             'message' => 'Category deleted successfully',
         ];
@@ -337,12 +340,13 @@ class MyblManageService
             unlink($item->image_url);
         }
         $item->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
         Redis::del([
             self::REDIS_GUEST_USER_KEY,
             self::REDIS_PREPAID_USER_KEY,
             self::REDIS_POSTPAID_USER_KEY
         ]);
+
         return [
             'message' => 'Item deleted successfully',
         ];

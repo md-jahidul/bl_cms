@@ -107,9 +107,6 @@ class GenericShortcutController extends Controller
 
     public function deleteRedisKey()
     {
-        Redis::del('mybl_home_component');
-        Redis::del('content_component');
-        Redis::del('non_bl_component');
-        Redis::del('mybl_commerce_component');
+        Helper::removeVersionControlRedisKey();
     }
 }

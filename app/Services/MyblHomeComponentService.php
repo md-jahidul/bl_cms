@@ -80,7 +80,8 @@ class MyblHomeComponentService
                     $update_menu->update();
                 }
             }
-            $this->removeVersionControlRedisKey('home');
+            Helper::removeVersionControlRedisKey('home');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -103,7 +104,8 @@ class MyblHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        $this->removeVersionControlRedisKey('home');
+        Helper::removeVersionControlRedisKey('home');
+
         return response("Successfully status changed");
     }
 
@@ -125,7 +127,8 @@ class MyblHomeComponentService
 
 
         $this->save($data);
-        $this->removeVersionControlRedisKey('home');
+        Helper::removeVersionControlRedisKey('home');
+
         return response("Component update successfully!");
     }
 
@@ -152,7 +155,8 @@ class MyblHomeComponentService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $component->update($data);
-        $this->removeVersionControlRedisKey('home');
+        Helper::removeVersionControlRedisKey('home');
+
         return response("Component update successfully!");
     }
 
@@ -160,23 +164,10 @@ class MyblHomeComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        $this->removeVersionControlRedisKey('home');
+        Helper::removeVersionControlRedisKey('home');
+
         return [
             'message' => 'Component delete successfully',
         ];
-    }
-
-    public function removeVersionControlRedisKey($keyName)
-    {
-        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-        $keys = Redis::keys('mybl_component_' . $keyName . '_*');
-        $values = [];
-
-        foreach ($keys as $key) {
-            $values [] = str_replace($pattern, '', $key);
-        }
-        if (!empty($values)) {
-            Redis::del($values);
-        }
     }
 }

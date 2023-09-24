@@ -25,16 +25,13 @@ class ShortCutService
      * @var $sliderRepository
      */
     protected $shortCutRepository;
-    protected $myblHomeComponentService;
-
     /**
      * ShortCutService constructor.
      * @param ShortCutRepository $shortCutRepository
      */
-    public function __construct(ShortCutRepository $shortCutRepository, MyblHomeComponentService $myblHomeComponentService)
+    public function __construct(ShortCutRepository $shortCutRepository)
     {
         $this->shortCutRepository = $shortCutRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($shortCutRepository);
     }
 
@@ -61,7 +58,8 @@ class ShortCutService
         $version_code = Helper::versionCode($shortCut['android_version_code'], $shortCut['ios_version_code']);
         $shortCut = array_merge($shortCut, $version_code);
         unset($shortCut['android_version_code'], $shortCut['ios_version_code']);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('shortcut');
+
+       Helper::removeVersionControlRedisKey('shortcut');
 
         $this->save($shortCut);
         return new Response("Shortcut has been successfully created");
@@ -98,7 +96,7 @@ class ShortCutService
         $version_code = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
         $request = array_merge($request, $version_code);
         unset($request['android_version_code'], $request['ios_version_code']);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('shortcut');
+        Helper::removeVersionControlRedisKey('shortcut');
 
         $shortCut->update($request);
 
@@ -115,7 +113,7 @@ class ShortCutService
         $shortcut = $this->findOne($id);
         unlink($shortcut['icon']);
         $shortcut->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('shortcut');
+        Helper::removeVersionControlRedisKey('shortcut');
 
         return Response('Shortcut has been successfully deleted');
     }
@@ -128,6 +126,8 @@ class ShortCutService
     public function tableSortable($request)
     {
         $this->shortCutRepository->sortShortcutsList($request);
+        Helper::removeVersionControlRedisKey('shortcut');
+
         return new Response('update successfully');
     }
 }
