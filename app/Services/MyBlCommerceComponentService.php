@@ -22,18 +22,13 @@ class MyBlCommerceComponentService
      * @var MyblSliderRepository
      */
     private $sliderRepository;
-    private $myblHomeComponentService;
-
-    protected const REDIS_KEY = "mybl_commerce_component";
 
     public function __construct(
         MyblCommerceComponentRepository $componentRepository,
-        MyblSliderRepository $sliderRepository,
-        MyblHomeComponentService $myblHomeComponentService
+        MyblSliderRepository $sliderRepository
     ) {
         $this->componentRepository = $componentRepository;
         $this->sliderRepository = $sliderRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($componentRepository);
     }
 
@@ -74,7 +69,9 @@ class MyBlCommerceComponentService
                     $update_menu->update();
                 }
             }
-            $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+
+            Helper::removeVersionControlRedisKey('commerce');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -97,7 +94,7 @@ class MyBlCommerceComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+        Helper::removeVersionControlRedisKey('commerce');
         return response("Successfully status changed");
     }
 
@@ -117,7 +114,8 @@ class MyBlCommerceComponentService
         $data['display_order'] = $commerceComponentCount + $homeSecondarySliderCount + 1;
 
         $this->save($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+        Helper::removeVersionControlRedisKey('commerce');
+
         return response("Component update successfully!");
     }
 
@@ -144,7 +142,8 @@ class MyBlCommerceComponentService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $component->update($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+        Helper::removeVersionControlRedisKey('commerce');
+
         return response("Component update successfully!");
     }
 
@@ -152,7 +151,8 @@ class MyBlCommerceComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
+
+
         return [
             'message' => 'Component delete successfully',
         ];

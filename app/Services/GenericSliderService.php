@@ -97,10 +97,8 @@ class GenericSliderService
             }
             elseif ($data['component_for'] == 'lms') {
                 $this->lmsHomeComponentService->save($homeComponentData);
-                Redis::del('lms_component_prepaid');
-                Redis::del('lms_component_postpaid');
-                Redis::del('lms_old_user_postpaid');
-                Redis::del('lms_old_user_prepaid');
+                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
+                Redis::del($keys);
             }
             elseif ($data['component_for'] == 'toffee' || $data['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
@@ -156,10 +154,9 @@ class GenericSliderService
             elseif ($slider['component_for'] == 'lms') {
                 $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $lmsComponent->update($homeComponentData);
-                Redis::del('lms_component_prepaid');
-                Redis::del('lms_component_postpaid');
-                Redis::del('lms_old_user_postpaid');
-                Redis::del('lms_old_user_prepaid');
+
+                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
+                Redis::del($keys);
             }
             elseif ($slider['component_for'] == 'toffee' || $slider['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
@@ -278,10 +275,8 @@ class GenericSliderService
             else if ($componentFor == 'lms') {
                 $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
-                Redis::del('lms_component_prepaid');
-                Redis::del('lms_component_postpaid');
-                Redis::del('lms_old_user_postpaid');
-                Redis::del('lms_old_user_prepaid');
+                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
+                Redis::del($keys);
             }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();

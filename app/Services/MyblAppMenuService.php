@@ -26,15 +26,13 @@ class MyblAppMenuService
      * @var array
      */
     private $menuItems;
-    private $myblHomeComponentService;
     /**
      * MenuService constructor.
      * @param MyblAppMenuRepository $menuRepository
      */
-    public function __construct(MyblAppMenuRepository $menuRepository, MyblHomeComponentService $myblHomeComponentService)
+    public function __construct(MyblAppMenuRepository $menuRepository)
     {
         $this->menuRepository = $menuRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($menuRepository);
     }
 
@@ -72,7 +70,8 @@ class MyblAppMenuService
 
 
         $this->save($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return new Response('Menu added successfully');
     }
 
@@ -83,7 +82,8 @@ class MyblAppMenuService
     public function tableSort($data)
     {
         $this->menuRepository->menuTableSort($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return new Response('Footer menu added successfully');
     }
 
@@ -128,7 +128,8 @@ class MyblAppMenuService
 
 
         $menu->update($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return Response('Menu updated successfully');
     }
 
@@ -150,7 +151,8 @@ class MyblAppMenuService
             }
         }
         $menu->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('navdrawer');
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return [
             'message' => 'Menu delete successfully',
         ];
