@@ -5,6 +5,8 @@ namespace App\Services\MyPlan;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Box\Spout\Common\Entity\Style\Color;
 use App\Repositories\AboutPageRepository;
@@ -31,6 +33,11 @@ class MyPlanProductService
     {
         $this->myBlPlanProductRepository = $myBlPlanProductRepository;
         $this->setActionRepository($myBlPlanProductRepository);
+    }
+
+    public function findByCode($productCode)
+    {
+        return $this->myBlPlanProductRepository->findOneByProperties(['product_code' => $productCode], ['product_code']);
     }
 
     public function uploadProductExcel($excel_path)
@@ -150,5 +157,17 @@ class MyPlanProductService
             Log::info(json_encode($problem));
         }
         $writer->close();
+    }
+
+    /**
+     * @param $id
+     * @return ResponseFactory|Response
+     * @throws \Exception
+     */
+    public function deleteProduct($id)
+    {
+        $product = $this->findOne($id);
+        $product->delete();
+        return Response('Product delete successfully');
     }
 }

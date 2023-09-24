@@ -10,6 +10,15 @@
 @endsection
 
 @section('content')
+{{--    @if ($errors->any())--}}
+{{--        <div class="alert alert-danger">--}}
+{{--            <ul>--}}
+{{--                @foreach ($errors->all() as $error)--}}
+{{--                    <li>{{ $error }}</li>--}}
+{{--                @endforeach--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    @endif--}}
     <section>
         <div class="card">
             <div class="card-content collapse show">
@@ -65,7 +74,7 @@
                                 <div class="form-group col-md-4 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <input class="form-control" name="product_code" required
-                                            @if($page == "edit") readonly @endif
+                                            @if($page == "edit") @endif
                                            data-validation-required-message="Please enter product code",
                                            placeholder="Enter Product Code"
                                            value="@if($page == "edit"){{ $product->product_code}}@else{{
