@@ -149,7 +149,8 @@ class Helper
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "VOLTE"                   => 'Volte',
-            "AMAR_PLAN"               => 'Amar Plan'
+            "AMAR_PLAN"               => 'Amar Plan',
+            "DEEN"                    => 'Deen'
         ];
     }
 
