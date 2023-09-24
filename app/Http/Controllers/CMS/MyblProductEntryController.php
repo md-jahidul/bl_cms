@@ -234,6 +234,8 @@ class MyblProductEntryController extends Controller
             /**
              * Commenting reset redis key code according to BL requirement on 24 June 2021
              */
+            Redis::del('prepaid_popular_pack');
+            Redis::del('postpaid_popular_pack');
             $this->service->resetProductRedisKeys();
             $this->service->syncSearch();
 
