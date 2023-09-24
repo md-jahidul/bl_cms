@@ -25,7 +25,7 @@ class GenericSliderImageController extends Controller
         GenericSliderService $genericSliderService,
         GenericSliderImageService $genericSliderImageService,
         BaseMsisdnService $baseMsisdnService,
-        FeedCategoryService $feedCategoryService,
+        FeedCategoryService $feedCategoryService
     ) {
         $this->genericSliderService = $genericSliderService;
         $this->genericSliderImagesService = $genericSliderImageService;

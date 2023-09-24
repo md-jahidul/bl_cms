@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\NonBlComponentRepository;
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\GenericSliderRepository;
@@ -85,15 +86,15 @@ class GenericSliderService
 
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($homeComponentData);
-                Redis::del('mybl_home_component');
+                Helper::removeVersionControlRedisKey('home');
             }
             elseif ($data['component_for'] == 'content') {
                 $this->contentComponentRepository->save($homeComponentData);
-                Redis::del('content_component');
+                Helper::removeVersionControlRedisKey('content');
             }
             elseif ($data['component_for'] == 'commerce') {
                 $this->commerceComponentRepository->save($homeComponentData);
-                Redis::del('mybl_commerce_component');
+                Helper::removeVersionControlRedisKey('commerce');
             }
             elseif ($data['component_for'] == 'lms') {
                 $this->lmsHomeComponentService->save($homeComponentData);
@@ -106,7 +107,7 @@ class GenericSliderService
 
             elseif ($data['component_for'] == 'non_bl') {
                 $this->nonBlComponentRepository->save($homeComponentData);
-                Redis::del('non_bl_component');
+                Helper::removeVersionControlRedisKey('nonbl');
             }
             elseif ($data['component_for'] == 'non_bl_offer') {
                 $this->nonBlOfferService->save($homeComponentData);
@@ -139,17 +140,17 @@ class GenericSliderService
             if ($slider['component_for'] == 'home') {
                 $homeComponent = $this->myblHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $homeComponent->update($homeComponentData);
-                Redis::del('mybl_home_component');
+                Helper::removeVersionControlRedisKey('home');
             }
             elseif ($slider['component_for'] == 'content') {
                 $contentComponent = $this->contentComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $contentComponent->update($homeComponentData);
-                Redis::del('content_component');
+                Helper::removeVersionControlRedisKey('content');
             }
             elseif ($slider['component_for'] == 'commerce') {
                 $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $commerceComponent->update($homeComponentData);
-                Redis::del('mybl_commerce_component');
+                Helper::removeVersionControlRedisKey('commerce');
             }
             elseif ($slider['component_for'] == 'lms') {
                 $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
@@ -165,7 +166,7 @@ class GenericSliderService
             elseif ($slider['component_for'] == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $nonBlComponent->update($homeComponentData);
-                Redis::del('non_bl_component');
+                Helper::removeVersionControlRedisKey('nonbl');
             }
             elseif ($slider['component_for'] == 'non_bl_offer') {
                 $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];

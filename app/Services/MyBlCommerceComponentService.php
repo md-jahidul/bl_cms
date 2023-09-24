@@ -151,7 +151,7 @@ class MyBlCommerceComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-
+        Helper::removeVersionControlRedisKey('commerce');
 
         return [
             'message' => 'Component delete successfully',
