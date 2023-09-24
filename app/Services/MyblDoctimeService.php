@@ -61,7 +61,7 @@ class MyblDoctimeService
                 'transaction_id' => $item->transaction_id,
                 'remarks' => $item->remarks,
                 'promo_code' => $item->promo_code,
-                'date' => $item->created_at->format('Y-m-d'),
+                'date' => $item->created_at->format('Y-m-d H:i:s'),
             ];
         });
         return $response;
