@@ -18,19 +18,14 @@ class ContentComponentService
 
     private $componentRepository;
     private $sliderRepository;
-    private $myblHomeComponentService;
-
-    protected const REDIS_KEY = "content_component";
 
     public function __construct(
         ContentComponentRepository $componentRepository,
-        MyblSliderRepository $sliderRepository,
-        MyblHomeComponentService $myblHomeComponentService
+        MyblSliderRepository $sliderRepository
 
     ) {
         $this->componentRepository = $componentRepository;
         $this->sliderRepository = $sliderRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($componentRepository);
     }
 
@@ -72,7 +67,9 @@ class ContentComponentService
                     $update_menu->update();
                 }
             }
-            $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+
+            Helper::removeVersionControlRedisKey('content');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -95,7 +92,7 @@ class ContentComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+        Helper::removeVersionControlRedisKey('content');
         return response("Successfully status changed");
     }
 
@@ -115,7 +112,8 @@ class ContentComponentService
         $data['display_order'] = $contentComponentCount + $homeSecondarySliderCount + 1;
 
         $this->save($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+        Helper::removeVersionControlRedisKey('content');
+
         return response("Component update successfully!");
     }
 
@@ -142,7 +140,8 @@ class ContentComponentService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $component->update($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+        Helper::removeVersionControlRedisKey('content');
+
         return response("Component update successfully!");
     }
 
@@ -150,7 +149,8 @@ class ContentComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('content');
+        Helper::removeVersionControlRedisKey('content');
+
         return [
             'message' => 'Component delete successfully',
         ];

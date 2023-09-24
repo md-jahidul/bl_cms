@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use App\Models\Config;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class Helper
 {
@@ -350,5 +352,20 @@ class Helper
             'ios_version_code_max' => $ios_version_code ? $ios_version_code_array[1] : 999999999
         ];
 
+    }
+
+    public static function removeVersionControlRedisKey($keyName = '')
+    {
+        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
+
+        $keys = $keyName == '' ? Redis::keys('mybl_component_*') : Redis::keys('mybl_component_' . $keyName . '_*');
+        $values = [];
+
+        foreach ($keys as $key) {
+            $values [] = str_replace($pattern, '', $key);
+        }
+        if (!empty($values)) {
+            Redis::del($values);
+        }
     }
 }

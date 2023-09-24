@@ -20,13 +20,10 @@ class ContentNavigationRailService
 {
     use CrudTrait;
     private $contentNavigationRailRepository;
-    private $myblHomeComponentService;
-    protected const REDIS_KEY = "mybl_content_navigation_rail";
 
-    public function __construct(ContentNavigationRailRepository $contentNavigationRailRepository, MyblHomeComponentService $myblHomeComponentService)
+    public function __construct(ContentNavigationRailRepository $contentNavigationRailRepository)
     {
         $this->contentNavigationRailRepository = $contentNavigationRailRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($contentNavigationRailRepository);
     }
 
@@ -47,7 +44,8 @@ class ContentNavigationRailService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
+        Helper::removeVersionControlRedisKey('contentnav');
+
         return new Response("Navigation rail has been successfully created");
     }
 
@@ -80,7 +78,8 @@ class ContentNavigationRailService
         unset($request['android_version_code'], $request['ios_version_code']);
 
         $navigationMenu->update($request);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
+        Helper::removeVersionControlRedisKey('contentnav');
+
         return new Response("Navigation rail has been successfully updated");
     }
 
@@ -93,7 +92,8 @@ class ContentNavigationRailService
     {
         $navigationRail = $this->findOne($id);
         $navigationRail->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
+        Helper::removeVersionControlRedisKey('contentnav');
+
         return Response('Navigation rail has been successfully deleted');
     }
 
@@ -105,7 +105,8 @@ class ContentNavigationRailService
     public function tableSortable($request)
     {
         $this->contentNavigationRailRepository->sortData($request->position);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('contentnav');
+        Helper::removeVersionControlRedisKey('contentnav');
+
         return new Response('update successfully');
     }
 }

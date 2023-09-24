@@ -24,15 +24,13 @@ class HomeNavigationRailService
      * @var HomeNavigationRailRepository
      */
     private $homeNavigationRailRepository;
-    private $myblHomeComponentService;
     /**
      * HomeNavigationRailService constructor.
      * @param HomeNavigationRailRepository $homeNavigationRailRepository
      */
-    public function __construct(HomeNavigationRailRepository $homeNavigationRailRepository, MyblHomeComponentService $myblHomeComponentService)
+    public function __construct(HomeNavigationRailRepository $homeNavigationRailRepository)
     {
         $this->homeNavigationRailRepository = $homeNavigationRailRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($homeNavigationRailRepository);
     }
 
@@ -57,7 +55,8 @@ class HomeNavigationRailService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('homenav');
+        Helper::removeVersionControlRedisKey('homenav');
+
         return new Response("Navigation rail has been successfully created");
     }
 
@@ -90,7 +89,8 @@ class HomeNavigationRailService
         unset($request['android_version_code'], $request['ios_version_code']);
 
         $navigationMenu->update($request);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('homenav');
+        Helper::removeVersionControlRedisKey('homenav');
+
         return new Response("Navigation rail has been successfully updated");
     }
 
@@ -103,7 +103,8 @@ class HomeNavigationRailService
     {
         $navigationRail = $this->findOne($id);
         $navigationRail->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('homenav');
+        Helper::removeVersionControlRedisKey('homenav');
+
         return Response('Navigation rail has been successfully deleted');
     }
 
@@ -115,7 +116,8 @@ class HomeNavigationRailService
     public function tableSortable($request)
     {
         $this->homeNavigationRailRepository->sortData($request->position);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('homenav');
+        Helper::removeVersionControlRedisKey('homenav');
+
         return new Response('update successfully');
     }
 }
