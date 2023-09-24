@@ -4,11 +4,14 @@ namespace App\Http\Controllers\AssetLite\MyPlan;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MyBlPlanProductRequest;
+use App\Http\Requests\MyPlanProductRequest;
 use App\Services\MyPlan\MyPlanProductService;
 use Exception;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class MyPlanProductController extends Controller
@@ -44,8 +47,13 @@ class MyPlanProductController extends Controller
         return view('admin.my-plan.product.form', compact('page'));
     }
 
-    public function store(MyBlPlanProductRequest $request)
+    public function store(MyPlanProductRequest $request)
     {
+        $uniqueCheck = $this->myBlPlanProductService->findByCode($request->product_code);
+        if ($uniqueCheck){
+            return back()->with('error', 'The product code is already exists.');
+        }
+
         if ($request->has("is_default")) {
             $default = $this->myBlPlanProductService->findBy(['is_default' => 1])->first();
             if ($default) {
@@ -64,8 +72,13 @@ class MyPlanProductController extends Controller
         return view('admin.my-plan.product.form', compact('product', 'page'));
     }
 
-    public function update(MyBlPlanProductRequest $request, $id)
+    public function update(MyPlanProductRequest $request, $id)
     {
+        $uniqueCheck = $this->myBlPlanProductService->findOne($id);
+        if ($uniqueCheck->product_code != $request->product_code){
+            return back()->with('error', 'The product code is already exists.');
+        }
+
         if ($request->has("is_default")) {
             $default = $this->myBlPlanProductService->findBy(['is_default' => 1])->first();
             if ($default) {
@@ -111,5 +124,17 @@ class MyPlanProductController extends Controller
             Log::info("MyBL Plan Product Download Failed: " . $e->getMessage());
         }
 
+    }
+
+    /**
+     * @param $id
+     * @return UrlGenerator|string
+     * @throws Exception
+     */
+    public function destroy($id)
+    {
+        $response = $this->myBlPlanProductService->deleteProduct($id);
+        Session::flash('error', $response->getContent());
+        return url(route('my-plan.products'));
     }
 }

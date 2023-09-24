@@ -53,7 +53,12 @@
             <td><span class="badge @if($product->is_active == 1) badge-success @else badge-warning @endif">
                 {{ $product->is_active == 1 ? "Active" : "Inactive" }}</span>
             </td>
-            <td><a href="{{ route('my-plan.products.edit', $product->id) }}" class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a></td>
+            <td>
+                <a href="{{ route('my-plan.products.edit', $product->id) }}" class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
+                <a href="#" remove="{{ url("my-plan/products/destroy/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
+                    <i class="la la-trash"></i>
+                </a>
+            </td>
         </tr>
     @endforeach
     </tbody>
