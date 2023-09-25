@@ -143,7 +143,7 @@ class OfferCategoryController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function sortedDataSave(Request $request)
     {

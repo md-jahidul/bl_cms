@@ -253,7 +253,8 @@ class OfferCategoryService
         return response('Related product save successfully');
     }
 
-    public function sortedDataSave($request)
+
+    public function sortedDataSave($request): string
     {
         $positions = $request->position;
         foreach ($positions as $position) {

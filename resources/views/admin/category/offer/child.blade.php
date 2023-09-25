@@ -22,7 +22,6 @@
                             <td><i class="icon-cursor-move icons"></i></td>
                             <th width="25%">Name</th>
                             <th width="25%">Type</th>
-                            {{--<th width="25%">{{ $type }}</th>--}}
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -35,12 +34,8 @@
                                         {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
                                     </td>
                                     <td width="20%">{{ $offerCategory->type->name ?? '' }}</td>
-                                    {{--<td width="6%">{{ $offerCategory->type->description ?? '' }}</td>--}}
                                     <td width="3%" class="text-center">
                                         <a href="{{ url("offer-categories/$parent_id/$type/edit/$offerCategory->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        {{--<a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger --}}{{--delete_btn--}}{{--" data-id="{{ $offerCategory->id }}" title="Delete">--}}
-                                            {{--<i class="la la-trash"></i>--}}
-                                        {{--</a>--}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -49,9 +44,7 @@
                 </div>
             </div>
         </div>
-
     </section>
-
 @stop
 
 @push('page-css')

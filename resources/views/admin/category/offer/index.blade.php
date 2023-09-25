@@ -80,7 +80,6 @@
                             </thead>
                             <tbody id="sortable">
                                 @foreach($offerCategories as $offerCategory)
-{{--                                                @if($offerCategory->alias != "call_rate")--}}
                                     <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
                                         <td width="3%" class="cursor-pointer"><i class="icon-cursor-move icons"></i></td>
                                         <td class="text-truncate">{{ $offerCategory->name_en }}</td>
@@ -104,11 +103,8 @@
                                         </td>
 
                                     </tr>
-{{--                                                @endif--}}
                                 @endforeach
-
                             </tbody>
-
                         </table>
                     </div>
                 </div>
