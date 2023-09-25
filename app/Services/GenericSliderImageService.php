@@ -20,12 +20,9 @@ class GenericSliderImageService
     use FileTrait;
 
     protected $sliderImageRepository;
-    private $myblHomeComponentService;
-
-    public function __construct(GenericSliderImageRepository $sliderImageRepository, MyblHomeComponentService $myblHomeComponentService)
+    public function __construct(GenericSliderImageRepository $sliderImageRepository)
     {
         $this->sliderImageRepository = $sliderImageRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($sliderImageRepository);
     }
 
@@ -98,21 +95,11 @@ class GenericSliderImageService
                 }
 
             });
-//            Redis::del('mybl_home_component');
-//            Redis::del('content_component');
-//            Redis::del('non_bl_component');
-//            Redis::del('mybl_commerce_component');
-//            Redis::del('non_bl_component');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('home');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('content');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
-            Redis::del('non_bl_offer');
-            Redis::del('lms_component_prepaid');
-            Redis::del('lms_component_postpaid');
-            Redis::del('lms_old_user_postpaid');
-            Redis::del('lms_old_user_prepaid');
-            Redis::del('toffee_banner');
+
+            Helper::removeVersionControlRedisKey();
+            $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner'];
+            Redis::del($keys);
+
             return true;
         } catch (\Exception $e) {
 
@@ -211,21 +198,10 @@ class GenericSliderImageService
                     BaseImageCta::where('banner_id', $id)->delete();
                 }
             });
-//            Redis::del('mybl_home_component');
-//            Redis::del('content_component');
-//            Redis::del('non_bl_component');
-//            Redis::del('mybl_commerce_component');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('home');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('content');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
-            $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
-            Redis::del('non_bl_offer');
-            Redis::del('lms_component_prepaid');
-            Redis::del('lms_component_postpaid');
-            Redis::del('lms_old_user_postpaid');
-            Redis::del('lms_old_user_prepaid');
-            Redis::del('toffee_banner');
 
+            Helper::removeVersionControlRedisKey();
+            $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner'];
+            Redis::del($keys);
             return true;
         } catch (\Exception $e) {
             Log::error('Slider Image store failed' . $e->getMessage());
@@ -237,16 +213,10 @@ class GenericSliderImageService
     {
         $sliderImage = $this->findOne($id);
         $sliderImage->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('home');
-        $this->myblHomeComponentService->removeVersionControlRedisKey('content');
-        $this->myblHomeComponentService->removeVersionControlRedisKey('commerce');
-        $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
-        Redis::del('non_bl_offer');
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        Redis::del('lms_old_user_postpaid');
-        Redis::del('lms_old_user_prepaid');
-        Redis::del('toffee_banner');
+
+        Helper::removeVersionControlRedisKey();
+        $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner'];
+        Redis::del($keys);
         /**
          * Removing redis cache for segment banner to impact the change
          */

@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\NonBlComponentRepository;
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\GenericSliderRepository;
@@ -85,35 +86,33 @@ class GenericSliderService
 
             if ($data['component_for'] == 'home') {
                 $this->myblHomeComponentService->save($homeComponentData);
-                Redis::del('mybl_home_component');
+                Helper::removeVersionControlRedisKey('home');
             }
             elseif ($data['component_for'] == 'content') {
                 $this->contentComponentRepository->save($homeComponentData);
-                Redis::del('content_component');
+                Helper::removeVersionControlRedisKey('content');
             }
             elseif ($data['component_for'] == 'commerce') {
                 $this->commerceComponentRepository->save($homeComponentData);
-                Redis::del('mybl_commerce_component');
-            }
-            elseif ($data['component_for'] == 'non_bl') {
-                $this->nonBlComponentRepository->save($homeComponentData);
-                Redis::del('non_bl_component');
-            }
-            elseif ($data['component_for'] == 'non_bl_offer') {
-                $this->nonBlOfferService->save($homeComponentData);
-                Redis::del('non_bl_offer');
+                Helper::removeVersionControlRedisKey('commerce');
             }
             elseif ($data['component_for'] == 'lms') {
                 $this->lmsHomeComponentService->save($homeComponentData);
-                Redis::del('lms_component_prepaid');
-                Redis::del('lms_component_postpaid');
-                Redis::del('lms_old_user_postpaid');
-                Redis::del('lms_old_user_prepaid');
+                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
+                Redis::del($keys);
             }
             elseif ($data['component_for'] == 'toffee' || $data['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
             }
 
+            elseif ($data['component_for'] == 'non_bl') {
+                $this->nonBlComponentRepository->save($homeComponentData);
+                Helper::removeVersionControlRedisKey('nonbl');
+            }
+            elseif ($data['component_for'] == 'non_bl_offer') {
+                $this->nonBlOfferService->save($homeComponentData);
+                Redis::del('non_bl_offer');
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -141,39 +140,39 @@ class GenericSliderService
             if ($slider['component_for'] == 'home') {
                 $homeComponent = $this->myblHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $homeComponent->update($homeComponentData);
-                Redis::del('mybl_home_component');
+                Helper::removeVersionControlRedisKey('home');
             }
             elseif ($slider['component_for'] == 'content') {
                 $contentComponent = $this->contentComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $contentComponent->update($homeComponentData);
-                Redis::del('content_component');
+                Helper::removeVersionControlRedisKey('content');
             }
             elseif ($slider['component_for'] == 'commerce') {
                 $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $commerceComponent->update($homeComponentData);
-                Redis::del('mybl_commerce_component');
+                Helper::removeVersionControlRedisKey('commerce');
             }
-            elseif ($slider['component_for'] == 'non_bl') {
-                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
-                $nonBlComponent->update($homeComponentData);
-                Redis::del('non_bl_component');
-            }
-            elseif ($slider['component_for'] == 'non_bl_offer') {
-                $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
-                $nonBlComponent->update($homeComponentData);
-                Redis::del('non_bl_offer');
-            }  elseif ($slider['component_for'] == 'lms') {
+            elseif ($slider['component_for'] == 'lms') {
                 $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $lmsComponent->update($homeComponentData);
-                Redis::del('lms_component_prepaid');
-                Redis::del('lms_component_postpaid');
-                Redis::del('lms_old_user_postpaid');
-                Redis::del('lms_old_user_prepaid');
+
+                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
+                Redis::del($keys);
             }
             elseif ($slider['component_for'] == 'toffee' || $slider['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
             }
 
+            elseif ($slider['component_for'] == 'non_bl') {
+                $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
+                $nonBlComponent->update($homeComponentData);
+                Helper::removeVersionControlRedisKey('nonbl');
+            }
+            elseif ($slider['component_for'] == 'non_bl_offer') {
+                $nonBlComponent = $this->nonBlOfferService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
+                $nonBlComponent->update($homeComponentData);
+                Redis::del('non_bl_offer');
+            }
 
             if (isset($data['icon']) && $data['icon'] != 'not-updated' && $data['icon'] != 'removed') {
                 $data['icon'] = 'storage/' . $data['icon']->store('generic_sliders_icons');
@@ -274,6 +273,12 @@ class GenericSliderService
                 $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->commerceComponentService->deleteComponent($commerceComponent->id);
             }
+            else if ($componentFor == 'lms') {
+                $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
+                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
+                Redis::del($keys);
+            }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->nonBLComponentService->deleteComponent($nonBlComponent->id);
@@ -281,15 +286,6 @@ class GenericSliderService
             else if ($componentFor == 'non_bl_offer') {
                 $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->nonBlOfferService->deleteComponent($nonBlOffer->id);
-            }
-
-            else if ($componentFor == 'lms') {
-                $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
-                $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
-                Redis::del('lms_component_prepaid');
-                Redis::del('lms_component_postpaid');
-                Redis::del('lms_old_user_postpaid');
-                Redis::del('lms_old_user_prepaid');
             }
             elseif ($componentFor == 'toffee' || $componentFor == 'toffee_section') {
                 Redis::del('toffee_banner');

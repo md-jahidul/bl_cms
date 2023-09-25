@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\MyblSliderRepository;
 use App\Repositories\NonBlComponentRepository;
 use App\Traits\CrudTrait;
@@ -19,18 +20,13 @@ class NonBlComponentService
      * @var MyblSliderRepository
      */
     private $sliderRepository;
-    private $myblHomeComponentService;
-
-    protected const REDIS_KEY = "non_bl_component";
 
     public function __construct(
         NonBlComponentRepository $componentRepository,
-        MyblSliderRepository $sliderRepository,
-        MyblHomeComponentService $myblHomeComponentService
+        MyblSliderRepository $sliderRepository
     ) {
         $this->componentRepository = $componentRepository;
         $this->sliderRepository = $sliderRepository;
-        $this->myblHomeComponentService = $myblHomeComponentService;
         $this->setActionRepository($componentRepository);
     }
 
@@ -71,7 +67,9 @@ class NonBlComponentService
                     $update_menu->update();
                 }
             }
-            $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
+
+            Helper::removeVersionControlRedisKey('nonbl');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -94,7 +92,8 @@ class NonBlComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return response("Successfully status changed");
     }
 
@@ -108,7 +107,8 @@ class NonBlComponentService
         $data['is_eligible'] = 0;
 
         $this->save($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return response("Component update successfully!");
     }
 
@@ -116,7 +116,8 @@ class NonBlComponentService
     {
         $component = $this->findOne($data['id']);
         $component->update($data);
-        $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return response("Component update successfully!");
     }
 
@@ -124,7 +125,8 @@ class NonBlComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        $this->myblHomeComponentService->removeVersionControlRedisKey('nonbl');
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return [
             'message' => 'Component delete successfully',
         ];
