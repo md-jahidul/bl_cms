@@ -37,7 +37,7 @@ class OfferCategoryController extends Controller
     public function index($parent_id = 0, $type = null)
     {
         // $type = OfferCategory::find($parent_id)->name;
-        $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->get();
+        $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->orderBy('display_order')->get();
         $simCategories = SimCategory::all();
         $file = 'index';
         if ($parent_id != 0) {
@@ -139,6 +139,15 @@ class OfferCategoryController extends Controller
 
 
         return redirect('offer-categories');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sortedDataSave(Request $request)
+    {
+        return $this->offerCategoryService->sortedDataSave($request);
     }
 
     /**

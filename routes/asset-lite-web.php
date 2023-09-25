@@ -209,6 +209,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')
         ->name('child-category');
 
+    Route::get('offer-categories/sorted-data-save', 'AssetLite\OfferCategoryController@sortedDataSave');
+
     /**
      * Dynamic URL Redirection Routes
      */

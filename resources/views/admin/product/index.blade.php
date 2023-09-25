@@ -44,6 +44,7 @@
                                 <th width="2%">Offer Type</th>
                                 <th width="15%" class="text-center">URL Slug</th>
                                 <th width="4%" class="text-center">MRP</th>
+                                <th width="4%" class="text-center">Sort</th>
                                 <th width="4%" class="text-center">Details</th>
                                 <th width="6%" class="">Action</th>
                             </tr>
@@ -64,6 +65,7 @@
                                     <td>{{ $product->offer_category->name_en }} {{ $product->is_four_g_offer == 1 ? "(4G Offer)" : ''}}</td>
                                     <td>{{ $product->url_slug }}</td>
                                     <td>{{ isset($product->product_core['mrp_price']) ? $product->product_core['mrp_price'] : "" }}</td>
+                                    <td>{{ isset($product->display_order) ? $product->display_order : "" }}</td>
                                     <td>
                                         {{--// Other Details ==============================================--}}
                                         @if(

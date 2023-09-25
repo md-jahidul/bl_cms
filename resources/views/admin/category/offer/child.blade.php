@@ -19,18 +19,18 @@
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
-                            <td>#</td>
+                            <td><i class="icon-cursor-move icons"></i></td>
                             <th width="25%">Name</th>
                             <th width="25%">Type</th>
                             {{--<th width="25%">{{ $type }}</th>--}}
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                             @foreach($offerCategories as $offerCategory)
                                 @php $type = strtolower($type) @endphp
                                 <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
-                                    <td width="1%">{{ $loop->iteration }}</td>
+                                    <td width="3%" class="cursor-pointer"><i class="icon-cursor-move icons"></i></td>
                                     <td width="15%">{{ $offerCategory->name_en }} {!! $offerCategory->status == 0 ? '<span class="text-danger"><b>( Inactive )</b></span>' : '' !!}
                                         {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
                                     </td>
@@ -55,7 +55,7 @@
 @stop
 
 @push('page-css')
-    {{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
             padding-top: 5px !important;
@@ -65,7 +65,9 @@
 @endpush
 
 @push('page-js')
-
+    <script>
+        var auto_save_url = "{{ url('offer-categories/sorted-data-save') }}";
+    </script>
 @endpush
 
 
