@@ -210,6 +210,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('offer-categories/{parent_id}/{type}/edit/{id}', 'AssetLite\OfferCategoryController@childEdit');
     Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')
         ->name('child-category');
+    Route::get('offer-categories/sorted-data-save', 'AssetLite\OfferCategoryController@sortedDataSave');
 
     /**
      * Dynamic URL Redirection Routes
@@ -655,8 +656,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
     Route::get('business-internet/search-data-sync', 'AssetLite\BusinessInternetController@searchDataSync');
-
-
 
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
