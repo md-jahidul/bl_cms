@@ -242,6 +242,14 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 ">
+                                    <label for="display_order">Sort Number</label>
+                                    <input type="text" name="display_order" id="display_order"  class="form-control" placeholder="Enter sort number" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ (!empty($product->display_order)) ? $product->display_order : old("display_order") ?? '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <label>For:</label>
                                     <div class="form-group" id="show_in_home">

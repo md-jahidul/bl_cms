@@ -253,6 +253,19 @@ class OfferCategoryService
         return response('Related product save successfully');
     }
 
+    public function sortedDataSave($request)
+    {
+        $positions = $request->position;
+        foreach ($positions as $position) {
+            $menu_id = $position[0];
+            $new_position = $position[1];
+            $updateCategory = $this->findOne($menu_id);
+            $updateCategory['display_order'] = $new_position;
+            $updateCategory->update();
+        }
+        return "success";
+    }
+
     /**
      * @param $id
      * @return ResponseFactory|Response

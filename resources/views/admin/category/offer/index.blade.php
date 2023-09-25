@@ -68,40 +68,42 @@
                 </div>
                 <div class="card-content mt-1">
                     <div class="table-responsive">
-                        <table id="recent-orders" class="table table-hover table-xl mb-0">
+                        <table id="recent-orders" class="table table-xl mb-0">
                             <thead>
                                 <tr>
+                                    <th class="border-top-0"><i class="icon-cursor-move icons"></i></th>
                                     <th class="border-top-0">Name</th>
                                     <th class="border-top-0">Childes</th>
                                     <th class="border-top-0">Status</th>
                                     <th class="border-top-0">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="sortable">
                                 @foreach($offerCategories as $offerCategory)
 {{--                                                @if($offerCategory->alias != "call_rate")--}}
-                                        <tr>
-                                            <td class="text-truncate">{{ $offerCategory->name_en }}</td>
-                                            <td>
-                                                {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-sm btn-outline-success round'> Childs</a>" : '<div class="badge badge-pill badge-danger">No</div>' !!}
-                                            </td>
-                                            <td>
-                                                @if($offerCategory->status)
-                                                    <div class="badge badge-success badge-pill">
-                                                        <span>Active</span>
-                                                    </div>
-                                                @else
-                                                    <div class="badge badge-danger badge-pill">
-                                                        <span>Inactive</span>
-                                                    </div>
-                                                @endif
-                                            </td>
+                                    <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
+                                        <td width="3%" class="cursor-pointer"><i class="icon-cursor-move icons"></i></td>
+                                        <td class="text-truncate">{{ $offerCategory->name_en }}</td>
+                                        <td>
+                                            {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-sm btn-outline-success round'> Childs</a>" : '<div class="badge badge-pill badge-danger">No</div>' !!}
+                                        </td>
+                                        <td>
+                                            @if($offerCategory->status)
+                                                <div class="badge badge-success badge-pill">
+                                                    <span>Active</span>
+                                                </div>
+                                            @else
+                                                <div class="badge badge-danger badge-pill">
+                                                    <span>Inactive</span>
+                                                </div>
+                                            @endif
+                                        </td>
 
-                                            <td width="6%" class="text-center">
-                                                <a href="{{ url("offer-categories/$offerCategory->id/edit") }}"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                            </td>
+                                        <td width="6%" class="text-center">
+                                            <a href="{{ url("offer-categories/$offerCategory->id/edit") }}"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        </td>
 
-                                        </tr>
+                                    </tr>
 {{--                                                @endif--}}
                                 @endforeach
 
@@ -118,16 +120,19 @@
 @stop
 
 @push('page-css')
-<style>
-    #sortable tr td{
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
-    }
-</style>
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #sortable tr td{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+    </style>
 @endpush
 
 @push('page-js')
-
+    <script>
+        var auto_save_url = "{{ url('offer-categories/sorted-data-save') }}";
+    </script>
 @endpush
 
 
