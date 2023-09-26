@@ -272,6 +272,8 @@
                                         <label for="is_four_g_offer" class="ml-1"><strong>Is 4G Offer</strong></label> <br>
                                         <input type="checkbox" name="is_recharge" value="1" id="is_recharge" {{ ($product->is_recharge == 1) ? 'checked' : '' }}>
                                         <label for="is_recharge" class="ml-1"><strong>Is Recharge Offer</strong></label> <br>
+                                        <input type="checkbox" name="is_not_purchasable" value="1" id="is_not_purchasable" {{ ($product->is_not_purchasable == 1) ? 'checked' : '' }}>
+                                        <label for="is_not_purchasable" class="ml-1"><strong>Is Not Purchasable</strong></label> <br>
                                     </div>
                                 </div>
 
