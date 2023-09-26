@@ -33,7 +33,7 @@ class GenericSliderController extends Controller
     public function store(Request $request)
     {
         $flag = $this->genericSliderService->storeSlider($request->all());
-        
+
         if($request->input('component_type') != 'carousel') {
             $request->merge([
                 'scrollable' => false,
@@ -59,6 +59,12 @@ class GenericSliderController extends Controller
     public function edit($sliderId)
     {
         $slider = $this->genericSliderService->findOne($sliderId);
+
+        $android_version_code = implode('-', [$slider['android_version_code_min'], $slider['android_version_code_max']]);
+        $ios_version_code = implode('-', [$slider['ios_version_code_min'], $slider['ios_version_code_max']]);
+        $slider->android_version_code = $android_version_code;
+        $slider->ios_version_code = $ios_version_code;
+
         return view('admin.generic-slider.edit', compact('slider'));
     }
 
@@ -70,9 +76,7 @@ class GenericSliderController extends Controller
                 'scrollable' => false,
             ]);
         }
-        
         $success = $this->genericSliderService->updateSlider($request->all(), $sliderId);
-        
         if ($success) {
             Session::flash('success', 'Slider Updtaed Successfully');
         } else {

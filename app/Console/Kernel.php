@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:rafm-report-cs-sefcare')->withoutOverlapping()
             ->dailyAt(config('constants.cs_selfcare.cs_report_send_at'))
             ->timezone('Asia/Dhaka');
+        $schedule->command('update-version-code-for-generic-slider-table');
     }
 
     /**
