@@ -243,6 +243,7 @@ class ProductService
         $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
         $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
         $data['is_recharge'] = (isset($data['is_recharge']) ? 1 : 0);
+        $data['is_not_purchasable'] = (isset($data['is_not_purchasable']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
         $data['product_code'] = strtoupper($data['product_code']);
         $data['show_in_multi_cat'] = $data['show_in_multi_cat'] ?? null;
