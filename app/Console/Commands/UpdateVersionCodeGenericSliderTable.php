@@ -47,7 +47,7 @@ class UpdateVersionCodeGenericSliderTable extends Command
         ];
 
         try {
-            GenericSlider::where('component_size' , null)->update($data);
+            GenericSlider::where('component_size', '!=', null)->update($data);
             Helper::removeVersionControlRedisKey();
 
         }catch (\Exception $e) {
