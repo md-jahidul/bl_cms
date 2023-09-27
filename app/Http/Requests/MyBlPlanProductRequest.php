@@ -26,7 +26,7 @@ class MyBlPlanProductRequest extends FormRequest
 
         return [
             'sim_type' => 'required',
-            'product_code' => 'required|exists:my_bl_plan_products,product_code',
+            'product_code' => 'required',
             'market_price' => 'required',
             'discount_price' => 'required',
             "savings_amount" => 'required',
