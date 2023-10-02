@@ -146,8 +146,10 @@ class Helper
             "BUS"                     => 'Bus',
             "CONTENT"                 => 'Content',
             "COMMUNITY"               => 'Community',
+            "VOLTE"                   => 'Volte',
             "TOFFEE"                  => 'Toffee',
-            "TOFFEE_LIVE"             => 'Toffee_Live'
+            "TOFFEE_LIVE"             => 'Toffee_Live',
+            "DEEN"                    => 'Deen'
         ];
     }
 

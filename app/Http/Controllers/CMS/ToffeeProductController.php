@@ -7,6 +7,7 @@ use App\Models\ToffeeProduct;
 use App\Repositories\MyBlDigitalServiceRepository;
 use App\Repositories\ToffeeProductRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 
 class ToffeeProductController extends Controller
@@ -47,6 +48,9 @@ class ToffeeProductController extends Controller
             Session::flash('danger', 'Product Create Failed');
         }
 
+        Redis::del('toffee_product_prepaid');
+        Redis::del('toffee_product_postpaid');
+
         return redirect('toffee-product');
     }
 
@@ -74,6 +78,9 @@ class ToffeeProductController extends Controller
             Session::flash('danger', 'Product Update Failed');
         }
 
+        Redis::del('toffee_product_prepaid');
+        Redis::del('toffee_product_postpaid');
+
         return redirect('toffee-product');
 
     }
@@ -81,6 +88,11 @@ class ToffeeProductController extends Controller
 
     public function destroy($id)
     {
-        return $this->toffeeProductRepository->destroy($id);
+        $flag = $this->toffeeProductRepository->destroy($id);
+
+        Redis::del('toffee_product_prepaid');
+        Redis::del('toffee_product_postpaid');
+
+        return $flag;
     }
 }
