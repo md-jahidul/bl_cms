@@ -8,6 +8,13 @@
     <table>
         <tr>
             <td>
+                <form method="post" action="{{route('mybl-plan.clear-redis-key')}}">
+                    {{csrf_field()}}
+                    <button type="submit" class="btn btn-danger"><i class="la la-remove"></i>Clear Redis Key
+                    </button>
+                </form>
+            </td>
+            <td>
                 <a href="{{ route('mybl-plan.products.create') }}" type="submit" class="btn btn-info">
                     <i class="la la-save"></i>Create Product
                 </a>
@@ -118,7 +125,7 @@
                             $('#product_list').DataTable();
                             setTimeout(() => {
                                 location.reload()
-                            }, 2000); 
+                            }, 2000);
                         } else {
                             swal.close();
                             swal.fire({

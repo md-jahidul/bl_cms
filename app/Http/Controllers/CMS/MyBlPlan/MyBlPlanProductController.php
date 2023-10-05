@@ -56,6 +56,7 @@ class MyBlPlanProductController extends Controller
         $this->myBlPlanProductService->save($request->all());
 
         Redis::del("mybl_plan_prepaid_products");
+        Redis::del("mybl_plan_dbss_product_codes");
 
         return redirect()->route('mybl-plan.products')->with('success', 'Product created successfully');
     }
@@ -80,8 +81,16 @@ class MyBlPlanProductController extends Controller
         $this->myBlPlanProductService->findOne($id)->update($request->all());
 
         Redis::del("mybl_plan_prepaid_products");
+        Redis::del("mybl_plan_dbss_product_codes");
 
         return redirect()->route('mybl-plan.products')->with('success', 'Product updated successfully');
+    }
+
+    public function clearRedisKey()
+    {
+        Redis::del("mybl_plan_prepaid_products");
+        Redis::del("mybl_plan_dbss_product_codes");
+        return redirect()->route('mybl-plan.products')->with('success', 'Redis key cleared successfully');
     }
 
     public function uploadPlanProductExcel(Request $request)
@@ -99,6 +108,7 @@ class MyBlPlanProductController extends Controller
             $this->myBlPlanProductService->uploadProductExcel($path);
 
             Redis::del("mybl_plan_prepaid_products");
+            Redis::del("mybl_plan_dbss_product_codes");
 
             $response = [
                 'success' => 'SUCCESS'
@@ -121,6 +131,6 @@ class MyBlPlanProductController extends Controller
         } catch (Exception $e) {
             Log::info("MyBL Plan Product Download Failed: " . $e->getMessage());
         }
-        
+
     }
 }
