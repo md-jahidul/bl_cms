@@ -356,16 +356,15 @@ class Helper
 
     public static function removeVersionControlRedisKey($keyName = '')
     {
-        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-
-        $keys = $keyName == '' ? Redis::keys('mybl_component_*') : Redis::keys('mybl_component_' . $keyName . '_*');
-        $values = [];
-
-        foreach ($keys as $key) {
-            $values [] = str_replace($pattern, '', $key);
-        }
-        if (!empty($values)) {
-            Redis::del($values);
+        if ($keyName != '') {
+            Redis::del('mybl_component_' . $keyName);
+        } else {
+            Redis::del([
+                'mybl_component_home',
+                'mybl_component_content',
+                'mybl_component_commerce',
+                'mybl_component_nonbl',
+            ]);
         }
     }
 }
