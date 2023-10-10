@@ -123,8 +123,8 @@ class Helper
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
-            "HELP_AND_TUTORIAL" => "Help & Tutorial",
-            "CALL_CENTER" => "Call Center",
+            "HELP_AND_TUTORIAL"       => "Help & Tutorial",
+            "CALL_CENTER"             => "Call Center",
             "GAMES"                   => "Games",
             "MUSICS"                  => "Musics",
             "VIDEO"                   => "Video",
@@ -150,9 +150,10 @@ class Helper
             "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
+            "DEEN"                    => 'Deen',
+            "AMAR_TUNE"               => 'Amar Tune',
             "VOLTE"                   => 'Volte',
             "AMAR_PLAN"               => 'Amar Plan',
-            "DEEN"                    => 'Deen'
         ];
     }
 
