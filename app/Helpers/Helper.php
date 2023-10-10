@@ -147,7 +147,8 @@ class Helper
             "VOLTE"                   => 'Volte',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
-            "DEEN"                    => 'Deen'
+            "DEEN"                    => 'Deen',
+            "AMAR_TUNE"               => 'Amar Tune'
         ];
     }
 
