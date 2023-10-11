@@ -16,7 +16,6 @@ use App\Traits\RedisTrait;
 use Illuminate\Http\Response;
 use DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
 
 class GlobalSettingService
 {

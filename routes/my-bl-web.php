@@ -1164,6 +1164,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
     Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
 
     /**
      * Product Special Type

@@ -34,4 +34,10 @@ class GlobalSettingRepository extends BaseRepository
         $this->modelName::where('settings_key', $keyname)->delete();
         return GlobalSetting::where('settings_key', $key)->first();
     }
+    public function getFilteredData($filterKey)
+    {
+      return GlobalSetting::when($filterKey, function ($query) use ($filterKey) {
+            return $query->where('settings_key', 'like', '%' . $filterKey . '%');
+        })->latest('created_at')->paginate(10); // You can adjust the number of items per page (e.g., 10 per page)
+    }
 }
