@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 @section('title', 'Settings')
 @section('card_name', 'Global Settings')
@@ -10,7 +9,7 @@
             <div class="col-md-12">
                 <a href="{{ route('global-settings.create') }}" class="btn btn-success">Create New Setting</a>
 
-                <table class="table">
+                <table class="table" id="Example1">
                     <thead>
                     <tr>
                         <th>Setting Key</th>
@@ -33,29 +32,26 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
-{{--                    {{ $settings->links() }}--}}
+                    {{ $settings->links() }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-{{--                <a href="{{ route('settings.create') }}" class="btn btn-success">Create New Setting</a>--}}
             </div>
         </div>
     </div>
 @endsection
-
-
 @push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets') }}/vendors/css/tables/datatable/datatables.min.css">
     <style></style>
 @endpush
 @push('page-js')
-    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('app-assets') }}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
+    <script src="{{ asset('app-assets') }}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="{{ asset('app-assets') }}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
         $(function () {
             $('.delete').click(function () {
@@ -73,7 +69,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('setting/destroy') }}/"+id,
+                            url: "{{ url('setting/destroy') }}/" + id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -92,11 +88,9 @@
             })
         })
 
-
-
-
         $(document).ready(function () {
-            $('#Example1').DataTable({
+            // Initialize DataTable with filter settings
+            var dataTable = $('#Example1').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
@@ -104,11 +98,13 @@
                 "bDestroy": true,
                 "pageLength": 10
             });
-        });
 
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
-    <script>
+            // Apply filter to table when the filter input changes
+            $('#filterSettingsKey').on('input', function () {
+                var filterValue = $(this).val();
+                dataTable.search(filterValue).draw();
+            });
+        });
 
     </script>
 @endpush

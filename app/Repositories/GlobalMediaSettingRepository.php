@@ -11,20 +11,23 @@ namespace App\Repositories;
 
 use App\Models\GlobalSetting;
 
+use App\Models\Media;
 use DB;
 
-class GlobalSettingRepository extends BaseRepository
+class GlobalMediaSettingRepository extends BaseRepository
 {
-    public $modelName = GlobalSetting::class;
+    public $modelName = Media::class;
 
     public function is_exist($key)
     {
-        return GlobalSetting::where('settings_key', $key)->first();
+        return Media::where('key_name', $key)->first();
     }
+
     public function getFilteredData($filterKey)
     {
-      return GlobalSetting::when($filterKey, function ($query) use ($filterKey) {
-            return $query->where('settings_key', 'like', '%' . $filterKey . '%');
+        return Media::when($filterKey, function ($query) use ($filterKey) {
+            return $query->where('key_name', 'like', '%' . $filterKey . '%');
         })->latest('created_at')->paginate(10); // You can adjust the number of items per page (e.g., 10 per page)
     }
+
 }

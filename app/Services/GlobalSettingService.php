@@ -14,6 +14,7 @@ use App\Repositories\SettingRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class GlobalSettingService
 {
@@ -35,6 +36,10 @@ class GlobalSettingService
         $this->settingRepository = $settingRepository;
         $this->setActionRepository($settingRepository);
     }
+    public function getFilteredData($filterKey){
+        return   $this->settingRepository->getFilteredData($filterKey);
+    }
+
 
     /**
      * Storing the banner resource
@@ -49,7 +54,9 @@ class GlobalSettingService
             $setting_response['response'] = new Response("Setting Already exists");
 
         } else {
-            $this->settingRepository->save($request->all());
+            $data=$request->all();
+            $data['updated_by'] = Auth::id();
+            $this->settingRepository->save($data);
             $setting_response['saved'] = true;
             $setting_response['response'] = new Response("Setting has been successfully created");
         }
@@ -64,6 +71,7 @@ class GlobalSettingService
     public function updateSetting($data, $id)
     {
         $setting = $this->findOne($id);
+        $data['updated_by'] = Auth::id();
         $setting->update($data);
         return new Response("Setting has been successfully updated");
     }

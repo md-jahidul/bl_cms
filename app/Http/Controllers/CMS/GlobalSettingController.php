@@ -33,9 +33,11 @@ class GlobalSettingController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $settings = $this->settingService->findAll();
+        $filterKey = $request->query('key');
+        $settings = $this->settingService->getFilteredData($filterKey);
+//        dd($settings);
         return view('admin.global-settings.index', compact('settings'));
 
     }

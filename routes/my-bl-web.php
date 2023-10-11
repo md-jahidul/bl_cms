@@ -320,7 +320,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post(
         'mybl/core-product/download',
         'CMS\MyblProductEntryController@downloadMyblProducts'
-    )->name('mybl.product.download');
+    )->name('mybl.product.downlo    ad');
     Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
         ->name('mybl.core-product.save');
     Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')
@@ -1121,6 +1121,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
     Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
 
 
 //
