@@ -1,116 +1,90 @@
 @extends('layouts.admin')
-@section('title', 'Settings')
-@section('card_name', 'Global Settings')
+@section('title', 'Media')
+@section('card_name', 'Global Media Upload')
 
 @section('content')
     <div class="container">
-        <h1>Settings</h1>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-12">
-                <a href="{{ route('global-settings.create') }}" class="btn btn-success">Create New Setting</a>
+                <div class="card">
+                    <div class="card-header">Media Manager</div>
 
-                <div class="form-group mt-3">
-                    <label for="filterSettingsKey">Filter by Settings Key:</label>
-                    <input type="text" id="filterSettingsKey" class="form-control">
-                </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{{ route('media.create') }}" class="btn btn-primary mb-3">Upload New Media</a>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="keyFilter" class="form-control" placeholder="Filter by Key Name">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="filterMedia()">Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                <table class="table" id="Example1">
-                    <thead>
-                    <tr>
-                        <th>Setting Key</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($settings as $setting)
-                        <tr>
-                            <td>{{ $setting->settings_key }}</td>
-                            <td>
-                                <a href="{{ route('global-settings.edit', $setting) }}" class="btn btn-warning">Edit</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="text-center">
-                    {{ $settings->links() }}
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Key Name</th>
+                                    <th>Image Location</th>
+                                    <th>Thumbnail</th>
+                                    <th>Settings Key</th>
+                                    <th>Created At</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($media as $item)
+                                    <tr>
+                                        <td>{{ $item->key_name }}</td>
+                                        <td>
+                                            <div class="media-location">
+                                                {{ $item->image_location }}
+                                                <button class="btn btn-sm btn-info copy-location"
+                                                        data-clipboard-text="{{ $item->image_location }}">Copy
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td><img src="{{ asset($item->image_location) }}"
+                                                 alt="{{ $item->key_name }} Thumbnail" class="img-thumbnail"
+                                                 style="width: 100px; height: 100px;">
+                                        </td>
+                                        <td>{{ $item->settings_key }}</td>
+                                        <td>
+                                            {{ $item->created_at }}
+                                        </td>
+                                        <td>
+                                            <a href="{{ asset($item->image_location) }}" target="_blank"
+                                               class="btn btn-info btn-sm">Preview</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        {{ $media->links() }}
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
             </div>
         </div>
     </div>
-    </body>
+
+    <!-- Other head content -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script>
+        // Initialize ClipboardJS for copy-location buttons
+        new ClipboardJS('.copy-location', {
+            text: function (trigger) {
+                return trigger.getAttribute('data-clipboard-text');
+            }
+        });
+
+        function filterMedia() {
+            var keyFilter = document.getElementById('keyFilter').value;
+            window.location.href = "{{ route('media.index') }}?key=" + keyFilter;
+        }
+    </script>
 @endsection
-    @push('style')
-        <link rel="stylesheet" href="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.css">
-        <link rel="stylesheet" type="text/css" href="{{ asset('app-assets') }}/vendors/css/tables/datatable/datatables.min.css">
-        <style></style>
-    @endpush
-
-    @push('page-js')
-        <script src="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.js"></script>
-        <script src="{{ asset('app-assets') }}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-        <script src="{{ asset('app-assets') }}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-        <script src="{{ asset('app-assets') }}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
-        <script>
-            $(function () {
-                $('.delete').click(function () {
-                    var id = $(this).attr('data-id');
-
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        type: 'warning',
-                        html: jQuery('.delete_btn').html(),
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.value) {
-                            $.ajax({
-                                url: "{{ url('setting/destroy') }}/" + id,
-                                methods: "get",
-                                success: function (res) {
-                                    Swal.fire(
-                                        'Deleted!',
-                                        'Your Settings has been deleted.',
-                                        'success',
-                                    );
-                                    setTimeout(redirect, 2000)
-                                    function redirect() {
-                                        window.location.href = "{{ url('setting/') }}"
-                                    }
-                                }
-                            })
-                        }
-                    })
-                })
-            })
-
-            $(document).ready(function () {
-                // Initialize DataTable with filter settings
-                var dataTable = $('#Example1').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [],
-                    paging: true,
-                    searching: true, // Enable searching
-                    "bDestroy": true,
-                    "pageLength": 10
-                });
-
-                // Apply filter to table when the filter input changes
-                $('#filterSettingsKey').on('input', function () {
-                    var filterValue = $(this).val();
-                    dataTable.search(filterValue).draw();
-                });
-            });
-        </script>
-    @endpush
