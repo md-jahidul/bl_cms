@@ -1528,6 +1528,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
     });
 
+    // Career
+    Route::resource('/career', 'AssetLite\Page\PageController');
+    Route::resource('/career-components', 'AssetLite\Page\PageComponentController');
+//    Route::post('/career-component-ordering-save','AssetLite\Page\PageComponentController')
+//        ->name('career-component-ordering-save.componentOrderingSave');
+
     // Site Map Generator
     Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');
     Route::get('generate-sitemap', 'AssetLite\SitemapController@generateSitemap');

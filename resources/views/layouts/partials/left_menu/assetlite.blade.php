@@ -935,6 +935,12 @@
         </ul>
     </li>
     {{--    @endif--}}
+
+    <li class="{{ is_active_url('career') }}">
+        <a class="menu-item" href="{{ url('career') }}"
+           data-i18n="nav.templates.vert.classic_menu"><i
+                class="la la-play"></i>Career</a>
+    </li>
     <hr>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
