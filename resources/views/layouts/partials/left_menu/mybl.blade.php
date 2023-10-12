@@ -51,53 +51,9 @@
             </ul>
 
             <ul class="menu-content">
-                <li class=" {{ is_active_url('mybl-menu') }}">
-                    <a class="menu-item" href="{{ url('mybl-menu') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-ellipsis-v"></i> Menu List
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="menu-content">
                 <li class="{{ is_active_url('manage-category') }}">
                     <a class="menu-item" href="{{ route('manage-category.index') }}">
                         <i class="la la-medium"></i>Explore</a>
-                </li>
-            </ul>
-
-            <ul class="menu-content">
-                <li class="{{ is_active_url('mybl-home-components') }}">
-                    <a class="menu-item" href="{{ route('mybl.home.components') }}">
-                        <i class="la la-puzzle-piece"></i>Home Components</a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('content-components') }}">
-                    <a class="menu-item" href="{{ route('content-components') }}">
-                        <i class="la la-puzzle-piece"></i>Content Components</a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class=" {{is_active_url(route('health-hub.index'))}}">
-                    <a class="menu-item" href="{{ route('health-hub.index') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-heart"></i>Health Hub
-                    </a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
-                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
-                        <i class="la la-paper-plane"></i>Home Navigation Rail
-                    </a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
-                    <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
-                        <i class="la la-paper-plane"></i>Content Navigation Rail
-                    </a>
                 </li>
             </ul>
         </li>
@@ -107,6 +63,15 @@
         <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i
                     class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Shortcuts</span></a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('MyblAppMenu') )
+        <li class=" {{ is_active_url('mybl-menu') }}">
+            <a class="menu-item" href="{{ url('mybl-menu') }}"
+            data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-ellipsis-v"></i> Menu List
+            </a>
         </li>
     @endif
 
@@ -120,7 +85,10 @@
                     <a class="menu-item" href="{{ route('mybl.product.index') }}">
                         <i class="ft-list"></i>Products</a>
                 </li>
-
+                <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                    <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                        <i class="ft-list"></i>Pin To Top Products</a>
+                </li>
                 <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
                     <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
                         <i class="la la-fire"></i>Free Products Analytic</a>
@@ -159,6 +127,35 @@
 {{--                <li class="{{ is_active_url('redis-key-update-view') }} nav-item"><a href="{{route('active-product-redis-key.update.view')}}">--}}
 {{--                        <span class="la la-align-center" data-i18n="nav.dash.main">Activate New Product Code</span></a>--}}
 {{--                </li>--}}
+
+                <li class="{{is_active_url('product-special-types')}}">
+                    <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-tag"></i>Product Special Types
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('MyblProductEntry') )
+        <li class="{{ is_active_match(route('toffee-product.index')) }} nav-item"><a href="{{route('toffee-product.index')}}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">Toffee</span></a>
+
+            <ul class="menu-content">
+
+                <li class="{{ is_active_match(route('toffee-product.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-product.index') }}">
+                        <i class="ft-list"></i>Toffee Products</a>
+                </li>
+                <li class="{{ is_active_match(route('toffee-subscription-types.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-subscription-types.index') }}">
+                        <i class="ft-list"></i>Subscription Types</a>
+                </li>
+                <li class="{{ is_active_match(route('toffee-premium-products.index')) }}">
+                    <a class="menu-item" href="{{ route('toffee-premium-products.index') }}">
+                        <i class="ft-list"></i>Premium Products</a>
+                </li>
             </ul>
         </li>
     @endif
@@ -202,7 +199,12 @@
             </ul>
         </li>
     @endif
-
+    <li class="{{ is_active_url('digital-service') }}">
+        <a class="menu-item" href="{{ route('digital-service.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
@@ -398,6 +400,38 @@
         </ul>
     </li>
 
+    <!-- Groups -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Group Components</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Show</a>
+            </li>
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('group-components/create') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Create Group</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Non Bl -->
+    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+        <span class="menu-title" data-i18n="nav.templates.main">Non Bl</span></a>
+        <ul class="menu-content">
+            <li class="{{ is_active_match('non-bl-components')}}">
+                <a class="menu-item" href="{{ url('non-bl-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>
+            </li>
+            <li class="{{ is_active_match('non-bl-offers')}}">
+                <a class="menu-item" href="{{ url('non-bl-offers') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i>Offer</a>
+            </li>
+
+            <li class=" {{is_active_url(route('nonbl-navigation-rail.index'))}}">
+                <a class="menu-item" href="{{ route('nonbl-navigation-rail.index') }}">
+                    <i class="la la-paper-plane"></i>NonBl Navigation Rail
+                </a>
+            </li>
+        </ul>
+    </li>
+
     <!-- FIFA WC -->
     <li class=" nav-item"><a href="#"><i class="la la-bullhorn"></i>
             <span class="menu-title" data-i18n="nav.templates.main">FIFA WC</span></a>
@@ -509,6 +543,10 @@
                     <a class="menu-item" href="{{ url('generic-slider') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Slider</a>
+                <li class="@if(is_active_match('generic-shortcut-master')) {{ is_active_match('generic-shortcut-master') }} @else {{ is_active_match('generic-shortcut') }}  @endif">
+                    <a class="menu-item" href="{{ route('generic-shortcut-master.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-sliders"></i>Generic Shortcut</a>
                 </li>
                 <li class="{{ is_active_match('generic-carousel')}}">
                     <a class="menu-item" href="{{ url('generic-carousel') }}"
@@ -548,6 +586,47 @@
                     <a class="menu-item" href="{{ route('popup-banner.index') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-list"></i> Popup Banner
+                    </a>
+                </li>
+                <li class="{{is_active_url('free-product-disburse')}}">
+                    <a class="menu-item" href="{{ route('free-product-disburse') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Free Product Disburse
+                    </a>
+                </li>
+                <li class="{{is_active_url('free-product-disburse-report-view')}}">
+                    <a class="menu-item" href="{{ route('free-product-disburse-report') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Free Product Disburse Report
+                    </a>
+                </li>
+                <li class="{{ is_active_url('mybl-home-components') }}">
+                    <a class="menu-item" href="{{ route('mybl.home.components') }}">
+                        <i class="la la-puzzle-piece"></i>Home Components</a>
+                </li>
+                <li class="{{ is_active_url('content-components') }}">
+                    <a class="menu-item" href="{{ route('content-components') }}">
+                        <i class="la la-puzzle-piece"></i>Content Components</a>
+                </li>
+                <li class=" {{is_active_url(route('health-hub.index'))}}">
+                    <a class="menu-item" href="{{ route('health-hub.index') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-heart"></i>Health Hub
+                    </a>
+                </li>
+                <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('heme-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Home Navigation Rail
+                    </a>
+                </li>
+                <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
+                    <a class="menu-item" href="{{ route('content-navigation-rail.index') }}">
+                        <i class="la la-paper-plane"></i>Content Navigation Rail
+                    </a>
+                </li>
+                <li class=" {{is_active_url(route('popup-sequence.index'))}}">
+                    <a class="menu-item" href="{{ route('popup-sequence.index') }}">
+                        <i class="la la-paper-plane"></i>Popup Sequence
                     </a>
                 </li>
             </ul>

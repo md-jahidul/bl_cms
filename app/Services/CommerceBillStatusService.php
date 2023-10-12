@@ -86,6 +86,7 @@ class CommerceBillStatusService
                 'payment_amount' => $item->payment_amount,
                 'payment_trx_id' => $item->payment_trx_id,
                 'payment_method' => $item->payment_method,
+                'date' => $item->created_at->format('Y-m-d H:i:s'),
             ];
         });
         return $response;

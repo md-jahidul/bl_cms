@@ -11,6 +11,7 @@ use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
 use App\Services\FreeProductPurchaseReportService;
 use App\Services\MyBlProductSchedulerService;
+use App\Services\MyBlSpecialTypeService;
 use App\Services\ProductCoreService;
 use App\Services\ProductTagService;
 use Carbon\Carbon;
@@ -37,7 +38,7 @@ class MyblProductEntryController extends Controller
     /**
      * @var ProductTagService
      */
-    private $productTagService, $myblProductRepository;
+    private $productTagService, $myblProductRepository, $productSpecialTypeService;
     private $baseMsisdnService;
     /**
      * @var FreeProductPurchaseReportService
@@ -57,7 +58,8 @@ class MyblProductEntryController extends Controller
         FreeProductPurchaseReportService $freeProductPurchaseReportService,
         MyBlProductSchedulerRepository $myblProductScheduleRepository,
         MyBlProductSchedulerService $myBlProductSchedulerService,
-        MyBlProductRepository $myblProductRepository
+        MyBlProductRepository $myblProductRepository,
+        MyBlSpecialTypeService $productSpecialTypeService
     ) {
         $this->middleware('auth');
         $this->service = $service;
@@ -67,6 +69,7 @@ class MyblProductEntryController extends Controller
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
         $this->myBlProductSchedulerService = $myBlProductSchedulerService;
         $this->myblProductRepository = $myblProductRepository;
+        $this->productSpecialTypeService = $productSpecialTypeService;
     }
 
     /**
@@ -109,6 +112,10 @@ class MyblProductEntryController extends Controller
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
 
+        $productSpecialTypes = $this->productSpecialTypeService
+            ->findBy(['status' => 1], null, ['column' => 'display_order', 'direction' => 'asc'])
+            ->pluck('name_en', 'slug');
+
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
         $baseMsisdnGroups = $this->baseMsisdnService->findAll();
         $disablePinToTop = (($pinToTopCount >= config('productMapping.mybl.max_no_of_pin_to_top')) && !$product->pin_to_top);
@@ -143,7 +150,7 @@ class MyblProductEntryController extends Controller
 
         return view(
             'admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText')
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText', 'productSpecialTypes')
         );
     }
 
@@ -179,6 +186,9 @@ class MyblProductEntryController extends Controller
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
+        $productSpecialTypes = $this->productSpecialTypeService
+            ->findBy(['status' => 1], null, ['column' => 'display_order', 'direction' => 'asc'])
+            ->pluck('name_en', 'slug');
         $internet_categories = MyBlInternetOffersCategory::where('platform', 'mybl')->pluck('name', 'id')->sortBy('sort');
 
         $pinToTopCount = MyBlProduct::where('pin_to_top', 1)->where('status', 1)->count();
@@ -191,7 +201,8 @@ class MyblProductEntryController extends Controller
                 'tags',
                 'internet_categories',
                 'disablePinToTop',
-                'baseMsisdnGroups'
+                'baseMsisdnGroups',
+                'productSpecialTypes'
             )
         );
     }
@@ -223,7 +234,9 @@ class MyblProductEntryController extends Controller
             /**
              * Commenting reset redis key code according to BL requirement on 24 June 2021
              */
-            //$this->service->resetProductRedisKeys();
+            Redis::del('prepaid_popular_pack');
+            Redis::del('postpaid_popular_pack');
+            $this->service->resetProductRedisKeys();
             $this->service->syncSearch();
 
             $response = [
@@ -362,5 +375,17 @@ class MyblProductEntryController extends Controller
 
         return redirect('redis-key-update-view');
 
+    }
+
+    public function pinToTopProducts()
+    {
+        $products = $this->service->findAllPinToTopProducts();
+
+         return view('admin.my-bl-products.pin-to-top-product', compact('products'));
+    }
+
+    public function productSortable(Request $request)
+    {
+        return $this->service->tableSort($request);
     }
 }

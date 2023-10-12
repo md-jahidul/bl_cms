@@ -57,6 +57,10 @@ class MyblAppMenuService
         if (request()->hasFile('icon')) {
             $data['icon'] = 'storage/' . $data['icon']->store('menu_icon');
         }
+        if (request()->hasFile('parent_icon')) {
+            $data['parent_icon'] = 'storage/' . $data['parent_icon']->store('menu_icon');
+        }
+
         $this->save($data);
         Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
         return new Response('Menu added successfully');
@@ -87,6 +91,13 @@ class MyblAppMenuService
                 unlink($menu->icon);
             }
         }
+        if (request()->hasFile('parent_icon')) {
+            $data['parent_icon'] = 'storage/' . $data['parent_icon']->store('menu_icon');
+            if (!empty($menu->parent_icon)) {
+                unlink($menu->parent_icon);
+            }
+        }
+
         $menu->update($data);
         Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
         return Response('Menu updated successfully');

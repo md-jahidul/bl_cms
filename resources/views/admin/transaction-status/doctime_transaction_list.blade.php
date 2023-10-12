@@ -36,8 +36,10 @@
                                 <th>Service Id</th>
                                 <th>Amount</th>
                                 <th>Payment Status</th>
+                                <th>Promo Code</th>
                                 <th>Transaction Time</th>
                                 <th>Remarks</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -52,6 +54,8 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
     <style>
         table.dataTable tbody td {
             max-height: 40px;
@@ -69,10 +73,15 @@
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+
     <script>
         $(function () {
-            
-            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            $('.datepicker').datetimepicker({
+                format : 'YYYY-MM-DD',
+                showClose: true,
+            });
 
             $("#doctime_transaction_list").dataTable({
                 scrollX: true,
@@ -148,6 +157,13 @@
                             return row.payment_status	;
                         }
                     },
+
+                    {
+                        name: 'promo_code	',
+                        render: function (data, type, row) {
+                            return row.promo_code	;
+                        }
+                    },
                     
                     {
                         name: 'transaction_time	',
@@ -161,6 +177,13 @@
                         render: function (data, type, row) {
                             return row.remarks	;
                         }
+                    },
+                    
+                    {
+                        name: 'date	',
+                        render: function (data, type, row) {
+                            return row.date	;
+                        }
                     }
                 ],
                 dom: 'Blfrtip',
@@ -168,13 +191,13 @@
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8]
+                            columns: [ 1,2,3,4,5,6,7,8,9,10]
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8]
+                            columns: [ 1,2,3,4,5,6,7,8,9,10]
                         }
                     }
                 ],

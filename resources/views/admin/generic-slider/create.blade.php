@@ -46,8 +46,41 @@
                                         </p>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="component_size" class="required">Component Size</label>
+                                    <select name="component_size" class="form-control custom-select"
+                                            id="component_size" required data-validation-required-message="Please select component size">
+                                        <option value="" >--Select Tab Section--</option>
+                                        @foreach (Config::get('generic-slider.component_size') as $key => $size)
+                                        <option value="{{$key}}" >{{$size}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('component_size'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_size') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="component_type" class="required">Component Type</label>
+                                    <select name="component_type" class="form-control custom-select"
+                                            id="component_type" required data-validation-required-message="Please select component type">
+                                        <option value="" >--Select Tab Section--</option>
+                                        @foreach (Config::get('generic-slider.component_type') as $key => $type)
+                                        <option value="{{$key}}" >{{ucfirst($type)}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('component_type'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_type') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="status_input">Component For: </label>
+                                    <label for="status_input" class="required">Component For: </label>
                                     <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
                                         <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
@@ -56,25 +89,81 @@
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
                                         <label for="campaignStatusActive" class="mr-3">Content</label>
                                         <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}
-                                            {{ isset($single_slider->component_for) ? '' : 'checked' }}>
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}>
                                         <label for="campaignStatusInactive" class="mr-3">Home</label>
                                         <input type="radio" name="component_for" value="lms" id="campaignStatusInactive"
                                             {{ (isset($single_slider->component_for) && $single_slider->component_for == 'lms') ? 'checked' : '' }}
                                             {{ isset($single_slider->component_for) ? '' : 'checked' }}>
                                         <label for="campaignStatusInactive" class="mr-3">LMS</label>
+                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
+                                        <input type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl_offer') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>
+                                        <input type="radio" name="component_for" value="toffee" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'toffee') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Toffee Home</label>
+                                        <input type="radio" name="component_for" value="toffee_section" id="campaignStatusInactive"
+                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'toffee_section') ? 'checked' : '' }}>
+                                        <label for="campaignStatusInactive" class="mr-3">Toffee Section</label>
                                         @if ($errors->has('component_for'))
                                             <div class="help-block">  {{ $errors->first('component_for') }}</div>
                                         @endif
                                     </div>
                                 </div>
+
+                                <div id="scrollable_div" class="form-group col-md-3">
+                                    <label for="scrollable" class="required">Scrollable</label>
+                                    <select name="scrollable" class="form-control custom-select"
+                                            id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
+                                        <option selected value="0" >False</option>
+                                        <option value="1" >True</option>
+                                    </select>
+                                    @if($errors->has('scrollable'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('scrollable') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-3 mb-2">
+                                    <label class="required" for="is_title_show">Is Title Show: </label>
+                                    <div class="form-group {{ $errors->has('is_title_show') ? ' error' : '' }}">
+                                        <input required type="radio" name="is_title_show" value="1" id=""/>
+                                        <label for="is_title_show" class="mr-3">True</label>
+                                        <input required type="radio" name="is_title_show" value="0" id=""/>
+                                        <label for="is_title_show" class="mr-3">False</label>
+
+                                        @if ($errors->has('is_title_show'))
+                                            <div class="help-block">  {{ $errors->first('is_title_show') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <div class="form-group">
+                                        <label for="image">Upload Icon :</label>
+                                        <input type="file"
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>
+                                        <div class="help-block">
+                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                            <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
+                                        </div>
+                                        <small id="massage"></small>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success mt-2">
                                     <i class="ft-save"></i> Save
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -98,8 +187,31 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
-    {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
+    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>
+
     <script>
+        $(document).ready(function () {
+            $('#component_type').change(function() {
+                let show = $('#component_type').val() == 'carousel'
+
+                if(show) {
+                    $('#scrollable_div').show()
+                } else {
+                    $('#scrollable_div').hide()
+                }
+            });
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Icon to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Icon file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
+        });
     </script>
 @endpush

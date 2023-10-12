@@ -53,6 +53,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
     Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
 
+    Route::resource('generic-shortcut-master', 'CMS\GenericShortcutMasterController');
+    Route::get('generic-shortcut-master/destroy/{id}', 'CMS\GenericShortcutMasterController@destroy');
+
+    Route::get('generic-shortcut/{id}', 'CMS\GenericShortcutController@index')->name('generic-shortcut');
+    Route::get('generic-shortcut/{id}/create', 'CMS\GenericShortcutController@create')->name('generic-shortcut.create');
+    Route::post('generic-shortcut/store', 'CMS\GenericShortcutController@store')->name('generic-shortcut.store');
+    Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
+    Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
+    Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+    Route::get('generic-shortcut-update-position', 'CMS\GenericShortcutController@updatePosition');
+
     //------ shortcuts -----------//
 
     // Banner
@@ -343,14 +354,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
 
+    Route::get('pin-to-top-products', 'CMS\MyblProductEntryController@pinToTopProducts')->name('pin-to-top.products');
+    Route::get('pin-to-top-products/sort-auto-save', 'CMS\MyblProductEntryController@productSortable');
     /*
      * Product Tags Routes
      */
-    Route::get('mybl/product/tags', 'ProductTagController@index')->name('product-tags.index');
-    Route::get('mybl/product/tags/{tag}/edit', 'ProductTagController@edit')->name('product-tags.edit');
-    Route::put('mybl/product/tags/{id}', 'ProductTagController@update')->name('product-tags.update');
-    Route::post('mybl/product/tags', 'ProductTagController@store')->name('product-tags.store');
-    Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
+    Route::get('mybl/product/tags', 'CMS\ProductTagController@index')->name('product-tags.index');
+    Route::get('mybl/product/tags/{tag}/edit', 'CMS\ProductTagController@edit')->name('product-tags.edit');
+    Route::put('mybl/product/tags/{id}', 'CMS\ProductTagController@update')->name('product-tags.update');
+    Route::post('mybl/product/tags', 'CMS\ProductTagController@store')->name('product-tags.store');
+    Route::delete('mybl/product/tags/{id}', 'CMS\ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
     Route::get('mybl-products-deep-link-create/{product_code}',
@@ -996,15 +1009,45 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('popup-banner', 'CMS\PopupBannerController');
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+    Route::resource('popup-sequence', 'CMS\PopupPrioritizationController');
 
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
 
 
 
-    //PGW Routes
+    // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    // Group Components
+    Route::get('group-components', 'CMS\GroupComponentController@index')->name('group.components');
+    Route::get('group-components/create', 'CMS\GroupComponentController@create')->name('group.components.create');
+    Route::post('group-components/store', 'CMS\GroupComponentController@store')->name('group.components.store');
+    Route::get('group-components/edit{id}', 'CMS\GroupComponentController@edit')->name('group.components.edit');
+    Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
+    Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
+    Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
+
+
+    // Non Bl Components
+    Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
+    Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');
+    Route::get('non-bl-components-status-update/{id}', 'CMS\NonBlComponentController@componentStatusUpdate')->name('nonbl.components.status.update');
+    Route::post('non-bl-components/store', 'CMS\NonBlComponentController@store')->name('nonbl.components.store');
+    Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
+    Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
+    Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
+    Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
+    Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
+
+    Route::resource('nonbl-navigation-rail', 'CMS\NonBlNavigationRailController');
+    Route::get('nonbl-navigation-rail-sortable', 'CMS\NonBlNavigationRailController@navigationMenuSortable')
+        ->name('nonbl-navigation-rail.sort');
+    Route::get('nonbl-navigation-rail/destroy/{id}', 'CMS\NonBlNavigationRailController@destroy')
+        ->name('nonbl-navigation-rail.destroy');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
@@ -1088,7 +1131,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
     Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
         ->name('mybl.transaction-status.course.list');
-        
+
     #Music
     Route::get('mybl/music-transaction-status-report-view', 'CMS\MyblTransactionStatusController@musicTransactionList')->name('mybl.transaction-status.music');
     Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
@@ -1103,7 +1146,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
-        
+
     /**
      * Generic Carousel
      * Live content
@@ -1120,10 +1163,46 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
+    /**
+     * Product Special Type
+     */
+    Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
+    Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
+    Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
+
+    /**
+     * Free Product Disburse file Upload
+     */
+    Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');
+    Route::post('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@uploadFreeProductDisburseExcel')->name('free-product-disburse.save');
+    Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
+    Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
+
+
     Route::resource('global-settings', 'CMS\GlobalSettingController');
     Route::resource('media', 'CMS\MediaController');
 
 
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
+
+    /**
+     * Toffee Product
+     */
+
+    Route::resource('toffee-product', 'CMS\ToffeeProductController');
+    Route::get('toffee-product/destroy/{id}', 'CMS\ToffeeProductController@destroy')
+        ->name('toffee-product.destroy');
+
+    Route::resource('toffee-subscription-types', 'CMS\ToffeeSubscriptionTypeController');
+    Route::get('toffee-subscription-types/destroy/{id}', 'CMS\ToffeeSubscriptionTypeController@destroy');
+
+    Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
+    Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
 //
 });
 
