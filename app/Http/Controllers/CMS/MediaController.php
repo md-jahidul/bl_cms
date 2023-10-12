@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Models\Media;
 use App\Services\GlobalMediaService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 
 class MediaController extends Controller
@@ -36,10 +36,25 @@ class MediaController extends Controller
 
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function store(Request $request)
     {
 
+        $settingsKey = $request->input('settings_key');
+        list($width, $height) = explode('x', $settingsKey);
+        $image = $request->file('image');
+        $imageWidth = getimagesize($image)[0];
+        $imageHeight = getimagesize($image)[1];
+
+
+        if ($imageWidth != $width || $imageHeight != $height) {
+            return redirect()->back()->with('error', 'Image dimensions do not match the settings key');
+        }
+
         $response = $this->settingService->storeMedia($request);
+
         if ($response['saved']) {
             return redirect(route('media.index'));
         } else {

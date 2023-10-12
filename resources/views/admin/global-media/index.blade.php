@@ -16,9 +16,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" id="keyFilter" class="form-control" placeholder="Filter by Key Name">
+                                    <input type="text" id="keyFilter" class="form-control"
+                                           placeholder="Filter by Key Name">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" onclick="filterMedia()">Filter</button>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="filterMedia()">
+                                            Filter
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -42,9 +45,10 @@
                                         <td>{{ $item->key_name }}</td>
                                         <td>
                                             <div class="media-location">
-                                                {{ $item->image_location }}
+                                                {{ env('IMAGE_HOST').$item->image_location }}
                                                 <button class="btn btn-sm btn-info copy-location"
-                                                        data-clipboard-text="{{ $item->image_location }}">Copy
+                                                        data-clipboard-text="{{ env('IMAGE_HOST').$item->image_location }}">
+                                                    Copy
                                                 </button>
                                             </div>
                                         </td>
@@ -74,7 +78,11 @@
 
     <!-- Other head content -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-    <script>
+    <script>function filterMedia() {
+            var keyFilter = document.getElementById('keyFilter').value;
+            window.location.href = "{{ route('media.index') }}?key=" + keyFilter;
+        }
+
         // Initialize ClipboardJS for copy-location buttons
         new ClipboardJS('.copy-location', {
             text: function (trigger) {
@@ -82,9 +90,6 @@
             }
         });
 
-        function filterMedia() {
-            var keyFilter = document.getElementById('keyFilter').value;
-            window.location.href = "{{ route('media.index') }}?key=" + keyFilter;
-        }
+
     </script>
 @endsection

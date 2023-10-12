@@ -7,7 +7,24 @@
         <h1>Settings</h1>
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ route('global-settings.create') }}" class="btn btn-success">Create New Setting</a>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ route('global-settings.create') }}" class="btn btn-success">Create New Setting</a>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="text" id="keyFilter" class="form-control"
+                                       placeholder="Filter by Key Name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="filterMedia()">
+                                        Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 <table class="table" id="Example1">
                     <thead>
@@ -45,7 +62,6 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets') }}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
 @endpush
 @push('page-js')
     <script src="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.js"></script>
@@ -94,7 +110,7 @@
                 dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
-                searching: true,
+                searching: false,
                 "bDestroy": true,
                 "pageLength": 10
             });
@@ -105,6 +121,9 @@
                 dataTable.search(filterValue).draw();
             });
         });
-
+        function filterMedia() {
+            var keyFilter = document.getElementById('keyFilter').value;
+            window.location.href = "<?php echo e(route('global-settings.index')); ?>?key=" + keyFilter;
+        }
     </script>
 @endpush
