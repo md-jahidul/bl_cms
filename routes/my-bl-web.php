@@ -359,11 +359,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     /*
      * Product Tags Routes
      */
-    Route::get('mybl/product/tags', 'ProductTagController@index')->name('product-tags.index');
-    Route::get('mybl/product/tags/{tag}/edit', 'ProductTagController@edit')->name('product-tags.edit');
-    Route::put('mybl/product/tags/{id}', 'ProductTagController@update')->name('product-tags.update');
-    Route::post('mybl/product/tags', 'ProductTagController@store')->name('product-tags.store');
-    Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
+    Route::get('mybl/product/tags', 'CMS\ProductTagController@index')->name('product-tags.index');
+    Route::get('mybl/product/tags/{tag}/edit', 'CMS\ProductTagController@edit')->name('product-tags.edit');
+    Route::put('mybl/product/tags/{id}', 'CMS\ProductTagController@update')->name('product-tags.update');
+    Route::post('mybl/product/tags', 'CMS\ProductTagController@store')->name('product-tags.store');
+    Route::delete('mybl/product/tags/{id}', 'CMS\ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
     Route::get('mybl-products-deep-link-create/{product_code}',
@@ -1009,6 +1009,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('popup-banner', 'CMS\PopupBannerController');
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+    Route::resource('popup-sequence', 'CMS\PopupPrioritizationController');
 
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
@@ -1185,6 +1186,21 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
     Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
         ->name('digital-service.destroy');
+
+    /**
+     * Toffee Product
+     */
+
+    Route::resource('toffee-product', 'CMS\ToffeeProductController');
+    Route::get('toffee-product/destroy/{id}', 'CMS\ToffeeProductController@destroy')
+        ->name('toffee-product.destroy');
+
+    Route::resource('toffee-subscription-types', 'CMS\ToffeeSubscriptionTypeController');
+    Route::get('toffee-subscription-types/destroy/{id}', 'CMS\ToffeeSubscriptionTypeController@destroy');
+
+    Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
+    Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
+//
 
     /**
      * MyBL Plan Routes

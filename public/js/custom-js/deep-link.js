@@ -19,7 +19,9 @@
                         'Generated!',
                         'Deep link generated successfully .<br><br> Link :  ' + result.short_link + '<br><br><button data-value="' + result.short_link + '" class="btn btn-secondary copy-deeplink">Copy</button>',
                         'success',
-                    );
+                    ).then(function () {
+                        location.reload();
+                    });
                 } else {
                     Swal.fire(
                         'Oops!',

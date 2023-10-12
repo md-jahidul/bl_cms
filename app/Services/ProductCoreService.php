@@ -396,7 +396,6 @@ class ProductCoreService
                                 $existingTagTitles = array_map('strtolower', $existingTagTitles);
                                 $existingTagIds = $existingTags->pluck('id')->toArray();
 
-
                                 foreach ($tags as $tag) {
                                     if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
                                         $tagInsert = new ProductTag();
@@ -416,9 +415,13 @@ class ProductCoreService
                                         // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
                                         $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
                                     }
-                                }                              
+                                }
 
                                 $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
+                            }
+
+                            if (count($tags) == 0 || (count($tags) == 1 && $tags[0] == "")) {
+                                MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
                             }
 
                         } catch (Exception $e) {
@@ -1419,7 +1422,7 @@ class ProductCoreService
     public function resetProductRedisKeys(): void
     {
         $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-        $keys = Redis::keys('available_products:*');
+        $keys = Redis::keys('a_p:*');
         $values = [];
 
         foreach ($keys as $key) {

@@ -29,6 +29,8 @@ class CourseTransactionStatus extends Model
         'order_total_price'
     ];
 
+    
+
     /**
      * Get Items
      *
