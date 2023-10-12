@@ -5,13 +5,19 @@ namespace App\Http\Controllers\CMS;
 use App\Services\DynamicRouteService;
 use App\Services\MetaTagService;
 use App\Services\MyblHomeComponentService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\ShortCode;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class MyblHomeComponentController extends Controller
 {
@@ -44,8 +50,21 @@ class MyblHomeComponentController extends Controller
 
     public function store(Request $request)
     {
-        $response = $this->componentService->storeComponent($request->all());
-        Session::flash('success', $response->getContent());
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+                'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            ]
+        );
+
+        if ($validate->fails()) {
+            Session::flash('error', 'Component update Faild');
+        }else{
+            $response = $this->componentService->storeComponent($request->all());
+            Session::flash('success', $response->getContent());
+        }
+
         return redirect()->route('mybl.home.components');
     }
 
@@ -63,13 +82,27 @@ class MyblHomeComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->findOne($id);
+        return $this->componentService->editComponent($id);
     }
 
     public function update(Request $request)
     {
-        $response = $this->componentService->updateComponent($request->all());
-        Session::flash('message', $response->getContent());
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+                'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            ]
+        );
+
+        if ($validate->fails()) {
+            Session::flash('error', 'Component update Faild');
+        }else{
+            $response = $this->componentService->updateComponent($request->all());
+            Session::flash('message', $response->getContent());
+        }
+
+
         return redirect()->route('mybl.home.components');
     }
 

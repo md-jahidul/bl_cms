@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\MenuRepository;
 use App\Repositories\MyblAppMenuRepository;
 use App\Traits\CrudTrait;
@@ -25,7 +26,6 @@ class MyblAppMenuService
      * @var array
      */
     private $menuItems;
-
     /**
      * MenuService constructor.
      * @param MyblAppMenuRepository $menuRepository
@@ -61,8 +61,17 @@ class MyblAppMenuService
             $data['parent_icon'] = 'storage/' . $data['parent_icon']->store('menu_icon');
         }
 
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
+
         $this->save($data);
-        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return new Response('Menu added successfully');
     }
 
@@ -73,8 +82,20 @@ class MyblAppMenuService
     public function tableSort($data)
     {
         $this->menuRepository->menuTableSort($data);
-        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return new Response('Footer menu added successfully');
+    }
+
+    public function editMenu($id)
+    {
+        $menu = $this->findOne($id);
+        $android_version_code = implode('-', [$menu['android_version_code_min'], $menu['android_version_code_max']]);
+        $ios_version_code = implode('-', [$menu['ios_version_code_min'], $menu['ios_version_code_max']]);
+        $menu->android_version_code = $android_version_code;
+        $menu->ios_version_code = $ios_version_code;
+
+        return $menu;
     }
 
     /**
@@ -98,8 +119,17 @@ class MyblAppMenuService
             }
         }
 
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
+
         $menu->update($data);
-        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return Response('Menu updated successfully');
     }
 
@@ -121,7 +151,8 @@ class MyblAppMenuService
             }
         }
         $menu->delete();
-        Redis::del([self::REDIS_AUTH_USER_KEY, self::REDIS_GUEST_USER_KEY]);
+        Helper::removeVersionControlRedisKey('navdrawer');
+
         return [
             'message' => 'Menu delete successfully',
         ];

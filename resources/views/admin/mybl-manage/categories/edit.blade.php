@@ -89,6 +89,26 @@
                                                    data-default-file="{{ asset($category->icon ?? "") }}">
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-10 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">Android Version Code</label>
+                                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code" value="{{ $category->android_version_code }}">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('android_version_code'))
+                                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-10 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">iOS Version Code</label>
+                                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code" value="{{ $category->ios_version_code }}">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('ios_version_code'))
+                                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                        @endif
+                                    </div>
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">Status:</label>
