@@ -661,11 +661,6 @@
                         <i class="la la-paper-plane"></i>Popup Sequence
                     </a>
                 </li>
-                <li class=" {{is_active_url(route('version-check-redis-key.index'))}}">
-                    <a class="menu-item" href="{{ route('version-check-redis-key.index') }}">
-                        <i class="la la-paper-plane"></i>Remove Version Control Redis Key
-                    </a>
-                </li>
             </ul>
         </li>
     @endif
