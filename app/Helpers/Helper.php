@@ -154,6 +154,7 @@ class Helper
             "AMAR_TUNE"               => 'Amar Tune',
             "VOLTE"                   => 'Volte',
             "AMAR_PLAN"               => 'Amar Plan',
+            "SERVICE"                 => 'Service',
         ];
     }
 
