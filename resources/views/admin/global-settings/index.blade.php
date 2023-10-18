@@ -58,6 +58,7 @@
             </div>
         </div>
     </div>
+    </div>
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.css">
