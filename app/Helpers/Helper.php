@@ -150,11 +150,11 @@ class Helper
             "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
-            "DEEN"                    => 'Deen',
             "AMAR_TUNE"               => 'Amar Tune',
             "VOLTE"                   => 'Volte',
-            "AMAR_PLAN"               => 'Amar Plan',
             "SERVICE"                 => 'Service',
+            "DEEN"                    => 'Deen',
+            "AMAR_PLAN"               => 'Amar Plan'
         ];
     }
 

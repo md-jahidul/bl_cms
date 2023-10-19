@@ -38,6 +38,16 @@ return [
             'show_from'             => 31,
             'hide_from'             => 32,
             'status'                => 33,
+            'name_bn'               => 34,
+            'show_timer'            => 35,
+            'activation_type'       => 36,
+            'cta_name_en'           => 37,
+            'cta_name_bn'           => 38,
+            'cta_bgd_color'         => 39,
+            'cta_text_color'        => 40,
+            'redirection_name_en'   => 41,
+            'redirection_name_bn'   => 42,
+            'redirection_deeplink' => 43
         ],
         'product_schedule_statuses' => [
             0 => 'None',
