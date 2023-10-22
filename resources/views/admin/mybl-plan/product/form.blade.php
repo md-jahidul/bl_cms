@@ -223,7 +223,7 @@
 
                                 <div class="form-group col-md-4 {{ $errors->has('savings_amount') ? ' error' : '' }}">
                                     <label class="required">Savings Amount</label>
-                                    <input type="number" class="form-control" required step=".01">
+                                    <input type="number" class="form-control" required step=".01"
                                      name="savings_amount" data-validation-required-message="Please enter savings amount"
                                     placeholder="Enter Savings Amount"
                                            value="@if($page == "edit"){{ $product->savings_amount}}@else{{
