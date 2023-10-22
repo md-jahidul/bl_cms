@@ -62,8 +62,57 @@ class GlobalMediaService
         return $media_response;
     }
 
-    public function getFilteredData($filterKey){
-        return   $this->mediaSettingRepository->getFilteredData($filterKey);
+
+
+ // to external data storage
+//    public function storeMedia($request): array
+//    {
+//        $media = $this->mediaSettingRepository->is_exist($request['key_name']);
+//
+//        if (isset($media)) {
+//            $media_response['saved'] = false;
+//            $media_response['response'] = new Response("Setting Already exists");
+//        } else {
+//            $data = $request->all();
+//            $defaultStorageLocation = config('filesystems.media_storage_location'); // Get the default storage location from config
+//
+//            // Check if the default storage location is valid and writable
+////            dd($defaultStorageLocation, is_writable($defaultStorageLocation));
+//
+////            if (!is_writable($defaultStorageLocation)) {
+////                $media_response['saved'] = false;
+////                $media_response['response'] = new Response("Error: Default storage location is not writable or does not exist.");
+////                return $media_response;
+////            }
+//
+//            // Upload the file to the default storage server location
+//            $uploadedFile = $data['image'];
+//            $filename = $uploadedFile->getClientOriginalName();
+//            $fileLocation = $defaultStorageLocation . '/' . $filename;
+//
+//            // Check if the file was successfully uploaded
+//            if (!$uploadedFile->storeAs($defaultStorageLocation, $filename)) {
+//                $media_response['saved'] = false;
+//                $media_response['response'] = new Response("Error: File upload failed.");
+//                return $media_response;
+//            }
+//
+//
+//            // Save the file location in the database
+//            $data['image_location'] = $fileLocation;
+//            $data['updated_by'] = Auth::id();
+//            $this->mediaSettingRepository->save($data);
+//
+//            $media_response['saved'] = true;
+//            $media_response['response'] = new Response("Setting has been successfully created");
+//        }
+//        return $media_response;
+//    }
+
+
+    public function getFilteredData($filterKey)
+    {
+        return $this->mediaSettingRepository->getFilteredData($filterKey);
     }
 
 
