@@ -154,7 +154,8 @@ class Helper
             "VOLTE"                   => 'Volte',
             "SERVICE"                 => 'Service',
             "DEEN"                    => 'Deen',
-            "AMAR_PLAN"               => 'Amar Plan'
+            "AMAR_PLAN"               => 'Amar Plan',
+            "SERVICE"                => 'Service'
         ];
     }
 
