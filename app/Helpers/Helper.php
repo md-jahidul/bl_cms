@@ -152,7 +152,6 @@ class Helper
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "AMAR_TUNE"               => 'Amar Tune',
             "VOLTE"                   => 'Volte',
-            "SERVICE"                 => 'Service',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
             "SERVICE"                => 'Service'
