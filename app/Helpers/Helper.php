@@ -151,7 +151,7 @@ class Helper
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "SERVICES"                => 'Service'
+            "SERVICE"                => 'Service'
         ];
     }
 
