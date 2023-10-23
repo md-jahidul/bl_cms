@@ -97,7 +97,7 @@ class GenericSliderImageService
             });
 
             Helper::removeVersionControlRedisKey();
-            $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner'];
+            $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner', 'top_visit_slider'];
             Redis::del($keys);
 
             return true;
@@ -200,7 +200,7 @@ class GenericSliderImageService
             });
 
             Helper::removeVersionControlRedisKey();
-            $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner'];
+            $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner', 'top_visit_slider'];
             Redis::del($keys);
             return true;
         } catch (\Exception $e) {
@@ -215,7 +215,7 @@ class GenericSliderImageService
         $sliderImage->delete();
 
         Helper::removeVersionControlRedisKey();
-        $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner'];
+        $keys = ['non_bl_offer', 'lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid', 'toffee_banner', 'top_visit_slider'];
         Redis::del($keys);
         /**
          * Removing redis cache for segment banner to impact the change
