@@ -1163,6 +1163,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
+    Route::resource('global-settings', 'CMS\GlobalSettingController');
+
     /**
      * Product Special Type
      */

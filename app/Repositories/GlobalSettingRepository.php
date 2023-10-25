@@ -32,5 +32,6 @@ class GlobalSettingRepository extends BaseRepository
     public function delEntryBySettingsKey($keyname)
     {
         $this->modelName::where('settings_key', $keyname)->delete();
+        return GlobalSetting::where('settings_key', $key)->first();
     }
 }
