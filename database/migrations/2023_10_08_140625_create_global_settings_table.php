@@ -23,7 +23,7 @@ class CreateGlobalSettingsTable extends Migration
             $table->integer('android_min')->default(0);
             $table->integer('android_max')->default(9999);
             $table->integer('ios_min')->default(0);
-                $table->integer('ios_max')->default(9999);
+            $table->integer('ios_max')->default(9999);
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamp('created_at')->useCurrent();

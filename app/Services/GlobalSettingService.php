@@ -77,10 +77,23 @@ class GlobalSettingService
     public function updateSetting($data, $id): Response
     {
         $setting = $this->findOne($id);
+        if (isset($setting->redis_key) && $setting->redis_key !== '') {
+            $this->takeAction($setting->redis_key);
+        }
         $data['updated_by'] = Auth::id();
         $setting->update($data);
         $this->delGlobalSettingCache();
         return new Response("Setting has been successfully updated");
+    }
+
+    public function takeAction($redis_obj_text)
+    {
+        $redis_obj_json = json_decode($redis_obj_text, true);
+        $redis_keys = explode(',', $redis_obj_json['redis_key']);
+        if (count($redis_keys) > 0) {
+            $this->deleteRedisKeys($redis_keys);
+        }
+        return;
     }
 
     /**
