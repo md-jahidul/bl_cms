@@ -22,13 +22,6 @@ class GlobalSettingRepository extends BaseRepository
         return $this->modelName::where('settings_key', $key)->first();
     }
 
-    public function getFilteredData($filterKey)
-    {
-        return $this->modelName::when($filterKey, function ($query) use ($filterKey) {
-            return $query->where('settings_key', 'like', '%' . $filterKey . '%');
-        })->latest('created_at')->paginate(10);
-    }
-
     public function delEntryBySettingsKey($keyname)
     {
         $this->modelName::where('settings_key', $keyname)->delete();
