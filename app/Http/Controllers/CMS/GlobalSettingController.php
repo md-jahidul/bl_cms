@@ -37,7 +37,6 @@ class GlobalSettingController extends Controller
     {
         $filterKey = $request->query('key');
         $settings = $this->settingService->getFilteredData($filterKey);
-//        dd($settings);
         return view('admin.global-settings.index', compact('settings'));
 
     }
