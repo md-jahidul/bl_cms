@@ -1457,6 +1457,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
+    Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
+
     /**
      * Product Special Type
      */
@@ -1472,6 +1475,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
     Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
 
+
+    Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
 
 
     /**

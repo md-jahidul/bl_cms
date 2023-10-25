@@ -58,6 +58,27 @@
             </ul>
 
             <ul class="menu-content">
+                <li class=" {{ is_active_url('mybl-menu') }}">
+                    <a class="menu-item" href="{{ url('mybl-menu') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-ellipsis-v"></i> Menu List
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_url('global-settings') }}">
+                    <a class="menu-item" href="{{ route('global-settings.index') }}">
+                        <i class="la la-medium"></i>Global Settings</a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('media') }}">
+                    <a class="menu-item" href="{{ route('media.index') }}">
+                        <i class="la la-medium"></i>Media Upload</a>
+                </li>
+            </ul>
+            <ul class="menu-content">
                 <li class="{{ is_active_url('manage-category') }}">
                     <a class="menu-item" href="{{ route('manage-category.index') }}">
                         <i class="la la-medium"></i>Explore</a>
