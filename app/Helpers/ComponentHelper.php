@@ -121,8 +121,8 @@ class ComponentHelper
                 'title' => 'Hovering Card Component',
                 'config' => ['slider']
             ],
-            'top_txt_image_card' => [
-                'title' => 'Top Txt Grid Image',
+            'card_with_bg_color_component' => [
+                'title' => 'Card with BG color Component',
                 'config' => []
             ],
             'tab_component' => [

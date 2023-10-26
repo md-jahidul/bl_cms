@@ -78,6 +78,7 @@ class PgComponentService
                             'group' => (int) $field['group'] ?? 0,
                         ];
                         $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
+
                     }
 
                     if (isset($field['is_tab'])) {
@@ -113,8 +114,8 @@ class PgComponentService
                         }
                     }
                 }
-
             }
+//            dd($componentDataSave);
 
 //            dd($data);
 //            dd($data, $componentDataInfo);

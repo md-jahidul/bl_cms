@@ -48,52 +48,73 @@ $(document).on('click', '#plus-image', function () {
     var total_option = option_count.length + 2;
     var componentType = $('#component_type').val()
     var input = '';
-    var itemIndex = total_option - 1;
 
-    input += '<div class="col-md-6 col-xs-6 options-count option-' + total_option + '">\n' +
+    input += '<div class="col-md-11 col-xs-6 options-count option-' + total_option + '">\n' +
         // '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
         '<div class="form-group">\n' +
-        '      <label for="message">Multiple Image</label>\n' +
-        '      <input type="file" class="dropify" name="componentData[' + itemIndex + '][image_one][value_en]" data-height="80"/>\n' +
-        '      <input type="hidden" name="componentData[' + itemIndex + '][image_one][group]" value="' + itemIndex + '"/>\n' +
+        '      <label for="message">Image One</label>\n' +
+        '      <input type="file" class="dropify" name="componentData[' + total_option + '][image_one][value_en]" data-height="80"/>\n' +
+        '      <input type="hidden" name="componentData[' + total_option + '][image_one][group]" value="' + total_option + '"/>\n' +
         '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
         '  </div>\n' +
-        ' </div>\n' +
+        ' </div>';
+        if(componentType === "hovering_card_component"){
+            input += '<div class="col-md-11 col-xs-5 options-count option-' + total_option + '">\n' +
+                '<div class="form-group">\n' +
+                '      <label for="message">Image Two</label>\n' +
+                '      <input type="file" class="dropify" name="componentData[' + total_option + '][image_two][value_en]" data-height="80"/>\n' +
+                '      <input type="hidden" name="componentData[' + total_option + '][image_two][group]"/ value="' + total_option + '">\n' +
+                '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+                ' </div>\n' +
+                ' </div>';
+        }
 
-        '<div class="col-md-5 col-xs-5 options-count option-' + total_option + '">\n' +
-        '<div class="form-group">\n' +
-        '      <label for="message">Multiple Image</label>\n' +
-        '      <input type="file" class="dropify" name="componentData[' + itemIndex + '][image_two][value_en]" data-height="80"/>\n' +
-        '      <input type="hidden" name="componentData[' + itemIndex + '][image_two][group]"/ value="' + itemIndex + '">\n' +
-        '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
-        ' </div>\n' +
-        ' </div>\n' +
-
-        '<div class="form-group col-md-6 option-' + total_option + '">\n' +
+    input += '<div class="form-group col-md-6 option-' + total_option + '">\n' +
         '<label for="alt_text">Title En</label>\n' +
-        '    <input type="text" name="componentData[' + itemIndex + '][title_en][value_en]" class="form-control img-data" required>\n' +
-        '    <input type="hidden" name="componentData[' + itemIndex + '][title_en][group]" value="' + itemIndex + '">\n' +
+        '    <input type="text" name="componentData[' + total_option + '][title][value_en]" class="form-control img-data" required>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][title][group]" value="' + total_option + '">\n' +
         '<span class="help-block duplicate-error text-danger"></span>\n' +
         '</div>\n' +
 
         '<div class="form-group col-md-5 option-' + total_option + '">\n' +
         '    <label for="alt_text">Title Bn</label>\n' +
-        '    <input type="text" name="componentData[' + itemIndex + '][title_bn][value_bn]" class="form-control img-data" required>\n' +
-        '    <input type="hidden" name="componentData[' + itemIndex + '][title_bn][group]" value="' + itemIndex + '">\n' +
+        '    <input type="text" name="componentData[' + total_option + '][title][value_bn]" class="form-control img-data" required>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][title][group]" value="' + total_option + '">\n' +
         '<span class="help-block duplicate-error text-danger"></span>\n' +
         '</div>\n' +
 
         '<div class="form-group col-md-6 option-' + total_option + '">\n' +
         '    <label for="alt_text">Desciption En</label>\n' +
-        '    <textarea name="componentData[' + itemIndex + '][desc_en][value_en]" class="form-control img-data"></textarea>\n' +
-        '    <input type="hidden" name="componentData[' + itemIndex + '][desc_en][group]" value="' + itemIndex + '">\n' +
+        '    <textarea name="componentData[' + total_option + '][desc][value_en]" class="form-control img-data"></textarea>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][desc][group]" value="' + total_option + '">\n' +
         '<span class="help-block duplicate-error text-danger"></span>\n' +
         '</div>\n' +
 
         '<div class="form-group col-md-5 option-' + total_option + '">\n' +
         '    <label for="alt_text">Desciption Bn</label>\n' +
-        '    <textarea name="componentData[' + itemIndex + '][desc_bn][value_bn]" class="form-control img-data"></textarea>\n' +
-        '    <input type="hidden" name="componentData[' + itemIndex + '][desc_bn][group]" value="' + itemIndex + '">\n' +
+        '    <textarea name="componentData[' + total_option + '][desc][value_bn]" class="form-control img-data"></textarea>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][desc][group]" value="' + total_option + '">\n' +
+        '<span class="help-block duplicate-error text-danger"></span>\n' +
+        '</div>\n' +
+
+        '<div class="form-group col-md-4 option-' + total_option + '">\n' +
+        '<label for="alt_text">Button En</label>\n' +
+        '    <input type="text" name="componentData[' + total_option + '][button][value_en]" class="form-control img-data" required>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][button][group]" value="' + total_option + '">\n' +
+        '<span class="help-block duplicate-error text-danger"></span>\n' +
+        '</div>\n' +
+
+        '<div class="form-group col-md-4 option-' + total_option + '">\n' +
+        '    <label for="alt_text">Button Bn</label>\n' +
+        '    <input type="text" name="componentData[' + total_option + '][button][value_bn]" class="form-control img-data" required>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][button][group]" value="' + total_option + '">\n' +
+        '<span class="help-block duplicate-error text-danger"></span>\n' +
+        '</div>\n' +
+
+        '<div class="form-group col-md-3 option-' + total_option + '">\n' +
+        '    <label for="alt_text">Button Link</label>\n' +
+        '    <input type="text" name="componentData[' + total_option + '][button_link][value_bn]" class="form-control img-data" required>\n' +
+        '    <input type="hidden" name="componentData[' + total_option + '][title][group]" value="' + total_option + '">\n' +
         '<span class="help-block duplicate-error text-danger"></span>\n' +
         '</div>\n' +
 

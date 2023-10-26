@@ -50,11 +50,18 @@
                                         @include('admin.new-pages.components.common-field.single-image')
                                     </slot>
 
-                                    {{--Multiple Image--}}
+                                    {{--hovering_card_component--}}
                                     <slot id="hovering_card_component" data-offer-type="hovering_card_component" class="d-none">
                                         @include('admin.new-pages.components.common-field.title')
                                         @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image')
+                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'hovering_card_component'])
+                                    </slot>
+
+                                    {{--card_with_bg_color_component--}}
+                                    <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component" class="d-none">
+                                        @include('admin.new-pages.components.common-field.title')
+                                        @include('admin.new-pages.components.common-field.text-editor')
+                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'card_with_bg_color_component'])
                                     </slot>
 
                                     {{--Video Component--}}
