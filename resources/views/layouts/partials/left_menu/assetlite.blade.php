@@ -936,10 +936,10 @@
     </li>
     {{--    @endif--}}
 
-    <li class="{{ is_active_url('career') }}">
-        <a class="menu-item" href="{{ url('career') }}"
+    <li class="{{ is_active_url('pages') }}">
+        <a class="menu-item" href="{{ url('pages') }}"
            data-i18n="nav.templates.vert.classic_menu"><i
-                class="la la-play"></i>Career</a>
+                class="la la-play"></i>Pages</a>
     </li>
     <hr>
 @endif

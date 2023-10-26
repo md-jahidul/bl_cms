@@ -1528,9 +1528,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
     });
 
-    // Career
-    Route::resource('/career', 'AssetLite\Page\PageController');
-    Route::resource('/career-components', 'AssetLite\Page\PageComponentController');
+    // Page
+    Route::resource('/pages', 'AssetLite\Page\PageController');
+    Route::get('page/destroy/{id}', 'AssetLite\Page\PageController@deletePage');
+    Route::get('/page-components/{pageId}', 'AssetLite\Page\PageComponentController@index')->name('page-components');
+    Route::get('/page-components/{pageId}/create', 'AssetLite\Page\PageComponentController@create')->name('page-components-create');
+    Route::post('/page-components/{pageId}/store', 'AssetLite\Page\PageComponentController@store')->name('page-components-store');
 //    Route::post('/career-component-ordering-save','AssetLite\Page\PageComponentController')
 //        ->name('career-component-ordering-save.componentOrderingSave');
 

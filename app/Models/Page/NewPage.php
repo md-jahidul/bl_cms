@@ -5,5 +5,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class NewPage extends Model
 {
-    protected $guarded = ['id'];
+    protected $fillable = ['name','slug','url_slug_en','schema_markup','page_header_en','page_header_bn','status'];
 }

@@ -4,11 +4,16 @@ namespace App\Http\Controllers\AssetLite\Page;
 
 use App\Helpers\ComponentHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DynamicPageStoreRequest;
 use App\Models\PageComponent;
 use App\Services\Page\PageService;
 use App\Services\Page\PgComponentService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
@@ -29,74 +34,112 @@ class PageController extends Controller
         $this->pgComponentService = $pgComponentService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $page = $this->pageService->findBySlug('career');
-        $components = $this->pgComponentService->findBy(['page_id' => $page->id], 'componentData');
-        return view('admin.career.components.index', compact('components', 'page'));
+        $pages = $this->pageService->findAll();
+        return view('admin.new-pages.list', compact('pages'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
+    public function create()
     {
-        $pageId = $request['section_id'];
-        $componentTypes = ComponentHelper::components()['all'];
-        return view('admin.career.components.create', compact('pageId', 'componentTypes'));
+        return view('admin.new-pages.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $this->pageService->storePage($request->all());
-        return Redirect::route('pages.index')->with('success', 'Page Create Successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // dd($id);
-
-//        $components = PageComponent::where('page_id', $id)->orderBy("order", "asc")->get();
-//
-//        return Inertia::render('Pages/Components/index', [
-//            "pageId" => $id,
-//            "componentas" => $components
-//        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
         $page = $this->pageService->findOne($id);
-//        return Inertia::render('Pages/Edit', compact('page'));
+        return view('admin.new-pages.create', compact('page'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function store(Request $request)
     {
-        $this->pageService->updatePage($request->all(), $id);
-        return Redirect::route('pages.index')->with('success', 'Page update successfully');
+        $response = $this->pageService->storePage($request->all());
+        Session::flash('success', $response->getContent());
+        return redirect('/pages');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function deletePage($id)
     {
         $this->pageService->destroy($id);
-        return redirect()->route('pages.index')->with('success', 'Page Deleted Successfully');
+        return url('/pages');
     }
+
+
+//    public function componentCreateForm()
+//    {
+//        // $componentTypes = $this->componentTypes;
+//        // $pageId = 1;
+//        // return view('admin.new-pages.components.create', compact('componentTypes', 'pageId'));
+//
+//        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
+//        $storeAction = 'other-component-store';
+//        $listAction = 'other-components';
+//        $pageType = self::PAGE_TYPE;
+//        return view('admin.components.create', compact('componentList', 'storeAction', 'listAction', 'pageType'));
+//
+//    }
+
+//    public function componentStore(Request $request)
+//    {
+//
+//        // return $request->all();
+//        $pageId = $request->sections['id'];
+//        $response = $this->componentService->componentStore($request->all(), $pageId, self::PAGE_TYPE);
+//        Session::flash('success', $response->content());
+//        return redirect(route('other-components', [$pageId]));
+//    }
+
+//    public function componentEditForm(Request $request, $id)
+//    {
+//        // $componentTypes = $this->componentTypes;
+//        // $component = $this->componentService->findOne($id);
+//        // $multipleImage = $component['multiple_attributes'];
+//        // return view('admin.new-pages.components.edit', compact('component', 'multipleImage', 'componentTypes', 'pageId'));
+//
+//        $component = $this->componentService->findOne($id);
+//        $componentList = ComponentHelper::components()[self::PAGE_TYPE];
+//        $updateAction = 'other-component-update';
+//        $listAction = 'other-components';
+//        return view('admin.components.edit', compact('component', 'componentList', 'updateAction', 'listAction'));
+//    }
+
+//    /**
+//     * @param Request $request
+//     * @param $pageId
+//     * @param $id
+//     * @return Application|RedirectResponse|Redirector
+//     */
+//    public function componentUpdate(Request $request,  $id)
+//    {
+//        // $response = $this->componentService->componentUpdate($request->all(), $id);
+//        // Session::flash('success', $response->content());
+//        // return redirect(route('other-components', [$pageId]));
+//
+//        // return $request->all();
+//        $request['page_type'] = self::PAGE_TYPE;
+//        $pageId = $request->sections['id'];
+//
+//        $response = $this->componentService->componentUpdate($request->all(), $id);
+//        Session::flash('message', $response->getContent());
+//        return redirect(route('other-components', [$pageId]));
+//    }
+//
+//    public function componentSortable(Request $request)
+//    {
+//        $this->componentService->tableSortable($request);
+//    }
+
+//    /**
+//     * @param $pageId
+//     * @param $id
+//     * @return string
+//     * @throws \Exception
+//     */
+//    public function componentDestroy($id)
+//    {
+//        $this->componentService->deleteComponent($id);
+//        // return url(route('other-components', [$pageId]));
+//        return url()->previous();
+//    }
+
 }

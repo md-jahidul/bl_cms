@@ -30,8 +30,15 @@ class PageService
 
     public function storePage($data)
     {
-        $data['slug'] = str_replace(' ', '_', strtolower($data['name']));
-        return $this->save($data);
+        $page = $this->findOne($data['page_id']);
+        if (!$page) {
+            $data['slug'] = str_replace(' ', '_', strtolower($data['name']));
+            $this->save($data);
+            return response('Page Save Successfully!!');
+        }else{
+            $page->update($data);
+            return Response('Page Update Successfully!!');
+        }
     }
     public function updatePage($data, $id)
     {

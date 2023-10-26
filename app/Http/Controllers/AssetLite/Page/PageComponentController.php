@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite\Page;
 
+use App\Helpers\ComponentHelper;
 use App\Http\Controllers\Controller;
 use App\Services\Page\PageService;
 use App\Services\Page\PgComponentService;
@@ -20,23 +21,26 @@ class PageComponentController extends Controller
         $this->pgComponentService = $pgComponentService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index($pageId)
     {
-        $pages = $this->pgComponentService->findAll(10);
-//        return Inertia::render('Pages/Components/index', [
-//            'pages' => $pages
-//        ]);
+
+        $orderBy = ['column' => 'order', 'direction' => 'asc'];
+        $components = $this->pgComponentService->findBy(['page_id' => $pageId], 'componentData', $orderBy);
+//        $page = $this->pageService->findOne($pageId);
+//        // $components = $this->pageService->getComponents($pageId);
+//        $banner = $this->alBannerService->findBanner(self::PAGE_TYPE, $pageId);
+//        $pageType = self::PAGE_TYPE;
+
+        return view('admin.new-pages.components.index', compact('components', 'pageId'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($pageId)
     {
-        return Inertia::render('Pages/Components/Create');
+        $componentTypes = ComponentHelper::pageComponents();
+        return view('admin.new-pages.components.create', compact('pageId', 'componentTypes'));
     }
 
     /**
@@ -45,7 +49,7 @@ class PageComponentController extends Controller
     public function store(Request $request)
     {
         $this->pgComponentService->storeUpdatePageComponent($request->all());
-        return Redirect::route('pages.show', $request->pageId)->with('success', 'Page Component Saved Successfully');
+        return Redirect::route('page-components', $request->pageId)->with('success', 'Page Component Saved Successfully');
     }
 
     /**

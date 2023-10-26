@@ -52,15 +52,16 @@ class PgComponentService
                 $components = $this->componentRepository->findAll();
                 $componentData = [
                     'page_id' => $data['pageId'],
-                    'name' => $data["name"],
-                    'type' => $data["type"],
-                    'status' => 1,
+                    'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
+                    'type' => $data["component_type"],
+                    'attribute' => $data["attribute"],
+                    'status' => $data['status'],
                     'order' => $components->count() + 1
                 ];
+
                 $componentInfo = $this->save($componentData);
                 $componentId = $componentInfo->id;
             }
-
 
 //            $componentDataInfo = [];
             foreach ($data['componentData'] as $index => $item) {
@@ -74,7 +75,7 @@ class PgComponentService
                             'key' => $key,
                             'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
                             'value_bn' => $field['value_bn'] ?? null,
-                            'group' => $field['group'] ?? 0,
+                            'group' => (int) $field['group'] ?? 0,
                         ];
                         $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
                     }

@@ -8,6 +8,11 @@ class NewPageComponent extends Model
 {
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'attribute' => 'array',
+        'config' => 'array'
+    ];
+
     public function componentData()
     {
         return $this->hasMany(NewPageComponentData::class,  'component_id', 'id');

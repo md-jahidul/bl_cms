@@ -109,4 +109,26 @@ class ComponentHelper
             ]
         ];
     }
+
+    public static function pageComponents(): array
+    {
+        return [
+            'banner_with_button' => [
+                'title' => 'Banner with Button',
+                'config' => ['image_position' => ['top', 'bottom']]
+            ],
+            'hovering_card_component' => [
+                'title' => 'Hovering Card Component',
+                'config' => ['slider']
+            ],
+            'top_txt_image_card' => [
+                'title' => 'Top Txt Grid Image',
+                'config' => []
+            ],
+            'tab_component' => [
+                'title' => 'Tab Component',
+                'config' => ['left_image' => true]
+            ]
+        ];
+    }
 }

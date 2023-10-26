@@ -22,7 +22,7 @@ class CreateNewPageComponentDataTable extends Migration
             $table->timestamps();
             $table->foreign('component_id')
                 ->references('id')
-                ->on('new_page_component_data')
+                ->on('new_page_components')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

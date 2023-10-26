@@ -16,12 +16,14 @@ class CreateNewPageComponentsTable extends Migration
             $table->unsignedBigInteger('page_id')->nullable();
             $table->string('name')->nullable();
             $table->string('type')->nullable();
-            $table->integer('order')->default(0);
+            $table->mediumText('attribute')->nullable();
+            $table->text('config')->nullable();
+            $table->integer('order')->default(1);
             $table->boolean('status')->default(0);
             $table->timestamps();
             $table->foreign('page_id')
                 ->references('id')
-                ->on('pages')
+                ->on('new_pages')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
