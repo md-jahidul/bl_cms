@@ -91,6 +91,10 @@ class CampaignNewModalityService
                     if (!empty($product['popup_image'])) {
                         $product['popup_image'] = 'storage/' . $product['popup_image']->store('mybl_new_campaign');
                     }
+
+                    if (!empty($product['popup_img_portrait'])) {
+                        $product['popup_img_portrait'] = 'storage/' . $product['popup_img_portrait']->store('mybl_new_campaign');
+                    }
                     if ($data['deno_type'] == 'all') {
                         $product['max_amount'] = null;
                         $product['number_of_apply_times'] = null;
@@ -175,6 +179,13 @@ class CampaignNewModalityService
                         $product['popup_image'] = 'storage/' . $product['popup_image']->store('mybl_new_campaign');
                         if (isset($campaignDetails) && file_exists($campaignDetails->popup_image)) {
                             unlink($campaignDetails->popup_image);
+                        }
+                    }
+
+                    if (!empty($product['popup_img_portrait'])) {
+                        $product['popup_img_portrait'] = 'storage/' . $product['popup_img_portrait']->store('mybl_new_campaign');
+                        if (isset($campaignDetails) && file_exists($campaignDetails->popup_img_portrait)) {
+                            unlink($campaignDetails->popup_img_portrait);
                         }
                     }
                     if (isset($campaignDetails)) {
