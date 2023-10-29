@@ -2,8 +2,8 @@
 @section('title', 'Component Create')
 @section('card_name', 'Component Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('dynamic-pages') }}"> Page List</a></li>
-    <li class="breadcrumb-item active"> <a href="{{ route('other-components', [$pageId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('pages') }}"> Page List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('page-components', [$pageId]) }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <form role="form" id="product_form" action="{{ route('page-components-store', $pageId) }}" method="POST" novalidate enctype="multipart/form-data">
+                    <form role="form" id="product_form" action="{{ route('page-components-store-or-update', $pageId) }}" method="POST" novalidate enctype="multipart/form-data">
                             <input type="hidden" name="pageId" value="{{ $pageId }}">
 
                             <div class="content-body">
@@ -43,7 +43,7 @@
 {{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
 {{--                                    </slot>--}}
 
-                                    {{--Title Text and Image Component--}}
+                                    {{-- Title Text and Image Component --}}
                                     <slot id="banner_with_button" data-offer-type="banner_with_button" class="{{ old("component_type") == 'banner_with_button' ? '' : 'd-none' }}">
                                         @include('admin.new-pages.components.common-field.title')
                                         @include('admin.new-pages.components.common-field.text-editor')
@@ -54,14 +54,42 @@
                                     <slot id="hovering_card_component" data-offer-type="hovering_card_component" class="d-none">
                                         @include('admin.new-pages.components.common-field.title')
                                         @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'hovering_card_component'])
+                                        @include('admin.new-pages.components.common-field.multiple-image', [
+                                            'component_type' => 'hovering_card_component',
+                                            'key' => 0
+                                        ])
                                     </slot>
 
                                     {{--card_with_bg_color_component--}}
                                     <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component" class="d-none">
                                         @include('admin.new-pages.components.common-field.title')
                                         @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'card_with_bg_color_component'])
+                                        @include('admin.new-pages.components.common-field.multiple-image', [
+                                            'component_type' => 'card_with_bg_color_component',
+                                            'key' => 0
+                                        ])
+                                    </slot>
+
+                                    {{--hiring_now_component--}}
+                                    <slot id="hiring_now_component" data-offer-type="hiring_now_component" class="d-none">
+                                        @include('admin.new-pages.components.common-field.title')
+                                        @include('admin.new-pages.components.common-field.text-editor')
+                                        @include('admin.new-pages.components.common-field.single-image')
+                                        @include('admin.new-pages.components.common-field.button-field')
+                                    </slot>
+
+                                    {{--top_image_card_with_button--}}
+                                    <slot id="top_image_card_with_button" data-offer-type="top_image_card_with_button" class="d-none">
+                                        @include('admin.new-pages.components.common-field.title')
+                                        @include('admin.new-pages.components.common-field.text-editor')
+                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'top_image_card_with_button', 'key' => 0])
+                                    </slot>
+
+                                    {{--galley_masonry--}}
+                                    <slot id="galley_masonry" data-offer-type="galley_masonry" class="d-none">
+                                        @include('admin.new-pages.components.common-field.title')
+                                        @include('admin.new-pages.components.common-field.text-editor')
+                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'galley_masonry', 'key' => 0])
                                     </slot>
 
                                     {{--Video Component--}}
@@ -214,7 +242,7 @@
 @endpush
 @push('page-js')
     <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>--}}
 {{--    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>--}}
 
     <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>

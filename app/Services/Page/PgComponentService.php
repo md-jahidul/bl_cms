@@ -2,6 +2,7 @@
 
 namespace App\Services\Page;
 
+use App\Models\Page\NewPageComponentData;
 use App\Repositories\Page\PageRepository;
 use App\Repositories\Page\PgComponentDataRepository;
 use App\Repositories\Page\PgComponentRepository;
@@ -35,41 +36,49 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-//        dd($data);
+        dd($data);
         DB::transaction(function () use ($data, $id) {
-            if ($id) {
-                if (isset($data['removedImages'])) {
-                    $oldImgArray = explode(',', $data['removedImages']);
-                    foreach ($oldImgArray as $item){
-                        if (!empty($item)){
-                            $this->deleteFile($item);
-                        }
-                    }
-                }
-                $this->componentDataRepository->deleteComponentData($id);
-                $componentId = $id;
-            } else {
-                $components = $this->componentRepository->findAll();
-                $componentData = [
-                    'page_id' => $data['pageId'],
-                    'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
-                    'type' => $data["component_type"],
-                    'attribute' => $data["attribute"],
-                    'status' => $data['status'],
-                    'order' => $components->count() + 1
-                ];
+//            if ($id) {
+//                if (isset($data['removedImages'])) {
+//                    $oldImgArray = explode(',', $data['removedImages']);
+//                    foreach ($oldImgArray as $item){
+//                        if (!empty($item)){
+//                            $this->deleteFile($item);
+//                        }
+//                    }
+//                }
+//                $this->componentDataRepository->deleteComponentData($id);
+//                $componentId = $id;
+//            }
+//              else {
+//
+//            }
 
-                $componentInfo = $this->save($componentData);
-                $componentId = $componentInfo->id;
+            $components = $this->componentRepository->findAll();
+            $componentData = [
+                'page_id' => $data['pageId'],
+                'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
+                'type' => $data["component_type"],
+                'attribute' => $data["attribute"] ?? null,
+                'status' => $data['status']
+            ];
+
+            if (!$id) {
+                $componentData['order'] = $components->count() + 1;
             }
 
+            $componentInfo = $this->componentRepository->createOrUpdate($componentData, $id);
+            $componentId = $componentInfo->id;
+
 //            $componentDataInfo = [];
-            foreach ($data['componentData'] as $index => $item) {
+            foreach (array_values($data['componentData']) as $index => $item) {
                 $tabParentId = 0;
                 foreach ($item as $key => $field) {
+
                     $valueEn = $field['value_en'] ?? null;
                     if ($key != "content" && $key != "is_static_component" && $key != "component_name") {
                         $componentDataInfo = [
+                            'id' => $field['id'] ?? null,
                             'component_id' => $componentId,
                             'parent_id' => 0,
                             'key' => $key,
@@ -77,8 +86,16 @@ class PgComponentService
                             'value_bn' => $field['value_bn'] ?? null,
                             'group' => (int) $field['group'] ?? 0,
                         ];
-                        $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
 
+//                        dd($componentDataInfo, $field['id']);
+
+//                        dd($componentDataInfo);
+                        $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
+
+//                        dd($componentDataSave);
+//                        if ($componentDataInfo['group'] == 2 && $componentDataInfo['key'] == "title"){
+//                            dd($componentDataInfo, $componentDataSave);
+//                        }
                     }
 
                     if (isset($field['is_tab'])) {
@@ -139,6 +156,17 @@ class PgComponentService
                 $pageComponent->order = $item['position'];
                 $pageComponent->update();
             }
+        }
+    }
+
+    public function deleteDataItem($data)
+    {
+        $componentData = $this->componentDataRepository->findBy(['component_id' => $data['data-com-id'], 'group' => $data['data-group']]);
+        foreach ($componentData as $item) {
+            if ($item->key == "image_one" || $item->key == "image_two") {
+                $this->deleteFile($item->value_en);
+            }
+            $item->delete();
         }
     }
 

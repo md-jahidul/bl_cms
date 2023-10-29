@@ -14,8 +14,8 @@
     @php
 
         $action = [
-            'edit' => 'dynamic-pages/component/edit',
-            'destroy' => 'dynamic-pages/component/delete',
+            'edit' => "page-components/$pageId/edit",
+            'destroy' => "page-components/$pageId/destroy",
             'componentSort' => 'dynamic-pages/component-sortable',
             'section_id' => $pageId
         ];

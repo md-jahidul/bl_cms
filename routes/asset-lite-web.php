@@ -1533,7 +1533,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('page/destroy/{id}', 'AssetLite\Page\PageController@deletePage');
     Route::get('/page-components/{pageId}', 'AssetLite\Page\PageComponentController@index')->name('page-components');
     Route::get('/page-components/{pageId}/create', 'AssetLite\Page\PageComponentController@create')->name('page-components-create');
-    Route::post('/page-components/{pageId}/store', 'AssetLite\Page\PageComponentController@store')->name('page-components-store');
+    Route::post('/page-components/{pageId}/store-or-update/{id?}', 'AssetLite\Page\PageComponentController@storeOrUpdate')->name('page-components-store-or-update');
+    Route::get('/page-components/{pageId}/edit/{id}', 'AssetLite\Page\PageComponentController@edit')->name('page-components-edit');
+    Route::get('/page-components/{pageId}/update', 'AssetLite\Page\PageComponentController@update')->name('page-components-update');
+    Route::get('/page-components/{pageId}/destroy/{id}', 'AssetLite\Page\PageComponentController@destroy')->name('page-components-destroy');
+
+    Route::get('/page-components-data-destroy', 'AssetLite\Page\PageComponentController@componentDataItemDelete')->name('components-data-destroy');
+
+
 //    Route::post('/career-component-ordering-save','AssetLite\Page\PageComponentController')
 //        ->name('career-component-ordering-save.componentOrderingSave');
 

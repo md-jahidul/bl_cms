@@ -125,8 +125,16 @@ class ComponentHelper
                 'title' => 'Card with BG color Component',
                 'config' => []
             ],
-            'tab_component' => [
-                'title' => 'Tab Component',
+            'hiring_now_component' => [
+                'title' => 'Hiring now Component',
+                'config' => ['left_image' => true]
+            ],
+            'top_image_card_with_button' => [
+                'title' => 'Top image card with button',
+                'config' => ['left_image' => true]
+            ],
+            'galley_masonry' => [
+                'title' => 'Galley Masonry ',
                 'config' => ['left_image' => true]
             ]
         ];
