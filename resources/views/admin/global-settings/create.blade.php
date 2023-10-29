@@ -21,12 +21,19 @@
                     <option value="number">Number</option>
                     <option value="string" selected>String</option>
                     <option value="json">JSON</option>
+                    <option value="boolean">Boolean</option>
                 </select>
             </div>
 
             <div class="form-group" id="number_input" style="display: none;">
                 <label for="number_value">Number Value</label>
                 <input type="number" class="form-control" id="number_value" name="number_value">
+            </div>
+
+            <div class="form-group" id="boolean_input" style="display: none;">
+                <label for="boolean_value">Boolean Value</label>
+                <input type="text" class="form-control" id="boolean_value" name="boolean_value">
+                <div id="boolean_error" style="color: red;"></div>
             </div>
 
             <div class="form-group" id="string_input">
@@ -79,6 +86,9 @@
             const valueTypeSelect = document.getElementById('value_type');
             const numberInput = document.getElementById('number_input');
             const stringInput = document.getElementById('string_input');
+            const booleanInput = document.getElementById('boolean_input');
+            const booleanValueInput = document.getElementById('boolean_value');
+            const booleanError = document.getElementById('boolean_error');
             const jsonInput = document.getElementById('json_input');
             const jsonValueInput = document.getElementById('json_value');
             const jsonError = document.getElementById('json_error');
@@ -99,6 +109,11 @@
                 stringInput.style.display = 'block';
             }
 
+            function showBooleanInput() {
+                hideAllInputs();
+                booleanInput.style.display = 'block';
+            }
+
             // Function to show JSON input
             function showJsonInput() {
                 hideAllInputs();
@@ -110,6 +125,7 @@
                 numberInput.style.display = 'none';
                 stringInput.style.display = 'none';
                 jsonInput.style.display = 'none';
+                booleanInput.style.display = 'none';
             }
 
             // Handle Value Type change
@@ -120,6 +136,8 @@
                     showStringInput();
                 } else if (valueTypeSelect.value === 'json') {
                     showJsonInput();
+                } else if (valueTypeSelect.value === 'boolean') {
+                    showBooleanInput();
                 }
             });
 
@@ -132,7 +150,15 @@
                     jsonError.textContent = 'Please enter a valid JSON input.';
                 }
             });
+            booleanValueInput.addEventListener('input', function () {
+                const inputValue = booleanValueInput.value.trim(); // Trim any leading/trailing spaces
 
+                if (inputValue === '0' || inputValue === '1') {
+                    booleanError.textContent = ''; // Clear error message
+                } else {
+                    booleanError.textContent = 'Please enter a valid boolean value (0 or 1).';
+                }
+            });
             // Handle form submission
             createSettingButton.addEventListener('click', function () {
                 settingsKeyError.textContent = '';
@@ -140,7 +166,6 @@
                 jsonError.textContent = '';
 
                 if (settings_key.value === '') {
-                    console.log('here');
                     settingsKeyError.textContent = 'Please enter a Setting Key'
                     return;
                 }
@@ -154,6 +179,8 @@
                     settingsValue = document.getElementById('number_value').value;
                 } else if (selectedValueType === 'string') {
                     settingsValue = document.getElementById('string_value').value;
+                } else if (selectedValueType === 'boolean') {
+                    settingsValue = document.getElementById('boolean_value').value;
                 } else if (selectedValueType === 'json') {
                     settingsValue = jsonValueInput.value;
 
