@@ -27,6 +27,7 @@
                                 $pageHeader = "";
                                 $pageHeaderBn = "";
                                 $schemaMarkup = "";
+                                $status = "";
                                 if (!empty($page)) {
                                     $pageId = $page->id;
                                     $nameEn = $page->name;
@@ -35,6 +36,7 @@
                                     $pageHeader = $page->page_header_en;
                                     $pageHeaderBn = $page->page_header_bn;
                                     $schemaMarkup = $page->schema_markup;
+                                    $status = $page->status;
                                 }
                             ?>
 
@@ -82,6 +84,17 @@
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" {{ $status == 1 ? 'checked' : '' }}>
+                                    <label for="active" class="mr-1">Active</label>
+
+                                    <input type="radio" name="status" value="0" id="inactive" {{ $status == 0 ? 'checked' : '' }}>
+                                    <label for="inactive">Inactive</label>
+                                </div>
                             </div>
 
                             <div class="form-actions col-md-12">
