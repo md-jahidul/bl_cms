@@ -133,6 +133,10 @@ class ComponentHelper
                 'title' => 'Top image card with button',
                 'config' => ['left_image' => true]
             ],
+            'step_cards_with_hovering_effect' => [
+                'title' => 'Step Cards with hovering effect',
+                'config' => ['left_image' => true]
+            ],
             'galley_masonry' => [
                 'title' => 'Galley Masonry ',
                 'config' => ['left_image' => true]

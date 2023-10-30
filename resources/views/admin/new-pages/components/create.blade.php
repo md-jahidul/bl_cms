@@ -37,60 +37,74 @@
                                         <label>Component Sample Picture</label>
                                         <img class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <slot id="component_data"></slot>
+                                </div>
 
                                     {{--Table Component--}}
 {{--                                    <slot id="table_component" data-offer-type="large_title_with_text" class="d-none">--}}
 {{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
 {{--                                    </slot>--}}
 
-                                    {{-- Title Text and Image Component --}}
-                                    <slot id="banner_with_button" data-offer-type="banner_with_button" class="{{ old("component_type") == 'banner_with_button' ? '' : 'd-none' }}">
-                                        @include('admin.new-pages.components.common-field.title')
-                                        @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.single-image')
-                                    </slot>
+{{--                                     Title Text and Image Component --}}
+{{--                                    <slot id="banner_with_button" data-offer-type="banner_with_button" class="{{ old("component_type") == 'banner_with_button' ? '' : 'd-none' }}">--}}
+{{--                                        @include('admin.new-pages.components.common-field.title')--}}
+{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
+{{--                                        @include('admin.new-pages.components.common-field.single-image')--}}
+{{--                                    </slot>--}}
 
-                                    {{--hovering_card_component--}}
-                                    <slot id="hovering_card_component" data-offer-type="hovering_card_component" class="d-none">
-                                        @include('admin.new-pages.components.common-field.title')
-                                        @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image', [
-                                            'component_type' => 'hovering_card_component',
-                                            'key' => 0
-                                        ])
-                                    </slot>
+{{--                                    hovering_card_component--}}
+{{--                                    <slot id="hovering_card_component" data-offer-type="hovering_card_component" class="d-none">--}}
+{{--                                        @include('admin.new-pages.components.common-field.title')--}}
+{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
+{{--                                        @include('admin.new-pages.components.common-field.multiple-image', [--}}
+{{--                                            'component_type' => 'hovering_card_component',--}}
+{{--                                            'key' => 0--}}
+{{--                                        ])--}}
+{{--                                    </slot>--}}
 
-                                    {{--card_with_bg_color_component--}}
-                                    <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component" class="d-none">
-                                        @include('admin.new-pages.components.common-field.title')
-                                        @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image', [
-                                            'component_type' => 'card_with_bg_color_component',
-                                            'key' => 0
-                                        ])
-                                    </slot>
+{{--                                    card_with_bg_color_component--}}
+{{--                                    <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component" class="d-none">--}}
+{{--                                        @include('admin.new-pages.components.common-field.title')--}}
+{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
+{{--                                        @include('admin.new-pages.components.common-field.multiple-image', [--}}
+{{--                                            'component_type' => 'card_with_bg_color_component',--}}
+{{--                                            'key' => 0--}}
+{{--                                        ])--}}
+{{--                                    </slot>--}}
 
-                                    {{--hiring_now_component--}}
-                                    <slot id="hiring_now_component" data-offer-type="hiring_now_component" class="d-none">
-                                        @include('admin.new-pages.components.common-field.title')
-                                        @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.single-image')
-                                        @include('admin.new-pages.components.common-field.button-field')
-                                    </slot>
+{{--                                    hiring_now_component--}}
+{{--                                    <slot id="hiring_now_component" data-offer-type="hiring_now_component" class="d-none">--}}
+{{--                                        @include('admin.new-pages.components.common-field.title')--}}
+{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
+{{--                                        @include('admin.new-pages.components.common-field.single-image')--}}
+{{--                                        @include('admin.new-pages.components.common-field.button-field')--}}
+{{--                                    </slot>--}}
 
-                                    {{--top_image_card_with_button--}}
-                                    <slot id="top_image_card_with_button" data-offer-type="top_image_card_with_button" class="d-none">
-                                        @include('admin.new-pages.components.common-field.title')
-                                        @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'top_image_card_with_button', 'key' => 0])
-                                    </slot>
+{{--                                    top_image_card_with_button--}}
+{{--                                    <slot id="top_image_card_with_button" data-offer-type="top_image_card_with_button" class="d-none">--}}
+{{--                                        @include('admin.new-pages.components.common-field.title')--}}
+{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
+{{--                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'top_image_card_with_button', 'key' => 0])--}}
+{{--                                    </slot>--}}
 
-                                    {{--galley_masonry--}}
-                                    <slot id="galley_masonry" data-offer-type="galley_masonry" class="d-none">
-                                        @include('admin.new-pages.components.common-field.title')
-                                        @include('admin.new-pages.components.common-field.text-editor')
-                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'galley_masonry', 'key' => 0])
-                                    </slot>
+{{--                                    galley_masonry--}}
+{{--                                    <slot id="galley_masonry" data-offer-type="galley_masonry" class="d-none">--}}
+{{--                                        @include('admin.new-pages.components.common-field.title')--}}
+{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
+{{--                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'galley_masonry', 'key' => 0])--}}
+{{--                                    </slot>--}}
+
+
+
+
+
+
+
+
+
+
 
                                     {{--Video Component--}}
 {{--                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text" class="d-none">--}}
@@ -189,7 +203,7 @@
 
 
 {{--                                    </slot>--}}
-
+                                <div class="row">
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
@@ -208,7 +222,6 @@
                                             </button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             @csrf
@@ -222,8 +235,11 @@
         form #related_product_field .select2-container {
             width: 100% !important;
         }
-    </style>
 
+        .type-line {
+            border-top: 1px solid #0a0e45 !important;
+        }
+    </style>
 @stop
 
 @push('page-css')
@@ -241,14 +257,15 @@
 
 @endpush
 @push('page-js')
-    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>--}}
+    <script src="{{ asset('js/custom-js/page-component.js') }}" type="text/javascript"></script>
 {{--    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>--}}
 {{--    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>--}}
 
     <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
 
-    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>--}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>

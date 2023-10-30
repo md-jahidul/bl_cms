@@ -36,7 +36,7 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-        dd($data);
+//        dd($data);
         DB::transaction(function () use ($data, $id) {
 //            if ($id) {
 //                if (isset($data['removedImages'])) {
@@ -84,7 +84,8 @@ class PgComponentService
                             'key' => $key,
                             'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
                             'value_bn' => $field['value_bn'] ?? null,
-                            'group' => (int) $field['group'] ?? 0,
+//                            'group' => (int) $field['group'] ?? 0,
+                            'group' => $index + 1,
                         ];
 
 //                        dd($componentDataInfo, $field['id']);
@@ -163,7 +164,7 @@ class PgComponentService
     {
         $componentData = $this->componentDataRepository->findBy(['component_id' => $data['data-com-id'], 'group' => $data['data-group']]);
         foreach ($componentData as $item) {
-            if ($item->key == "image_one" || $item->key == "image_two") {
+            if ($item->key == "image" || $item->key == "image_hover") {
                 $this->deleteFile($item->value_en);
             }
             $item->delete();

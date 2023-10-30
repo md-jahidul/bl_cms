@@ -1,49 +1,44 @@
 @php($key ?? 0)
+{{--@dd($data)--}}
 
-<slot class="options-count">
-    <input type="hidden" name="old_com_id[]" value="{{ $data['image_one']['id'] ?? '' }}">
-    <input type="hidden" name="old_com_id[]" value="{{ $data['image_two']['id'] ?? '' }}">
-    <input type="hidden" name="old_com_id[]" value="{{ $data['title']['id'] ?? '' }}">
-    <input type="hidden" name="old_com_id[]" value="{{ $data['desc']['id'] ?? '' }}">
-    <input type="hidden" name="old_com_id[]" value="{{ $data['button']['id'] ?? '' }}">
-    <input type="hidden" name="old_com_id[]" value="{{ $data['button_link']['id'] ?? '' }}">
 
+<slot class="page_component_multi_item">
     @if(isset($component_type) && $component_type == "galley_masonry")
-        <div class="col-md-11 col-xs-12 ">
+        <div class="col-md-12 col-xs-12 ">
             <div class="form-group">
                 <label for="message">Image One</label>
-                <input type="hidden" name="componentData[{{$key}}][image_one][value_en]" value="{{ $data['image_one']['value_en'] ?? '' }}">
-                <input type="file" class="dropify" name="componentData[{{$key}}][image_one][value_en]" data-height="80" {{ isset($data) ? '' : 'required' }}
-                data-default-file="{{ isset($data['image_one']['value_en']) ? config('filesystems.file_base_url') . $data['image_one']['value_en'] : '' }}"/>
-                <input type="hidden" name="componentData[{{$key}}][image_one][group]" value="{{ $key + 1 }}">
-                <input type="hidden" name="componentData[{{$key}}][image_one][id]" value="{{ $data['image_one']['id'] ?? '' }}">
+                <input type="hidden" name="componentData[{{$key}}][image][value_en]" value="{{ $data['image']['value_en'] ?? '' }}">
+                <input type="file" class="dropify" name="componentData[{{$key}}][image][value_en]" data-height="80" {{ isset($data) ? '' : 'required' }}
+                data-default-file="{{ isset($data['image']['value_en']) ? config('filesystems.file_base_url') . $data['image']['value_en'] : '' }}"/>
+                <input type="hidden" name="componentData[{{$key}}][image][group]" value="{{ $key + 1 }}">
+                <input type="hidden" name="componentData[{{$key}}][image][id]" value="{{ $data['image']['id'] ?? '' }}">
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
             </div>
         </div>
     @else
-        <div class="col-md-11 col-xs-12 ">
+        <div class="col-md-12 col-xs-12 ">
             <div class="form-group">
-                <label for="message">Image One</label>
-                <input type="hidden" name="componentData[{{$key}}][image_one][value_en]" value="{{ $data['image_one']['value_en'] ?? '' }}">
-                <input type="file" class="dropify" name="componentData[{{$key}}][image_one][value_en]" data-height="80" {{ isset($data) ? '' : 'required' }}
-                data-default-file="{{ isset($data['image_one']['value_en']) ? config('filesystems.file_base_url') . $data['image_one']['value_en'] : '' }}"/>
-                <input type="hidden" name="componentData[{{$key}}][image_one][group]" value="{{ $key + 1 }}">
-                <input type="hidden" name="componentData[{{$key}}][image_one][id]" value="{{ $data['image_one']['id'] ?? '' }}">
+                <label for="message">Image</label>
+                <input type="hidden" name="componentData[{{$key}}][image][value_en]" value="{{ $data['image']['value_en'] ?? '' }}">
+                <input type="file" class="dropify" name="componentData[{{$key}}][image][value_en]" data-height="80" {{ isset($data) ? '' : 'required' }}
+                data-default-file="{{ isset($data['image']['value_en']) ? config('filesystems.file_base_url') . $data['image']['value_en'] : '' }}"/>
+                <input type="hidden" name="componentData[{{$key}}][image][group]" value="{{ $key + 1 }}">
+                <input type="hidden" name="componentData[{{$key}}][image][id]" value="{{ $data['image']['id'] ?? '' }}">
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
             </div>
         </div>
 
         @if(isset($component_type) && $component_type == "hovering_card_component")
-            <div class="col-md-11 col-xs-5">
+            <div class="col-md-12 col-xs-5">
                 <div class="form-group">
-                    <label for="message">Image Two</label>
-                    <input type="hidden" name="componentData[{{$key}}][image_two][value_en]" value="{{ $data['image_two']['value_en'] ?? '' }}">
-                    <input type="file" class="dropify" name="componentData[{{$key}}][image_two][value_en]" data-height="80" {{ isset($data) ? '' : 'required' }}
-                    data-default-file="{{ isset($data['image_two']['value_en']) ? config('filesystems.file_base_url') . $data['image_two']['value_en'] : '' }}"/>
-                    <input type="hidden" name="componentData[{{$key}}][image_two][group]" value="{{ $key + 1 }}">
-                    <input type="hidden" name="componentData[{{$key}}][image_two][id]" value="{{ $data['image_two']['id'] ?? '' }}">
+                    <label for="message">Image Hover</label>
+                    <input type="hidden" name="componentData[{{$key}}][image_hover][value_en]" value="{{ $data['image_hover']['value_en'] ?? '' }}">
+                    <input type="file" class="dropify" name="componentData[{{$key}}][image_hover][value_en]" data-height="80" {{ isset($data) ? '' : 'required' }}
+                    data-default-file="{{ isset($data['image_hover']['value_en']) ? config('filesystems.file_base_url') . $data['image_hover']['value_en'] : '' }}"/>
+                    <input type="hidden" name="componentData[{{$key}}][image_hover][group]" value="{{ $key + 1 }}">
+                    <input type="hidden" name="componentData[{{$key}}][image_hover][id]" value="{{ $data['image_hover']['id'] ?? '' }}">
                     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                     <div class="help-block"></div>
                 </div>
@@ -57,7 +52,7 @@
             <input type="hidden" name="componentData[{{$key}}][title][id]" value="{{ $data['title']['id'] ?? '' }}">
         </div>
 
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-6">
             <label for="title_en">Title Bn</label>
             <input type="text" name="componentData[{{$key}}][title][value_bn]" class="form-control"
                    value="{{ $data['title']['value_en'] ?? '' }}">
@@ -72,7 +67,7 @@
             <input type="hidden" name="componentData[{{$key}}][desc][id]" value="{{ $data['desc']['id'] ?? '' }}">
         </div>
 
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-6">
             <label for="title_en">Description Bn</label>
             <textarea type="text" rows="3" name="componentData[{{$key}}][desc][value_bn]" class="form-control">{{ $data['desc']['value_bn'] ?? '' }}</textarea>
             <input type="hidden" name="componentData[{{$key}}][desc][group]" value="{{ $key + 1 }}">
@@ -103,7 +98,7 @@
             @endif
         </div>
 
-        <div class="form-group col-md-3 {{ $errors->has('button_link') ? ' error' : '' }}">
+        <div class="form-group col-md-4 {{ $errors->has('button_link') ? ' error' : '' }}">
             <label for="button_link" >Button URL</label>
             <input type="text" name="componentData[{{$key}}][button_link][value_en]"  class="form-control" placeholder="Enter company name bangla"
                    value="{{ $data['button_link']['value_en'] ?? '' }}">
@@ -126,7 +121,7 @@
         @php($key+1)
         <div class="form-group col-md-1">
             <label for="alt_text"></label>
-            <i class="la la-trash remove-image btn-sm btn-danger mt-2" data-com-id="{{ $component->id }}" data-group="{{ $data['image_one']['group'] }}"></i>
+            <i class="la la-trash remove-image btn-sm btn-danger mt-2" data-com-id="{{ $component->id }}" data-group="{{ $data['image']['group'] }}"></i>
         </div>
     @endif
 </slot>

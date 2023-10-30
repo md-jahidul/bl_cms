@@ -66,10 +66,18 @@
 
                                     {{--card_with_bg_color_component--}}
                                     @if($component->type == "card_with_bg_color_component")
-                                        <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component" class="d-none">
+                                        <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component">
                                             @include('admin.new-pages.components.common-field.title')
                                             @include('admin.new-pages.components.common-field.text-editor')
-                                            @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'card_with_bg_color_component'])
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.multiple-image', [
+                                                        'component_type' => 'card_with_bg_color_component',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
                                         </slot>
                                     @endif
 
@@ -85,7 +93,7 @@
 
                                     {{--top_image_card_with_button--}}
                                     @if($component->type == "top_image_card_with_button")
-                                        <slot id="top_image_card_with_button" data-offer-type="top_image_card_with_button" class="d-none">
+                                        <slot id="top_image_card_with_button" data-offer-type="top_image_card_with_button">
                                             @include('admin.new-pages.components.common-field.title')
                                             @include('admin.new-pages.components.common-field.text-editor')
                                             @if(isset($component->component_data_mod))
