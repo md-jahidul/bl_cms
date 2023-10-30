@@ -17,7 +17,7 @@ class CreateNewPagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('slug')->nullable()->index();
-            $table->string('url_slug_en')->nullable();
+            $table->string('url_slug')->nullable();
             $table->string('url_slug_bn')->nullable();
             $table->text('schema_markup')->nullable();
             $table->text('page_header_en')->nullable();
