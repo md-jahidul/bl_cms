@@ -27,14 +27,16 @@
                                 $pageHeader = "";
                                 $pageHeaderBn = "";
                                 $schemaMarkup = "";
+                                $status = "";
                                 if (!empty($page)) {
                                     $pageId = $page->id;
                                     $nameEn = $page->name;
-                                    $urlSlug = $page->url_slug_en;
+                                    $urlSlug = $page->url_slug;
                                     $urlSlugBn = $page->url_slug_bn;
                                     $pageHeader = $page->page_header_en;
                                     $pageHeaderBn = $page->page_header_bn;
                                     $schemaMarkup = $page->schema_markup;
+                                    $status = $page->status;
                                 }
                             ?>
 
@@ -46,17 +48,17 @@
                                 <div class="help-block"></div>
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                            <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                 <label>URL<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control slug-convert" value="{{ old("url_slug_en") ? old("url_slug_en") : $urlSlug ?? '' }}" name="url_slug_en"
+                                <input type="text" class="form-control slug-convert" value="{{ old("url_slug") ? old("url_slug") : $urlSlug ?? '' }}" name="url_slug"
                                        required placeholder="URL">
                                 <div class="help-block"></div>
                                 <small class="text-info">
                                     <strong>i.e:</strong> page-name (no spaces)<br>
                                 </small>
                                 <div class="help-block"></div>
-                                @if ($errors->has('url_slug_en'))
-                                    <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
                                 @endif
                             </div>
 
@@ -82,6 +84,17 @@
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <div class="form-group">
+                                    <label for="title" class="mr-1">Status:</label>
+                                    <input type="radio" name="status" value="1" id="active" {{ $status == 1 ? 'checked' : '' }}>
+                                    <label for="active" class="mr-1">Active</label>
+
+                                    <input type="radio" name="status" value="0" id="inactive" {{ $status == 0 ? 'checked' : '' }}>
+                                    <label for="inactive">Inactive</label>
+                                </div>
                             </div>
 
                             <div class="form-actions col-md-12">
