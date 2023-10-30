@@ -22,7 +22,7 @@ class CreateRneBonusTransactionsTable extends Migration
             $table->string('referee_msisdn');
             $table->string('referrer_product_code');
             $table->string('referee_product_code');
-            $table->enum('status', ['pending', 'completed', 'failed'])->index();
+            $table->enum('status', ['pending', 'completed', 'partial', 'failed'])->index();
             $table->integer('retry_count')->default(0);
             $table->timestamp('referrer_disbursement_time')->nullable();
             $table->timestamp('referee_disbursement_time')->nullable();
