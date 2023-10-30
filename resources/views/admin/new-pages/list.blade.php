@@ -37,7 +37,7 @@
                                             </p>
                                         </td>
                                         <td>
-                                            {{ $page->url_slug_en }}
+                                            {{ $page->url_slug }}
                                         </td>
                                         <td align="center">
                                             <a href="{{ route('page-components', $page->id) }}" class="btn btn-secondary">

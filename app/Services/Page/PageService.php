@@ -31,6 +31,7 @@ class PageService
     public function storePage($data)
     {
         $page = $this->findOne($data['page_id']);
+        $data['url_slug'] = str_replace(' ', '-', strtolower($data['url_slug']));
         if (!$page) {
             $data['slug'] = str_replace(' ', '_', strtolower($data['name']));
             $this->save($data);
