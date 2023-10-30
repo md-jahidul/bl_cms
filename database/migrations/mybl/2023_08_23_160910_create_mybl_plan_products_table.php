@@ -17,7 +17,7 @@ class CreateMyblPlanProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('sim_type');
             $table->string('content_type')->nullable();
-            $table->string("product_code");
+            $table->string("product_code")->unique();
             $table->string("renew_product_code")->nullable();
             $table->string("recharge_product_code")->nullable();
             $table->integer("sms_volume")->nullable();
@@ -36,6 +36,7 @@ class CreateMyblPlanProductsTable extends Migration
             $table->float("discount_percentage");
             $table->tinyInteger("is_active")->default(1);
             $table->tinyInteger("is_default")->default(0);
+            $table->integer('purchase_count')->default(1);
             $table->timestamps();
         });
     }

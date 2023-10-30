@@ -36,8 +36,8 @@
                                             data-default-file="{{ url($banner->banner) }}"
                                             class="dropify"/>
                                 </div>
-
-                                <div class="form-group col-md-10 {{ $errors->has('deeplink') ? ' error' : '' }}">
+                            <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('deeplink') ? ' error' : '' }}">
                                     <label for="title" class="required">Deep Link</label>
                                     <input type="text" name="deeplink"  class="form-control" placeholder="Enter Deep Link"
                                             value="{{ $banner->deeplink }}" required data-validation-required-message="Enter menu english label">
@@ -46,8 +46,7 @@
                                         <div class="help-block">  {{ $errors->first('deeplink') }}</div>
                                     @endif
                                 </div>
-
-                                <div class="col-md-10">
+                                <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <label for="title" class="required mr-1">Status:</label>
 
@@ -62,7 +61,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-3">
                                     <div class="form-group {{ $errors->has('is_priority') ? ' error' : '' }}">
                                         <label for="title" class="required mr-1">Is Priority ?:</label>
 
@@ -77,11 +76,32 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                    <label for="title" class="required">Android Version Code</label>
+                                    <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code"
+                                           required data-validation-required-message="Enter Version Code" value="{{ $banner->android_version_code }}">
+                                    <div class="help-block"></div>
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('android_version_code'))
+                                        <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                    @endif
                                 </div>
-                                <div class="form-actions right">
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="la la-check-square-o"></i> Update</button>
+                                <div class="form-group col-md-6 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                    <label for="title" class="required">iOS Version Code</label>
+                                    <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code"
+                                           required data-validation-required-message="Enter Version Code" value="{{ $banner->ios_version_code }}">
+                                    <div class="help-block"></div>
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('ios_version_code'))
+                                        <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                    @endif
                                 </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="la la-check-square-o"></i> Update</button>
                             </div>
                             @csrf
                         </form>

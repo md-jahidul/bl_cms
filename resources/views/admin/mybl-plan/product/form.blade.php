@@ -39,7 +39,7 @@
                                         <select name="sim_type" class="form-control">
                                             <option value="prepaid" @if($page == "edit" && $product->sim_type == "prepaid") selected @endif>PREPAID</option>
                                             {{-- <option value="postpaid" @if($page == "edit" && $product->sim_type == "postpaid") selected @endif>POSTPAID</option> --}}
-                                        </select>   
+                                        </select>
                                     </div>
                                 </div>
 
@@ -181,7 +181,7 @@
                                 <div class="form-group col-md-4">
                                     <div class="form-group">
                                         <label class="required">Market Price</label>
-                                        <input type="number" class="form-control" step=".01" required
+                                        <input type="number" class="form-control" required
                                         data-validation-required-message="Please enter market price" name="market_price"
                                         placeholder="Enter MRP Price"
                                                value="@if($page == "edit"){{ $product->market_price}}@else{{
@@ -196,7 +196,7 @@
                                 <div class="form-group col-md-4">
                                     <div class="form-group">
                                         <label class="required">Discount Price</label>
-                                        <input type="number" class="form-control" step=".01" required
+                                        <input type="number" class="form-control" required
                                         data-validation-required-message="Please enter discount price" name="discount_price"
                                         placeholder="Enter Discount Price"
                                                value="@if($page == "edit"){{ $product->discount_price}}@else{{

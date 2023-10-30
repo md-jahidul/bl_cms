@@ -1457,6 +1457,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
+    Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
+
     /**
      * Product Special Type
      */
@@ -1472,6 +1475,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
     Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
 
+
+    Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
 
 
     /**
@@ -1506,6 +1512,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::put('mybl-plan/products/update/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@update')->name("mybl-plan.products.update");
     Route::post('mybl-plan/upload-products', 'CMS\MyBlPlan\MyBlPlanProductController@uploadPlanProductExcel')->name("mybl-plan.upload-products");
     Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
+    Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
 
 });
 

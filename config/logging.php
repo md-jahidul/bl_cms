@@ -105,7 +105,6 @@ return [
             'path'   => storage_path('logs/event-based-bonus-v2/event-base-bonus.log'),
             'level' => 'error'
         ],
-
         'notificationinfolog' => [
             'driver' => 'daily',
             'path' => storage_path('logs/notificationLogs/laravel.log'),

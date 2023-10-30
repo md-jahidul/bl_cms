@@ -123,8 +123,8 @@ class Helper
             "MEDALIA_FEEDBACK"        => "Medalia Feedback",
             "EVENT_BASED_BONUS"       => "Event Based Bonus",
             "MYBL_CAMPAIGN"           => "MyBl Campaign Modality",
-            "HELP_AND_TUTORIAL" => "Help & Tutorial",
-            "CALL_CENTER" => "Call Center",
+            "HELP_AND_TUTORIAL"       => "Help & Tutorial",
+            "CALL_CENTER"             => "Call Center",
             "GAMES"                   => "Games",
             "MUSICS"                  => "Musics",
             "VIDEO"                   => "Video",
@@ -150,9 +150,11 @@ class Helper
             "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
+            "AMAR_TUNE"               => 'Amar Tune',
             "VOLTE"                   => 'Volte',
+            "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "DEEN"                    => 'Deen'
+            "SERVICE"                => 'Service'
         ];
     }
 
@@ -356,16 +358,15 @@ class Helper
 
     public static function removeVersionControlRedisKey($keyName = '')
     {
-        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-
-        $keys = $keyName == '' ? Redis::keys('mybl_component_*') : Redis::keys('mybl_component_' . $keyName . '_*');
-        $values = [];
-
-        foreach ($keys as $key) {
-            $values [] = str_replace($pattern, '', $key);
-        }
-        if (!empty($values)) {
-            Redis::del($values);
+        if ($keyName != '') {
+            Redis::del('mybl_component_' . $keyName);
+        } else {
+            Redis::del([
+                'mybl_component_home',
+                'mybl_component_content',
+                'mybl_component_commerce',
+                'mybl_component_nonbl',
+            ]);
         }
     }
 }
