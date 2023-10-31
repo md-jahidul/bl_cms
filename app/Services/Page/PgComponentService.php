@@ -36,7 +36,6 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-//        dd($data);
         DB::transaction(function () use ($data, $id) {
 //            if ($id) {
 //                if (isset($data['removedImages'])) {
