@@ -45,7 +45,7 @@ function dropify() {
 //     }
 // })
 
-$(document).on('click', '#plus-image', function () {
+    $(document).on('click', '#plus-image', function () {
     var option_count = $('.page_component_multi_item');
 
     var total_option = option_count.length;
@@ -53,13 +53,35 @@ $(document).on('click', '#plus-image', function () {
     var componentType = $('#component_type').val()
     var input = '';
 
+    var button =
+    '<div class="form-group col-md-4 ">\n' +
+    '<label for="alt_text">Button En</label>\n' +
+    '    <input type="text" name="componentData[' + total_option + '][button][value_en]" class="form-control " required>\n' +
+    // '    <input type="hidden" name="componentData[' + total_option + '][button][group]" value="' + group_count + '" data-role="group">\n' +
+    '<span class="help-block duplicate-error text-danger"></span>\n' +
+    '</div>\n' +
+
+    '<div class="form-group col-md-4 ">\n' +
+    '    <label for="alt_text">Button Bn</label>\n' +
+    '    <input type="text" name="componentData[' + total_option + '][button][value_bn]" class="form-control " required>\n' +
+    // '    <input type="hidden" name="componentData[' + total_option + '][button][group]" value="' + group_count + '" data-role="group">\n' +
+    '<span class="help-block duplicate-error text-danger"></span>\n' +
+    '</div>\n' +
+
+    '<div class="form-group col-md-4 ">\n' +
+    '    <label for="alt_text">Button Link</label>\n' +
+    '    <input type="text" name="componentData[' + total_option + '][button_link][value_en]" class="form-control " required>\n' +
+    // '    <input type="hidden" name="componentData[' + total_option + '][button_link][group]" value="' + group_count + '" data-role="group">\n' +
+    '<span class="help-block duplicate-error text-danger"></span>\n' +
+    '</div>';
+
     input += "<slot class='page_component_multi_item'>"
     if(componentType === "galley_masonry"){
         input += '<div class="col-md-12 col-xs-6 ">\n' +
             '<div class="form-group">\n' +
             '      <label for="message">Image One</label>\n' +
-            '      <input type="file" class="dropify" name="componentData[' + total_option + '][image_one][value_en]" data-height="80"/>\n' +
-            // '      <input type="hidden" name="componentData[' + total_option + '][image_one][group]" value="' + group_count + '" data-role="group"/>\n' +
+            '      <input type="file" class="dropify" name="componentData[' + total_option + '][image][value_en]" data-height="80"/>\n' +
+            // '      <input type="hidden" name="componentData[' + total_option + '][image][group]" value="' + group_count + '" data-role="group"/>\n' +
             '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
             '  </div>\n' +
             ' </div>';
@@ -67,8 +89,8 @@ $(document).on('click', '#plus-image', function () {
         input += '<div class="col-md-12 col-xs-6 ">\n' +
             '<div class="form-group">\n' +
             '      <label for="message">Image One</label>\n' +
-            '      <input type="file" class="dropify" name="componentData[' + total_option + '][image_one][value_en]" data-height="80"/>\n' +
-            // '      <input type="hidden" name="componentData[' + total_option + '][image_one][group]" value="' + group_count + '" data-role="group"/>\n' +
+            '      <input type="file" class="dropify" name="componentData[' + total_option + '][image][value_en]" data-height="80"/>\n' +
+            // '      <input type="hidden" name="componentData[' + total_option + '][image][group]" value="' + group_count + '" data-role="group"/>\n' +
             '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
             '  </div>\n' +
             ' </div>';
@@ -108,28 +130,9 @@ $(document).on('click', '#plus-image', function () {
             '    <textarea name="componentData[' + total_option + '][desc][value_bn]" class="form-control "></textarea>\n' +
             // '    <input type="hidden" name="componentData[' + total_option + '][desc][group]" value="' + group_count + '" data-role="group">\n' +
             '<span class="help-block duplicate-error text-danger"></span>\n' +
-            '</div>\n' +
-
-            '<div class="form-group col-md-4 ">\n' +
-            '<label for="alt_text">Button En</label>\n' +
-            '    <input type="text" name="componentData[' + total_option + '][button][value_en]" class="form-control " required>\n' +
-            // '    <input type="hidden" name="componentData[' + total_option + '][button][group]" value="' + group_count + '" data-role="group">\n' +
-            '<span class="help-block duplicate-error text-danger"></span>\n' +
-            '</div>\n' +
-
-            '<div class="form-group col-md-4 ">\n' +
-            '    <label for="alt_text">Button Bn</label>\n' +
-            '    <input type="text" name="componentData[' + total_option + '][button][value_bn]" class="form-control " required>\n' +
-            // '    <input type="hidden" name="componentData[' + total_option + '][button][group]" value="' + group_count + '" data-role="group">\n' +
-            '<span class="help-block duplicate-error text-danger"></span>\n' +
-            '</div>\n' +
-
-            '<div class="form-group col-md-4 ">\n' +
-            '    <label for="alt_text">Button Link</label>\n' +
-            '    <input type="text" name="componentData[' + total_option + '][button_link][value_en]" class="form-control " required>\n' +
-            // '    <input type="hidden" name="componentData[' + total_option + '][button_link][group]" value="' + group_count + '" data-role="group">\n' +
-            '<span class="help-block duplicate-error text-danger"></span>\n' +
             '</div>';
+
+
     }
 
     input += '<div class="form-group col-md-1 ">\n' +
