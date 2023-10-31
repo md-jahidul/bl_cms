@@ -270,7 +270,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
-    <script src="{{ asset('js/custom-js/page-multi-item.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/custom-js/page-multi-item.js') }}" type="text/javascript"></script>--}}
 
 
     <script>

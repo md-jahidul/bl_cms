@@ -22,7 +22,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-4 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
-                                        <select name="component_type" class="form-control" id="component_type"
+                                        <select disabled readonly class="form-control" id="component_type"
                                                 required data-validation-required-message="Please select component type">
                                             <option value="">--Select Data Type--</option>
                                             @foreach($componentTypes as $key => $type)
