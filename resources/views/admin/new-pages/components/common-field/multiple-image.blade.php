@@ -1,59 +1,32 @@
 @php($key ?? 0)
-{{--@dd($data)--}}
-
-
 <slot class="page_component_multi_item">
-    @if(isset($component_type) && $component_type == "galley_masonry")
-        <div class="col-md-12 col-xs-12 ">
-            <div class="form-group">
-                <label for="message">Image</label>
-                <input type="hidden" name="componentData[{{$key}}][image][value_en]"
-                       value="{{ $data['image']['value_en'] ?? '' }}">
-                <input type="file" class="dropify" name="componentData[{{$key}}][image][value_en]" data-height="80"
-                       {{ isset($data) ? '' : 'required' }}
-                       data-default-file="{{ isset($data['image']['value_en']) ? config('filesystems.file_base_url') . $data['image']['value_en'] : '' }}"/>
-                <input type="hidden" name="componentData[{{$key}}][image][group]" value="{{ $key + 1 }}">
-                <input type="hidden" name="componentData[{{$key}}][image][id]" value="{{ $data['image']['id'] ?? '' }}">
-                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                <div class="help-block"></div>
-            </div>
-        </div>
-    @else
-        <div class="col-md-12 col-xs-12 ">
-            <div class="form-group">
-                <label for="message">Image</label>
-                <input type="hidden" name="componentData[{{$key}}][image][value_en]"
-                       value="{{ $data['image']['value_en'] ?? '' }}">
-                <input type="file" class="dropify" name="componentData[{{$key}}][image][value_en]" data-height="80"
-                       {{ isset($data) ? '' : 'required' }}
-                       data-default-file="{{ isset($data['image']['value_en']) ? config('filesystems.file_base_url') . $data['image']['value_en'] : '' }}"/>
-                <input type="hidden" name="componentData[{{$key}}][image][group]" value="{{ $key + 1 }}">
-                <input type="hidden" name="componentData[{{$key}}][image][id]" value="{{ $data['image']['id'] ?? '' }}">
-                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                <div class="help-block"></div>
-            </div>
-        </div>
-
-        @if(isset($component_type) && $component_type == "hovering_card_component")
-            <div class="col-md-12 col-xs-5">
-                <div class="form-group">
-                    <label for="message">Image Hover</label>
-                    <input type="hidden" name="componentData[{{$key}}][image_hover][value_en]"
-                           value="{{ $data['image_hover']['value_en'] ?? '' }}">
-                    <input type="file" class="dropify" name="componentData[{{$key}}][image_hover][value_en]"
-                           data-height="80" {{ isset($data) ? '' : 'required' }}
-                           data-default-file="{{ isset($data['image_hover']['value_en']) ? config('filesystems.file_base_url') . $data['image_hover']['value_en'] : '' }}"/>
-                    <input type="hidden" name="componentData[{{$key}}][image_hover][group]" value="{{ $key + 1 }}">
-                    <input type="hidden" name="componentData[{{$key}}][image_hover][id]"
-                           value="{{ $data['image_hover']['id'] ?? '' }}">
-                    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                    <div class="help-block"></div>
-                </div>
-            </div>
-        @endif
+    @if(isset($component_type) && $component_type == "hovering_card_component")
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.image-two')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.description')
         @include('admin.new-pages.components.common-field.multi-item.redirect-link')
+    @elseif(isset($component_type) && $component_type == "card_with_bg_color_component")
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
+        @include('admin.new-pages.components.common-field.multi-item.button')
+    @elseif(isset($component_type) && $component_type == "top_image_card_with_button")
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
+        @include('admin.new-pages.components.common-field.multi-item.button')
+    @elseif(isset($component_type) && $component_type == "step_cards_with_hovering_effect")
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.image-two')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
+        @include('admin.new-pages.components.common-field.multi-item.title-two')
+        @include('admin.new-pages.components.common-field.multi-item.description-two')
+    @elseif(isset($component_type) && $component_type == "step_cards_with_hovering_effect")
+        @include('admin.new-pages.components.common-field.multi-item.image')
+    @else
+
     @endif
 
     {{--    @dd($data)--}}

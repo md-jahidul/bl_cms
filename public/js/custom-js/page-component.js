@@ -16,42 +16,42 @@
     var attributeTitle =
         `<div class="form-group col-md-6">
             <label for="title_en">Title Field (English)</label>
-            <input type="text" name="attribute[title_en]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="attribute[title][en]"  class="form-control" placeholder="Enter company name bangla">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-6">
             <label for="title_en">Title Field (English)</label>
-            <input type="text" name="attribute[title_bn]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name bangla">
             <div class="help-block"></div>
         </div>`
 
     var attributeTitleSubTitle =
         `<div class="form-group col-md-6">
             <label for="desc_en">Description (English)</label>
-            <textarea type="text" name="attribute[desc_en]"  class="form-control summernote_editor" placeholder="Enter offer details in english"></textarea>
+            <textarea type="text" name="attribute[desc][en]"  class="form-control summernote_editor" placeholder="Enter offer details in english"></textarea>
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-6">
             <label for="desc_bn">Description (Bangla)</label>
-            <textarea type="text" name="attribute[desc_bn]"  class="form-control summernote_editor" placeholder="Enter offer details in english" ></textarea>
+            <textarea type="text" name="attribute[desc][bn]"  class="form-control summernote_editor" placeholder="Enter offer details in english" ></textarea>
             <div class="help-block"></div>
         </div>`
 
     var attributeButton =
         `<div class="form-group col-md-4">
             <label for="title_en">Button Field (English)</label>
-            <input type="text" name="attribute[button_en]"  class="form-control" placeholder="Enter button name English">
+            <input type="text" name="attribute[button_name][en]"  class="form-control" placeholder="Enter button name English">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-4">
-            <label for="title_en">Button Field (English)</label>
-            <input type="text" name="attribute[button_bn]"  class="form-control" placeholder="Enter button name bangla">
+            <label for="button_bn">Button Field (Bangla)</label>
+            <input type="text" name="attribute[button_name][bn]"  class="form-control" placeholder="Enter button name bangla">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-4">
             <label for="title_en">Button Field URL</label>
-            <input type="text" name="attribute[button_url]"  class="form-control" placeholder="Enter button name url">
+            <input type="text" name="attribute[button_link][en]"  class="form-control" placeholder="Enter button name url">
             <div class="help-block"></div>
         </div>`
 
@@ -68,7 +68,7 @@
     var imageOne = function (index= 0) {
         return `<div class="col-md-12 col-xs-12">
             <div class="form-group">
-                <label for="message">Image One</label>
+                <label for="message">Image</label>
                 <input type="file" class="dropify" name="componentData[${index}][image][value_en]" data-height="80"/>
 <!--                <input type="hidden" name="componentData[0][image][group]" value="1" data-role="group">-->
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
@@ -78,11 +78,11 @@
     }
 
 
-    var imageTwo = function (index = 0) {
+    var imageTwo = function (index = 0, label = 'Hover', fieldName = 'image_hover') {
         return `<div class="col-md-12 col-xs-12">
             <div class="form-group">
-                <label for="message">Image Two</label>
-                <input type="file" class="dropify" name="componentData[${index}][image_hover][value_en]" data-height="80"/>
+                <label for="message">Image ${label}</label>
+                <input type="file" class="dropify" name="componentData[${index}][${fieldName}][value_en]" data-height="80"/>
                 <!-- <input type="hidden" name="componentData[0][image_hover][group]" value="1" data-role="group">-->
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
@@ -147,14 +147,14 @@
     var multiItemButton  = function (index) {
         return `<div class="form-group col-md-4">
             <label for="button_en">Button Title (English)</label>
-            <input type="text" name="componentData[${index}][button][value_en]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="componentData[${index}][button_name][value_en]"  class="form-control" placeholder="Enter company name bangla">
 <!--            <input type="hidden" name="componentData[0][button][group]" value="1" data-role="group">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button Title (Bangla)</label>
-            <input type="text" name="componentData[${index}][button][value_bn]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="componentData[${index}][button_name][value_bn]"  class="form-control" placeholder="Enter company name bangla">
 <!--            <input type="hidden" name="componentData[0][button][group]" value="1" data-role="group">-->
             <div class="help-block"></div>
         </div>
@@ -170,42 +170,42 @@
     var doubleButton  =
         `<div class="form-group col-md-4">
             <label for="button_en">Button One Title (English)</label>
-            <input type="text" name="componentData[0][button_one][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="componentData[0][button_one_name][value_en]"  class="form-control" placeholder="Enter button name bangla">
 <!--            <input type="hidden" name="componentData[0][button_one][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button One Title (Bangla)</label>
-            <input type="text" name="componentData[0][button_one][value_bn]"  class="form-control" placeholder="Enter button name bangla">
-            <input type="hidden" name="componentData[0][button_one][group]" value="1">
+            <input type="text" name="componentData[0][button_one_name][value_bn]"  class="form-control" placeholder="Enter button name bangla">
+<!--            <input type="hidden" name="componentData[0][button_one][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button One URL</label>
-            <input type="text" name="componentData[0][button_one_url][value_en]"  class="form-control" placeholder="Enter button name bangla">
-            <input type="hidden" name="componentData[0][button_one_url][group]" value="1">
+            <input type="text" name="componentData[0][button_one_link][value_en]"  class="form-control" placeholder="Enter button name bangla">
+<!--            <input type="hidden" name="componentData[0][button_one_url][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_en">Button Two Title (English)</label>
-            <input type="text" name="componentData[0][button_two][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="componentData[0][button_name_two][value_en]"  class="form-control" placeholder="Enter button name bangla">
 <!--            <input type="hidden" name="componentData[0][button_two][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button Two Title (Bangla)</label>
-            <input type="text" name="componentData[0][button_two][value_bn]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="componentData[0][button_name_two][value_bn]"  class="form-control" placeholder="Enter button name bangla">
 <!--            <input type="hidden" name="componentData[0][button_two][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button Two URL</label>
-            <input type="text" name="componentData[0][button_two_url][value_en]"  class="form-control" placeholder="Enter button url bangla">
+            <input type="text" name="componentData[0][button_two_link][value_en]"  class="form-control" placeholder="Enter button url bangla">
 <!--            <input type="hidden" name="componentData[0][button_two_url][group]" value="1">-->
             <div class="help-block"></div>
         </div>`
@@ -356,10 +356,10 @@
         }else if(componentType === "step_cards_with_hovering_effect"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
-                    imageOne() + imageTwo() +
-                    multiItemTitle() +
-                    multiItemDescription() +
-                    multiItemTitleTwo(0, 'Title Hover', 'title_hover') +
+                    imageOne(index) + imageTwo(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    multiItemTitleTwo(index, 'Title Hover', 'title_hover') +
                     multiItemDescriptionTwo(index, 'Description Hover', 'desc_hover') +
                     removeBtn +
                 `</slot>`;
