@@ -36,7 +36,6 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-//        dd($data);
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
@@ -66,18 +65,20 @@ class PgComponentService
                 foreach (array_values($data['componentData']) as $index => $item) {
                     $tabParentId = 0;
                     foreach ($item as $key => $field) {
-
                         $valueEn = $field['value_en'] ?? null;
+                        $itemEn = is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn;
+
                         if ($key != "content" && $key != "is_static_component" && $key != "component_name") {
                             $componentDataInfo = [
                                 'id' => $field['id'] ?? null,
                                 'component_id' => $componentId,
                                 'parent_id' => 0,
                                 'key' => $key,
-                                'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
-                                'value_bn' => $field['value_bn'] ?? null,
+                                'value_en' => $itemEn,
+                                'value_bn' => isset($field['value_bn']) && $field['value_bn'] != null ? $field['value_bn'] : $itemEn,
                                 'group' => $index + 1,
                             ];
+
                             $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
                         }
 

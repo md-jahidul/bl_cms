@@ -5,6 +5,13 @@
             <div class="form-actions col-md-12 mt-0 type-line"></div>
         </div>`
 
+    var itemCountLine = function (itemNo) {
+        return `<div class="col-md-12">
+            <span><h5><strong class="item-counter">Item ${itemNo}</strong></h5></span>
+            <div class="form-actions col-md-12 mt-0 item-divider"></div>
+        </div>`
+    }
+
     var redirectLink = function (index = 0) {
         return `<div class="form-group col-md-12">
             <label for="button_link" >Redirect Link URL</label>
@@ -69,7 +76,6 @@
             <label for="alt_text" class="">Image Field</label>
             <div class="custom-file">
                 <input type="file" name="componentData[0][image][value_en]" class="dropify" data-height="80">
-<!--                <input type="hidden" name="componentData[0][image][group]" value="1">-->
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
             </div>
         </div>`
@@ -79,7 +85,6 @@
             <div class="form-group">
                 <label for="message">Image</label>
                 <input type="file" class="dropify" name="componentData[${index}][image][value_en]" data-height="80"/>
-<!--                <input type="hidden" name="componentData[0][image][group]" value="1" data-role="group">-->
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
             </div>
@@ -92,7 +97,6 @@
             <div class="form-group">
                 <label for="message">Image ${label}</label>
                 <input type="file" class="dropify" name="componentData[${index}][${fieldName}][value_en]" data-height="80"/>
-                <!-- <input type="hidden" name="componentData[0][image_hover][group]" value="1" data-role="group">-->
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
             </div>
@@ -103,12 +107,10 @@
         return `<div class="form-group col-md-6">
             <label for="title_en">Title En</label>
             <input type="text" name="componentData[${index}][title][value_en]" class="form-control">
-            <!-- <input type="hidden" name="componentData[0][title][group]" value="1" data-role="group">-->
         </div>
         <div class="form-group col-md-6">
             <label for="title_en">Title Bn</label>
             <input type="text" name="componentData[${index}][title][value_bn]" class="form-control">
-            <!--            <input type="hidden" name="componentData[0][title][group]" value="1" data-role="group">-->
         </div>`
     }
 
@@ -116,13 +118,11 @@
         return `<div class="form-group col-md-6">
             <label for="title_en">Description En</label>
             <textarea type="text" rows="3" name="componentData[${index}][desc][value_en]" class="form-control"></textarea>
-            <!--            <input type="hidden" name="componentData[0][desc][group]" value="1" data-role="group">-->
         </div>
 
         <div class="form-group col-md-6">
             <label for="title_en">Description Bn</label>
             <textarea type="text" rows="3" name="componentData[${index}][desc][value_bn]" class="form-control"></textarea>
-            <!--            <input type="hidden" name="componentData[0][desc][group]" value="1" data-role="group">-->
         </div>`
     }
 
@@ -130,12 +130,10 @@
         return `<div class="form-group col-md-6">
             <label for="title_en">${label} En</label>
             <input type="text" name="componentData[${index}][${fieldName}][value_en]" class="form-control">
-            <!-- <input type="hidden" name="componentData[0][title][group]" value="1" data-role="group">-->
         </div>
         <div class="form-group col-md-6">
             <label for="title_en">${label} Bn</label>
             <input type="text" name="componentData[${index}][${fieldName}][value_bn]" class="form-control">
-            <!--            <input type="hidden" name="componentData[0][title][group]" value="1" data-role="group">-->
         </div>`
     }
 
@@ -143,35 +141,30 @@
         return `<div class="form-group col-md-6">
             <label for="title_en">${label} En</label>
             <textarea type="text" rows="3" name="componentData[${index}][${fieldName}][value_en]" class="form-control"></textarea>
-            <!--            <input type="hidden" name="componentData[0][desc][group]" value="1" data-role="group">-->
         </div>
 
         <div class="form-group col-md-6">
             <label for="title_en">${label} Bn</label>
             <textarea type="text" rows="3" name="componentData[${index}][${fieldName}][value_bn]" class="form-control"></textarea>
-            <!--            <input type="hidden" name="componentData[0][desc][group]" value="1" data-role="group">-->
         </div>`
     }
 
-    var multiItemButton  = function (index) {
+    var multiItemButton  = function (index = 0) {
         return `<div class="form-group col-md-4">
             <label for="button_en">Button Title (English)</label>
             <input type="text" name="componentData[${index}][button_name][value_en]"  class="form-control" placeholder="Enter company name bangla">
-<!--            <input type="hidden" name="componentData[0][button][group]" value="1" data-role="group">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button Title (Bangla)</label>
             <input type="text" name="componentData[${index}][button_name][value_bn]"  class="form-control" placeholder="Enter company name bangla">
-<!--            <input type="hidden" name="componentData[0][button][group]" value="1" data-role="group">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button URL</label>
             <input type="text" name="componentData[${index}][button_link][value_en]"  class="form-control" placeholder="Enter company name bangla">
-<!--            <input type="hidden" name="componentData[0][button_link][group]" value="1" data-role="group">-->
             <div class="help-block"></div>
         </div>`
     }
@@ -180,42 +173,36 @@
         `<div class="form-group col-md-4">
             <label for="button_en">Button One Title (English)</label>
             <input type="text" name="componentData[0][button_one_name][value_en]"  class="form-control" placeholder="Enter button name bangla">
-<!--            <input type="hidden" name="componentData[0][button_one][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button One Title (Bangla)</label>
             <input type="text" name="componentData[0][button_one_name][value_bn]"  class="form-control" placeholder="Enter button name bangla">
-<!--            <input type="hidden" name="componentData[0][button_one][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button One URL</label>
             <input type="text" name="componentData[0][button_one_link][value_en]"  class="form-control" placeholder="Enter button name bangla">
-<!--            <input type="hidden" name="componentData[0][button_one_url][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_en">Button Two Title (English)</label>
             <input type="text" name="componentData[0][button_name_two][value_en]"  class="form-control" placeholder="Enter button name bangla">
-<!--            <input type="hidden" name="componentData[0][button_two][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button Two Title (Bangla)</label>
             <input type="text" name="componentData[0][button_name_two][value_bn]"  class="form-control" placeholder="Enter button name bangla">
-<!--            <input type="hidden" name="componentData[0][button_two][group]" value="1">-->
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button Two URL</label>
             <input type="text" name="componentData[0][button_two_link][value_en]"  class="form-control" placeholder="Enter button url bangla">
-<!--            <input type="hidden" name="componentData[0][button_two_url][group]" value="1">-->
             <div class="help-block"></div>
         </div>`
 
@@ -255,11 +242,13 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                     cardLine +
+                    addBtn +
+                    itemCountLine(1) +
                     imageOne() + imageTwo() +
                     multiItemTitle() +
                     multiItemDescription() +
                     redirectLink() +
-                    addBtn +
+
                 `</slot>`;
         }else if(componentType === "card_with_bg_color_component"){
             componentData +=
@@ -267,11 +256,13 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                     cardLine +
+                    addBtn +
+                    itemCountLine(1) +
                     imageOne() +
                     multiItemTitle() +
                     multiItemDescription() +
                     multiItemButton() +
-                    addBtn +
+
                 `</slot>`;
         }else if(componentType === "hiring_now_component"){
             componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
@@ -281,11 +272,13 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                     cardLine +
+                    addBtn +
+                    itemCountLine(1) +
                     imageOne() +
                     multiItemTitle() +
                     multiItemDescription() +
                     multiItemButton() +
-                    addBtn +
+
                 `</slot>`;
         }else if(componentType === "step_cards_with_hovering_effect"){
             componentData +=
@@ -294,22 +287,25 @@
                     attributeTitleSubTitle +
                     attributeButton +
                     cardLine +
+                    addBtn +
+                    itemCountLine(1) +
                     imageOne() + imageTwo() +
                     multiItemTitle() +
                     multiItemDescription() +
                     multiItemTitleTwo(0, 'Title Hover', 'title_hover') +
                     multiItemDescriptionTwo(0, 'Description Hover', 'desc_hover') +
-                    addBtn +
+
                 `</slot>`;
         }else if(componentType === "galley_masonry"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine +
                     attributeButton +
-                    imageOne() +
+                    cardLine +
                     addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
                 `</slot>`;
         }else{
             console.log('No component found!!')
@@ -336,6 +332,7 @@
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
                     imageOne(index) + imageTwo(index) +
                     multiItemTitle(index) +
                     multiItemDescription(index) +
@@ -345,6 +342,7 @@
         }else if(componentType === "card_with_bg_color_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
                     imageOne(index) +
                     multiItemTitle(index) +
                     multiItemDescription(index) +
@@ -356,6 +354,7 @@
         }else if(componentType === "top_image_card_with_button"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
                     imageOne(index) +
                     multiItemTitle(index) +
                     multiItemDescription(index) +
@@ -365,6 +364,7 @@
         }else if(componentType === "step_cards_with_hovering_effect"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
                     imageOne(index) + imageTwo(index) +
                     multiItemTitle(index) +
                     multiItemDescription(index) +
@@ -375,7 +375,7 @@
         }else if(componentType === "galley_masonry"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
-                    attributeButton +
+                    itemCountLine(index + 1) +
                     imageOne(index) +
                     removeBtn +
                 `</slot>`;
@@ -426,9 +426,12 @@
                 }
             })
         } else {
-            // console.log($('input[data-role=group]'));
             $(event.target).parent().parent().remove();
+            let itemCounter = $('.item-counter');
+            itemCounter.each(function (index) {
+                let totalItem = index + 1;
+                $(this).html('Item ' + totalItem)
+            })
         }
     });
 })();
-

@@ -232,12 +232,14 @@
     </section>
 
     <style>
+        .type-line {
+            border-top: 1px solid #06063b !important;
+        }
+        .item-divider {
+            border-top: 1px solid #ef6d0c !important;
+        }
         form #related_product_field .select2-container {
             width: 100% !important;
-        }
-
-        .type-line {
-            border-top: 1px solid #0a0e45 !important;
         }
     </style>
 @stop
