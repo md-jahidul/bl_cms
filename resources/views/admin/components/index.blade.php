@@ -44,17 +44,9 @@
 @endpush
 
 @push('page-js')
-<script type="text/javascript">
-    var auto_save_url = "{{ url($componentSort) }}";
-    // jQuery(document).ready(function($){
-    //     $('input.section_name').on('keyup', function(){
-    //         var sectionName = $('#product_details_form').find('.section_name').val();
-    //         var sectionNameLower = sectionName.toLowerCase();
-    //         var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '-');
-    //         $('#product_details_form').find('.auto_slug').empty().val(sectionNameRemoveSpace);
-    //     });
-    // });
-</script>
+    <script type="text/javascript">
+        var auto_save_url = "{{ url($componentSort) }}";
+    </script>
 @endpush
 
 

@@ -16,7 +16,7 @@
         $action = [
             'edit' => "page-components/$pageId/edit",
             'destroy' => "page-components/$pageId/destroy",
-            'componentSort' => 'dynamic-pages/component-sortable',
+            'componentSort' => 'page-components-save-sorted',
             'section_id' => $pageId
         ];
 
@@ -52,7 +52,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
 
-        var auto_save_url = "{{ url('dynamic-pages/component-sortable') }}";
+        {{--var auto_save_url = "{{ url('page-components/save-sorted') }}";--}}
 
         $(function () {
 

@@ -1547,12 +1547,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('/page-components/{pageId}/edit/{id}', 'AssetLite\Page\PageComponentController@edit')->name('page-components-edit');
     Route::get('/page-components/{pageId}/update', 'AssetLite\Page\PageComponentController@update')->name('page-components-update');
     Route::get('/page-components/{pageId}/destroy/{id}', 'AssetLite\Page\PageComponentController@destroy')->name('page-components-destroy');
+    Route::get('page-components-save-sorted', 'AssetLite\Page\PageComponentController@componentOrderingSave');
 
+    // Page Repeatable Item Delete
     Route::get('/page-components-data-destroy', 'AssetLite\Page\PageComponentController@componentDataItemDelete')->name('components-data-destroy');
-
-
-//    Route::post('/career-component-ordering-save','AssetLite\Page\PageComponentController')
-//        ->name('career-component-ordering-save.componentOrderingSave');
 
     // Site Map Generator
     Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');

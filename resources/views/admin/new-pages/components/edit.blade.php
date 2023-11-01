@@ -34,6 +34,7 @@
                                                         value="{{ $key }}" {{ ($component->type == $key) ? 'selected' : '' }}>{{ $type['title'] }}</option>
                                             @endforeach
                                         </select>
+                                        <input type="hidden" name="component_type" value="{{ $component->type }}">
                                         <div class="help-block"></div>
                                     </div>
 
@@ -46,20 +47,20 @@
                                     {{-- Title Text and Image Component --}}
                                     @if($component->type == "banner_with_button")
                                         <slot id="banner_with_button" data-offer-type="banner_with_button">
-                                            @include('admin.new-pages.components.common-field.title')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
-                                            @include('admin.new-pages.components.common-field.single-image')
+                                            @include('admin.new-pages.components.common-field.attribute.image')
                                         </slot>
                                     @endif
 
                                     {{--hovering_card_component--}}
                                     @if($component->type == "hovering_card_component")
                                         <slot id="hovering_card_component" data-offer-type="hovering_card_component">
-                                            @include('admin.new-pages.components.common-field.title')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @if(isset($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
-                                                    @include('admin.new-pages.components.common-field.multiple-image', [
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'hovering_card_component',
                                                         'data' => $data,
                                                         'key' => $key
@@ -73,11 +74,11 @@
                                     @if($component->type == "card_with_bg_color_component")
                                         <slot id="card_with_bg_color_component"
                                               data-offer-type="card_with_bg_color_component">
-                                            @include('admin.new-pages.components.common-field.title')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @if(isset($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
-                                                    @include('admin.new-pages.components.common-field.multiple-image', [
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'card_with_bg_color_component',
                                                         'data' => $data,
                                                         'key' => $key
@@ -90,7 +91,7 @@
                                     {{--hiring_now_component--}}
                                     @if($component->type == "hiring_now_component")
                                         <slot id="hiring_now_component" data-offer-type="hiring_now_component">
-                                            @include('admin.new-pages.components.common-field.title')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @include('admin.new-pages.components.common-field.single-image')
                                             @include('admin.new-pages.components.common-field.button-field')
@@ -101,11 +102,11 @@
                                     @if($component->type == "top_image_card_with_button")
                                         <slot id="top_image_card_with_button"
                                               data-offer-type="top_image_card_with_button">
-                                            @include('admin.new-pages.components.common-field.title')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @if(isset($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
-                                                    @include('admin.new-pages.components.common-field.multiple-image', [
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'top_image_card_with_button',
                                                         'data' => $data,
                                                         'key' => $key
@@ -124,7 +125,7 @@
                                             @include('admin.new-pages.components.common-field.attribute.button')
                                             @if(isset($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
-                                                    @include('admin.new-pages.components.common-field.multiple-image', [
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'step_cards_with_hovering_effect',
                                                         'data' => $data,
                                                         'key' => $key
@@ -137,12 +138,12 @@
                                     {{--galley_masonry--}}
                                     @if($component->type == "galley_masonry")
                                         <slot id="galley_masonry" data-offer-type="galley_masonry">
-                                            @include('admin.new-pages.components.common-field.title')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
 
                                             @if(isset($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
-                                                    @include('admin.new-pages.components.common-field.multiple-image', [
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'galley_masonry',
                                                         'data' => $data,
                                                         'key' => $key
