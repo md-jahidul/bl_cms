@@ -36,24 +36,17 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
+//        dd($data);
         DB::transaction(function () use ($data, $id) {
-//            if ($id) {
-//                if (isset($data['removedImages'])) {
-//                    $oldImgArray = explode(',', $data['removedImages']);
-//                    foreach ($oldImgArray as $item){
-//                        if (!empty($item)){
-//                            $this->deleteFile($item);
-//                        }
-//                    }
-//                }
-//                $this->componentDataRepository->deleteComponentData($id);
-//                $componentId = $id;
-//            }
-//              else {
-//
-//            }
-
             $components = $this->componentRepository->findAll();
+
+            if (isset($data["attribute"]['image_file'])) {
+                $imgUrl = $this->fileUpload($data["attribute"]['image_file']);
+                $data["attribute"]['image']['en'] = $imgUrl;
+                $data["attribute"]['image']['bn'] = $imgUrl;
+                unset($data["attribute"]['image_file']);
+            }
+
             $componentData = [
                 'page_id' => $data['pageId'],
                 'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
@@ -69,74 +62,60 @@ class PgComponentService
             $componentInfo = $this->componentRepository->createOrUpdate($componentData, $id);
             $componentId = $componentInfo->id;
 
-//            $componentDataInfo = [];
-            foreach (array_values($data['componentData']) as $index => $item) {
-                $tabParentId = 0;
-                foreach ($item as $key => $field) {
+            if (isset($data['componentData'])){
+                foreach (array_values($data['componentData']) as $index => $item) {
+                    $tabParentId = 0;
+                    foreach ($item as $key => $field) {
 
-                    $valueEn = $field['value_en'] ?? null;
-                    if ($key != "content" && $key != "is_static_component" && $key != "component_name") {
-                        $componentDataInfo = [
-                            'id' => $field['id'] ?? null,
-                            'component_id' => $componentId,
-                            'parent_id' => 0,
-                            'key' => $key,
-                            'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
-                            'value_bn' => $field['value_bn'] ?? null,
-//                            'group' => (int) $field['group'] ?? 0,
-                            'group' => $index + 1,
-                        ];
+                        $valueEn = $field['value_en'] ?? null;
+                        if ($key != "content" && $key != "is_static_component" && $key != "component_name") {
+                            $componentDataInfo = [
+                                'id' => $field['id'] ?? null,
+                                'component_id' => $componentId,
+                                'parent_id' => 0,
+                                'key' => $key,
+                                'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
+                                'value_bn' => $field['value_bn'] ?? null,
+                                'group' => $index + 1,
+                            ];
+                            $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
+                        }
 
-//                        dd($componentDataInfo, $field['id']);
+                        if (isset($field['is_tab'])) {
+                            $tabParentId = $componentDataSave->id ?? 0;
+                        }
 
-//                        dd($componentDataInfo);
-                        $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
+                        if ($key == "is_static_component" || $key == "component_name") {
+                            $componentDataInfo = [
+                                'component_id' => $componentId,
+                                'parent_id' => $tabParentId,
+                                'key' => $key,
+                                'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
+                                'value_bn' => $field['value_bn'] ?? null,
+                                'group' => $field['group'] ?? 0,
+                            ];
+                            $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
+                        }
 
-//                        dd($componentDataSave);
-//                        if ($componentDataInfo['group'] == 2 && $componentDataInfo['key'] == "title"){
-//                            dd($componentDataInfo, $componentDataSave);
-//                        }
-                    }
-
-                    if (isset($field['is_tab'])) {
-                        $tabParentId = $componentDataSave->id ?? 0;
-                    }
-
-                    if ($key == "is_static_component" || $key == "component_name") {
-                        $componentDataInfo = [
-                            'component_id' => $componentId,
-                            'parent_id' => $tabParentId,
-                            'key' => $key,
-                            'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
-                            'value_bn' => $field['value_bn'] ?? null,
-                            'group' => $field['group'] ?? 0,
-                        ];
-                        $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
-                    }
-
-                    if ($key == "content") {
-                        foreach ($field as  $tabItems) {
-                            foreach ($tabItems as $tabItemKey => $tabItem) {
-                                $valueEn = $tabItem['value_en'] ?? null;
-                                $tabItemData = [
-                                    'component_id' => $componentId,
-                                    'parent_id' => $tabParentId,
-                                    'key' => $tabItemKey,
-                                    'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
-                                    'value_bn' => $tabItem['value_bn'] ?? null,
-                                    'group' => $tabItem['group'] ?? 0,
-                                ];
-                                $this->componentDataRepository->save($tabItemData);
+                        if ($key == "content") {
+                            foreach ($field as  $tabItems) {
+                                foreach ($tabItems as $tabItemKey => $tabItem) {
+                                    $valueEn = $tabItem['value_en'] ?? null;
+                                    $tabItemData = [
+                                        'component_id' => $componentId,
+                                        'parent_id' => $tabParentId,
+                                        'key' => $tabItemKey,
+                                        'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
+                                        'value_bn' => $tabItem['value_bn'] ?? null,
+                                        'group' => $index + 1,
+                                    ];
+                                    $this->componentDataRepository->save($tabItemData);
+                                }
                             }
                         }
                     }
                 }
             }
-//            dd($componentDataSave);
-
-//            dd($data);
-//            dd($data, $componentDataInfo);
-//            return $this->componentDataRepository->saveMany($componentDataInfo);
         });
     }
 
@@ -151,9 +130,11 @@ class PgComponentService
     public function saveSortedData($data)
     {
         if (!empty($data)) {
-            foreach ($data as $item){
-                $pageComponent = $this->componentRepository->findOne($item['id']);
-                $pageComponent->order = $item['position'];
+            foreach ($data['position'] as $item){
+                $comId = $item[0];
+                $comPosition = $item[1];
+                $pageComponent = $this->componentRepository->findOne($comId);
+                $pageComponent->order = $comPosition;
                 $pageComponent->update();
             }
         }

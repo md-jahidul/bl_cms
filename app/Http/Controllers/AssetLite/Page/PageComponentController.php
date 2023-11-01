@@ -90,15 +90,6 @@ class PageComponentController extends Controller
         return view('admin.new-pages.components.edit', compact('component', 'componentTypes', 'pageId'));
     }
 
-//    /**
-//     * Update the specified resource in storage.
-//     */
-//    public function update(Request $request, string $id)
-//    {
-//        $this->pgComponentService->storeUpdatePageComponent($request->all(), $id);
-//        return Redirect::route('pages.show', $request->pageId)->with('success', 'Page Component Update Successfully');
-//    }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -115,6 +106,6 @@ class PageComponentController extends Controller
     public function componentOrderingSave(Request $request)
     {
         $this->pgComponentService->saveSortedData($request->all());
-        return Redirect::back()->with('success', 'Page Component Sorted Successfully');
+        return "Success";
     }
 }

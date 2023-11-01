@@ -13,6 +13,15 @@
         </div>`
     }
 
+    var attributeImage =
+        `<div class="form-group col-md-12">
+            <label for="alt_text" class="">Image</label>
+            <div class="custom-file">
+                <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+            </div>
+        </div>`
+
     var attributeTitle =
         `<div class="form-group col-md-6">
             <label for="title_en">Title Field (English)</label>
@@ -20,7 +29,7 @@
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-6">
-            <label for="title_en">Title Field (English)</label>
+            <label for="title_en">Title Field (Bangla)</label>
             <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name bangla">
             <div class="help-block"></div>
         </div>`
@@ -239,7 +248,7 @@
         let componentType = $(this).val();
         let componentData = '';
         if (componentType === "banner_with_button"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeButton + singleImage;
+            componentData += attributeTitle + attributeTitleSubTitle + attributeButton + attributeImage;
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +

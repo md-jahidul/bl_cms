@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Auth;
 trait LogModelAction
 {
     public static function boot() {
-  
+
         parent::boot();
-  
-        static::created(function($item) {           
-            
+
+        static::created(function($item) {
+
             LogInDb::create([
                 'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
+                'user_name' => Auth::user(),
                 'action' => ModelActions::C,
                 'data' => $item,
                 'model' => (new \ReflectionClass($item))->getName()
@@ -24,11 +24,11 @@ trait LogModelAction
 
         });
 
-        static::updating(function($item) {      
-            
+        static::updating(function($item) {
+
             LogInDb::create([
                 'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
+                'user_name' => Auth::user(),
                 'action' => ModelActions::U,
                 'data' => json_encode([
                     'before' => $item,
@@ -38,17 +38,17 @@ trait LogModelAction
             ]);
 
         });
-  
-        static::deleted(function($item) {            
+
+        static::deleted(function($item) {
 
             LogInDb::create([
                 'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
+                'user_name' => Auth::user(),
                 'action' => ModelActions::D,
                 'data' => $item,
                 'model' => (new \ReflectionClass($item))->getName()
             ]);
-            
+
         });
     }
 }
