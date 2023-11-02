@@ -16,7 +16,7 @@ trait LogModelAction
 
             LogInDb::create([
                 'user_id' => Auth::id(),
-                'user_name' => Auth::user(),
+                'user_name' => Auth::user()->name,
                 'action' => ModelActions::C,
                 'data' => $item,
                 'model' => (new \ReflectionClass($item))->getName()
@@ -28,7 +28,7 @@ trait LogModelAction
 
             LogInDb::create([
                 'user_id' => Auth::id(),
-                'user_name' => Auth::user(),
+                'user_name' => Auth::user()->name,
                 'action' => ModelActions::U,
                 'data' => json_encode([
                     'before' => $item,
@@ -43,7 +43,7 @@ trait LogModelAction
 
             LogInDb::create([
                 'user_id' => Auth::id(),
-                'user_name' => Auth::user(),
+                'user_name' => Auth::user()->name,
                 'action' => ModelActions::D,
                 'data' => $item,
                 'model' => (new \ReflectionClass($item))->getName()
