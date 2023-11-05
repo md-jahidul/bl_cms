@@ -9,9 +9,9 @@
             <div class="col-md-12">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            <a href="{{ route('global-settings.create') }}" class="btn btn-success">Create New Setting</a>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <a href="{{ route('global-settings.create') }}" class="btn btn-success">Create New Setting</a>--}}
+{{--                        </div>--}}
                         <div class="col-md-6">
                             <div class="input-group mb-3">
                                 <input type="text" id="keyFilter" class="form-control"
