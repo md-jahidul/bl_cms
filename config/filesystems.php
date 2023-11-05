@@ -87,7 +87,7 @@ return [
             //'password' => 'encryption-password',
 
             // Optional SFTP Settings...
-             'port' => 22,
+            'port' => 22,
             // 'root' => '',
             // 'timeout' => 30,
         ]
@@ -99,6 +99,8 @@ return [
         'monthly_update_attachments' => 'monthly_update_attachments',
     ],
 
-    'file_base_url' => env('FILE_BASE_URL', '/uploads/')
+    'file_base_url' => env('FILE_BASE_URL', '/uploads/'),
+    'media_storage_location' => env('MEDIA_STORAGE_LOCATION', 'http://192.168.0.107:6080/uploads')
 
 ];
+//http://192.168.0.107:8080
