@@ -37,7 +37,7 @@ class MyBlSpecialTypeService
         return $this->productSpecialTypeRepository->findAll();
     }
 
-    public function storeProductSpecialType($specialType): bool
+    public function storeProductSpecialType($specialType)
     {
         try {
             DB::transaction(function () use ($specialType) {
@@ -68,14 +68,14 @@ class MyBlSpecialTypeService
     }
 
 
-    public function tableSortable($data): Response
+    public function tableSortable($data)
     {
         $this->productSpecialTypeRepository->productSpecialTypeTableSort($data);
         Redis::del('product-special-types');
         return new Response('Sequence has been successfully update');
     }
 
-    public function updateProductSpecialType($data, $id): bool
+    public function updateProductSpecialType($data, $id)
     {
         try {
             $productSpecialType = $this->findOne($id);
