@@ -5,9 +5,9 @@
             <div class="form-actions col-md-12 mt-0 type-line"></div>
         </div>`
 
-    var itemCountLine = function (itemNo) {
+    var itemCountLine = function (itemNo = null, title = "Item") {
         return `<div class="col-md-12">
-            <span><h5><strong class="item-counter">Item ${itemNo}</strong></h5></span>
+            <span><h5><strong class="item-counter">${title + " " + itemNo}</strong></h5></span>
             <div class="form-actions col-md-12 mt-0 item-divider"></div>
         </div>`
     }
@@ -103,7 +103,9 @@
         </div>`
     }
 
-    var multiItemTitle = function (index = 0) {
+    var multiItemTitle = function (index = 0, isTab = false) {
+        let tabFieldName = `componentData[${index}}][tab_items][title][value_en]`;
+
         return `<div class="form-group col-md-6">
             <label for="title_en">Title En</label>
             <input type="text" name="componentData[${index}][title][value_en]" class="form-control">
@@ -212,10 +214,22 @@
             <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i> Add More</button>
         </div>`
 
+    var addTabBtn  =
+        `<div class="form-group col-md-12">
+            <label for="alt_text"></label>
+            <button type="button" class="btn-sm btn-outline-warning block add-tab-item" ><i class="la la-plus"></i> Add More</button>
+        </div>`
+
     var removeBtn =
         `<div class="form-group col-md-1 ">
            <label for="alt_text"></label>
            <i class="la la-trash remove-image btn-sm btn-danger"></i>
+        </div>`;
+
+    var removeTabItemBtn =
+        `<div class="form-group col-md-1 ">
+           <label for="alt_text"></label>
+           <i class="la la-trash remove-tab-item btn-sm btn-danger"></i>
         </div>`;
 
     function dropify(){
@@ -234,6 +248,7 @@
         let componentElementId = $('#component_data');
         let componentType = $(this).val();
         let componentData = '';
+
         if (componentType === "banner_with_button"){
             componentData += attributeTitle + attributeTitleSubTitle + attributeButton + attributeImage;
         }else if(componentType === "hovering_card_component"){
@@ -306,6 +321,27 @@
                     itemCountLine(1) +
                     imageOne() +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_one"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine +
+                    addBtn +
+                    itemCountLine(1, "Tab") +
+                    multiItemTitle() +
+                    `<div class="col-md-11 ml-5">
+                        <div class="row tab-item">
+                            ${
+                                addTabBtn +
+                                itemCountLine('', '') +
+                                multiItemTitle() +
+                                multiItemDescription() +
+                                imageOne()
+                            }
+                        </div>
+                    </div>` +
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }
@@ -318,7 +354,6 @@
         // var fullUrl = "{{ asset('component-images') }}/" + componentType;
         // $("#componentImg").attr('src', fullUrl)
     })
-
 
     $(document).on('click', '#plus-image', function () {
         var option_count = $('.page_component_multi_item');
@@ -378,10 +413,26 @@
                     imageOne(index) +
                     removeBtn +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_one"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1, "Tab") +
+                    multiItemTitle() +
+                `<div class="col-md-11 ml-5">
+                    <div class="row tab-item">
+                        ${
+                            addTabBtn +
+                            itemCountLine('', '') +
+                            multiItemTitle() +
+                            multiItemDescription() +
+                            imageOne()
+                        }
+                    </div>
+                    </div>` +
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }
-
 
         $('#component_data').append(componentData);
         $('#' + componentType).append(componentData);
@@ -433,4 +484,29 @@
             })
         }
     });
+
+    // Tab Item Add
+    $(document).on('click', '.add-tab-item', function (e) {
+        console.log($(e.target).parent().parent())
+        let tabItem = $(e.target).parent().parent()
+
+        let componentData =
+            `<slot>` +
+                itemCountLine('', '') +
+                multiItemTitle() +
+                multiItemDescription() +
+                imageOne() + removeTabItemBtn +
+            `</slot>`
+        tabItem.append(componentData)
+        dropify();
+    })
+    // Tab Item Remove
+    $(document).on('click', '.remove-tab-item', function (event) {
+        $(event.target).parent().parent().remove();
+        // let itemCounter = $('.item-counter');
+        // itemCounter.each(function (index) {
+        //     let totalItem = index + 1;
+        //     $(this).html('Item ' + totalItem)
+        // })
+    })
 })();

@@ -36,7 +36,7 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-//        dd($data);
+        dd($data);
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
