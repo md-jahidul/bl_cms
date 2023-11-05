@@ -331,7 +331,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post(
         'mybl/core-product/download',
         'CMS\MyblProductEntryController@downloadMyblProducts'
-    )->name('mybl.product.downlo    ad');
+    )->name('mybl.product.download');
     Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
         ->name('mybl.core-product.save');
     Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')
