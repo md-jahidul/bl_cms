@@ -138,7 +138,11 @@ class ComponentHelper
                 'config' => ['left_image' => true]
             ],
             'galley_masonry' => [
-                'title' => 'Galley Masonry ',
+                'title' => 'Galley Masonry',
+                'config' => ['left_image' => true]
+            ],
+            'tab_component_with_image_card_one' => [
+                'title' => 'Tab component with image card one',
                 'config' => ['left_image' => true]
             ]
         ];
