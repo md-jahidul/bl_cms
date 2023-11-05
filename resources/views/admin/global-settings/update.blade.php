@@ -22,6 +22,7 @@
                     <option value="number" @if ($settings->value_type === 'number') selected @endif>Number</option>
                     <option value="string" @if ($settings->value_type === 'string') selected @endif>String</option>
                     <option value="json" @if ($settings->value_type === 'json') selected @endif>JSON</option>
+                    <option value="boolean" @if ($settings->value_type === 'boolean') selected @endif>Boolean</option>
                 </select>
             </div>
 
@@ -37,6 +38,14 @@
                 <label for="string_value">String Value</label>
                 <input type="text" class="form-control" id="string_value" name="string_value"
                        value="{{ $settings->settings_value }}">
+            </div>
+
+            <div class="form-group" id="boolean_input"
+                 @if ($settings->value_type !== 'boolean') style="display: none;" @endif>
+                <label for="boolean_value">Boolean Value</label>
+                <input type="text" class="form-control" id="boolean_value" name="boolean_value"
+                       value="{{ $settings->settings_value }}">
+                <div id="boolean_error" style="color: red;"></div>
             </div>
 
             <div class="form-group" id="json_input"
@@ -72,7 +81,7 @@
 
             <div class="form-group">
                 <label for="status">Status</label>
-                <select class="form-control" id="status" name="status">
+                <select class="form-control" id="status" name="status" readonly="true" disabled>
                     <option value="1" @if ($settings->status == 1) selected @endif>True</option>
                     <option value="0" @if ($settings->status == 0) selected @endif>False</option>
                 </select>
@@ -88,6 +97,9 @@
             const valueTypeSelect = document.getElementById('value_type');
             const numberInput = document.getElementById('number_input');
             const stringInput = document.getElementById('string_input');
+            const booleanInput = document.getElementById('boolean_input');
+            const booleanValueInput = document.getElementById('boolean_value');
+            const booleanError = document.getElementById('boolean_error');
             const jsonInput = document.getElementById('json_input');
             const jsonValueInput = document.getElementById('json_value');
             const jsonError = document.getElementById('json_error');
@@ -108,6 +120,11 @@
                 stringInput.style.display = 'block';
             }
 
+            function showBooleanInput() {
+                hideAllInputs();
+                booleanInput.style.display = 'block';
+            }
+
             // Function to show JSON input
             function showJsonInput() {
                 hideAllInputs();
@@ -119,6 +136,7 @@
                 numberInput.style.display = 'none';
                 stringInput.style.display = 'none';
                 jsonInput.style.display = 'none';
+                booleanInput.style.display = 'none';
             }
 
             // Handle Value Type change
@@ -129,6 +147,8 @@
                     showStringInput();
                 } else if (valueTypeSelect.value === 'json') {
                     showJsonInput();
+                } else if (valueTypeSelect.value === 'boolean') {
+                    showBooleanInput();
                 }
             });
 
@@ -139,6 +159,15 @@
                     jsonError.textContent = ''; // Clear error message
                 } catch (error) {
                     jsonError.textContent = 'Please enter a valid JSON input.';
+                }
+            });
+            booleanValueInput.addEventListener('input', function () {
+                const inputValue = booleanValueInput.value.trim(); // Trim any leading/trailing spaces
+
+                if (inputValue === "0" || inputValue === "1") {
+                    booleanError.textContent = ''; // Clear error message
+                } else {
+                    booleanError.textContent = 'Please enter a valid boolean value (0 or 1).';
                 }
             });
 
@@ -164,6 +193,8 @@
                     settingsValue = document.getElementById('number_value').value;
                 } else if (selectedValueType === 'string') {
                     settingsValue = document.getElementById('string_value').value;
+                } else if (selectedValueType === 'boolean') {
+                    settingsValue = document.getElementById('boolean_value').value;
                 } else if (selectedValueType === 'json') {
                     settingsValue = jsonValueInput.value;
 

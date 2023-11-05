@@ -30,7 +30,11 @@ class GenericSliderImage extends Model
         'banner_text_bn',
         'subtitle_text_en',
         'subtitle_text_bn',
-        'deeplink'
+        'deeplink',
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
     ];
 
     protected $casts = [

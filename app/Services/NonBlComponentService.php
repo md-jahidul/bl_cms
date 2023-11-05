@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\MyblSliderRepository;
 use App\Repositories\NonBlComponentRepository;
 use App\Traits\CrudTrait;
@@ -19,8 +20,6 @@ class NonBlComponentService
      * @var MyblSliderRepository
      */
     private $sliderRepository;
-
-    protected const REDIS_KEY = "non_bl_component";
 
     public function __construct(
         NonBlComponentRepository $componentRepository,
@@ -68,7 +67,9 @@ class NonBlComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del(self::REDIS_KEY);
+
+            Helper::removeVersionControlRedisKey('nonbl');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -91,7 +92,8 @@ class NonBlComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return response("Successfully status changed");
     }
 
@@ -105,7 +107,8 @@ class NonBlComponentService
         $data['is_eligible'] = 0;
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return response("Component update successfully!");
     }
 
@@ -113,7 +116,8 @@ class NonBlComponentService
     {
         $component = $this->findOne($data['id']);
         $component->update($data);
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return response("Component update successfully!");
     }
 
@@ -121,7 +125,8 @@ class NonBlComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('nonbl');
+
         return [
             'message' => 'Component delete successfully',
         ];

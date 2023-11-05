@@ -27,7 +27,9 @@ class MyblManageRequest extends FormRequest
         return [
             'type' => 'required',
             'title_en' => 'required',
-            'title_bn' => 'required'
+            'title_bn' => 'required',
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
         ];
     }
 }

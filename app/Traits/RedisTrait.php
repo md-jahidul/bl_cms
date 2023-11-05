@@ -56,6 +56,19 @@ trait RedisTrait
             $this->handleRedisException($e);
         }
     }
+    public function deleteRedisKeys(array $keys)
+    {
+        try {
+            $deletedCount = 0;
+            foreach ($keys as $key) {
+                $deletedCount += Redis::del($key);
+            }
+            return $deletedCount;
+        } catch (\Exception $e) {
+            $this->handleRedisException($e);
+        }
+    }
+
     // You can add more methods for other Redis data structures like lists, sets, etc.
 
     // Handle Redis exceptions in a central place

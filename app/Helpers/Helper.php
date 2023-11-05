@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use App\Models\Config;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class Helper
 {
@@ -147,7 +149,8 @@ class Helper
             "VOLTE"                   => 'Volte',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
-            "DEEN"                    => 'Deen'
+            "DEEN"                    => 'Deen',
+            "AMAR_PLAN"               => 'Amar Plan'
         ];
     }
 
@@ -331,5 +334,33 @@ class Helper
            'register_password_set' => 'Register Password Set',
            'number_verification' => 'Number Verification'
         ];
+    }
+
+    public static function versionCode($android_version_code, $ios_version_code): array
+    {
+        $android_version_code_array = explode('-', $android_version_code);
+        $ios_version_code_array = explode('-', $ios_version_code);
+
+        return [
+            'android_version_code_min' => $android_version_code ? $android_version_code_array[0] : 0,
+            'android_version_code_max' => $android_version_code ? $android_version_code_array[1]: 999999999,
+            'ios_version_code_min' => $ios_version_code ? $ios_version_code_array[0] : 0,
+            'ios_version_code_max' => $ios_version_code ? $ios_version_code_array[1] : 999999999
+        ];
+
+    }
+
+    public static function removeVersionControlRedisKey($keyName = '')
+    {
+        if ($keyName != '') {
+            Redis::del('mybl_component_' . $keyName);
+        } else {
+            Redis::del([
+                'mybl_component_home',
+                'mybl_component_content',
+                'mybl_component_commerce',
+                'mybl_component_nonbl',
+            ]);
+        }
     }
 }

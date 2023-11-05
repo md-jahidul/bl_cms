@@ -111,6 +111,11 @@ class MyblManageController extends Controller
      */
     public function storeItem(Request $request, $parent_id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->manageService->storeItem($request->all());
         Session::flash('success', $response->getContent());
         return redirect(route("mybl-manage-items.index", $parent_id));
@@ -142,7 +147,8 @@ class MyblManageController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->manageService->findOrFail($id);
+        $category = $this->manageService->editCategory($id);
+
         return view('admin.mybl-manage.categories.edit', compact('category'));
     }
 
@@ -155,7 +161,7 @@ class MyblManageController extends Controller
     public function editItem($parent_id, $id)
     {
         $manageCategory = $this->manageService->findOne($parent_id);
-        $item = $this->manageItemRepository->findOrFail($id);
+        $item = $this->manageService->editItem($id);
         $deeplinkActions = Helper::deepLinkList();
         $actionList = Helper::navigationActionList();
         return view('admin.mybl-manage.edit', compact('item', 'manageCategory', 'deeplinkActions', 'actionList'));
@@ -184,6 +190,11 @@ class MyblManageController extends Controller
      */
     public function updateItem(Request $request, $parent_id, $id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->manageService->updateItem($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route("mybl-manage-items.index", $parent_id));
