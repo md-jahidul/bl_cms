@@ -27,7 +27,7 @@
         @include('admin.new-pages.components.common-field.multi-item.description')
         @include('admin.new-pages.components.common-field.multi-item.title-two')
         @include('admin.new-pages.components.common-field.multi-item.description-two')
-    @elseif(isset($component_type) && $component_type == "step_cards_with_hovering_effect")
+    @elseif(isset($component_type) && $component_type == "galley_masonry")
         @include('admin.new-pages.components.common-field.multi-item.image')
     @else
 
@@ -43,7 +43,7 @@
         <div class="form-group col-md-1">
             <label for="alt_text"></label>
             <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $component->id }}"
-               data-group="{{ $data['image']['group'] }}"></i>
+               data-group="{{ isset($data['image']['group']) ? $data['image']['group'] : '' }}"></i>
         </div>
     @endif
 </slot>

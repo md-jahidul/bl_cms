@@ -78,7 +78,9 @@ class PageComponentController extends Controller
                 'group' => $data->group,
             ];
         }
+
         $component->component_data_mod = array_values($componentData);
+
         unset($component->componentData);
 
         if ($component->type == "tab-component"){

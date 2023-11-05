@@ -172,37 +172,37 @@
     var doubleButton  =
         `<div class="form-group col-md-4">
             <label for="button_en">Button One Title (English)</label>
-            <input type="text" name="componentData[0][button_one_name][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_one_name][en]"  class="form-control" placeholder="Enter button name bangla">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button One Title (Bangla)</label>
-            <input type="text" name="componentData[0][button_one_name][value_bn]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_one_name][bn]"  class="form-control" placeholder="Enter button name bangla">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button One URL</label>
-            <input type="text" name="componentData[0][button_one_link][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_one_link][en]"  class="form-control" placeholder="Enter button name bangla">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_en">Button Two Title (English)</label>
-            <input type="text" name="componentData[0][button_name_two][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_two_name][en]"  class="form-control" placeholder="Enter button name bangla">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button Two Title (Bangla)</label>
-            <input type="text" name="componentData[0][button_name_two][value_bn]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_two_name][bn]"  class="form-control" placeholder="Enter button name bangla">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button Two URL</label>
-            <input type="text" name="componentData[0][button_two_link][value_en]"  class="form-control" placeholder="Enter button url bangla">
+            <input type="text" name="attribute[button_two_link][en]"  class="form-control" placeholder="Enter button url bangla">
             <div class="help-block"></div>
         </div>`
 
@@ -262,10 +262,9 @@
                     multiItemTitle() +
                     multiItemDescription() +
                     multiItemButton() +
-
                 `</slot>`;
         }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
+            componentData += attributeTitle + attributeTitleSubTitle + attributeImage + doubleButton;
         }else if(componentType === "top_image_card_with_button"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -385,7 +384,7 @@
 
 
         $('#component_data').append(componentData);
-        // $('#' + componentType).append(input);
+        $('#' + componentType).append(componentData);
         dropify();
     });
 

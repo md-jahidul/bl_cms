@@ -36,6 +36,7 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
+//        dd($data);
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
@@ -43,7 +44,12 @@ class PgComponentService
                 $imgUrl = $this->fileUpload($data["attribute"]['image_file']);
                 $data["attribute"]['image']['en'] = $imgUrl;
                 $data["attribute"]['image']['bn'] = $imgUrl;
-                unset($data["attribute"]['image_file']);
+            }
+
+            if ($id && !isset($data["attribute"]['image_file'])) {
+                $component = $this->findOne($id);
+                $data["attribute"]['image']['en'] = $component['attribute']['image']['en'] ?? null;
+                $data["attribute"]['image']['bn'] = $component['attribute']['image']['en'] ?? null;
             }
 
             $componentData = [
@@ -57,8 +63,8 @@ class PgComponentService
             if (!$id) {
                 $componentData['order'] = $components->count() + 1;
             }
-
             $componentInfo = $this->componentRepository->createOrUpdate($componentData, $id);
+            unset($data['image_file']);
             $componentId = $componentInfo->id;
 
             if (isset($data['componentData'])){
@@ -78,7 +84,7 @@ class PgComponentService
                                 'value_bn' => isset($field['value_bn']) && $field['value_bn'] != null ? $field['value_bn'] : $itemEn,
                                 'group' => $index + 1,
                             ];
-
+//                            dd($componentDataInfo);
                             $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
                         }
 
