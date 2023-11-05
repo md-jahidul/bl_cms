@@ -16,8 +16,8 @@
                     @foreach($components as $list)
                         <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
                             <td><i class="icon-cursor-move icons"></i></td>
-                            <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                            <td>{{ $list->title_en  }}</td>
+                            <td>{{ ucwords(str_replace('_', ' ', $list->type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                            <td>{{ $list->name  }}</td>
                             <td class="text-right">
                                 <a href="{{ url("$edit/$list->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                 <a href="#" remove="{{ url("$destroy/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
@@ -44,17 +44,9 @@
 @endpush
 
 @push('page-js')
-<script type="text/javascript">
-    var auto_save_url = "{{ url($componentSort) }}";
-    // jQuery(document).ready(function($){
-    //     $('input.section_name').on('keyup', function(){
-    //         var sectionName = $('#product_details_form').find('.section_name').val();
-    //         var sectionNameLower = sectionName.toLowerCase();
-    //         var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '-');
-    //         $('#product_details_form').find('.auto_slug').empty().val(sectionNameRemoveSpace);
-    //     });
-    // });
-</script>
+    <script type="text/javascript">
+        var auto_save_url = "{{ url($componentSort) }}";
+    </script>
 @endpush
 
 

@@ -12,6 +12,7 @@ use App\Traits\CrudTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CampaignNewModalityService
@@ -65,6 +66,8 @@ class CampaignNewModalityService
     public function storeCampaign($data): Response
     {
         try {
+            DB::beginTransaction();
+
             if ($data['reward_getting_type'] == 'single_time') {
                 $data['max_amount'] = null;
                 $data['number_of_apply_times'] = null;
@@ -114,10 +117,11 @@ class CampaignNewModalityService
                 );
             }
 
+            DB::commit();
             return new Response("New Campaign Modality has been successfully created");
         } catch (\Exception $e) {
+            DB::rollback();
             $error = $e->getMessage();
-            dd($error);
             Log::error($error);
             return new Response("New Campaign Modality campaign Create Failed. Error: $error");
         }
