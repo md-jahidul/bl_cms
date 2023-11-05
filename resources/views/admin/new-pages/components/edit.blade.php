@@ -49,6 +49,7 @@
                                         <slot id="banner_with_button" data-offer-type="banner_with_button">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @include('admin.new-pages.components.common-field.attribute.image')
                                         </slot>
                                     @endif
@@ -93,8 +94,8 @@
                                         <slot id="hiring_now_component" data-offer-type="hiring_now_component">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
-                                            @include('admin.new-pages.components.common-field.single-image')
-                                            @include('admin.new-pages.components.common-field.button-field')
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.double-button')
                                         </slot>
                                     @endif
 
@@ -336,6 +337,7 @@
 @endpush
 @push('page-js')
     <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/custom-js/page-component.js') }}" type="text/javascript"></script>
     {{--    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>--}}
     {{--    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
@@ -346,7 +348,7 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     {{--    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>--}}
-    <script src="{{ asset('js/custom-js/page-multi-item.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/custom-js/page-multi-item.js') }}" type="text/javascript"></script>--}}
 
     {{--    <script>--}}
     {{--        $(function () {--}}
