@@ -27,7 +27,6 @@ class MyBlSpecialTypeService
     public function __construct(MyBlSpecialTypeRepository $productSpecialTypeRepository, GlobalSettingRepository $globalSettingsRepository)
     {
         $this->globalSettingsRepository = $globalSettingsRepository;
-
         $this->productSpecialTypeRepository = $productSpecialTypeRepository;
         $this->setActionRepository($productSpecialTypeRepository);
     }
@@ -102,16 +101,13 @@ class MyBlSpecialTypeService
 
     public function insertIntoGlobalSettings()
     {
-        $this->globalSettingsRepository->delEntryBySettingsKey('product-special-types');
-//        $special_types = $this->productSpecialTypeRepository->findAll();
-        $special_types = $this->productSpecialTypeRepository->findByProperties([], ['name_en',
+        $this->globalSettingsRepository->delEntryBySettingsKey('special_types');
+        $special_types = $this->productSpecialTypeRepository->findByProperties(['status' => 1], ['name_en',
             'name_bn',
             'slug',
-            'icon',
-            'display_order',
-            'status']);
+            'icon']);
         $data['settings_value'] = json_encode($special_types, true);
-        $data['settings_key'] = 'product-special-types';
+        $data['settings_key'] = 'special_types';
         $data['value_type'] = 'json';
         $data['updated_by'] = Auth::id();
         $this->globalSettingsRepository->create($data);
