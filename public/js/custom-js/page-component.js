@@ -80,11 +80,18 @@
             </div>
         </div>`
 
-    var imageOne = function (index= 0) {
+    var imageOne = function (index= 0, isTab = false, tabIndex = 0) {
+        let fieldName = ""
+        if (isTab) {
+            fieldName += `componentData[${index}][tab_items][${tabIndex}][image][value_en]`;
+        }else {
+            fieldName += `componentData[${index}][image][value_en]`;
+        }
+
         return `<div class="col-md-12 col-xs-12">
             <div class="form-group">
                 <label for="message">Image</label>
-                <input type="file" class="dropify" name="componentData[${index}][image][value_en]" data-height="80"/>
+                <input type="file" class="dropify" name="${fieldName}" data-height="80"/>
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
             </div>
@@ -103,28 +110,51 @@
         </div>`
     }
 
-    var multiItemTitle = function (index = 0, isTab = false) {
-        let tabFieldName = `componentData[${index}}][tab_items][title][value_en]`;
+    var multiItemTitle = function (index = 0, isTab = false, tabIndex = 0) {
+        let fieldNameEn = ""
+        let fieldNameBn = ""
+        let tabInput = ""
+
+        if (isTab) {
+            fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][title][value_en]`;
+            fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][title][value_bn]`;
+            tabInput += `<input type="hidden" name="componentData[${index}][title][is_tab]" value="1">`;
+        }else {
+            fieldNameEn += `componentData[${index}][title][value_en]`;
+            fieldNameBn += `componentData[${index}][title][value_bn]`;
+        }
 
         return `<div class="form-group col-md-6">
             <label for="title_en">Title En</label>
-            <input type="text" name="componentData[${index}][title][value_en]" class="form-control">
+            ${tabInput}
+            <input type="text" name="${fieldNameEn}" class="form-control">
         </div>
         <div class="form-group col-md-6">
             <label for="title_en">Title Bn</label>
-            <input type="text" name="componentData[${index}][title][value_bn]" class="form-control">
+            <input type="text" name="${fieldNameBn}" class="form-control">
         </div>`
     }
 
-    var multiItemDescription  = function (index = 0) {
+    var multiItemDescription  = function (index = 0, isTab = false, tabIndex = 0) {
+        let fieldNameEn = ""
+        let fieldNameBn = ""
+
+        if (isTab) {
+            fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][desc][value_en]`;
+            fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][desc][value_bn]`;
+        }else {
+            fieldNameEn += `componentData[${index}][desc][value_en]`;
+            fieldNameBn += `componentData[${index}][desc][value_bn]`;
+        }
+
         return `<div class="form-group col-md-6">
             <label for="title_en">Description En</label>
-            <textarea type="text" rows="3" name="componentData[${index}][desc][value_en]" class="form-control"></textarea>
+            <textarea type="text" rows="3" name="${fieldNameEn}" class="form-control"></textarea>
         </div>
 
         <div class="form-group col-md-6">
             <label for="title_en">Description Bn</label>
-            <textarea type="text" rows="3" name="componentData[${index}][desc][value_bn]" class="form-control"></textarea>
+            <textarea type="text" rows="3" name="${fieldNameBn}" class="form-control"></textarea>
         </div>`
     }
 
@@ -332,13 +362,14 @@
                     multiItemTitle() +
                     `<div class="col-md-11 ml-5">
                         <div class="row tab-item">
-                            ${
-                                addTabBtn +
-                                itemCountLine('', '') +
-                                multiItemTitle() +
-                                multiItemDescription() +
-                                imageOne()
-                            }
+                            <slot class="tab_item_count">
+                                ${
+                                    addTabBtn +
+                                    multiItemTitle(0, true, 0) +
+                                    multiItemDescription(0, true, 0) +
+                                    imageOne(0, true, 0)
+                                }
+                            </slot>
                         </div>
                     </div>` +
                 `</slot>`;
@@ -417,16 +448,18 @@
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1, "Tab") +
-                    multiItemTitle() +
+                    multiItemTitle(index) +
                 `<div class="col-md-11 ml-5">
                     <div class="row tab-item">
-                        ${
-                            addTabBtn +
-                            itemCountLine('', '') +
-                            multiItemTitle() +
-                            multiItemDescription() +
-                            imageOne()
-                        }
+                        <slot class="tab_item_count">
+                            ${
+                                addTabBtn +
+                                itemCountLine('', '') +
+                                multiItemTitle(index, true, 0) +
+                                multiItemDescription(index, true, 0) +
+                                imageOne(index, true, 0)
+                            }
+                        </slot>
                     </div>
                     </div>` +
                 `</slot>`;
@@ -487,16 +520,24 @@
 
     // Tab Item Add
     $(document).on('click', '.add-tab-item', function (e) {
-        console.log($(e.target).parent().parent())
-        let tabItem = $(e.target).parent().parent()
+        let tabItem = $(e.target).parent().parent().parent()
+
+        let option_count = $('.page_component_multi_item');
+        let index = option_count.length - 1;
+
+        let tabItems = tabItem.children();
+        let tabItemIndex = tabItems.length
 
         let componentData =
-            `<slot>` +
-                itemCountLine('', '') +
-                multiItemTitle() +
-                multiItemDescription() +
-                imageOne() + removeTabItemBtn +
-            `</slot>`
+            `<slot class="tab_item_count">
+                ${
+                    itemCountLine('', '') +
+                    multiItemTitle(index, true, tabItemIndex) +
+                    multiItemDescription(index, true, tabItemIndex) +
+                    imageOne(index, true, tabItemIndex) +
+                    removeTabItemBtn
+                }
+            </slot>`
         tabItem.append(componentData)
         dropify();
     })
