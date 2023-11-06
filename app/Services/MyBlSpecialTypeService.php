@@ -57,7 +57,6 @@ class MyBlSpecialTypeService
 
             });
             $this->insertIntoGlobalSettings();
-            $this->delGlobalSettingCache();
             Redis::del('product-special-types');
             return true;
 
@@ -90,8 +89,6 @@ class MyBlSpecialTypeService
 
             $this->insertIntoGlobalSettings();
             Redis::del('product-special-types');
-            $this->delGlobalSettingCache();
-
             return true;
         } catch (\Exception $e) {
             Log::error('Product Special Type store failed' . $e->getMessage());
@@ -116,10 +113,7 @@ class MyBlSpecialTypeService
             $this->globalSettingsRepository->create($data);
         }
 
-
-
         $this->delGlobalSettingCache();
-
     }
 
     public function addSpecialTypeIconBase($special_types)
@@ -146,8 +140,6 @@ class MyBlSpecialTypeService
 
         $this->delSliderRedisCache();
         $this->insertIntoGlobalSettings();
-        $this->delGlobalSettingCache();
-
         return Response('Product Special Type has been successfully deleted');
     }
 
