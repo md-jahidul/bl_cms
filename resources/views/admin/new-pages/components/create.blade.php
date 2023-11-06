@@ -14,218 +14,59 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
                     <form role="form" id="product_form" action="{{ route('page-components-store-or-update', $pageId) }}" method="POST" novalidate enctype="multipart/form-data">
-                            <input type="hidden" name="pageId" value="{{ $pageId }}">
+                        <input type="hidden" name="pageId" value="{{ $pageId }}">
 
-                            <div class="content-body">
-                                <div class="row">
-                                    <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
-                                        <label for="editor_en" class="required">Component Type</label>
-                                        <select name="component_type" class="form-control required" id="component_type"
-                                                required data-validation-required-message="Please select component type">
-                                            <option value="">--Select Component Type--</option>
-                                            @foreach($componentTypes as $key => $item)
-                                                <option data-alias="{{ $key }}" value="{{ $key }}">{{ $item['title'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('component_type'))
-                                            <div class="help-block">{{ $errors->first('component_type') }}</div>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-8 pb-2">
-                                        <label>Component Sample Picture</label>
-                                        <img class="img-thumbnail" id="componentImg" width="100%">
+                        <div class="content-body">
+                            <div class="row">
+                                <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+                                    <label for="editor_en" class="required">Component Type</label>
+                                    <select name="component_type" class="form-control required" id="component_type"
+                                            required data-validation-required-message="Please select component type">
+                                        <option value="">--Select Component Type--</option>
+                                        @foreach($componentTypes as $key => $item)
+                                            <option data-alias="{{ $key }}" value="{{ $key }}">{{ $item['title'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('component_type'))
+                                        <div class="help-block">{{ $errors->first('component_type') }}</div>
+                                    @endif
+                                </div>
+                                <div class="col-md-8 pb-2">
+                                    <label>Component Sample Picture</label>
+                                    <img class="img-thumbnail" id="componentImg" width="100%">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <slot id="component_data"></slot>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mt-2">
+                                    <div class="form-group">
+                                        <label for="title" class="mr-1">Status:</label>
+                                        <input type="radio" name="status" value="1" id="active" checked>
+                                        <label for="active" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="inactive">
+                                        <label for="inactive">Inactive</label>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <slot id="component_data"></slot>
-                                </div>
 
-                                    {{--Table Component--}}
-{{--                                    <slot id="table_component" data-offer-type="large_title_with_text" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                    </slot>--}}
-
-{{--                                     Title Text and Image Component --}}
-{{--                                    <slot id="banner_with_button" data-offer-type="banner_with_button" class="{{ old("component_type") == 'banner_with_button' ? '' : 'd-none' }}">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.single-image')--}}
-{{--                                    </slot>--}}
-
-{{--                                    hovering_card_component--}}
-{{--                                    <slot id="hovering_card_component" data-offer-type="hovering_card_component" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.multiple-image', [--}}
-{{--                                            'component_type' => 'hovering_card_component',--}}
-{{--                                            'key' => 0--}}
-{{--                                        ])--}}
-{{--                                    </slot>--}}
-
-{{--                                    card_with_bg_color_component--}}
-{{--                                    <slot id="card_with_bg_color_component" data-offer-type="card_with_bg_color_component" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.multiple-image', [--}}
-{{--                                            'component_type' => 'card_with_bg_color_component',--}}
-{{--                                            'key' => 0--}}
-{{--                                        ])--}}
-{{--                                    </slot>--}}
-
-{{--                                    hiring_now_component--}}
-{{--                                    <slot id="hiring_now_component" data-offer-type="hiring_now_component" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.single-image')--}}
-{{--                                        @include('admin.new-pages.components.common-field.button-field')--}}
-{{--                                    </slot>--}}
-
-{{--                                    top_image_card_with_button--}}
-{{--                                    <slot id="top_image_card_with_button" data-offer-type="top_image_card_with_button" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'top_image_card_with_button', 'key' => 0])--}}
-{{--                                    </slot>--}}
-
-{{--                                    galley_masonry--}}
-{{--                                    <slot id="galley_masonry" data-offer-type="galley_masonry" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.multiple-image', ['component_type' => 'galley_masonry', 'key' => 0])--}}
-{{--                                    </slot>--}}
-
-
-
-
-
-
-
-
-
-
-
-                                    {{--Video Component--}}
-{{--                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.extra-title',--}}
-{{--                                                [--}}
-{{--                                                    'title_en' => "Video Title EN",--}}
-{{--                                                    'title_bn' => "Video Title BN",--}}
-{{--                                                ])--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                        @include('admin.new-pages.components.common-field.video')--}}
-{{--                                    </slot>--}}
-
-{{--                                    --}}{{--Bullet Text--}}
-{{--                                    <slot id="bullet_text" data-offer-type="large_title_with_text" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                    </slot>--}}
-
-{{--                                    --}}{{--Accordion Text--}}
-{{--                                    <slot id="accordion_text" data-offer-type="accordion_text" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                    </slot>--}}
-{{--                                    --}}
-
-{{--                                    --}}{{--Customer Complains--}}
-{{--                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="d-none">--}}
-{{--                                        @include('admin.new-pages.components.common-field.other-attributes',--}}
-{{--                                                [--}}
-{{--                                                    'other_attributes' => [--}}
-{{--                                                        'compl_cld_no' => 'Complaint Closed No (%)',--}}
-{{--                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',--}}
-{{--                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',--}}
-{{--                                                        'unreached_cust_no' => 'Unreached Customer No (%)',--}}
-{{--                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',--}}
-{{--                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',--}}
-{{--                                                    ],--}}
-{{--                                                ])--}}
-{{--                                        @include('admin.new-pages.components.common-field.text-editor')--}}
-{{--                                    </slot>--}}
-{{--                                    --}}{{--button_component--}}
-{{--                                    <slot id="button_component" data-offer-type="button_component" class="d-none">--}}
-
-{{--                                        @include('admin.new-pages.components.common-field.title')--}}
-
-{{--                                        @include('admin.new-pages.components.common-field.other-attributes',--}}
-{{--                                                [--}}
-{{--                                                    'other_attributes' => [--}}
-{{--                                                        /*'url_en' => 'Url EN',--}}
-{{--                                                        'url_bn' => 'Url BN',*/--}}
-{{--                                                    ],--}}
-{{--                                                ])--}}
-
-
-
-{{--                                        <div class="form-group col-md-6 {{ $errors->has('redirect_url_en') ? ' error' : '' }} {{ (isset($component) && $component->other_attributes['is_external_url'] ?? 0 == 0) ? '' : (!isset($component) ? '' : 'd-none') }}" id="pageDynamicEn">--}}
-{{--                                            <label for="redirect_url_en">Redirect URL EN</label>--}}
-{{--                                            <input type="text" name="other_attr[redirect_url_en]" class="form-control" placeholder="Enter URL"--}}
-{{--                                                value="{{ isset($component) ? $component->other_attributes['redirect_url_en'] : '' }}">--}}
-{{--                                            <div class="help-block"></div>--}}
-{{--                                            @if ($errors->has('redirect_url_en'))--}}
-{{--                                                <div class="help-block">  {{ $errors->first('redirect_url_en') }}</div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                        <div class="form-group col-md-6 {{ $errors->has('redirect_url_bn') ? ' error' : '' }} {{ (isset($component) && $component->other_attributes['is_external_url'] ?? 0 == 0) ? '' : (!isset($component) ? '' : 'd-none') }}" id="pageDynamicBn">--}}
-{{--                                            <label for="redirect_url_bn">Redirect URL BN</label>--}}
-{{--                                            <input type="text" name="other_attr[redirect_url_bn]" class="form-control" placeholder="Enter URL"--}}
-{{--                                                value="{{ isset($component) ? $component->other_attributes['redirect_url_bn'] : '' }}">--}}
-{{--                                            <div class="help-block"></div>--}}
-{{--                                            @if ($errors->has('redirect_url_bn'))--}}
-{{--                                                <div class="help-block">  {{ $errors->first('redirect_url_bn') }}</div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-
-
-
-{{--                                        <div class="form-group col-md-6 {{ $errors->has('external_url') ? ' error' : '' }} {{ (isset($component) && $component->other_attributes['is_external_url'] ?? 1 == 1) ? '' : 'd-none' }}" id="externalLink">--}}
-{{--                                            <label for="external_url">External URL</label>--}}
-{{--                                            <input type="text" name="other_attr[external_url]" class="form-control" placeholder="Enter URL"--}}
-{{--                                                value="{{ isset($component) ? $component->other_attributes['external_url'] : '' }}">--}}
-{{--                                            <div class="help-block"></div>--}}
-{{--                                            @if ($errors->has('external_url'))--}}
-{{--                                                <div class="help-block">  {{ $errors->first('external_url') }}</div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-6 mt-1">--}}
-{{--                                            <label></label>--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="external_link">Is External Link:</label>--}}
-{{--                                                <input type="checkbox" name="other_attr[is_external_url]" value="1" id="external_link"--}}
-{{--                                                    {{ (isset($component) && $component->other_attributes['is_external_url'] ?? 1 == 1) ? 'checked' : (old("is_external_url") ? 'checked' : '') }}>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-
-{{--                                    </slot>--}}
-                                <div class="row">
-                                    <div class="col-md-12 mt-2">
-                                        <div class="form-group">
-                                            <label for="title" class="mr-1">Status:</label>
-                                            <input type="radio" name="status" value="1" id="active" checked>
-                                            <label for="active" class="mr-1">Active</label>
-
-                                            <input type="radio" name="status" value="0" id="inactive">
-                                            <label for="inactive">Inactive</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-actions col-md-12">
-                                        <div class="pull-right">
-                                            <button type="submit" id="save" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> Save
-                                            </button>
-                                        </div>
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" id="save" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            @csrf
-                        </form>
+                        </div>
+                        @csrf
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>

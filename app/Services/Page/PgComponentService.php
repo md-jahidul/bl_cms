@@ -74,7 +74,7 @@ class PgComponentService
                         $valueEn = $field['value_en'] ?? null;
                         $itemEn = is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn;
 
-                        if ($key != "content" && $key != "is_static_component" && $key != "component_name") {
+                        if ($key != "tab_items" && $key != "is_static_component" && $key != "component_name") {
                             $componentDataInfo = [
                                 'id' => $field['id'] ?? null,
                                 'component_id' => $componentId,
@@ -88,24 +88,26 @@ class PgComponentService
                             $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
                         }
 
+//                        dd($componentDataSave, $field);
                         if (isset($field['is_tab'])) {
                             $tabParentId = $componentDataSave->id ?? 0;
                         }
 
-                        if ($key == "is_static_component" || $key == "component_name") {
-                            $componentDataInfo = [
-                                'component_id' => $componentId,
-                                'parent_id' => $tabParentId,
-                                'key' => $key,
-                                'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
-                                'value_bn' => $field['value_bn'] ?? null,
-                                'group' => $field['group'] ?? 0,
-                            ];
-                            $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
-                        }
+//                        if ($key == "is_static_component" || $key == "component_name") {
+//                            $componentDataInfo = [
+//                                'component_id' => $componentId,
+//                                'parent_id' => $tabParentId,
+//                                'key' => $key,
+//                                'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
+//                                'value_bn' => $field['value_bn'] ?? null,
+//                                'group' => $field['group'] ?? 0,
+//                            ];
+//                            $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
+//                        }
 
-                        if ($key == "content") {
+                        if ($key == "tab_items") {
                             foreach ($field as  $tabItems) {
+//                                dd($componentDataSave);
                                 foreach ($tabItems as $tabItemKey => $tabItem) {
                                     $valueEn = $tabItem['value_en'] ?? null;
                                     $tabItemData = [
@@ -116,6 +118,7 @@ class PgComponentService
                                         'value_bn' => $tabItem['value_bn'] ?? null,
                                         'group' => $index + 1,
                                     ];
+
                                     $this->componentDataRepository->save($tabItemData);
                                 }
                             }
@@ -124,6 +127,7 @@ class PgComponentService
                 }
             }
         });
+//        dd('Done');
     }
 
     public function fileUpload($file)
