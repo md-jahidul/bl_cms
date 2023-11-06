@@ -150,7 +150,8 @@ class Helper
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "DEEN"                    => 'Deen',
-            "AMAR_PLAN"               => 'Amar Plan'
+            "AMAR_PLAN"               => 'Amar Plan',
+            "SIM_BLOCK"               => 'Sim Block'
         ];
     }
 
