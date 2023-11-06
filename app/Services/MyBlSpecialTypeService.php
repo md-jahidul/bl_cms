@@ -106,13 +106,30 @@ class MyBlSpecialTypeService
             'name_bn',
             'slug',
             'icon']);
-        $data['settings_value'] = json_encode($special_types, true);
-        $data['settings_key'] = 'special_types';
-        $data['value_type'] = 'json';
-        $data['updated_by'] = Auth::id();
-        $this->globalSettingsRepository->create($data);
+
+        if (count($special_types) > 0) {
+            $special_types_base_uri_added = $this->addSpecialTypeIconBase($special_types);
+            $data['settings_value'] = json_encode($special_types_base_uri_added, true);
+            $data['settings_key'] = 'special_types';
+            $data['value_type'] = 'json';
+            $data['updated_by'] = Auth::id();
+            $this->globalSettingsRepository->create($data);
+        }
+
+
+
         $this->delGlobalSettingCache();
 
+    }
+
+    public function addSpecialTypeIconBase($special_types)
+    {
+        foreach ($special_types as $value) {
+            if (isset($value['icon'])) {
+                $value['icon'] = env('IMAGE_HOST') . $value['icon'];
+            }
+        }
+        return $special_types;
     }
 
     /**
