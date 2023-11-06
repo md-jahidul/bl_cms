@@ -81,7 +81,7 @@
 
             <div class="form-group">
                 <label for="status">Status</label>
-                <select class="form-control" id="status" name="status">
+                <select class="form-control" id="status" name="status" readonly="true" disabled>
                     <option value="1" @if ($settings->status == 1) selected @endif>True</option>
                     <option value="0" @if ($settings->status == 0) selected @endif>False</option>
                 </select>
