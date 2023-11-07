@@ -1,9 +1,10 @@
 (function () {
-    var cardLine =
-        `<div class="col-md-12">
-            <span><h5><strong>Card Info</strong></h5></span>
+    var cardLine = function (title = "Card Info") {
+        return `<div class="col-md-12">
+            <span><h5><strong>${title}</strong></h5></span>
             <div class="form-actions col-md-12 mt-0 type-line"></div>
         </div>`
+    }
 
     var itemCountLine = function (itemNo = null, title = "Item") {
         return `<div class="col-md-12">
@@ -42,6 +43,19 @@
         </div>`
 
     var attributeTitleSubTitle =
+        `<div class="form-group col-md-6">
+            <label for="desc_en">Description (English)</label>
+            <textarea type="text" name="attribute[desc][en]"  class="form-control" placeholder="Enter offer details in english"></textarea>
+            <div class="help-block"></div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="desc_bn">Description (Bangla)</label>
+            <textarea type="text" name="attribute[desc][bn]"  class="form-control" placeholder="Enter offer details in english" ></textarea>
+            <div class="help-block"></div>
+        </div>`
+
+    var attributeEditor =
         `<div class="form-group col-md-6">
             <label for="desc_en">Description (English)</label>
             <textarea type="text" name="attribute[desc][en]"  class="form-control summernote_editor" placeholder="Enter offer details in english"></textarea>
@@ -201,6 +215,14 @@
         </div>`
     }
 
+    var multiItemUrl  = function (index = 0) {
+        return `<div class="form-group col-md-12">
+            <label for="button_link" >URL</label>
+            <input type="text" name="componentData[${index}][url][value_en]"  class="form-control" placeholder="Enter url">
+            <div class="help-block"></div>
+        </div>`
+    }
+
     var doubleButton  =
         `<div class="form-group col-md-4">
             <label for="button_en">Button One Title (English)</label>
@@ -273,8 +295,37 @@
         });
     }
 
+    function summernote_editor(){
+        $("textarea.summernote_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
+            toolbar: [
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+
+            height:200
+        })
+    }
+
 
     $('#component_type').on('change', function () {
+        var componentTypeImg = this.value + ".png"
+        var fullUrl = "{{ asset('page-component-image') }}/" + componentTypeImg;
+        $("#componentImg").attr('src', fullUrl)
+
         let componentElementId = $('#component_data');
         let componentType = $(this).val();
         let componentData = '';
@@ -286,7 +337,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() + imageTwo() +
@@ -300,7 +351,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
@@ -315,7 +366,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
@@ -330,7 +381,7 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeButton +
-                    cardLine +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() + imageTwo() +
@@ -338,7 +389,6 @@
                     multiItemDescription() +
                     multiItemTitleTwo(0, 'Title Hover', 'title_hover') +
                     multiItemDescriptionTwo(0, 'Description Hover', 'desc_hover') +
-
                 `</slot>`;
         }else if(componentType === "galley_masonry"){
             componentData +=
@@ -346,17 +396,75 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeButton +
-                    cardLine +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
+                `</slot>`;
+        }else if(componentType === "hero_section"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    attributeImage +
+                    cardLine('Breadcrumbs') +
+                    addBtn +
+                    itemCountLine(1) +
+                    multiItemTitle() +
+                    redirectLink() +
+                `</slot>`;
+        }else if(componentType === "text_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeEditor +
+                `</slot>`;
+        }else if(componentType === "text_with_image"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    attributeImage +
+                `</slot>`;
+        }else if(componentType === "top_image_bottom_text_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                `</slot>`;
+        }else if(componentType === "icon_text_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                `</slot>`;
+        }else if(componentType === "icon_text_with_bg_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
                 `</slot>`;
         }else if(componentType === "tab_component_with_image_card_one"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1, "Tab") +
                     multiItemTitle() +
@@ -380,6 +488,7 @@
         componentElementId.empty()
         componentElementId.append(componentData)
         dropify();
+        summernote_editor();
         // if ( == )
         // var componentType = this.value + ".png"
         // var fullUrl = "{{ asset('component-images') }}/" + componentType;
@@ -442,6 +551,41 @@
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1) +
                     imageOne(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "hero_section"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    multiItemTitle(index) +
+                    redirectLink(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "top_image_bottom_text_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "icon_text_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "icon_text_with_bg_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
                     removeBtn +
                 `</slot>`;
         }else if(componentType === "tab_component_with_image_card_one"){
@@ -540,6 +684,7 @@
             </slot>`
         tabItem.append(componentData)
         dropify();
+        summernote_editor();
     })
     // Tab Item Remove
     $(document).on('click', '.remove-tab-item', function (event) {

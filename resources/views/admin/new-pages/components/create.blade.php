@@ -20,7 +20,7 @@
 
                         <div class="content-body">
                             <div class="row">
-                                <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+                                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
                                     <label for="editor_en" class="required">Component Type</label>
                                     <select name="component_type" class="form-control required" id="component_type"
                                             required data-validation-required-message="Please select component type">
@@ -34,8 +34,8 @@
                                         <div class="help-block">{{ $errors->first('component_type') }}</div>
                                     @endif
                                 </div>
-                                <div class="col-md-8 pb-2">
-                                    <label>Component Sample Picture</label>
+                                <div class="col-md-3 ">
+{{--                                    <label>Component Sample Picture</label>--}}
                                     <img class="img-thumbnail" id="componentImg" width="100%">
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
         $(function () {
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"
-                var fullUrl = "{{ asset('component-images') }}/" + componentType;
+                var fullUrl = "{{ asset('page-component-image') }}/" + componentType;
                 $("#componentImg").attr('src', fullUrl)
             })
 

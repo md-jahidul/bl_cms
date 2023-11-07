@@ -23,7 +23,7 @@
                             <input type="hidden" name="pageId" value="{{ $pageId }}">
                             <div class="content-body">
                                 <div class="row">
-                                    <div class="form-group col-md-4 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                    <div class="form-group col-md-9 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
                                         <select disabled readonly class="form-control" id="component_type"
                                                 required
@@ -38,9 +38,9 @@
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="col-md-8 pb-2">
-                                        <label>Component Sample Picture</label>
-                                        <img src="{{ asset("component-images/$component->component_type.png") }}"
+                                    <div class="col-md-3">
+{{--                                        <label>Component Sample Picture</label>--}}
+                                        <img src="{{ asset("page-component-image/$component->type.png") }}"
                                              class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
 
@@ -154,113 +154,135 @@
                                         </slot>
                                     @endif
 
+                                    {{--hero_section--}}
+                                    @if($component->type == "hero_section")
+                                        <slot id="hero_section" data-offer-type="hero_section">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Breadcrumbs"])
 
-                                    {{--                                    --}}{{--Video Component--}}
-                                    {{--                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text"--}}
-                                    {{--                                          class="{{ ($component->component_type ==  "title_with_video_and_text"  ) ? '' : "d-none" }}">--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.extra-title',--}}
-                                    {{--                                                [--}}
-                                    {{--                                                    'title_en' => "Video Title EN",--}}
-                                    {{--                                                    'title_bn' => "Video Title BN",--}}
-                                    {{--                                                ])--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.title')--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.video')--}}
-                                    {{--                                    </slot>--}}
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
 
-                                    {{--                                    --}}{{--Table Component--}}
-                                    {{--                                    <slot id="table_component" data-offer-type="table_component" class="{{ ($component->component_type ==  "table_component"  ) ? '' : "d-none" }}">--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-                                    {{--                                    </slot>--}}
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'hero_section',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @else
+                                                @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                     'component_type' => 'hero_section',
+                                                     'data' => [],
+                                                     'key' => 0
+                                                 ])
+                                            @endif
+                                        </slot>
+                                    @endif
 
-                                    {{--                                    --}}{{--Bullet Text--}}
-                                    {{--                                    <slot id="bullet_text" data-offer-type="large_title_with_text" class="{{ ($component->component_type ==  "bullet_text"  ) ? '' : "d-none" }}">--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.title')--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-                                    {{--                                    </slot>--}}
+                                    {{--text_component--}}
+                                    @if($component->type == "text_component")
+                                        <slot id="galley_masonry" data-offer-type="galley_masonry">
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
+                                        </slot>
+                                    @endif
 
-                                    {{--                                    --}}{{--Accordion Text--}}
-                                    {{--                                    <slot id="accordion_text" data-offer-type="accordion_text" class="{{ ($component->component_type ==  "accordion_text"  ) ? '' : "d-none" }}">--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.title')--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-                                    {{--                                    </slot>--}}
+                                    {{--text_with_image--}}
+                                    @if($component->type == "text_with_image")
+                                        <slot id="galley_masonry" data-offer-type="galley_masonry">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                        </slot>
+                                    @endif
 
-                                    {{--                                    --}}{{--Multiple Image--}}
-                                    {{--                                    <slot id="multiple_image" data-offer-type="multiple_image" class="{{ ($component->component_type ==  "multiple_image"  ) ? '' : "d-none" }}">--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.extra-title')--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.title')--}}
-                                    {{--                                        @php( $i = 0 )--}}
-                                    {{--                                        @if(isset($component->componentMultiData))--}}
-                                    {{--                                            @foreach($component->componentMultiData as $key => $image)--}}
-                                    {{--                                                @include('layouts.partials.product-details.component.common-field.multiple-image', [$image, $key])--}}
-                                    {{--                                            @endforeach--}}
-                                    {{--                                        @endif--}}
-                                    {{--                                    </slot>--}}
+                                    {{--hero_section--}}
+                                    @if($component->type == "top_image_bottom_text_component")
+                                        <slot id="hero_section" data-offer-type="hero_section">
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'top_image_bottom_text_component',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @else
+                                                @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                     'component_type' => 'top_image_bottom_text_component',
+                                                     'data' => [],
+                                                     'key' => 0
+                                                 ])
+                                            @endif
+                                        </slot>
+                                    @endif
 
-                                    {{--                                    --}}{{--Customer Complains--}}
-                                    {{--                                    <slot id="customer_complaint" data-offer-type="customer_complaint" class="{{ ($component->component_type ==  "customer_complaint"  ) ? '' : "d-none" }}">--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.other-attributes',--}}
-                                    {{--                                                [--}}
-                                    {{--                                                    'other_attributes' => [--}}
-                                    {{--                                                        'compl_cld_no' => 'Complaint Closed No (%)',--}}
-                                    {{--                                                        'compl_cld_title_en' => 'Complaint Closed Title EN',--}}
-                                    {{--                                                        'compl_cld_title_bn' => 'Complaint Closed Title BN',--}}
-                                    {{--                                                        'unreached_cust_no' => 'Unreached Customer No (%)',--}}
-                                    {{--                                                        'unreached_cust_title_en' => 'Unreached Customer Title EN',--}}
-                                    {{--                                                        'unreached_cust_title_bn' => 'Unreached Customer Title BN',--}}
-                                    {{--                                                    ],--}}
-                                    {{--                                                ])--}}
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-                                    {{--                                    </slot>--}}
-                                    {{--                                    --}}{{--button_component--}}
-                                    {{--                                    <slot id="button_component" data-offer-type="button_component" class="{{ ($component->component_type ==  "button_component"  ) ? '' : "d-none" }}">--}}
+                                    {{--icon_text_component--}}
+                                    @if($component->type == "icon_text_component")
+                                        <slot id="hero_section" data-offer-type="hero_section">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'icon_text_component',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @else
+                                                @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                     'component_type' => 'icon_text_component',
+                                                     'data' => [],
+                                                     'key' => 0
+                                                 ])
+                                            @endif
+                                        </slot>
+                                    @endif
 
-                                    {{--                                        @include('layouts.partials.product-details.component.common-field.title')--}}
+                                    {{--icon_text_component--}}
+                                    @if($component->type == "icon_text_with_bg_component")
+                                        <slot id="hero_section" data-offer-type="hero_section">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'icon_text_with_bg_component',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @else
+                                                @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                     'component_type' => 'icon_text_with_bg_component',
+                                                     'data' => [],
+                                                     'key' => 0
+                                                 ])
+                                            @endif
+                                        </slot>
+                                    @endif
 
-                                    {{--                                        @if ($component->component_type ==  "button_component")--}}
+                                    {{--tab_component_with_image_card_one--}}
+{{--                                    @if($component->type == "tab_component_with_image_card_one")--}}
+{{--                                        <slot id="galley_masonry" data-offer-type="galley_masonry">--}}
+{{--                                            @include('admin.new-pages.components.common-field.attribute.title')--}}
+{{--                                            @include('admin.new-pages.components.common-field.attribute.description')--}}
 
-                                    {{--                                            <div class="form-group col-md-6 {{ $errors->has('redirect_url_en') ? ' error' : '' }} {{ (isset($component->other_attributes['is_external_url']) ? (($component->other_attributes['is_external_url'] == 0)? '' : 'd-none') : '')}}" id="pageDynamicEn">--}}
-                                    {{--                                                <label for="redirect_url_en">Redirect URL EN</label>--}}
-                                    {{--                                                <input type="text" name="other_attr[redirect_url_en]" class="form-control" placeholder="Enter URL"--}}
-                                    {{--                                                    value="{{ isset($component) ? $component->other_attributes['redirect_url_en'] : '' }}">--}}
-                                    {{--                                                <div class="help-block"></div>--}}
-                                    {{--                                                @if ($errors->has('redirect_url_en'))--}}
-                                    {{--                                                    <div class="help-block">  {{ $errors->first('redirect_url_en') }}</div>--}}
-                                    {{--                                                @endif--}}
-                                    {{--                                            </div>--}}
-                                    {{--                                            <div class="form-group col-md-6 {{ $errors->has('redirect_url_bn') ? ' error' : '' }} {{ (isset($component->other_attributes['is_external_url']) ? (($component->other_attributes['is_external_url'] == 0)? '' : 'd-none') : '') }}" id="pageDynamicBn">--}}
-                                    {{--                                                <label for="redirect_url_bn">Redirect URL BN</label>--}}
-                                    {{--                                                <input type="text" name="other_attr[redirect_url_bn]" class="form-control" placeholder="Enter URL"--}}
-                                    {{--                                                    value="{{ isset($component) ? $component->other_attributes['redirect_url_bn'] : '' }}">--}}
-                                    {{--                                                <div class="help-block"></div>--}}
-                                    {{--                                                @if ($errors->has('redirect_url_bn'))--}}
-                                    {{--                                                    <div class="help-block">  {{ $errors->first('redirect_url_bn') }}</div>--}}
-                                    {{--                                                @endif--}}
-                                    {{--                                            </div>--}}
-
-                                    {{--                                            <div class="form-group col-md-6 {{ $errors->has('external_url') ? ' error' : '' }} {{ (isset($component->other_attributes['is_external_url']) ? (($component->other_attributes['is_external_url'] == 1)? '' : 'd-none') : 'd-none')}}" id="externalLink">--}}
-                                    {{--                                                <label for="external_url">External URL</label>--}}
-                                    {{--                                                <input type="text" name="other_attr[external_url]" class="form-control" placeholder="Enter URL"--}}
-                                    {{--                                                    value="{{ isset($component) ? $component->other_attributes['external_url'] : '' }}">--}}
-                                    {{--                                                <div class="help-block"></div>--}}
-                                    {{--                                                @if ($errors->has('external_url'))--}}
-                                    {{--                                                    <div class="help-block">  {{ $errors->first('external_url') }}</div>--}}
-                                    {{--                                                @endif--}}
-                                    {{--                                            </div>--}}
-
-                                    {{--                                            <div class="col-md-6 mt-1">--}}
-                                    {{--                                                <label></label>--}}
-                                    {{--                                                <div class="form-group">--}}
-                                    {{--                                                    <label for="external_link">Is External Link:</label>--}}
-                                    {{--                                                    <input type="checkbox" name="other_attr[is_external_url]" value="1" id="external_link"--}}
-                                    {{--                                                        {{ (isset($component->other_attributes['is_external_url']) && $component->other_attributes['is_external_url'] == 1) ? 'checked' : (old("is_external_url") ? 'checked' : '') }}>--}}
-                                    {{--                                                </div>--}}
-                                    {{--                                            </div>--}}
-                                    {{--                                        @endif--}}
-
-
-                                    {{--                                    </slot>--}}
-
+{{--                                            @if(isset($component->component_data_mod))--}}
+{{--                                                @foreach($component->component_data_mod as $key => $data)--}}
+{{--                                                    @include('admin.new-pages.components.common-field.repeatable-item', [--}}
+{{--                                                        'component_type' => 'galley_masonry',--}}
+{{--                                                        'data' => $data,--}}
+{{--                                                        'key' => $key--}}
+{{--                                                    ])--}}
+{{--                                                @endforeach--}}
+{{--                                            @endif--}}
+{{--                                        </slot>--}}
+{{--                                    @endif--}}
 
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
@@ -268,7 +290,6 @@
                                             <input type="radio" name="status" value="1"
                                                    id="active" {{ $component->status == 1 ? 'checked' : '' }}>
                                             <label for="active" class="mr-1">Active</label>
-
                                             <input type="radio" name="status" value="0"
                                                    id="inactive" {{ $component->status == 0 ? 'checked' : '' }}>
                                             <label for="inactive">Inactive</label>
@@ -282,34 +303,8 @@
                                             </button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-
-                            {{--                            <div class="app-content">--}}
-                            {{--                                <h3>Component Fields</h3><hr>--}}
-                            {{--                                <div class="sidebar-right">--}}
-                            {{--                                    <div class="sidebar">--}}
-                            {{--                                        <div class="sidebar-content card d-none d-lg-block">--}}
-                            {{--                                            <div class="card-body">--}}
-                            {{--                                                <div class="category-title">--}}
-                            {{--                                                    <h6><strong>Component Example Picture</strong></h6>--}}
-                            {{--                                                </div>--}}
-                            {{--                                                <hr>--}}
-                            {{--                                                <div class="row">--}}
-
-                            {{--                                                </div>--}}
-                            {{--                                            </div>--}}
-                            {{--                                        </div>--}}
-                            {{--                                    </div>--}}
-                            {{--                                </div>--}}
-                            {{--                                <div class="content-left">--}}
-                            {{--                                    <div class="content-wrapper">--}}
-
-
-                            {{--                                    </div>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
                         </form>
                     </div>
                 </div>
