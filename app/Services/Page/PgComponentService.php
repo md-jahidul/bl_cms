@@ -106,7 +106,7 @@ class PgComponentService
 //                        }
 
                         if ($key == "tab_items") {
-                            foreach ($field as  $tabItems) {
+                            foreach ($field as $tabIndex => $tabItems) {
 //                                dd($componentDataSave);
                                 foreach ($tabItems as $tabItemKey => $tabItem) {
                                     $valueEn = $tabItem['value_en'] ?? null;
@@ -116,7 +116,7 @@ class PgComponentService
                                         'key' => $tabItemKey,
                                         'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
                                         'value_bn' => $tabItem['value_bn'] ?? null,
-                                        'group' => $index + 1,
+                                        'group' => $tabIndex + 1,
                                     ];
 
                                     $this->componentDataRepository->save($tabItemData);

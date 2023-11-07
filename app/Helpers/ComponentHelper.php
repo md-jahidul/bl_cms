@@ -144,6 +144,46 @@ class ComponentHelper
             'tab_component_with_image_card_one' => [
                 'title' => 'Tab component with image card one',
                 'config' => ['left_image' => true]
+            ],
+            'tab_component_with_image_card_two' => [
+                'title' => 'Tab Component With Image Card Two',
+                'config' => ['left_image' => true]
+            ],
+            'tab_component_with_image_card_three' => [
+                'title' => 'Tab Component With Image Card One',
+                'config' => ['left_image' => true]
+            ],
+            'hero_section' => [
+                'title' => 'Hero Section',
+                'config' => ['left_image' => true]
+            ],
+            'text_component' => [
+                'title' => 'Text Component',
+                'config' => ['left_image' => true]
+            ],
+            'text_with_image' => [
+                'title' => 'Text with Image',
+                'config' => ['left_image' => true]
+            ],
+            'top_image_bottom_text_component' => [
+                'title' => 'Top Image Bottom Text Component',
+                'config' => ['left_image' => true]
+            ],
+            'icon_text_component' => [
+                'title' => 'Icon Text Component',
+                'config' => ['left_image' => true]
+            ],
+            'icon_text_with_bg_component' => [
+                'title' => 'Icon Text With BG Component',
+                'config' => ['left_image' => true]
+            ],
+            'video_full_width_component' => [
+                'title' => 'Video Full Width Component',
+                'config' => ['left_image' => true]
+            ],
+            'stories_slider' => [
+                'title' => 'Stories Slider',
+                'config' => ['left_image' => true]
             ]
         ];
     }

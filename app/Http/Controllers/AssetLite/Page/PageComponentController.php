@@ -71,24 +71,43 @@ class PageComponentController extends Controller
         $component = $this->pgComponentService->findOne($id, 'componentData');
         $componentData = [];
         foreach ($component->componentData as $data){
-            $componentData[$data->group][$data->key] = [
-                'id' => $data->id,
-                'value_en' => $data->value_en,
-                'value_bn' => $data->value_bn,
-                'group' => $data->group,
-            ];
+
+            if ($data->parent_id == 0) {
+                $componentData[$data->group][$data->key] = [
+                    'id' => $data->id,
+                    'value_en' => $data->value_en,
+                    'value_bn' => $data->value_bn,
+                    'group' => $data->group,
+                ];
+            }
+
+            $tabItemData = [];
+            if (!empty($data->children && $component->type == "tab_component_with_image_card_one") ) {
+                foreach ($data->children as $childData) {
+                    $tabItemData[$childData->group][$childData->key] = [
+                        'id' => $childData->id,
+                        'parent_id' => $childData->parent_id,
+                        'value_en' => $childData->value_en,
+                        'value_bn' => $childData->value_bn,
+                        'group' => $childData->group,
+                    ];
+                }
+                if (!empty($tabItemData)){
+                    $componentData[$data->group]['data'] = array_values($tabItemData);
+                }
+            }
         }
 
         $component->component_data_mod = array_values($componentData);
-
         unset($component->componentData);
 
-        if ($component->type == "tab-component"){
+        if ($component->type == "tab_component_with_image_card_one"){
             $component =  $this->pgComponentService->findOne($id, ['componentData' => function($q) {
                 $q->where('parent_id', 0);
                 $q->with('children');
             }]);
         }
+
         return view('admin.new-pages.components.edit', compact('component', 'componentTypes', 'pageId'));
     }
 
