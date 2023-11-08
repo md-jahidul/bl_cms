@@ -1254,6 +1254,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('popup-banner', 'CMS\PopupBannerController');
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+    Route::resource('popup-sequence', 'CMS\PopupPrioritizationController');
+
 
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
