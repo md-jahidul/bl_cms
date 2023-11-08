@@ -1254,7 +1254,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('popup-banner', 'CMS\PopupBannerController');
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
-    Route::resource('popup-sequence', 'CMS\PopupPrioritizationController');
 
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
@@ -1440,15 +1439,22 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
 
-
-    #Bus Ticket
     /**
      * Have Plane to put all transaction status under one controller and service
-     * Bus
+     * onmobile
      */
     Route::get('mybl/{type}/transaction-status-report-view', 'CMS\MyblTransactionStatusController@getTransactionList')->name('mybl.transaction-status');
     Route::get('mybl/{type}/transaction-status-report', 'CMS\MyblTransactionStatusController@getTransaction')
         ->name('mybl.transaction-status.list');
+
+    /**
+     * Generic Carousel
+     * Live content
+     */
+    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
+    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
+    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
+
 
     /**
      * Internet Gift content
@@ -1475,9 +1481,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
     Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
 
-
-    Route::resource('global-settings', 'CMS\GlobalSettingController');
-    Route::resource('media', 'CMS\MediaController');
 
 
     /**

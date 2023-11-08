@@ -29,7 +29,7 @@ class MyblTransactionStatusController extends Controller
      * @var MyblSharetripService
      */
     private $sharetripService;
-    
+
     /**
      * @var MyblDoctimeService
      */
@@ -113,7 +113,7 @@ class MyblTransactionStatusController extends Controller
     {
         return $this->sharetripService->getSharetripTransaction($request);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -133,6 +133,7 @@ class MyblTransactionStatusController extends Controller
         return $this->doctimeService->getDoctimeTransaction($request);
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -142,7 +143,7 @@ class MyblTransactionStatusController extends Controller
     {
         $view = "";
 
-        if (in_array($type, ['bus'])) {
+        if (in_array($type, ['bus', 'onmobile'])) {
             $view = $type.'_transaction_list';
             return view('admin.transaction-status.'.$view);
         }else{
@@ -158,6 +159,7 @@ class MyblTransactionStatusController extends Controller
     public function getTransaction(Request $request, $type)
     {
         if($type == 'bus') return $this->transactionStatusService->getBusTransaction($request);
+        if($type == 'onmobile') return $this->transactionStatusService->getOnmobileTransaction($request);
     }
 
 }
