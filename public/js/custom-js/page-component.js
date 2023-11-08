@@ -180,6 +180,86 @@
         </div>`
     }
 
+    var multiItemFeedback  = function (index = 0, isTab = false, tabIndex = 0) {
+        let fieldFeedbackEn = ""
+        let fieldFeedbackBn = ""
+        let fieldNameEn = ""
+        let fieldNameBn = ""
+        let fieldDesignationEn = ""
+        let fieldDesignationBn = ""
+        let fieldInstituteEn = ""
+        let fieldInstituteBn = ""
+        let tabFeedback = ""
+        let tabName = ""
+        let tabDesignation = ""
+        let tabInstitute = ""
+
+        if (isTab) {
+            fieldFeedbackEn += `componentData[${index}][tab_items][${tabIndex}][feedback][value_en]`;
+            fieldFeedbackBn += `componentData[${index}][tab_items][${tabIndex}][feedback][value_bn]`;
+            fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][name][value_bn]`;
+            fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][name][value_bn]`;
+            fieldDesignationEn += `componentData[${index}][tab_items][${tabIndex}][designation][value_bn]`;
+            fieldDesignationBn += `componentData[${index}][tab_items][${tabIndex}][designation][value_bn]`;
+            fieldInstituteEn += `componentData[${index}][tab_items][${tabIndex}][institute][value_bn]`;
+            fieldInstituteBn += `componentData[${index}][tab_items][${tabIndex}][institute][value_bn]`;
+            tabFeedback += `<input type="hidden" name="componentData[${index}][feedback][is_tab]" value="1">`;
+            tabName += `<input type="hidden" name="componentData[${index}][name][is_tab]" value="1">`;
+            tabDesignation += `<input type="hidden" name="componentData[${index}][designation][is_tab]" value="1">`;
+            tabInstitute += `<input type="hidden" name="componentData[${index}][institute][is_tab]" value="1">`;
+        }else {
+            fieldFeedbackEn +=   `componentData[${index}][feedback][value_en]`;
+            fieldFeedbackBn +=   `componentData[${index}][feedback][value_bn]`;
+            fieldNameEn +=       `componentData[${index}][name][value_en]`;
+            fieldNameBn +=       `componentData[${index}][name][value_bn]`;
+            fieldDesignationEn+= `componentData[${index}][designation][value_en]`;
+            fieldDesignationBn+= `componentData[${index}][designation][value_bn]`;
+            fieldInstituteEn +=  `componentData[${index}][institute][value_en]`;
+            fieldInstituteBn +=  `componentData[${index}][institute][value_bn]`;
+        }
+
+        return `<div class="form-group col-md-6">
+            <label for="title_en">Feedback En</label>
+            ${tabFeedback}
+            <textarea type="text" rows="3" name="${fieldFeedbackEn}" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="title_en">Feedback Bn</label>
+            <textarea type="text" rows="3" name="${fieldFeedbackBn}" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="title_en">Name En</label>
+            ${tabName}
+            <input type="text" name="${fieldNameEn}" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">Name Bn</label>
+            <input type="text" name="${fieldNameBn}" class="form-control">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="title_en">Designation En</label>
+            ${tabDesignation}
+            <input type="text" name="${fieldDesignationEn}" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">Designation Bn</label>
+            <input type="text" name="${fieldDesignationBn}" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">Institute En</label>
+            ${tabInstitute}
+            <input type="text" name="${fieldInstituteEn}" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">Institute Bn</label>
+            <input type="text" name="${fieldInstituteBn}" class="form-control">
+        </div>
+        `
+    }
+
     var multiItemTitleTwo = function (index = 0, label = 'Title', fieldName = 'title') {
         return `<div class="form-group col-md-6">
             <label for="title_en">${label} En</label>
@@ -479,6 +559,14 @@
                     attributeTitleSubTitle +
                     videoUrl() +
                 `</slot>`;
+        }else if(componentType === "stories_slider"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    addBtn +
+                    itemCountLine(1) +
+                    multiItemFeedback() +
+                    imageOne() +
+                `</slot>`;
         }else if(componentType === "tab_component_with_image_card_one"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -606,6 +694,14 @@
                     imageOne(index) +
                     multiItemTitle(index) +
                     multiItemDescription(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "stories_slider"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    multiItemFeedback(index) +
+                    imageOne(index) +
                     removeBtn +
                 `</slot>`;
         }else if(componentType === "tab_component_with_image_card_one"){

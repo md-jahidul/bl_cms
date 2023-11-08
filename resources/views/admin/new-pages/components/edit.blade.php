@@ -171,26 +171,26 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
-                                            @else
-                                                @include('admin.new-pages.components.common-field.repeatable-item', [
-                                                     'component_type' => 'hero_section',
-                                                     'data' => [],
-                                                     'key' => 0
-                                                 ])
+{{--                                            @else--}}
+{{--                                                @include('admin.new-pages.components.common-field.repeatable-item', [--}}
+{{--                                                     'component_type' => 'hero_section',--}}
+{{--                                                     'data' => [],--}}
+{{--                                                     'key' => 0--}}
+{{--                                                 ])--}}
                                             @endif
                                         </slot>
                                     @endif
 
                                     {{--text_component--}}
                                     @if($component->type == "text_component")
-                                        <slot id="galley_masonry" data-offer-type="galley_masonry">
+                                        <slot id="text_component" data-offer-type="text_component">
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
                                         </slot>
                                     @endif
 
                                     {{--text_with_image--}}
                                     @if($component->type == "text_with_image")
-                                        <slot id="galley_masonry" data-offer-type="galley_masonry">
+                                        <slot id="galley_masonry" data-offer-type="text_with_image">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.attribute.image')
@@ -199,7 +199,7 @@
 
                                     {{--hero_section--}}
                                     @if($component->type == "top_image_bottom_text_component")
-                                        <slot id="hero_section" data-offer-type="hero_section">
+                                        <slot id="top_image_bottom_text_component" data-offer-type="top_image_bottom_text_component">
                                             @if(!empty($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [
@@ -208,19 +208,19 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
-                                            @else
-                                                @include('admin.new-pages.components.common-field.repeatable-item', [
-                                                     'component_type' => 'top_image_bottom_text_component',
-                                                     'data' => [],
-                                                     'key' => 0
-                                                 ])
+{{--                                            @else--}}
+{{--                                                @include('admin.new-pages.components.common-field.repeatable-item', [--}}
+{{--                                                     'component_type' => 'top_image_bottom_text_component',--}}
+{{--                                                     'data' => [],--}}
+{{--                                                     'key' => 0--}}
+{{--                                                 ])--}}
                                             @endif
                                         </slot>
                                     @endif
 
                                     {{--icon_text_component--}}
                                     @if($component->type == "icon_text_component")
-                                        <slot id="hero_section" data-offer-type="hero_section">
+                                        <slot id="icon_text_component" data-offer-type="hero_section">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.multi-item.divider')
@@ -232,19 +232,19 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
-                                            @else
-                                                @include('admin.new-pages.components.common-field.repeatable-item', [
-                                                     'component_type' => 'icon_text_component',
-                                                     'data' => [],
-                                                     'key' => 0
-                                                 ])
+{{--                                            @else--}}
+{{--                                                @include('admin.new-pages.components.common-field.repeatable-item', [--}}
+{{--                                                     'component_type' => 'icon_text_component',--}}
+{{--                                                     'data' => [],--}}
+{{--                                                     'key' => 0--}}
+{{--                                                 ])--}}
                                             @endif
                                         </slot>
                                     @endif
 
                                     {{--icon_text_component--}}
                                     @if($component->type == "icon_text_with_bg_component")
-                                        <slot id="hero_section" data-offer-type="hero_section">
+                                        <slot id="icon_text_with_bg_component" data-offer-type="icon_text_with_bg_component">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.multi-item.divider')
@@ -256,29 +256,50 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
-                                            @else
-                                                @include('admin.new-pages.components.common-field.repeatable-item', [
-                                                     'component_type' => 'icon_text_with_bg_component',
-                                                     'data' => [],
-                                                     'key' => 0
-                                                 ])
+{{--                                            @else--}}
+{{--                                                @include('admin.new-pages.components.common-field.repeatable-item', [--}}
+{{--                                                     'component_type' => 'icon_text_with_bg_component',--}}
+{{--                                                     'data' => [],--}}
+{{--                                                     'key' => 0--}}
+{{--                                                 ])--}}
                                             @endif
                                         </slot>
                                     @endif
 
                                     {{--video_full_width_component--}}
                                     @if($component->type == "video_full_width_component")
-                                        <slot id="galley_masonry" data-offer-type="video_full_width_component">
+                                        <slot id="video_full_width_component" data-offer-type="video_full_width_component">
                                             @include('admin.new-pages.components.common-field.attribute.video-url')
                                         </slot>
                                     @endif
 
                                     {{--text_with_image--}}
                                     @if($component->type == "video_with_text_container_component")
-                                        <slot id="galley_masonry" data-offer-type="video_with_text_container_component">
+                                        <slot id="video_with_text_container_component" data-offer-type="video_with_text_container_component">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.attribute.video-url')
+                                        </slot>
+                                    @endif
+
+                                    {{--icon_text_component--}}
+                                    @if($component->type == "stories_slider")
+                                        <slot id="stories_slider" data-offer-type="stories_slider">
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'stories_slider',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @else
+                                                @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                     'component_type' => 'stories_slider',
+                                                     'data' => [],
+                                                     'key' => 0
+                                                 ])
+                                            @endif
                                         </slot>
                                     @endif
 
@@ -338,7 +359,6 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
@@ -347,10 +367,8 @@
 
 @endpush
 @push('page-js')
-    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('js/custom-js/page-component.js') }}" type="text/javascript"></script>
-    {{--    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>--}}
-    {{--    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
@@ -358,105 +376,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-    {{--    <script src="{{ asset('js/custom-js/multi-image.js') }}" type="text/javascript"></script>--}}
-{{--    <script src="{{ asset('js/custom-js/page-multi-item.js') }}" type="text/javascript"></script>--}}
-
-    {{--    <script>--}}
-    {{--        $(function () {--}}
-    {{--            $('#component_type').on('change', function () {--}}
-    {{--                var componentType = this.value + ".png"--}}
-    {{--                var fullUrl = "{{ asset('component-images') }}/" + componentType;--}}
-    {{--                $("#componentImg").attr('src', fullUrl)--}}
-    {{--            })--}}
-
-    {{--            function dropify(){--}}
-    {{--                $('.dropify').dropify({--}}
-    {{--                    messages: {--}}
-    {{--                        'default': 'Browse for an Image File to upload',--}}
-    {{--                        'replace': 'Click to replace',--}}
-    {{--                        'remove': 'Remove',--}}
-    {{--                        'error': 'Choose correct file format'--}}
-    {{--                    }--}}
-    {{--                });--}}
-    {{--            }--}}
-    {{--            dropify();--}}
-
-    {{--            $("textarea#details").summernote({--}}
-    {{--                toolbar: [--}}
-    {{--                    ['style', ['bold', 'italic', 'underline', 'clear']],--}}
-    {{--                    ['font', ['strikethrough', 'superscript', 'subscript']],--}}
-    {{--                    ['fontsize', ['fontsize']],--}}
-    {{--                    ['color', ['color']],--}}
-    {{--                    // ['table', ['table']],--}}
-    {{--                    ['para', ['ul', 'ol', 'paragraph']],--}}
-    {{--                    ['view', ['fullscreen', 'codeview']]--}}
-    {{--                ],--}}
-    {{--                height:200--}}
-    {{--            })--}}
-
-    {{--            // $(document).on('click', '#plus-image', function () {--}}
-    {{--            //     var option_count = $('.options-count');--}}
-    {{--            //     var total_option = option_count.length + 1;--}}
-    {{--            //--}}
-    {{--            //     var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +--}}
-    {{--            //         '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +--}}
-    {{--            //         '<div class="form-group">\n' +--}}
-    {{--            //         '      <label for="message">Multiple Image</label>\n' +--}}
-    {{--            //         '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +--}}
-    {{--            //         '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +--}}
-    {{--            //         '  </div>\n' +--}}
-    {{--            //         ' </div>\n'+--}}
-    {{--            //         '<div class="form-group col-md-5 option-'+total_option+'">\n' +--}}
-    {{--            //         '    <label for="alt_text">Alt Text</label>\n' +--}}
-    {{--            //         '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +--}}
-    {{--            //         '</div>\n' +--}}
-    {{--            //         '<div class="form-group col-md-1 option-'+total_option+'">\n' +--}}
-    {{--            //         '   <label for="alt_text"></label>\n' +--}}
-    {{--            //         '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +--}}
-    {{--            //         '</div>';--}}
-    {{--            //     $('#multiple-image-field').append(input);--}}
-    {{--            //     //Call dropify Function--}}
-    {{--            //     dropify();--}}
-    {{--            // });--}}
-
-    {{--            $(document).on('click', '.remove-image', function (event) {--}}
-    {{--                var rowId = $(event.target).attr('data-id');--}}
-    {{--                $('.'+rowId).remove();--}}
-    {{--            });--}}
-
-    {{--            $(document).on('click', '.remove-image', function (event) {--}}
-    {{--                var rowId = $(event.target).attr('data-id');--}}
-    {{--                $('.'+rowId).remove();--}}
-    {{--            });--}}
-
-    {{--            //External Link--}}
-    {{--            $('#external_link').click(function () {--}}
-    {{--                var externalLink = $('#externalLink');--}}
-    {{--                var pageDynamicEn = $('#pageDynamicEn');--}}
-    {{--                var pageDynamicBn = $('#pageDynamicBn');--}}
-
-    {{--                if($(this).prop("checked") == true){--}}
-    {{--                    externalLink.removeClass('d-none');--}}
-    {{--                    pageDynamicEn.addClass('d-none');--}}
-    {{--                    pageDynamicBn.addClass('d-none');--}}
-    {{--                }else{--}}
-    {{--                    pageDynamicEn.removeClass('d-none');--}}
-    {{--                    pageDynamicBn.removeClass('d-none');--}}
-    {{--                    externalLink.addClass('d-none');--}}
-    {{--                }--}}
-    {{--            });--}}
-
-    {{--        })--}}
-    {{--    </script>--}}
 
     <script>
         var componentDataDestroyUrl = "{{ url('page-components-data-destroy') }}";
         $(function () {
-            // $(document).on('click', '.remove-image', function (event) {
-            //     $(event.target).parent().parent().remove();
-            // });
-
-
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"
                 var fullUrl = "{{ asset('component-images') }}/" + componentType;
@@ -496,97 +419,6 @@
                 },
                 height: 150
             })
-
-            $(document).on('click', '.remove-image', function (event) {
-                var rowId = $(event.target).attr('data-id');
-                $('.' + rowId).remove();
-            });
-
-            // Multi Feature Component
-            $(document).on('click', '#features', function () {
-                var option_count = $('.component-count');
-                var total_option = option_count.length + 2;
-
-                var FeatureInput = '<input id="multi_item_count" type="hidden" name="multi_item_count" value="' + total_option + '">\n' +
-                    ' <div class="form-group col-md-12 mb-0 option-' + total_option + '">\n' +
-                    '     <div class="alert alert-secondary">\n' +
-                    '         <strong>Feature ' + total_option + '</strong>\n' +
-                    '     </div>\n' +
-                    ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-' + total_option + '">\n' +
-                    '     <label for="alt_text">Feature Title (English)</label>\n' +
-                    '     <input type="text" name="multi_item[feature_title_en-' + total_option + ']" class="form-control">\n' +
-                    ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-' + total_option + '">\n' +
-                    '     <label for="alt_text">Feature Title (Bangla)</label>\n' +
-                    '     <input type="text" name="multi_item[feature_title_bn-' + total_option + ']" class="form-control">\n' +
-                    ' </div>\n' +
-                    ' <div class="col-md-12 col-xs-12 component-count option-' + total_option + '"">\n' +
-                    '     <div class="form-group">\n' +
-                    '         <label for="message">Feature Icon</label>\n' +
-                    '         <input type="file" class="dropify" name="multi_item[image_url-' + total_option + ']" data-height="80"/>\n' +
-                    '         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
-                    '     </div>\n' +
-                    ' </div>\n' +
-                    ' <div class="form-group col-md-4 option-' + total_option + '">\n' +
-                    '     <label for="alt_text">Alt Text</label>\n' +
-                    '     <input type="text" name="multi_item[alt_text-' + total_option + ']" placeholder="Enter image alt text" class="form-control">\n' +
-                    ' </div>\n' +
-                    ' <div class="form-group col-md-4 option-' + total_option + '">\n' +
-                    '     <label for="button_en">Button Title (English)</label>\n' +
-                    '     <input type="text" name="multi_item[button_en-' + total_option + ']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
-                    ' </div>\n' +
-                    ' <div class="form-group col-md-4 option-' + total_option + '">\n' +
-                    '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
-                    '     <input type="text" name="multi_item[button_bn-' + total_option + ']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
-                    ' </div>\n' +
-                    '<div class="form-group col-md-6 option-' + total_option + '">\n' +
-                    '     <label for="button_link" >Details (English)</label>\n' +
-                    '     <textarea name="multi_item[details_en-' + total_option + ']" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>\n' +
-                    '</div>\n' +
-                    '<div class="form-group col-md-6 option-' + total_option + '">\n' +
-                    '     <label for="button_link" >Details (Bangla)</label>\n' +
-                    '     <textarea name="multi_item[details_bn-' + total_option + ']" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>\n' +
-                    '</div>\n' +
-                    '<div class="form-group col-md-1 option-' + total_option + '">\n' +
-                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-' + total_option + '" ><i data-id="option-' + total_option + '" class="la la-trash"></i></button>\n' +
-                    '</div>';
-                $('#features_component').append(FeatureInput);
-                dropify();
-            });
-
-            $(document).on('click', '.remove-image', function (event) {
-                var rowId = $(event.target).attr('data-id');
-                $('.' + rowId).remove();
-            });
-
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Image File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
-
-            //External Link
-            $('#external_link').click(function () {
-                var externalLink = $('#externalLink');
-                var pageDynamicEn = $('#pageDynamicEn');
-                var pageDynamicBn = $('#pageDynamicBn');
-
-                if ($(this).prop("checked") == true) {
-                    externalLink.removeClass('d-none');
-                    pageDynamicEn.addClass('d-none');
-                    pageDynamicBn.addClass('d-none');
-                } else {
-                    pageDynamicEn.removeClass('d-none');
-                    pageDynamicBn.removeClass('d-none');
-                    externalLink.addClass('d-none');
-                }
-            });
-
-
         })
     </script>
 

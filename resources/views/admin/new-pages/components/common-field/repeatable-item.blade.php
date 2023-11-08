@@ -56,6 +56,9 @@
         @include('admin.new-pages.components.common-field.multi-item.image')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.description')
+    @elseif(isset($component_type) && $component_type == "stories_slider")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => false])
     @else
 
     @endif
