@@ -266,6 +266,22 @@
                                         </slot>
                                     @endif
 
+                                    {{--video_full_width_component--}}
+                                    @if($component->type == "video_full_width_component")
+                                        <slot id="galley_masonry" data-offer-type="video_full_width_component">
+                                            @include('admin.new-pages.components.common-field.attribute.video-url')
+                                        </slot>
+                                    @endif
+
+                                    {{--text_with_image--}}
+                                    @if($component->type == "video_with_text_container_component")
+                                        <slot id="galley_masonry" data-offer-type="video_with_text_container_component">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.video-url')
+                                        </slot>
+                                    @endif
+
                                     {{--tab_component_with_image_card_one--}}
 {{--                                    @if($component->type == "tab_component_with_image_card_one")--}}
 {{--                                        <slot id="galley_masonry" data-offer-type="galley_masonry">--}}

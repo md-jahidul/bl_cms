@@ -14,7 +14,6 @@ class ComponentHelper
      */
     public static function components(): array
     {
-
         return [
             'all' => [
                 'single_image' => 'Single Image',
@@ -180,6 +179,10 @@ class ComponentHelper
             ],
             'video_full_width_component' => [
                 'title' => 'Video Full Width Component',
+                'config' => ['left_image' => true]
+            ],
+            'video_with_text_container_component' => [
+                'title' => 'Video With Text Container Component',
                 'config' => ['left_image' => true]
             ],
             'stories_slider' => [

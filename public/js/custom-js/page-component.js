@@ -21,6 +21,14 @@
         </div>`
     }
 
+    var videoUrl = function (index = 0) {
+        return `<div class="form-group col-md-12">
+            <label for="button_link" >Video URL</label>
+            <input type="text" name="attribute[media_url][en]"  class="form-control" placeholder="Enter video link">
+            <div class="help-block"></div>
+        </div>`
+    }
+
     var attributeImage =
         `<div class="form-group col-md-12">
             <label for="alt_text" class="">Image</label>
@@ -458,6 +466,18 @@
                     imageOne() +
                     multiItemTitle() +
                     multiItemDescription() +
+                `</slot>`;
+        }else if(componentType === "video_full_width_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    videoUrl() +
+                `</slot>`;
+        }else if(componentType === "video_with_text_container_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    videoUrl() +
                 `</slot>`;
         }else if(componentType === "tab_component_with_image_card_one"){
             componentData +=
