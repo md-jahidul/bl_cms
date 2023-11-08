@@ -181,6 +181,10 @@ class ComponentHelper
                 'title' => 'Video Full Width Component',
                 'config' => ['left_image' => true]
             ],
+            'video_with_text_container_component' => [
+                'title' => 'Video With Text Container Component',
+                'config' => ['left_image' => true]
+            ],
             'stories_slider' => [
                 'title' => 'Stories Slider',
                 'config' => ['left_image' => true]
