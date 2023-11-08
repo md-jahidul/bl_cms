@@ -92,7 +92,7 @@
                                     <select disabled name="component_for" class="form-control custom-select"
                                             id="component_for" required data-validation-required-message="Please select component For">
                                         <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.component_for') as $key => $type)
+                                        @foreach ($componentType as $key => $type)
                                             <option value="{{$key}}" {{ (isset($slider->component_for) && $slider->component_for == $key) ? 'selected' : '' }} >{{$type}}</option>
                                         @endforeach
                                     </select>

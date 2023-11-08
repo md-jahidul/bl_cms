@@ -87,10 +87,10 @@ class GenericComponentItemService
 
     public function storeComponent($data)
     {
-        $msComponentCount = $this->findAll()->count();
+        $componentCount = $this->findAll()->count();
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
-        $data['display_order'] = $msComponentCount + 1;
+        $data['display_order'] = $componentCount + 1;
 
         $this->save($data);
 

@@ -37,6 +37,7 @@ class GenericSliderService
     protected $lmsHomeComponentService;
     protected $nonBlOfferService;
     protected $nonBLComponentService;
+    protected $genericComponentService, $genericComponentItemService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
@@ -48,7 +49,9 @@ class GenericSliderService
         MyBlCommerceComponentService  $commerceComponentService,
         LmsHomeComponentService $lmsHomeComponentService,
         NonBlOfferService $nonBlOfferService,
-        NonBlComponentService $nonBlComponentService
+        NonBlComponentService $nonBlComponentService,
+        GenericComponentService $genericComponentService,
+        GenericComponentItemService $genericComponentItemService
     ) {
         $this->genericSliderRepository = $genericSliderRepository;
         $this->myblHomeComponentService = $myblHomeComponentService;
@@ -61,6 +64,9 @@ class GenericSliderService
         $this->nonBlOfferService = $nonBlOfferService;
         $this->nonBLComponentService = $nonBlComponentService;
         $this->lmsHomeComponentService = $lmsHomeComponentService;
+        $this->genericComponentService = $genericComponentService;
+        $this->genericComponentItemService = $genericComponentItemService;
+
         $this->setActionRepository($genericSliderRepository);
     }
 
@@ -84,14 +90,21 @@ class GenericSliderService
 
             $genericSlider = $this->save($data);
 
-            $homeComponentData['title_en'] = $data['title_en'];
-            $homeComponentData['title_bn'] = $data['title_bn'];
-            $homeComponentData['display_order'] = $this->displayOrder($data['component_for']);
-            $homeComponentData['component_key'] = "generic_slider_" . $genericSlider->id;
-            $homeComponentData['is_api_call_enable'] = 1;
-            $homeComponentData['is_eligible'] = 0;
+            $homeComponentData = $this->formatHomeComponentData($data, $genericSlider);
 
-            if (!in_array($data['component_for'], config('generic-slider.top_most_visited_page'))) {
+
+            $genericComponent = $this->genericComponentService->findAll();
+            $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
+
+            if (in_array($data['component_for'], $genericComponentKeys)) {
+                $genericComponentId = $this->findGenericComponentId($genericComponent, $data['component_for']);
+                $homeComponentData['generic_slider_id'] = $genericSlider->id;
+                $homeComponentData['generic_component_id'] = $genericComponentId;
+
+                $this->genericComponentItemService->storeComponent($homeComponentData);
+            }
+
+            else if (!in_array($data['component_for'], config('generic-slider.top_most_visited_page'))) {
                 if ($data['component_for'] == 'home') {
                     $this->myblHomeComponentService->save($homeComponentData);
                     Helper::removeVersionControlRedisKey('home');
@@ -149,7 +162,15 @@ class GenericSliderService
             $homeComponentData['title_en'] = $data['title_en'];
             $homeComponentData['title_bn'] = $data['title_bn'];
 
-            if (!in_array($data['component_for'], config('generic-slider.top_most_visited_page'))) {
+            $genericComponent = $this->genericComponentService->findAll();
+            $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
+
+            if (in_array($data['component_for'], $genericComponentKeys)) {
+                $homeComponentData['id'] = $this->genericComponentItemService->findBy(['generic_slider_id' =>$slider->id])[0]['id'];
+                $this->genericComponentItemService->updateComponent($homeComponentData);
+            }
+
+            else if (!in_array($data['component_for'], config('generic-slider.top_most_visited_page'))) {
                 if ($slider['component_for'] == 'home') {
                     $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
                     $homeComponent->update($homeComponentData);
@@ -281,7 +302,16 @@ class GenericSliderService
         try {
             $slider = $this->findOne($id);
             $componentFor = $slider['component_for'];
-            if (!in_array($componentFor, config('generic-slider.top_most_visited_page'))) {
+
+            $genericComponent = $this->genericComponentService->findAll();
+            $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
+
+            if (in_array($slider['component_for'], $genericComponentKeys)) {
+                $id = $this->genericComponentItemService->findBy(['generic_slider_id' =>$slider->id])[0]['id'];
+                $this->genericComponentItemService->deleteComponent($id);
+            }
+
+            else if (!in_array($componentFor, config('generic-slider.top_most_visited_page'))) {
                 if ($componentFor == 'home') {
                     $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                     $this->myblHomeComponentService->deleteComponent($homeComponent->id);
@@ -325,5 +355,30 @@ class GenericSliderService
             ];
         }
 
+    }
+
+    public function findGenericComponentId($components, $keyName)
+    {
+        foreach ($components as $component){
+            if ($component['component_key'] == $keyName) {
+                return $component['id'];
+            }
+        }
+    }
+
+    public function formatHomeComponentData($data, $genericSlider)
+    {
+        return [
+            'title_en' => $data['title_en'],
+            'title_bn' => $data['title_bn'],
+            'display_order' => $this->displayOrder($data['component_for']),
+            'component_key' => "generic_slider_" . $genericSlider->id,
+            'is_api_call_enable' => 1,
+            'is_eligible' => 0,
+            'android_version_code_min' => $data['android_version_code_min'],
+            'android_version_code_max' => $data['android_version_code_min'],
+            'ios_version_code_min' => $data['android_version_code_min'],
+            'ios_version_code_max' => $data['android_version_code_min'],
+        ];
     }
 }
