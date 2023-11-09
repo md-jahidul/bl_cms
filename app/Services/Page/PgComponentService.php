@@ -36,20 +36,38 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-//        dd($data);
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
-            if (isset($data["attribute"]['image_file'])) {
+            if (isset($data["attribute"]) && isset($data["attribute"]['image_file'])) {
                 $imgUrl = $this->fileUpload($data["attribute"]['image_file']);
                 $data["attribute"]['image']['en'] = $imgUrl;
                 $data["attribute"]['image']['bn'] = $imgUrl;
             }
 
+            if (!empty($data['attribute']['button_link'])){
+                $data["attribute"]['button_link']['bn'] = $data["attribute"]['button_link']['bn'] ?? $data["attribute"]['button_link']['en'];
+            }
+
+            if (!empty($data['attribute']['media_url'])){
+                $data["attribute"]['media_url']['bn'] = $data["attribute"]['media_url']['bn'] ?? $data["attribute"]['media_url']['en'];
+            }
+
+            if (!empty($data['attribute']['button_one_link'])){
+                $data["attribute"]['button_one_link']['bn'] = $data["attribute"]['button_one_link']['bn'] ?? $data["attribute"]['button_one_link']['en'];
+            }
+
+            if (!empty($data['attribute']['button_two_link'])){
+                $data["attribute"]['button_two_link']['bn'] = $data["attribute"]['button_two_link']['bn'] ?? $data["attribute"]['button_two_link']['en'];
+            }
+
             if ($id && !isset($data["attribute"]['image_file'])) {
                 $component = $this->findOne($id);
-                $data["attribute"]['image']['en'] = $component['attribute']['image']['en'] ?? null;
-                $data["attribute"]['image']['bn'] = $component['attribute']['image']['en'] ?? null;
+                if (isset($component['attribute']['image']['en']) && isset($component['attribute']['image']['bn']))
+                {
+                    $data["attribute"]['image']['en'] = $component['attribute']['image']['en'] ?? null;
+                    $data["attribute"]['image']['bn'] = $component['attribute']['image']['bn'] ?? null;
+                }
             }
 
             $componentData = [
@@ -63,8 +81,9 @@ class PgComponentService
             if (!$id) {
                 $componentData['order'] = $components->count() + 1;
             }
+            unset($componentData['attribute']['image_file']);
+
             $componentInfo = $this->componentRepository->createOrUpdate($componentData, $id);
-            unset($data['image_file']);
             $componentId = $componentInfo->id;
 
             if (isset($data['componentData'])){

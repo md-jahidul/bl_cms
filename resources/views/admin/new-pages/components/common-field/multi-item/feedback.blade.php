@@ -35,7 +35,7 @@
           $fieldDesignationBn.= "componentData[$key][designation][value_bn]";
           $fieldInstituteEn .=  "componentData[$key][institute][value_en]";
           $fieldInstituteBn .=  "componentData[$key][institute][value_bn]";
-          $fieldImage .=  "componentData[$key][image][value_bn]";
+          $fieldImage .=        "componentData[$key][image][value_en]";
       }
 
  @endphp
@@ -49,7 +49,7 @@
 
 <div class="form-group col-md-6">
     <label for="title_en">Feedback Bn</label>
-    <textarea type="text" rows="3" name="$fieldFeedbackBn }}" class="form-control">{{ $data['feedback']['value_bn'] ?? '' }}</textarea>
+    <textarea type="text" rows="3" name="{{ $fieldFeedbackBn }}" class="form-control">{{ $data['feedback']['value_bn'] ?? '' }}</textarea>
 </div>
 
 <div class="form-group col-md-6">

@@ -488,6 +488,8 @@
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
                 `</slot>`;
         }else if(componentType === "hero_section"){
             componentData +=
@@ -659,6 +661,8 @@
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1) +
                     imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
                     removeBtn +
                 `</slot>`;
         }else if(componentType === "hero_section"){
