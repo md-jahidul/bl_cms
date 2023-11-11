@@ -26,15 +26,12 @@ class CreateGenericComponentItemsTable extends Migration
             $table->bigInteger('ios_version_code_min')->default(0);
             $table->bigInteger('ios_version_code_max')->default(999999999);
             $table->unsignedBigInteger('generic_component_id');
-            $table->unsignedBigInteger('generic_slider_id')->nullable();
+            $table->string('other_component_name')->nullable();
+            $table->bigInteger('other_component_id')->nullable()->index();
+            $table->string('other_component_table_name')->nullable();
             $table->foreign('generic_component_id')
                 ->references('id')
                 ->on('generic_components')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            $table->foreign('generic_slider_id')
-                ->references('id')
-                ->on('generic_sliders')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();

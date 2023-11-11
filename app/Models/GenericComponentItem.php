@@ -18,7 +18,9 @@ class GenericComponentItem extends Model
         'ios_version_code_min',
         'ios_version_code_max',
         'generic_component_id',
-        'generic_slider_id'
+        'other_component_name',
+        'other_component_id',
+        'other_component_table_name'
     ];
 
     public function component()

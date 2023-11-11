@@ -10,6 +10,11 @@ class GenericComponentItemRepository extends BaseRepository
 
     public function delete($id)
     {
-        return $this->modelName::where('id', $id)->delete();
+        try {
+            return $this->modelName::where('id', $id)->delete();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
     }
 }

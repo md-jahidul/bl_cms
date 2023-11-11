@@ -98,7 +98,9 @@ class GenericSliderService
 
             if (in_array($data['component_for'], $genericComponentKeys)) {
                 $genericComponentId = $this->findGenericComponentId($genericComponent, $data['component_for']);
-                $homeComponentData['generic_slider_id'] = $genericSlider->id;
+                $homeComponentData['other_component_name'] = 'generic_slider';
+                $homeComponentData['other_component_id'] = $genericSlider->id;
+                $homeComponentData['other_component_table_name'] = 'generic_sliders';
                 $homeComponentData['generic_component_id'] = $genericComponentId;
 
                 $this->genericComponentItemService->storeComponent($homeComponentData);
@@ -166,7 +168,7 @@ class GenericSliderService
             $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
 
             if (in_array($data['component_for'], $genericComponentKeys)) {
-                $homeComponentData['id'] = $this->genericComponentItemService->findBy(['generic_slider_id' =>$slider->id])[0]['id'];
+                $homeComponentData['id'] = $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0]['id'];
                 $this->genericComponentItemService->updateComponent($homeComponentData);
             }
 
@@ -307,7 +309,7 @@ class GenericSliderService
             $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
 
             if (in_array($slider['component_for'], $genericComponentKeys)) {
-                $id = $this->genericComponentItemService->findBy(['generic_slider_id' =>$slider->id])[0]['id'];
+                $id = $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0]['id'];
                 $this->genericComponentItemService->deleteComponent($id);
             }
 

@@ -45,7 +45,7 @@
                             <a href="{{ route("generic-component-items.status.update", $component['id']) }}" data-value="disable {{ $component['title_en'] }}"
                             class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
                             @endif
-                            @if($component['generic_slider_id'] == null)
+                            @if($component['other_component_name'] == null)
                             <a href="" data-id="{{ $component['id'] }}" data-toggle="modal" data-target="#large" role="button"
                                class="btn btn-info border-0 edit"><i class="la la-pencil" aria-hidden="true"></i></a>
                             <a href="#" remove="{{ route("generic-component-items.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
