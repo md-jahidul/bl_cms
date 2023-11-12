@@ -1519,6 +1519,24 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
     Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
 
+    /**
+     * I Screen
+     */
+    Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
+    Route::get('generic-components/destroy/{id}', 'CMS\GenericComponentController@delete');
+    Route::get('generic-component/{componentId}/items', 'CMS\GenericComponentItemController@index')->name('generic-component-items-list.index');
+//    Route::get('generic-component-items', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
+    Route::get('generic-component-items/edit/{id}', 'CMS\GenericComponentItemController@edit')
+        ->name('generic-component-items.edit');
+    Route::post('generic-component-items/store', 'CMS\GenericComponentItemController@store')
+        ->name('generic-component-items.store');
+    Route::post('generic-component-items/update', 'CMS\GenericComponentItemController@update')
+        ->name('generic-component-items.update');
+    Route::get('generic-component-items-sort', 'CMS\GenericComponentItemController@componentSort');
+    Route::get('generic-component-items-status-update/{id}', 'CMS\GenericComponentItemController@componentStatusUpdate')
+        ->name('generic-component-items.status.update');
+    Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
+        ->name('generic-component-items.destroy');
 });
 
 // 4G Map View Route

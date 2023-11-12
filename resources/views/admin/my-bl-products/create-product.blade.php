@@ -487,6 +487,16 @@
                                         <label for="show_timer">Show Timer</label>
                                     </fieldset>
                                 </div>
+                                <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
+                                    <label for="service_tags">Service Tags</label>
+                                    <input class="form-control" name="service_tags" id="service_tags"
+                                           value="{{ old("service_tags") ? old("service_tags") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('service_tags'))
+                                        <div class="help-block">{{ $errors->first('service_tags') }}</div>
+                                    @endif
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Service Tags should be Comma-separated value. Example: iscreen,toffee</span>
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>Service Product Image</label>
                                     <input type="file" id="input-file-now" name="service_image_url" class="dropify"/>
