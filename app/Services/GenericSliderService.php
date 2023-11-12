@@ -138,7 +138,7 @@ class GenericSliderService
                 }
             }
 
-            Redis::del('top_visit_slider');
+            Redis::del(['top_visit_slider', 'generic_component_data']);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -233,7 +233,7 @@ class GenericSliderService
             unset($data['android_version_code'], $data['ios_version_code']);
 
             $slider->update($data);
-            Redis::del('top_visit_slider');
+            Redis::del(['top_visit_slider', 'generic_component_data']);
 
             DB::commit();
             return true;
@@ -345,7 +345,7 @@ class GenericSliderService
                 }
             }
             $slider->delete();
-            Redis::del('top_visit_slider');
+            Redis::del(['top_visit_slider', 'generic_component_data']);
 
             return [
                 'message' => 'Slider delete successfully',
