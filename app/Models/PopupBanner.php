@@ -16,6 +16,8 @@ class PopupBanner extends Model
         'android_version_code_min',
         'android_version_code_max',
         'ios_version_code_min',
-        'ios_version_code_max'
+        'ios_version_code_max',
+        'start_date',
+        'end_date'
     ];
 }
