@@ -285,6 +285,8 @@
                                     {{--icon_text_component--}}
                                     @if($component->type == "stories_slider")
                                         <slot id="stories_slider" data-offer-type="stories_slider">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @if(!empty($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [

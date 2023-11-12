@@ -564,6 +564,9 @@
         }else if(componentType === "stories_slider"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     multiItemFeedback() +
