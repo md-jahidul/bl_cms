@@ -2,26 +2,35 @@
 
 namespace App\Services;
 
+use App\Enums\GlobalSettingConst;
+use App\Repositories\GlobalSettingRepository;
 use App\Repositories\MyBlSpecialTypeRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use App\Traits\RedisTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+
 
 class MyBlSpecialTypeService
 {
     use CrudTrait;
     use FileTrait;
+    use RedisTrait;
 
     protected $productSpecialTypeRepository;
+    protected $globalSettingsRepository;
 
-    public function __construct(MyBlSpecialTypeRepository $productSpecialTypeRepository)
+    public function __construct(MyBlSpecialTypeRepository $productSpecialTypeRepository, GlobalSettingRepository $globalSettingsRepository)
     {
+        $this->globalSettingsRepository = $globalSettingsRepository;
         $this->productSpecialTypeRepository = $productSpecialTypeRepository;
         $this->setActionRepository($productSpecialTypeRepository);
     }
+
 
     public function getProductSpecialTypes()
     {
@@ -39,7 +48,7 @@ class MyBlSpecialTypeService
                 }
 
                 if (request()->hasFile('icon')) {
-                    $specialType['icon'] = 'storage/' . $specialType['icon']->storeAs('product-special-type', time().'-'.bin2hex(random_bytes(4)).'-'.$specialType['icon']->getClientOriginalName());
+                    $specialType['icon'] = 'storage/' . $specialType['icon']->storeAs('product-special-type', time() . '-' . bin2hex(random_bytes(4)) . '-' . $specialType['icon']->getClientOriginalName());
                 }
                 $specialType['display_order'] = $i;
                 $specialType['slug'] = str_replace(" ", "_", strtolower($specialType['name_en']));
@@ -47,6 +56,7 @@ class MyBlSpecialTypeService
                 $specialType = $this->save($specialType);
 
             });
+            $this->insertIntoGlobalSettings();
             Redis::del('product-special-types');
             return true;
 
@@ -55,7 +65,6 @@ class MyBlSpecialTypeService
             return false;
         }
     }
-
 
 
     public function tableSortable($data)
@@ -71,13 +80,14 @@ class MyBlSpecialTypeService
             $productSpecialType = $this->findOne($id);
             DB::transaction(function () use ($data, $id, $productSpecialType) {
                 if (request()->hasFile('icon')) {
-                    $data['icon'] = 'storage/' . $data['icon']->storeAs('product-special-type', time().'-'.bin2hex(random_bytes(4)).'-'.$data['icon']->getClientOriginalName());
+                    $data['icon'] = 'storage/' . $data['icon']->storeAs('product-special-type', time() . '-' . bin2hex(random_bytes(4)) . '-' . $data['icon']->getClientOriginalName());
                     $this->deleteFile($productSpecialType->icon);
 
                 }
-                
                 $productSpecialType->update($data);
             });
+
+            $this->insertIntoGlobalSettings();
             Redis::del('product-special-types');
             return true;
         } catch (\Exception $e) {
@@ -86,7 +96,39 @@ class MyBlSpecialTypeService
         }
     }
 
+    public function insertIntoGlobalSettings()
+    {
+        $this->globalSettingsRepository->delEntryBySettingsKey('special_types');
+        $special_types = $this->productSpecialTypeRepository->findByProperties(['status' => 1], ['name_en',
+            'name_bn',
+            'slug',
+            'icon']);
 
+        if (count($special_types) > 0) {
+            $special_types_base_uri_added = $this->addSpecialTypeIconBase($special_types);
+            $data['settings_value'] = json_encode($special_types_base_uri_added, true);
+            $data['settings_key'] = 'special_types';
+            $data['value_type'] = 'json';
+            $data['updated_by'] = Auth::id();
+            $this->globalSettingsRepository->create($data);
+        }
+
+        $this->delGlobalSettingCache();
+    }
+
+    public function addSpecialTypeIconBase($special_types)
+    {
+        foreach ($special_types as $value) {
+            if (isset($value['icon'])) {
+                $value['icon'] = env('IMAGE_HOST') . $value['icon'];
+            }
+        }
+        return $special_types;
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function deleteProductSpecialType($id)
     {
         $productSpecialType = $this->findOne($id);
@@ -97,11 +139,17 @@ class MyBlSpecialTypeService
         }
 
         $this->delSliderRedisCache();
+        $this->insertIntoGlobalSettings();
         return Response('Product Special Type has been successfully deleted');
     }
 
     public function delSliderRedisCache($redisKey = 'product-special-types')
     {
         Redis::del($redisKey);
+    }
+
+    public function delGlobalSettingCache($redisKey = 'product-special-types')
+    {
+        $this->redisDel(GlobalSettingConst::SETTINGS_REDIS_KEY);
     }
 }
