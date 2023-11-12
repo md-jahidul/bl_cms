@@ -98,6 +98,30 @@
                                         <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date">Start Date</label>
+                                    <div class='input-group'>
+                                        <input required type='text' class="form-control" name="start_date" id="start_date"
+                                               placeholder="Please select start date"
+                                               value="{{ $banner->start_date }}">
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input required type="text" class="form-control" name="end_date" id="end_date"
+                                           placeholder="Please select end date"
+                                           value="{{old('end_date') ? old('end_date'): $banner->end_date}}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-actions right">
                                 <button type="submit" class="btn btn-success">
@@ -114,8 +138,18 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+
+    <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 {{--    <script>--}}
 {{--        $(function () {--}}
 {{--            var externalLink = $('#externalLink');--}}
@@ -130,6 +164,18 @@
 {{--    </script>--}}
     <script>
         $(function () {
+            var date = new Date();
+            date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                showClose: true,
+            });
+            $('#end_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false, //Important! See issue #1075
+                showClose: true,
+
+            });
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Image File to upload',
