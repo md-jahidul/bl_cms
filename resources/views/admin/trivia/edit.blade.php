@@ -463,12 +463,12 @@
                         <div class="help-block"></div>
                     </div>
                 </div>
-
+                <div class="col-6">
                     <!-- Banner -->
                     <div class="col-12">
                         @if(isset($trivia))
                             <img style="height:100px;width:200px;" id="imgDisplay" src="{{ asset($trivia->banner) }}"/>
-                            @else
+                        @else
                             <img src="" style="height:100px;width:200px;display:none" id="imgDisplay"/>
                         @endif
                     </div>
@@ -478,13 +478,13 @@
                             <div id="banner" class="input-group">
                                 <div class="custom-file">
                                     <input
-                                    accept="image/*"
-                                    @if(!isset($trivia))
-                                        required
+                                        accept="image/*"
+                                        @if(!isset($trivia))
+                                            required
                                         data-validation-required-message="Image is required"
-                                    @endif
-                                    accept="image/*"
-                                    onchange="
+                                        @endif
+                                        accept="image/*"
+                                        onchange="
                                     createImageBitmap(this.files[0]).then((bmp) => {
                                         if(bmp.width/bmp.height == 16/9){
                                             document.getElementById('submitForm').disabled = false;
@@ -498,10 +498,10 @@
                                         }
                                     })"
 
-                                    name="banner"
-                                    type="file"
-                                    id="image"
-                                    class="custom-file-input @error('image_path') is-invalid @enderror">
+                                        name="banner"
+                                        type="file"
+                                        id="image"
+                                        class="custom-file-input @error('image_path') is-invalid @enderror">
                                     <label class="custom-file-label" for="imgInp">Upload Banner...</label>
                                 </div>
                             </div>
@@ -513,6 +513,40 @@
                         </div>
 
                     </div>
+                </div>
+                <div class="col-6">
+                    <!-- Icon -->
+                    <div class="col-12">
+                        @if(isset($trivia))
+                            <img style="height:100px;width:200px;" id="iconDisplay" src="{{ asset($trivia->icon) }}"/>
+                        @else
+                            <img src="" style="height:100px;width:200px;display:none" id="iconDisplay"/>
+                        @endif
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="icon" id="bor" class="">Icon :</label>
+                            <div id="icon" class="input-group">
+                                <div class="custom-file">
+                                    <input
+                                        accept="image/*"
+                                        name="icon"
+                                        type="file"
+                                        id="icon_image"
+                                        class="custom-file-input @error('image_path') is-invalid @enderror">
+                                    <label class="custom-file-label" for="imgInp">Upload Icon...</label>
+                                </div>
+                            </div>
+                            <div class="help-block">
+                                <small class="text-danger" id="msg"> @error('image_path') {{ $message }} @enderror </small>
+                            </div>
+                            <div id="icon_massage"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+
 
                     <div class="col-2 mb-2" >
                         <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($banner_info)) btn-success @else btn-info @endif ">
@@ -530,3 +564,26 @@
         List
     </h1>
 @endsection
+@push('page-js')
+    <script>
+        $(document).ready(function () {
+            function readURL(input) {
+                console.log(input);
+                if (input.files && input.files[0]) {
+                    console.log(input.files[0]);
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#iconDisplay').css('display', 'block');
+                        $('#iconDisplay').attr('src', e.target.result);
+
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#icon_image").change(function() {
+                readURL(this);
+            });
+        });
+    </script>
+@endpush
