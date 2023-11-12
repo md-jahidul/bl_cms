@@ -487,6 +487,98 @@
                                 {{--                                        </button>--}}
                                 {{--                                    </div>--}}
                                 {{--                                </div>--}}
+                                <div class="col-md-12 pl-0"><h5><strong>Digital Service</strong></h5></div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Name BN</label>
+                                    <input class="form-control" name="name_bn" id="name_bn"
+                                           value="{{ $details->details->name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('cta_name_en') ? ' error' : '' }}">
+                                    <label for="name_bn">Cta Name EN</label>
+                                    <input class="form-control" name="cta_name_en" id="cta_name_en"
+                                           value="{{ $details->details->cta_name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('cta_name_en'))
+                                        <div class="help-block">{{ $errors->first('cta_name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('cta_name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Cta Name BN</label>
+                                    <input class="form-control" name="cta_name_bn" id="cta_name_bn"
+                                           value="{{ $details->details->cta_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('cta_name_bn'))
+                                        <div class="help-block">{{ $errors->first('cta_name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('redirection_name_en') ? ' error' : '' }}">
+                                    <label for="name_bn">Redirection Name BN</label>
+                                    <input class="form-control" name="redirection_name_en" id="redirection_name_en"
+                                           value="{{ $details->details->redirection_name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_name_en'))
+                                        <div class="help-block">{{ $errors->first('redirection_name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('redirection_name_bn') ? ' error' : '' }}">
+                                    <label for="redirection_name_bn">Redirection Name BN</label>
+                                    <input class="form-control" name="redirection_name_bn" id="redirection_name_bn"
+                                           value="{{ $details->details->redirection_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_name_bn'))
+                                        <div class="help-block">{{ $errors->first('redirection_name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('redirection_deeplink') ? ' error' : '' }}">
+                                    <label for="redirection_deeplink">Redirection Deeplink</label>
+                                    <input class="form-control" name="redirection_deeplink" id="redirection_deeplink"
+                                           value="{{ $details->details->redirection_deeplink }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_deeplink'))
+                                        <div class="help-block">{{ $errors->first('redirection_deeplink') }}</div>
+                                    @endif
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="activation_type">Activation Type</label>
+                                        <select name="activation_type" class="form-control">
+                                            <option value="REGULAR" @if($details->details->activation_type == 'REGULAR') selected @endif>REGULAR</option>
+                                            <option value="SERVICE" @if($details->details->activation_type == 'SERVICE') selected @endif>SERVICE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="cta_bgd_color" class="control-label">Background Color</label>
+                                        <input type="color" name="cta_bgd_color" class="form-control" placeholder="Background Color" value="{{ $details->details->cta_bgd_color }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="cta_text_color" class="control-label">Text Color</label>
+                                        <input type="color" name="cta_text_color" class="form-control" placeholder="Color" value="{{ $details->details->cta_text_color }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="show_timer" value="1" name="show_timer" @if($details->details->show_timer) checked @endif>
+                                        <label for="show_timer">Show Timer</label>
+                                    </fieldset>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Service Product Image</label>
+                                    <input type="file" id="input-file-now" name="service_image_url" class="dropify" data-default-file="{{ $details->details->service_image_url ? url('storage/' .$details->details->service_image_url) : ''}}"/>
+                                    @if($errors->has('service_image_url'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('service_image_url') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
                                 <div class="col-md-12 pl-0"><h5><strong>Product Schedule Settings</strong></h5></div>
                                 @if($productScheduleRunning == true)
                                     <span class="text-danger"><strong><i class="la la-warning"></i> Warning:</strong> {{ $warningText }} So don't change in <strong>Product Schedule Settings.</strong></span>
