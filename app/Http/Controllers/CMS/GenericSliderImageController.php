@@ -74,7 +74,7 @@ class GenericSliderImageController extends Controller
             $image->update(['sequence' => $position[1]]);
         }
 
-        $keys = ['non_bl_offer', 'toffee_banner'];
+        $keys = ['non_bl_offer', 'toffee_banner', 'top_visit_slider'];
         Helper::removeVersionControlRedisKey();
         Redis::del($keys);
 
