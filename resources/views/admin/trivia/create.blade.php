@@ -524,11 +524,28 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="icon" id="bor" class="">Icon :</label>
+                            <label for="icon" id="bor" class="required">Icon :</label>
                             <div id="icon" class="input-group">
                                 <div class="custom-file">
                                     <input
                                         accept="image/*"
+                                        @if(!isset($trivia))
+                                            required
+                                        data-validation-required-message="Image is required"
+                                        @endif
+                                        onchange="
+                                    createImageBitmap(this.files[0]).then((bmp) => {
+                                        if(bmp.width/bmp.height == 1/1){
+                                            document.getElementById('submitForm').disabled = false;
+                                            document.getElementById('icon_massage').innerHTML = '';
+                                            this.style.border = 'none';
+                                        }else{
+                                            this.style.border = '1px solid red';
+                                            document.getElementById('icon_massage').innerHTML = '<b>image aspact ratio must 1:1(change the picture to enable button)</b>';
+                                            document.getElementById('icon_massage').classList.add('text-danger');
+                                            document.getElementById('submitForm').disabled = true;
+                                        }
+                                    })"
                                         name="icon"
                                         type="file"
                                         id="icon_image"
@@ -538,6 +555,7 @@
                             </div>
                             <div class="help-block">
                                 <small class="text-danger" id="msg"> @error('image_path') {{ $message }} @enderror </small>
+                                <small class="text-info">image aspact ratio must be in 1:1</small>
                             </div>
                             <div id="icon_massage"></div>
                         </div>
