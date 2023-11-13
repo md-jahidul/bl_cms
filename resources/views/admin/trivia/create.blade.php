@@ -70,7 +70,7 @@
                     <!-- Status -->
                     <div class="col-md-3">
                         <label for="status">Active Status:</label>
-                        <select class="form-control" id="status"
+                        <select class="form-control custom-select" id="status"
                                 name="status">
                             <option value="1"> Active</option>
                             <option value="0">Inactive</option>
@@ -80,8 +80,22 @@
                         @endif
                     </div>
 
+                    <!-- Is Title Show -->
+                    <div class="col-md-2">
+                        <label for="is_title_show">Is Title Show:</label>
+                        <select class="form-control custom-select" id="is_title_show"
+                                name="is_title_show">
+                            <option value="1"> True</option>
+                            <option value="0" selected>False</option>
+                        </select>
+                        @if ($errors->has('is_title_show'))
+                            <div class="help-block">  {{ $errors->first('is_title_show') }}</div>
+                        @endif
+                    </div>
+
+
                     <!-- Pending Label -->
-                    <div class="col-6">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="pending_bottom_label_en" class="required">Pending Bottom Label EN:</label>
                             <input
@@ -100,7 +114,7 @@
                         </div>
                         {{-- <input type="hidden" name="id" value="1"> <!-- as this is single row, we pass ID statically to updateOrCreate --> --}}
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="pending_bottom_label_bn" class="required">Pending Bottom Label BN:</label>
                             <input
