@@ -1370,12 +1370,12 @@ class ProductCoreService
             ->build();
 
 
-        $header = config('productMapping.mybl.columns');
+        $header = config('productMapping.mybl.download-columns');
 
         unset($header['internet_volume_mb']);
 
-        $header['Active'] = $header['status'];
-        unset($header['status']);
+//        $header['Active'] = $header['status'];
+//        unset($header['status']);
 
         $headers = array_map(function ($val) {
             return str_replace('_', ' ', ucwords($val));
@@ -1429,7 +1429,16 @@ class ProductCoreService
                 $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
                 $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
                 $insert_data[33] = ($product->status) ? 'Yes' : 'No';
-
+                $insert_data[34] = $product->details->name_bn;
+                $insert_data[35] = $product->details->show_timer;
+                $insert_data[36] = $product->details->activation_type;
+                $insert_data[37] = $product->details->cta_name_en;
+                $insert_data[38] = $product->details->cta_name_bn;
+                $insert_data[39] = $product->details->cta_bgd_color;
+                $insert_data[40] = $product->details->cta_text_color;
+                $insert_data[41] = $product->details->redirection_name_en;
+                $insert_data[42] = $product->details->redirection_name_bn;
+                $insert_data[43] = $product->details->redirection_deeplink;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
