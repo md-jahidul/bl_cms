@@ -583,12 +583,13 @@
                     multiItemTitle() +
                     `<div class="col-md-11 ml-5">
                         <div class="row tab-item">
-                            <slot class="tab_item_count">
+                            <slot class="tab_item_count" data-tab-id="0">
                                 ${
                                     addTabBtn +
                                     multiItemTitle(0, true, 0) +
                                     multiItemDescription(0, true, 0) +
-                                    imageOne(0, true, 0)
+                                    imageOne(0, true, 0) +
+                                    itemCountLine('', '')
                                 }
                             </slot>
                         </div>
@@ -716,19 +717,21 @@
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1, "Tab") +
                     multiItemTitle(index) +
-                `<div class="col-md-11 ml-5">
-                    <div class="row tab-item">
-                        <slot class="tab_item_count">
-                            ${
-                                addTabBtn +
-                                itemCountLine('', '') +
-                                multiItemTitle(index, true, 0) +
-                                multiItemDescription(index, true, 0) +
-                                imageOne(index, true, 0)
-                            }
-                        </slot>
-                    </div>
+                    `<div class="col-md-11 ml-5">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="${index}">
+                                ${
+                                    addTabBtn +
+                                    multiItemTitle(index, true, 0) +
+                                    multiItemDescription(index, true, 0) +
+                                    imageOne(index, true, 0) +
+                                    // (index != 0) ? removeTabItemBtn : "" +
+                                    itemCountLine('', '')
+                                }
+                            </slot>
+                        </div>
                     </div>` +
+                    removeBtn +
                 `</slot>`;
         }else{
             console.log('No component found!!')
@@ -742,6 +745,8 @@
     $(document).on('click', '.remove-image', function (event) {
         var id = $(event.target).attr('data-com-id');
         var group = $(event.target).attr('data-group');
+        var tab = $(event.target).attr('data-tab');
+        var parentId = $(event.target).attr('data-parent');
         if (id){
             var confirmPopupParams = {
                 title: 'Are you sure?',
@@ -763,7 +768,7 @@
             Swal.fire(confirmPopupParams).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: componentDataDestroyUrl + "?data-com-id=" + id + "&data-group=" + group,
+                        url: componentDataDestroyUrl + "?data-com-id=" + id + "&data-group=" + group + "&data-tab=" + tab + group + "&data-parent=" + parentId,
                         methods: "get",
                         success: function (redirectUrl) {
                             Swal.fire(deletePopupParams);
@@ -788,21 +793,18 @@
     // Tab Item Add
     $(document).on('click', '.add-tab-item', function (e) {
         let tabItem = $(e.target).parent().parent().parent()
-
-        let option_count = $('.page_component_multi_item');
-        let index = option_count.length - 1;
-
+        let index = $(e.target).parent().parent().attr('data-tab-id');
         let tabItems = tabItem.children();
         let tabItemIndex = tabItems.length
 
         let componentData =
-            `<slot class="tab_item_count">
+            `<slot class="tab_item_count" data-tab-id="${index}">
                 ${
-                    itemCountLine('', '') +
                     multiItemTitle(index, true, tabItemIndex) +
                     multiItemDescription(index, true, tabItemIndex) +
                     imageOne(index, true, tabItemIndex) +
-                    removeTabItemBtn
+                    removeTabItemBtn +
+                    itemCountLine('', '')
                 }
             </slot>`
         tabItem.append(componentData)

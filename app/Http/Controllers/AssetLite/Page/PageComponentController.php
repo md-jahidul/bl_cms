@@ -99,15 +99,16 @@ class PageComponentController extends Controller
         }
 
         $component->component_data_mod = array_values($componentData);
-        unset($component->componentData);
-
-        if ($component->type == "tab_component_with_image_card_one"){
-            $component =  $this->pgComponentService->findOne($id, ['componentData' => function($q) {
-                $q->where('parent_id', 0);
-                $q->with('children');
-            }]);
-        }
-
+//        return $component;
+//        unset($component->componentData);
+//
+//        if ($component->type == "tab_component_with_image_card_one"){
+//            $component =  $this->pgComponentService->findOne($id, ['componentData' => function($q) {
+//                $q->where('parent_id', 0);
+//                $q->with('children');
+//            }]);
+//
+//        }
         return view('admin.new-pages.components.edit', compact('component', 'componentTypes', 'pageId'));
     }
 

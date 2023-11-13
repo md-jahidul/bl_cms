@@ -305,23 +305,22 @@
                                         </slot>
                                     @endif
 
-                                    {{--tab_component_with_image_card_one--}}
-{{--                                    @if($component->type == "tab_component_with_image_card_one")--}}
-{{--                                        <slot id="galley_masonry" data-offer-type="galley_masonry">--}}
-{{--                                            @include('admin.new-pages.components.common-field.attribute.title')--}}
-{{--                                            @include('admin.new-pages.components.common-field.attribute.description')--}}
-
-{{--                                            @if(isset($component->component_data_mod))--}}
-{{--                                                @foreach($component->component_data_mod as $key => $data)--}}
-{{--                                                    @include('admin.new-pages.components.common-field.repeatable-item', [--}}
-{{--                                                        'component_type' => 'galley_masonry',--}}
-{{--                                                        'data' => $data,--}}
-{{--                                                        'key' => $key--}}
-{{--                                                    ])--}}
-{{--                                                @endforeach--}}
-{{--                                            @endif--}}
-{{--                                        </slot>--}}
-{{--                                    @endif--}}
+                                    <!--tab_component_with_image_card_one-->
+                                    @if($component->type == "tab_component_with_image_card_one")
+                                        <slot id="tab_component_with_image_card_one" data-offer-type="tab_component_with_image_card_one">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_one',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
 
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
@@ -352,6 +351,12 @@
     </section>
 
     <style>
+        .type-line {
+            border-top: 1px solid #06063b !important;
+        }
+        .item-divider {
+            border-top: 1px solid #ef6d0c !important;
+        }
         form #related_product_field .select2-container {
             width: 100% !important;
         }
