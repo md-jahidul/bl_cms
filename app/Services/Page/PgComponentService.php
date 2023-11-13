@@ -36,6 +36,7 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
+//        dd($data);
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
@@ -110,6 +111,7 @@ class PgComponentService
 //                        dd($componentDataSave, $field);
                         if (isset($field['is_tab'])) {
                             $tabParentId = $componentDataSave->id ?? 0;
+//                            dd($tabParentId);
                         }
 
 //                        if ($key == "is_static_component" || $key == "component_name") {
@@ -126,10 +128,11 @@ class PgComponentService
 
                         if ($key == "tab_items") {
                             foreach ($field as $tabIndex => $tabItems) {
-//                                dd($componentDataSave);
                                 foreach ($tabItems as $tabItemKey => $tabItem) {
+//                                    dd($tabParentId);
                                     $valueEn = $tabItem['value_en'] ?? null;
                                     $tabItemData = [
+                                        'id' => $tabItem['id'] ?? null,
                                         'component_id' => $componentId,
                                         'parent_id' => $tabParentId,
                                         'key' => $tabItemKey,
@@ -137,8 +140,8 @@ class PgComponentService
                                         'value_bn' => $tabItem['value_bn'] ?? null,
                                         'group' => $tabIndex + 1,
                                     ];
-
-                                    $this->componentDataRepository->save($tabItemData);
+//                                    dd($tabItemData);
+                                    $this->componentDataRepository->createOrUpdate($tabItemData);
                                 }
                             }
                         }
@@ -172,7 +175,12 @@ class PgComponentService
 
     public function deleteDataItem($data)
     {
-        $componentData = $this->componentDataRepository->findBy(['component_id' => $data['data-com-id'], 'group' => $data['data-group']]);
+        if ($data['data-parent'] > 0) {
+            $componentData = $this->componentDataRepository->findBy(['parent_id' => $data['data-parent'], 'group' => $data['data-group']]);
+        } else {
+            $componentData = $this->componentDataRepository->findBy(['component_id' => $data['data-com-id'], 'group' => $data['data-group']]);
+        }
+
         foreach ($componentData as $item) {
             if ($item->key == "image" || $item->key == "image_hover") {
                 $this->deleteFile($item->value_en);

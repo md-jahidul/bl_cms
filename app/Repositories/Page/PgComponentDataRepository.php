@@ -17,7 +17,8 @@ class PgComponentDataRepository extends BaseRepository
         if ($componentDataObj) {
             if ($componentDataObj->value_en != $componentData['value_en'])
                 $this->deleteFile($componentDataObj->value_en);
-            return $componentDataObj->update($componentData);
+            $componentDataObj->update($componentData);
+            return $componentDataObj;
         }
         return $this->model->create($componentData);
     }
