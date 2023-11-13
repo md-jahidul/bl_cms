@@ -15,6 +15,7 @@ class AddIconColumnInTriviaGamificationsTable extends Migration
     {
         Schema::table('trivia_gamifications', function (Blueprint $table) {
             $table->string('icon')->after('banner')->nullable();
+            $table->boolean('is_title_show')->after('icon')->default(false);
         });
     }
 
@@ -27,6 +28,7 @@ class AddIconColumnInTriviaGamificationsTable extends Migration
     {
         Schema::table('trivia_gamifications', function (Blueprint $table) {
             $table->dropColumn('icon');
+            $table->dropColumn('is_title_show');
         });
     }
 }
