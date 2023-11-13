@@ -304,7 +304,8 @@
                                       $details->details->content_type == 'volume transfer' ||
                                       $details->details->content_type == 'roam' ||
                                       $details->details->content_type == 'reactivation'||
-                                      $details->details->content_type == 'scr'
+                                      $details->details->content_type == 'scr' ||
+                                      $details->details->content_type == 'service'
                                     )
                                     @php
                                         $tabs = $details->detailTabs->pluck('id')->toArray() ?? [];
@@ -576,6 +577,16 @@
                                         <input type="checkbox" id="show_timer" value="1" name="show_timer" @if($details->details->show_timer) checked @endif>
                                         <label for="show_timer">Show Timer</label>
                                     </fieldset>
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
+                                    <label for="service_tags">Service Tags</label>
+                                    <input class="form-control" name="service_tags" id="service_tags"
+                                           value="{{ $details->details->service_tags }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('service_tags'))
+                                        <div class="help-block">{{ $errors->first('service_tags') }}</div>
+                                    @endif
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Service Tags should be Comma-separated value. Example: iscreen,toffee</span>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Service Product Image</label>

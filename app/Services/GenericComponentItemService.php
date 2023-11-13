@@ -2,10 +2,7 @@
 
 namespace App\Services;
 
-use App\Helpers\Helper;
-use App\Repositories\ContentComponentRepository;
-use App\Repositories\LmsHomeComponentRepository;
-use App\Repositories\MyblSliderRepository;
+use App\Repositories\GenericComponentItemRepository;
 use App\Traits\CrudTrait;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,22 +10,25 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
 
-class LmsHomeComponentService
+class GenericComponentItemService
 {
     use CrudTrait;
-    private $lmsHomeComponentRepository;
+
+    private $genericComponentItemRepository;
+
+    protected const REDIS_KEY = "lms_component";
 
     public function __construct(
-        LmsHomeComponentRepository $lmsHomeComponentRepository
+        GenericComponentItemRepository $genericComponentItemRepository
     ) {
-        $this->lmsHomeComponentRepository = $lmsHomeComponentRepository;
-        $this->setActionRepository($lmsHomeComponentRepository);
+        $this->genericComponentItemRepository = $genericComponentItemRepository;
+        $this->setActionRepository($genericComponentItemRepository);
     }
 
-    public function findAllComponents()
+    public function findAllItems($id)
     {
         $orderBy = ['column' => 'display_order', 'direction' => 'ASC'];
-        $contentSortableComponents = $this->findBy([], null, $orderBy)->toArray();
+        $contentSortableComponents = $this->findBy(['generic_component_id' => $id], null, $orderBy)->toArray();
 
         return collect($contentSortableComponents)->sortBy('display_order')->values()->all();
 
@@ -58,7 +58,6 @@ class LmsHomeComponentService
                     $update_menu->update();
                 }
             }
-            Helper::removeVersionControlRedisKey('mybl_component_lms');
 
             return [
                 'status' => "success",
@@ -82,55 +81,20 @@ class LmsHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
 
         return response("Successfully status changed");
     }
 
     public function storeComponent($data)
     {
-        $msComponentCount = $this->findAll()->count();
+        $componentCount = $this->findAll()->count();
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
-        $data['display_order'] = $msComponentCount + 1;
-        /**
-         * Version Control
-         */
-        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code);
-        unset($data['android_version_code'], $data['ios_version_code']);
+        $data['display_order'] = $componentCount + 1;
 
         $this->save($data);
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
 
         return response("LMS Component update successfully!");
-    }
-
-    public function updateComponent($data)
-    {
-        $component = $this->findOne($data['id']);
-        /**
-         * Version Control
-         */
-        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-        $data = array_merge($data, $version_code);
-        unset($data['android_version_code'], $data['ios_version_code']);
-
-        $component->update($data);
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
-
-        return response("LMS Component update successfully!");
-    }
-
-    public function deleteComponent($id)
-    {
-        $component = $this->findOne($id);
-        $component->delete();
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
-
-        return [
-            'message' => 'Component delete successfully',
-        ];
     }
 
     public function editComponent($id)
@@ -142,5 +106,22 @@ class LmsHomeComponentService
         $component->ios_version_code = $ios_version_code;
 
         return $component;
+    }
+
+    public function updateComponent($data)
+    {
+        $component = $this->findOne($data['id']);
+        $component->update($data);
+
+        return response("LMS Component update successfully!");
+    }
+
+    public function deleteComponent($id)
+    {
+        $this->genericComponentItemRepository->delete($id);
+
+        return [
+            'message' => 'Component delete successfully',
+        ];
     }
 }
