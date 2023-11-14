@@ -115,6 +115,7 @@ class LmsShortcutComponentService
 //        dd($data);
         $component = $this->findOne($id);
         $component->update($data);
+        Helper::removeVersionControlRedisKey('lms');
 
         return response("Shortcut Component update successfully!");
     }
