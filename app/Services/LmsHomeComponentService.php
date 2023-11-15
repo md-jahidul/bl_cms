@@ -58,7 +58,7 @@ class LmsHomeComponentService
                     $update_menu->update();
                 }
             }
-            Helper::removeVersionControlRedisKey('mybl_component_lms');
+            Helper::removeVersionControlRedisKey('lms');
 
             return [
                 'status' => "success",
@@ -82,7 +82,7 @@ class LmsHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
+        Helper::removeVersionControlRedisKey('lms');
 
         return response("Successfully status changed");
     }
@@ -101,7 +101,7 @@ class LmsHomeComponentService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
+        Helper::removeVersionControlRedisKey('lms');
 
         return response("LMS Component update successfully!");
     }
@@ -117,7 +117,7 @@ class LmsHomeComponentService
         unset($data['android_version_code'], $data['ios_version_code']);
 
         $component->update($data);
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
+        Helper::removeVersionControlRedisKey('lms');
 
         return response("LMS Component update successfully!");
     }
@@ -126,7 +126,7 @@ class LmsHomeComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Helper::removeVersionControlRedisKey('mybl_component_lms');
+        Helper::removeVersionControlRedisKey('lms');
 
         return [
             'message' => 'Component delete successfully',
