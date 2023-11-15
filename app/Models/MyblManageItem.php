@@ -23,7 +23,11 @@ class MyblManageItem extends Model
         'display_order',
         'deep_link_slug',
         'status',
-        'deeplink'
+        'deeplink',
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
     ];
 
     protected $casts = [

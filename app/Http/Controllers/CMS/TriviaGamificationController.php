@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TriviaGamificationRequest;
 use App\Models\TriviaGamification;
+use App\Services\MyblHomeComponentService;
 use App\Services\TriviaGamificationService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -60,10 +62,8 @@ class TriviaGamificationController extends Controller
     public function store(TriviaGamificationRequest $request)
     {
         $this->triviaGamificationService->saveTriviaInfo($request->all());
-        Redis::del("mybl_home_component");
-        Redis::del("content_component");
-        Redis::del("mybl_commerce_component");
-        Redis::del("non_bl_component");
+        Helper::removeVersionControlRedisKey();
+
         return redirect()->route('gamification.index')->with('success', "Data saved successfully!");
     }
 
@@ -98,12 +98,10 @@ class TriviaGamificationController extends Controller
      * @return Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $this->triviaGamificationService->updateTriviaInfo($request->all(), $id);
-        Redis::del("mybl_home_component");
-        Redis::del("content_component");
-        Redis::del("mybl_commerce_component");
-        Redis::del("non_bl_component");
+        Helper::removeVersionControlRedisKey();
+
         return redirect()->route('gamification.index')->with('success', "Data Updated successfully!");
     }
 
@@ -116,10 +114,8 @@ class TriviaGamificationController extends Controller
     public function destroy($id)
     {
         session()->flash('error', $this->triviaGamificationService->destroy($id)->getContent());
-        Redis::del("mybl_home_component");
-        Redis::del("content_component");
-        Redis::del("mybl_commerce_component");
-        Redis::del("non_bl_component");
+        Helper::removeVersionControlRedisKey();
+
         return redirect(route('gamification.index'));
     }
 }

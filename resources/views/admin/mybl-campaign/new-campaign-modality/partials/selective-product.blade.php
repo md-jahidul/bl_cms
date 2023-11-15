@@ -26,6 +26,14 @@
         <div class="help-block"></div>
     </div>
 </div>
+<div id="image-input" class="form-group col-md-4 mb-0">
+    <div class="form-group">
+        <label for="image_url">Popup Image (Portrait)</label>
+        <input type="file" id="image_url" name="campaign_details[{{ $index }}][popup_img_portrait]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"
+               data-default-file="{{ isset($product->popup_img_portrait) ? asset($product->popup_img_portrait) : '' }}"/>
+        <div class="help-block"></div>
+    </div>
+</div>
 
 {{--<div class="form-group col-md-6 mb-0">--}}
 {{--    <label for="desc_en" class="required">Description En</label>--}}
