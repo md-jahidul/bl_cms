@@ -9,6 +9,8 @@ class TriviaGamification extends Model
     protected $fillable = [
         'id',
         "banner",
+        "icon",
+        "is_title_show",
         "pending_bottom_label_en",
         "pending_bottom_label_bn",
         "completed_bottom_label_en",
