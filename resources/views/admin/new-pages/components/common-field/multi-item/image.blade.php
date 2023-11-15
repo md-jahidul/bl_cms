@@ -4,7 +4,7 @@
     $imageId = "";
     $tabInput = "";
 
-    if ($is_tab) {
+    if (isset($is_tab) && $is_tab) {
         $fieldName .= "componentData[$key][tab_items][$tabIndex][image][value_en]";
         $fieldNameGroup .= "componentData[$key][tab_items][$tabIndex][image][group]";
         $imageId .= "componentData[$key][tab_items][$tabIndex][image][id]";

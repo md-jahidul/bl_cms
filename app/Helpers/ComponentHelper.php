@@ -138,7 +138,7 @@ class ComponentHelper
                 'config' => ['left_image' => true]
             ],
             'galley_masonry' => [
-                'title' => 'Galley Masonry',
+                'title' => 'Gallery Masonry',
                 'config' => ['left_image' => true]
             ],
             'tab_component_with_image_card_one' => [
