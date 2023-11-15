@@ -4,7 +4,7 @@
     $fieldNameID = "";
     $tabInput = "";
 
-    if ($is_tab) {
+    if (isset($is_tab) && $is_tab) {
         $fieldNameEn .= "componentData[$key][tab_items][$tabIndex][title][value_en]";
         $fieldNameBn .= "componentData[$key][tab_items][$tabIndex][title][value_bn]";
         $fieldNameID .= "componentData[$key][tab_items][$tabIndex][title][id]";
