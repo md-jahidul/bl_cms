@@ -74,7 +74,7 @@ class PopupBannerController extends Controller
         }else{
             session()->flash('message', "Failed! Please try again");
         }
-        return redirect(route('popup-banner.index'));  
+        return redirect(route('popup-banner.index'));
     }
 
     /**
@@ -98,6 +98,7 @@ class PopupBannerController extends Controller
     {
         //
         $banner = $this->popupBannerService->findBanner($id);
+        $banner['start_time'] = $banner['start_date'];
         return view('admin.popup-banner.edit')->with('page','edit')->with('banner',$banner);
     }
 
@@ -117,7 +118,7 @@ class PopupBannerController extends Controller
         }else{
             session()->flash('message', "Failed! Please try again");
         }
-        return redirect(route('popup-banner.index')); 
+        return redirect(route('popup-banner.index'));
     }
 
     /**

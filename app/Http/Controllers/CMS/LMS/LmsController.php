@@ -46,7 +46,7 @@ class LmsController extends Controller
 
     public function edit($id)
     {
-        return $this->lmsHomeComponentService->findOne($id);
+        return $this->lmsHomeComponentService->editComponent($id);
     }
 
     public function update(Request $request)

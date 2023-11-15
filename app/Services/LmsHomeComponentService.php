@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\LmsHomeComponentRepository;
 use App\Repositories\MyblSliderRepository;
@@ -15,10 +16,7 @@ use Illuminate\Support\Facades\Redis;
 class LmsHomeComponentService
 {
     use CrudTrait;
-
     private $lmsHomeComponentRepository;
-
-    protected const REDIS_KEY = "lms_component";
 
     public function __construct(
         LmsHomeComponentRepository $lmsHomeComponentRepository
@@ -60,10 +58,8 @@ class LmsHomeComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del('lms_component_prepaid');
-            Redis::del('lms_component_postpaid');
-            Redis::del('lms_old_user_postpaid');
-            Redis::del('lms_old_user_prepaid');
+            Helper::removeVersionControlRedisKey('lms');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -86,10 +82,8 @@ class LmsHomeComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        Redis::del('lms_old_user_postpaid');
-        Redis::del('lms_old_user_prepaid');
+        Helper::removeVersionControlRedisKey('lms');
+
         return response("Successfully status changed");
     }
 
@@ -99,23 +93,32 @@ class LmsHomeComponentService
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
         $data['display_order'] = $msComponentCount + 1;
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
 
         $this->save($data);
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        Redis::del('lms_old_user_postpaid');
-        Redis::del('lms_old_user_prepaid');
+        Helper::removeVersionControlRedisKey('lms');
+
         return response("LMS Component update successfully!");
     }
 
     public function updateComponent($data)
     {
         $component = $this->findOne($data['id']);
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $component->update($data);
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        Redis::del('lms_old_user_postpaid');
-        Redis::del('lms_old_user_prepaid');
+        Helper::removeVersionControlRedisKey('lms');
+
         return response("LMS Component update successfully!");
     }
 
@@ -123,12 +126,21 @@ class LmsHomeComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del('lms_component_prepaid');
-        Redis::del('lms_component_postpaid');
-        Redis::del('lms_old_user_postpaid');
-        Redis::del('lms_old_user_prepaid');
+        Helper::removeVersionControlRedisKey('lms');
+
         return [
             'message' => 'Component delete successfully',
         ];
+    }
+
+    public function editComponent($id)
+    {
+        $component = $this->findOne($id);
+        $android_version_code = implode('-', [$component['android_version_code_min'], $component['android_version_code_max']]);
+        $ios_version_code = implode('-', [$component['ios_version_code_min'], $component['ios_version_code_max']]);
+        $component->android_version_code = $android_version_code;
+        $component->ios_version_code = $ios_version_code;
+
+        return $component;
     }
 }
