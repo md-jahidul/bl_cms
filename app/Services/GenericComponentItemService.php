@@ -16,8 +16,6 @@ class GenericComponentItemService
 
     private $genericComponentItemRepository;
 
-    protected const REDIS_KEY = "lms_component";
-
     public function __construct(
         GenericComponentItemRepository $genericComponentItemRepository
     ) {
@@ -59,6 +57,8 @@ class GenericComponentItemService
                 }
             }
 
+            Redis::del('generic_component_data');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -81,6 +81,7 @@ class GenericComponentItemService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
+        Redis::del('generic_component_data');
 
         return response("Successfully status changed");
     }
@@ -93,6 +94,8 @@ class GenericComponentItemService
         $data['display_order'] = $componentCount + 1;
 
         $this->save($data);
+        Redis::del('generic_component_data');
+
 
         return response("LMS Component update successfully!");
     }
@@ -112,13 +115,15 @@ class GenericComponentItemService
     {
         $component = $this->findOne($data['id']);
         $component->update($data);
+        Redis::del('generic_component_data');
 
-        return response("LMS Component update successfully!");
+        return response("Component update successfully!");
     }
 
     public function deleteComponent($id)
     {
         $this->genericComponentItemRepository->delete($id);
+        Redis::del('generic_component_data');
 
         return [
             'message' => 'Component delete successfully',
