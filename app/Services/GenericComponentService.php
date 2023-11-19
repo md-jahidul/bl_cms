@@ -7,6 +7,7 @@ use App\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class GenericComponentService
 {
@@ -24,6 +25,7 @@ class GenericComponentService
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));
         try {
             $this->genericComponentRepository->save($data);
+            Redis::del('generic_component_data');
 
             return true;
         } catch (\Exception $e){
@@ -41,7 +43,11 @@ class GenericComponentService
     {
         try {
             $section = $this->genericComponentRepository->findOne($id);
-            return $section->update($data);
+            $section->update($data);
+            Redis::del('generic_component_data');
+
+            return true;
+
         } catch (\Exception $e) {
 
             Log::error('Error while update section : ' . $e->getMessage());
@@ -51,6 +57,9 @@ class GenericComponentService
 
     public function delete($id)
     {
-        return $this->genericComponentRepository->destroy($id);
+        $this->genericComponentRepository->destroy($id);
+        Redis::del('generic_component_data');
+
+        return true;
     }
 }
