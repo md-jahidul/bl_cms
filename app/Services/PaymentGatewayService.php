@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\PaymentGatewayRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
@@ -20,6 +21,8 @@ class PaymentGatewayService
 
     public function save($request)
     {
+        $data = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
+
         try {
             $data['gateway_id'] =  $request['gateway_id'];
             $data['display_order'] = $this->paymentGatewayRepository->findAll()->count() + 1;
@@ -30,6 +33,9 @@ class PaymentGatewayService
             } else if ($data['gateway_id'] == 201 || $data['gateway_id'] == 211) {
                 $data['gateway_name'] = 'bKash';
                 $data['type'] = 'mfs';
+            } else if($data['gateway_id'] == 601) {
+                $data['gateway_name'] = 'port-wallet';
+                $data['type'] = 'port-wallet';
             } else {
                 $data['gateway_name'] = 'ssl';
                 $data['type'] =  'ssl';
@@ -63,11 +69,19 @@ class PaymentGatewayService
 
     public function findOne($id, $relation = null)
     {
-        return $this->paymentGatewayRepository->findOne($id);
+        $component =  $this->paymentGatewayRepository->findOne($id);
+        $android_version_code = implode('-', [$component['android_version_code_min'], $component['android_version_code_max']]);
+        $ios_version_code = implode('-', [$component['ios_version_code_min'], $component['ios_version_code_max']]);
+        $component->android_version_code = $android_version_code;
+        $component->ios_version_code = $ios_version_code;
+
+        return $component;
     }
 
     public function update($request, $id)
     {
+        $data = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
+
         try {
             $data['gateway_id'] =  $request['gateway_id'];
             $data['gateway_name'] = null;
@@ -75,6 +89,9 @@ class PaymentGatewayService
                 $data['gateway_name'] = 'Visa/Master';
             } else if ($data['gateway_id'] == 201 || $data['gateway_id'] == 211) {
                 $data['gateway_name'] = 'bKash';
+            } else if($data['gateway_id'] == 601) {
+                $data['gateway_name'] = 'port-wallet';
+                $data['type'] = 'port-wallet';
             } else {
                 $data['gateway_name'] = 'ssl';
             }
@@ -89,6 +106,7 @@ class PaymentGatewayService
             if (isset($request['logo_mobile_v2'])) {
                 $data['logo_mobile_v2'] = 'storage/' . $request['logo_mobile_v2']->store('gateways');
             }
+
             $pgw = $this->paymentGatewayRepository->findOne($id);
             $pgw->update($data);
             // Delete Redis Data
