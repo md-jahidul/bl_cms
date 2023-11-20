@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\GenericComponentItemRepository;
 use App\Traits\CrudTrait;
 use Exception;
@@ -15,8 +16,6 @@ class GenericComponentItemService
     use CrudTrait;
 
     private $genericComponentItemRepository;
-
-    protected const REDIS_KEY = "lms_component";
 
     public function __construct(
         GenericComponentItemRepository $genericComponentItemRepository
@@ -59,6 +58,8 @@ class GenericComponentItemService
                 }
             }
 
+            Redis::del('generic_component_data');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -81,6 +82,7 @@ class GenericComponentItemService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
+        Redis::del('generic_component_data');
 
         return response("Successfully status changed");
     }
@@ -93,6 +95,8 @@ class GenericComponentItemService
         $data['display_order'] = $componentCount + 1;
 
         $this->save($data);
+        Redis::del('generic_component_data');
+
 
         return response("LMS Component update successfully!");
     }
@@ -110,15 +114,25 @@ class GenericComponentItemService
 
     public function updateComponent($data)
     {
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $component = $this->findOne($data['id']);
         $component->update($data);
 
-        return response("LMS Component update successfully!");
+        Redis::del('generic_component_data');
+
+        return response("Component update successfully!");
     }
 
     public function deleteComponent($id)
     {
         $this->genericComponentItemRepository->delete($id);
+        Redis::del('generic_component_data');
 
         return [
             'message' => 'Component delete successfully',
