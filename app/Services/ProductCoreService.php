@@ -462,8 +462,9 @@ class ProductCoreService
         $builder = $builder->whereHas(
             'details',
             function ($q) use ($request, $bundles) {
-                if ($request->product_code) {
-                    $q->where('product_code', $request->product_code);
+                if ($request->product_codes) {
+                    $productCodes = explode(',', $request->product_codes);
+                    $q->whereIn('product_code', $productCodes);
                 }
                 if ($request->sim_type) {
                     $q->where('sim_type', $request->sim_type);

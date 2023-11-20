@@ -152,7 +152,8 @@ class MyblProductEntryController extends Controller
      */
     public function index()
     {
-        return view('admin.my-bl-products.mybl_product_entry');
+        $products = $this->myblProductRepository->findByProperties(['status' => 1], ['product_code']);
+        return view('admin.my-bl-products.mybl_product_entry', compact('products'));
     }
 
     public function inactiveProducts(Request $request)
