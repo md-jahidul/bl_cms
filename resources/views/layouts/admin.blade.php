@@ -66,6 +66,9 @@
     {{--SummerNote Editor CSS--}}
     <link href="{{ asset('app-assets/vendors/js/editors/summernote/summernote-lite.min.css') }}" rel="stylesheet">
 
+    <!--include tam-emoji ccs-->
+    <link href="{{ asset('app-assets/vendors/js/editors/summernote/tam-emoji/css/emoji.css') }}" rel="stylesheet">
+
     {{--  dropify  --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 
@@ -168,6 +171,10 @@
 
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
+<!--include tam-emoji js-->
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/tam-emoji/js/config.js') }}"></script>
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/tam-emoji/js/tam-emoji.min.js') }}"></script>
+
 <script>
     $(function () {
         $("textarea.summernote_editor").summernote({
@@ -180,7 +187,8 @@
                 ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['link', 'picture', 'video', 'hr']],
-                ['view', ['fullscreen', 'codeview']]
+                ['view', ['fullscreen', 'codeview']],
+                ['insert', ['emoji']]
             ],
             popover: {
                 table: [

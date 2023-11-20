@@ -53,16 +53,6 @@ class PageComponentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return Inertia::render('Pages/Components/Create', [
-            "pageId" => $id
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit($pageId, $id)
@@ -80,9 +70,13 @@ class PageComponentController extends Controller
                     'group' => $data->group,
                 ];
             }
-
+            $tabComponents = [
+                "tab_component_with_image_card_one",
+                "tab_component_with_image_card_two",
+                "tab_component_with_image_card_three"
+            ];
             $tabItemData = [];
-            if (!empty($data->children && $component->type == "tab_component_with_image_card_one") ) {
+            if (!empty($data->children) && in_array($component->type, $tabComponents)) {
                 foreach ($data->children as $childData) {
                     $tabItemData[$childData->group][$childData->key] = [
                         'id' => $childData->id,
