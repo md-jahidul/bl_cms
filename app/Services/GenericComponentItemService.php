@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\GenericComponentItemRepository;
 use App\Traits\CrudTrait;
 use Exception;
@@ -113,8 +114,16 @@ class GenericComponentItemService
 
     public function updateComponent($data)
     {
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $component = $this->findOne($data['id']);
         $component->update($data);
+
         Redis::del('generic_component_data');
 
         return response("Component update successfully!");
