@@ -322,6 +322,40 @@
                                         </slot>
                                     @endif
 
+                                    <!--tab_component_with_image_card_two-->
+                                    @if($component->type == "tab_component_with_image_card_two")
+                                        <slot id="tab_component_with_image_card_two" data-offer-type="tab_component_with_image_card_two">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_two',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    <!--tab_component_with_image_card_three-->
+                                    @if($component->type == "tab_component_with_image_card_three")
+                                        <slot id="tab_component_with_image_card_three" data-offer-type="tab_component_with_image_card_three">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_three',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>

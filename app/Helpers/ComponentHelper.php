@@ -142,7 +142,7 @@ class ComponentHelper
                 'config' => ['left_image' => true]
             ],
             'tab_component_with_image_card_one' => [
-                'title' => 'Tab component with image card one',
+                'title' => 'Tab component with image card One',
                 'config' => ['left_image' => true]
             ],
             'tab_component_with_image_card_two' => [
@@ -150,7 +150,7 @@ class ComponentHelper
                 'config' => ['left_image' => true]
             ],
             'tab_component_with_image_card_three' => [
-                'title' => 'Tab Component With Image Card One',
+                'title' => 'Tab Component With Image Card Three',
                 'config' => ['left_image' => true]
             ],
             'hero_section' => [

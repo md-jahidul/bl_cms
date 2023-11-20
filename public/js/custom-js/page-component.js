@@ -157,7 +157,7 @@
         </div>`
     }
 
-    var multiItemDescription  = function (index = 0, isTab = false, tabIndex = 0) {
+    var multiItemDescription  = function (index = 0, isTab = false, tabIndex = 0, it_editor = false) {
         let fieldNameEn = ""
         let fieldNameBn = ""
 
@@ -171,12 +171,12 @@
 
         return `<div class="form-group col-md-6">
             <label for="title_en">Description En</label>
-            <textarea type="text" rows="3" name="${fieldNameEn}" class="form-control"></textarea>
+            <textarea type="text" rows="3" name="${fieldNameEn}" class="form-control ${it_editor ? 'summernote_editor' : '' }"></textarea>
         </div>
 
         <div class="form-group col-md-6">
             <label for="title_en">Description Bn</label>
-            <textarea type="text" rows="3" name="${fieldNameBn}" class="form-control"></textarea>
+            <textarea type="text" rows="3" name="${fieldNameBn}" class="form-control ${it_editor ? 'summernote_editor' : '' }"></textarea>
         </div>`
     }
 
@@ -193,20 +193,21 @@
         let tabName = ""
         let tabDesignation = ""
         let tabInstitute = ""
+        let tabInput = ""
 
         if (isTab) {
             fieldFeedbackEn += `componentData[${index}][tab_items][${tabIndex}][feedback][value_en]`;
             fieldFeedbackBn += `componentData[${index}][tab_items][${tabIndex}][feedback][value_bn]`;
-            fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][name][value_bn]`;
+            fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][name][value_en]`;
             fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][name][value_bn]`;
-            fieldDesignationEn += `componentData[${index}][tab_items][${tabIndex}][designation][value_bn]`;
+            fieldDesignationEn += `componentData[${index}][tab_items][${tabIndex}][designation][value_en]`;
             fieldDesignationBn += `componentData[${index}][tab_items][${tabIndex}][designation][value_bn]`;
-            fieldInstituteEn += `componentData[${index}][tab_items][${tabIndex}][institute][value_bn]`;
+            fieldInstituteEn += `componentData[${index}][tab_items][${tabIndex}][institute][value_en]`;
             fieldInstituteBn += `componentData[${index}][tab_items][${tabIndex}][institute][value_bn]`;
-            tabFeedback += `<input type="hidden" name="componentData[${index}][feedback][is_tab]" value="1">`;
-            tabName += `<input type="hidden" name="componentData[${index}][name][is_tab]" value="1">`;
-            tabDesignation += `<input type="hidden" name="componentData[${index}][designation][is_tab]" value="1">`;
-            tabInstitute += `<input type="hidden" name="componentData[${index}][institute][is_tab]" value="1">`;
+            tabFeedback += `<input type="hidden" name="componentData[${index}][title][is_tab]" value="1">`;
+            // tabName += `<input type="hidden" name="componentData[${index}][name][is_tab]" value="1">`;
+            // tabDesignation += `<input type="hidden" name="componentData[${index}][designation][is_tab]" value="1">`;
+            // tabInstitute += `<input type="hidden" name="componentData[${index}][institute][is_tab]" value="1">`;
         }else {
             fieldFeedbackEn +=   `componentData[${index}][feedback][value_en]`;
             fieldFeedbackBn +=   `componentData[${index}][feedback][value_bn]`;
@@ -283,22 +284,36 @@
         </div>`
     }
 
-    var multiItemButton  = function (index = 0) {
+    var multiItemButton  = function (index = 0, isTab = false, tabIndex = 0) {
+        let fieldNameEn = ""
+        let fieldNameBn = ""
+        let fieldNameIink = ""
+
+        if (isTab) {
+            fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][button_name][value_en]`;
+            fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][button_name][value_bn]`;
+            fieldNameIink += `componentData[${index}][tab_items][${tabIndex}][button_name][value_en]`;
+        }else {
+            fieldNameEn += `componentData[${index}][button_name][value_en]`;
+            fieldNameBn += `componentData[${index}][button_name][value_bn]`;
+            fieldNameIink += `componentData[${index}][button_link][value_en]`;
+        }
+
         return `<div class="form-group col-md-4">
             <label for="button_en">Button Title (English)</label>
-            <input type="text" name="componentData[${index}][button_name][value_en]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="${fieldNameEn}"  class="form-control" placeholder="Enter button lable English">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_bn" >Button Title (Bangla)</label>
-            <input type="text" name="componentData[${index}][button_name][value_bn]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="${fieldNameBn}"  class="form-control" placeholder="Enter button lable bangla">
             <div class="help-block"></div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="button_link" >Button URL</label>
-            <input type="text" name="componentData[${index}][button_link][value_en]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="${fieldNameIink}"  class="form-control" placeholder="Enter button link">
             <div class="help-block"></div>
         </div>`
     }
@@ -394,7 +409,8 @@
                 ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['link', 'picture', 'video', 'hr']],
-                ['view', ['fullscreen', 'codeview']]
+                ['view', ['fullscreen', 'codeview']],
+                ['insert', ['emoji']]
             ],
             popover: {
                 table: [
@@ -572,7 +588,7 @@
                     multiItemFeedback() +
                     imageOne() +
                 `</slot>`;
-        }else if(componentType === "tab_component_with_image_card_one"){
+        }else if(componentType === "tab_component_with_image_card_one" || componentType === "tab_component_with_image_card_two"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
@@ -587,7 +603,30 @@
                                 ${
                                     addTabBtn +
                                     multiItemTitle(0, true, 0) +
-                                    multiItemDescription(0, true, 0) +
+                                    multiItemDescription(0, true, 0, true) +
+                                    imageOne(0, true, 0) +
+                                    multiItemButton(0, true, 0) +
+                                    itemCountLine('', '')
+                                }
+                            </slot>
+                        </div>
+                    </div>` +
+                `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_three"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1, "Tab") +
+                    multiItemTitle() +
+                    `<div class="col-md-11 ml-5">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="0">
+                                ${
+                                    addTabBtn +
+                                    multiItemFeedback(0, true, 0) +
                                     imageOne(0, true, 0) +
                                     itemCountLine('', '')
                                 }
@@ -712,7 +751,7 @@
                     imageOne(index) +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "tab_component_with_image_card_one"){
+        }else if(componentType === "tab_component_with_image_card_one" || componentType === "tab_component_with_image_card_two"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1, "Tab") +
@@ -725,7 +764,26 @@
                                     multiItemTitle(index, true, 0) +
                                     multiItemDescription(index, true, 0) +
                                     imageOne(index, true, 0) +
-                                    // (index != 0) ? removeTabItemBtn : "" +
+                                    multiItemButton(index, true, 0) +
+                                    itemCountLine('', '')
+                                }
+                            </slot>
+                        </div>
+                    </div>` +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_three"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1, "Tab") +
+                    multiItemTitle(index) +
+                    `<div class="col-md-11 ml-5">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="${index}">
+                                ${
+                                    addTabBtn +
+                                    multiItemFeedback(index, true, 0) +
+                                    imageOne(index, true, 0) +
                                     itemCountLine('', '')
                                 }
                             </slot>
@@ -792,21 +850,36 @@
 
     // Tab Item Add
     $(document).on('click', '.add-tab-item', function (e) {
+        let componentType = $('#component_type').val()
         let tabItem = $(e.target).parent().parent().parent()
         let index = $(e.target).parent().parent().attr('data-tab-id');
         let tabItems = tabItem.children();
         let tabItemIndex = tabItems.length
 
-        let componentData =
-            `<slot class="tab_item_count" data-tab-id="${index}">
+        let componentData = "";
+
+        if (componentType === "tab_component_with_image_card_three"){
+            componentData +=
+                `<slot class="tab_item_count" data-tab-id="${index}">
+                ${
+                    multiItemFeedback(index, true, tabItemIndex) +
+                    imageOne(index, true, tabItemIndex) +
+                    itemCountLine('', '')
+                }
+            </slot>`
+        }else {
+            componentData +=
+                `<slot class="tab_item_count" data-tab-id="${index}">
                 ${
                     multiItemTitle(index, true, tabItemIndex) +
                     multiItemDescription(index, true, tabItemIndex) +
                     imageOne(index, true, tabItemIndex) +
+                    multiItemButton(index, true, tabItemIndex) +
                     removeTabItemBtn +
                     itemCountLine('', '')
                 }
             </slot>`
+        }
         tabItem.append(componentData)
         dropify();
         summernote_editor();
