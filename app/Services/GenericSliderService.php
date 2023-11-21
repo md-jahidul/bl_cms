@@ -175,7 +175,8 @@ class GenericSliderService
 
             if (in_array($data['component_for'], $genericComponentKeys)) {
                 $genericItem = $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0];
-//                dd($homeComponentData, $genericItem);
+                $homeComponentData['display_order'] = $genericItem['display_order'];
+
                 $genericItem->update($homeComponentData);
                 Redis::del('generic_component_data');
             }
