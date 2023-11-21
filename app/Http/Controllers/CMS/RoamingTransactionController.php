@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\FreeProductDisburseJob;
+use App\Jobs\RoamingPaymentProcess;
 use App\Models\RoamingTransaction;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,6 @@ class RoamingTransactionController extends Controller
         $length = $request->get('length');
 
         $builder = new RoamingTransaction();
-        $builder = $builder->where('status', 1);
         $builder = $builder->latest();
 
         if ($request->transaction_type != null) {
@@ -43,6 +44,15 @@ class RoamingTransactionController extends Controller
             'recordsTotal' => $all_items_count,
             'recordsFiltered' => $all_items_count,
             'data' => $items->toArray(),
+        ];
+    }
+
+    public function dispatchRoamingPaymentJob($transaction_id): array
+    {
+        RoamingPaymentProcess::dispatch($transaction_id);
+
+        return [
+            "status_code" => 200
         ];
     }
 }

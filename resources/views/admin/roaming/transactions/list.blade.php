@@ -91,8 +91,12 @@
                     },
                     {
                         name: 'transaction_type',
-                        render: function (data, type, row) {
-                            return row.transaction_type;
+                        render: function (data, type, row) {;
+                            if (row.transaction_type === "ROAMING_ACTIVE") {
+                                return "<span class='badge badge-primary'>" + row.transaction_type + "</span>";
+                            } else {
+                                return "<span class='badge badge-info'>" + row.transaction_type + "</span>";
+                            }
                         }
                     },
                     {
@@ -121,36 +125,59 @@
                     },
                     {
                         name: 'transaction_status',
-                        render: function (data, type, row) {
-                            return row.transaction_status;
+                        render: function (data, type, row) {;
+                            if (row.transaction_status === "VALID") {
+                                return "<span class='badge badge-success'>" + row.transaction_status + "</span>";
+                            } else {
+                                return "<span class='badge badge-warning'>" + row.transaction_status + "</span>";
+                            }
                         }
                     },
                     {
                         name: 'status',
                         render: function (data, type, row) {
-                            return row.status;
+                            if (row.status === "PENDING") {
+                                return "<span class='badge badge-warning'>Pending</span>";
+                            } else {
+                                return "<span class='badge badge-success'>Completed</span>";
+                            }
                         }
                     },
                     {
                         name: 'payment_initiated',
                         render: function (data, type, row) {
-                            return row.payment_initiated;
+                            let status = row.payment_initiated;
+                            if (status === 1) {
+                                return "<span class='badge badge-success'>Yes</span>";
+                            } else {
+                                return "<span class='badge badge-danger'>No</span>";
+                            }
                         }
                     },
                     {
                         name: 'payment_complete',
                         render: function (data, type, row) {
-                            return row.payment_complete;
+                            let status = row.payment_completed;
+                            if (status === 1) {
+                                return "<span class='badge badge-success'>Yes</span>";
+                            } else {
+                                return "<span class='badge badge-danger'>No</span>";
+                            }
                         }
                     },
                     {
                         name: 'actions',
                         className: 'filter_data',
                         render: function (data, type, row) {
-                            let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
-                            return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
-                          </div>`
+                            if (row.status === "PENDING") {
+                                return `<div class="btn-group" role="group" aria-label="Basic example">
+                                    <button class="btn btn-sm btn-success edit" onclick="startActivationProcess('` + row.transaction_id + `');">Start Process</button>
+                                </div>`
+                            } else {
+                                return `<div class="btn-group" role="group" aria-label="Basic example">
+                                    <button class="btn btn-sm btn-icon btn-info disabled">Completed</button>
+                                </div>`
+                            }
                         }
                     }
                 ],
@@ -164,6 +191,34 @@
                 $('#product_list').DataTable().ajax.reload();
             });
         });
+
+        function startActivationProcess(transaction_id){
+            alert("Are you sure?")
+            $.ajax({
+                url: "{{ url('roaming/dispatch-payment-job') }}/"+transaction_id,
+                methods: "get",
+                success: function (result) {
+
+                    if(result.status_code === 200){
+                        Swal.fire(
+                            'Success!',
+                            'Payment Processed Successfully',
+                            'success',
+                        );
+                    }else{
+                        Swal.fire(
+                            'Oops!',
+                            'Something went wrong please try again ',
+                            'error',
+                        );
+                    }
+                    setTimeout(redirect, 2000)
+                    function redirect() {
+                        $('#product_list').DataTable().ajax.reload();
+                    }
+                }
+            });
+        }
     </script>
 @endpush
 
