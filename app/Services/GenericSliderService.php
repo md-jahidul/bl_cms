@@ -157,18 +157,26 @@ class GenericSliderService
 
     public function updateSlider($data, $id)
     {
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         try {
             DB::beginTransaction();
             $slider = $this->genericSliderRepository->findOne($id);
-            $homeComponentData['title_en'] = $data['title_en'];
-            $homeComponentData['title_bn'] = $data['title_bn'];
+            $homeComponentData = $this->formatHomeComponentData($data, $slider);
 
             $genericComponent = $this->genericComponentService->findAll();
             $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
 
             if (in_array($data['component_for'], $genericComponentKeys)) {
-                $homeComponentData['id'] = $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0]['id'];
-                $this->genericComponentItemService->updateComponent($homeComponentData);
+                $genericItem = $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0];
+//                dd($homeComponentData, $genericItem);
+                $genericItem->update($homeComponentData);
+                Redis::del('generic_component_data');
             }
 
             else if (!in_array($data['component_for'], config('generic-slider.top_most_visited_page'))) {
@@ -218,12 +226,12 @@ class GenericSliderService
                 unset($data['icon']);
             }
 
-            /**
-             * Version Control
-             */
-            $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-            $data = array_merge($data, $version_code);
-            unset($data['android_version_code'], $data['ios_version_code']);
+//            /**
+//             * Version Control
+//             */
+//            $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+//            $data = array_merge($data, $version_code);
+//            unset($data['android_version_code'], $data['ios_version_code']);
 
             $slider->update($data);
             Redis::del(['top_visit_slider', 'generic_component_data']);
@@ -232,6 +240,7 @@ class GenericSliderService
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+
             Log::info($e->getMessage());
             return false;
         }
@@ -369,9 +378,9 @@ class GenericSliderService
             'is_api_call_enable' => 1,
             'is_eligible' => 0,
             'android_version_code_min' => $data['android_version_code_min'],
-            'android_version_code_max' => $data['android_version_code_min'],
+            'android_version_code_max' => $data['android_version_code_max'],
             'ios_version_code_min' => $data['android_version_code_min'],
-            'ios_version_code_max' => $data['android_version_code_min'],
+            'ios_version_code_max' => $data['android_version_code_max'],
         ];
     }
 }
