@@ -113,5 +113,40 @@ class GlobalSettingService
     {
         $this->redisDel(GlobalSettingConst::SETTINGS_REDIS_KEY);
     }
+    public function generateHashBasedOnDataCheck():bool
+    {
+        $globalSettingsData = $this->settingRepository->findByProperties(['status' => 1], ['settings_value', 'settings_key', 'value_type', 'start_time', 'end_time']);
+
+        $result = [];
+        $currentTime = date('Y-m-d H:i:s');
+
+        foreach ($globalSettingsData as $value) {
+            if ($value['value_type'] === GlobalSettingConst::JSON) {
+                $value['settings_value'] = json_decode($value['settings_value'], true);
+            } elseif ($value['value_type'] === GlobalSettingConst::INT) {
+                $value['settings_value'] = (integer)$value['settings_value'];
+            } elseif ($value['value_type'] === GlobalSettingConst::BOOL) {
+                $value['settings_value'] = (bool)$value['settings_value'];
+            }
+
+            /**
+             * If Current time within or equal to start_time and end_time, then settings_key will not be included in data
+             */
+            if (isset($value['start_time'], $value['end_time']) && ($currentTime >= $value['start_time'] && $currentTime <= $value['end_time'])) {
+                continue;
+            }else {
+                $result[$value['settings_key']] = $value['settings_value'];
+            }
+        }
+
+        $generatedHash = hash('sha256', json_encode($result));
+        $redisIdentityHash = $this->redisGet(GlobalSettingConst::SETTINGS_REDIS_KEY);
+
+        if (isset($redisIdentityHash) && $generatedHash == $redisIdentityHash) {
+            return false;
+        }
+
+        return true;
+    }
 
 }

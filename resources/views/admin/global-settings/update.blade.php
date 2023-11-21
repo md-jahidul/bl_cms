@@ -80,6 +80,16 @@
             </div>
 
             <div class="form-group">
+                <label for="start_time">Start Time</label>
+                <input type="datetime-local" class="form-control" id="start_time" name="start_time" value="{{ $settings->start_time }}">
+            </div>
+
+            <div class="form-group">
+                <label for="end_time">End Time</label>
+                <input type="datetime-local" class="form-control" id="end_time" name="end_time" value="{{ $settings->end_time }}">
+            </div>
+
+            <div class="form-group">
                 <label for="status">Status</label>
                 <select class="form-control" id="status" name="status" readonly="true" disabled>
                     <option value="1" @if ($settings->status == 1) selected @endif>True</option>
