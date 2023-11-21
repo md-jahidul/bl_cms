@@ -264,9 +264,9 @@ class MyblProductEntryController extends Controller
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
      */
-    public function downloadMyblProducts()
+    public function downloadMyblProducts(Request $request)
     {
-        return $this->service->downloadMyblProducts();
+        return $this->service->downloadMyblProducts($request);
     }
 
     public function resetRedisProductKey()

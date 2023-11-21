@@ -58,7 +58,7 @@ class ProductDeepLinkService
     {
         $product = MyBlProduct::where('product_code', $product_code)->first();
         if (!$product) {
-            throw new NotFoundHttpException();
+            return ['short_link' => "", 'status_code' => 404, 'ms' => "Product code not found"];
         }
         $body=[
             "dynamicLinkInfo"=>[
@@ -72,7 +72,14 @@ class ProductDeepLinkService
               ]
             ]
         ];
-        $saveData = new ProductDeepLink();
+        $productDeeplink = new ProductDeepLink();
+
+        $oldDeeplink = $productDeeplink->where('product_code', $product_code)->select('product_code', 'deep_link')->first();
+
+        if ($oldDeeplink){
+            return ['short_link' => $oldDeeplink->deep_link, 'status_code' => 200, 'ms' => "Deeplink has already"];
+        }
+
         $insert_item = array();
         $result = $this->firebaseDeepLinkService->post($body);
         if ($result['status_code'] == 200) {
@@ -80,8 +87,8 @@ class ProductDeepLinkService
             $insert_item['product_code'] = $product_code;
             $insert_item['deep_link'] = $shortLink;
 
-            if ($saveData->create($insert_item)) {
-                return ['short_link' => "$shortLink", 'status_code' => $result['status_code'], 'ms' => "successfuly created"];
+            if ($productDeeplink->create($insert_item)) {
+                return ['short_link' => "$shortLink", 'status_code' => $result['status_code'], 'ms' => "successfully created"];
             } else {
                 return ['short_link' => "", 'status_code' => 500, 'ms' => "something is wrong"];
             }

@@ -38,6 +38,7 @@ return [
             'show_from'             => 31,
             'hide_from'             => 32,
             'status'                => 33,
+            'deep_link'             => 34,
         ],
         'product_schedule_statuses' => [
             0 => 'None',
@@ -45,7 +46,6 @@ return [
             2 => 'To be Hidden',
             3 => 'Completed Schedule',
             4 => 'To be Shown'
-
         ],
         'max_no_of_pin_to_top' => 150
     ],

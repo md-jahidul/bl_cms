@@ -80,6 +80,11 @@ class ProductCoreService
     private $productActivityRepository;
     private $myblProductScheduleRepository;
     /**
+     * @var ProductDeepLinkService
+     */
+    private $productDeepLinkService;
+
+    /**
      * ProductCoreService constructor.
      * @param ProductCoreRepository $productCoreRepository
      * @param MyBlProductRepository $myBlProductRepository
@@ -97,7 +102,8 @@ class ProductCoreService
         TagCategoryRepository $tagRepository,
         ProductDeepLinkRepository $productDeepLinkRepository,
         MyBlProductTagRepository $myBlProductTagRepository,
-        MyBlProductSchedulerRepository $myblProductScheduleRepository
+        MyBlProductSchedulerRepository $myblProductScheduleRepository,
+        ProductDeepLinkService $productDeepLinkService
     ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->myBlProductRepository = $myBlProductRepository;
@@ -108,6 +114,7 @@ class ProductCoreService
         $this->setActionRepository($productCoreRepository);
         $this->myBlProductTagRepository = $myBlProductTagRepository;
         $this->myblProductScheduleRepository = $myblProductScheduleRepository;
+        $this->productDeepLinkService = $productDeepLinkService;
     }
 
     /**
@@ -1290,9 +1297,61 @@ class ProductCoreService
         return Redirect::route('mybl.product.index')->with('success', 'Product updated Successfully');
     }
 
-    public function downloadMyblProducts()
+    public function downloadMyblProducts($request)
     {
-        $products = MyBlProduct::whereHas('details')->with('details', 'detailTabs')->where('status', 1)->get();
+        $products = new MyBlProduct();
+        $products = $products->where('status', 1);
+
+        /*        if ($request->status) {
+          $builder = MyBlProduct::where('status', $request->status);
+          } */
+        if ($request->show_in_home != null) {
+            $products = $products->where('show_in_home', $request->show_in_home);
+        }
+
+        if ($request->pinned_products != "") {
+            $products = $products->where('pin_to_top', $request->pinned_products);
+        }
+        $bundles = ['mix', 'voice', 'sms'];
+        $products = $products->whereHas('details',
+            function ($q) use ($request, $bundles) {
+                if ($request->product_codes) {
+                    $productCodes = explode(',', $request->product_codes);
+                    $q->whereIn('product_code', $productCodes);
+                }
+                if ($request->sim_type) {
+                    $q->where('sim_type', $request->sim_type);
+                }
+
+                if ($request->content_type) {
+                    if (in_array($request->content_type, $bundles)) {
+                        $q->where('content_type', $request->content_type);
+                        $q->whereNull('call_rate');
+                    } elseif ($request->content_type == 'recharge_offer') {
+                        $q->whereNotNull('recharge_product_code');
+                    } elseif ($request->content_type == 'scr') {
+                        $q->whereNotNull('call_rate');
+                    } elseif ($request->content_type == 'free_products') {
+                        $q->where('mrp_price', null);
+                    } elseif ($request->content_type == 'is_popular_pack') {
+                        $q->where('is_popular_pack', 1);
+                    } else {
+                        $q->where('content_type', $request->content_type);
+                    }
+                }
+            });
+
+            if ($request->content_type == 'is_popular_pack') {
+                $products =  $products->where('is_popular_pack', 1);
+            }
+
+            if ($request->content_type == 'recharge_offer') {
+                $products->where('show_recharge_offer', 1);
+            }
+
+        $products = $products->with('details', 'detailTabs')
+            ->where('status', 1)
+            ->get();
 
         $products = $products->sortBy('details.content_type');
 
@@ -1332,6 +1391,10 @@ class ProductCoreService
 
         foreach ($products as $product) {
             if ($product->details) {
+                if (isset($request['filtered_btn'])) {
+                    $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
+                    $insert_data[33] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
+                }
                 $insert_data[0] = ($product->details->sim_type == 2) ? 'Postpaid' : 'Prepaid';
                 $insert_data[1] = $product->details->content_type;
                 $insert_data[2] = $product->details->product_code;
@@ -1371,7 +1434,7 @@ class ProductCoreService
                 $insert_data[30] = ($product->is_visible) ? 'Yes' : 'No';
                 $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
                 $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
-                $insert_data[33] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[34] = ($product->status) ? 'Yes' : 'No';
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
