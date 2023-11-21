@@ -133,7 +133,6 @@ class MyblTransactionStatusController extends Controller
         return $this->doctimeService->getDoctimeTransaction($request);
     }
 
-
     /**
      * Display a listing of the resource.
      *
