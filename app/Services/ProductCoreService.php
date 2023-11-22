@@ -1301,29 +1301,33 @@ class ProductCoreService
     {
         $products = new MyBlProduct();
         $products = $products->where('status', 1);
+        $filterExportBtn = isset($request['filtered_btn']);
 
-        /*        if ($request->status) {
-          $builder = MyBlProduct::where('status', $request->status);
-          } */
-        if ($request->show_in_home != null) {
+        if ($request->show_in_home != null && $filterExportBtn) {
             $products = $products->where('show_in_home', $request->show_in_home);
         }
-
-        if ($request->pinned_products != "") {
+        if ($request->pinned_products != "" && $filterExportBtn) {
             $products = $products->where('pin_to_top', $request->pinned_products);
         }
+        if ($request->content_type == 'is_popular_pack' && $filterExportBtn) {
+            $products =  $products->where('is_popular_pack', 1);
+        }
+        if ($request->content_type == 'recharge_offer' && $filterExportBtn) {
+            $products->where('show_recharge_offer', 1);
+        }
+
         $bundles = ['mix', 'voice', 'sms'];
         $products = $products->whereHas('details',
-            function ($q) use ($request, $bundles) {
-                if ($request->product_codes) {
+            function ($q) use ($request, $bundles, $filterExportBtn) {
+                if ($request->product_codes && $filterExportBtn) {
                     $productCodes = explode(',', $request->product_codes);
                     $q->whereIn('product_code', $productCodes);
                 }
-                if ($request->sim_type) {
+                if ($request->sim_type && $filterExportBtn) {
                     $q->where('sim_type', $request->sim_type);
                 }
 
-                if ($request->content_type) {
+                if ($request->content_type && $filterExportBtn) {
                     if (in_array($request->content_type, $bundles)) {
                         $q->where('content_type', $request->content_type);
                         $q->whereNull('call_rate');
@@ -1340,14 +1344,6 @@ class ProductCoreService
                     }
                 }
             });
-
-            if ($request->content_type == 'is_popular_pack') {
-                $products =  $products->where('is_popular_pack', 1);
-            }
-
-            if ($request->content_type == 'recharge_offer') {
-                $products->where('show_recharge_offer', 1);
-            }
 
         $products = $products->with('details', 'detailTabs')
             ->where('status', 1)
@@ -1375,8 +1371,15 @@ class ProductCoreService
 
         unset($header['internet_volume_mb']);
 
+
         $header['Active'] = $header['status'];
         unset($header['status']);
+
+        if(isset($request['filtered_btn'])) {
+            $header['Deep-link'] = $header['deep_link'];
+        }
+
+        unset($header['deep_link']);
 
         $headers = array_map(function ($val) {
             return str_replace('_', ' ', ucwords($val));
@@ -1391,10 +1394,6 @@ class ProductCoreService
 
         foreach ($products as $product) {
             if ($product->details) {
-                if (isset($request['filtered_btn'])) {
-                    $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
-                    $insert_data[33] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
-                }
                 $insert_data[0] = ($product->details->sim_type == 2) ? 'Postpaid' : 'Prepaid';
                 $insert_data[1] = $product->details->content_type;
                 $insert_data[2] = $product->details->product_code;
@@ -1434,7 +1433,12 @@ class ProductCoreService
                 $insert_data[30] = ($product->is_visible) ? 'Yes' : 'No';
                 $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
                 $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
-                $insert_data[34] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[33] = ($product->status) ? 'Yes' : 'No';
+
+                if (isset($request['filtered_btn'])) {
+                    $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
+                    $insert_data[34] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
+                }
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
