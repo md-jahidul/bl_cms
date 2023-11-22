@@ -56,10 +56,6 @@ class ProductDeepLinkService
      */
     public function createDeepLink($product_code)
     {
-        $product = MyBlProduct::where('product_code', $product_code)->first();
-        if (!$product) {
-            return ['short_link' => "", 'status_code' => 404, 'ms' => "Product code not found"];
-        }
         $body=[
             "dynamicLinkInfo"=>[
               "domainUriPrefix"=>env('DOMAINURIPREFIX'),

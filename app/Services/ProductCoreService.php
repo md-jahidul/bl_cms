@@ -395,6 +395,9 @@ class ProductCoreService
                                 'product_code' => $product_code
                             ], $mybl_data);
 
+                            // Create Deeplink
+                            $this->productDeepLinkService->createDeepLink($product_code);
+
                             if (count($productTabs)) {
                                 MyBlProductTab::where('product_code', $product_code)->delete();
 
@@ -908,6 +911,9 @@ class ProductCoreService
             $data['media'] = null;
         }*/
 
+        // Create Deeplink
+        $this->productDeepLinkService->createDeepLink($product_code);
+
         $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
@@ -1141,7 +1147,11 @@ class ProductCoreService
      */
     public function storeMyblProducts($request)
     {
-        $data['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
+        $productCode = strtoupper(str_replace(' ', '', $request->product_code));
+        $data['product_code'] = $productCode;
+
+        // Create Deeplink
+        $this->productDeepLinkService->createDeepLink($productCode);
 
         if ($request->file('media')) {
             $file = $request->media;
