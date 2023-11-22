@@ -11,6 +11,6 @@ class GenericComponent extends Model
 
     public function items()
     {
-        return $this->hasMany(GenericComponent::class, 'generic_component_id', 'id');
+        return $this->hasMany(GenericComponentItem::class, 'generic_component_id', 'id');
     }
 }
