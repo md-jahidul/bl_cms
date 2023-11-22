@@ -25,7 +25,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("priyojon/ $priyojonLanding->id") }}" method="POST" novalidate>
+                        <form role="form" action="{{ url("priyojon/$priyojonLanding->id") }}" method="POST" novalidate>
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
@@ -72,6 +72,22 @@
                                     @if ($errors->has('desc_bn'))
                                         <div class="help-block">{{ $errors->first('desc_bn') }}</div>
                                     @endif
+                                </div>
+
+                                <input type="hidden" name="about_page" value="discount-privilege">
+                                <div class="form-group col-md-4">
+                                    <label>Page Header</label>
+                                    <textarea class="form-control" name="page_header" id="" cols="30" rows="4">{{ $priyojonLanding->page_header ?? "" }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Page Header BN</label>
+                                    <textarea class="form-control" name="page_header_bn" id="" cols="30" rows="4">{{ $priyojonLanding->page_header_bn ?? "" }}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" name="schema_markup" id="" cols="30" rows="4">{{ $priyojonLanding->schema_markup ?? "" }}</textarea>
                                 </div>
 
                                 <div class="form-actions col-md-12 ">
