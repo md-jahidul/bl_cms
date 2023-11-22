@@ -17,7 +17,11 @@ class EcareerPortal extends Model
     protected $table = 'ecareer_portals';
 
 
-   protected $fillable = ['title_en', 'title_bn', 'slug', 'description_en', 'description_bn', 'image', 'video', 'alt_text', 'category', 'route_slug', 'category_type','call_to_action', 'additional_info', 'is_active', 'has_items', 'deleted_at'];
+   protected $fillable = [
+       'title_en', 'title_bn', 'slug', 'description_en', 'description_bn', 'image', 'video',
+       'alt_text', 'category', 'route_slug', 'category_type','call_to_action', 'additional_info',
+       'page_header', 'page_header_bn', 'schema_markup', 'is_active', 'has_items', 'deleted_at'
+   ];
 
 
    public function portalItems(){

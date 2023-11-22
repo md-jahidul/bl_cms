@@ -47,12 +47,17 @@ class EcareerController extends Controller {
     public function generalIndex() {
 
         $categoryTypes = 'life_at_bl_general';
-
         $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-
-        return view('admin.ecarrer.general.index', compact('sections'));
+        $seoData = $this->ecarrerService->getSeoData();
+        return view('admin.ecarrer.general.index', compact('sections', 'seoData'));
     }
 
+    public function createOrUpdateSeo(Request $request)
+    {
+        $response = $this->ecarrerService->seoSaveOrUpdate($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect('life-at-banglalink/general');
+    }
 
     /**
      * [generalCreate create general section]

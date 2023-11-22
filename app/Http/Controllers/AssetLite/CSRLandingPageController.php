@@ -8,6 +8,7 @@ use App\Services\MediaBannerImageService;
 use App\Services\MediaLandingPageService;
 use App\Services\MediaPressNewsEventService;
 use App\Services\MediaTvcVideoService;
+use App\Services\MetaTagService;
 use Doctrine\DBAL\Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -40,6 +41,10 @@ class CSRLandingPageController extends Controller
      * @var MediaPressNewsEventService
      */
     private $mediaPressNewsEventService;
+    /**
+     * @var MetaTagService
+     */
+    private $metaTagService;
 
     /**
      * RolesController constructor.
@@ -49,11 +54,13 @@ class CSRLandingPageController extends Controller
     public function __construct(
         MediaPressNewsEventService $mediaPressNewsEventService,
         MediaLandingPageService $mediaLandingPageService,
-        MediaBannerImageService $mediaBannerImageService
+        MediaBannerImageService $mediaBannerImageService,
+        MetaTagService $metaTagService
     ) {
         $this->mediaPressNewsEventService = $mediaPressNewsEventService;
         $this->mediaLandingPageService = $mediaLandingPageService;
         $this->mediaBannerImageService = $mediaBannerImageService;
+        $this->metaTagService = $metaTagService;
     }
 
 
@@ -64,7 +71,8 @@ class CSRLandingPageController extends Controller
     {
         $orderBy = ['column' => "display_order", 'direction' => 'ASC'];
         $componentList = $this->mediaLandingPageService->findBy(['reference_type' => self::LANDING_REFERENCE_TYPE], '', $orderBy);
-        return view('admin.al-csr.landing-page.component_list', compact('componentList'));
+        $metaTag = $this->metaTagService->findMetaTagByKey(self::LANDING_REFERENCE_TYPE);
+        return view('admin.al-csr.landing-page.component_list', compact('componentList', 'metaTag'));
     }
 
     /**

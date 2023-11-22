@@ -2,7 +2,7 @@
 
 
 <div class="form-group col-md-6 {{ $errors->has('offer_details_title_en') ? ' error' : '' }}">
-    <label for="offer_details_title_en" >Title (English)</label>
+    <label for="offer_details_title_en" >Offer Breakdown (English)</label>
     <input type="text" name="offer_details_title_en"
            value="{{ !empty($productDetail->product_details['offer_details_title_en']) ? $productDetail->product_details['offer_details_title_en'] : '' }}"
            class="form-control" placeholder="Enter details of first-time recharge in English">
@@ -13,7 +13,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('offer_details_title_bn') ? ' error' : '' }}">
-    <label for="offer_details_title_bn" >Title (Bangla)</label>
+    <label for="offer_details_title_bn" >Offer Breakdown (Bangla)</label>
     <input type="text" name="offer_details_title_bn"  class="form-control" placeholder="Enter first-time recharge title in English"
            value="{{ !empty($productDetail->product_details['offer_details_title_bn']) ? $productDetail->product_details['offer_details_title_bn'] : '' }}" >
     <div class="help-block"></div>

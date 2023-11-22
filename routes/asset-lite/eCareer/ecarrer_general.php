@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('life-at-banglalink/general',
     'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
+Route::post('life-at-banglalink/general-seo-store','AssetLite\EcareerController@createOrUpdateSeo')->name('life.at.banglalink.general-seo-store');
 Route::get('life-at-banglalink/general/create',
     'AssetLite\EcareerController@generalCreate')->name('life.at.banglalink.general.create');
 Route::post('life-at-banglalink/general/store',

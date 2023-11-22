@@ -13,4 +13,9 @@ class MetaTagRepository extends BaseRepository
     {
         return $this->model->where('page_id', $id)->first();
     }
+
+    public function createOrUpdate($data, $key)
+    {
+        return $this->model->updateOrCreate(['dynamic_route_key' => $key], $data);
+    }
 }

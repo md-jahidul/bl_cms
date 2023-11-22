@@ -170,8 +170,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('about-us-career-sortable', 'AssetLite\AboutEcareerItemController@aboutUsCareerSortable');
 
 
-    // META TAG  ====================================
+    # META TAG  ====================================
     Route::resource('meta-tag', 'AssetLite\MetaTagController');
+    Route::get('meta-tag/destroy/{id}', 'AssetLite\MetaTagController@destroy');
+
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
     // CONFIG  ====================================
@@ -1392,7 +1394,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us-field.update');
     Route::get('corporate/contact-us-field/{section_id}/destroy/{id}',
         'AssetLite\CorpContactUsFieldController@destroy');
-//    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
+    // Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
 
     // Corporate Responsibility Contact Us Info List
     Route::get('corporate/contact-us-info', 'AssetLite\CorporateRespContactUsController@customerContactInfoList')
@@ -1458,8 +1460,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // Blog Landing Page
     Route::resource('blog/landing-page-component', 'AssetLite\BlogLandingPageController')->except(['show', 'destroy']);
+    Route::post('blog/landing-page-component/seo-data-store', 'AssetLite\BlogLandingPageController@landingPageSeoDataSave')->name('blog-lending-pg-seo');
     Route::get('blog/landing-page-component/destroy/{id}', 'AssetLite\BlogLandingPageController@destroy');
     Route::get('blog-landing-page-sortable', 'AssetLite\BlogLandingPageController@landingPageSortable');
+    Route::get('blog-archive-seo', 'AssetLite\BlogLandingPageController@getArchiveSEO')->name('blog.archive-seo');
+    Route::post('blog-archive-seo/store', 'AssetLite\BlogLandingPageController@storeArchiveSEO')->name('blog.archive-seo-store');
 
     // Ad Tech banner Store
     Route::post('ad-tech/store', 'AssetLite\MenuController@adTechStore')->name('adtech.store');

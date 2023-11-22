@@ -13,6 +13,7 @@ use App\Repositories\AlFaqRepository;
 use App\Repositories\MediaLandingPageRepository;
 use App\Repositories\MediaPressNewsEventRepository;
 use App\Repositories\MediaTvcVideoRepository;
+use App\Repositories\MetaTagRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -29,6 +30,10 @@ class MediaLandingPageService
     protected $mediaTvcVideoRepository;
 
     protected $mediaPressNewsEventRepository;
+    /**
+     * @var MetaTagRepository
+     */
+    private $metaTagRepository;
 
     /**
      * DigitalServicesService constructor.
@@ -39,11 +44,13 @@ class MediaLandingPageService
     public function __construct(
         MediaLandingPageRepository $mediaLandingPageRepository,
         MediaTvcVideoRepository $mediaTvcVideoRepository,
-        MediaPressNewsEventRepository $mediaPressNewsEventRepository
+        MediaPressNewsEventRepository $mediaPressNewsEventRepository,
+        MetaTagRepository $metaTagRepository
     ) {
         $this->mediaLandingPageRepository = $mediaLandingPageRepository;
         $this->mediaTvcVideoRepository = $mediaTvcVideoRepository;
         $this->mediaPressNewsEventRepository = $mediaPressNewsEventRepository;
+        $this->metaTagRepository = $metaTagRepository;
         $this->setActionRepository($mediaLandingPageRepository);
     }
 
@@ -103,7 +110,12 @@ class MediaLandingPageService
         return "success";
     }
 
-
+    public function seoDataSave($data, $key)
+    {
+        $data['page_id'] = 0;
+        $this->metaTagRepository->createOrUpdate($data, $key);
+        return Response('SEO info has been save successfully');
+    }
 
     /**
      * @param $id

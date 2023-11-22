@@ -6,34 +6,47 @@ use App\Enums\ExplorCStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExploreCRequest;
 use App\Services\ExploreCService;
+use App\Services\MetaTagService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Services\ExploreCDetailsService;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class ExploreCController extends Controller
 {
     public const PAGE_TYPE = "explore_c";
     protected $exploreCService;
     protected $exploreCDetailsService;
+    /**
+     * @var MetaTagService
+     */
+    private $metaTagService;
 
-    public function __construct( ExploreCService $exploreCService, ExploreCDetailsService $exploreCDetailsService)
-    {
+    public function __construct(
+        ExploreCService $exploreCService,
+        ExploreCDetailsService $exploreCDetailsService,
+        MetaTagService $metaTagService
+    ) {
         $this->exploreCService = $exploreCService;
         $this->exploreCDetailsService = $exploreCDetailsService;
+        $this->metaTagService = $metaTagService;
 
     }
 
         /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        
         $exploreCs = $this->exploreCService->exploreCList();
-
-        return view('admin.explore-c.index', compact('exploreCs'));
+        $metaTag = $this->metaTagService->findMetaTagByKey(self::PAGE_TYPE);
+        return view('admin.explore-c.index', compact('exploreCs', 'metaTag'));
     }
 
     /**
@@ -56,25 +69,11 @@ class ExploreCController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ExploreCRequest $request
+     * @return Application|RedirectResponse|Redirector
      */
     public function store(ExploreCRequest $request)
     {
-        // // $data = [];
-        // if ($request->file('img')) {
-        //     $file = $request->img;
-        //     $path = $file->storeAs(
-        //         'explore_c/images',
-        //         'explore_c_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-        //         'public'
-        //     );
-
-        //     $img = $path;
-        // }
-        // $data = $request->all();
-        // $data['img'] = $img;
-        // return $this->exploreCService->store($request->all());
         session()->flash('message', $this->exploreCService->store($request->all())->getContent());
         return redirect(route('explore-c.index'));
 
@@ -99,7 +98,7 @@ class ExploreCController extends Controller
      */
     public function edit($id)
     {
-        
+
         $exploreC = $this->exploreCService->findOne($id);
         $allPages = $this->exploreCDetailsService->findBy(['type' => self::PAGE_TYPE]);
         $pages = [];
@@ -114,7 +113,7 @@ class ExploreCController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -137,13 +136,13 @@ class ExploreCController extends Controller
     {
         session()->flash('message', $this->exploreCService->destroy($id)->getContent());
         return redirect(route('explore-c.index'));
-        
+
     }
 
     public function exploreCSortable(Request $request)/*: Response*/
     {
         return $this->exploreCService->tableSortable($request->all());
-        
+
     }
 
 }

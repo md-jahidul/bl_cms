@@ -123,6 +123,9 @@ class PriyojonController extends Controller
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->updatePriyojon($request->all(), $id);
         Session::flash('message', $response->getContent());
+        if (isset($request->about_page) && $request->about_page == "discount-privilege"){
+            return redirect('about-page/discount-privilege');
+        }
         return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
     }
 

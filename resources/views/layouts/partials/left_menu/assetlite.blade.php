@@ -414,7 +414,7 @@
                         <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
                                data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-safari"></i> General</a>
+                                    class="la la-safari"></i> Landing Page</a>
                         </li>
                         <li class="{{ request()->is('life-at-banglalink/teams*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
@@ -682,11 +682,11 @@
                             <span class="menu-title" data-i18n="nav.templates.main">Post List</span>
                         </a>
                     </li>
-{{--                    <li class="{{ is_active_url('/tvc-video') }} nav-item">--}}
-{{--                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>--}}
-{{--                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
+                    <li class="{{ is_active_url('/blog-archive-seo') }} nav-item">
+                        <a href="{{ url('/blog-archive-seo') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">SEO for Archive</span>
+                        </a>
+                    </li>
 
                     <li class="{{ is_active_url('blog/landing-page-component') . is_active_url('blog/landing-page-component/create') }} nav-item">
                         <a href="{{ url('blog/landing-page-component') }}"><i class="la la-futbol-o"></i>
@@ -935,6 +935,15 @@
         </ul>
     </li>
     {{--    @endif--}}
+    <li class="{{ is_active_url(route('meta-tag.index')) }}">
+        <a class="menu-item" href="{{ route('meta-tag.index') }}"
+           data-i18n="nav.templates.vert.classic_menu"><i
+                class="la la-list"></i> Meta Tags</a>
+    </li>
+
+
+    <hr>
+    <hr>
     <hr>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}

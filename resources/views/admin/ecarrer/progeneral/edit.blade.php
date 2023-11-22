@@ -92,7 +92,8 @@
                                         </select>
                                 </div> --}}
 
-
+                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=> $sections])
+                                @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$sections])
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -106,10 +107,6 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
-
-                                @include('admin.ecarrer-items.additional.description',['ecarrer_item'=> $sections])
-                                @include('admin.ecarrer-items.additional.call_to_actions',['ecarrer_item'=>$sections])
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
