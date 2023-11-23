@@ -50,6 +50,25 @@ class PriyojonController extends Controller
         return $temp['parent_id'];
     }
 
+    public function landingPageSeoSave(Request $request)
+    {
+        $seoData = Priyojon::where('component_type', 'landing_page_seo')->first();
+
+        $data = [
+            'component_type' => "landing_page_seo",
+            'page_header' => $request->page_header,
+            'page_header_bn' => $request->page_header_bn,
+            'schema_markup' => $request->schema_markup
+        ];
+
+        if ($seoData) {
+            $seoData->update($data);
+        }
+        Priyojon::create($data);
+        Session::flash('success', "SEO data save successfully!!");
+        return redirect('priyojon');
+    }
+
     /**
      * @param int $parent_id
      * @return Factory|View
@@ -70,7 +89,9 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-        return view('admin.loyalty-header.index', compact('priyojons', 'parent_id', 'menu_items'));
+        $seoData = Priyojon::where('component_type', 'landing_page_seo')->first();
+
+        return view('admin.loyalty-header.index', compact('priyojons', 'parent_id', 'menu_items', 'seoData'));
     }
 
     public function create($parent_id = 0)

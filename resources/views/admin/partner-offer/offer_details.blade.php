@@ -130,32 +130,32 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Page Header (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header">{{ isset($partnerOfferDetail->partner_offer_details->page_header) ?
-                                                $partnerOfferDetail->partner_offer_details->page_header : null }}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
+{{--                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
+{{--                                    <label>Page Header (HTML)</label>--}}
+{{--                                    <textarea class="form-control" rows="7" name="page_header">{{ isset($partnerOfferDetail->partner_offer_details->page_header) ?--}}
+{{--                                                $partnerOfferDetail->partner_offer_details->page_header : null }}</textarea>--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>Note: </strong> Title, meta, canonical and other tags--}}
+{{--                                    </small>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Page Header Bangla (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header_bn">{{ isset($partnerOfferDetail->partner_offer_details->page_header_bn) ?
-                                                        $partnerOfferDetail->partner_offer_details->page_header_bn : null }}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
+{{--                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
+{{--                                    <label>Page Header Bangla (HTML)</label>--}}
+{{--                                    <textarea class="form-control" rows="7" name="page_header_bn">{{ isset($partnerOfferDetail->partner_offer_details->page_header_bn) ?--}}
+{{--                                                        $partnerOfferDetail->partner_offer_details->page_header_bn : null }}</textarea>--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>Note: </strong> Title, meta, canonical and other tags--}}
+{{--                                    </small>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label>Schema Markup</label>
-                                    <textarea class="form-control" rows="7" name="schema_markup">{{ isset($partnerOfferDetail->partner_offer_details->schema_markup) ?
-                                                $partnerOfferDetail->partner_offer_details->schema_markup : null }}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                    </small>
-                                </div>
+{{--                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
+{{--                                    <label>Schema Markup</label>--}}
+{{--                                    <textarea class="form-control" rows="7" name="schema_markup">{{ isset($partnerOfferDetail->partner_offer_details->schema_markup) ?--}}
+{{--                                                $partnerOfferDetail->partner_offer_details->schema_markup : null }}</textarea>--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>Note: </strong> JSON-LD (Recommended by Google)--}}
+{{--                                    </small>--}}
+{{--                                </div>--}}
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
@@ -192,63 +192,63 @@
 {{--                                    @endif--}}
 {{--                                </div>--}}
 
-                                <div class="col-md-6 mt-4  {{ $errors->has('banner_name') ? ' error' : '' }}">
-                                    <label >Image Name EN</label>
-                                    <input type="text" name="banner_name"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ old('banner_name') ? old('banner_name') : $partnerOfferDetail->partner_offer_details->banner_name }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('banner_name'))
-                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="col-md-6 mt-4  {{ $errors->has('banner_name') ? ' error' : '' }}">--}}
+{{--                                    <label >Image Name EN</label>--}}
+{{--                                    <input type="text" name="banner_name"  class="form-control" placeholder="Enter image alter text"--}}
+{{--                                           value="{{ old('banner_name') ? old('banner_name') : $partnerOfferDetail->partner_offer_details->banner_name }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('banner_name'))--}}
+{{--                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-6 mt-4  {{ $errors->has('banner_name_bn') ? ' error' : '' }}">
-                                    <label>Image Name BN</label>
-                                    <input type="text" name="banner_name_bn"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ old('banner_name_bn') ? old('banner_name_bn') : $partnerOfferDetail->partner_offer_details->banner_name_bn }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('banner_name_bn'))
-                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="col-md-6 mt-4  {{ $errors->has('banner_name_bn') ? ' error' : '' }}">--}}
+{{--                                    <label>Image Name BN</label>--}}
+{{--                                    <input type="text" name="banner_name_bn"  class="form-control" placeholder="Enter image alter text"--}}
+{{--                                           value="{{ old('banner_name_bn') ? old('banner_name_bn') : $partnerOfferDetail->partner_offer_details->banner_name_bn }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('banner_name_bn'))--}}
+{{--                                        <div class="help-block text-danger">{{ $errors->first('banner_name_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-6 mt-1">
-                                    <label for="banner_alt_text">Alt Text EN</label>
-                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}">
-                                </div>
+{{--                                <div class="col-md-6 mt-1">--}}
+{{--                                    <label for="banner_alt_text">Alt Text EN</label>--}}
+{{--                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"--}}
+{{--                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}">--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-6 mt-1">
-                                    <label for="banner_alt_text">Alt Text BN</label>
-                                    <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}">
-                                </div>
+{{--                                <div class="col-md-6 mt-1">--}}
+{{--                                    <label for="banner_alt_text">Alt Text BN</label>--}}
+{{--                                    <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text"--}}
+{{--                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}">--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('url_slug') ? ' error' : '' }}">
-                                    <label> URL EN (url slug) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{ old('url_slug') ? old('url_slug') : $partnerOfferDetail->partner_offer_details->url_slug }}"
-                                           name="url_slug" placeholder="URL EN">
-                                    <div class="help-block"></div>
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug'))
-                                        <div class="help-block">  {{ $errors->first('url_slug') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 mt-1 {{ $errors->has('url_slug') ? ' error' : '' }}">--}}
+{{--                                    <label> URL EN (url slug) <span class="text-danger">*</span></label>--}}
+{{--                                    <input type="text" class="form-control" value="{{ old('url_slug') ? old('url_slug') : $partnerOfferDetail->partner_offer_details->url_slug }}"--}}
+{{--                                           name="url_slug" placeholder="URL EN">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>--}}
+{{--                                    </small>--}}
+{{--                                    @if ($errors->has('url_slug'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('url_slug') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
-                                    <label> URL BN (url slug) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{ old('url_slug_bn') ? old('url_slug_bn') : $partnerOfferDetail->partner_offer_details->url_slug_bn }}"
-                                           name="url_slug_bn" placeholder="URL BN">
-                                    <div class="help-block"></div>
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
-                                    </small>
-                                    @if ($errors->has('url_slug_bn'))
-                                        <div class="help-block">{{ $errors->first('url_slug_bn') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 mt-1 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">--}}
+{{--                                    <label> URL BN (url slug) <span class="text-danger">*</span></label>--}}
+{{--                                    <input type="text" class="form-control" value="{{ old('url_slug_bn') ? old('url_slug_bn') : $partnerOfferDetail->partner_offer_details->url_slug_bn }}"--}}
+{{--                                           name="url_slug_bn" placeholder="URL BN">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    <small class="text-info">--}}
+{{--                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>--}}
+{{--                                    </small>--}}
+{{--                                    @if ($errors->has('url_slug_bn'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('url_slug_bn') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
 
 

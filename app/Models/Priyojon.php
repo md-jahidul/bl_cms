@@ -11,6 +11,7 @@ class Priyojon extends Model
 
     protected $fillable = [
         'parent_id',
+        'component_type',
         'title_en',
         'title_bn',
         'desc_en',

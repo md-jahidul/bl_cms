@@ -78,6 +78,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
     Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['create', 'store', 'update', 'edit']);
+    Route::post('priyojon-landing-page-seo', 'AssetLite\PriyojonController@landingPageSeoSave');
+
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
 //    Route::get('priyojon/{id?}/create', 'AssetLite\PriyojonController@create');
     Route::post('priyojon-landing-page-banner/{id}', 'AssetLite\PriyojonController@landingPageBanner')
