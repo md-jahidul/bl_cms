@@ -205,6 +205,20 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('RoamingTransactions') )
+        <li class="{{ is_active_url('roaming/transactions') }} nav-item"><a href="{{ route('roaming.transactions') }}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">Roaming</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(route('roaming.transactions')) }}">
+                    <a class="menu-item" href="{{ route('roaming.transactions') }}">
+                        <i class="ft-list"></i>Transaction</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('AppLaunch') )
         <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>
