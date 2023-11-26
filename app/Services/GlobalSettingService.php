@@ -132,7 +132,7 @@ class GlobalSettingService
             /**
              * If Current time within or equal to start_time and end_time, then settings_key will not be included in data
              */
-            if (isset($value['start_time'], $value['end_time']) && ($currentTime >= $value['start_time'] && $currentTime <= $value['end_time'])) {
+            if (isset($value['start_time'], $value['end_time']) && !($currentTime >= $value['start_time'] && $currentTime <= $value['end_time'])) {
                 continue;
             }else {
                 $result[$value['settings_key']] = $value['settings_value'];

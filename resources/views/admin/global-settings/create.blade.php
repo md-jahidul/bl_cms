@@ -70,12 +70,12 @@
 
             <div class="form-group">
                 <label for="start_time">Start Time</label>
-                <input type="datetime-local" class="form-control" id="start_time" name="start_time" value="">
+                <input class="form-control datepicker" id="start_time" name="start_time" autocomplete="off">
             </div>
 
             <div class="form-group">
                 <label for="end_time">End Time</label>
-                <input type="datetime-local" class="form-control" id="end_time" name="end_time" value="">
+                <input class="form-control datepicker" id="end_time" name="end_time" autocomplete="off">
             </div>
 
             <div class="form-group">
@@ -224,3 +224,20 @@
         });
     </script>
 @endsection
+@push('style')
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
+@endpush
+@push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script>
+        $(function () {
+            $('.datepicker').datetimepicker({
+                format : 'YYYY-MM-DD H:m:s',
+                showClose: true,
+            });
+        });
+    </script>
+
+@endpush
