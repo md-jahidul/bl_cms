@@ -63,8 +63,9 @@ class PriyojonController extends Controller
 
         if ($seoData) {
             $seoData->update($data);
+        }else{
+            Priyojon::create($data);
         }
-        Priyojon::create($data);
         Session::flash('success', "SEO data save successfully!!");
         return redirect('priyojon');
     }
