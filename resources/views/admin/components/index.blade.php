@@ -14,9 +14,17 @@
                     </thead>
                     <tbody id="sortable">
                     @foreach($components as $list)
+                        @php
+                            $componentType = "";
+                            if (isset($list->type)){
+                                $componentType = $list->type;
+                            } else {
+                                $componentType = $list->component_type;
+                            }
+                        @endphp
                         <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
                             <td><i class="icon-cursor-move icons"></i></td>
-                            <td>{{ ucwords(str_replace('_', ' ', $list->type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                            <td>{{ ucwords(str_replace('_', ' ', $componentType)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                             <td>{{ $list->name  }}</td>
                             <td class="text-right">
                                 <a href="{{ url("$edit/$list->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
