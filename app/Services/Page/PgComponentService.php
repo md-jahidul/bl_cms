@@ -76,6 +76,7 @@ class PgComponentService
                 'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
                 'type' => $data["component_type"],
                 'attribute' => $data["attribute"] ?? null,
+                'config' => $data["config"] ?? null,
                 'status' => $data['status']
             ];
 
