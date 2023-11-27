@@ -80,4 +80,47 @@
             saveNewPositions();
         }
     });
+
+    function saveNewPositionsV2() {
+        var positions = [];
+        $('.update').each(function () {
+            positions.push([
+                $(this).attr('data-index'),
+                $(this).attr('data-position')
+            ]);
+        })
+
+        $.ajax({
+            type: "POST",
+            url: auto_save_url,
+
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            ,
+            data: {
+                update: 1,
+                position: positions
+            },
+            success: function (data) {
+                console.log(data)
+            },
+            error: function () {
+                window.location.replace(auto_save_url);
+            }
+        });
+    }
+
+    $("#sortable-new").sortable({
+        update: function (event, ui) {
+            console.log(auto_save_url)
+            $(this).children().each(function (index) {
+                if ($(this).attr('data-position') != (index + 1)) {
+                }
+                $(this).attr('data-position', (index + 1)).addClass('update')
+            });
+            saveNewPositionsV2();
+        }
+    });
+
 })();
