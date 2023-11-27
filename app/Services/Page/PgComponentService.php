@@ -76,6 +76,7 @@ class PgComponentService
                 'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
                 'type' => $data["component_type"],
                 'attribute' => $data["attribute"] ?? null,
+                'config' => $data["config"] ?? null,
                 'status' => $data['status']
             ];
 
@@ -129,7 +130,6 @@ class PgComponentService
                         if ($key == "tab_items") {
                             foreach ($field as $tabIndex => $tabItems) {
                                 foreach ($tabItems as $tabItemKey => $tabItem) {
-//                                    dd($tabParentId);
                                     $valueEn = $tabItem['value_en'] ?? null;
                                     $tabItemData = [
                                         'id' => $tabItem['id'] ?? null,
@@ -138,7 +138,7 @@ class PgComponentService
                                         'key' => $tabItemKey,
                                         'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
                                         'value_bn' => $tabItem['value_bn'] ?? null,
-                                        'group' => $tabIndex + 1,
+                                        'group' => $tabParentId . "." . ($tabIndex + 1),
                                     ];
 //                                    dd($tabItemData);
                                     $this->componentDataRepository->createOrUpdate($tabItemData);
@@ -149,7 +149,6 @@ class PgComponentService
                 }
             }
         });
-//        dd('Done');
     }
 
     public function fileUpload($file)
@@ -178,12 +177,17 @@ class PgComponentService
         if ($data['data-parent'] > 0) {
             $componentData = $this->componentDataRepository->findBy(['parent_id' => $data['data-parent'], 'group' => $data['data-group']]);
         } else {
-            $componentData = $this->componentDataRepository->findBy(['component_id' => $data['data-com-id'], 'group' => $data['data-group']]);
+            $componentData = $this->componentDataRepository->findBy(['component_id' => $data['data-com-id'], 'group' => $data['data-group']], 'children');
         }
 
         foreach ($componentData as $item) {
             if ($item->key == "image" || $item->key == "image_hover") {
                 $this->deleteFile($item->value_en);
+            }
+            if (!empty($item->children)) {
+                foreach ($item->children as $data){
+                    $data->delete();
+                }
             }
             $item->delete();
         }

@@ -1,4 +1,7 @@
 @php
+    if (!empty($tabItemData)){
+        $data = $tabItemData;
+    }
     $fieldNameEn = "";
     $fieldNameBn = "";
     $fieldNameLink = "";

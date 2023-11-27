@@ -18,7 +18,7 @@ class CreateNewPageComponentDataTable extends Migration
             $table->string('key')->nullable();
             $table->text('value_en')->nullable();
             $table->text('value_bn')->nullable();
-            $table->integer('group')->default(0);
+            $table->double('group')->default(0);
             $table->timestamps();
             $table->foreign('component_id')
                 ->references('id')

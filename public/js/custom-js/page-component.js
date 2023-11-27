@@ -194,6 +194,7 @@
         let tabDesignation = ""
         let tabInstitute = ""
         let tabInput = ""
+        let tabTitle = ""
 
         if (isTab) {
             fieldFeedbackEn += `componentData[${index}][tab_items][${tabIndex}][feedback][value_en]`;
@@ -204,7 +205,7 @@
             fieldDesignationBn += `componentData[${index}][tab_items][${tabIndex}][designation][value_bn]`;
             fieldInstituteEn += `componentData[${index}][tab_items][${tabIndex}][institute][value_en]`;
             fieldInstituteBn += `componentData[${index}][tab_items][${tabIndex}][institute][value_bn]`;
-            tabFeedback += `<input type="hidden" name="componentData[${index}][title][is_tab]" value="1">`;
+            tabTitle += `<input type="hidden" name="componentData[${index}][title][is_tab]" value="1">`;
             // tabName += `<input type="hidden" name="componentData[${index}][name][is_tab]" value="1">`;
             // tabDesignation += `<input type="hidden" name="componentData[${index}][designation][is_tab]" value="1">`;
             // tabInstitute += `<input type="hidden" name="componentData[${index}][institute][is_tab]" value="1">`;
@@ -221,7 +222,7 @@
 
         return `<div class="form-group col-md-6">
             <label for="title_en">Feedback En</label>
-            ${tabFeedback}
+            ${tabTitle}
             <textarea type="text" rows="3" name="${fieldFeedbackEn}" class="form-control"></textarea>
         </div>
 
@@ -292,7 +293,7 @@
         if (isTab) {
             fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][button_name][value_en]`;
             fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][button_name][value_bn]`;
-            fieldNameIink += `componentData[${index}][tab_items][${tabIndex}][button_name][value_en]`;
+            fieldNameIink += `componentData[${index}][tab_items][${tabIndex}][button_link][value_en]`;
         }else {
             fieldNameEn += `componentData[${index}][button_name][value_en]`;
             fieldNameBn += `componentData[${index}][button_name][value_bn]`;
@@ -435,7 +436,24 @@
         let componentData = '';
 
         if (componentType === "banner_with_button"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeButton + attributeImage;
+            let config = `
+                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en" class="required">Position</label>
+                    <select name="config[position]" class="form-control">
+                        <option value="">--Select Position--</option>
+                        <option value="right">Right</option>
+                        <option value="bottom">Bottom</option>
+                    </select>
+                </div>
+            `
+            componentData +=
+                cardLine('Config') +
+                config +
+                cardLine('Top Section') +
+                attributeTitle +
+                attributeTitleSubTitle +
+                attributeButton +
+                attributeImage;
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -495,8 +513,28 @@
                     multiItemDescriptionTwo(0, 'Description Hover', 'desc_hover') +
                 `</slot>`;
         }else if(componentType === "galley_masonry"){
+            let config = `
+                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en">Slider Action</label>
+                    <select name="config[slider_action]" class="form-control">
+                        <option value="">--Select Position--</option>
+                        <option value="navigation">Navigation</option>
+                        <option value="pagination">Pagination</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mt-2">
+                        <label for="gray_scale"></label><br>
+                        <input type="checkbox" name="config[gray_scale]" value="1" id="gray_scale">
+                        <label for="gray_scale" class="ml-1"> <strong>Gray Scale</strong></label><br>
+                    </div>
+                </div>
+            `
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Top Section') +
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeButton +
@@ -525,8 +563,22 @@
                     attributeEditor +
                 `</slot>`;
         }else if(componentType === "text_with_image"){
+            let config = `
+                <div class="form-group col-md-9">
+                    <label for="editor_en" class="required">Position</label>
+                    <select name="config[position]" class="form-control">
+                        <option value="">--Select Position--</option>
+                        <option value="right">Right</option>
+                        <option value="left">Left</option>
+                    </select>
+                </div>
+            `
+
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Top Section') +
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeImage +
@@ -864,6 +916,7 @@
                 ${
                     multiItemFeedback(index, true, tabItemIndex) +
                     imageOne(index, true, tabItemIndex) +
+                    removeTabItemBtn +
                     itemCountLine('', '')
                 }
             </slot>`
@@ -872,7 +925,7 @@
                 `<slot class="tab_item_count" data-tab-id="${index}">
                 ${
                     multiItemTitle(index, true, tabItemIndex) +
-                    multiItemDescription(index, true, tabItemIndex) +
+                    multiItemDescription(index, true, tabItemIndex, true) +
                     imageOne(index, true, tabItemIndex) +
                     multiItemButton(index, true, tabItemIndex) +
                     removeTabItemBtn +

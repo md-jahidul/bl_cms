@@ -78,7 +78,7 @@ class PageComponentController extends Controller
             $tabItemData = [];
             if (!empty($data->children) && in_array($component->type, $tabComponents)) {
                 foreach ($data->children as $childData) {
-                    $tabItemData[$childData->group][$childData->key] = [
+                    $tabItemData["$childData->group"][$childData->key] = [
                         'id' => $childData->id,
                         'parent_id' => $childData->parent_id,
                         'value_en' => $childData->value_en,
@@ -93,7 +93,6 @@ class PageComponentController extends Controller
         }
 
         $component->component_data_mod = array_values($componentData);
-//        return $component;
 //        unset($component->componentData);
 //
 //        if ($component->type == "tab_component_with_image_card_one"){

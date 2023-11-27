@@ -139,6 +139,25 @@
                                     {{--galley_masonry--}}
                                     @if($component->type == "galley_masonry")
                                         <slot id="galley_masonry" data-offer-type="galley_masonry">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
+                                            <div class="form-group col-md-9">
+                                                <label for="editor_en" class="required">Position</label>
+                                                <select name="config[slider_action]" class="form-control">
+                                                    <option value="">--Select Position--</option>
+                                                    <option value="navigation" {{ $component->config['slider_action'] == "navigation" ? 'selected' : '' }}>Navigation</option>
+                                                    <option value="pagination" {{ $component->config['slider_action'] == "pagination" ? 'selected' : '' }}>Pagination</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group mt-2">
+                                                    <label for="gray_scale"></label><br>
+                                                    <input type="checkbox" name="config[gray_scale]" value="1" id="gray_scale"
+                                                        {{ isset($component->config['gray_scale']) && $component->config['gray_scale'] == "1" ? 'checked' : '' }}>
+                                                    <label for="gray_scale" class="ml-1"> <strong>Gray Scale</strong></label><br>
+                                                </div>
+                                            </div>
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Top Section"])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
 
@@ -191,6 +210,16 @@
                                     {{--text_with_image--}}
                                     @if($component->type == "text_with_image")
                                         <slot id="galley_masonry" data-offer-type="text_with_image">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
+                                            <div class="form-group col-md-9">
+                                                <label for="editor_en" class="required">Position</label>
+                                                <select name="config[position]" class="form-control">
+                                                    <option value="">--Select Position--</option>
+                                                    <option value="right" {{ $component->config['position'] == "right" ? 'selected' : '' }}>Right</option>
+                                                    <option value="left" {{ $component->config['position'] == "left" ? 'selected' : '' }}>Left</option>
+                                                </select>
+                                            </div>
+
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.attribute.image')
