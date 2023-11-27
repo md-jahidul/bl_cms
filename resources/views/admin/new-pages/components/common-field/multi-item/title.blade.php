@@ -1,4 +1,8 @@
 @php
+    if (!empty($tabItemData)){
+        $data = $tabItemData;
+    }
+
     $fieldNameEn = "";
     $fieldNameBn = "";
     $fieldNameID = "";
@@ -20,7 +24,6 @@
     <label for="title_en">Title En</label>
     <input type="text" name="{{ $fieldNameEn }}" class="form-control"
            value="{{ $data['title']['value_en'] ?? '' }}">
-{{--    <input type="hidden" name="componentData[{{$key}}][title][group]" value="{{ $key + 1 }}">--}}
     <input type="hidden" name="{{ $fieldNameID }}" value="{{ $data['title']['id'] ?? '' }}">
 </div>
 
@@ -28,6 +31,5 @@
     <label for="title_en">Title Bn</label>
     <input type="text" name="{{ $fieldNameBn }}" class="form-control"
            value="{{ $data['title']['value_bn'] ?? '' }}">
-{{--    <input type="hidden" name="componentData[{{$key}}][title][group]" value="{{ $key + 1 }}">--}}
     <input type="hidden" name="{{ $fieldNameID }}" value="{{ $data['title']['id'] ?? '' }}">
 </div>

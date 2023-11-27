@@ -194,6 +194,7 @@
         let tabDesignation = ""
         let tabInstitute = ""
         let tabInput = ""
+        let tabTitle = ""
 
         if (isTab) {
             fieldFeedbackEn += `componentData[${index}][tab_items][${tabIndex}][feedback][value_en]`;
@@ -204,7 +205,7 @@
             fieldDesignationBn += `componentData[${index}][tab_items][${tabIndex}][designation][value_bn]`;
             fieldInstituteEn += `componentData[${index}][tab_items][${tabIndex}][institute][value_en]`;
             fieldInstituteBn += `componentData[${index}][tab_items][${tabIndex}][institute][value_bn]`;
-            tabFeedback += `<input type="hidden" name="componentData[${index}][title][is_tab]" value="1">`;
+            tabTitle += `<input type="hidden" name="componentData[${index}][title][is_tab]" value="1">`;
             // tabName += `<input type="hidden" name="componentData[${index}][name][is_tab]" value="1">`;
             // tabDesignation += `<input type="hidden" name="componentData[${index}][designation][is_tab]" value="1">`;
             // tabInstitute += `<input type="hidden" name="componentData[${index}][institute][is_tab]" value="1">`;
@@ -221,7 +222,7 @@
 
         return `<div class="form-group col-md-6">
             <label for="title_en">Feedback En</label>
-            ${tabFeedback}
+            ${tabTitle}
             <textarea type="text" rows="3" name="${fieldFeedbackEn}" class="form-control"></textarea>
         </div>
 
@@ -292,7 +293,7 @@
         if (isTab) {
             fieldNameEn += `componentData[${index}][tab_items][${tabIndex}][button_name][value_en]`;
             fieldNameBn += `componentData[${index}][tab_items][${tabIndex}][button_name][value_bn]`;
-            fieldNameIink += `componentData[${index}][tab_items][${tabIndex}][button_name][value_en]`;
+            fieldNameIink += `componentData[${index}][tab_items][${tabIndex}][button_link][value_en]`;
         }else {
             fieldNameEn += `componentData[${index}][button_name][value_en]`;
             fieldNameBn += `componentData[${index}][button_name][value_bn]`;
@@ -864,6 +865,7 @@
                 ${
                     multiItemFeedback(index, true, tabItemIndex) +
                     imageOne(index, true, tabItemIndex) +
+                    removeTabItemBtn +
                     itemCountLine('', '')
                 }
             </slot>`

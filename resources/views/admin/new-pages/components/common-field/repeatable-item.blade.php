@@ -78,8 +78,7 @@
         @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => false])
         <div class="col-md-11 ml-5">
             <div class="row tab-item">
-                @foreach($data['data'] as $tabIndex => $data)
-{{--                        @dd($data)--}}
+                @foreach($data['data'] as $tabIndex => $tabItemData)
                     <slot class="tab_item_count" data-tab-id="{{ $key }}">
                         @if($tabIndex == 0)
                             <div class="form-group col-md-12">
@@ -89,20 +88,28 @@
                         @endif
                         @if($component_type == "tab_component_with_image_card_three")
                             @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => true])
-{{--                                @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])--}}
                         @else
                             @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => true, 'tabIndex' => $tabIndex])
                             @include('admin.new-pages.components.common-field.multi-item.description', ['is_tab' => true, 'tabIndex' => $tabIndex, 'is_editor' => true])
                             @include('admin.new-pages.components.common-field.multi-item.button', ['is_tab' => true, 'tabIndex' => $tabIndex])
-{{--                                @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])--}}
+                            @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
                         @endif
 
                         @if($tabIndex != 0)
-                            <div class="form-group col-md-1 ">
-                                <label for="alt_text"></label>
-                                <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $data['title']['id'] }}" data-tab="1"
-                                   data-parent="{{ $data['title']['parent_id'] ?? 0 }}" data-group="{{ isset($data['title']['group']) ? $data['title']['group'] : '' }}"></i>
-                            </div>
+                            @if(isset($tabItemData['title']['parent_id']))
+                                <div class="form-group col-md-1 ">
+                                    <label for="alt_text"></label>
+                                    <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $tabItemData['title']['id'] }}" data-tab="1"
+                                       data-parent="{{ $tabItemData['title']['parent_id'] }}" data-group="{{ $tabItemData['title']['group'] }}"></i>
+                                </div>
+                            @else
+                                <div class="form-group col-md-1 ">
+                                    <label for="alt_text"></label>
+                                    <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $tabItemData['feedback']['id'] }}" data-tab="1"
+                                       data-parent="{{ $tabItemData['feedback']['parent_id'] }}" data-group="{{ $tabItemData['feedback']['group'] }}"></i>
+                                </div>
+                            @endif
+
                         @endif
                         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => '', 'index' => ""])
                     </slot>
@@ -110,13 +117,15 @@
             </div>
         </div>
     @else
+
     @endif
 
 {{--    @if(isset($key) && $key != 0)--}}
         <div class="form-group col-md-1">
             <label for="alt_text"></label>
             <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $component->id }}" data-parent="0" data-tab="0"
-               data-group="{{ isset($data['title']['group']) ? $data['title']['group'] : '' }}"></i>
+               data-group="{{ isset($data['title']['group']) ? $data['title']['group'] : '' }}"
+            ></i>
         </div>
 {{--    @endif--}}
 </slot>
