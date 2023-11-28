@@ -457,7 +457,6 @@ class ProductCoreService
                             }
 
                         } catch (Exception $e) {
-                            dd($e->getMessage());
                             Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
                             continue;
                         }
