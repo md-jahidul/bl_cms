@@ -23,6 +23,49 @@
                         <form role="form" action="{{ route('mybl-menu.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="offset-2">
+                                    <div class="form-group col-md-12 {{ $errors->has('type') ? ' error' : '' }}">
+                                        <label for="title" class="required">Choose User Type</label><hr class="mt-0">
+                                        <div class="row skin skin-square">
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="type" value="all" id="all" checked>
+                                                <label for="all">All</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="type" value="prepaid" id="prepaid" >
+                                                <label for="prepaid">Prepaid</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="type" value="postpaid" id="postpaid">
+                                                <label for="postpaid">Postpaid</label>
+                                            </div>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('type'))
+                                            <div class="help-block">  {{ $errors->first('type') }}</div>
+                                        @endif
+                                    </div>
+                                    @if($parent_id == 0)
+
+                                        <div class="form-group col-md-10 {{ $errors->has('content_for') ? ' error' : '' }}">
+                                            <label for="title" class="required">Content For</label><hr class="mt-0">
+                                            <div class="row skin skin-square">
+                                                <div class="col-md-4 col-sm-12">
+                                                    <input type="radio" name="content_for" value="bl" checked>
+                                                    <label for="content_for">Banglalink User</label>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12">
+                                                    <input type="radio" name="content_for" value="non-bl" >
+                                                    <label for="content_for">Non Banglalink User</label>
+                                                </div>
+                                            </div>
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('content_for'))
+                                                <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                                            @endif
+                                        </div>
+
+                                    @endif
+
                                     <div class="form-group col-md-10 {{ $errors->has('title_en') ? ' error' : '' }}">
                                         <label for="title" class="required">English Label</label>
                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter english label"
@@ -79,7 +122,51 @@
                                             </select>
                                             <div class="help-block"></div>
                                         </div>
+                                        <div class="form-group col-md-10 {{ $errors->has('deeplink') ? ' error' : '' }}">
+                                            <label for="title" >Deeplink</label>
+                                            <input type="text" name="deeplink"  class="form-control" placeholder="Enter Deeplink"
+                                                   value="{{ old("deeplink") ? old("deeplink") : '' }}">
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('deeplink'))
+                                                <div class="help-block">  {{ $errors->first('deeplink') }}</div>
+                                            @endif
+                                        </div>
                                     @endif
+                                    @if($parent_id == 0)
+                                        <div class="form-group col-md-10 {{ $errors->has('parent_icon') ? ' error' : '' }}">
+                                            <label for="alt_text" class="required">Icon</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="parent_icon" class="custom-file-input dropify"
+                                                        data-height="80">
+                                            </div>
+                                            <div class="help-block"></div>
+                                            @if ($errors->has('parent_icon'))
+                                                <div class="help-block">  {{ $errors->first('parent_icon') }}</div>
+                                            @endif
+                                        </div>
+                                    @endif
+
+                                    <div class="form-group col-md-10 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">Android Version Code</label>
+                                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('android_version_code'))
+                                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-10 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">iOS Version Code</label>
+                                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('ios_version_code'))
+                                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                        @endif
+                                    </div>
+
 
                                     <div class="col-md-10">
                                         <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">

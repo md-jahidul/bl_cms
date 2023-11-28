@@ -14,6 +14,10 @@ class LmsShortcut extends Model
         'customer_type',
         'display_order',
         'deeplink_url',
-        'status'
+        'status',
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
     ];
 }

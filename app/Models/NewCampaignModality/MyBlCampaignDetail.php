@@ -24,6 +24,7 @@ class MyBlCampaignDetail extends Model
             'banner_image',
             'thumb_image',
             'popup_image',
+            'popup_img_portrait',
             'cash_back_type',
             'max_amount',
             'number_of_apply_times',

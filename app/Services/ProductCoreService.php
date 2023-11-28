@@ -412,19 +412,36 @@ class ProductCoreService
                             if (count($tags)) {
                                 $existingTags = ProductTag::whereIn('title', $tags)->get();
                                 $existingTagTitles = $existingTags->pluck('title')->toArray();
+                                $existingTagTitles = array_map('strtolower', $existingTagTitles);
                                 $existingTagIds = $existingTags->pluck('id')->toArray();
 
                                 foreach ($tags as $tag) {
-                                    if (!in_array($tag, Arr::flatten($existingTagTitles)) && $tag != "") {
+                                    if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
                                         $tagInsert = new ProductTag();
                                         $tagInsert->title = $tag;
                                         $tagInsert->priority = rand(5, 10);
                                         $tagInsert->save();
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
+
+                                        #for push newly created tag's id to sync product tag in my_bl_product_tags table
+                                        $existingTagIds[] = $tagInsert->id;
+                                    }
+                                }
+
+                                #For update the id in my_bl_products table. Only for existing tag
+                                foreach ($existingTags as $key => $value) {
+                                    if($value->title == $tags[0]){
+                                        // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
                                     }
                                 }
 
                                 $productTagIds = ProductTag::whereIn('title', $tags)->pluck('id')->toArray();
                                 $this->syncProductTags($product_code, Arr::flatten($productTagIds));
+                            }
+
+                            if (count($tags) == 0 || (count($tags) == 1 && $tags[0] == "")) {
+                                MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
                             }
 
                         } catch (Exception $e) {
@@ -916,6 +933,7 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0] ?? null)->first();
         $data['tag'] = isset($firstTag) ? $firstTag->title : null;
+        $data['tag_id'] = isset($firstTag) ? $firstTag->id : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['is_favorite'] = isset($request->is_favorite) ? true : false;
@@ -935,6 +953,7 @@ class ProductCoreService
         $coreData['is_display_title_en_schedule'] = isset($request->is_display_title_en_schedule) ? true : false;
         $coreData['is_display_title_bn_schedule'] = isset($request->is_display_title_bn_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
         $productSchedule = [];
         $isProductSchedule = false;
 
@@ -1031,8 +1050,16 @@ class ProductCoreService
         try {
             DB::beginTransaction();
 
-            $model = MyBlProduct::where('product_code', $product_code);
+            $model = MyBlProduct::where('product_code', $product_code)->first();
 
+            $data['pin_to_top_sequence'] = 100000;
+            if ($data['pin_to_top'] || $model->pin_to_top == 1) {
+                if ($model->pin_to_top != 1) {
+                    $data['pin_to_top_sequence'] = count(MyBlProduct::where('pin_to_top', true)->get()) + 1;
+                } else {
+                    $data['pin_to_top_sequence'] = $model->pin_to_top_sequence;
+                }
+            }
             $model->update($data);
 
             $coreProduct = ProductCore::where('product_code', $product_code)->update($coreData);
@@ -1058,6 +1085,10 @@ class ProductCoreService
                     $data_section_slug['my_bl_internet_offers_category_id'] = $offerSectionId;
 
                     $model_tab->updateOrCreate($data_section_slug);
+                }
+            }else{
+                if(MyBlProductTab::where('product_code', $product_code)->exists()){
+                    MyBlProductTab::where('product_code', $product_code)->delete();
                 }
             }
 
@@ -1168,6 +1199,7 @@ class ProductCoreService
 
         $firstTag = ProductTag::where('id', $request->tags[0])->first();
         $data['tag'] = isset($firstTag->title) ? $firstTag->title : null;
+        $data['tag_id'] = isset($firstTag->id) ? $firstTag->id : null;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
         $data['is_favorite'] = isset($request->is_favorite) ? true : false;
@@ -1183,6 +1215,8 @@ class ProductCoreService
         $data['is_pin_to_top_schedule'] = isset($request->is_pin_to_top_schedule) ? true : false;
         $data['is_base_msisdn_group_id_schedule'] = isset($request->is_base_msisdn_group_id_schedule) ? true : false;
         $data['base_msisdn_group_id'] = $request->base_msisdn_group_id;
+        $data['special_type'] = isset($request->special_type) ? $request->special_type : null;
+
 
         $productSchedule = [];
         $isProductSchedule = false;
@@ -1479,7 +1513,7 @@ class ProductCoreService
     public function resetProductRedisKeys(): void
     {
         $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
-        $keys = Redis::keys('available_products:*');
+        $keys = Redis::keys('a_p:*');
         $values = [];
 
         foreach ($keys as $key) {
@@ -1520,6 +1554,38 @@ class ProductCoreService
             return [
                 'status' => "failed",
                 'massage' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function findAllPinToTopProducts()
+    {
+        $orderBy = ['column' => 'pin_to_top_sequence', 'direction' => 'ASC'];
+        return $this->myBlProductRepository->findBy(['pin_to_top' => true, 'status' => true], null, $orderBy);
+    }
+
+    public function tableSort($request)
+    {
+        try {
+            $positions = $request->position;
+
+            foreach ($positions as $position) {
+                $menu_id = $position[0];
+                $new_position = $position[1];
+                $update_menu = $this->myBlProductRepository->findOne($menu_id);
+                $update_menu['pin_to_top_sequence'] = $new_position;
+                $update_menu->update();
+            }
+
+            return [
+                'status' => "success",
+                'massage' => "Order Changed successfully"
+            ];
+        } catch (\Exception $exception) {
+            $error = $exception->getMessage();
+            return [
+                'status' => "error",
+                'massage' => $error
             ];
         }
     }

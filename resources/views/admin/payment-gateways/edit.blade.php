@@ -25,6 +25,7 @@
                                             >bKash</option>
                                             <option value="101" @if(isset($pgwGateways_info) && $pgwGateways_info->gateway_id == 101) selected @endif>Visa/Master</option>
                                             <option value="301" @if(isset($pgwGateways_info) && $pgwGateways_info->gateway_id == 301) selected @endif>SSL</option>
+                                            <option value="211" @if(isset($pgwGateways_info) && $pgwGateways_info->gateway_id == 211) selected @endif>bKash One Tap</option>
                                         </select>
                                     </div>
                                 </div>
@@ -67,7 +68,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="required">Web Logo URL:
+                                    <label >Web Logo URL:
                                     </label>
                                     <div class="controls">
                                         <input type="file"
@@ -82,7 +83,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="required">Mobile Logo URL :
+                                    <label>Mobile Logo URL :
                                     </label>
                                     <div class="controls">
                                         <input type="file"
@@ -91,6 +92,22 @@
                                                class="dropify"
                                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'
                                                data-default-file="{{ isset($pgwGateways_info->logo_mobile) ? asset($pgwGateways_info->logo_mobile) : ""}}"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Mobile Logo V2 :
+                                    </label>
+                                    <div class="controls">
+                                        <input type="file"
+                                               id="logo_mobile_v2"
+                                               name="logo_mobile_v2"
+                                               class="dropify"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'
+                                               data-default-file="{{ isset($pgwGateways_info->logo_mobile_v2) ? asset($pgwGateways_info->logo_mobile_v2) : ""}}"
                                         />
                                     </div>
                                 </div>

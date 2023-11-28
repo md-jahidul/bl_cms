@@ -46,6 +46,24 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group col-md-10 {{ $errors->has('content_for') ? ' error' : '' }}">
+                                        <label for="title" class="required">Content For</label><hr class="mt-0">
+                                        <div class="row skin skin-square">
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="content_for" value="bl" @if($category->content_for == 'bl') {{ 'checked' }} @endif>
+                                                <label for="content_for">Banglalink User</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <input type="radio" name="content_for" value="non-bl" @if($category->content_for == 'non-bl') {{ 'checked' }} @endif>
+                                                <label for="content_for">Non Banglalink User</label>
+                                            </div>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('content_for'))
+                                            <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="form-group col-md-10 {{ $errors->has('title_en') ? ' error' : '' }}">
                                         <label for="title" class="required">English Label</label>
                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter english label"
@@ -64,7 +82,33 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
-
+                                    <div class="form-group col-md-10 {{ $errors->has('icon') ? ' error' : '' }}">
+                                        <label for="alt_text">Icon</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="icon" class="custom-file-input dropify" data-height="80"
+                                                   data-default-file="{{ asset($category->icon ?? "") }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-10 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">Android Version Code</label>
+                                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code" value="{{ $category->android_version_code }}">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('android_version_code'))
+                                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-10 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">iOS Version Code</label>
+                                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code" value="{{ $category->ios_version_code }}">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('ios_version_code'))
+                                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                        @endif
+                                    </div>
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">Status:</label>

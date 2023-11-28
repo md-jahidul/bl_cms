@@ -106,8 +106,29 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
-
-                                    <div class="col-md-6">
+                                    <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="required">Android Version Code</label>
+                                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code"
+                                               required data-validation-required-message="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('android_version_code'))
+                                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="required">iOS Version Code</label>
+                                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code"
+                                               required data-validation-required-message="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('ios_version_code'))
+                                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="title" class="required mr-1">User Can Enable/Disable:</label> <br>
                                             <input type="radio" name="is_eligible" value="1" id="active">
@@ -118,9 +139,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="title" class="required mr-1">Status:</label>
+                                            <label for="title" class="required mr-1">Status:</label> <br>
 
                                             <input type="radio" name="is_api_call_enable" value="1" id="can_enable_yes">
                                             <label for="can_enable_yes" class="mr-1">Enable</label>
@@ -162,6 +183,8 @@
         (function () {
             let titleEn = $("input[name='title_en']");
             let titleBn = $("input[name='title_bn']");
+            let androidVersionCode = $("input[name='android_version_code']");
+            let iosVersionCode = $("input[name='ios_version_code']");
             let active = $("#active");
             let inactive = $("#inactive");
             let enable_yes = $("#can_enable_yes");
@@ -190,6 +213,8 @@
                     success: function (data) {
                         titleEn.val(data.title_en)
                         titleBn.val(data.title_bn)
+                        androidVersionCode.val(data.android_version_code)
+                        iosVersionCode.val(data.ios_version_code)
                         if (data.is_eligible === 1){
                             active.prop("checked", true)
                         } else {

@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\ShortCutRepository ;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -24,8 +25,6 @@ class ShortCutService
      * @var $sliderRepository
      */
     protected $shortCutRepository;
-
-
     /**
      * ShortCutService constructor.
      * @param ShortCutRepository $shortCutRepository
@@ -56,6 +55,11 @@ class ShortCutService
                'content' => $shortCut['other_info']
             ]);
         }
+        $version_code = Helper::versionCode($shortCut['android_version_code'], $shortCut['ios_version_code']);
+        $shortCut = array_merge($shortCut, $version_code);
+        unset($shortCut['android_version_code'], $shortCut['ios_version_code']);
+
+       Helper::removeVersionControlRedisKey('shortcut');
 
         $this->save($shortCut);
         return new Response("Shortcut has been successfully created");
@@ -89,6 +93,11 @@ class ShortCutService
             $request['other_info'] = null;
         }
 
+        $version_code = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
+        $request = array_merge($request, $version_code);
+        unset($request['android_version_code'], $request['ios_version_code']);
+        Helper::removeVersionControlRedisKey('shortcut');
+
         $shortCut->update($request);
 
         return new Response("Shortcut has been successfully updated");
@@ -104,6 +113,8 @@ class ShortCutService
         $shortcut = $this->findOne($id);
         unlink($shortcut['icon']);
         $shortcut->delete();
+        Helper::removeVersionControlRedisKey('shortcut');
+
         return Response('Shortcut has been successfully deleted');
     }
 
@@ -115,6 +126,8 @@ class ShortCutService
     public function tableSortable($request)
     {
         $this->shortCutRepository->sortShortcutsList($request);
+        Helper::removeVersionControlRedisKey('shortcut');
+
         return new Response('update successfully');
     }
 }

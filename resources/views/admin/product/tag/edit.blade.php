@@ -13,11 +13,24 @@
                         @method('PUT')
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" class="control-label">Tag Title</label>
                                     <input type="text" name="title" class="form-control" placeholder="Tag Title"
                                            value="{{$tag->title}}" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tag_bgd_color" class="control-label">Background Color</label>
+                                    <input type="color" name="tag_bgd_color" class="form-control" placeholder="Background Color" value="{{ $tag->tag_bgd_color ? $tag->tag_bgd_color : '#000000' }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tag_text_color" class="control-label">Text Color</label>
+                                    <input type="color" name="tag_text_color" class="form-control" placeholder="Color" value="{{ $tag->tag_text_color ? $tag->tag_text_color : '#ffffff'}}" required>
                                 </div>
                             </div>
 

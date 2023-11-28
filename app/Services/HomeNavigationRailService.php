@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\HomeNavigationRailRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -23,9 +24,6 @@ class HomeNavigationRailService
      * @var HomeNavigationRailRepository
      */
     private $homeNavigationRailRepository;
-
-    protected const REDIS_KEY = "mybl_home_navigation_rail";
-
     /**
      * HomeNavigationRailService constructor.
      * @param HomeNavigationRailRepository $homeNavigationRailRepository
@@ -48,9 +46,29 @@ class HomeNavigationRailService
     public function storeNavigationMenu($data)
     {
         $data['display_order'] = $this->findAll()->count() + 1;
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $this->save($data);
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('homenav');
+
         return new Response("Navigation rail has been successfully created");
+    }
+
+    public function editNavigationMenu($id)
+    {
+        $navigationMenu = $this->findOne($id);
+        $android_version_code = implode('-', [$navigationMenu['android_version_code_min'], $navigationMenu['android_version_code_max']]);
+        $ios_version_code = implode('-', [$navigationMenu['ios_version_code_min'], $navigationMenu['ios_version_code_max']]);
+        $navigationMenu->android_version_code = $android_version_code;
+        $navigationMenu->ios_version_code = $ios_version_code;
+
+        return $navigationMenu;
     }
 
     /**
@@ -62,8 +80,17 @@ class HomeNavigationRailService
     public function updateNavigationMenu($request, $id)
     {
         $navigationMenu = $this->findOne($id);
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
+        $request = array_merge($request, $version_code);
+        unset($request['android_version_code'], $request['ios_version_code']);
+
         $navigationMenu->update($request);
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('homenav');
+
         return new Response("Navigation rail has been successfully updated");
     }
 
@@ -76,7 +103,8 @@ class HomeNavigationRailService
     {
         $navigationRail = $this->findOne($id);
         $navigationRail->delete();
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('homenav');
+
         return Response('Navigation rail has been successfully deleted');
     }
 
@@ -88,7 +116,8 @@ class HomeNavigationRailService
     public function tableSortable($request)
     {
         $this->homeNavigationRailRepository->sortData($request->position);
-        Redis::del(self::REDIS_KEY);
+        Helper::removeVersionControlRedisKey('homenav');
+
         return new Response('update successfully');
     }
 }

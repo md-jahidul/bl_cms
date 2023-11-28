@@ -23,7 +23,6 @@
             </div>
             <div class="card-content collapse show">
                 <div class="card-body">
-
                     <div class="card-body">
                         <form novalidate class="form row" action="{{route('generic-slider.images.store')}}"
                               enctype="multipart/form-data" method="POST">
@@ -35,16 +34,19 @@
                                     <div class="form-group col-md-12">
                                         <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
 
-                                            <input type="radio" name="user_type" value="all" id="input-radio-15"
-                                                   checked>
+                                            <input type="radio" name="user_type" value="all" id="input-radio-15" checked>
                                             <label for="input-radio-15" class="mr-3">All</label>
+                                            @if(!($slider_information->component_for == 'non_bl' || $slider_information->component_for == 'non_bl_offer'))
+
                                             <input type="radio" name="user_type" value="prepaid" id="input-radio-16">
                                             <label for="input-radio-16" class="mr-3">Prepaid</label>
+
                                             <input type="radio" name="user_type" value="postpaid" id="input-radio-17">
                                             <label for="input-radio-17" class="mr-3">Postpaid</label>
-{{--                                            <input type="radio" name="user_type" value="segment_wise_banner"--}}
-{{--                                                   id="segment_wise_banner">--}}
-{{--                                            <label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
+
+                                        {{--<input type="radio" name="user_type" value="segment_wise_banner" id="segment_wise_banner">--}}
+                                        {{--<label for="segment_wise_banner" class="mr-3">Segment wise banner</label>--}}
+                                            @endif
 
                                             @if ($errors->has('user_type'))
                                                 <div class="help-block">  {{ $errors->first('user_type') }}</div>
@@ -99,6 +101,64 @@
                                             <div class="help-block">{{ $errors->first('end_date') }}</div>
                                         @endif
                                     </div>
+
+                                    @if($slider_information->component_type == "swipe_banner" ||
+                                        $slider_information->component_type == "category_banner")
+                                    <div class="form-group col-md-6">
+                                        <label for="banner_text_en">Banner Text English</label>
+                                        <input class="form-control"
+                                                name="banner_text_en"
+                                                id="banner_text_en"
+
+                                                placeholder="Enter English Banner Text"
+                                                >
+                                        @if($errors->has('banner_text_en'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('banner_text_en') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="banner_text_bn">Banner Text Bangla</label>
+                                        <input class="form-control"
+                                                name="banner_text_bn"
+                                                id="banner_text_bn"
+                                                placeholder="Enter Bangla Banner Text"
+                                                >
+                                        @if($errors->has('banner_text_bn'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('banner_text_bn') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="subtitle_text_en">Subtitle Text (English)</label>
+                                        <input class="form-control"
+                                                name="subtitle_text_en"
+                                                id="subtitle_text_en"
+                                                placeholder="Enter Bangla Banner Text"
+                                                >
+                                        @if($errors->has('subtitle_text_en'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('subtitle_text_en') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="subtitle_text_bn">Subtitle Text (Bangla)</label>
+                                        <input class="form-control"
+                                                name="subtitle_text_bn"
+                                                id="subtitle_text_bn"
+                                                placeholder="Enter Bangla Banner Text"
+                                                >
+                                        @if($errors->has('subtitle_text_bn'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('subtitle_text_bn') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                    @endif
+
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="is_active">Active Status:</label>
@@ -107,6 +167,13 @@
                                                 <option value="1"> Active</option>
                                                 <option value="0">Inactive</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Deeplink</label>
+                                            <input type="text" name="deeplink" class="form-control"  placeholder="Enter Valid Deeplink" >
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                     @php
@@ -125,26 +192,53 @@
                                         </select>
                                         <div class="help-block"></div>
                                     </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">Android Version Code</label>
+                                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('android_version_code'))
+                                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="">iOS Version Code</label>
+                                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('ios_version_code'))
+                                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                        @endif
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="image" class="required">Upload Image :</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
+                                                    @php
+                                                    if (isset($slider_information->component_size) && $slider_information->component_size !=null){
+                                                        $width = explode('x', $slider_information->component_size)[0];
+                                                        $height = explode('x', $slider_information->component_size)[1];
+                                                        $size = $width/$height;
+                                                    } else {
+                                                        $size = - 1;
+                                                        $width = -1;
+                                                        $height = -1;
+                                                    }
+                                                    @endphp
                                                     <input accept="image/*"
                                                            required
                                                            data-validation-required-message="Image is required"
                                                            onchange="createImageBitmap(this.files[0]).then((bmp) => {
-
-                                                    if(bmp.width/bmp.height == 16/9){
-                                                        console.log('yes')
+                                                    if (`{{$size}}` == -1 || Number((bmp.width/bmp.height).toFixed(2)) == Number(`{{round($size, 2)}}`)){
                                                         document.getElementById('submitForm').disabled = false;
                                                         document.getElementById('massage').innerHTML = '';
                                                         this.style.border = 'none';
-                                                        // this.nextElementSibling.innerHTML = '';
-                                                    }else{
-                                                        console.log('no')
+                                                    } else {
                                                         this.style.border = '1px solid red';
-                                                        document.getElementById('massage').innerHTML = '<b>Image aspect ratio must 16:9(change the picture to enable button)</b>';
+                                                        document.getElementById('massage').innerHTML = `<b>Image size must be {{$width}} x {{$height}} pixel (change the picture to enable button)</b>`;
                                                         document.getElementById('massage').classList.add('text-danger');
                                                         document.getElementById('submitForm').disabled = true;
                                                     }
@@ -154,10 +248,6 @@
                                                     <label class="custom-file-label" for="image_url">Upload
                                                         Image...</label>
                                                 </div>
-                                            </div>
-                                            <div class="help-block">
-                                                <small class="text-info"> Image aspect ratio should be in
-                                                    16:9 </small><br>
                                             </div>
                                             <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                             <small id="massage"></small>

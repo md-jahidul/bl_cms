@@ -55,8 +55,10 @@
                                         <option value="sms">SMS BUNDLES</option>
                                         <option value="scr">SPECIAL CALL RATE</option>
                                         <option value="recharge_offer">RECHARGE OFFER</option>
+                                        <option value="reactivation">REACTIVATION OFFER</option>
                                         <option value="ma loan">MA LOAN</option>
                                         <option value="data loan">DATA LOAN</option>
+                                        <option value="minute loan">MINUTE LOAN</option>
                                         <option value="gift">GIFT</option>
                                         <option value="volume request">VOLUME REQUEST</option>
                                         <option value="volume transfer">VOLUME TRANSFER</option>
@@ -272,6 +274,21 @@
                                                 </option>
                                             @endforeach
 
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="special_type">Special Type</label>
+                                        <select name="special_type" class="form-control">
+                                            <option value=""></option>
+                                            @foreach ($productSpecialTypes as $key => $specialType)
+                                                <option
+                                                    value="{{ $key }}" {{ old("special_type") == $key ? 'selected' : '' }}>  {{$specialType}}
+                                                </option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -546,6 +563,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script>
         $(function () {
+
+            $('select[name="special_type"]').select2({
+                placeholder: 'Please Select Special Type',
+                allowClear: true
+            });
             // alert(true)
 
             $("#commentForm").validate();
@@ -556,7 +578,7 @@
             });
             $('.tags').select2({
                 placeholder: 'Please Select Tags',
-                maximumSelectionLength: 3
+                maximumSelectionLength: 1
             });
         });
 
@@ -671,11 +693,24 @@
                               <div class="help-block"></div>
                            </div>`
 
+
             let callRateUnit = `<div class="form-group col-md-4">
                                   <label class="required">Call Rate Unit</label>
                                   <input class="form-control" name="call_rate_unit" required>
                                   <div class="help-block"></div>
                                 </div>`
+
+            let reactivationCallRateUnit = `<div class="form-group col-md-4">
+                                  <label>Call Rate Unit</label>
+                                  <input class="form-control" name="call_rate_unit">
+                                  <div class="help-block"></div>
+                                </div>`
+
+            let reactivationCallRate = `<div class="form-group col-md-4">
+                              <label>Call Rate</label>
+                              <input type="number" class="form-control" name="call_rate">
+                              <div class="help-block"></div>
+                           </div>`
 
             let sectionType = `<div class="form-group col-md-4">
                                     <label class="required">Product Categories</label>
@@ -700,6 +735,8 @@
                 type === 'gift'
             ) {
                 offer_types.append(data + dataUnit + sectionType)
+            } else if (type === 'reactivation') {
+                offer_types.append(data + dataUnit + voiceVol + reactivationCallRate + reactivationCallRateUnit)
             } else if (type === 'mix' || type === 'recharge_offer') {
                 offer_types.append(data + dataUnit + voiceVol + smsVol + sectionType)
             } else if (type === 'voice') {

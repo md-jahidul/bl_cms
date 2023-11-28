@@ -59,6 +59,11 @@ class HomeNavigationRailController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+
         $response = $this->homeNavigationRailService->storeNavigationMenu($request->all());
         session()->flash('message', $response->getContent());
         return redirect(route('heme-navigation-rail.index'));
@@ -84,7 +89,7 @@ class HomeNavigationRailController extends Controller
     public function edit($id)
     {
         $navigationMenus = $this->homeNavigationRailService->getNavigationRail();
-        $navigationMenu = $this->homeNavigationRailService->findOne($id);
+        $navigationMenu = $this->homeNavigationRailService->editNavigationMenu($id);
         return view('admin.mybl-home-components.navigation-rails.index')
                     ->with('navigationMenus', $navigationMenus)
                     ->with('navigationMenu', $navigationMenu);
@@ -99,6 +104,11 @@ class HomeNavigationRailController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validate = $request->validate([
+            'android_version_code' => 'nullable|regex:/^\d+-\d+$/',
+            'ios_version_code' => 'nullable|regex:/^\d+-\d+$/',
+        ]);
+        
         $response = $this->homeNavigationRailService->updateNavigationMenu($request->all(), $id);
         session()->flash('success', $response->getContent());
         return redirect(route('heme-navigation-rail.index'));

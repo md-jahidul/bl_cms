@@ -555,6 +555,7 @@
                 element.datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
             }
 
@@ -594,6 +595,13 @@
                         <div class="form-group">
                             <label for="image_url">Popup Image</label>
                             <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Popup Image(Portrait)</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][popup_img_portrait]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
                             <div class="help-block"></div>
                         </div>
                     </div>
@@ -735,6 +743,13 @@
                             <div class="help-block"></div>
                         </div>
                     </div>
+                    <div id="image-input" class="form-group col-md-4 mb-2">
+                        <div class="form-group">
+                            <label for="image_url">Popup Image(Portrait)</label>
+                            <input type="file" id="image_url" name="campaign_details[`+index+`][popup_img_portrait]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="required">Cashback Type : </label>
@@ -815,6 +830,13 @@
                             <div class="form-group">
                                 <label for="image_url">Popup Image</label>
                                 <input type="file" id="image_url" name="campaign_details[`+index+`][popup_image]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
+                        <div id="image-input" class="form-group col-md-4 mb-2">
+                            <div class="form-group">
+                                <label for="image_url">Popup Image(Portrait)</label>
+                                <input type="file" id="image_url" name="campaign_details[`+index+`][popup_img_portrait]" class="dropify" data-height="77" data-allowed-file-extensions="png jpg jpeg gif"/>
                                 <div class="help-block"></div>
                             </div>
                         </div>
@@ -934,10 +956,12 @@
                 $('.product_start_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 dropify()
                 dateTime(productStart)
@@ -966,10 +990,12 @@
                 $('.product_start_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
                 $('.product_end_date').datetimepicker({
                     format : 'YYYY-MM-DD HH:mm:ss',
                     showClose: true,
+                    minDate: date,
                 });
 
                 dateTime(productStart)
@@ -1051,6 +1077,9 @@
             });
 
             $('.form').submit(function () {
+                // Disable the submit button after click
+                $('.form #save').prop('disabled', true);
+
                 if ($('input[name=recurring_type]:checked').val() != 'none') {
                     let dateRange = $('#display_period').val().split("-");
                     var start = dateRange[0] + ' 12:00 AM';

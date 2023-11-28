@@ -24,7 +24,7 @@
 
             <div class="row">
                     <!-- type Label -->
-                    <div class="form-group col-md-4 mb-2">
+                    <div class="form-group col-md-3 mb-2">
                         <label for="type" class="required">Type:</label>
                         <select name="type" class="browser-default custom-select" required>
                                 <option value="trivia"> Trivia </option>
@@ -34,7 +34,7 @@
                     </div>
 
                     <!-- Rule Name -->
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="rule_name" class="required">Rule Name:</label>
                             <input
@@ -54,36 +54,48 @@
                     </div>
 
                     <!-- Content For -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="status_input">Component For: </label>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="checkbox"
-                                            class=""
-                                            id="home"
-                                            name="home"
-                                            value="true"
-                                            @if(isset($settings->home)) @if($settings->home) checked @endif @endif
-                                            />
-                                    <label for="home">Home</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <input type="checkbox"
-                                            id="non_bl"
-                                            name="non_bl"
-                                            value="true"
-                                            @if(isset($settings->non_bl)) @if($settings->non_bl) checked @endif @endif/>
-                                    <label for="non_bl">Non Bl</label>
-                                </div>
-                            </div>
-                        </div>
+                        <select name="content_for" class="browser-default custom-select" required>
+                                <option value="home"> Home </option>
+                                <option value="commerce"> Commerce </option>
+                                <option value="content"> Content </option>
+                                <option value="non_bl"> Non Bl </option>
+                        </select>
+                        @if ($errors->has('content_for'))
+                            <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                        @endif
                     </div>
 
+                    <!-- Status -->
+                    <div class="col-md-3">
+                        <label for="status">Active Status:</label>
+                        <select class="form-control custom-select" id="status"
+                                name="status">
+                            <option value="1"> Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                        @if ($errors->has('status'))
+                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                        @endif
+                    </div>
+
+                    <!-- Is Title Show -->
+                    <div class="col-md-2">
+                        <label for="is_title_show">Is Title Show:</label>
+                        <select class="form-control custom-select" id="is_title_show"
+                                name="is_title_show">
+                            <option value="1"> True</option>
+                            <option value="0" selected>False</option>
+                        </select>
+                        @if ($errors->has('is_title_show'))
+                            <div class="help-block">  {{ $errors->first('is_title_show') }}</div>
+                        @endif
+                    </div>
+
+
                     <!-- Pending Label -->
-                    <div class="col-6">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="pending_bottom_label_en" class="required">Pending Bottom Label EN:</label>
                             <input
@@ -102,7 +114,7 @@
                         </div>
                         {{-- <input type="hidden" name="id" value="1"> <!-- as this is single row, we pass ID statically to updateOrCreate --> --}}
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
                         <div class="form-group">
                             <label for="pending_bottom_label_bn" class="required">Pending Bottom Label BN:</label>
                             <input
@@ -464,12 +476,12 @@
                         <div class="help-block"></div>
                     </div>
                 </div>
-
+                <div class="col-6">
                     <!-- Banner -->
                     <div class="col-12">
                         @if(isset($trivia))
                             <img style="height:100px;width:200px;" id="imgDisplay" src="{{ asset($trivia->banner) }}"/>
-                            @else
+                        @else
                             <img src="" style="height:100px;width:200px;display:none" id="imgDisplay"/>
                         @endif
                     </div>
@@ -479,15 +491,15 @@
                             <div id="banner" class="input-group">
                                 <div class="custom-file">
                                     <input
-                                    accept="image/*"
-                                    @if(!isset($trivia))
-                                        required
+                                        accept="image/*"
+                                        @if(!isset($trivia))
+                                            required
                                         data-validation-required-message="Image is required"
-                                    @endif
-                                    accept="image/*"
-                                    onchange="
+                                        @endif
+                                        accept="image/*"
+                                        onchange="
                                     createImageBitmap(this.files[0]).then((bmp) => {
-                                        if(Math.floor(bmp.width/bmp.height).toFixed(2) == Math.floor(16/9).toFixed(2)){
+                                        if(bmp.width/bmp.height == 16/9){
                                             document.getElementById('submitForm').disabled = false;
                                             document.getElementById('massage').innerHTML = '';
                                             this.style.border = 'none';
@@ -499,10 +511,10 @@
                                         }
                                     })"
 
-                                    name="banner"
-                                    type="file"
-                                    id="image"
-                                    class="custom-file-input @error('image_path') is-invalid @enderror">
+                                        name="banner"
+                                        type="file"
+                                        id="image"
+                                        class="custom-file-input @error('image_path') is-invalid @enderror">
                                     <label class="custom-file-label" for="imgInp">Upload Banner...</label>
                                 </div>
                             </div>
@@ -514,6 +526,56 @@
                         </div>
 
                     </div>
+                </div>
+                <div class="col-6">
+                    <!-- Icon -->
+                    <div class="col-12">
+                        @if(isset($trivia))
+                            <img style="height:100px;width:200px;" id="iconDisplay" src="{{ asset($trivia->icon) }}"/>
+                        @else
+                            <img src="" style="height:100px;width:200px;display:none" id="iconDisplay"/>
+                        @endif
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="icon" id="bor" class="required">Icon :</label>
+                            <div id="icon" class="input-group">
+                                <div class="custom-file">
+                                    <input
+                                        accept="image/*"
+                                        @if(!isset($trivia))
+                                            required
+                                        data-validation-required-message="Image is required"
+                                        @endif
+                                        onchange="
+                                    createImageBitmap(this.files[0]).then((bmp) => {
+                                        if(bmp.width/bmp.height == 1/1){
+                                            document.getElementById('submitForm').disabled = false;
+                                            document.getElementById('icon_massage').innerHTML = '';
+                                            this.style.border = 'none';
+                                        }else{
+                                            this.style.border = '1px solid red';
+                                            document.getElementById('icon_massage').innerHTML = '<b>image aspact ratio must 1:1(change the picture to enable button)</b>';
+                                            document.getElementById('icon_massage').classList.add('text-danger');
+                                            document.getElementById('submitForm').disabled = true;
+                                        }
+                                    })"
+                                        name="icon"
+                                        type="file"
+                                        id="icon_image"
+                                        class="custom-file-input @error('image_path') is-invalid @enderror">
+                                    <label class="custom-file-label" for="imgInp">Upload Icon...</label>
+                                </div>
+                            </div>
+                            <div class="help-block">
+                                <small class="text-danger" id="msg"> @error('image_path') {{ $message }} @enderror </small>
+                                <small class="text-info">image aspact ratio must be in 1:1</small>
+                            </div>
+                            <div id="icon_massage"></div>
+                        </div>
+
+                    </div>
+                </div>
 
                     <div class="col-2 mb-2" >
                         <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($banner_info)) btn-success @else btn-info @endif ">
@@ -531,3 +593,26 @@
         List
     </h1>
 @endsection
+@push('page-js')
+    <script>
+        $(document).ready(function () {
+            function readURL(input) {
+                console.log(input);
+                if (input.files && input.files[0]) {
+                    console.log(input.files[0]);
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#iconDisplay').css('display', 'block');
+                        $('#iconDisplay').attr('src', e.target.result);
+
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#icon_image").change(function() {
+                readURL(this);
+            });
+        });
+    </script>
+@endpush

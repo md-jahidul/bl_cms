@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\CommerceNavigationRailRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -29,9 +30,28 @@ class CommerceNavigationRailService
     public function storeNavigationMenu($data)
     {
         $data['display_order'] = $this->findAll()->count() + 1;
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code); 
+        unset($data['android_version_code'], $data['ios_version_code']);
+
         $this->save($data);
         Redis::del(self::REDIS_KEY);
         return new Response("Navigation rail has been successfully created");
+    }
+
+    public function editNavigationMenu($id)
+    {
+        $navigationMenu = $this->findOne($id);
+        $android_version_code = implode('-', [$navigationMenu['android_version_code_min'], $navigationMenu['android_version_code_max']]);
+        $ios_version_code = implode('-', [$navigationMenu['ios_version_code_min'], $navigationMenu['ios_version_code_max']]);
+        $navigationMenu->android_version_code = $android_version_code;
+        $navigationMenu->ios_version_code = $ios_version_code;
+
+        return $navigationMenu;
     }
 
     /**
@@ -43,6 +63,14 @@ class CommerceNavigationRailService
     public function updateNavigationMenu($request, $id)
     {
         $navigationMenu = $this->findOne($id);
+
+        /**
+         * Version Control
+         */
+        $version_code = Helper::versionCode($request['android_version_code'], $request['ios_version_code']);
+        $request = array_merge($request, $version_code); 
+        unset($request['android_version_code'], $request['ios_version_code']);
+        
         $navigationMenu->update($request);
         Redis::del(self::REDIS_KEY);
         return new Response("Navigation rail has been successfully updated");

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Services\MyblDoctimeService;
 use App\Services\MyblMusicService;
 use App\Services\MyblSharetripService;
+use App\Services\MyblTransactionStatusService;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
@@ -27,11 +28,16 @@ class MyblTransactionStatusController extends Controller
      * @var MyblSharetripService
      */
     private $sharetripService;
-    
+
     /**
      * @var MyblDoctimeService
      */
     private $doctimeService;
+
+    /**
+     * @var MyblTransactionStatusService
+     */
+    private $transactionStatusService;
 
     /**
      * MyblTransactionStatusController constructor.
@@ -40,12 +46,14 @@ class MyblTransactionStatusController extends Controller
         MyblCourseService $courseService,
         MyblMusicService $musicService,
         MyblSharetripService $sharetripService,
-        MyblDoctimeService $doctimeService
+        MyblDoctimeService $doctimeService,
+        MyblTransactionStatusService $transactionStatusService
     ) {
         $this->courseService = $courseService;
         $this->musicService = $musicService;
         $this->sharetripService = $sharetripService;
         $this->doctimeService = $doctimeService;
+        $this->transactionStatusService = $transactionStatusService;
     }
 
     /**
@@ -104,7 +112,7 @@ class MyblTransactionStatusController extends Controller
     {
         return $this->sharetripService->getSharetripTransaction($request);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -122,6 +130,33 @@ class MyblTransactionStatusController extends Controller
     public function getDoctimeTransaction(Request $request)
     {
         return $this->doctimeService->getDoctimeTransaction($request);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function getTransactionList($type)
+    {
+        $view = "";
+
+        if (in_array($type, ['onmobile'])) {
+            $view = $type.'_transaction_list';
+            return view('admin.transaction-status.'.$view);
+        }else{
+            throw new NotFoundHttpException();
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getTransaction(Request $request, $type)
+    {
+        if($type == 'onmobile') return $this->transactionStatusService->getOnmobileTransaction($request);
     }
 
 }

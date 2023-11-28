@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class MyblManageItem extends Model
 {
     use LogModelAction;
-    
+
     protected $fillable = [
         'manage_categories_id',
         'type',
@@ -22,7 +22,12 @@ class MyblManageItem extends Model
         'other_info',
         'display_order',
         'deep_link_slug',
-        'status'
+        'status',
+        'deeplink',
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
     ];
 
     protected $casts = [

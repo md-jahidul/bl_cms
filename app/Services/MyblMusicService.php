@@ -57,6 +57,7 @@ class MyblMusicService
                 'msisdn' => $item->msisdn,
                 'service_id' => $item->service_id,
                 'amount' => $item->amount,
+                'date' => $item->created_at->format('Y-m-d H:i:s'),
             ];
         });
         return $response;

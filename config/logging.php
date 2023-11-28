@@ -94,6 +94,11 @@ return [
             'path' => storage_path('logs/RetailerLog/retailer.log'),
             'level' => 'debug'
         ],
+        'myblPlanLog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/myblPlanLog/mybl_plan.log'),
+            'level' => 'debug'
+        ],
 
         'event-based-bonus-v2' => [
             'driver' => 'daily',
@@ -104,6 +109,12 @@ return [
         'notificationinfolog' => [
             'driver' => 'daily',
             'path' => storage_path('logs/notificationLogs/laravel.log'),
+            'days' => 7
+        ],
+
+        'apihub-error' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/apihub-error/apihub-error.log'),
             'days' => 7
         ],
     ],
