@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Helpers\Helper;
+use App\Repositories\GlobalSettingRepository;
 use App\Services\FeedCategoryService;
+use App\Services\GlobalSettingService;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
@@ -44,6 +46,10 @@ class NotificationController extends Controller
      * @var CustomerService
      */
     private $customerService;
+    /**
+     * @var GlobalSettingRepository
+     */
+    private $globalSettingRepository;
 
 
     /**
@@ -59,7 +65,8 @@ class NotificationController extends Controller
         NotificationCategoryService $notificationCategoryService,
         UserService $userService,
         FeedCategoryService $feedCategoryService,
-        CustomerService $customerService
+        CustomerService $customerService,
+        GlobalSettingRepository $globalSettingRepository
     ) {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
@@ -67,6 +74,7 @@ class NotificationController extends Controller
         $this->customerService = $customerService;
         $this->feedCategoryService = $feedCategoryService;
         $this->customerService = $customerService;
+        $this->globalSettingRepository = $globalSettingRepository;
         $this->middleware('auth');
     }
 
@@ -74,7 +82,7 @@ class NotificationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      * @author ahsan habib <habib.cst@gmail.com>
      */
     public function index()
@@ -82,7 +90,9 @@ class NotificationController extends Controller
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
         $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', false);
         $category = $this->notificationCategoryService->findAll();
-        $modifyDisableTime = 60;
+        $globalKey = $this->globalSettingRepository->is_exist('notification_mod_time');
+        $modifyDisableTime = (int)$globalKey->settings_value ?? 60;
+
         return view('admin.notification.notification.index')
             ->with('modifyDisableTime', $modifyDisableTime)
             ->with('category', $category)
