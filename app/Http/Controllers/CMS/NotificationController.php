@@ -82,7 +82,9 @@ class NotificationController extends Controller
         $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
         $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', false);
         $category = $this->notificationCategoryService->findAll();
+        $modifyDisableTime = 60;
         return view('admin.notification.notification.index')
+            ->with('modifyDisableTime', $modifyDisableTime)
             ->with('category', $category)
             ->with('notifications', $notifications);
     }

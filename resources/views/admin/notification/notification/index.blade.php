@@ -48,6 +48,11 @@
                         @foreach ($notifications as $notification)
                             @php
                                 $schedule = $notification->schedule;
+                                if (isset($schedule->start)) {
+                                    $allowEditDelOption = now()->addMinutes($modifyDisableTime)->toDateTimeString() > $schedule->start;
+                                }else{
+                                    $allowEditDelOption = false;
+                                }
                             @endphp
                             <tr>
                                 <td width="5%">{{$notification->id}}</td>
@@ -58,27 +63,46 @@
                                 <td>{{ $schedule->start ?? ''}}</td>
                                 <td>{{ $schedule->end ?? ''}}</td>
                                 <td width="20%">
-                                    <div class="row" style="padding-right: 5px;">
+                                    <div class="row">
+                                        @if(!$allowEditDelOption)
+                                            <div class="col-md-2">
+                                                <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left"
+                                                   href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success btn-sm" >
+                                                    <i class="la la-pencil"></i>
+                                                </a>
+                                            </div>
 
-                                        <div class="col-md-2 m-1">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success btn-sm" >
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        {{-- <div class="col-md-2 m-1">
-                                             <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                         </div>--}}
+                                            <div class="col-md-2 disabled">
+                                                <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider"
+                                                        data-placement="right" class="btn-sm btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            </div>
 
-                                        <div class="col-md-2 m-1">
-                                            <a  role="button"
-                                                data-id=""
-                                                href="{{route('notification.show',$notification->id)}}"
-                                                data-placement="right"
-                                                class="showButton btn btn-outline-info btn-sm"
-                                                onclick=""><i class="la la-paper-plane"></i></a>
-                                        </div>
+                                            <div class="col-md-2">
+                                                <a  role="button"
+                                                    data-id=""
+                                                    href="{{route('notification.show',$notification->id)}}"
+                                                    data-placement="right"
+                                                    class="showButton btn btn-outline-info btn-sm"
+                                                    onclick=""><i class="la la-paper-plane"></i></a>
+                                            </div>
+                                        @else
+                                            <div class="col-md-2">
+                                                <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left"
+                                                   href="#" class="btn-pancil btn btn-grey-blue btn-sm disabled" >
+                                                    <i class="la la-pencil"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button data-placement="right" class="btn-sm btn-blue-grey disabled" onclick=""><i class="la la-trash"></i></button>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a  role="button" data-id="" href="#" data-placement="right"
+                                                    class="btn btn btn-grey-blue btn-sm disabled"><i class="la la-paper-plane"></i></a>
+                                            </div>
+                                        @endif
 
-                                        <div class="col-md-2 m-1">
+
+                                        <div class="col-md-2">
                                             <a  role="button"
                                                 data-id=""
                                                 href="{{route('notification.show-all',$notification->id)}}"
