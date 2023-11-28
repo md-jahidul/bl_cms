@@ -159,7 +159,8 @@ class MyblProductEntryController extends Controller
      */
     public function index()
     {
-        return view('admin.my-bl-products.mybl_product_entry');
+        $products = $this->myblProductRepository->findByProperties(['status' => 1], ['product_code']);
+        return view('admin.my-bl-products.mybl_product_entry', compact('products'));
     }
 
     public function inactiveProducts(Request $request)
@@ -276,9 +277,9 @@ class MyblProductEntryController extends Controller
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
      */
-    public function downloadMyblProducts()
+    public function downloadMyblProducts(Request $request)
     {
-        return $this->service->downloadMyblProducts();
+        return $this->service->downloadMyblProducts($request);
     }
 
     public function resetRedisProductKey()

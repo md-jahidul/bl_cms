@@ -95,7 +95,8 @@ return [
             'cta_text_color'        => 40,
             'redirection_name_en'   => 41,
             'redirection_name_bn'   => 42,
-            'redirection_deeplink' => 43
+            'redirection_deeplink'  => 43,
+            'deep_link'             => 44,
         ],
         'product_schedule_statuses' => [
             0 => 'None',
@@ -103,7 +104,6 @@ return [
             2 => 'To be Hidden',
             3 => 'Completed Schedule',
             4 => 'To be Shown'
-
         ],
         'max_no_of_pin_to_top' => 150
     ],

@@ -99,7 +99,7 @@
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
-            <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+            <div class="content-header-left col-md-4 col-12 mb-2 breadcrumb-new">
                 <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3>
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-header-right col-md-6 col-12">
+            <div class="content-header-right col-md-8 col-12">
                 <div class="dropdown float-md-right">
                     @yield('action')
                 </div>

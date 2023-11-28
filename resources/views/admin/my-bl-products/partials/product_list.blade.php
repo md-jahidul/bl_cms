@@ -7,9 +7,17 @@
                 <option value="2">POSTPAID</option>
             </select>
         </div>
-        <div class="col-md-3">
-            <input class="form-control filter" name="product_code" placeholder="Enter Product Code to Filter" id="product_code"/>
+
+        <div class="form-group select-role col-md-3 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
+            <div class="role-select">
+                <select class="select2 form-control" multiple="multiple" name="product_codes[]" id="product_code_filter">
+                    @foreach($products as $product)
+                        <option value="{{ $product->product_code }}">{{$product->product_code}}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
+
         <div class="col-md-3">
             <select name="content_type" class="form-control filter" id="content_type">
                 <option value=""> Content Type</option>
@@ -76,6 +84,8 @@
 @push('page-js')
     {{--    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript">
         </script>--}}
+    <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script>
@@ -93,8 +103,8 @@
                 ajax: {
                     url: '{{ route('mybl.products.list') }}',
                     data: {
-                        product_code: function () {
-                            return $("#product_code").val();
+                        product_codes: function () {
+                            return $("#product_code_filter").val();
                         },
                         sim_type: function () {
                             return $("#sim_type").val();
@@ -235,6 +245,10 @@
             $(document).on('change', '.filter', function (e) {
                 $('#product_list').DataTable().ajax.reload();
             });
+
+            $(document).on('change', '#product_code_filter', function (e) {
+                $('#product_list').DataTable().ajax.reload();
+            });
         });
 
         function deepLinkCreate(productCode){
@@ -275,10 +289,8 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-
         }
     </script>
-
 @endpush
 
 

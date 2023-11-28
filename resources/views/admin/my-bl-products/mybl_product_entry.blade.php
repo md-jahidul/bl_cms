@@ -17,7 +17,7 @@
             <td> |</td>
 
             <td>
-                <form method="post" action="{{route('mybl.product.download')}}">
+                <form method="post" id="download-form" action="{{route('mybl.product.download')}}">
                     {{csrf_field()}}
 
                     <a href="{{route('mybl.product.create')}}" class="btn btn-info">
@@ -27,11 +27,14 @@
                     <button type="submit" class="btn btn-info"><i class="la la-download"></i>Export Current
                         Products
                     </button>
+
+                    <button type="submit" name="filtered_btn" value="clicked" class="btn btn-success"><i class="la la-download"></i>Export Filtered
+                        Products
+                    </button>
                 </form>
             </td>
         </tr>
     </table>
-
 @endsection
 @section('content')
     <section>
@@ -88,9 +91,6 @@
 
     <script>
         $(function () {
-
-            $
-
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Excel File to upload',
@@ -99,6 +99,24 @@
                     'error': 'Choose correct file format'
                 }
             });
+
+            $('#download-form').submit(function (e) {
+                // e.preventDefault()
+                let sim_type = $("#sim_type").val()
+                let product_codes = $("#product_code_filter").val()
+                let content_type = $("#content_type").val()
+                let show_in_home = $("#show_in_home").val()
+                let pinned_products = $("#pinned_products").val()
+
+                let filterInput =
+                    `<input name='sim_type' value='${sim_type}' type='hidden'>` +
+                    `<input name='product_codes' value='${product_codes}' type='hidden'>` +
+                    `<input name='content_type' value='${content_type}' type='hidden'>` +
+                    `<input name='show_in_home' value='${show_in_home}' type='hidden'>` +
+                    `<input name='pinned_products' value='${pinned_products}' type='hidden'>`;
+
+                $(this).append(filterInput)
+            })
 
             /* file handled  */
             $('#uploadProduct').submit(function (e) {
