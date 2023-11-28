@@ -155,7 +155,8 @@ class Helper
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
             "SERVICE"                 => 'Service',
-            "SIM_BLOCK"               => 'Sim Block'
+            "SIM_BLOCK"               => 'Sim Block',
+            "DCB"                     => 'Dcb'
         ];
     }
 

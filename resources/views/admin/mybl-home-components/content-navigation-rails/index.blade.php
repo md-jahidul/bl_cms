@@ -125,7 +125,16 @@
                             <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
                         @endif
                     </div>
-
+                    <div class="form-group col-md-4 {{ $errors->has('deeplink') ? ' error' : '' }}">
+                        <label for="title">Deeplink</label>
+                        <input type="text" name="deeplink"  class="form-control" placeholder="Enter Deeplink."
+                               value="@if(isset($navigationMenu)){{$navigationMenu->deeplink}} @elseif(old("deeplink")) {{old("deeplink")}} @endif">
+                        <div class="help-block"></div>
+                        <div class="help-block"></div>
+                        @if ($errors->has('deeplink'))
+                            <div class="help-block">  {{ $errors->first('deeplink') }}</div>
+                        @endif
+                    </div>
                     <div class="col-md-3">
                         <label></label>
                         <div class="form-group mt-2">
