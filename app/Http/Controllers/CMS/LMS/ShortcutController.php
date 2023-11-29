@@ -52,6 +52,12 @@ class ShortcutController extends Controller
     {
        $component = $this->lmsShortcutComponentService->findOne($id);
 
+        $android_version_code = implode('-', [$component['android_version_code_min'], $component['android_version_code_max']]);
+        $ios_version_code = implode('-', [$component['ios_version_code_min'], $component['ios_version_code_max']]);
+        $component->android_version_code = $android_version_code;
+        $component->ios_version_code = $ios_version_code;
+
+
         return view('admin.shortcut-components.create', compact('component'));
     }
 
