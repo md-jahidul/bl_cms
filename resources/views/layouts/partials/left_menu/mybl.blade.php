@@ -60,6 +60,18 @@
             </ul>
 
             <ul class="menu-content">
+                <li class="{{ is_active_url('global-settings') }}">
+                    <a class="menu-item" href="{{ route('global-settings.index') }}">
+                        <i class="la la-medium"></i>Global Settings</a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('media') }}">
+                    <a class="menu-item" href="{{ route('media.index') }}">
+                        <i class="la la-medium"></i>Media Upload</a>
+                </li>
+            </ul>
+            <ul class="menu-content">
                 <li class="{{ is_active_url('manage-category') }}">
                     <a class="menu-item" href="{{ route('manage-category.index') }}">
                         <i class="la la-medium"></i>Explore</a>
@@ -1012,6 +1024,12 @@
                 <a class="menu-item" href="{{ route('mybl.transaction-status.doctime') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-list"></i>DocTime Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/onmobile/transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status',['type' => 'onmobile']) }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Onmobile Transaction
                 </a>
             </li>
         </ul>

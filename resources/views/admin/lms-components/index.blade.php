@@ -106,13 +106,26 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-4 {{ $errors->has('version_code') ? ' error' : '' }}">
-                                        <label for="title" class="required">Version Code</label>
-                                        <input type="number" name="version_code"  class="form-control" placeholder="Enter Version Code"
+                                    <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="required">Android Version Code</label>
+                                        <input type="text" name="android_version_code"  class="form-control" placeholder="Enter Version Code"
                                                required data-validation-required-message="Enter Version Code">
                                         <div class="help-block"></div>
-                                        @if ($errors->has('version_code'))
-                                            <div class="help-block">  {{ $errors->first('version_code') }}</div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('android_version_code'))
+                                            <div class="help-block">  {{ $errors->first('android_version_code') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('ios_version_code') ? ' error' : '' }}">
+                                        <label for="title" class="required">iOS Version Code</label>
+                                        <input type="text" name="ios_version_code"  class="form-control" placeholder="Enter Version Code"
+                                               required data-validation-required-message="Enter Version Code">
+                                        <div class="help-block"></div>
+                                        <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Version code should be Hyphen-separated value. Example: 10-99</span>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('ios_version_code'))
+                                            <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
                                         @endif
                                     </div>
                                     <div class="col-md-4">
@@ -170,7 +183,8 @@
         (function () {
             let titleEn = $("input[name='title_en']");
             let titleBn = $("input[name='title_bn']");
-            let versionCode = $("input[name='version_code']");
+            let androidVersionCode = $("input[name='android_version_code']");
+            let iosVersionCode = $("input[name='ios_version_code']");
             let active = $("#active");
             let inactive = $("#inactive");
             let enable_yes = $("#can_enable_yes");
@@ -199,7 +213,8 @@
                     success: function (data) {
                         titleEn.val(data.title_en)
                         titleBn.val(data.title_bn)
-                        versionCode.val(data.version_code)
+                        androidVersionCode.val(data.android_version_code)
+                        iosVersionCode.val(data.ios_version_code)
                         if (data.is_eligible === 1){
                             active.prop("checked", true)
                         } else {

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\ContentComponentRepository;
 use App\Repositories\LmsHomeComponentRepository;
 use App\Repositories\LmsShortcutComponentRepository;
@@ -18,9 +19,6 @@ class LmsShortcutComponentService
     use CrudTrait;
 
     private $lmsShortcutComponentRepository;
-
-    protected const REDIS_KEY_PREPAID = "lms_component_prepaid";
-    protected const REDIS_KEY_POSTPAID = "lms_component_postpaid";
 
     public function __construct(
         LmsShortcutComponentRepository $lmsShortcutComponentRepository
@@ -62,8 +60,8 @@ class LmsShortcutComponentService
                     $update_menu->update();
                 }
             }
-            Redis::del(self::REDIS_KEY_PREPAID);
-            Redis::del(self::REDIS_KEY_POSTPAID);
+           Helper::removeVersionControlRedisKey('lms');
+
             return [
                 'status' => "success",
                 'massage' => "Order Changed successfully"
@@ -86,8 +84,8 @@ class LmsShortcutComponentService
         $component = $this->findOne($id);
         $component->is_api_call_enable = $component->is_api_call_enable ? 0 : 1;
         $component->save();
-        Redis::del(self::REDIS_KEY_PREPAID);
-        Redis::del(self::REDIS_KEY_POSTPAID);
+        Helper::removeVersionControlRedisKey('lms');
+
         return response("Successfully status changed");
     }
 
@@ -100,8 +98,8 @@ class LmsShortcutComponentService
         $data['display_order'] = $msComponentCount + 1;
 
         $this->save($data);
-        Redis::del(self::REDIS_KEY_PREPAID);
-        Redis::del(self::REDIS_KEY_POSTPAID);
+        Helper::removeVersionControlRedisKey('lms');
+
         return response("Shortcut Component update successfully!");
     }
 
@@ -111,10 +109,14 @@ class LmsShortcutComponentService
             $data['icon'] = 'storage/' . $data['icon']->store('lms_shortcut');
         }
 
+        $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
+        $data = array_merge($data, $version_code);
+        unset($data['android_version_code'], $data['ios_version_code']);
+//        dd($data);
         $component = $this->findOne($id);
         $component->update($data);
-        Redis::del(self::REDIS_KEY_PREPAID);
-        Redis::del(self::REDIS_KEY_POSTPAID);
+        Helper::removeVersionControlRedisKey('lms');
+
         return response("Shortcut Component update successfully!");
     }
 
@@ -122,8 +124,8 @@ class LmsShortcutComponentService
     {
         $component = $this->findOne($id);
         $component->delete();
-        Redis::del(self::REDIS_KEY_PREPAID);
-        Redis::del(self::REDIS_KEY_POSTPAID);
+        Helper::removeVersionControlRedisKey('lms');
+
         return [
             'message' => 'Component delete successfully',
         ];

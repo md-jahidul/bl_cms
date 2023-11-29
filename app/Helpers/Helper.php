@@ -151,7 +151,8 @@ class Helper
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "SERVICE"                => 'Service'
+            "SERVICE"                => 'Service',
+            "AMAR_TUNE"               => 'Amar Tune'
         ];
     }
 
@@ -362,6 +363,7 @@ class Helper
                 'mybl_component_content',
                 'mybl_component_commerce',
                 'mybl_component_nonbl',
+                'mybl_component_lms'
             ]);
         }
     }
