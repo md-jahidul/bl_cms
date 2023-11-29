@@ -362,6 +362,7 @@ class Helper
                 'mybl_component_content',
                 'mybl_component_commerce',
                 'mybl_component_nonbl',
+                'mybl_component_lms'
             ]);
         }
     }
