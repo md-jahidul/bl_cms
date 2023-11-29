@@ -54,7 +54,18 @@ class ProductCore extends Model
         'is_commercial_name_en_schedule',
         'is_commercial_name_bn_schedule',
         'is_display_title_en_schedule',
-        'is_display_title_bn_schedule'
+        'is_display_title_bn_schedule',
+        'service_image_url',
+        'name_bn',
+        'show_timer',
+        'activation_type',
+        'cta_name_en',
+        'cta_name_bn',
+        'cta_bgd_color',
+        'cta_text_color',
+        'redirection_name_en',
+        'redirection_name_bn',
+        'redirection_deeplink'
     ];
 
     protected $guarded = ['id'];

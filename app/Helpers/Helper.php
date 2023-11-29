@@ -152,7 +152,8 @@ class Helper
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
             "AMAR_TUNE"               => 'Amar Tune',
-            "SIM_BLOCK"               => 'Sim Block'
+            "SIM_BLOCK"               => 'Sim Block',
+            "SERVICE"                => 'Service'
         ];
     }
 
@@ -312,7 +313,8 @@ class Helper
             'voice' => 'VOICE',
             'mixed_bundle' => 'MIX BUNDLES',
             'gift_packs' => "GIFT PACKS",
-            'roaming' => "ROAMING"
+            'roaming' => "ROAMING",
+            'service' => "Service"
         ];
     }
 
