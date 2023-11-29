@@ -34,7 +34,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody id="sortable-new">
                         @foreach($sliderImages as $index=>$slider_image)
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>

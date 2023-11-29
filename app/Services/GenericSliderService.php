@@ -105,8 +105,7 @@ class GenericSliderService
             }
             elseif ($data['component_for'] == 'lms') {
                 $this->lmsHomeComponentService->save($homeComponentData);
-                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
-                Redis::del($keys);
+                Helper::removeVersionControlRedisKey('lms');
             }
             elseif ($data['component_for'] == 'toffee' || $data['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
@@ -163,8 +162,7 @@ class GenericSliderService
                 $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' =>'generic_slider_' . $slider->id])[0];
                 $lmsComponent->update($homeComponentData);
 
-                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
-                Redis::del($keys);
+                Helper::removeVersionControlRedisKey('lms');
             }
             elseif ($slider['component_for'] == 'toffee' || $slider['component_for'] == 'toffee_section') {
                 Redis::del('toffee_banner');
@@ -290,8 +288,7 @@ class GenericSliderService
             else if ($componentFor == 'lms') {
                 $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
                 $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
-                $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
-                Redis::del($keys);
+                Helper::removeVersionControlRedisKey('lms');
             }
             else if ($componentFor == 'non_bl') {
                 $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
@@ -315,6 +312,5 @@ class GenericSliderService
                 'message' => 'Slider delete failed',
             ];
         }
-
     }
 }
