@@ -1,16 +1,6 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">
-
-
-
-
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item">
-                <span class="menu-title" data-i18n="nav.dash.main">
-                    <input type="text" id="mySearch" onkeyup="" placeholder="Search.." title="Type in a category">
-                </span>
-            </li>
-
             <li class="{{ is_active_url('/home') }} nav-item"><a href="{{ asset('home') }}"><i class="la la-home"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
