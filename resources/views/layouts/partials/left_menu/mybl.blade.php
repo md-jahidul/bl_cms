@@ -840,6 +840,18 @@
                 <a class="menu-item" href="{{ route('content-components') }}">
                     <i class="la la-puzzle-piece"></i>Shortcuts/components</a>
             </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-list"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Transaction Report</span></a>
+                <ul class="menu-content">
+                    <li class="{{is_active_url('mybl/music-transaction-status-report-view')}}">
+                        <a class="menu-item" href="{{ route('mybl.transaction-status.music') }} "
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i>Music Transaction
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
