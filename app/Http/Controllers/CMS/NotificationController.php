@@ -91,7 +91,7 @@ class NotificationController extends Controller
         $notifications = $this->notificationService->findAll('', 'schedule', $orderBy)->where('quick_notification', false);
         $category = $this->notificationCategoryService->findAll();
         $globalKey = $this->globalSettingRepository->is_exist('notification_mod_time');
-        $modifyDisableTime = (int)$globalKey->settings_value ?? 60;
+        $modifyDisableTime = isset($globalKey->settings_value) ? (int)$globalKey->settings_value : 60;
 
         return view('admin.notification.notification.index')
             ->with('modifyDisableTime', $modifyDisableTime)

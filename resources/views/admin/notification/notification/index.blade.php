@@ -85,6 +85,15 @@
                                                     class="showButton btn btn-outline-info btn-sm"
                                                     onclick=""><i class="la la-paper-plane"></i></a>
                                             </div>
+
+                                            <div class="col-md-2">
+                                                <a  role="button"
+                                                    data-id=""
+                                                    href="{{route('notification.show-all',$notification->id)}}"
+                                                    data-placement="right"
+                                                    class="showButton btn btn-outline-info btn-sm"
+                                                    onclick=""><i class="la la-adn"></i></a>
+                                            </div>
                                         @else
                                             <div class="col-md-2">
                                                 <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left"
@@ -99,17 +108,12 @@
                                                 <a  role="button" data-id="" href="#" data-placement="right"
                                                     class="btn btn btn-grey-blue btn-sm disabled"><i class="la la-paper-plane"></i></a>
                                             </div>
+
+                                            <div class="col-md-2">
+                                                <a  role="button" data-id="" href="#" data-placement="right" class="showButton btn btn-grey-blue btn-sm disabled"
+                                                    onclick=""><i class="la la-adn"></i></a>
+                                            </div>
                                         @endif
-
-
-                                        <div class="col-md-2">
-                                            <a  role="button"
-                                                data-id=""
-                                                href="{{route('notification.show-all',$notification->id)}}"
-                                                data-placement="right"
-                                                class="showButton btn btn-outline-info btn-sm"
-                                                onclick=""><i class="la la-adn"></i></a>
-                                        </div>
 
                                     </div>
                                 </td>

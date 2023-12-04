@@ -7,7 +7,7 @@
 
             @include('layouts.partials.left_menu.assetlite')
 
-            @include('layouts.partials.left_menu.mybl')        
+            @include('layouts.partials.left_menu.mybl')
 
         </ul>
     </div>
