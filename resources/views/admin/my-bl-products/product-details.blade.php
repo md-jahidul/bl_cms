@@ -525,7 +525,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-4 {{ $errors->has('redirection_name_en') ? ' error' : '' }}">
-                                    <label for="name_bn">Redirection Name BN</label>
+                                    <label for="name_bn">Redirection Name EN</label>
                                     <input class="form-control" name="redirection_name_en" id="redirection_name_en"
                                            value="{{ $details->details->redirection_name_en }}">
                                     <div class="help-block"></div>
