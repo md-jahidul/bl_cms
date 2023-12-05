@@ -47,7 +47,7 @@
     @endif
 
     <!--General-->
-    <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+    <li class=" nav-item"><a href="#"><i class="la la-newspaper-o"></i>
             <span class="menu-title" data-i18n="nav.templates.main">General</span></a>
         @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
             <ul class="menu-content">
@@ -417,7 +417,7 @@
     </li>
 
     <!--Base-->
-    <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+    <li class=" nav-item"><a href="#"><i class="la la-database"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Base</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_url(route('guest-user-track-list')) }}">
@@ -437,7 +437,7 @@
     </li>
 
     <!--Orange Club-->
-    <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+    <li class=" nav-item"><a href="#"><i class="la la-connectdevelop"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Orange Club</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_url('lms-components') }}">
@@ -476,7 +476,7 @@
     </li>
 
     <!--Non BL-->
-    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+    <li class="nav-item"><a href="#"><i class="la la-black-tie"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Non Bl</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_match('non-bl-components')}}">
@@ -495,7 +495,7 @@
     </li>
 
     <!--Connect-->
-    <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+    <li class=" nav-item"><a href="#"><i class="la la-delicious"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Connect</span></a>
         <ul class="menu-content">
             <li class=" {{is_active_url(route('heme-navigation-rail.index'))}}">
@@ -852,7 +852,7 @@
     </li>
 
     <!--Content-->
-    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+    <li class="nav-item"><a href="#"><i class="la la-file-image-o"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Content</span></a>
         <ul class="menu-content">
             <li class=" {{is_active_url(route('content-navigation-rail.index'))}}">
@@ -885,7 +885,7 @@
     </li>
 
     <!--Course-->
-    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+    <li class="nav-item"><a href="#"><i class="la la-caret-square-o-up"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Course</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
@@ -921,7 +921,7 @@
     </li>
 
     <!--Care-->
-    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+    <li class="nav-item"><a href="#"><i class="la la-eye"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Care</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
@@ -944,7 +944,7 @@
     </li>
 
     <!--Community-->
-    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+    <li class="nav-item"><a href="#"><i class="la la-commenting-o"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Community</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
@@ -962,7 +962,7 @@
 
 
     <!--Commerce-->
-    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
+    <li class="nav-item"><a href="#"><i class="la la-creative-commons"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Commerce</span></a>
         <ul class="menu-content">
             <li class="{{ is_active_match('commerce-navigation-rail')}}">
