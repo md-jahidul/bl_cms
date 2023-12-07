@@ -14,6 +14,7 @@ class RoamingTransaction extends Model
         'user_type',
         'transaction_id',
         'session_id',
+        "bank_transaction_id",
         'val_id',
         'transaction_status',
         'account_id',
@@ -27,5 +28,7 @@ class RoamingTransaction extends Model
         'da_posting',
         'deposit',
         'invoice_payment',
+        "refund_initiated",
+        "refund_status"
     ];
 }
