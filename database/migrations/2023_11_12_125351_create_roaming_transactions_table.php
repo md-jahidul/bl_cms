@@ -24,6 +24,7 @@ class CreateRoamingTransactionsTable extends Migration
             $table->string('amount_bdt');
             $table->string('amount_usd');
             $table->string('session_id');
+            $table->string('bank_transaction_id')->nullable()->default(null);
             $table->string('transaction_status')->nullable();
             $table->string('val_id')->nullable()->default(null);
             $table->enum('status', ['PENDING', 'COMPLETE'])->nullable()->default(null);
@@ -33,7 +34,8 @@ class CreateRoamingTransactionsTable extends Migration
             $table->enum('da_posting', ['0', '1'])->default('0');
             $table->enum('deposit', ['0', '1'])->nullable()->default(null);
             $table->enum('invoice_payment', ['0', '1'])->nullable()->default(null);
-
+            $table->enum('refund_initiated', ['INITIATED', 'FAILED'])->nullable()->default(null);
+            $table->enum('refund_status', ['REFUNDED', 'IN_PROCESSING', 'CANCELLED'])->nullable()->default(null);
             $table->timestamps();
         });
     }
