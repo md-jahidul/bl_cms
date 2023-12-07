@@ -25,6 +25,7 @@ class PaymentGatewayService
 
         try {
             $data['gateway_id'] =  $request['gateway_id'];
+            $data['percentage_of_user'] =  $request['percentage_of_user'];
             $data['display_order'] = $this->paymentGatewayRepository->findAll()->count() + 1;
             $data['gateway_name'] = null;
             if ($data['gateway_id'] == 101) {
@@ -84,6 +85,7 @@ class PaymentGatewayService
 
         try {
             $data['gateway_id'] =  $request['gateway_id'];
+            $data['percentage_of_user'] =  $request['percentage_of_user'];
             $data['gateway_name'] = null;
             if ($data['gateway_id'] == 101) {
                 $data['gateway_name'] = 'Visa/Master';
