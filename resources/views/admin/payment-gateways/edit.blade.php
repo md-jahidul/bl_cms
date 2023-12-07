@@ -135,6 +135,14 @@
                                     <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
                                 @endif
                             </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('percentage_of_user') ? ' error' : '' }}">
+                                <label for="title">Percentage Of User</label>
+                                <input type="number" name="percentage_of_user"  class="form-control" placeholder="Enter Percentage Of User" value="{{ $pgwGateways_info->percentage_of_user }}">
+                                @if ($errors->has('percentage_of_user'))
+                                    <div class="help-block">  {{ $errors->first('percentage_of_user') }}</div>
+                                @endif
+                            </div>
                             <!-- <div class="col-md-3">
                             <div class="form-group">
                                 <label class="required">Payment Gateway Status :
