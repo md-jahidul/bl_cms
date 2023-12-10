@@ -34,6 +34,7 @@ class CreateRoamingTransactionsTable extends Migration
             $table->enum('da_posting', ['0', '1'])->default('0');
             $table->enum('deposit', ['0', '1'])->nullable()->default(null);
             $table->enum('invoice_payment', ['0', '1'])->nullable()->default(null);
+            $table->string('refund_ref_id')->nullable()->default(null);
             $table->enum('refund_initiated', ['INITIATED', 'FAILED'])->nullable()->default(null);
             $table->enum('refund_status', ['REFUNDED', 'IN_PROCESSING', 'CANCELLED'])->nullable()->default(null);
             $table->timestamps();

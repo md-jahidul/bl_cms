@@ -29,6 +29,7 @@ class RoamingTransaction extends Model
         'deposit',
         'invoice_payment',
         "refund_initiated",
-        "refund_status"
+        "refund_status",
+        "refund_ref_id"
     ];
 }
