@@ -29,17 +29,17 @@
                     </li>
                 @endif
                 @if( auth()->user()->can_view('AccessLog') )
-                    <li class="{{ is_active_url('access-logs')}}">
-                        <a class="menu-item" href="{{ url('access-logs') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-lock"></i> Access Logs</a>
-                    </li>
-                @endif
-                @if( auth()->user()->can_view('AccessLog') )
                     <li class="{{ is_active_url('activity-logs')}}">
                         <a class="menu-item" href="{{ url('activity-logs') }}"
                            data-i18n="nav.templates.vert.classic_menu"><i
                                 class="la la-lock"></i> Activity Logs</a>
+                    </li>
+                @endif
+                @if( auth()->user()->can_view('AccessLog') )
+                    <li class="{{ is_active_url('access-logs')}}">
+                        <a class="menu-item" href="{{ url('access-logs') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-lock"></i> Access Logs</a>
                     </li>
                 @endif
             </ul>
@@ -156,17 +156,16 @@
                 <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>
                     <ul class="menu-content">
-                        <li class="{{ is_active_match(route('app-launch.report')) ? '' : is_active_match(route('app-launch.index')) }}">
-                            <a class="menu-item" href="{{ route('app-launch.index') }}">
-                                <i class="ft-alert-triangle"></i>App Launch Popup</a>
+                        <li class="{{is_active_url('popup-banner')}}">
+                            <a class="menu-item" href="{{ route('popup-banner.index') }} "
+                               data-i18n="nav.templates.vert.classic_menu">
+                                <i class="la la-list"></i> Popup Banner
+                            </a>
                         </li>
-                        <li class="{{ is_active_match(route('recurring-schedule-hours.index'))}}">
-                            <a class="menu-item" href="{{ route('recurring-schedule-hours.index') }}">
-                                <i class="ft-clock"></i>Recurring Hours</a>
-                        </li>
-                        <li class="{{ is_active_match(route('app-launch.report'))}}">
-                            <a class="menu-item" href="{{ route('app-launch.report') }}">
-                                <i class="ft-list"></i>Purchase Report</a>
+                        <li class=" {{is_active_url(route('popup-sequence.index'))}}">
+                            <a class="menu-item" href="{{ route('popup-sequence.index') }}">
+                                <i class="la la-paper-plane"></i>Popup Sequence
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -1159,14 +1158,20 @@
                             <a class="menu-item" href="{{ route('welcome-banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                                 <i class="la la-image"></i>My-BL Welcome Banner</a>
                         </li>
-                        <li class="{{is_active_url('popup-banner')}}">
-                            <a class="menu-item" href="{{ route('popup-banner.index') }} "
-                               data-i18n="nav.templates.vert.classic_menu">
-                                <i class="la la-list"></i> Popup Banner
-                            </a>
+
+                        <li class="{{ is_active_match(route('app-launch.report')) ? '' : is_active_match(route('app-launch.index')) }}">
+                            <a class="menu-item" href="{{ route('app-launch.index') }}">
+                                <i class="ft-alert-triangle"></i>App Launch Popup</a>
                         </li>
 
-
+                        <li class="{{ is_active_match(route('recurring-schedule-hours.index'))}}">
+                            <a class="menu-item" href="{{ route('recurring-schedule-hours.index') }}">
+                                <i class="ft-clock"></i>Recurring Hours</a>
+                        </li>
+                        <li class="{{ is_active_match(route('app-launch.report'))}}">
+                            <a class="menu-item" href="{{ route('app-launch.report') }}">
+                                <i class="ft-list"></i>Purchase Report</a>
+                        </li>
 
                         <li class=" {{is_active_url(route('health-hub.index'))}}">
                             <a class="menu-item" href="{{ route('health-hub.index') }} "
@@ -1174,11 +1179,7 @@
                                 <i class="la la-heart"></i>Health Hub
                             </a>
                         </li>
-                        <li class=" {{is_active_url(route('popup-sequence.index'))}}">
-                            <a class="menu-item" href="{{ route('popup-sequence.index') }}">
-                                <i class="la la-paper-plane"></i>Popup Sequence
-                            </a>
-                        </li>
+
                     </ul>
                 </li>
             @endif
