@@ -63,6 +63,7 @@
                                         <option value="volume request">VOLUME REQUEST</option>
                                         <option value="volume transfer">VOLUME TRANSFER</option>
                                         <option value="roam">ROAMING PRODUCT</option>
+                                        <option value="service">SERVICES</option>
                                         {{--<option value="bonus">BONUS</option>--}}
                                     </select>
                                     <div class="help-block"></div>
@@ -288,7 +289,7 @@
                                                     value="{{ $key }}" {{ old("special_type") == $key ? 'selected' : '' }}>  {{$specialType}}
                                                 </option>
                                             @endforeach
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -342,20 +343,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-4 mb-2" id="cta_action">
-                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
-                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
-                                            class="browser-default custom-select">
-                                        <option value="">No Base Msisdn Group Selected</option>
-                                        @foreach ($baseMsisdnGroups as $key => $value)
-                                            <option value="{{ $value->id }}"
-                                                {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
-                                    <div class="help-block"></div>
-                                </div>
-
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="show_in_home" value="1" name="show_in_app">
@@ -397,6 +384,111 @@
                                         <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack">
                                         <label for="is_popular_pack">Is Popular Pack</label>
                                     </fieldset>
+                                </div>
+                                <div class="form-group col-md-4 mb-2" id="cta_action">
+                                    <label for="base_msisdn_groups_id">Base Msisdn</label>
+                                    <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
+                                            class="browser-default custom-select">
+                                        <option value="">No Base Msisdn Group Selected</option>
+                                        @foreach ($baseMsisdnGroups as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{ isset($campaign) && $campaign->base_msisdn_groups_id == $value->id ? 'selected' : '' }}>{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-warning"><strong><i class="la la-warning"></i> Warning:</strong> If you don't select a base group, this product is available for connection type-wise users</span>
+                                    <div class="help-block"></div>
+                                </div>
+                                <div class="col-md-12 pl-0"><h5><strong>Digital Service</strong></h5></div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Name BN</label>
+                                    <input class="form-control" name="name_bn" id="name_bn"
+                                           value="{{ old("name_bn") ? old("name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('cta_name_en') ? ' error' : '' }}">
+                                    <label for="name_bn">Cta Name EN</label>
+                                    <input class="form-control" name="cta_name_en" id="cta_name_en"
+                                           value="{{ old("cta_name_en") ? old("cta_name_en") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('cta_name_en'))
+                                        <div class="help-block">{{ $errors->first('cta_name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('cta_name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Cta Name BN</label>
+                                    <input class="form-control" name="cta_name_bn" id="cta_name_bn"
+                                           value="{{ old("cta_name_bn") ? old("cta_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('cta_name_bn'))
+                                        <div class="help-block">{{ $errors->first('cta_name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('redirection_name_en') ? ' error' : '' }}">
+                                    <label for="name_bn">Redirection Name EN</label>
+                                    <input class="form-control" name="redirection_name_en" id="redirection_name_en"
+                                           value="{{ old("redirection_name_en") ? old("redirection_name_en") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_name_en'))
+                                        <div class="help-block">{{ $errors->first('redirection_name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('redirection_name_bn') ? ' error' : '' }}">
+                                    <label for="redirection_name_bn">Redirection Name BN</label>
+                                    <input class="form-control" name="redirection_name_bn" id="redirection_name_bn"
+                                           value="{{ old("redirection_name_bn") ? old("redirection_name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_name_bn'))
+                                        <div class="help-block">{{ $errors->first('redirection_name_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('redirection_deeplink') ? ' error' : '' }}">
+                                    <label for="redirection_deeplink">Redirection Deeplink</label>
+                                    <input class="form-control" name="redirection_deeplink" id="redirection_deeplink"
+                                           value="{{ old("redirection_deeplink") ? old("redirection_deeplink") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_deeplink'))
+                                        <div class="help-block">{{ $errors->first('redirection_deeplink') }}</div>
+                                    @endif
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="activation_type">Activation Type</label>
+                                        <select name="activation_type" class="form-control">
+                                            <option value="REGULAR">REGULAR</option>
+                                            <option value="SERVICE">SERVICE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="tag_bgd_color" class="control-label">Background Color</label>
+                                        <input type="color" name="tag_bgd_color" class="form-control" placeholder="Background Color" value="'#000000'" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="tag_text_color" class="control-label">Text Color</label>
+                                        <input type="color" name="tag_text_color" class="form-control" placeholder="Color" value="'#ffffff'" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="show_timer" value="1" name="show_timer">
+                                        <label for="show_timer">Show Timer</label>
+                                    </fieldset>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Service Product Image</label>
+                                    <input type="file" id="input-file-now" name="service_image_url" class="dropify"/>
+                                    @if($errors->has('service_image_url'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('service_image_url') }}</small>
+                                        </p>
+                                    @endif
                                 </div>
                                 <div class="col-md-12 pl-0"><h5><strong>Product Schedule Settings</strong></h5></div>
                                 <div class="form-actions col-md-12 mt-0"></div>
@@ -460,7 +552,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-4 schedule_visibility d-none">
                                     <label class="required">Schedule Visibility (show/hide in app)</label>
                                     <ul class="list-inline">
@@ -727,7 +819,8 @@
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||
-                type === 'gift'
+                type === 'gift' ||
+                type === 'service'
             ) {
                 offer_types.append(data + dataUnit + sectionType)
             } else if (type === 'reactivation') {

@@ -131,7 +131,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Slider Image
     /*Route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
-    Route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'],'myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
