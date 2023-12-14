@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use http\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -62,6 +63,8 @@ class LoginController extends Controller
             return redirect('/login')->with('error', 'Your account is locked. contact system Administrator');
         }
 
+        $this->storeAccessTokenForNewCMS($request);
+
         if ($this->attemptLogin($request)) {
             if (Auth::user()->status == "locked") {
                 $this->logout($request);
@@ -93,4 +96,36 @@ class LoginController extends Controller
         );
     }
 
+    public function storeAccessTokenForNewCMS($request)
+    {
+        $this->cUrlRequest($request->all());
+    }
+
+    public function cUrlRequest($request)
+    {
+        $headers = [
+//        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+        ];
+
+        $body = [
+            "email" => "mybl-admin@admin.com",
+            "password" => "Banglalink@2020"
+        ];
+
+        $baseUrl = "http://172.16.191.50:8443";
+        $url = $baseUrl . "/api/v1/login";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper("POST"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+        $result = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        return $result;
+    }
 }
