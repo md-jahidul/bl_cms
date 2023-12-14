@@ -498,9 +498,16 @@
 
                     <ul class="menu-content">
                         <li class="{{ is_active_match(route('mybl.product.index')) }}">
+                            <a class="menu-item" href="http://172.16.191.50:8445/welcome?access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjE5MS41MDo4NDQzL2FwaS92MS9sb2dpbiIsImlhdCI6MTcwMjU1NDM5MiwiZXhwIjoxNzYyNTU0MzkyLCJuYmYiOjE3MDI1NTQzOTIsImp0aSI6InFTR3RCSVVDYlZLU01ReUMiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.kXY57BuzBw1PAQf4pSeOc6XFuI5DGYdkBJoqHEAp910" target="_blank">
+                                <i class="ft-list"></i>Product V2</a>
+                        </li>
+
+                        <li class="{{ is_active_match(route('mybl.product.index')) }}">
                             <a class="menu-item" href="{{ route('mybl.product.index') }}">
                                 <i class="ft-list"></i>Product Library</a>
                         </li>
+
+
                         <li class="{{ is_active_match(route('product-tags.index'))}}">
                             <a class="menu-item" href="{{ route('product-tags.index') }}">
                                 <i class="ft-tag"></i>Product Tags</a>
