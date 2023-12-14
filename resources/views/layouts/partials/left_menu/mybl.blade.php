@@ -192,6 +192,20 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('MyblProductEntry') )
+        <li class="{{ is_active_url('vas-products') }} nav-item"><a href="{{ url('vas-products') }}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">VAS</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(url('vas-products')) }}">
+                    <a class="menu-item" href="{{ url('vas-products') }}">
+                        <i class="ft-list"></i>Products</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('AppLaunch') )
         <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>

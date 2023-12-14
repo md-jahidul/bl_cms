@@ -1228,6 +1228,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
     Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
 
+    /**
+     * VAS Product
+     */
+
+    Route::resource('vas-products', 'CMS\VasProductController');
+    Route::get('vas-products/destroy/{id}', 'CMS\VasProductController@destroy')
+        ->name('vas-product.destroy');
+
 });
 
 // 4G Map View Route
