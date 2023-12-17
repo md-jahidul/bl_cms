@@ -1263,7 +1263,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
     Route::resource('popup-sequence', 'CMS\PopupPrioritizationController');
 
-
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
 
@@ -1544,6 +1543,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('generic-component-items.status.update');
     Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
         ->name('generic-component-items.destroy');
+    /**
+     * New CMS Token Generate
+     */
+    Route::get('new-cms/verify-token', "Auth\NewCMSAuthController@verifyToken");
 });
 
 // 4G Map View Route

@@ -497,8 +497,8 @@
                         <span class="menu-title">Products</span></a>
 
                     <ul class="menu-content">
-                        <li class="{{ is_active_match(route('mybl.product.index')) }}">
-                            <a class="menu-item" href="http://172.16.191.50:8445/welcome?access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjE5MS41MDo4NDQzL2FwaS92MS9sb2dpbiIsImlhdCI6MTcwMjU1NDM5MiwiZXhwIjoxNzYyNTU0MzkyLCJuYmYiOjE3MDI1NTQzOTIsImp0aSI6InFTR3RCSVVDYlZLU01ReUMiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.kXY57BuzBw1PAQf4pSeOc6XFuI5DGYdkBJoqHEAp910" target="_blank">
+                        <li class="">
+                            <a id="productV2" class="menu-item">
                                 <i class="ft-list"></i>Product V2</a>
                         </li>
 
@@ -1376,6 +1376,22 @@
     {{--    </li>--}}
 
 @endif
+
+@push('page-js')
+    <script>
+        $(function () {
+            $("#productV2").click(function () {
+                $.ajax({
+                    url: "{{ url('new-cms/verify-token') }}",
+                    type:'GET',
+                    success: function (result) {
+                        window.open(result.redirect_url);
+                    },
+                });
+            })
+        })
+    </script>
+@endpush
 
 {{--<li class="{{ is_active_url('developer/api/debug') }}">--}}
 {{--    <a class="menu-item" href="{{ route('support-message') }}">--}}
