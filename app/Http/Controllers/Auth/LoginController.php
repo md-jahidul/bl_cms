@@ -121,7 +121,7 @@ class LoginController extends Controller
             "password" => $request['password']
         ];
 
-        $baseUrl = env("NEW_CMS_URL", "http://172.16.191.50:8443");
+        $baseUrl = env("NEW_CMS_API", "http://172.16.191.50:8443");
 
         $url = $baseUrl . $urlEndPoint;
 

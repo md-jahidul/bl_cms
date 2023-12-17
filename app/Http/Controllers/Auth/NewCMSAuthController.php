@@ -39,12 +39,13 @@ class NewCMSAuthController extends Controller
 
         $verifyTokenUrl = "/api/v1/access-token";
         $refreshTokenUrl = "/api/v1/refresh";
-        $baseUrl = env("NEW_CMS_URL", "http://172.16.191.50:8443");
-
-        $response = $this->cUrlRequest($verifyTokenUrl, $token);
+        $newCmsUrl = env("NEW_CMS_URL", "http://172.16.191.50:8445");
+        $newCmsApi = env("NEW_CMS_API", "http://172.16.191.50:8443");
+        $url = $newCmsApi . $verifyTokenUrl;
+        $response = $this->cUrlRequest($url, $token);
 
         if ($response['status_code'] == 200){
-            $redirectUrl = $baseUrl . "/welcome?access_token=" . $response['data']['access_token'] . "&source=" . $baseUrl;
+            $redirectUrl = $newCmsUrl . "/welcome?access_token=" . $response['data']['access_token'];
             return [
                 'access_token' => $response['data']['access_token'],
                 'redirect_url' => $redirectUrl
@@ -72,14 +73,11 @@ class NewCMSAuthController extends Controller
 //        }
 //    }
 
-    public function cUrlRequest($urlEndPoint, $token)
+    public function cUrlRequest($url, $token)
     {
         $headers = [
             "Authorization: Bearer " . $token
         ];
-        $baseUrl = env("NEW_CMS_URL", "http://172.16.191.50:8443");
-        $url = $baseUrl . $urlEndPoint;
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper("POST"));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
