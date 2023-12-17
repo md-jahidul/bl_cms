@@ -30,6 +30,7 @@ class UpdateInAppSearchContentRequest extends FormRequest
         $rules = [
             'display_title' => 'required|max:60|unique:my_bl_search_contents,display_title,' . $this->id,
             'description' => 'max:100',
+            'deeplink' => 'max:255',
             'tag' => 'required|array',
         ];
 
