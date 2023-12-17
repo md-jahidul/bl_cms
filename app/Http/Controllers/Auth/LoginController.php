@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -30,7 +33,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+//    protected $redirectTo = '/home';
 
 //    protected $decayMinutes = 5;
 
@@ -98,23 +101,29 @@ class LoginController extends Controller
 
     public function storeAccessTokenForNewCMS($request)
     {
-        $this->cUrlRequest($request->all());
+        $urlEndPoint = "/api/v1/login";
+        $response = $this->cUrlRequest($request->all(), $urlEndPoint);
+        $user = User::where('email', $request->email)->first();
+        if ($response && $user) {
+            $redisKey = "user_token_" . $user->id . ":";
+            Redis::set($redisKey, $response['access_token']);
+        }
     }
 
-    public function cUrlRequest($request)
+    public function cUrlRequest($request, $urlEndPoint)
     {
         $headers = [
-//        'Accept' => 'application/json',
-        'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json'
         ];
 
         $body = [
-            "email" => "mybl-admin@admin.com",
-            "password" => "Banglalink@2020"
+            "email" => $request['email'],
+            "password" => $request['password']
         ];
 
-        $baseUrl = "http://172.16.191.50:8443";
-        $url = $baseUrl . "/api/v1/login";
+        $baseUrl = env("NEW_CMS_URL", "http://172.16.191.50:8443");
+
+        $url = $baseUrl . $urlEndPoint;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper("POST"));
@@ -126,6 +135,15 @@ class LoginController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         $result = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        return $result;
+
+        $result = json_decode($result, true);
+
+        if ($httpCode == 200){
+            return [
+                'access_token' => $result['data']['access_token'] ?? null
+            ];
+        }
+
+        Log::error('New CMS Login Error:' . $result['error']);
     }
 }
