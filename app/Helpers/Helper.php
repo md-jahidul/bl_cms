@@ -156,7 +156,8 @@ class Helper
             "AMAR_PLAN"               => 'Amar Plan',
             "SERVICE"                 => 'Service',
             "SIM_BLOCK"               => 'Sim Block',
-            "DCB"                     => 'Dcb'
+            "DCB"                     => 'Dcb',
+            "DEEPLINK"               => 'Deeplink'
         ];
     }
 
