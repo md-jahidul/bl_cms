@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
+use App\Http\Controllers\Controller;
 use App\Services\ProductCoreService;
 use App\Services\StoreLocatorService;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class StoreLocatorEntryController extends Controller
         $this->service = $service;
     }
 
-    public function create()
+    public function index()
     {
         return view('store_locator_entry');
     }

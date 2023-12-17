@@ -83,6 +83,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="deeplink">Deeplink</label>
+                                                <input type="text" id="deeplink" name="deeplink" class="form-control">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-actions">
