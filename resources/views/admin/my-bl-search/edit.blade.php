@@ -133,6 +133,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="deeplink">Deeplink</label>
+                                                <input type="text" id="deeplink" name="deeplink" class="form-control" value="{{ $search_content->deeplink }}">
+                                            </div>
+                                        </div>
                                         <input type="hidden" name="id" value="{{$search_content->id}}">
                                     </div>
                                 </div>
