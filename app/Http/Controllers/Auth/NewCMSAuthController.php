@@ -44,7 +44,7 @@ class NewCMSAuthController extends Controller
         $response = $this->cUrlRequest($verifyTokenUrl, $token);
 
         if ($response['status_code'] == 200){
-            $redirectUrl = $baseUrl . "/welcome-new?access_token=" . $response['data']['access_token'] . "&source=" . $baseUrl;
+            $redirectUrl = $baseUrl . "/welcome?access_token=" . $response['data']['access_token'] . "&source=" . $baseUrl;
             return [
                 'access_token' => $response['data']['access_token'],
                 'redirect_url' => $redirectUrl
