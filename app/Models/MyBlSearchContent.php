@@ -20,7 +20,8 @@ class MyBlSearchContent extends Model
         'navigation_action',
         'other_contents',
         'is_default',
-        'connection_type'
+        'connection_type',
+        'deeplink'
     ];
 
     protected $searchable = [
