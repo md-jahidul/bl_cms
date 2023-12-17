@@ -559,6 +559,14 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('StoreLocatorEntry'))
+        <li class="{{ is_active_url('digital-service') }}">
+            <a class="menu-item" href="{{ url('store-locations/entry') }}"
+               data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-server"></i>Store Location Entry
+            </a>
+        </li>
+   @endif
 
     @if( auth()->user()->can_view('Banner') || auth()->user()->can_view('WelcomeInfo') || auth()->user()->can_view('MyblSlider')
          || auth()->user()->can_view('MyblSliderImage')  || auth()->user()->can_view('ContextualCard')    )
