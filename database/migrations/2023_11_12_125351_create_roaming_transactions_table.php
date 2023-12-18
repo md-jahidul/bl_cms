@@ -23,7 +23,7 @@ class CreateRoamingTransactionsTable extends Migration
             $table->string('roaming_transaction_id')->nullable();
             $table->string('amount_bdt');
             $table->string('amount_usd');
-            $table->string('session_id');
+            $table->string('session_id')->nullable();
             $table->string('bank_transaction_id')->nullable()->default(null);
             $table->string('transaction_status')->nullable();
             $table->string('val_id')->nullable()->default(null);
