@@ -35,12 +35,12 @@ class VasProductService
             DB::transaction(function () use ($request) {
 
                 if (request()->hasFile('image')) {
-                    $request['icon'] = 'storage/' . $request['image']->storeAs('vas-product', time() . '-' . bin2hex(random_bytes(4)) . '-' . $request['image']->getClientOriginalName());
+                    $request['image'] = 'storage/' . $request['image']->storeAs('vas-product', time() . '-' . bin2hex(random_bytes(4)) . '-' . $request['image']->getClientOriginalName());
                 }
                 $this->save($request);
 
             });
-            $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+            //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
             return true;
 
         } catch (\Exception $e) {
@@ -61,7 +61,7 @@ class VasProductService
                 $vasProduct->update($data);
             });
 
-            $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+            //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
             return true;
         } catch (\Exception $e) {
             Log::error('VAS Product Update failed' . $e->getMessage());
@@ -78,7 +78,7 @@ class VasProductService
             $this->deleteFile($vasProduct->image);
         }
 
-        $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+        //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
         return Response('VAS Product has been successfully deleted');
     }
 }

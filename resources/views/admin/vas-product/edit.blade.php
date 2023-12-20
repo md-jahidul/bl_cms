@@ -20,16 +20,16 @@
                             @method('put')
 
                             <div class="form-group col-md-6 mb-2">
-                                <label for="partner_id" class="required">Partner id:</label>
+                                <label for="subscription_offer_id" class="required">Subscription offer ID:</label>
                                 <input
-                                    data-validation-required-message="Partner ID is required"
-                                    value="{{old('partner_id')?old('partner_id'):$vasProduct->partner_id}}" required id="partner_id"
+                                    data-validation-required-message="Subscription offer id is required"
+                                    value="{{old('subscription_offer_id')?old('subscription_offer_id'):$vasProduct->subscription_offer_id}}" required id="subscription_offer_id"
                                     type="text" class="form-control @error('title_en') is-invalid @enderror"
-                                    placeholder="Partner Id" name="partner_id">
+                                    placeholder="Subscription offer id" name="subscription_offer_id">
                                 <div class="help-block"></div>
-                                @if ($errors->has('partner_id'))
+                                @if ($errors->has('subscription_offer_id'))
                                     <div class="help-block">
-                                        <small class="text-danger"> {{ $errors->first('partner_id') }} </small>
+                                        <small class="text-danger"> {{ $errors->first('subscription_offer_id') }} </small>
                                     </div>
                                 @endif
                             </div>
@@ -160,31 +160,77 @@
                             </div>
                             <div class="form-group col-md-6 mb-2">
                                 <label for="activation_type" class="required">Activation type:</label>
-                                <input
-                                    data-validation-required-message="Activation type is required"
-                                    value="{{old('validity_en')?old('validity_en'):$vasProduct->validity_en}}" required id="activation_type"
-                                    type="text" class="form-control @error('validity_en') is-invalid @enderror"
-                                    placeholder="Activation type" name="activation_type">
-                                <div class="help-block"></div>
-                                @if ($errors->has('activation_type'))
-                                    <div class="help-block">
-                                        <small class="text-danger"> {{ $errors->first('activation_type') }} </small>
+                                <div class="">
+                                    <ul class="list list-inline">
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="activation_type" id="Default" value="Default"
+                                                {{$vasProduct->activation_type == 'Default' ? 'checked' : ''}}>
+                                            <label for="Default" class="small">Default</label>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <input id="Deeplink" type="radio" name="activation_type" value="Deeplink"
+                                                {{$vasProduct->activation_type == 'Deeplink' ? 'checked' : ''}}>
+                                            <label for="Deeplink" class="small">Deeplink</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group" id="activation_deeplink" @if ($vasProduct->activation_type == 'Default')
+                                            style="display: none" @endif>
+                                            <label class="small">Deeplink</label>
+                                            <div class='input-group'>
+                                                <input
+                                                    value="{{old('activation_deeplink')?old('activation_deeplink'):$vasProduct->activation_deeplink}}" id="activation_deeplink"
+                                                    type="text" class="form-control @error('validity_en') is-invalid @enderror"
+                                                    placeholder="Activation Deeplink" name="activation_deeplink">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('activation_deeplink'))
+                                                    <div class="help-block">
+                                                        <small class="text-danger"> {{ $errors->first('activation_deeplink') }} </small>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                @endif
+                                </div>
                             </div>
                             <div class="form-group col-md-6 mb-2">
                                 <label for="deactivation_type" class="required">Deactivation type:</label>
-                                <input
-                                    data-validation-required-message="Deactivation type is required"
-                                    value="{{old('deactivation_type')?old('deactivation_type'):$vasProduct->deactivation_type}}" required id="deactivation_type"
-                                    type="text" class="form-control @error('deactivation_type') is-invalid @enderror"
-                                    placeholder="Deactivation type" name="deactivation_type">
-                                <div class="help-block"></div>
-                                @if ($errors->has('deactivation_type'))
-                                    <div class="help-block">
-                                        <small class="text-danger"> {{ $errors->first('deactivation_type') }} </small>
+                                <div class="">
+                                    <ul class="list list-inline">
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="deactivation_type" id="Default" value="Default"
+                                                {{$vasProduct->deactivation_type == 'Default' ? 'checked' : ''}}>
+                                            <label for="Default" class="small">Default</label>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <input id="Deeplink" type="radio" name="deactivation_type" value="Deeplink"
+                                                {{$vasProduct->deactivation_type == 'Deeplink' ? 'checked' : ''}}>
+                                            <label for="Deeplink" class="small">Deeplink</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group" id="deactivation_deeplink" @if ($vasProduct->deactivation_type == 'Default')
+                                            style="display: none" @endif>
+                                            <label class="small">Deeplink</label>
+                                            <div class='input-group'>
+                                                <input
+                                                    value="{{old('deactivation_deeplink')?old('deactivation_deeplink'):$vasProduct->deactivation_deeplink}}" id="deactivation_deeplink"
+                                                    type="text" class="form-control @error('validity_en') is-invalid @enderror"
+                                                    placeholder="Activation Deeplink" name="deactivation_deeplink">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('deactivation_deeplink'))
+                                                    <div class="help-block">
+                                                        <small class="text-danger"> {{ $errors->first('deactivation_deeplink') }} </small>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                @endif
+                                </div>
                             </div>
 
                             <div class="col-6">
@@ -216,40 +262,20 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
-                                <label for="icon">Icon</label>
+                            <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }}">
+                                <label for="image">Image</label>
                                 <div class="custom-file">
                                     <input
                                         accept="image/*"
-                                        onchange="createImageBitmap(this.files[0]).then((bmp) => {
-
-                                                    if(bmp.width/bmp.height == 1/1){
-                                                        console.log('yes')
-                                                        document.getElementById('submitForm').disabled = false;
-                                                        document.getElementById('massage').innerHTML = '';
-                                                        this.style.border = 'none';
-                                                        // this.nextElementSibling.innerHTML = '';
-                                                    }else{
-                                                        console.log('no')
-                                                        this.style.border = '1px solid red';
-                                                        document.getElementById('massage').innerHTML = '<b>Image aspect ratio must be 1:1(change the picture to enable button)</b>';
-                                                        document.getElementById('massage').classList.add('text-danger');
-                                                        document.getElementById('submitForm').disabled = true;
-                                                    }
-                                                })"
-
-                                        type="file" name="icon" class="custom-file-input dropify" data-default-file="{{ asset($vasProduct->icon) }}"
+                                        type="file" name="image" class="custom-file-input dropify" data-default-file="{{ asset($vasProduct->image) }}"
                                             data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
                                 </div>
-                                <div class="help-block">
-                                    <small class="text-info"> Image aspect ratio should be in
-                                        1:1 </small><br>
-                                </div>
+                                <div class="help-block"></div>
                                 <div class="help-block"></div>
                                 <small id="massage"></small>
-                                @if ($errors->has('icon'))
+                                @if ($errors->has('image'))
                                     <div class="help-block">
-                                        <small class="text-danger"> {{ $errors->first('icon') }} </small>
+                                        <small class="text-danger"> {{ $errors->first('image') }} </small>
                                     </div>
                                 @endif
                             </div>
@@ -306,6 +332,23 @@
     <script>
 
         $(function () {
+            $('input[name="activation_type"]').on('change', function () {
+                let action = $(this).val();
+                if (action === "Deeplink") {
+                    $('#activation_deeplink').show();
+                } else {
+                    $('#activation_deeplink').hide();
+                }
+            });
+
+            $('input[name="deactivation_type"]').on('change', function () {
+                let action = $(this).val();
+                if (action === "Deeplink") {
+                    $('#deactivation_deeplink').show();
+                } else {
+                    $('#deactivation_deeplink').hide();
+                }
+            });
 
             $('.dropify').dropify({
                 messages: {

@@ -15,7 +15,7 @@ class CreateMyblVasProductsTable extends Migration
     {
         Schema::create('mybl_vas_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('partner_id');
+            $table->string('subscription_offer_id');
             $table->string('cp_id');
             $table->string('title_en');
             $table->string('title_bn');

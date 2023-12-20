@@ -12,7 +12,7 @@ class VasProduct extends Model
     protected $table = 'mybl_vas_products';
 
     protected $fillable = [
-        'partner_id',
+        'subscription_offer_id',
         'cp_id',
         'title_en',
         'title_bn',
@@ -25,7 +25,9 @@ class VasProduct extends Model
         'platform',
         'is_renewal',
         'activation_type',
+        'activation_deeplink',
         'deactivation_type',
+        'deactivation_deeplink',
         'status'
     ];
 

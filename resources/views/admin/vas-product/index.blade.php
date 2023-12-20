@@ -20,9 +20,9 @@
                         <tr>
                             <td width="3%"><i class="icons"></i></td>
                             <th width="5%">ID</th>
-                            <th width="30%">Title</th>
-                            <th width="15%">Partner ID</th>
+                            <th width="15%">Subscription offer ID</th>
                             <th width="15%">CP ID</th>
+                            <th width="30%">Title</th>
                             <th width="15%">platform</th>
                             <th width="5%">Visibility</th>
                             <th class="text-right">Action</th>
@@ -33,9 +33,9 @@
                             <tr data-index="{{ $product->id }}" data-position="">
                                 <td width="3%"><i class="icons"></i></td>
                                 <td>{{ ++$index }}</td>
-                                <td>{{ $product->title_en }}</td>
                                 <td>{{ $product->partner_id }}</td>
                                 <td>{{ $product->cp_id }}</td>
+                                <td>{{ $product->title_en }}</td>
                                 <td>{{ $product->platform }}</td>
                                 <td>
                                     @if($product->visibilityStatus())
