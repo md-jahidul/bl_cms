@@ -10,6 +10,7 @@ class RoamingTransaction extends Model
 
     protected $fillable = [
         'msisdn',
+        "email",
         'transaction_type',
         'user_type',
         'transaction_id',
