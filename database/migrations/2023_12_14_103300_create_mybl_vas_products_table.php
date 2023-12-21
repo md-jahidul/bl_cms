@@ -19,11 +19,11 @@ class CreateMyblVasProductsTable extends Migration
             $table->string('cp_id');
             $table->string('title_en');
             $table->string('title_bn');
-            $table->string('desc_en');
-            $table->string('desc_bn');
+            $table->string('desc_en')->nullable();
+            $table->string('desc_bn')->nullable();
             $table->double('price', 8, 2);
-            $table->string('validity_en');
-            $table->string('validity_bn');
+            $table->string('validity_en')->nullable();
+            $table->string('validity_bn')->nullable();
             $table->string('image')->nullable();
             $table->string('platform')->nullable();
             $table->boolean('is_renewal')->default(0);

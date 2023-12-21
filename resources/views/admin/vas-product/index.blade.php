@@ -33,7 +33,7 @@
                             <tr data-index="{{ $product->id }}" data-position="">
                                 <td width="3%"><i class="icons"></i></td>
                                 <td>{{ ++$index }}</td>
-                                <td>{{ $product->partner_id }}</td>
+                                <td>{{ $product->subscription_offer_id }}</td>
                                 <td>{{ $product->cp_id }}</td>
                                 <td>{{ $product->title_en }}</td>
                                 <td>{{ $product->platform }}</td>
