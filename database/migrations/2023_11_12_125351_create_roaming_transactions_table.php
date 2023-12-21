@@ -16,6 +16,7 @@ class CreateRoamingTransactionsTable extends Migration
         Schema::create('roaming_transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('msisdn');
+            $table->string('email')->nullable();
             $table->string('account_id');
             $table->enum('transaction_type', ['ROAMING_ACTIVE', 'ROAMING_PAYMENT']);
             $table->string('user_type');
