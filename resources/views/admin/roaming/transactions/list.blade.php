@@ -147,7 +147,7 @@
                         name: 'payment_initiated',
                         render: function (data, type, row) {
                             let status = row.payment_initiated;
-                            if (status === 1) {
+                            if (status == 1) {
                                 return "<span class='badge badge-success'>Yes</span>";
                             } else {
                                 return "<span class='badge badge-danger'>No</span>";
@@ -158,7 +158,7 @@
                         name: 'payment_complete',
                         render: function (data, type, row) {
                             let status = row.payment_completed;
-                            if (status === 1) {
+                            if (status == 1) {
                                 return "<span class='badge badge-success'>Yes</span>";
                             } else {
                                 return "<span class='badge badge-danger'>No</span>";

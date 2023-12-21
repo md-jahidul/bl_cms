@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\FreeProductDisburseJob;
-use App\Jobs\RoamingPaymentProcess;
+use App\Jobs\RoamingActivationNRecharge;
 use App\Models\RoamingTransaction;
 use Illuminate\Http\Request;
 
@@ -47,12 +47,12 @@ class RoamingTransactionController extends Controller
         ];
     }
 
-    public function dispatchRoamingPaymentJob($transaction_id): array
-    {
-        RoamingPaymentProcess::dispatch($transaction_id);
-
-        return [
-            "status_code" => 200
-        ];
-    }
+//    public function dispatchRoamingPaymentJob($transaction_id): array
+//    {
+//        RoamingActivationNRecharge::dispatch($transaction_id);
+//
+//        return [
+//            "status_code" => 200
+//        ];
+//    }
 }
