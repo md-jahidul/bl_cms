@@ -36,7 +36,7 @@
             <th>Status</th>
             <th>Payment Initiated</th>
             <th>Payment Completed</th>
-            <th class="filter_data">Actions</th>
+{{--            <th class="filter_data">Actions</th>--}}
         </tr>
         </thead>
         <tbody>
@@ -147,7 +147,7 @@
                         name: 'payment_initiated',
                         render: function (data, type, row) {
                             let status = row.payment_initiated;
-                            if (status === 1) {
+                            if (status == 1) {
                                 return "<span class='badge badge-success'>Yes</span>";
                             } else {
                                 return "<span class='badge badge-danger'>No</span>";
@@ -158,28 +158,28 @@
                         name: 'payment_complete',
                         render: function (data, type, row) {
                             let status = row.payment_completed;
-                            if (status === 1) {
+                            if (status == 1) {
                                 return "<span class='badge badge-success'>Yes</span>";
                             } else {
                                 return "<span class='badge badge-danger'>No</span>";
                             }
                         }
                     },
-                    {
-                        name: 'actions',
-                        className: 'filter_data',
-                        render: function (data, type, row) {
-                            if (row.status === "PENDING") {
-                                return `<div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="btn btn-sm btn-success edit" onclick="startActivationProcess('` + row.transaction_id + `');">Start Process</button>
-                                </div>`
-                            } else {
-                                return `<div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="btn btn-sm btn-icon btn-info disabled">Completed</button>
-                                </div>`
-                            }
-                        }
-                    }
+                    // {
+                    //     name: 'actions',
+                    //     className: 'filter_data',
+                    //     render: function (data, type, row) {
+                    //         if (row.status === "PENDING") {
+                    //             return `<div class="btn-group" role="group" aria-label="Basic example">
+                    //                 <button class="btn btn-sm btn-success edit" onclick="startActivationProcess('` + row.transaction_id + `');">Start Process</button>
+                    //             </div>`
+                    //         } else {
+                    //             return `<div class="btn-group" role="group" aria-label="Basic example">
+                    //                 <button class="btn btn-sm btn-icon btn-info disabled">Completed</button>
+                    //             </div>`
+                    //         }
+                    //     }
+                    // }
                 ],
                 "fnCreatedRow": function (row, data, index) {
                     $('td', row).eq(0).html(index + 1);
@@ -192,33 +192,33 @@
             });
         });
 
-        function startActivationProcess(transaction_id){
-            alert("Are you sure?")
-            $.ajax({
-                url: "{{ url('roaming/dispatch-payment-job') }}/"+transaction_id,
-                methods: "get",
-                success: function (result) {
+        {{--function startActivationProcess(transaction_id){--}}
+        {{--    alert("Are you sure?")--}}
+        {{--    $.ajax({--}}
+        {{--        url: "{{ url('roaming/dispatch-payment-job') }}/"+transaction_id,--}}
+        {{--        methods: "get",--}}
+        {{--        success: function (result) {--}}
 
-                    if(result.status_code === 200){
-                        Swal.fire(
-                            'Success!',
-                            'Payment Processed Successfully',
-                            'success',
-                        );
-                    }else{
-                        Swal.fire(
-                            'Oops!',
-                            'Something went wrong please try again ',
-                            'error',
-                        );
-                    }
-                    setTimeout(redirect, 2000)
-                    function redirect() {
-                        $('#product_list').DataTable().ajax.reload();
-                    }
-                }
-            });
-        }
+        {{--            if(result.status_code === 200){--}}
+        {{--                Swal.fire(--}}
+        {{--                    'Success!',--}}
+        {{--                    'Payment Processed Successfully',--}}
+        {{--                    'success',--}}
+        {{--                );--}}
+        {{--            }else{--}}
+        {{--                Swal.fire(--}}
+        {{--                    'Oops!',--}}
+        {{--                    'Something went wrong please try again ',--}}
+        {{--                    'error',--}}
+        {{--                );--}}
+        {{--            }--}}
+        {{--            setTimeout(redirect, 2000)--}}
+        {{--            function redirect() {--}}
+        {{--                $('#product_list').DataTable().ajax.reload();--}}
+        {{--            }--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
     </script>
 @endpush
 
