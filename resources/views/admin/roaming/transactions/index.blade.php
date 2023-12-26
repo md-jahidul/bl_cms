@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'MyBl Roaming Transactions')
-@section('card_name', 'MyBl Roaming Transactions')
+@section('card_name', 'Roaming Transaction Status')
 @section('content')
     <section>
         <div class="card">
