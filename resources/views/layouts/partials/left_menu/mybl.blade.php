@@ -492,64 +492,69 @@
             </li>
 
             @if( auth()->user()->can_view('MyblProductEntry') )
-                <li class="{{ is_active_url('mybl/core-product') }} nav-item"><a href="{{route('mybl.product.index')}}"><i
-                            class="la la-list"></i>
-                        <span class="menu-title">Products</span></a>
-
-                    <ul class="menu-content">
-                        <li class="">
-                            <a id="productV2" class="menu-item">
-                                <i class="ft-list"></i>Product V2</a>
-                        </li>
-
-                        <li class="{{ is_active_match(route('mybl.product.index')) }}">
-                            <a class="menu-item" href="{{ route('mybl.product.index') }}">
-                                <i class="ft-list"></i>Product Library</a>
-                        </li>
 
 
-                        <li class="{{ is_active_match(route('product-tags.index'))}}">
-                            <a class="menu-item" href="{{ route('product-tags.index') }}">
-                                <i class="ft-tag"></i>Product Tags</a>
-                        </li>
-                        <li class="{{is_active_url('mybl-internet-offer-category')}}">
-                            <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
-                               data-i18n="nav.templates.vert.classic_menu">
-                                <i class="la la-align-center"></i> Product Categories
-                            </a>
-                        </li>
-                        <li class="{{is_active_url('product-special-types')}}">
-                            <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
-                                <i class="ft-tag"></i>Product Special Types
-                            </a>
-                        </li>
-                        <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
-                            <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
-                                <i class="ft-x-square"></i>Inactive Products</a>
-                        </li>
-                        <li class="{{ is_active_match(route('product.schedule'))}}">
-                            <a class="menu-item" href="{{ route('product.schedule') }}">
-                                <i class="la la-history"></i>Schedule</a>
-                        </li>
-                        <li class="{{ is_active_match(route('product-activities.history')) }}">
-                            <a class="menu-item" href="{{ route('product-activities.history') }}">
-                                <i class="la la-history"></i>Products Activities</a>
-                        </li>
-                        <li class="{{ is_active_url('redis-key-update-view') }}">
-                            <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
-                                <i class="la la-align-center"></i>New codes activation</a>
-                        </li>
-                        <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
-                            <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
-                                <i class="la la-fire"></i>Free Products Analytic</a>
-                        </li>
-                        <li class="{{ is_active_match(route('pin-to-top.products')) }}">
-                            <a class="menu-item" href="{{ route('pin-to-top.products') }}">
-                                <i class="ft-list"></i>Pin To Top Products</a>
-                        </li>
+                @if(env("PRODUCT_LIST_VERSION", "V2") == "V2")
+                    <li class="">
+                        <a id="productV2" class="menu-item">
+                            <i class="ft-list"></i>Products </a>
+                    </li>
+                @else
+                    <li class="{{ is_active_url('mybl/core-product') }} nav-item"><a href="{{route('mybl.product.index')}}"><i
+                                class="la la-list"></i>
+                            <span class="menu-title">Products</span></a>
 
-                    </ul>
-                </li>
+                        <ul class="menu-content">
+                            <li class="{{ is_active_match(route('mybl.product.index')) }}">
+                                <a class="menu-item" href="{{ route('mybl.product.index') }}">
+                                    <i class="ft-list"></i>Product Library</a>
+                            </li>
+
+
+                            <li class="{{ is_active_match(route('product-tags.index'))}}">
+                                <a class="menu-item" href="{{ route('product-tags.index') }}">
+                                    <i class="ft-tag"></i>Product Tags</a>
+                            </li>
+                            <li class="{{is_active_url('mybl-internet-offer-category')}}">
+                                <a class="menu-item" href="{{ route('mybl-internet-offer-category') }} "
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-align-center"></i> Product Categories
+                                </a>
+                            </li>
+                            <li class="{{is_active_url('product-special-types')}}">
+                                <a class="menu-item" href="{{ url('product-special-types') }} " data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="ft-tag"></i>Product Special Types
+                                </a>
+                            </li>
+                            <li class="{{ is_active_match(route('mybl.products.inactive-products')) }}">
+                                <a class="menu-item" href="{{ route('mybl.products.inactive-products') }}">
+                                    <i class="ft-x-square"></i>Inactive Products</a>
+                            </li>
+                            <li class="{{ is_active_match(route('product.schedule'))}}">
+                                <a class="menu-item" href="{{ route('product.schedule') }}">
+                                    <i class="la la-history"></i>Schedule</a>
+                            </li>
+                            <li class="{{ is_active_match(route('product-activities.history')) }}">
+                                <a class="menu-item" href="{{ route('product-activities.history') }}">
+                                    <i class="la la-history"></i>Products Activities</a>
+                            </li>
+                            <li class="{{ is_active_url('redis-key-update-view') }}">
+                                <a class="menu-item" href="{{route('active-product-redis-key.update.view')}}">
+                                    <i class="la la-align-center"></i>New codes activation</a>
+                            </li>
+                            <li class="{{ is_active_match(route('free-product.purchase.report')) }}">
+                                <a class="menu-item" href="{{ route('free-product.purchase.report') }}">
+                                    <i class="la la-fire"></i>Free Products Analytic</a>
+                            </li>
+                            <li class="{{ is_active_match(route('pin-to-top.products')) }}">
+                                <a class="menu-item" href="{{ route('pin-to-top.products') }}">
+                                    <i class="ft-list"></i>Pin To Top Products</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                @endif
+
             @endif
 
             <li class="{{ is_active_url('myblslider') . is_active_url('myblslider/addImage/') . is_active_url('myblslider/create') . is_active_url('myblslider/edit') }}">
