@@ -12,7 +12,9 @@ use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Http\Requests\NotificationRequest;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -202,13 +204,19 @@ class NotificationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param $id
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     * @throws \Exception
+     * @return UrlGenerator|string
+     * @throws Exception
      */
     public function destroy($id)
     {
         session()->flash('error', $this->notificationService->deleteNotification($id)->getContent());
         return url('notificationCategory');
+    }
+
+    public function quickNotificationDelete($id)
+    {
+        session()->flash('error', $this->notificationService->deleteNotification($id)->getContent());
+        return url('quick-notification');
     }
 
 
@@ -229,9 +237,8 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTargetWiseNotificationReport(Request $request){
-
-
+    public function getTargetWiseNotificationReport(Request $request)
+    {
         if ($request->has('draw')){
             return $this->notificationService->getNotificationListReport($request);
         }
@@ -248,10 +255,7 @@ class NotificationController extends Controller
      */
     public function getTargetWiseNotificationReportDetails(Request $request,$title)
     {
-
         $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
-        //    dd($notifications);
-
         return view('admin.notification.target-wise-notification.details')
             ->with('notifications', $notifications);
     }
@@ -277,7 +281,10 @@ class NotificationController extends Controller
             return $notification->schedule ? $notification->schedule->updated_at : $notification->starts_at;
         })->values();
         $category = $this->notificationCategoryService->findAll();
+        $modifyDisableTime = isset($globalKey->settings_value) ? (int)$globalKey->settings_value : 60;
+
         return view('admin.notification.notification.quick_notification_index')
+            ->with('modifyDisableTime', $modifyDisableTime)
             ->with('category', $category)
             ->with('notifications', $notifications);
     }
