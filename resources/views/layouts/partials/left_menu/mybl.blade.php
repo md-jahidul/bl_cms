@@ -747,19 +747,16 @@
                         <li class="{{ is_active_url('recharge/prefill-amounts')}}">
                             <a class="menu-item" href="{{ route('recharge.prefill-amounts.index') }}">
                                 <i class="la la-money"></i>Recharge Prefill Amount</a>
-
                         </li>
 
                         <li class="{{ is_active_url('balance-transfer/prefill-amounts')}}">
                             <a class="menu-item" href="{{ route('balance-transfer.prefill-amounts.create') }}">
                                 <i class="la la-money"></i>Balance Transfer Prefill Amount</a>
-
                         </li>
 
                         <li class="{{ is_active_url('mybl/settings/najat')}}">
                             <a class="menu-item" href="{{ route('mybl.settings.najat.index') }}">
                                 <i class="la la-feed"></i>Najat Content Config</a>
-
                         </li>
                         <li class="{{ is_active_url('mybl/settings/lodge/complaints')}}">
                             <a class="menu-item" href="{{ route('lodge_complaints') }}">
@@ -769,7 +766,6 @@
                             <a class="menu-item" href="{{ route('bandhosim.index') }}">
                                 <i class="la la-cog"></i>Bandho sim image</a>
                         </li>
-
                     </ul>
                 </li>
             @endif
@@ -786,6 +782,11 @@
                 <ul class="menu-content">
                     <li class="{{ is_active_match('payment-gateways')}}">
                         <a class="menu-item" href="{{ url('payment-gateways') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Gateway List V2</a>
+                    </li>
+                </ul>
+                <ul class="menu-content">
+                    <li class="">
+                        <a class="menu-item" href="#" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> own recharge inventory</a>
                     </li>
                 </ul>
             </li>
