@@ -14,7 +14,7 @@
             <select name="show_in_home" class="form-control filter" id="status">
                 <option value="">Activation Status</option>
                 <option value="pending">Pending</option>
-                <option value="complete">Complete</option>
+                <option value="complete">Completed</option>
             </select>
         </div>
     </div>
@@ -26,7 +26,7 @@
         <thead>
         <tr>
             <th>Sl.</th>
-            <th>Msisdn</th>
+            <th>MSISDN</th>
             <th>Transaction Type</th>
             <th>User Type</th>
             <th>Transaction ID</th>
@@ -125,11 +125,11 @@
                     },
                     {
                         name: 'transaction_status',
-                        render: function (data, type, row) {;
+                        render: function (data, type, row) {
                             if (row.transaction_status === "VALID") {
-                                return "<span class='badge badge-success'>" + row.transaction_status + "</span>";
+                                return "<span class='badge badge-success'>Success</span>";
                             } else {
-                                return "<span class='badge badge-warning'>" + row.transaction_status + "</span>";
+                                return "<span class='badge badge-warning'>Failed</span>";
                             }
                         }
                     },
