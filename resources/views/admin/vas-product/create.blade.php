@@ -42,16 +42,16 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="cp_id" class="required">CP id:</label>
+                                        <label for="partner_id" class="required">Partner id:</label>
                                         <input
-                                            data-validation-required-message="CP ID is required"
-                                            value="@if(old('cp_id')) {{old('cp_id')}} @endif" required id="cp_id"
-                                            type="text" class="form-control @error('cp_id') is-invalid @enderror"
-                                            placeholder="CP ID" name="cp_id">
+                                            data-validation-required-message="Partner ID is required"
+                                            value="@if(old('partner_id')) {{old('partner_id')}} @endif" required id="partner_id"
+                                            type="text" class="form-control @error('partner_id') is-invalid @enderror"
+                                            placeholder="Partner ID" name="partner_id">
                                         <div class="help-block"></div>
-                                        @if ($errors->has('cp_id'))
+                                        @if ($errors->has('partner_id'))
                                             <div class="help-block">
-                                                <small class="text-danger"> {{ $errors->first('cp_id') }} </small>
+                                                <small class="text-danger"> {{ $errors->first('partner_id') }} </small>
                                             </div>
                                         @endif
                                     </div>
@@ -114,16 +114,30 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="price" class="required">Price:</label>
+                                        <label for="price_en" class="required">Price (EN):</label>
                                         <input
-                                            data-validation-required-message="Title is required"
-                                            value="@if(old('price')) {{old('price')}} @endif" required id="price"
-                                            type="number" class="form-control @error('price') is-invalid @enderror"
-                                            placeholder="Product Price" name="price" step="0.01">
+                                            data-validation-required-message="Price is required"
+                                            value="@if(old('price_en')) {{old('price_en')}} @endif" required id="price_en"
+                                            type="text" class="form-control @error('price_en') is-invalid @enderror"
+                                            placeholder="Product Price" name="price_en" step="0.01">
                                         <div class="help-block"></div>
-                                        @if ($errors->has('price'))
+                                        @if ($errors->has('price_en'))
                                             <div class="help-block">
-                                                <small class="text-danger"> {{ $errors->first('price') }} </small>
+                                                <small class="text-danger"> {{ $errors->first('price_en') }} </small>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="price_bn" class="required">Price (BN):</label>
+                                        <input
+                                            data-validation-required-message="Price is required"
+                                            value="@if(old('price_bn')) {{old('price_bn')}} @endif" required id="price_bn"
+                                            type="text" class="form-control @error('price_bn') is-invalid @enderror"
+                                            placeholder="Product Price" name="price_bn">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('price_bn'))
+                                            <div class="help-block">
+                                                <small class="text-danger"> {{ $errors->first('price_bn') }} </small>
                                             </div>
                                         @endif
                                     </div>
@@ -164,6 +178,18 @@
                                             </div>
                                         @endif
                                     </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="is_renewable">Is Renewable:</label>
+                                            <select class="form-control" id="is_renewable"
+                                                    name="is_renewable">
+                                                <option value="1"> Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="activation_type" class="required">Activation type:</label>
                                         <div class="">
@@ -233,16 +259,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="is_renewal">Is Renewal:</label>
-                                            <select class="form-control" id="is_renewal"
-                                                    name="is_renewal">
-                                                <option value="1"> Yes</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
                                     <div class="col-6">
                                         <div class="form-group">

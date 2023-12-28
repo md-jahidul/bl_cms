@@ -18,23 +18,23 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <td width="3%"><i class="icons"></i></td>
+                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="5%">ID</th>
                             <th width="15%">Subscription offer ID</th>
-                            <th width="15%">CP ID</th>
+                            <th width="15%">Partner ID</th>
                             <th width="30%">Title</th>
                             <th width="15%">platform</th>
                             <th width="5%">Visibility</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="">
+                        <tbody id="sortable">
                         @foreach($vasProducts as $index => $product)
-                            <tr data-index="{{ $product->id }}" data-position="">
-                                <td width="3%"><i class="icons"></i></td>
-                                <td>{{ ++$index }}</td>
+                            <tr data-index="{{ $product->id }}" data-position="{{$product->display_order}}">
+                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                                <td>{{ $product->id }}</td>
                                 <td>{{ $product->subscription_offer_id }}</td>
-                                <td>{{ $product->cp_id }}</td>
+                                <td>{{ $product->partner_id }}</td>
                                 <td>{{ $product->title_en }}</td>
                                 <td>{{ $product->platform }}</td>
                                 <td>
@@ -83,7 +83,7 @@
 @push('page-js')
     <script>
 
-        //let auto_save_url = "{{ url('product-special-types/addImage/update-position') }}";
+        let auto_save_url = "{{ url('vas-products/order/update-position') }}";
 
         $(document).ready(function () {
             $(document).on('click', '.del', function (e) {

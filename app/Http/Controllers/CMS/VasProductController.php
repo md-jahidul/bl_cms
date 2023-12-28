@@ -59,6 +59,11 @@ class VasProductController extends Controller
         return redirect('vas-products');
     }
 
+    public function updatePosition(Request $request)
+    {
+        return $this->vasProductService->tableSortable($request);
+    }
+
 
     public function destroy($vasProductId)
     {
