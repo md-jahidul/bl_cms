@@ -274,10 +274,14 @@
                                     <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }}">
                                         <label for="image" class="">Image</label>
                                         <div class="custom-file">
-                                            <input
+                                            {{-- <input
                                                 accept="image/*"
                                                 type="file" name="image" class="custom-file-input dropify"
-                                                data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
+                                                data-height="80" data-allowed-file-extensions="png jpg jpeg gif json"> --}}
+                                            <input
+                                                value="{{old('image')}}" id="image"
+                                                type="text" class="form-control @error('image') is-invalid @enderror"
+                                                placeholder="Image Url" name="image">
                                         </div>
                                         <div class="help-block"></div>
                                         <div class="help-block"></div>
