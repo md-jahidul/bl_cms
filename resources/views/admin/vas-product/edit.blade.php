@@ -208,7 +208,7 @@
                                             <div class='input-group'>
                                                 <input
                                                     value="{{old('activation_deeplink')?old('activation_deeplink'):$vasProduct->activation_deeplink}}" id="activation_deeplink"
-                                                    type="text" class="form-control @error('validity_en') is-invalid @enderror"
+                                                    type="text" class="form-control @error('activation_deeplink') is-invalid @enderror"
                                                     placeholder="Activation Deeplink" name="activation_deeplink">
                                                 <div class="help-block"></div>
                                                 @if ($errors->has('activation_deeplink'))
@@ -245,7 +245,7 @@
                                             <div class='input-group'>
                                                 <input
                                                     value="{{old('deactivation_deeplink')?old('deactivation_deeplink'):$vasProduct->deactivation_deeplink}}" id="deactivation_deeplink"
-                                                    type="text" class="form-control @error('validity_en') is-invalid @enderror"
+                                                    type="text" class="form-control @error('deactivation_deeplink') is-invalid @enderror"
                                                     placeholder="Activation Deeplink" name="deactivation_deeplink">
                                                 <div class="help-block"></div>
                                                 @if ($errors->has('deactivation_deeplink'))
@@ -280,10 +280,14 @@
                             <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }}">
                                 <label for="image">Image</label>
                                 <div class="custom-file">
-                                    <input
+                                    {{-- <input
                                         accept="image/*"
                                         type="file" name="image" class="custom-file-input dropify" data-default-file="{{ asset($vasProduct->image) }}"
-                                            data-height="80" data-allowed-file-extensions="png jpg jpeg gif json">
+                                            data-height="80" data-allowed-file-extensions="png jpg jpeg gif json"> --}}
+                                    <input
+                                        value="{{old('image')?old('image'):$vasProduct->image}}" id="image"
+                                        type="text" class="form-control @error('validity_en') is-invalid @enderror"
+                                        placeholder="Image Url" name="image">
                                 </div>
                                 <div class="help-block"></div>
                                 <div class="help-block"></div>
