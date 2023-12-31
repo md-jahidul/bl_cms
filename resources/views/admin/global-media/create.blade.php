@@ -42,6 +42,7 @@
 
     <script>
         function validateImage() {
+            var keyName = document.getElementById('key_name').value;
             var settingsKey = document.getElementById('settings_key').value;
             var selectedFile = document.getElementById('image').files[0];
             var dimensions = document.querySelector(`option[value="${settingsKey}"]`).getAttribute('data-dimensions');
@@ -51,6 +52,12 @@
 
             var [maxWidth, maxHeight] = dimensions.split('x');
 
+            // Check if a file was selected
+            if (!keyName) {
+                alert('Please insert the key name.');
+                return;
+            }
+            
             // Check if a file was selected
             if (!selectedFile) {
                 alert('Please select an image.');
