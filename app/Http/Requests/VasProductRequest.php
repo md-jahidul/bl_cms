@@ -23,10 +23,22 @@ class VasProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-                'subscription_offer_id' => 'required|unique:mybl_vas_products,subscription_offer_id,'. $this->subscription_offer_id,
+        if ($this->method() == "PUT") {
+            $id = $this->route()->parameters();
+
+            return [
+                'subscription_offer_id' => 'required|unique:mybl_vas_products,subscription_offer_id,'. $id['vas_product'],
                 'partner_id' => 'required',
             ];
+
+        }else {
+            return [
+                'subscription_offer_id' => 'required|unique:mybl_vas_products,subscription_offer_id',
+                'partner_id' => 'required',
+            ];
+        }
+        
+        
     }
 
     public function messages()
