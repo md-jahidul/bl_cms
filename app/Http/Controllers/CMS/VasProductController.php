@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VasProductRequest;
 use App\Services\VasProductService;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class VasProductController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(VasProductRequest $request)
     {
         if($this->vasProductService->storeVasProducts($request->all())) {
             session()->flash('message', 'VAS Product Created Successfully');
@@ -47,7 +48,7 @@ class VasProductController extends Controller
     }
 
 
-    public function update(Request $request, $vasProductId)
+    public function update(VasProductRequest $request, $vasProductId)
     {
 
         if($this->vasProductService->updateVasProduct($request->all(), $vasProductId)) {
