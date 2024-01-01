@@ -28,7 +28,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody id="sortable-new">
                         @foreach($vasProducts as $index => $product)
                             <tr data-index="{{ $product->id }}" data-position="{{$product->display_order}}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
