@@ -2,28 +2,23 @@
 
 namespace App\Models;
 
-use App\Traits\LogModelAction;
 use Illuminate\Database\Eloquent\Model;
 
-class NonBlComponent extends Model
+class GenericRailItem extends Model
 {
-    use LogModelAction;
-
     protected $fillable = [
-        'component_key',
+        'generic_rail_id',
         'title_en',
         'title_bn',
-        'is_api_call_enable',
+        'icon',
+        'status',
+        'is_highlight',
+        'deeplink',
         'display_order',
-        'is_eligible',
         'android_version_code_min',
         'android_version_code_max',
         'ios_version_code_min',
         'ios_version_code_max',
-        'other_component_id',
-        'cta_name_en',
-        'cta_name_bn',
-        'deeplink',
-        'icon',
+        'user_type'
     ];
 }

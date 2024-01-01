@@ -16,6 +16,11 @@ class LmsHomeComponent extends Model
         'android_version_code_min',
         'android_version_code_max',
         'ios_version_code_min',
-        'ios_version_code_max'
+        'ios_version_code_max',
+        'other_component_id',
+        'cta_name_en',
+        'cta_name_bn',
+        'deeplink',
+        'icon',
     ];
 }
