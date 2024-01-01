@@ -223,7 +223,7 @@ class ProductCoreService
 
     /**
      * @param $excel_path
-     * @return bool|int
+     * @return string[]
      */
     public function mapMyBlProduct($excel_path)
     {
@@ -244,6 +244,9 @@ class ProductCoreService
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
+                            if ($index == 34){
+                                continue;
+                            }
                             switch ($field) {
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
@@ -374,89 +377,96 @@ class ProductCoreService
                             }
                         }
 
-                        try {
-                            $product_code = $core_data['product_code'];
+//                        try {
+//
+//                        } catch (Exception $e) {
+//                            Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
+//                            continue;
+//                        }
 
-                            $core_product = ProductCore::where('product_code', $product_code)->first();
+                        $product_code = $core_data['product_code'];
 
-                            if ($core_product) {
-                                if ($core_product->platform == 'web') {
-                                    $core_data ['platform'] = 'all';
+                        $core_product = ProductCore::where('product_code', $product_code)->first();
+
+                        if ($core_product) {
+                            if ($core_product->platform == 'web') {
+                                $core_data ['platform'] = 'all';
+                            }
+                        } else {
+                            $core_data['platform'] = 'app';
+                        }
+
+                        ProductCore::updateOrCreate([
+                            'product_code' => $product_code
+                        ], $core_data);
+
+                        MyBlProduct::updateOrCreate([
+                            'product_code' => $product_code
+                        ], $mybl_data);
+
+                        // Create Deeplink
+                        $this->productDeepLinkService->createDeepLink($product_code);
+
+                        if (count($productTabs)) {
+                            MyBlProductTab::where('product_code', $product_code)->delete();
+
+                            foreach ($productTabs as $productTab) {
+                                $productTabInsert = new MyBlProductTab();
+                                $productTabInsert->product_code = $productTab['product_code'];
+                                $productTabInsert->my_bl_internet_offers_category_id = $productTab['my_bl_internet_offers_category_id'];
+                                $productTabInsert->save();
+                            }
+                        }
+
+                        if (count($tags)) {
+                            $existingTags = ProductTag::whereIn('title', $tags)->get();
+                            $existingTagTitles = $existingTags->pluck('title')->toArray();
+                            $existingTagTitles = array_map('strtolower', $existingTagTitles);
+                            $existingTagIds = $existingTags->pluck('id')->toArray();
+
+                            foreach ($tags as $tag) {
+                                if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
+                                    $tagInsert = new ProductTag();
+                                    $tagInsert->title = $tag;
+                                    $tagInsert->priority = rand(5, 10);
+                                    $tagInsert->save();
+                                    $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
+
+                                    #for push newly created tag's id to sync product tag in my_bl_product_tags table
+                                    $existingTagIds[] = $tagInsert->id;
                                 }
-                            } else {
-                                $core_data['platform'] = 'app';
                             }
 
-                            ProductCore::updateOrCreate([
-                                'product_code' => $product_code
-                            ], $core_data);
-
-                            MyBlProduct::updateOrCreate([
-                                'product_code' => $product_code
-                            ], $mybl_data);
-
-                            // Create Deeplink
-                            $this->productDeepLinkService->createDeepLink($product_code);
-
-                            if (count($productTabs)) {
-                                MyBlProductTab::where('product_code', $product_code)->delete();
-
-                                foreach ($productTabs as $productTab) {
-                                    $productTabInsert = new MyBlProductTab();
-                                    $productTabInsert->product_code = $productTab['product_code'];
-                                    $productTabInsert->my_bl_internet_offers_category_id = $productTab['my_bl_internet_offers_category_id'];
-                                    $productTabInsert->save();
+                            #For update the id in my_bl_products table. Only for existing tag
+                            foreach ($existingTags as $key => $value) {
+                                if($value->title == $tags[0]){
+                                    // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
+                                    $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
                                 }
                             }
 
-                            if (count($tags)) {
-                                $existingTags = ProductTag::whereIn('title', $tags)->get();
-                                $existingTagTitles = $existingTags->pluck('title')->toArray();
-                                $existingTagTitles = array_map('strtolower', $existingTagTitles);
-                                $existingTagIds = $existingTags->pluck('id')->toArray();
+                            $productTagIds = ProductTag::whereIn('title', $tags)->pluck('id')->toArray();
+                            $this->syncProductTags($product_code, Arr::flatten($productTagIds));
+                        }
 
-                                foreach ($tags as $tag) {
-                                    if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
-                                        $tagInsert = new ProductTag();
-                                        $tagInsert->title = $tag;
-                                        $tagInsert->priority = rand(5, 10);
-                                        $tagInsert->save();
-                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
-
-                                        #for push newly created tag's id to sync product tag in my_bl_product_tags table
-                                        $existingTagIds[] = $tagInsert->id;
-                                    }
-                                }
-
-                                #For update the id in my_bl_products table. Only for existing tag
-                                foreach ($existingTags as $key => $value) {
-                                    if($value->title == $tags[0]){
-                                        // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
-                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
-                                    }
-                                }
-
-                                $productTagIds = ProductTag::whereIn('title', $tags)->pluck('id')->toArray();
-                                $this->syncProductTags($product_code, Arr::flatten($productTagIds));
-                            }
-
-                            if (count($tags) == 0 || (count($tags) == 1 && $tags[0] == "")) {
-                                MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
-                            }
-
-                        } catch (Exception $e) {
-                            Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
-                            continue;
+                        if (count($tags) == 0 || (count($tags) == 1 && $tags[0] == "")) {
+                            MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
                         }
                     }
                     $row_number++;
                 }
             }
             $reader->close();
-            return true;
+            return [
+                'status' => "SUCCESS",
+                'massage' => "Product upload successfully!!"
+            ];
         } catch (Exception $e) {
             Log::error('Product Entry Error: ' . $e->getMessage());
-            return 0;
+            return [
+                'status' => "FAIL",
+                'massage' => $e->getMessage()
+            ];
         }
     }
 
