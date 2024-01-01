@@ -1531,7 +1531,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
 
     Route::resource('vas-products', 'CMS\VasProductController');
-    Route::get('vas-products/order/update-position', 'CMS\VasProductController@updatePosition');
+    Route::match(['GET', 'POST'],'vas-products/order/update-position', 'CMS\VasProductController@updatePosition');
     Route::get('vas-products/destroy/{id}', 'CMS\VasProductController@destroy')
         ->name('vas-product.destroy');
 
