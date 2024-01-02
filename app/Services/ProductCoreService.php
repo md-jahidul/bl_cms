@@ -279,6 +279,17 @@ class ProductCoreService
                                     }
                                     $mybl_data[$field] = $flag;
                                     break;
+                                case "show_timer":
+                                    $type = strtolower($cells [$index]->getValue());
+                                    if ($type == 'yes') {
+                                        $flag = 1;
+                                    } elseif ($type == 'no') {
+                                        $flag = 0;
+                                    } else {
+                                        break;
+                                    }
+                                    $core_data[$field] = $flag;
+                                    break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
 
@@ -338,7 +349,6 @@ class ProductCoreService
 
                                         if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
-
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
                                                 ->get()
@@ -377,80 +387,82 @@ class ProductCoreService
                             }
                         }
 
-//                        try {
-//
-//                        } catch (Exception $e) {
-//                            Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
-//                            continue;
-//                        }
+                        try {
+                            $product_code = $core_data['product_code'];
+                            $core_product = ProductCore::where('product_code', $product_code)->first();
+                            $core_data['activation_type'] = $core_data['activation_type'] ?? 'REGULAR';
 
-                        $product_code = $core_data['product_code'];
 
-                        $core_product = ProductCore::where('product_code', $product_code)->first();
-
-                        if ($core_product) {
-                            if ($core_product->platform == 'web') {
-                                $core_data ['platform'] = 'all';
+                            if ($core_product) {
+                                if ($core_product->platform == 'web') {
+                                    $core_data ['platform'] = 'all';
+                                }
+                            } else {
+                                $core_data['platform'] = 'app';
                             }
-                        } else {
-                            $core_data['platform'] = 'app';
-                        }
 
-                        ProductCore::updateOrCreate([
-                            'product_code' => $product_code
-                        ], $core_data);
+                            ProductCore::updateOrCreate([
+                                'product_code' => $product_code
+                            ], $core_data);
 
-                        MyBlProduct::updateOrCreate([
-                            'product_code' => $product_code
-                        ], $mybl_data);
+                            MyBlProduct::updateOrCreate([
+                                'product_code' => $product_code
+                            ], $mybl_data);
 
-                        // Create Deeplink
-                        $this->productDeepLinkService->createDeepLink($product_code);
+                            // Create Deeplink
+                            $this->productDeepLinkService->createDeepLink($product_code);
 
-                        if (count($productTabs)) {
-                            MyBlProductTab::where('product_code', $product_code)->delete();
+                            if (count($productTabs)) {
+                                MyBlProductTab::where('product_code', $product_code)->delete();
 
-                            foreach ($productTabs as $productTab) {
-                                $productTabInsert = new MyBlProductTab();
-                                $productTabInsert->product_code = $productTab['product_code'];
-                                $productTabInsert->my_bl_internet_offers_category_id = $productTab['my_bl_internet_offers_category_id'];
-                                $productTabInsert->save();
-                            }
-                        }
-
-                        if (count($tags)) {
-                            $existingTags = ProductTag::whereIn('title', $tags)->get();
-                            $existingTagTitles = $existingTags->pluck('title')->toArray();
-                            $existingTagTitles = array_map('strtolower', $existingTagTitles);
-                            $existingTagIds = $existingTags->pluck('id')->toArray();
-
-                            foreach ($tags as $tag) {
-                                if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
-                                    $tagInsert = new ProductTag();
-                                    $tagInsert->title = $tag;
-                                    $tagInsert->priority = rand(5, 10);
-                                    $tagInsert->save();
-                                    $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
-
-                                    #for push newly created tag's id to sync product tag in my_bl_product_tags table
-                                    $existingTagIds[] = $tagInsert->id;
+                                foreach ($productTabs as $productTab) {
+                                    $productTabInsert = new MyBlProductTab();
+                                    $productTabInsert->product_code = $productTab['product_code'];
+                                    $productTabInsert->my_bl_internet_offers_category_id = $productTab['my_bl_internet_offers_category_id'];
+                                    $productTabInsert->save();
                                 }
                             }
 
-                            #For update the id in my_bl_products table. Only for existing tag
-                            foreach ($existingTags as $key => $value) {
-                                if($value->title == $tags[0]){
-                                    // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
-                                    $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
+                            if (count($tags)) {
+                                $existingTags = ProductTag::whereIn('title', $tags)->get();
+                                $existingTagTitles = $existingTags->pluck('title')->toArray();
+                                $existingTagTitles = array_map('strtolower', $existingTagTitles);
+                                $existingTagIds = $existingTags->pluck('id')->toArray();
+
+                                foreach ($tags as $tag) {
+                                    if (!in_array(strtolower($tag), Arr::flatten($existingTagTitles)) && $tag != "") {
+                                        $tagInsert = new ProductTag();
+                                        $tagInsert->title = $tag;
+                                        $tagInsert->priority = rand(5, 10);
+                                        $tagInsert->save();
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $tagInsert->id]);
+
+                                        #for push newly created tag's id to sync product tag in my_bl_product_tags table
+                                        $existingTagIds[] = $tagInsert->id;
+                                    }
                                 }
+
+                                #For update the id in my_bl_products table. Only for existing tag
+                                foreach ($existingTags as $key => $value) {
+                                    if($value->title == $tags[0]){
+                                        // $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_bgd_color' => $value->tag_bgd_color, 'tag_text_color' => $value->tag_text_color]);
+                                        $myBlProduct = MyBlProduct::where('product_code', $product_code)->update(['tag_id' => $value->id]);
+                                    }
+                                }
+
+                                $this->syncProductTags($product_code, Arr::flatten($existingTagIds));
                             }
 
-                            $productTagIds = ProductTag::whereIn('title', $tags)->pluck('id')->toArray();
-                            $this->syncProductTags($product_code, Arr::flatten($productTagIds));
-                        }
+                            if (count($tags) == 0 || (count($tags) == 1 && $tags[0] == "")) {
+                                MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
+                            }
 
-                        if (count($tags) == 0 || (count($tags) == 1 && $tags[0] == "")) {
-                            MyBlProduct::where('product_code', $product_code)->update(['tag_id' => null]);
+                        } catch (Exception $e) {
+                            Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
+                            return [
+                                'status' => "FAIL",
+                                'massage' => $e->getMessage()
+                            ];
                         }
                     }
                     $row_number++;
@@ -1118,6 +1130,19 @@ class ProductCoreService
             unset($data_request['is_visible']);
             unset($data_request['pin_to_top']);
 
+            if ($request->file('service_image_url')) {
+                $file = $request->service_image_url;
+                $path = $file->storeAs(
+                    'products/images',
+                    $data_request['product_code'] . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                    'public'
+                );
+
+                $data_request['service_image_url'] = $path;
+            }
+
+            $data_request['show_timer'] = $request->show_timer ?? 0;
+
 //            if (isset($data_request['internet_volume_mb'])) {
 //                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
 //                $data_request['data_volume_unit'] = ($data_request['internet_volume_mb'] > 1024) ? 'GB' : 'MB';
@@ -1312,6 +1337,19 @@ class ProductCoreService
             unset($data_request['is_visible']);
             unset($data_request['pin_to_top']);
 
+            if ($request->file('service_image_url')) {
+                $file = $request->service_image_url;
+                $path = $file->storeAs(
+                    'products/images',
+                    $data_request['product_code'] . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                    'public'
+                );
+
+                $data_request['service_image_url'] = $path;
+            }
+
+            $data_request['show_timer'] = $request->show_timer ?? 0;
+
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
             $data_request['recharge_product_code'] = strtoupper(str_replace(' ', '', $request->recharge_product_code));
@@ -1421,13 +1459,13 @@ class ProductCoreService
             ->build();
 
 
-        $header = config('productMapping.mybl.columns');
+        $header = config('productMapping.mybl.download-columns');
 
         unset($header['internet_volume_mb']);
 
 
-        $header['Active'] = $header['status'];
-        unset($header['status']);
+//        $header['Active'] = $header['status'];
+//        unset($header['status']);
 
         if(isset($request['filtered_btn'])) {
             $header['Deep-link'] = $header['deep_link'];
@@ -1470,11 +1508,10 @@ class ProductCoreService
                 $insert_data[19] = $product->details->vat;
                 $insert_data[20] = ($product->show_recharge_offer) ? 'Yes' : 'No';
                 $insert_data[21] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
-                // $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
-                //     ',',
-                //     $product->detailTabs->pluck('name')->where('platform', 'mybl')->toArray()
-                // ) ?: $product->offer_section_title);
-                $insert_data[22] = implode(',',$product->detailTabs->pluck('name')->toArray());
+                $insert_data[22] = strtolower($insert_data[1]) !== 'data' ? $product->offer_section_title : (implode(
+                    ',',
+                    $product->detailTabs->pluck('name')->where('platform', 'mybl')->toArray()
+                ) ?: $product->offer_section_title);
                 $productTags = $product->tags;
                 $insert_data[23] = $productTags->count() ? implode(',',
                     $productTags->pluck('title')->toArray()) : $product->tag;
@@ -1488,12 +1525,21 @@ class ProductCoreService
                 $insert_data[31] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
                 $insert_data[32] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
                 $insert_data[33] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[34] = $product->details->name_bn;
+                $insert_data[35] = ($product->details->show_timer) ? 'Yes' : 'No';
+                $insert_data[36] = $product->details->activation_type;
+                $insert_data[37] = $product->details->cta_name_en;
+                $insert_data[38] = $product->details->cta_name_bn;
+                $insert_data[39] = $product->details->cta_bgd_color;
+                $insert_data[40] = $product->details->cta_text_color;
+                $insert_data[41] = $product->details->redirection_name_en;
+                $insert_data[42] = $product->details->redirection_name_bn;
+                $insert_data[43] = $product->details->redirection_deeplink;
 
                 if (isset($request['filtered_btn'])) {
                     $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
-                    $insert_data[34] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
+                    $insert_data[44] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
                 }
-
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);

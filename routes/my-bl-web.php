@@ -423,8 +423,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');
-    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
-    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
+    Route::get('store-locations/entry', 'CMS\StoreLocatorEntryController@index');
+    Route::post('store-locations', 'CMS\StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
