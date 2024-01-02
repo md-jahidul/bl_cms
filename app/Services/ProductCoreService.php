@@ -223,7 +223,7 @@ class ProductCoreService
 
     /**
      * @param $excel_path
-     * @return bool|int
+     * @return string[]
      */
     public function mapMyBlProduct($excel_path)
     {
@@ -244,6 +244,10 @@ class ProductCoreService
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
+                            if ($index == 45){
+                                continue;
+                            }
+
                             switch ($field) {
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
@@ -346,7 +350,6 @@ class ProductCoreService
 
                                         if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
-
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
                                                 ->get()
@@ -387,7 +390,6 @@ class ProductCoreService
 
                         try {
                             $product_code = $core_data['product_code'];
-
                             $core_product = ProductCore::where('product_code', $product_code)->first();
                             $core_data['activation_type'] = $core_data['activation_type'] ?? 'REGULAR';
 
@@ -458,17 +460,26 @@ class ProductCoreService
 
                         } catch (Exception $e) {
                             Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
-                            continue;
+                            return [
+                                'status' => "FAIL",
+                                'massage' => $e->getMessage()
+                            ];
                         }
                     }
                     $row_number++;
                 }
             }
             $reader->close();
-            return true;
+            return [
+                'status' => "SUCCESS",
+                'massage' => "Product upload successfully!!"
+            ];
         } catch (Exception $e) {
             Log::error('Product Entry Error: ' . $e->getMessage());
-            return 0;
+            return [
+                'status' => "FAIL",
+                'massage' => $e->getMessage()
+            ];
         }
     }
 
@@ -1457,9 +1468,9 @@ class ProductCoreService
 //        $header['Active'] = $header['status'];
 //        unset($header['status']);
 
-        if(isset($request['filtered_btn'])) {
-            $header['Deep-link'] = $header['deep_link'];
-        }
+        $header['Deep-link'] = $header['deep_link'];
+//        if(isset($request['filtered_btn'])) {
+//        }
 
         unset($header['deep_link']);
 
@@ -1525,11 +1536,12 @@ class ProductCoreService
                 $insert_data[41] = $product->details->redirection_name_en;
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
+                $insert_data[44] = $product->details->service_tags;
 
-                if (isset($request['filtered_btn'])) {
-                    $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
-                    $insert_data[44] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
-                }
+                $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
+                $insert_data[45] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
+//                if (isset($request['filtered_btn'])) {
+//                }
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
