@@ -48,7 +48,7 @@ return [
             'redirection_name_en'   => 41,
             'redirection_name_bn'   => 42,
             'redirection_deeplink'  => 43,
-            'service_tags' => 44,
+            'service_tags'          => 44,
         ],
         'download-columns' => [
             'sim_type'              => 0,
@@ -96,7 +96,8 @@ return [
             'redirection_name_en'   => 41,
             'redirection_name_bn'   => 42,
             'redirection_deeplink'  => 43,
-            'deep_link'             => 44,
+            'service_tags'          => 44,
+            'deep_link'             => 45,
         ],
         'product_schedule_statuses' => [
             0 => 'None',
