@@ -9,8 +9,6 @@ use App\Traits\RedisTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
-
 
 class VasProductService
 {
@@ -20,6 +18,7 @@ class VasProductService
 
     protected const VAS_PRODUCT_REDIS_KEY = 'vas-product';
     protected $vasProductRepository;
+
     public function __construct(VasProductRepository $vasProductRepository)
     {
         $this->vasProductRepository = $vasProductRepository;
@@ -52,7 +51,8 @@ class VasProductService
                 $this->save($request);
 
             });
-            //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+            $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+            
             return true;
 
         } catch (\Exception $e) {
@@ -74,7 +74,7 @@ class VasProductService
                 $vasProduct->update($data);
             });
 
-            //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+            $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
             return true;
         } catch (\Exception $e) {
             Log::error('VAS Product Update failed' . $e->getMessage());
@@ -91,14 +91,16 @@ class VasProductService
         //     $this->deleteFile($vasProduct->image);
         // }
 
-        //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+        $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+
         return Response('VAS Product has been successfully deleted');
     }
 
     public function tableSortable($data)
     {
         $this->vasProductRepository->vasProductsTableSort($data);
-        //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+        $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
+
         return new Response('Sequence has been successfully update');
     }
 }
