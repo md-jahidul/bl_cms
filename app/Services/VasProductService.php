@@ -51,8 +51,9 @@ class VasProductService
                 $this->save($request);
 
             });
+
             $this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
-            
+
             return true;
 
         } catch (\Exception $e) {
