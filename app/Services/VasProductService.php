@@ -41,9 +41,12 @@ class VasProductService
                     $i = $vas_products->display_order + 1;
                 }
 
-                if (request()->hasFile('image')) {
-                    $request['image'] = 'storage/' . $request['image']->storeAs('vas-product', time() . '-' . bin2hex(random_bytes(4)) . '-' . $request['image']->getClientOriginalName());
-                }
+                // if (request()->hasFile('image')) {
+                //     $request['image'] = 'storage/' . $request['image']->storeAs('vas-product', time() . '-' . bin2hex(random_bytes(4)) . '-' . $request['image']->getClientOriginalName());
+                // }
+                
+                if (empty($request['image'])) $request['image'] = null;
+
                 $request['display_order'] = $i;
 
                 $this->save($request);
@@ -63,10 +66,11 @@ class VasProductService
         try {
             $vasProduct = $this->findOne($id);
             DB::transaction(function () use ($data, $id, $vasProduct) {
-                if (request()->hasFile('image')) {
-                    $data['image'] = 'storage/' . $data['image']->storeAs('vas-product', time() . '-' . bin2hex(random_bytes(4)) . '-' . $data['image']->getClientOriginalName());
-                    if($vasProduct->image) $this->deleteFile($vasProduct->image);
-                }
+                // if (request()->hasFile('image')) {
+                //     $data['image'] = 'storage/' . $data['image']->storeAs('vas-product', time() . '-' . bin2hex(random_bytes(4)) . '-' . $data['image']->getClientOriginalName());
+                //     if($vasProduct->image) $this->deleteFile($vasProduct->image);
+                // }
+                if (empty($data['image'])) $data['image'] = null;
                 $vasProduct->update($data);
             });
 
@@ -83,9 +87,9 @@ class VasProductService
         $vasProduct = $this->findOne($id);
         $vasProduct->delete();
 
-        if ($vasProduct->image) {
-            $this->deleteFile($vasProduct->image);
-        }
+        // if ($vasProduct->image) {
+        //     $this->deleteFile($vasProduct->image);
+        // }
 
         //$this->redisDel(self::VAS_PRODUCT_REDIS_KEY);
         return Response('VAS Product has been successfully deleted');
