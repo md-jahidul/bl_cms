@@ -244,9 +244,6 @@ class ProductCoreService
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
-                            if ($index == 34){
-                                continue;
-                            }
                             switch ($field) {
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
