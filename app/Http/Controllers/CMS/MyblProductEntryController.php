@@ -229,7 +229,15 @@ class MyblProductEntryController extends Controller
 
             $path = Storage::disk('public')->path($path);
 
-            $this->service->mapMyBlProduct($path);
+            $response = $this->service->mapMyBlProduct($path);
+
+            if ($response['status'] == "FAIL"){
+                $response = [
+                    'status' => 'FAILED',
+                    'errors' => $response['massage']
+                ];
+                return response()->json($response, 500);
+            }
 
             // reset product keys from redis
             /**

@@ -47,7 +47,7 @@ return [
             'cta_text_color'        => 40,
             'redirection_name_en'   => 41,
             'redirection_name_bn'   => 42,
-            'redirection_deeplink' => 43,
+            'redirection_deeplink'  => 43,
             'service_tags' => 44,
         ],
         'download-columns' => [

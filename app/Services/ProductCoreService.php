@@ -223,7 +223,7 @@ class ProductCoreService
 
     /**
      * @param $excel_path
-     * @return bool|int
+     * @return string[]
      */
     public function mapMyBlProduct($excel_path)
     {
@@ -346,7 +346,6 @@ class ProductCoreService
 
                                         if (!is_null($core_data['content_type'])) {
                                             $productCode = $core_data['product_code'];
-
                                             $productTabs = MyBlInternetOffersCategory::select('id')
                                                 ->whereIn('name', $titleArr)
                                                 ->get()
@@ -387,7 +386,6 @@ class ProductCoreService
 
                         try {
                             $product_code = $core_data['product_code'];
-
                             $core_product = ProductCore::where('product_code', $product_code)->first();
                             $core_data['activation_type'] = $core_data['activation_type'] ?? 'REGULAR';
 
@@ -458,17 +456,26 @@ class ProductCoreService
 
                         } catch (Exception $e) {
                             Log::error('Error: ' . $product_code . ' ' . $e->getMessage());
-                            continue;
+                            return [
+                                'status' => "FAIL",
+                                'massage' => $e->getMessage()
+                            ];
                         }
                     }
                     $row_number++;
                 }
             }
             $reader->close();
-            return true;
+            return [
+                'status' => "SUCCESS",
+                'massage' => "Product upload successfully!!"
+            ];
         } catch (Exception $e) {
             Log::error('Product Entry Error: ' . $e->getMessage());
-            return 0;
+            return [
+                'status' => "FAIL",
+                'massage' => $e->getMessage()
+            ];
         }
     }
 
