@@ -151,6 +151,8 @@ class Helper
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
+            "SIM_BLOCK"               => 'Sim Block',
+            "DEEPLINK"               => 'Deeplink',
             "AMAR_TUNE"               => 'Amar Tune',
             "SERVICE"                => 'Service'
         ];
@@ -312,7 +314,8 @@ class Helper
             'voice' => 'VOICE',
             'mixed_bundle' => 'MIX BUNDLES',
             'gift_packs' => "GIFT PACKS",
-            'roaming' => "ROAMING"
+            'roaming' => "ROAMING",
+            'service' => "Service"
         ];
     }
 
@@ -362,6 +365,7 @@ class Helper
                 'mybl_component_content',
                 'mybl_component_commerce',
                 'mybl_component_nonbl',
+                'mybl_component_lms',
                 'generic_component_data'
             ]);
         }

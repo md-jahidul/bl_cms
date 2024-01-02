@@ -572,6 +572,14 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('StoreLocatorEntry'))
+        <li class="{{ is_active_url('digital-service') }}">
+            <a class="menu-item" href="{{ url('store-locations/entry') }}"
+               data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-server"></i>Store Location Entry
+            </a>
+        </li>
+   @endif
 
     @if( auth()->user()->can_view('Banner') || auth()->user()->can_view('WelcomeInfo') || auth()->user()->can_view('MyblSlider')
          || auth()->user()->can_view('MyblSliderImage')  || auth()->user()->can_view('ContextualCard')    )
@@ -1037,6 +1045,12 @@
                 <a class="menu-item" href="{{ route('mybl.transaction-status.doctime') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-list"></i>DocTime Transaction
+                </a>
+            </li>
+            <li class="{{is_active_url('mybl/onmobile/transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status',['type' => 'onmobile']) }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Onmobile Transaction
                 </a>
             </li>
         </ul>

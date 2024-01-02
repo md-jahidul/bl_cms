@@ -829,7 +829,8 @@
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||
-                type === 'gift'
+                type === 'gift' ||
+                type === 'service'
             ) {
                 offer_types.append(data + dataUnit + sectionType)
             } else if (type === 'reactivation') {

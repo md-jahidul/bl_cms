@@ -43,7 +43,10 @@ class TriviaGamificationService
         if (isset($data['banner'])) {
             $data['banner'] = 'storage/' . $data['banner']->store('trivia');
         }
-        
+        if (isset($data['icon'])) {
+            $data['icon'] = 'storage/' . $data['icon']->store('trivia');
+        }
+
         return $this->triviaGamificationRepository->save($data);
     }
 
@@ -57,6 +60,12 @@ class TriviaGamificationService
             $data['banner'] = 'storage/' . $data['banner']->store('trivia');
             if (isset($triviaInfo) && file_exists($triviaInfo->banner)) {
                 unlink($triviaInfo->banner);
+            }
+        }
+        if (isset($data['icon'])) {
+            $data['icon'] = 'storage/' . $data['icon']->store('trivia');
+            if (isset($triviaInfo) && file_exists($triviaInfo->icon)) {
+                unlink($triviaInfo->icon);
             }
         }
 
