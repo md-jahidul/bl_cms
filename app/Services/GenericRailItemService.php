@@ -56,8 +56,8 @@ class GenericRailItemService
     public function update($data, $itemId)
     {
         try {
-            $railData = $this->genericRailService->findOne($itemId);
             $itemData = $this->genericRailItemRepository->findOne($itemId);
+            $railData = $this->genericRailService->findOne($itemData['generic_rail_id']);
 
             $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
             $data = array_merge($data, $version_code);
@@ -69,6 +69,7 @@ class GenericRailItemService
             return true;
 
         } catch (\Exception $e) {
+
             return false;
         }
     }

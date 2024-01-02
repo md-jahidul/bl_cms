@@ -77,9 +77,9 @@ class GenericRailItemController extends Controller
     {
         if($this->genericRailItemService->update($request->all(), $itemId)) {
 
-            session()->flash('message', 'Image Updated Successfully');
+            session()->flash('message', 'Item Updated Successfully');
         } else {
-            session()->flash('error', 'Image Updated Failed');
+            session()->flash('error', 'Item Updated Failed');
         }
 
         return redirect()->back();
