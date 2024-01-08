@@ -114,39 +114,29 @@
                                         @endif
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="price_en" class="required">Price (EN):</label>
+                                        <label for="price" class="required">Price:</label>
                                         <input
                                             data-validation-required-message="Price is required"
-                                            value="@if(old('price_en')) {{old('price_en')}} @endif" required id="price_en"
-                                            type="text" class="form-control @error('price_en') is-invalid @enderror"
-                                            placeholder="Product Price" name="price_en" step="0.01">
+                                            value="@if(old('price')) {{old('price')}} @endif" required id="price"
+                                            type="number" class="form-control @error('price') is-invalid @enderror"
+                                            placeholder="Product Price" name="price" step="0.01">
                                         <div class="help-block"></div>
-                                        @if ($errors->has('price_en'))
+                                        @if ($errors->has('price'))
                                             <div class="help-block">
-                                                <small class="text-danger"> {{ $errors->first('price_en') }} </small>
+                                                <small class="text-danger"> {{ $errors->first('price') }} </small>
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-6 mb-2">
-                                        <label for="price_bn" class="required">Price (BN):</label>
-                                        <input
-                                            data-validation-required-message="Price is required"
-                                            value="@if(old('price_bn')) {{old('price_bn')}} @endif" required id="price_bn"
-                                            type="text" class="form-control @error('price_bn') is-invalid @enderror"
-                                            placeholder="Product Price" name="price_bn">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('price_bn'))
-                                            <div class="help-block">
-                                                <small class="text-danger"> {{ $errors->first('price_bn') }} </small>
-                                            </div>
-                                        @endif
-                                    </div>
+                                    
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="platform" class="required">Platform:</label>
                                             <select class="form-control" id="platform"
                                                     name="platform">
                                                 <option value="SDP"> SDP</option>
+                                                <option value="RRBT"> RRBT</option>
+                                                <option value="CRBT"> CRBT</option>
+                                                <option value="stop_all"> Stop All</option>
                                             </select>
                                         </div>
                                     </div>
