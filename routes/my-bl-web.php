@@ -1473,10 +1473,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
     Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
 
-    /**
-     * New CMS Token Generate
-     */
-    Route::get('new-cms/verify-token', "Auth\NewCMSAuthController@verifyToken");
 });
 
 // 4G Map View Route
@@ -1498,6 +1494,11 @@ Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {
         return "Customer not found";
     }
 });
+
+/**
+ * New CMS Token Generate
+ */
+Route::get('new-cms/verify-token', "Auth\NewCMSAuthController@verifyToken");
 
 Route::get( 'winner-test', function() {
     $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
