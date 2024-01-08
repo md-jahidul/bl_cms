@@ -3,23 +3,18 @@
 namespace App\Services;
 
 use App\Helpers\Helper;
-use App\Models\MyBlProduct;
 use App\Repositories\MyBlServiceItemRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 
 class MyBlServiceItemsService
 {
     use CrudTrait;
     use FileTrait;
 
-    /**
-     * @var $sliderRepository
-     */
     protected $serviceItemRepository;
 
     /**
@@ -53,7 +48,6 @@ class MyBlServiceItemsService
         return $this->separatedActiveAndInactive($service_items);
     }
 
-
     public function storeServiceItems($items)
     {
         try {
@@ -64,51 +58,22 @@ class MyBlServiceItemsService
                 } else {
                     $i = $items_data->sequence + 1;
                 }
+                $items['tags'] = implode(', ', $items['tag']);
                 $items['sequence'] = $i;
-                $items['component_identifier'] = str_replace(' ', '_', strtolower($items_data['title_en']));
-
-                if (isset($items['tags'])) {
-                    $tagsArray = explode(",", $items['tags']);
-                    $tagsJson = json_encode($tagsArray);
-                    $items['tags'] = $tagsJson;
-                }
+                $items['component_identifier'] = str_replace(' ', '_', strtolower($items['title_en']));
                 $version_code = Helper::versionCode($items['android_version_code'], $items['ios_version_code']);
                 $items = array_merge($items, $version_code);
                 unset($items['android_version_code'], $items['ios_version_code']);
                 $items = $this->save($items);
             });
 
-            return new Response("Image has been successfully added");
+            return new Response("Items has been successfully added");
         } catch (\Exception $e) {
-            Log::error('Slider Image store failed' . $e->getMessage());
-            // return $e->getMessage();
+            Log::error('Item store failed' . $e->getMessage());
             return \response($e->getMessage(), 500);
         }
     }
 
-    public function getActiveProducts()
-    {
-        $builder = new MyBlProduct();
-        $builder = $builder->where('status', 1);
-
-        $products = $builder->whereHas(
-            'details',
-            function ($q) {
-                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
-            }
-        )->get();
-
-        $data = [];
-
-        foreach ($products as $product) {
-            $data [] = [
-                'id' => $product->details->product_code,
-                'text' => $product->details->product_code . ' - (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
-            ];
-        }
-
-        return $data;
-    }
 
     public function tableSortable($data)
     {
@@ -122,12 +87,13 @@ class MyBlServiceItemsService
         try {
             $serviceItems = $this->findOne($id);
             DB::transaction(function () use ($data, $id, $serviceItems) {
+                $data['tags'] = implode(', ', $data['tag']);
                 $serviceItems->update($data);
             });
 
-            return response("Image has has been successfully updated");
+            return response("Item has has been successfully updated");
         } catch (\Exception $e) {
-            Log::error('Slider Image store failed' . $e->getMessage());
+            Log::error('Item store failed' . $e->getMessage());
             return \response($e->getMessage(), 500);
         }
     }
@@ -137,17 +103,7 @@ class MyBlServiceItemsService
     {
         $serviceItem = $this->findOne($id);
         $serviceItem->delete();
-        /**
-         * Removing redis cache for segment banner to impact the change
-         */
-//        if ($sliderImage->user_type === 'segment_wise_banner') {
-//            $this->delSliderRedisCache();
-//        }
-        return Response('Image has been successfully deleted');
+        return Response('Item has been successfully deleted');
     }
 
-    public function delSliderRedisCache($redisKey = 'mybl_segmented_banners')
-    {
-        Redis::del($redisKey);
-    }
 }

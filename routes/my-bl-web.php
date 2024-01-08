@@ -910,7 +910,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('health-hub-deeplink-analytic-details');
 
 
-
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
     // Guest User Tracking Page Wise

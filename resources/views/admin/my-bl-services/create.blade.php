@@ -5,7 +5,6 @@
     <li class="breadcrumb-item active">
         <a href="{{ url('my-bl-services') }}">Services List</a>
     </li>
-    {{--    <li class="breadcrumb-item active">Create Campaign</li>--}}
 @endsection
 @section('content')
     <section>
@@ -46,69 +45,6 @@
                                         </p>
                                     @endif
                                 </div>
-
-                                {{--                                <div class="form-group col-md-6">--}}
-                                {{--                                    <label for="component_size" class="required">Component Size</label>--}}
-                                {{--                                    <select name="component_size" class="form-control custom-select"--}}
-                                {{--                                            id="component_size" required data-validation-required-message="Please select component size">--}}
-                                {{--                                        <option value="" >--Select Tab Section--</option>--}}
-                                {{--                                        @foreach (Config::get('generic-slider.component_size') as $key => $size)--}}
-                                {{--                                            <option value="{{$key}}" >{{$size}}</option>--}}
-                                {{--                                        @endforeach--}}
-                                {{--                                    </select>--}}
-                                {{--                                    @if($errors->has('component_size'))--}}
-                                {{--                                        <p class="text-left">--}}
-                                {{--                                            <small class="danger text-muted">{{ $errors->first('component_size') }}</small>--}}
-                                {{--                                        </p>--}}
-                                {{--                                    @endif--}}
-                                {{--                                </div>--}}
-
-                                {{--                                <div class="form-group col-md-6">--}}
-                                {{--                                    <label for="component_type" class="required">Component Type</label>--}}
-                                {{--                                    <select name="component_type" class="form-control custom-select"--}}
-                                {{--                                            id="component_type" required data-validation-required-message="Please select component type">--}}
-                                {{--                                        <option value="" >--Select Tab Section--</option>--}}
-                                {{--                                        @foreach (Config::get('generic-slider.component_type') as $key => $type)--}}
-                                {{--                                            <option value="{{$key}}" >{{ucfirst($type)}}</option>--}}
-                                {{--                                        @endforeach--}}
-                                {{--                                    </select>--}}
-                                {{--                                    @if($errors->has('component_type'))--}}
-                                {{--                                        <p class="text-left">--}}
-                                {{--                                            <small class="danger text-muted">{{ $errors->first('component_type') }}</small>--}}
-                                {{--                                        </p>--}}
-                                {{--                                    @endif--}}
-                                {{--                                </div>--}}
-
-                                {{--                                <div class="form-group col-md-6 mb-2">--}}
-                                {{--                                    <label for="component_for" class="required">Component For: </label>--}}
-                                {{--                                    <select name="component_for" class="form-control custom-select"--}}
-                                {{--                                            id="component_for" required data-validation-required-message="Please select component type">--}}
-                                {{--                                        <option value="" >--Select Tab Section--</option>--}}
-                                {{--                                        @foreach (Config::get('generic-slider.component_for') as $key => $type)--}}
-                                {{--                                            <option value="{{$key}}" >{{$type}}</option>--}}
-                                {{--                                        @endforeach--}}
-                                {{--                                    </select>--}}
-                                {{--                                    @if($errors->has('component_type'))--}}
-                                {{--                                        <p class="text-left">--}}
-                                {{--                                            <small class="danger text-muted">{{ $errors->first('component_type') }}</small>--}}
-                                {{--                                        </p>--}}
-                                {{--                                    @endif--}}
-                                {{--                                </div>--}}
-
-                                {{--                                <div id="scrollable_div" class="form-group col-md-3">--}}
-                                {{--                                    <label for="scrollable" class="required">Scrollable</label>--}}
-                                {{--                                    <select name="scrollable" class="form-control custom-select"--}}
-                                {{--                                            id="scrollable" required data-validation-required-message="Please select component is scrollable or not">--}}
-                                {{--                                        <option selected value="0" >False</option>--}}
-                                {{--                                        <option value="1" >True</option>--}}
-                                {{--                                    </select>--}}
-                                {{--                                    @if($errors->has('scrollable'))--}}
-                                {{--                                        <p class="text-left">--}}
-                                {{--                                            <small class="danger text-muted">{{ $errors->first('scrollable') }}</small>--}}
-                                {{--                                        </p>--}}
-                                {{--                                    @endif--}}
-                                {{--                                </div>--}}
-
                                 <div class="form-group col-md-3 mb-2">
                                     <label class="required" for="status">Status: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
@@ -135,28 +71,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                {{--                                <div class="form-group col-md-6">--}}
-                                {{--                                    <div class="form-group">--}}
-                                {{--                                        <label for="image">Upload Icon :</label>--}}
-                                {{--                                        <input type="file"--}}
-                                {{--                                               id="icon"--}}
-                                {{--                                               name="icon"--}}
-                                {{--                                               class="dropify"--}}
-                                {{--                                               data-allowed-formats="square"--}}
-                                {{--                                               data-allowed-file-extensions="png"--}}
-                                {{--                                               data-height="70"/>--}}
-                                {{--                                        <div class="help-block">--}}
-                                {{--                                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>--}}
-                                {{--                                            <small class="text-info"> Shortcut icon should be in 1:1 aspect--}}
-                                {{--                                                ratio</small>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <small id="massage"></small>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
-
-
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="icon" class="required">Upload Icon :</label>
+                                    <label for="icon" class="required">Icon Url :</label>
                                     <input
                                             maxlength="200"
                                             value="@if(old('icon')) {{old('icon')}} @endif" required
@@ -167,7 +83,6 @@
                                     <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
                                     <label for="title" class="">Android Version Code</label>
                                     <input type="text" name="android_version_code" class="form-control"
@@ -221,30 +136,4 @@
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#component_type').change(function () {
-                let show = $('#component_type').val() == 'carousel'
-
-                if (show) {
-                    $('#scrollable_div').show()
-                } else {
-                    $('#scrollable_div').hide()
-                }
-            });
-
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Icon to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct Icon file'
-                },
-                error: {
-                    'imageFormat': 'The image ratio must be 1:1.'
-                }
-            });
-        });
-    </script>
 @endpush

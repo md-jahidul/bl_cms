@@ -73,11 +73,6 @@ class MyBlServiceItemsController extends Controller
         return redirect()->back();
     }
 
-//    public function getMyblProducts()
-//    {
-//        return $this->sliderImageService->getActiveProducts();
-//    }
-
     /**
      * Display the specified resource.
      *
@@ -102,9 +97,9 @@ class MyBlServiceItemsController extends Controller
 
     public function edit($id)
     {
+
         $itemInfo = $this->blServiceItemsService->findOne($id);
         $android_version_code = implode('-', [$itemInfo['android_version_code_min'], $itemInfo['android_version_code_max']]);
-
         $ios_version_code = implode('-', [$itemInfo['ios_version_code_min'], $itemInfo['ios_version_code_max']]);
         $itemInfo->android_version_code = $android_version_code;
         $itemInfo->ios_version_code = $ios_version_code;
@@ -118,13 +113,6 @@ class MyBlServiceItemsController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     * @throws \Exception
-     */
     public function destroy($id)
     {
         session()->flash('error', $this->blServiceItemsService->deleteServiceItem($id)->getContent());

@@ -22,7 +22,6 @@
                             <th width="10%">ID</th>
                             <th width="40%">Tittle</th>
                             <th width="20%">Status</th>
-{{--                            <th width="20%">Slider For</th>--}}
                             <th width="30%">Action</th>
                         </tr>
                         </thead>
@@ -32,7 +31,6 @@
                                     <td width="10%">{{$service->id}}</td>
                                     <td width="20%">{{$service->title_en}}</td>
                                     <td width="20%">{{$service->status==1?'Active':'Inactive'}}</td>
-{{--                                    <td width="20%">{{$service->component_for}}</td>--}}
                                     <td width="30%">
                                         <div class="row justify-content-md-center no-gutters">
                                             <div class="col-md-3">

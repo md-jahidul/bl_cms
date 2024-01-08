@@ -17,7 +17,7 @@ class CreateMyBlServicesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title_en');
             $table->string('title_bn');
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->boolean('is_title_show')->default(false);
             $table->integer('sequence')->nullable();
             $table->boolean('status')->default(false);
