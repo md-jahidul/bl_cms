@@ -1108,6 +1108,7 @@ class ProductCoreService
             }
 
             $data_request['show_timer'] = $request->show_timer ?? 0;
+            $data_request['show_tnc'] = $request->show_tnc ?? 0;
 
 //            if (isset($data_request['internet_volume_mb'])) {
 //                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
@@ -1310,6 +1311,7 @@ class ProductCoreService
             }
 
             $data_request['show_timer'] = $request->show_timer ?? 0;
+            $data_request['show_tnc'] = $request->show_tnc ?? 0;
 
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));

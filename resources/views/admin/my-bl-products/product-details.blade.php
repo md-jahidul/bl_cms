@@ -553,13 +553,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="cta_bgd_color" class="control-label">Background Color</label>
                                         <input type="color" name="cta_bgd_color" class="form-control" placeholder="Background Color" value="{{ $details->details->cta_bgd_color }}" required>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="cta_text_color" class="control-label">Text Color</label>
                                         <input type="color" name="cta_text_color" class="form-control" placeholder="Color" value="{{ $details->details->cta_text_color }}" required>
@@ -569,6 +569,12 @@
                                     <fieldset>
                                         <input type="checkbox" id="show_timer" value="1" name="show_timer" @if($details->details->show_timer) checked @endif>
                                         <label for="show_timer">Show Timer</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="show_tnc" value="1" name="show_tnc" @if($details->details->show_tnc) checked @endif>
+                                        <label for="show_tnc">Show Terms & Condition</label>
                                     </fieldset>
                                 </div>
                                 <div class="form-group col-md-4">

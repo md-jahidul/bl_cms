@@ -463,13 +463,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="tag_bgd_color" class="control-label">Background Color</label>
                                         <input type="color" name="tag_bgd_color" class="form-control" placeholder="Background Color" value="'#000000'" required>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="tag_text_color" class="control-label">Text Color</label>
                                         <input type="color" name="tag_text_color" class="form-control" placeholder="Color" value="'#ffffff'" required>
@@ -479,6 +479,12 @@
                                     <fieldset>
                                         <input type="checkbox" id="show_timer" value="1" name="show_timer">
                                         <label for="show_timer">Show Timer</label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="show_tnc" value="1" name="show_tnc">
+                                        <label for="show_tnc">Show Terms & Condition</label>
                                     </fieldset>
                                 </div>
                                 <div class="form-group col-md-4">
