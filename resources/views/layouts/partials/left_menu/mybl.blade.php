@@ -509,7 +509,7 @@
             @if( auth()->user()->can_view('MyblProductEntry') )
 
 
-                @if(env("PRODUCT_LIST_VERSION", "V2") == "V2")
+                @if(config("misc.migrator.product_list") == "V2")
                     <li class="">
                         <a id="productV2" class="menu-item">
                             <i class="ft-list"></i>Products </a>
