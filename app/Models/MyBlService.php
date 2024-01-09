@@ -18,6 +18,7 @@ class MyBlService extends Model
         'icon',
         'is_title_show',
         'sequence',
+        'connection_type',
         'status',
         'android_version_code_min',
         'android_version_code_max',

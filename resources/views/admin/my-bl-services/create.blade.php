@@ -83,6 +83,20 @@
                                     <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="connection_type">Connection Type <span
+                                                    class="danger">*</span></label>
+                                        <select name="connection_type" class="browser-default custom-select"
+                                                id="connection_type" required>
+                                            <option value="all">ALL</option>
+                                            <option value="prepaid">PREPAID</option>
+                                            <option value="postpaid">POSTPAID</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
                                     <label for="title" class="">Android Version Code</label>
                                     <input type="text" name="android_version_code" class="form-control"
