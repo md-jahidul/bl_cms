@@ -136,8 +136,8 @@ class PartnerOfferController extends Controller {
      * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id) {
-
+    public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id)
+    {
         $campaignList = $request->campaign_redirect;
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());
@@ -162,8 +162,7 @@ class PartnerOfferController extends Controller {
 //        }
 
 
-        $response = $this->partnerOfferDetailService
-                ->updatePartnerOfferDetails($request->all(), $request->offer_details_id);
+        $response = $this->partnerOfferDetailService->updatePartnerOfferDetails($request->all(), $request->offer_details_id);
         Session::flash('message', $response->getContent());
         return redirect()->route('partner-offer', [$request->partner_id, $partnet]);
     }
