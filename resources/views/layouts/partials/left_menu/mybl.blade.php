@@ -507,11 +507,9 @@
             </li>
 
             @if( auth()->user()->can_view('MyblProductEntry') )
-
-
-                @if(env("PRODUCT_LIST_VERSION", "V2") == "V2")
+                @if(config("misc.migrator.product_list") == "V2")
                     <li class="">
-                        <a id="productV2" class="menu-item">
+                        <a class="menu-item redirectNewCms" target="/connect/products">
                             <i class="ft-list"></i>Products </a>
                     </li>
                 @else
@@ -572,7 +570,7 @@
 
             @endif
 
-            <li class="{{ is_active_url('myblslider') . is_active_url('myblslider/addImage/') . is_active_url('myblslider/create') . is_active_url('myblslider/edit') }}">
+            <li class="{{ is_active_url(route('products-deep-link-report')) . is_active_url('deeplink-analytic') }}">
                 <a class="menu-item" href="{{ route('myblslider.index') }}"
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-sliders"></i>Product Deeplink</a>
@@ -721,7 +719,6 @@
                         </a>
                     </li>
 
-
                     {{--            <li class="nav-item"><a href="#"><i class="la la-users"></i>--}}
                     {{--                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>--}}
                     {{--                <ul class="menu-content">--}}
@@ -785,20 +782,26 @@
             </li>
 
             @if( auth()->user()->can_view('Otp') )
-                <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
-                        <span class="menu-title">Config</span></a>
-                    <ul class="menu-content">
-                        <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
-                            <a class="menu-item" href="{{ route('otp-config.index') }}"
-                               data-i18n="nav.templates.vert.classic_menu">
-                                <i class="la la-cog"></i>OTP Config</a>
-                        </li>
+                @if(config("misc.migrator.config") == "V2")
+                    <li class="">
+                        <a class="menu-item redirectNewCms" target="/connect/config/otp">
+                            <i class="ft-list"></i>Config </a>
+                    </li>
+                @else
+                    <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+                            <span class="menu-title">Config</span></a>
+                        <ul class="menu-content">
+                            <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
+                                <a class="menu-item" href="{{ route('otp-config.index') }}"
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-cog"></i>OTP Config</a>
+                            </li>
 
-                        <li class="{{ is_active_url('sms-languages') . is_active_url('sms-languages/create') . is_active_route('sms-languages.edit')}}">
-                            <a class="menu-item" href="{{ route('sms-languages.index') }}"
-                               data-i18n="nav.templates.vert.classic_menu">
-                                <i class="la la-cog"></i>SMS Language Config</a>
-                        </li>
+                            <li class="{{ is_active_url('sms-languages') . is_active_url('sms-languages/create') . is_active_route('sms-languages.edit')}}">
+                                <a class="menu-item" href="{{ route('sms-languages.index') }}"
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-cog"></i>SMS Language Config</a>
+                            </li>
 
                         <li class="{{ is_active_url('recharge/prefill-amounts')}}">
                             <a class="menu-item" href="{{ route('recharge.prefill-amounts.index') }}">
@@ -823,7 +826,7 @@
                                 <i class="la la-cog"></i>Bandho sim image</a>
                         </li>
                     </ul>
-                </li>
+                </li>@endif
             @endif
 
 
@@ -1395,12 +1398,14 @@
 @push('page-js')
     <script>
         $(function () {
-            $("#productV2").click(function () {
+            $(".redirectNewCms").click(function (event) {
+                var targetUrl = $(event.target).attr('target');
                 $.ajax({
                     url: "{{ url('new-cms/verify-token') }}",
                     type:'GET',
                     success: function (result) {
-                        window.open(result.redirect_url);
+                        let redirectUrl = result.redirect_url + "&redirectUrl=" + targetUrl
+                        window.open(redirectUrl);
                     },
                 });
             })
