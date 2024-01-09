@@ -144,6 +144,6 @@ class LoginController extends Controller
             ];
         }
 
-        Log::error('New CMS Login Error:' . $result['error']);
+        Log::error('New CMS Login Error:' . $result);
     }
 }

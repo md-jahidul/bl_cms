@@ -93,7 +93,7 @@ class NewCMSAuthController extends Controller
         if ($httpCode == 200){
             return $result;
         }
-        Log::error('New CMS Login Error:' . $result['message']);
+        Log::error('New CMS Login Error:' . $result);
         return $result;
     }
 }
