@@ -12,6 +12,9 @@
 @endsection
 @section('content')
     <section>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error) @endforeach
+        @endif
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
