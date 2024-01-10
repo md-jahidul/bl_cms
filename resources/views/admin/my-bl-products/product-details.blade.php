@@ -487,6 +487,17 @@
                                         <label for="is_popular_pack">Is Popular Pack</label>
                                     </fieldset>
                                 </div>
+                                @if(strtolower($details->details->content_type) == 'lms')
+                                    <div class="form-group col-md-4">
+                                        <label>LMS Tier Slab</label>
+                                        <input class="form-control" name="lms_tier_slab" id="lms_tier_slab"
+                                               value="{{ $details->details->lms_tier_slab }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('lms_tier_slab'))
+                                            <div class="help-block">{{ $errors->first('lms_tier_slab') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
                                 {{--                                <div class="col-md-4">--}}
                                 {{--                                    <div class="form-group">--}}
