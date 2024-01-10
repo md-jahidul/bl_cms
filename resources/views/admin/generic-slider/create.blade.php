@@ -80,37 +80,19 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="status_input" class="required">Component For: </label>
-                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
-                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'commerce') ? 'checked' : '' }}>
-                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>
-                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'content') ? 'checked' : '' }}>
-                                        <label for="campaignStatusActive" class="mr-3">Content</label>
-                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'home') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Home</label>
-                                        <input type="radio" name="component_for" value="lms" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'lms') ? 'checked' : '' }}
-                                            {{ isset($single_slider->component_for) ? '' : 'checked' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">LMS</label>
-                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
-                                        <input type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'non_bl_offer') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>
-                                        <input type="radio" name="component_for" value="toffee" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'toffee') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Toffee Home</label>
-                                        <input type="radio" name="component_for" value="toffee_section" id="campaignStatusInactive"
-                                            {{ (isset($single_slider->component_for) && $single_slider->component_for == 'toffee_section') ? 'checked' : '' }}>
-                                        <label for="campaignStatusInactive" class="mr-3">Toffee Section</label>
-                                        @if ($errors->has('component_for'))
-                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>
-                                        @endif
-                                    </div>
+                                    <label for="component_for" class="required">Component For: </label>
+                                    <select name="component_for" class="form-control custom-select"
+                                            id="component_for" required data-validation-required-message="Please select component type">
+                                        <option value="" >--Select Tab Section--</option>
+                                        @foreach (Config::get('generic-slider.component_for') as $key => $type)
+                                            <option value="{{$key}}" >{{$type}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('component_type'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_type') }}</small>
+                                        </p>
+                                    @endif
                                 </div>
 
                                 <div id="scrollable_div" class="form-group col-md-2">

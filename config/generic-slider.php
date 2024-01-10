@@ -21,4 +21,38 @@ return [
         "984x738"=>"984 x 738",
         "200x266"=>"200 x 266"
     ],
+
+    'component_for' => [
+       'commerce' => 'Commerce',
+       'content' => 'Content',
+       'home' => 'Home',
+       'lms' => 'LMS',
+       'non_bl' => 'Non Bl',
+       'non_bl_offer' => 'Non Bl Offer',
+       'toffee' => 'Toffee Home',
+       "toffee_section" => "Toffee Section",
+       "usage_history" => "Usage History",
+        "balance_transfer" =>"Balance Transfer",
+        "product_aoc" =>"Product Aoc",
+       "rne" => "rne",
+       "profile" => "Profile",
+       "utility" => "Utility",
+       "utility_distributor" => "Utility Distributor",
+       "details_internet" => "Details Internet",
+       "details_sms" => "Details Sms",
+       "details_minute" => "Details Minute",
+    ],
+
+    'top_most_visited_page' => [
+        "usage_history",
+        "balance_transfer",
+        "product_aoc",
+        "rne",
+        "profile",
+        "utility",
+        "utility_distributor",
+        "details_internet",
+        "details_sms",
+        "details_minute",
+    ]
 ];

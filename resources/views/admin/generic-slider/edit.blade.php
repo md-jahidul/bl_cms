@@ -86,42 +86,59 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-2">
-                                    <label for="status_input">Component For: </label>
-                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">
-                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'commerce') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>
-                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'content') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusActive" class="mr-3">Content</label>
-                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Home</label>
-                                        <input type="radio" name="component_for" value="lms" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'lms') ? 'checked' : '' }}
-                                            {{ isset($slider->component_for) ? '' : 'checked' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">LMS</label>
-                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>
-                                        <input type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"
-                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl_offer') ? 'checked' : '' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>
-                                        <label for="campaignStatusInactive" class="mr-3">LMS</label> <br>
-                                        <input type="radio" name="component_for" value="toffee" id="campaignStatusInactive"
-                                               {{ (isset($slider->component_for) && $slider->component_for == 'toffee') ? 'checked' : '' }}
-                                               {{ isset($slider->component_for) ? '' : 'checked' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Toffee Home</label>
-                                        <input type="radio" name="component_for" value="toffee_section" id="campaignStatusInactive"
-                                               {{ (isset($slider->component_for) && $slider->component_for == 'toffee_section') ? 'checked' : '' }}
-                                               {{ isset($slider->component_for) ? '' : 'checked' }} disabled>
-                                        <label for="campaignStatusInactive" class="mr-3">Toffee Section</label>
-                                        @if ($errors->has('component_for'))
-                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>
-                                        @endif
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <input type="hidden" name = "component_for" value="{{ $slider->component_for }}">
+                                    <label for="component_for" class="required">Component For</label>
+                                    <select disabled name="component_for" class="form-control custom-select"
+                                            id="component_for" required data-validation-required-message="Please select component For">
+                                        <option value="" >--Select Tab Section--</option>
+                                        @foreach (Config::get('generic-slider.component_for') as $key => $type)
+                                            <option value="{{$key}}" {{ (isset($slider->component_for) && $slider->component_for == $key) ? 'selected' : '' }} >{{$type}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('component_for'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('component_for') }}</small>
+                                        </p>
+                                    @endif
                                 </div>
+
+{{--                                <div class="form-group col-md-6 mb-2">--}}
+{{--                                    <label for="status_input">Component For: </label>--}}
+{{--                                    <div class="form-group {{ $errors->has('component_for') ? ' error' : '' }}">--}}
+{{--                                        <input type="radio" name="component_for" value="commerce" id="campaignStatusActive"--}}
+{{--                                            {{ (isset($slider->component_for) && $slider->component_for == 'commerce') ? 'checked' : '' }} disabled>--}}
+{{--                                        <label for="campaignStatusActive" class="mr-3">Commerce</label>--}}
+{{--                                        <input type="radio" name="component_for" value="content" id="campaignStatusActive"--}}
+{{--                                            {{ (isset($slider->component_for) && $slider->component_for == 'content') ? 'checked' : '' }} disabled>--}}
+{{--                                        <label for="campaignStatusActive" class="mr-3">Content</label>--}}
+{{--                                        <input type="radio" name="component_for" value="home" id="campaignStatusInactive"--}}
+{{--                                            {{ (isset($slider->component_for) && $slider->component_for == 'home') ? 'checked' : '' }} disabled>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">Home</label>--}}
+{{--                                        <input type="radio" name="component_for" value="lms" id="campaignStatusInactive"--}}
+{{--                                            {{ (isset($slider->component_for) && $slider->component_for == 'lms') ? 'checked' : '' }}--}}
+{{--                                            {{ isset($slider->component_for) ? '' : 'checked' }} disabled>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">LMS</label>--}}
+{{--                                        <input type="radio" name="component_for" value="non_bl" id="campaignStatusInactive"--}}
+{{--                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl') ? 'checked' : '' }} disabled>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">Non Bl</label>--}}
+{{--                                        <input type="radio" name="component_for" value="non_bl_offer" id="campaignStatusInactive"--}}
+{{--                                            {{ (isset($slider->component_for) && $slider->component_for == 'non_bl_offer') ? 'checked' : '' }} disabled>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">Non Bl Offer</label>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">LMS</label> <br>--}}
+{{--                                        <input type="radio" name="component_for" value="toffee" id="campaignStatusInactive"--}}
+{{--                                               {{ (isset($slider->component_for) && $slider->component_for == 'toffee') ? 'checked' : '' }}--}}
+{{--                                               {{ isset($slider->component_for) ? '' : 'checked' }} disabled>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">Toffee Home</label>--}}
+{{--                                        <input type="radio" name="component_for" value="toffee_section" id="campaignStatusInactive"--}}
+{{--                                               {{ (isset($slider->component_for) && $slider->component_for == 'toffee_section') ? 'checked' : '' }}--}}
+{{--                                               {{ isset($slider->component_for) ? '' : 'checked' }} disabled>--}}
+{{--                                        <label for="campaignStatusInactive" class="mr-3">Toffee Section</label>--}}
+{{--                                        @if ($errors->has('component_for'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('component_for') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div id="scrollable_div" class="form-group col-md-2">
                                     <label for="scrollable" class="">Scrollable</label>
