@@ -1142,6 +1142,8 @@ class ProductCoreService
 
             $model = ProductCore::where('product_code', $product_code)->first();
 
+            $data_request['lms_tier_slab'] = $model->content_type == "lms" ? strtoupper($request->input('lms_tier_slab', null)) : null;
+
             $others = [
                 'activity_type' => self::UPDATE,
                 'platform' => self::PLATFORM
@@ -1324,6 +1326,8 @@ class ProductCoreService
                 $data_request['data_volume'] = $request['internet_volume_mb'];
             }
 
+            $data_request['lms_tier_slab'] = $request->content_type == "lms" ? strtoupper($request->input('lms_tier_slab', null)) : null;
+
             $others = [
                 'activity_type' => self::CREATE,
                 'platform' => self::PLATFORM
@@ -1441,6 +1445,7 @@ class ProductCoreService
                 $insert_data[41] = $product->details->redirection_name_en;
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
+                $insert_data[44] = $product->details->lms_tier_slab;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);

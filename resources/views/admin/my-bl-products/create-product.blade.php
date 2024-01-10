@@ -64,6 +64,7 @@
                                         <option value="volume transfer">VOLUME TRANSFER</option>
                                         <option value="roam">ROAMING PRODUCT</option>
                                         <option value="service">SERVICES</option>
+                                        <option value="lms">LMS</option>
                                         {{--<option value="bonus">BONUS</option>--}}
                                     </select>
                                     <div class="help-block"></div>
@@ -385,6 +386,7 @@
                                         <label for="is_popular_pack">Is Popular Pack</label>
                                     </fieldset>
                                 </div>
+                                <slot id="lms_tier_slab_info"></slot>
                                 <div class="form-group col-md-4 mb-2" id="cta_action">
                                     <label for="base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
@@ -742,6 +744,7 @@
 
             let type = $(this).val();
             let offer_types = $('#offer_types');
+            let lms_tier_slab = $('#lms_tier_slab_info');
 
             let data = `<div class="col-md-4">
                             <div class="form-group package_type">
@@ -812,6 +815,8 @@
                                 </div>`
 
             offer_types.empty()
+            lms_tier_slab.empty()
+
             console.log(type)
             if (
                 type === 'data' ||
@@ -835,6 +840,17 @@
                 offer_types.append(callRate + callRateUnit)
             } else if (type === 'ma loan') {
                 offer_types.empty()
+            } else if (type === 'lms') {
+                let slabField = `<div class="form-group col-md-4">
+                    <label>LMS Tier Slab</label>
+                    <input class="form-control" name="lms_tier_slab" id="lms_tier_slab" value="">
+                        <div class="help-block"></div>
+                        @if ($errors->has('lms_tier_slab'))
+                        <div class="help-block">{{ $errors->first('lms_tier_slab') }}</div>
+                    @endif
+                </div>`;
+
+                lms_tier_slab.append(slabField);
             }
 
             $('.data-section').select2({
