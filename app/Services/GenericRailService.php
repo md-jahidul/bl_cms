@@ -197,7 +197,8 @@ class GenericRailService
             'cta_name_en' => $rail['cta_name_en'],
             'cta_name_bn' => $rail['cta_name_bn'],
             'deeplink' => $rail['deeplink'],
-            'icon' => $rail['icon']
+            'icon' => $rail['icon'],
+            'is_title_show' => $rail['is_title_show']
 
         ];
 

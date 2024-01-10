@@ -22,5 +22,7 @@ class MyBlCommerceComponent extends Model
         'cta_name_bn',
         'deeplink',
         'icon',
+        'is_title_show',
+        'child_ids'
     ];
 }

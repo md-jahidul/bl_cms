@@ -19,7 +19,9 @@ class AddNewColumnToLmsHomeComponentsTable extends Migration
             $table->string('cta_name_en')->nullable();
             $table->string('cta_name_bn')->nullable();
             $table->string('deeplink')->nullable();
+            $table->boolean('is_title_show')->default(false);
             $table->bigInteger('other_component_id')->nullable();
+            $table->json('child_ids')->nullable();
         });
     }
 
@@ -37,6 +39,8 @@ class AddNewColumnToLmsHomeComponentsTable extends Migration
             $table->dropColumn('cta_name_bn');
             $table->dropColumn('deeplink');
             $table->dropColumn('other_component_id');
+            $table->dropColumn('is_title_show');
+            $table->dropColumn('child_ids');
         });
     }
 }
