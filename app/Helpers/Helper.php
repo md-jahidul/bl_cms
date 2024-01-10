@@ -150,14 +150,14 @@ class Helper
             "COMMUNITY"               => 'Community',
             "TOFFEE"                  => 'Toffee',
             "TOFFEE_LIVE"             => 'Toffee_Live',
-            "AMAR_TUNE"               => 'Amar Tune',
             "VOLTE"                   => 'Volte',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "SERVICE"                 => 'Service',
+            "AMAR_TUNE"               => 'Amar Tune',
             "SIM_BLOCK"               => 'Sim Block',
-            "DCB"                     => 'Dcb',
-            "DEEPLINK"               => 'Deeplink'
+            "SERVICE"                => 'Service',
+            "DEEPLINK"               => 'Deeplink',
+            "DCB"                     => 'Dcb'
         ];
     }
 

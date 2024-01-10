@@ -1299,7 +1299,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'generic-slider/images/{id}/delete',
         'CMS\GenericSliderImageController@destroy'
     )->name('generic-slider.images.destroy');
-    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
     //Active new Product Code
     Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
