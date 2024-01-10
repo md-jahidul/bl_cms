@@ -1474,11 +1474,8 @@ class ProductCoreService
 //        $header['Active'] = $header['status'];
 //        unset($header['status']);
 
-        $header['Deep-link'] = $header['deep_link'];
 //        if(isset($request['filtered_btn'])) {
 //        }
-
-        unset($header['deep_link']);
 
         $headers = array_map(function ($val) {
             return str_replace('_', ' ', ucwords($val));
