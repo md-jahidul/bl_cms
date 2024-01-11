@@ -15,8 +15,7 @@ class RoamingPagesRepository extends BaseRepository {
     public $modelName = RoamingGeneralPages::class;
 
     public function getPageList() {
-        $response = $this->model->get();
-        return $response;
+        return $this->model->get();
     }
 
     public function getPage($pageId) {
@@ -49,46 +48,49 @@ class RoamingPagesRepository extends BaseRepository {
                 $page->save();
             }
 
-            //delete all previous components
-            RoamingPageComponents::where(array('page_type' => $request->page_type, 'parent_id' => $request->page_id))->delete();
+            if (isset($request->component_position)) {
+                //delete all previous components
+                RoamingPageComponents::where(array('page_type' => $request->page_type, 'parent_id' => $request->page_id))->delete();
 
-            $insert = [];
-            $count = 0;
-            foreach ($request->component_position as $k => $val) {
-                $insert[$count]['page_type'] = $request->page_type;
-                $insert[$count]['parent_id'] = $request->page_id;
+                $insert = [];
+                $count = 0;
+                foreach ($request->component_position as $k => $val) {
+                    $insert[$count]['page_type'] = $request->page_type;
+                    $insert[$count]['parent_id'] = $request->page_id;
 
-                if (isset($request->headline_text_title_en[$k])) {
-                    $insert[$count]['headline_en'] = $request->headline_text_title_en[$k];
-                    $insert[$count]['headline_bn'] = $request->headline_text_title_bn[$k];
-                    $insert[$count]['body_text_en'] = $request->headline_text_textarea_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->headline_text_textarea_bn[$k];
-                    $insert[$count]['show_button'] = isset($request->show_button[$k]) ? 1 : 0;
-                    $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'headline-text';
+                    if (isset($request->headline_text_title_en[$k])) {
+                        $insert[$count]['headline_en'] = $request->headline_text_title_en[$k];
+                        $insert[$count]['headline_bn'] = $request->headline_text_title_bn[$k];
+                        $insert[$count]['body_text_en'] = $request->headline_text_textarea_en[$k];
+                        $insert[$count]['body_text_bn'] = $request->headline_text_textarea_bn[$k];
+                        $insert[$count]['show_button'] = isset($request->show_button[$k]) ? 1 : 0;
+                        $insert[$count]['position'] = $k;
+                        $insert[$count]['component_type'] = 'headline-text';
+                    }
+                    if (isset($request->list_headline_en[$k])) {
+                        $insert[$count]['headline_en'] = $request->list_headline_en[$k];
+                        $insert[$count]['headline_bn'] = $request->list_headline_bn[$k];
+                        $insert[$count]['body_text_en'] = $request->list_textarea_en[$k];
+                        $insert[$count]['body_text_bn'] = $request->list_textarea_bn[$k];
+                        $insert[$count]['show_button'] = 0;
+                        $insert[$count]['position'] = $k;
+                        $insert[$count]['component_type'] = 'list-component';
+                    }
+                    if (isset($request->free_textarea_en[$k])) {
+                        $insert[$count]['headline_en'] = "";
+                        $insert[$count]['headline_bn'] = "";
+                        $insert[$count]['body_text_en'] = $request->free_textarea_en[$k];
+                        $insert[$count]['body_text_bn'] = $request->free_textarea_bn[$k];
+                        $insert[$count]['show_button'] = 0;
+                        $insert[$count]['position'] = $k;
+                        $insert[$count]['component_type'] = 'free-text';
+                    }
+                    $count++;
                 }
-                if (isset($request->list_headline_en[$k])) {
-                    $insert[$count]['headline_en'] = $request->list_headline_en[$k];
-                    $insert[$count]['headline_bn'] = $request->list_headline_bn[$k];
-                    $insert[$count]['body_text_en'] = $request->list_textarea_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->list_textarea_bn[$k];
-                    $insert[$count]['show_button'] = 0;
-                    $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'list-component';
-                }
-                if (isset($request->free_textarea_en[$k])) {
-                    $insert[$count]['headline_en'] = "";
-                    $insert[$count]['headline_bn'] = "";
-                    $insert[$count]['body_text_en'] = $request->free_textarea_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->free_textarea_bn[$k];
-                    $insert[$count]['show_button'] = 0;
-                    $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'free-text';
-                }
-                $count++;
+
+                RoamingPageComponents::insert($insert);
             }
 
-        RoamingPageComponents::insert($insert);
         return $page;
     }
 

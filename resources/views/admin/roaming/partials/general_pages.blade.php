@@ -18,17 +18,14 @@
                         <tbody>
                             @foreach($pages as $p)
                             <tr>
+                                <td>{{ $p->page_type }}</td>
+                                <td>
+                                    {{ $p->title_en }}
+                                </td>
+                                <td>
+                                   {{ $p->short_text_en }}
+                                </td>
 
-                                <td>
-                                    {{ $p->page_type }}
-                                </td>
-                                <td>
-                                    {{ $p->title_en }} 
-                                </td>
-                                <td>
-                                   {{ $p->short_text_en }} 
-                                </td>
-                                
                                 <td class="text-center">
 
                                     <a href="{{ url('roaming/general-page-component/page/'.$p->id)}}" class=" page_edit">
@@ -36,8 +33,6 @@
                                     </a>
 
                                 </td>
-
-
                             </tr>
                             @endforeach
                         </tbody>
