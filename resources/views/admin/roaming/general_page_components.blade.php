@@ -38,12 +38,12 @@
                             <div class="form-group row">
                                 <div class="col-md-4 col-xs-12">
                                     <label>Short Description (EN)</label>
-                                    <textarea class="form-control" name="short_description_en">{{$page->short_description_en}}</textarea>
+                                    <textarea class="form-control summernote_editor" name="short_description_en">{{$page->short_description_en}}</textarea>
 
                                 </div>
                                 <div class="col-md-4 col-xs-12">
                                     <label>Short Description (BN)</label>
-                                    <textarea class="form-control" name="short_description_bn">{{$page->short_description_bn}}</textarea>
+                                    <textarea class="form-control summernote_editor" name="short_description_bn">{{$page->short_description_bn}}</textarea>
                                 </div>
 
 
