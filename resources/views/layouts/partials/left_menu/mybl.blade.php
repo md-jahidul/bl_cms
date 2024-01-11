@@ -1368,7 +1368,7 @@
                     url: "{{ url('new-cms/verify-token') }}",
                     type:'GET',
                     success: function (result) {
-                        let redirectUrl = result.redirect_url + "&redirectUrl=" + targetUrl
+                        let redirectUrl = result.redirect_url + targetUrl + "?access_token=" + result.access_token
                         window.open(redirectUrl);
                     },
                 });

@@ -45,10 +45,9 @@ class NewCMSAuthController extends Controller
         $response = $this->cUrlRequest($url, $token);
 
         if ($response['status_code'] == 200){
-            $redirectUrl = $newCmsUrl . "/welcome?access_token=" . $response['data']['access_token'];
             return [
                 'access_token' => $response['data']['access_token'],
-                'redirect_url' => $redirectUrl
+                'redirect_url' => $newCmsUrl
             ];
         }
 
