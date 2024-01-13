@@ -371,7 +371,8 @@ class Helper
     }
 
     public static function findCandidateChildComponent($components)
-    {$data = [];
+    {
+        $data = [];
         foreach ($components as $component) {
             if (isset($component['type']) && $component['type'] == 'parent') {
                 $data[] = $component;
