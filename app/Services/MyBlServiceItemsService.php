@@ -9,6 +9,7 @@ use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class MyBlServiceItemsService
 {
@@ -17,10 +18,12 @@ class MyBlServiceItemsService
 
     protected $serviceItemRepository;
 
+
     /**
      * AlSliderImageService constructor.
      * @param MyBlServiceItemRepository $serviceItemRepository
      */
+    protected const REDIS_KEY = "mybl_component_service";
 
     public function __construct(MyBlServiceItemRepository $serviceItemRepository)
     {
@@ -66,7 +69,7 @@ class MyBlServiceItemsService
                 unset($items['android_version_code'], $items['ios_version_code']);
                 $items = $this->save($items);
             });
-
+            self::removeServiceRedisKey();
             return new Response("Items has been successfully added");
         } catch (\Exception $e) {
             Log::error('Item store failed' . $e->getMessage());
@@ -78,6 +81,7 @@ class MyBlServiceItemsService
     public function tableSortable($data)
     {
         $this->serviceItemRepository->serviceItemTableSort($data);
+        self::removeServiceRedisKey();
         return new Response('Sequence has been successfully update');
     }
 
@@ -90,7 +94,7 @@ class MyBlServiceItemsService
                 $data['tags'] = implode(', ', $data['tag']);
                 $serviceItems->update($data);
             });
-
+            self::removeServiceRedisKey();
             return response("Item has has been successfully updated");
         } catch (\Exception $e) {
             Log::error('Item store failed' . $e->getMessage());
@@ -103,7 +107,13 @@ class MyBlServiceItemsService
     {
         $serviceItem = $this->findOne($id);
         $serviceItem->delete();
+        self::removeServiceRedisKey();
         return Response('Item has been successfully deleted');
+    }
+
+    public static function removeServiceRedisKey($keyName = '')
+    {
+        Redis::del(self::REDIS_KEY);
     }
 
 }

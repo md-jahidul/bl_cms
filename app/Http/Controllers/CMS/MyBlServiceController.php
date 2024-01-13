@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 
-use App\Models\MyBlService;
 use App\Services\MyBlServiceComponentService;
 use App\Repositories\MyBlServiceRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 
 class MyBlServiceController extends Controller
@@ -47,13 +42,6 @@ class MyBlServiceController extends Controller
     public function store(Request $request)
     {
         $flag = $this->blService->store($request->all());
-
-//        if ($request->input('component_type') != 'carousel') {
-//            $request->merge([
-//                'scrollable' => false,
-//            ]);
-//        }
-
         if ($flag) {
             Session::flash('success', 'Slider Created Successfully');
         } else {
@@ -91,7 +79,7 @@ class MyBlServiceController extends Controller
 
     public function tableSortable($data)
     {
-        $this->blService->sliderImageTableSort($data);
+        $this->blService->servicesTableSort($data);
         return new Response('Sequence has been successfully update');
     }
 
