@@ -23,10 +23,10 @@
                         @foreach ($products as $section)
                             <tr data-index="{{ $section->id }}" data-position="{{ $section->pin_to_top_sequence }}">
                                 <td class="pt-1" width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $section->details->name }}</td>
-                                <td>{{ $section->product_code }}</td>
-                                <td>{{ $section->details->content_type }}</td>
-                                <td>{{ $section->pin_to_top_sequence }}</td>
+                                <td>{{ $section->details->name ?? null }}</td>
+                                <td>{{ $section->product_code ?? null }}</td>
+                                <td>{{ $section->details->content_type ?? null }}</td>
+                                <td>{{ $section->pin_to_top_sequence ?? null }}</td>
                             </tr>
                         @endforeach
                         </tbody>
