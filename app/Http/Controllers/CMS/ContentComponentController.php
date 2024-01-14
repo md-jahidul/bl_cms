@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\CMS;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\ContentComponentService;
 use Illuminate\Http\Request;
@@ -20,7 +21,9 @@ class ContentComponentController extends Controller
     public function index()
     {
         $components = $this->componentService->findAllComponents();
-        return view('admin.content-components.index', compact('components'));
+        $candidateChildes = Helper::findCandidateChildComponent($components);
+
+        return view('admin.content-components.index', compact('components', 'candidateChildes'));
     }
 
     public function store(Request $request)
@@ -39,7 +42,7 @@ class ContentComponentController extends Controller
             $response = $this->componentService->storeComponent($request->all());
             Session::flash('success', $response->getContent());
         }
-        
+
         return redirect()->route('content-components');
     }
 
@@ -57,7 +60,16 @@ class ContentComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->editComponent($id);
+        $componentData =  $this->componentService->editComponent($id);
+        $candidateChildes = $this->componentService->findBy(['type' => 'parent']);
+        $routeObj = [
+            'update' => "content-components.update",
+            'componentName' => 'Content',
+            'index' => 'content-components'
+        ];
+
+        return view('admin.mybl-home-components.generic-field', compact('componentData', 'candidateChildes', 'routeObj'));
+
     }
 
     public function update(Request $request)
@@ -76,7 +88,7 @@ class ContentComponentController extends Controller
             $response = $this->componentService->updateComponent($request->all());
             Session::flash('message', $response->getContent());
         }
-        
+
         return redirect()->route('content-components');
     }
 

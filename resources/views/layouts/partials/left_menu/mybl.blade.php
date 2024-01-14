@@ -118,6 +118,11 @@
                            data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-sliders"></i>Generic Carousel</a>
                     </li>
+                    <li class="{{ is_active_match('generic-rail')}}">
+                        <a class="menu-item" href="{{ url('generic-rail') }}"
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i>Generic Rail</a>
+                    </li>
                 </ul>
             </li>
         </ul>

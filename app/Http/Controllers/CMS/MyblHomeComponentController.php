@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Services\DynamicRouteService;
 use App\Services\MetaTagService;
 use App\Services\MyblHomeComponentService;
@@ -45,7 +46,9 @@ class MyblHomeComponentController extends Controller
     public function index()
     {
         $components = $this->componentService->findAllComponents();
-        return view('admin.mybl-home-components.index', compact('components'));
+        $candidateChildes = Helper::findCandidateChildComponent($components);
+
+        return view('admin.mybl-home-components.index', compact('components', 'candidateChildes'));
     }
 
     public function store(Request $request)
@@ -82,7 +85,16 @@ class MyblHomeComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->editComponent($id);
+
+        $componentData = $this->componentService->editComponent($id);
+        $candidateChildes = $this->componentService->findBy(['type' => 'parent']);
+        $routeObj = [
+            'update' => "mybl.home.components.update",
+            'componentName' => 'Home',
+            'index' => 'mybl.home.components'
+        ];
+
+        return view('admin.mybl-home-components.generic-field', compact('componentData', 'candidateChildes', 'routeObj'));
     }
 
     public function update(Request $request)
