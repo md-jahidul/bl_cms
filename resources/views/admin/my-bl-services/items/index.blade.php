@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Slider')
+@section('title', 'Service Items')
 @section('card_name', $service->title." Service")
 
 @section('action')

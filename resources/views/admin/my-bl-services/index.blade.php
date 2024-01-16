@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Services List')
+@section('title', 'Services')
 @section('card_name', 'Services List')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Services List</li>
