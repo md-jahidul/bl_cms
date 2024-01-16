@@ -20,6 +20,8 @@ class GlobalSetting extends Model
         'created_at',
         'updated_at',
         'redis_key',
-        'status'
+        'status',
+        'start_time',
+        'end_time'
     ];
 }
