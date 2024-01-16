@@ -44,7 +44,12 @@ class GenericRailItemService
 
             $this->genericRailItemRepository->save($data);
 
-            Helper::removeVersionControlRedisKey($railData['component_for']);
+            if ($railData['component_for'] == 'non_bl') {
+                Helper::removeVersionControlRedisKey('nonbl');
+            }
+            else {
+                Helper::removeVersionControlRedisKey($railData['component_for']);
+            }
 
             return true;
 
@@ -64,7 +69,13 @@ class GenericRailItemService
             unset($data['android_version_code'], $data['ios_version_code']);
 
             $itemData->update($data);
-            Helper::removeVersionControlRedisKey($railData['component_for']);
+
+            if ($railData['component_for'] == 'non_bl') {
+                Helper::removeVersionControlRedisKey('nonbl');
+            }
+            else {
+                Helper::removeVersionControlRedisKey($railData['component_for']);
+            }
 
             return true;
 
