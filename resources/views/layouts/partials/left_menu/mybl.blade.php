@@ -123,6 +123,12 @@
                            data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-list"></i>Generic Rail</a>
                     </li>
+                    <li class="{{ is_active_url('my-bl-services') }}">
+                        <a class="menu-item" href="{{ route('my-bl-services.index') }}"
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-server"></i>Generic Services
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -1047,6 +1053,7 @@
                     <i class="la la-server"></i>Digital Services
                 </a>
             </li>
+
 
             <!-- LMS -->
 {{--            <li class="nav-item"><a href="#"><i class="la la-users"></i>--}}
