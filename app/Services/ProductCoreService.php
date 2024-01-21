@@ -1441,6 +1441,7 @@ class ProductCoreService
                 $insert_data[41] = $product->details->redirection_name_en;
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
+                $insert_data[44] = $product->details->service_tags;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
