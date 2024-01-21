@@ -72,10 +72,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="icon" class="required">Icon Url :</label>
+                                    <label for="icon">Icon Url :</label>
                                     <input
                                             maxlength="200"
-                                            value="@if(old('icon')) {{old('icon')}} @endif" required
+                                            value="@if(old('icon')) {{old('icon')}} @endif"
                                             id="icon"
                                             type="text"
                                             class="form-control @error('icon') is-invalid @enderror"
