@@ -28,7 +28,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody id="sortable-new">
                         @foreach($railItems as $index=>$item)
                             <tr data-index="{{ $item->id }}" data-position="{{ $item->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
