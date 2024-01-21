@@ -37,7 +37,7 @@
                             <tr data-index="{{ $items->id }}" data-position="{{ $items->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $items->id }}</td>
-                                <td><img class="" src="{{ asset($items->image_url) }}" alt="Slider Image"
+                                <td><img class="" src="{{$items->image_url}}" alt="Slider Image"
                                          height="100" width="200"/></td>
                                 <td>{{ $items->title_en }}</td>
                                 <td>{{ $items->title_bn }}</td>

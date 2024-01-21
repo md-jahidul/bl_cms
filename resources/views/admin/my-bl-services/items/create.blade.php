@@ -104,9 +104,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="image_url" class="required">Image url:</label>
+                                        <label for="image_url">Image url:</label>
                                         <input
-                                                value="@if(old('image_url')) {{old('image_url')}} @endif" required
+                                                value="@if(old('image_url')) {{old('image_url')}} @endif"
                                                 id="image_url"
                                                 type="text"
                                                 class="form-control @error('image_url') is-invalid @enderror"
