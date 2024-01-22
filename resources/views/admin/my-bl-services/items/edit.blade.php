@@ -64,7 +64,7 @@
                                 <div>
                                     <label>Component Identifier </label>
                                     <select name="component_identifier" class="browser-default custom-select"
-                                            id="navigate_action" required>
+                                            id="navigate_action">
                                         <option value="">Select Action</option>
                                         @foreach ($actionList as $key => $value)
                                             <option

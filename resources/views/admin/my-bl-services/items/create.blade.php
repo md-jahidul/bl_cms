@@ -71,7 +71,7 @@
                                         <div>
                                             <label>Component Identifier </label>
                                             <select name="component_identifier" class="browser-default custom-select"
-                                                    id="navigate_action" required>
+                                                    id="navigate_action">
                                                 <option value="">Select Action</option>
                                                 @foreach ($actionList as $key => $value)
                                                     <option
@@ -101,9 +101,9 @@
 
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="is_active">Active Status:</label>
-                                            <select class="form-control" id="is_active"
-                                                    name="is_active">
+                                            <label for="status">Active Status:</label>
+                                            <select class="form-control" id="status"
+                                                    name="status">
                                                 <option value="1"> Active</option>
                                                 <option value="0">Inactive</option>
                                             </select>
