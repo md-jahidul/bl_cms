@@ -21,38 +21,38 @@
                             <input type="hidden" hidden value="{{$itemInfo->id}}" name="id">
                             <div class="form-group col-md-6">
                                 <label for="title_en">Title En: <small
-                                            class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <input
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Title is required"
-                                        data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                        value="{{old('title_en')?old('title_en'):$itemInfo->title_en}}" required
-                                        id="title_en"
-                                        type="text"
-                                        class="form-control @error('title_en') is-invalid @enderror"
-                                        placeholder="Title En" name="title_en">
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Title is required"
+                                    data-validation-regex-message="Title must start with alphabets"
+                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                    value="{{old('title_en')?old('title_en'):$itemInfo->title_en}}" required
+                                    id="title_en"
+                                    type="text"
+                                    class="form-control @error('title_en') is-invalid @enderror"
+                                    placeholder="Title En" name="title_en">
                                 <small
-                                        class="text-danger"> @error('title_en') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('title_en') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="title_bn">Title Bn: <small
-                                            class="text-danger">*</small> </label>
+                                        class="text-danger">*</small> </label>
                                 <input
-                                        maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Title is required"
-                                        data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                        value="{{old('title_bn')?old('title_bn'):$itemInfo->title_bn}}" required
-                                        id="title_bn"
-                                        type="text"
-                                        class="form-control @error('title_bn') is-invalid @enderror"
-                                        placeholder="Title Bn" name="title_bn">
+                                    maxlength="200"
+                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                    data-validation-required-message="Title is required"
+                                    data-validation-regex-message="Title must start with alphabets"
+                                    data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                    value="{{old('title_bn')?old('title_bn'):$itemInfo->title_bn}}" required
+                                    id="title_bn"
+                                    type="text"
+                                    class="form-control @error('title_bn') is-invalid @enderror"
+                                    placeholder="Title Bn" name="title_bn">
                                 <small
-                                        class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
@@ -68,7 +68,7 @@
                                        class="form-control @error('alt_text') is-invalid @enderror"
                                        placeholder="Alt text" name="alt_text">
                                 <small
-                                        class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
+                                    class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
                             <div class="col-6">
@@ -118,19 +118,19 @@
                                 <div class="form-group">
                                     <label for="image"> Icon url :</label>
                                     <input
-                                            value="{{old('image_url')?old('image_url'):$itemInfo->image_url}}" required
-                                            id="image_url"
-                                            type="text" class="form-control @error('image_url') is-invalid @enderror"
-                                            placeholder="Image URL" name="image_url">
+                                        value="{{old('image_url')?old('image_url'):$itemInfo->image_url}}" required
+                                        id="image_url"
+                                        type="text" class="form-control @error('image_url') is-invalid @enderror"
+                                        placeholder="Image URL" name="image_url">
                                     <small
-                                            class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     <small id="message"></small>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="tags">Tags <span class="danger">*</span></label>
+                                    <label for="tags">Tags </label>
                                     <div class="edit-on-delete form-control">
                                         {{ $itemInfo->tags }}
                                     </div>
@@ -226,15 +226,7 @@
                     tags.push(value);
                 }
             });
-
-            if (tags.length === 0) {
-                swal.fire({
-                    title: 'Search Content cannot be empty',
-                    type: 'error',
-                });
-            } else {
                 $(this).unbind('submit').submit();
-            }
         });
     </script>
 @endpush

@@ -69,8 +69,8 @@ class MyBlServiceComponentService
             $update_menu = $this->blServiceRepository->findOrFail($menu_id);
             $update_menu['sequence'] = $new_position;
             $update_menu->update();
-            self::removeServiceRedisKey();
         }
+        self::removeServiceRedisKey();
         return "success";
     }
 
@@ -84,17 +84,15 @@ class MyBlServiceComponentService
         try {
             DB::beginTransaction();
             $service = $this->blServiceRepository->findOne($id);
-            /**
-             * Version Control
-             */
+
             $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
             $data = array_merge($data, $version_code);
             unset($data['android_version_code'], $data['ios_version_code']);
 
             $service->update($data);
             DB::commit();
-            self::removeServiceRedisKey();
 
+            self::removeServiceRedisKey();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
@@ -108,6 +106,7 @@ class MyBlServiceComponentService
     {
         try {
             $this->delete($id);
+
             self::removeServiceRedisKey();
 
             return [

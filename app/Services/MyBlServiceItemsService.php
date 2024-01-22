@@ -19,10 +19,6 @@ class MyBlServiceItemsService
     protected $serviceItemRepository;
 
 
-    /**
-     * AlSliderImageService constructor.
-     * @param MyBlServiceItemRepository $serviceItemRepository
-     */
     protected const REDIS_KEY = "mybl_component_service";
 
     public function __construct(MyBlServiceItemRepository $serviceItemRepository)
@@ -33,16 +29,16 @@ class MyBlServiceItemsService
 
     public function separatedActiveAndInactive($data): array
     {
-        $activeImages = [];
-        $inActiveImages = [];
+        $activeItems = [];
+        $inActiveItems = [];
         foreach ($data as $image) {
             if ($image->is_active == 1 && $image->visibilityStatus()) {
-                $activeImages[] = $image;
+                $activeItems[] = $image;
             } else {
-                $inActiveImages[] = $image;
+                $inActiveItems[] = $image;
             }
         }
-        return array_merge($activeImages, $inActiveImages);
+        return array_merge($activeItems, $inActiveItems);
     }
 
     public function itemList($service_id): array
@@ -103,6 +99,9 @@ class MyBlServiceItemsService
     }
 
 
+    /**
+     * @throws \Exception
+     */
     public function deleteServiceItem($id)
     {
         $serviceItem = $this->findOne($id);
