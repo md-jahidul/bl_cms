@@ -23,7 +23,6 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="5%">ID</th>
-                            <th>Image</th>
                             <th width="15%">Title EN</th>
                             <th width="15%">Title BN</th>
                             <th width="10%">Alt Text</th>
@@ -37,8 +36,6 @@
                             <tr data-index="{{ $items->id }}" data-position="{{ $items->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $items->id }}</td>
-                                <td><img class="" src="{{$items->image_url}}" alt="Slider Image"
-                                         height="100" width="200"/></td>
                                 <td>{{ $items->title_en }}</td>
                                 <td>{{ $items->title_bn }}</td>
                                 <td>{{ $items->alt_text }}</td>
