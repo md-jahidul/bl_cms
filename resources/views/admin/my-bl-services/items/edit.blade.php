@@ -56,6 +56,30 @@
                                 <div class="help-block"></div>
                             </div>
 
+                            <div class="form-group col-md-6" id="action_div">
+                                @php
+                                    $actionList = Helper::navigationActionList();
+                                @endphp
+
+                                <div>
+                                    <label>Component Identifier </label>
+                                    <select name="component_identifier" class="browser-default custom-select"
+                                            id="navigate_action" required>
+                                        <option value="">Select Action</option>
+                                        @foreach ($actionList as $key => $value)
+                                            <option
+                                                @if(isset($itemInfo->component_identifier) && $itemInfo->component_identifier == $key)
+                                                    selected
+                                                @endif
+                                                value="{{ $key }}">
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
 
                             <div class="form-group col-md-6 mb-2">
                                 <label for="alt_text" class="required">Alt Text: </label>
@@ -131,17 +155,29 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tags">Tags </label>
-                                    <div class="edit-on-delete form-control">
-                                        {{ $itemInfo->tags }}
+                            @if ($itemInfo->tags)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tags">Tags </label>
+                                        <div class="edit-on-delete form-control">
+                                            {{ ($itemInfo->tags) }}
+                                        </div>
+                                        <small class="info">Press Enter or Comma to create a new search tag, Backspace
+                                            or
+                                            Delete to remove the last one.</small>
                                     </div>
-                                    <small class="info">Press Enter or Comma to create a new search tag, Backspace or
-                                        Delete to remove the last one.</small>
                                 </div>
-                            </div>
 
+                            @else
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tags">Tags </label>
+                                        <div class="edit-on-delete form-control" id="tags"></div>
+                                        <small class="info">Press Enter or Comma to create a new search tag,
+                                            Backspace or Delete to remove the last one.</small>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="form-group col-md-6 {{ $errors->has('android_version_code') ? ' error' : '' }}">
                                 <label for="title" class="">Android Version Code</label>
                                 <input type="text" name="android_version_code" class="form-control"

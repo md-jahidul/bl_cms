@@ -28,6 +28,7 @@
                             <th width="10%">Alt Text</th>
                             <th width="10%">Deeplink</th>
                             <th width="10%">Highlight</th>
+                            <th width="10%">Status</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -40,7 +41,8 @@
                                 <td>{{ $items->title_bn }}</td>
                                 <td>{{ $items->alt_text }}</td>
                                 <td>{{ $items->deeplink }}</td>
-                                <td>{{ $items->is_highlight }}</td>
+                                <td>{{ $items->is_highlight==1?'Yes':'No' }}</td>
+                                <td>{{ $items->status ==1?'Active':'Inactive'}}</td>
                                 <td class="action">
                                     <form action="{{route('my-bl-services.items.destroy',$items->id)}}"
                                           id="del_form_{{$items->id}}"
