@@ -118,7 +118,7 @@
                                 <div class="form-group">
                                     <label for="image"> Icon url :</label>
                                     <input
-                                        value="{{old('image_url')?old('image_url'):$itemInfo->image_url}}" required
+                                        value="{{old('image_url')?old('image_url'):$itemInfo->image_url}}"
                                         id="image_url"
                                         type="text" class="form-control @error('image_url') is-invalid @enderror"
                                         placeholder="Image URL" name="image_url">
@@ -226,7 +226,7 @@
                     tags.push(value);
                 }
             });
-                $(this).unbind('submit').submit();
+            $(this).unbind('submit').submit();
         });
     </script>
 @endpush
