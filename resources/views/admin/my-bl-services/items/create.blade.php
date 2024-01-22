@@ -62,6 +62,29 @@
                                         <small class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
+
+                                    <div class="form-group col-md-6" id="action_div">
+                                        @php
+                                            $actionList = Helper::navigationActionList();
+                                        @endphp
+
+                                        <div>
+                                            <label>Component Identifier </label>
+                                            <select name="component_identifier" class="browser-default custom-select"
+                                                    id="navigate_action" required>
+                                                <option value="">Select Action</option>
+                                                @foreach ($actionList as $key => $value)
+                                                    <option
+                                                        value="{{ $key }}">
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="alt_text" class="required">Alt Text: </label>
                                         <input

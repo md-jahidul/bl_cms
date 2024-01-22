@@ -57,9 +57,11 @@ class MyBlServiceItemsService
                 } else {
                     $i = $items_data->sequence + 1;
                 }
-                $items['tags'] = implode(', ', $items['tag']);
+                if (isset($items['tag'])) {
+                    $items['tags'] = implode(', ', $items['tag']);
+                }
                 $items['sequence'] = $i;
-                $items['component_identifier'] = str_replace(' ', '_', strtolower($items['title_en']));
+//                $items['component_identifier'] = str_replace(' ', '_', strtolower($items['title_en']));
                 $version_code = Helper::versionCode($items['android_version_code'], $items['ios_version_code']);
                 $items = array_merge($items, $version_code);
                 unset($items['android_version_code'], $items['ios_version_code']);
@@ -87,7 +89,11 @@ class MyBlServiceItemsService
         try {
             $serviceItems = $this->findOne($id);
             DB::transaction(function () use ($data, $id, $serviceItems) {
-                $data['tags'] = implode(', ', $data['tag']);
+                if (isset($data['tag'])) {
+                    $data['tags'] = implode(', ', $data['tag']);
+                } else {
+                    $data['tags'] = null;
+                }
                 $serviceItems->update($data);
             });
             self::removeServiceRedisKey();

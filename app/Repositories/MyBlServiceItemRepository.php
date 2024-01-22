@@ -11,19 +11,21 @@ class MyBlServiceItemRepository extends BaseRepository
 
     public function is_sequence_exist($sequence, $service_id)
     {
-        $service_sequence =$this->model::where('my_bl_service_id', $service_id)
+        $service_sequence = $this->model::where('my_bl_service_id', $service_id)
             ->where('sequence', $sequence)->get();
         return empty($service_sequence->all());
     }
 
     public function getServiceItems($service_id)
     {
-        return $this->model->where('my_bl_service_id', $service_id)->orderBy('sequence','ASC')->get();
+        return $this->model->where('my_bl_service_id', $service_id)->orderBy('sequence', 'ASC')->get();
     }
+
     public function getLastServiceItems($service_id)
     {
-        return $this->model->where('my_bl_service_id', $service_id)->orderBy('sequence','DESC')->first();
+        return $this->model->where('my_bl_service_id', $service_id)->orderBy('sequence', 'DESC')->first();
     }
+
     public function serviceItemTableSort($request)
     {
         $positions = $request->position;
