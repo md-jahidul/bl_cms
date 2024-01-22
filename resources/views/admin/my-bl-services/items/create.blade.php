@@ -103,8 +103,7 @@
                                                    placeholder="Enter Valid Deeplink">
                                             <small
                                                 class="text-danger"> @error('deeplink') {{ $message }} @enderror </small>
-                                            <small id="message"></small>
-                                        </div>
+                                            <small id="message"></small></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="image_url">Image url:</label>
