@@ -10,7 +10,7 @@ class MyBlServiceRepository extends BaseRepository
 
     public function getServices()
     {
-        return $this->modelName::where('status', 1)->orderBy('sequence','ASC')->get();
+        return $this->modelName::orderBy('sequence','ASC')->get();
     }
 
     public function serviceSequence()

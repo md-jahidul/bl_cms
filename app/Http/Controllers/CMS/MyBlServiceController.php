@@ -96,7 +96,6 @@ class MyBlServiceController extends Controller
 
     public function destroy($id)
     {
-
         $this->blService->deleteService($id);
         return redirect('my-bl-services')->with('success', 'Service deleted successfully.');
     }
