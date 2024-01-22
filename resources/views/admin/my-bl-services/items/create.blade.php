@@ -98,10 +98,12 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Deeplink</label>
-                                            <input type="text" name="deeplink" class="form-control"
+                                            <label for="deeplink" class="required">Deeplink</label>
+                                            <input type="text" name="deeplink" class="form-control" required
                                                    placeholder="Enter Valid Deeplink">
-                                            <div class="help-block"></div>
+                                            <small
+                                                class="text-danger"> @error('deeplink') {{ $message }} @enderror </small>
+                                            <small id="message"></small>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
