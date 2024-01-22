@@ -108,12 +108,15 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label>Deeplink</label>
-                                    <input type="text" name="deeplink" class="form-control"
+                                    <label for="deeplink" class="required">Deeplink</label>
+                                    <input type="text" name="deeplink" class="form-control" required
                                            value="{{ $itemInfo->deeplink }}" placeholder="Enter Valid Deeplink">
-                                    <div class="help-block"></div>
+                                    <small
+                                        class="text-danger"> @error('deeplink') {{ $message }} @enderror </small>
+                                    <small id="message"></small>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="image"> Icon url :</label>
