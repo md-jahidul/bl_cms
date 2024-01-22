@@ -86,7 +86,6 @@
                                         <label for="icon">Icon :</label>
                                         <input
                                                 value="{{old('icon')?old('icon'):$service->icon}}"
-                                                required
                                                 id="icon"
                                                 type="text"
                                                 class="form-control @error('icon') is-invalid @enderror"
