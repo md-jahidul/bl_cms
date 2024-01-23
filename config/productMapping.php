@@ -47,9 +47,8 @@ return [
             'cta_text_color'        => 40,
             'redirection_name_en'   => 41,
             'redirection_name_bn'   => 42,
-            'redirection_deeplink'  => 43,
-            'service_tags'          => 44,
-            'lms_tier_slab' => 46,
+            'redirection_deeplink' => 43,
+            'tnc_type'             => 44
         ],
         'download-columns' => [
             'sim_type'              => 0,
@@ -96,10 +95,8 @@ return [
             'cta_text_color'        => 40,
             'redirection_name_en'   => 41,
             'redirection_name_bn'   => 42,
-            'redirection_deeplink'  => 43,
-            'service_tags'          => 44,
-            'deep_link'             => 45,
-            'lms_tier_slab' => 46,
+            'redirection_deeplink' => 43,
+            'tnc_type'             => 44
         ],
         'product_schedule_statuses' => [
             0 => 'None',

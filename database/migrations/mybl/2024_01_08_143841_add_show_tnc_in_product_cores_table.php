@@ -14,7 +14,7 @@ class AddShowTncInProductCoresTable extends Migration
     public function up()
     {
         Schema::table('product_cores', function (Blueprint $table) {
-            $table->boolean('show_tnc')->default(0);
+            $table->string('tnc_type')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddShowTncInProductCoresTable extends Migration
     public function down()
     {
         Schema::table('product_cores', function (Blueprint $table) {
-            $table->dropColumn('show_tnc');
+            $table->dropColumn('tnc_type');
         });
     }
 }
