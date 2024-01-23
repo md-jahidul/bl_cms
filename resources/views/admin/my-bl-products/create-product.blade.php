@@ -484,8 +484,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="tnc_type">C for T&C</label>
-                                        <select name="tnc_type" required class="form-control">
-                                            <option>Select a option</option>
+                                        <select name="tnc_type" class="form-control">
+                                            <option value="">Select a option</option>
                                             @foreach(config('constants.tnc_types') as $key => $type)
                                             <option value="{{$key}}">{{$type}}</option>
                                             @endforeach
