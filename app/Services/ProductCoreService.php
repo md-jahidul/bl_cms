@@ -244,10 +244,6 @@ class ProductCoreService
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
-                            if ($index == 45){
-                                continue;
-                            }
-
                             switch ($field) {
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
@@ -1543,6 +1539,7 @@ class ProductCoreService
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
                 $insert_data[44] = $product->details->tnc_type;
+                $insert_data[45] = $product->details->service_tags;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
