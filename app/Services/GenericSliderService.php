@@ -25,19 +25,19 @@ class GenericSliderService
 {
     use CrudTrait;
 
-    protected $genericSliderRepository;
-    protected $myblHomeComponentService;
-    protected $sliderRepository;
-    protected $contentComponentRepository;
-    protected $nonBlComponentRepository;
-    protected $contentComponentService;
-    protected $commerceComponentRepository;
-    protected $commerceComponentService;
+    public $genericSliderRepository;
+    public $myblHomeComponentService;
+    public $sliderRepository;
+    public $contentComponentRepository;
+    public $nonBlComponentRepository;
+    public $contentComponentService;
+    public $commerceComponentRepository;
+    public $commerceComponentService;
     protected $nonBlOfferService;
-    protected $nonBLComponentService;
+    public $nonBLComponentService;
 
-    protected $lmsHomeComponentService;
-    protected $genericComponentService, $genericComponentItemService;
+    public $lmsHomeComponentService;
+    public $genericComponentService, $genericComponentItemService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
@@ -358,6 +358,7 @@ class GenericSliderService
                 'message' => 'Slider delete failed',
             ];
         }
+
     }
 
     public function findGenericComponentId($components, $keyName)

@@ -375,4 +375,16 @@ class Helper
             ]);
         }
     }
+
+    public static function findCandidateChildComponent($components)
+    {
+        $data = [];
+        foreach ($components as $component) {
+            if (isset($component['type']) && $component['type'] == 'parent') {
+                $data[] = $component;
+            }
+        }
+
+        return $data;
+    }
 }

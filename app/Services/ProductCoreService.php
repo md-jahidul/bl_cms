@@ -244,10 +244,6 @@ class ProductCoreService
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
-                            if ($index == 45){
-                                continue;
-                            }
-
                             switch ($field) {
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
@@ -290,6 +286,9 @@ class ProductCoreService
                                         break;
                                     }
                                     $core_data[$field] = $flag;
+                                    break;
+                                case "tnc_type":
+                                    $core_data [$field] = strtolower($cells[$index]->getValue()) ?? null;
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -1143,7 +1142,7 @@ class ProductCoreService
             }
 
             $data_request['show_timer'] = $request->show_timer ?? 0;
-            $data_request['show_tnc'] = $request->show_tnc ?? 0;
+            $data_request['tnc_type'] = $request->tnc_type ?? null;
 
 //            if (isset($data_request['internet_volume_mb'])) {
 //                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
@@ -1353,7 +1352,7 @@ class ProductCoreService
             }
 
             $data_request['show_timer'] = $request->show_timer ?? 0;
-            $data_request['show_tnc'] = $request->show_tnc ?? 0;
+            $data_request['tnc_type'] = $request->tnc_type ?? null;
 
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
@@ -1539,14 +1538,8 @@ class ProductCoreService
                 $insert_data[41] = $product->details->redirection_name_en;
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
-                $insert_data[44] = $product->details->service_tags;
-
-                $deeplink = $this->productDeepLinkService->createDeepLink($product->details->product_code);
-                $insert_data[45] = ($deeplink['status_code'] == 200) ? $deeplink['short_link'] : "Something went wrong";
-//                if (isset($request['filtered_btn'])) {
-//                }
-
-                $insert_data[46] = $product->details->lms_tier_slab;
+                $insert_data[44] = $product->details->tnc_type;
+                $insert_data[45] = $product->details->service_tags;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
