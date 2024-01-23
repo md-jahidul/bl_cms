@@ -84,7 +84,7 @@
                                     <select name="component_for" class="form-control custom-select"
                                             id="component_for" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.component_for') as $key => $type)
+                                        @foreach ($componentType as $key => $type)
                                             <option value="{{$key}}" >{{$type}}</option>
                                         @endforeach
                                     </select>
