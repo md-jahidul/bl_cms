@@ -45,8 +45,8 @@
                                                    class="btn btn-success border-0 change_status" title="Click to disable">Enabled</a>
                                             @endif
                                             @if(substr($component['component_key'], 0, 7) !== "generic")
-                                                <a href="" data-id="{{ $component['id'] }}" data-toggle="modal" data-target="#large" role="button"
-                                                   class="btn btn-info border-0 edit"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                    <a href="{{ route('mybl.home.components.edit', $component['id']) }}" role="button"
+                                                       class="btn btn-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                                 <a href="#" remove="{{ route("mybl.home.components.destroy", $component['id']) }}" class="border-0 btn btn-danger delete_btn" data-id="{{ $component['id'] }}" title="Delete the component">
                                                     <i class="la la-trash"></i>
                                                 </a>
@@ -151,6 +151,37 @@
                                             <input type="radio" name="is_api_call_enable" value="0" id="can_disable_no" checked>
                                             <label for="can_disable_no">Disable</label>
                                         </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="cta_name_en">Cta Name EN</label>
+                                        <input type="text" name="cta_name_en" id="cta_name_en" class="form-control"
+                                               placeholder="Enter Cta Name En.">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="cta_name_en">Cta Name BN</label>
+                                        <input type="text" name="cta_name_bn" id="cta_name_bn" class="form-control"
+                                               placeholder="Enter Cta Name Bn." >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="deeplink">Deeplink</label>
+                                        <input type="text" name="deeplink" id="deeplink" class="form-control"
+                                               placeholder="Enter Deeplink URL.">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="icon">icon</label>
+                                        <input type="text" name="icon" id="icon" class="form-control"
+                                               placeholder="Enter Icon URL.">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Childes </label>
+                                        <select multiple class="w-100 select2 childes" name="child_ids[]" style="width: 100%">
+                                            <option value="">Select a option</option>
+                                            @foreach ($candidateChildes as $key => $child)
+                                                    <option value="{{ $child['id'] }}">  {{$child['title_en']}}  </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -303,6 +334,11 @@
                         }, 2000)
                     }
                 })
+            });
+
+            $('.childes').select2({
+                placeholder: 'Select Childes.',
+                maximumSelectionLength: 4
             });
 
         })();
