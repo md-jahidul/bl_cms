@@ -154,7 +154,8 @@ class Helper
             "AMAR_TUNE"               => 'Amar Tune',
             "SIM_BLOCK"               => 'Sim Block',
             "SERVICE"                => 'Service',
-            "DEEPLINK"               => 'Deeplink'
+            "DEEPLINK"               => 'Deeplink',
+            "DCB"                     => 'Dcb'
         ];
     }
 

@@ -1120,7 +1120,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'generic-slider/images/{id}/delete',
         'CMS\GenericSliderImageController@destroy'
     )->name('generic-slider.images.destroy');
-    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
 
     /*
