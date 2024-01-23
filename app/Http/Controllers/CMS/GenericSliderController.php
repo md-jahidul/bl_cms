@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Models\GenericSlider;
+use App\Services\GenericComponentService;
 use App\Services\GenericSliderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -11,10 +12,13 @@ use Illuminate\Support\Facades\Session;
 class GenericSliderController extends Controller
 {
     protected  $genericSliderService;
-    public function __construct(GenericSliderService $genericSliderService)
-    {
+    protected $genericComponentService;
+    public function __construct(
+        GenericSliderService $genericSliderService,
+        GenericComponentService $genericComponentService
+    ) {
         $this->genericSliderService = $genericSliderService;
-
+        $this->genericComponentService = $genericComponentService;
     }
 
     public function index()
@@ -26,7 +30,12 @@ class GenericSliderController extends Controller
 
     public function create()
     {
-        return view('admin.generic-slider.create');
+        $config = config('generic-slider.component_for');
+        $genericComponent = $this->genericComponentService->findAll();
+        $genericComponent = $genericComponent->pluck('title_en', 'component_key')->toArray();
+        $componentType = array_merge($config, $genericComponent);
+
+        return view('admin.generic-slider.create', compact('componentType'));
     }
 
 
@@ -65,7 +74,13 @@ class GenericSliderController extends Controller
         $slider->android_version_code = $android_version_code;
         $slider->ios_version_code = $ios_version_code;
 
-        return view('admin.generic-slider.edit', compact('slider'));
+        $config = config('generic-slider.component_for');
+        $genericComponent = $this->genericComponentService->findAll();
+        $genericComponent = $genericComponent->pluck('title_en', 'component_key')->toArray();
+        $componentType = array_merge($config, $genericComponent);
+
+
+        return view('admin.generic-slider.edit', compact('slider', 'componentType'));
     }
 
 
