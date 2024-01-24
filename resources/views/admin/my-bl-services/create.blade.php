@@ -45,7 +45,7 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-3 mb-2">
+                                <div class="form-group col-md-6 mb-2">
                                     <label class="required" for="status">Status: </label>
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <input required type="radio" name="status" value="1" id=""/>
