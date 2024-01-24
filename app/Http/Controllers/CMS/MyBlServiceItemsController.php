@@ -86,10 +86,9 @@ class MyBlServiceItemsController extends Controller
 
     public function updatePosition(Request $request)
     {
-
         foreach ($request->position as $position) {
-            $image = $this->blServiceItemsService->findOrFail($position[0]);
-            $image->update(['sequence' => $position[1]]);
+            $items = $this->blServiceItemsService->findOrFail($position[0]);
+            $items->update(['sequence' => $position[1]]);
         }
         return "success";
     }
