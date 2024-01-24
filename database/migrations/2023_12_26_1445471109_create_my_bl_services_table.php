@@ -18,7 +18,6 @@ class CreateMyBlServicesTable extends Migration
             $table->string('title_en');
             $table->string('title_bn');
             $table->string('icon')->nullable();
-            $table->boolean('is_title_show')->default(false);
             $table->integer('sequence')->nullable();
             $table->boolean('status')->default(false);
             $table->string('connection_type')->default('prepaid');

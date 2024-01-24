@@ -58,19 +58,6 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3 mb-2">
-                                    <label class="required" for="is_title_show">Is Title Show: </label>
-                                    <div class="form-group {{ $errors->has('is_title_show') ? ' error' : '' }}">
-                                        <input required type="radio" name="is_title_show" value="1" id=""/>
-                                        <label for="is_title_show" class="mr-3">True</label>
-                                        <input required type="radio" name="is_title_show" value="0" id=""/>
-                                        <label for="is_title_show" class="mr-3">False</label>
-
-                                        @if ($errors->has('is_title_show'))
-                                            <div class="help-block">  {{ $errors->first('is_title_show') }}</div>
-                                        @endif
-                                    </div>
-                                </div>
                                 <div class="form-group col-md-6 mb-2">
                                     <label for="icon">Icon Url :</label>
                                     <input
