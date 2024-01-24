@@ -32,7 +32,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody id="sortable-new">
                         @foreach($service_items as $index=>$items)
                             <tr data-index="{{ $items->id }}" data-position="{{ $items->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
@@ -54,8 +54,8 @@
                                                                                                   aria-hidden="true"></i></a>
                                         <a href="#" data-id="{{ $items->id }}"
                                            role="button" class="btn btn-outline-danger border-0 del"><i
-                                                    class="la la-remove"
-                                                    aria-hidden="true"></i></a>
+                                                class="la la-remove"
+                                                aria-hidden="true"></i></a>
                                     </form>
                                 </td>
                             </tr>
@@ -81,36 +81,7 @@
 
 @push('page-js')
     <script>
-
         let auto_save_url = "{{ url('my-bl-services/add-items/update-position') }}";
-
-        $(document).ready(function () {
-            $(document).on('click', '.del', function (e) {
-                e.preventDefault();
-
-                let id = $(this).data('id');
-                console.log(id);
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    console.log(result);
-                    if (result.value) {
-                        console.log("#del_form_" + id)
-                        $("#del_form_" + id).submit();
-                    }
-                })
-            })
-
-        });
-
     </script>
 @endpush
 

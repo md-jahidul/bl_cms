@@ -1015,7 +1015,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
 
 
-
     // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
@@ -1255,7 +1254,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'my-bl-services/items/{id}/delete',
         'CMS\MyBlServiceItemsController@destroy'
     )->name('my-bl-services.items.destroy');
-    Route::get('my-bl-services/add-items/update-position', 'CMS\MyBlServiceItemsController@updatePosition');
+    Route::match(['GET', 'POST'], 'my-bl-services/add-items/update-position', 'CMS\MyBlServiceItemsController@updatePosition');
 });
 
 // 4G Map View Route
