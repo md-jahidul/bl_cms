@@ -489,12 +489,16 @@
                                         <label for="show_timer">Show Timer</label>
                                     </fieldset>
                                 </div>
-                                <div class="col-md-2 icheck_minimal skin mt-2">
-                                    <fieldset>
-                                        <input type="checkbox" id="show_tnc" value="1" name="show_tnc">
-                                        <label for="show_tnc">Show Terms & Condition</label>
-                                    </fieldset>
-                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="tnc_type">C for T&C</label>
+                                        <select name="tnc_type" class="form-control">
+                                            <option value="">Select a option</option>
+                                            @foreach(config('constants.tnc_types') as $key => $type)
+                                            <option value="{{$key}}">{{$type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
                                     <label for="service_tags">Service Tags</label>
                                     <input class="form-control" name="service_tags" id="service_tags"

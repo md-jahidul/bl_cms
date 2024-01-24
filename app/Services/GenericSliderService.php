@@ -358,6 +358,7 @@ class GenericSliderService
                 'message' => 'Slider delete failed',
             ];
         }
+
     }
 
     public function findGenericComponentId($components, $keyName)

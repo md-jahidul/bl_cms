@@ -1411,12 +1411,12 @@
     <script>
         $(function () {
             $(".redirectNewCms").click(function (event) {
-                var targetUrl = $(event.target).attr('target');
+                let targetUrl = $(event.target).attr('target');
                 $.ajax({
                     url: "{{ url('new-cms/verify-token') }}",
                     type:'GET',
                     success: function (result) {
-                        let redirectUrl = result.redirect_url + targetUrl + "?access_token=" + result.access_token
+                        let redirectUrl = result.redirect_url + targetUrl + "?access_token=" + result.access_token + "&redirectUrl=" + targetUrl
                         window.open(redirectUrl);
                     },
                 });

@@ -605,6 +605,17 @@
                                     @endif
                                     <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Service Tags should be Comma-separated value. Example: iscreen,toffee</span>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="tnc_type">C for T&C</label>
+                                        <select name="tnc_type" class="form-control">
+                                            <option value="">Select a option</option>
+                                            @foreach(config('constants.tnc_types') as $key => $type)
+                                                <option @if($details->details->tnc_type == $key) selected @endif value="{{$key}}">{{$type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>Service Product Image</label>
                                     <input type="file" id="input-file-now" name="service_image_url" class="dropify" data-default-file="{{ $details->details->service_image_url ? url('storage/' .$details->details->service_image_url) : ''}}"/>
