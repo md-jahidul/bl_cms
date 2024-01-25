@@ -21,9 +21,9 @@ class MyBlServiceItemsController extends Controller
     private $blServiceItemsService;
 
     public function __construct(
-        MyBlServiceItemRepository    $serviceItemRepository,
-        MyBlServiceComponentService  $myBlService,
-        MyBlServiceItemsService      $blServiceItemsService
+        MyBlServiceItemRepository   $serviceItemRepository,
+        MyBlServiceComponentService $myBlService,
+        MyBlServiceItemsService     $blServiceItemsService
     )
     {
         $this->serviceItemRepository = $serviceItemRepository;
@@ -86,11 +86,7 @@ class MyBlServiceItemsController extends Controller
 
     public function updatePosition(Request $request)
     {
-        foreach ($request->position as $position) {
-            $items = $this->blServiceItemsService->findOrFail($position[0]);
-            $items->update(['sequence' => $position[1]]);
-        }
-        return "success";
+        return $this->blServiceItemsService->updatePosition($request);
     }
 
 
