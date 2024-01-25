@@ -104,6 +104,16 @@ class MyBlServiceItemsService
         }
     }
 
+    public function updatePosition($request)
+    {
+        foreach ($request->position as $position) {
+            $items = $this->findOrFail($position[0]);
+            $items->update(['sequence' => $position[1]]);
+        }
+        self::removeServiceRedisKey();
+        return "success";
+    }
+
 
     /**
      * @throws \Exception
