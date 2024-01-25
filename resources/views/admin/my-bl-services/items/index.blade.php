@@ -82,6 +82,32 @@
 @push('page-js')
     <script>
         let auto_save_url = "{{ url('my-bl-services/add-items/update-position') }}";
+        $(document).ready(function () {
+            $(document).on('click', '.del', function (e) {
+                e.preventDefault();
+
+                let id = $(this).data('id');
+                console.log(id);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    console.log(result);
+                    if (result.value) {
+                        console.log("#del_form_" + id)
+                        $("#del_form_" + id).submit();
+                    }
+                })
+            })
+
+        });
     </script>
 @endpush
 
