@@ -499,6 +499,7 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                </div>
                                 <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
                                     <label for="service_tags">Service Tags</label>
                                     <input class="form-control" name="service_tags" id="service_tags"
