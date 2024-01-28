@@ -103,7 +103,7 @@
                                             <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
                                         @endif
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="is_active">Active Status:</label>
                                             <select class="form-control" id="is_active"
@@ -113,7 +113,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="is_active">Highlight:</label>
                                             <select class="form-control" id="is_highlight"
@@ -121,6 +121,26 @@
                                                 <option value="1"> Active</option>
                                                 <option value="0" selected>Inactive</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="action_div">
+                                        @php
+                                            $actionList = Helper::navigationActionList();
+                                        @endphp
+
+                                        <div class="form-group">
+                                            <label>Component Identifier</label>
+                                            <select name="component_identifier" class="browser-default custom-select"
+                                                    id="component_identifier">
+                                                <option value="">Select Action</option>
+                                                @foreach ($actionList as $key => $value)
+                                                    <option
+                                                        value="{{ $key }}">
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <div class="help-block"></div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">

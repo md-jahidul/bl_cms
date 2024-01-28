@@ -94,7 +94,7 @@
                                 @endif
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="status">Active Status:</label>
                                     <select
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="status">Highlight:</label>
                                     <select
@@ -129,7 +129,29 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-4" id="action_div">
+                                @php
+                                    $actionList = Helper::navigationActionList();
+                                @endphp
 
+                                <div class="form-group">
+                                    <label>Component Identifier</label>
+                                    <select name="component_identifier" class="browser-default custom-select"
+                                            id="component_identifier">
+                                        <option value="">Select Action</option>
+                                        @foreach ($actionList as $key => $value)
+                                            <option
+                                                @if(isset($itemData->component_identifier) && $itemData->component_identifier == $key)
+                                                    selected
+                                                @endif
+                                                value="{{ $key }}">
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
                             <div class="form-group col-md-12">
                                 <button style="float: right" type="submit" id="submitForm"
                                         class="btn btn-success round px-2">
