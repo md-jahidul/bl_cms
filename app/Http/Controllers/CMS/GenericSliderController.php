@@ -35,7 +35,6 @@ class GenericSliderController extends Controller
         $genericComponent = $genericComponent->pluck('title_en', 'component_key')->toArray();
         $componentType = array_merge($config, $genericComponent);
 
-//        dd($componentType);
         return view('admin.generic-slider.create', compact('componentType'));
     }
 
