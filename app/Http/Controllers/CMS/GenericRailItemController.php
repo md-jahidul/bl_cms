@@ -52,6 +52,7 @@ class GenericRailItemController extends Controller
         }
 
         Helper::removeVersionControlRedisKey();
+        Redis::del('generic_rail_data');
 
         return "success";
     }

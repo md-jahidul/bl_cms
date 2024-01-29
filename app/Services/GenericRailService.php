@@ -60,6 +60,9 @@ class GenericRailService
                 $this->genericSliderService->nonBlComponentRepository->save($homeComponentData);
                 Helper::removeVersionControlRedisKey('nonbl');
             }
+
+            Redis::del('generic_rail_data');
+
             DB::commit();
             return true;
 
@@ -108,6 +111,7 @@ class GenericRailService
             }
 
             $rail->update($data);
+            Redis::del('generic_rail_data');
 
             DB::commit();
             return true;
@@ -161,6 +165,7 @@ class GenericRailService
             }
 
             $rail->delete();
+            Redis::del('generic_rail_data');
 
             DB::commit();
             return [

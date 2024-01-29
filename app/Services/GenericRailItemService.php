@@ -50,6 +50,7 @@ class GenericRailItemService
             else {
                 Helper::removeVersionControlRedisKey($railData['component_for']);
             }
+            Redis::del('generic_rail_data');
 
             return true;
 
@@ -72,10 +73,10 @@ class GenericRailItemService
 
             if ($railData['component_for'] == 'non_bl') {
                 Helper::removeVersionControlRedisKey('nonbl');
-            }
-            else {
+            } else {
                 Helper::removeVersionControlRedisKey($railData['component_for']);
             }
+            Redis::del('generic_rail_data');
 
             return true;
 
@@ -94,6 +95,7 @@ class GenericRailItemService
 
             $itemData->delete();
             Helper::removeVersionControlRedisKey($railData['component_for']);
+            Redis::del('generic_rail_data');
 
             return $railData['id'];
 
