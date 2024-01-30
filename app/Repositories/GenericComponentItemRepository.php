@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\GenericComponentItem;
+use Illuminate\Support\Facades\Log;
 
 class GenericComponentItemRepository extends BaseRepository
 {
@@ -13,8 +14,9 @@ class GenericComponentItemRepository extends BaseRepository
         try {
             return $this->modelName::where('id', $id)->delete();
         } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
 
+            Log::error($e->getMessage());
+            return false;
+        }
     }
 }

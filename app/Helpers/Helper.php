@@ -153,8 +153,8 @@ class Helper
             "VOLTE"                   => 'Volte',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "AMAR_TUNE"               => 'Amar Tune',
             "SIM_BLOCK"               => 'Sim Block',
+            "AMAR_TUNE"               => 'Amar Tune',
             "SERVICE"                => 'Service',
             "DEEPLINK"               => 'Deeplink',
             "DCB"                     => 'Dcb'

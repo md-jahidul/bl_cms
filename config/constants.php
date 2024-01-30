@@ -84,10 +84,6 @@ return [
     ],
 
     'tnc_types' => [
-        'content' => 'Content',
-        'care' => 'Care',
-        'commerce' => 'Commerce',
-        'courses' => 'Courses',
-        'community' => 'Community'
+        'care' => 'Care'
     ]
 ];

@@ -11,6 +11,7 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Models\ProductTag;
+use App\Models\TermsAndCondition;
 use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
@@ -228,6 +229,7 @@ class ProductCoreService
     public function mapMyBlProduct($excel_path)
     {
         $config = config('productMapping.mybl.columns');
+        $tnc_keywords = TermsAndCondition::all()->pluck('keyword')->toArray();
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
@@ -288,7 +290,11 @@ class ProductCoreService
                                     $core_data[$field] = $flag;
                                     break;
                                 case "tnc_type":
-                                    $core_data [$field] = strtolower($cells[$index]->getValue()) ?? null;
+                                    if (in_array(strtolower($cells[$index]->getValue()), $tnc_keywords)) {
+                                        $core_data [$field] = $cells[$index]->getValue();
+                                    } else {
+                                        $core_data [$field] = null;
+                                    }
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -1538,6 +1544,8 @@ class ProductCoreService
                 $insert_data[41] = $product->details->redirection_name_en;
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
+                $insert_data[44] = $product->details->tnc_type;
+                $insert_data[45] = $product->details->service_tags;
                 $insert_data[46] = $product->details->lms_tier_slab;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
