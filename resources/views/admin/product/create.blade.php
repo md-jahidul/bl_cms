@@ -228,6 +228,11 @@
                                     @include('layouts.partials.products.common-field.product-image')
                                 </slot>
 
+                                <!--Postpaid Select-->
+                                <slot id="postpaid_select" data-offer-type="postpaid_select" style="display: none">
+                                    @include('layouts.partials.products.other.other_detail_field')
+                                </slot>
+
                                 @include('layouts.partials.products.common-field.search-related-field')
 
                                 <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">

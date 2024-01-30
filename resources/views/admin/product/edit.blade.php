@@ -151,8 +151,7 @@
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
                                 </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ $product->offer_category_id != OfferType::OTHERS ? '' : 'd-none' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('image') ? ' error' : '' }} product_detals_img {{ $product->offer_category_id != OfferType::OTHERS && $product->offer_category_id != OfferType::POSTPAID_SELECT ? '' : 'd-none' }}">
                                     <label for="tag_category_id">Product Details Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="image" class="custom-file-input dropify" data-height="90"
@@ -232,9 +231,13 @@
                                     @include('layouts.partials.products.other')
                                 </slot>
 
+                                <slot class="{{ $product->offer_category_id == OfferType::POSTPAID_SELECT ? '' : 'd-none' }}" id="postpaid_select" data-offer-type="postpaid_select">
+                                    @include('layouts.partials.products.other.other_detail_field')
+                                </slot>
+
                                 @include('layouts.partials.products.common-field.search-related-field')
 
-                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }} {{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }} {{ $product->offer_category_id == OfferType::OTHERS || $product->offer_category_id == OfferType::POSTPAID_SELECT ? '' : 'd-none' }}">
                                     <label for="mobileImg">Product Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="product_image" data-height="90" class="dropify"
