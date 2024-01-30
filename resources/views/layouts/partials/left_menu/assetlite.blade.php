@@ -181,11 +181,11 @@
                         </li>
 
 
-                        <li class="{{ is_active_url('roaming-info-tips') }}">
-                            <a class="menu-item" href="{{ url('roaming-info-tips') }}"
-                               data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-caret-right"></i> Info & Tips</a>
-                        </li>
+{{--                        <li class="{{ is_active_url('roaming-info-tips') }}">--}}
+{{--                            <a class="menu-item" href="{{ url('roaming-info-tips') }}"--}}
+{{--                               data-i18n="nav.templates.vert.classic_menu"><i--}}
+{{--                                    class="la la-caret-right"></i> Info & Tips</a>--}}
+{{--                        </li>--}}
 
 
                         <li class="{{ is_active_url('roaming/operators') }}">
