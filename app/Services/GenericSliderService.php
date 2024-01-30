@@ -25,19 +25,19 @@ class GenericSliderService
 {
     use CrudTrait;
 
-    protected $genericSliderRepository;
-    protected $myblHomeComponentService;
-    protected $sliderRepository;
-    protected $contentComponentRepository;
-    protected $nonBlComponentRepository;
-    protected $contentComponentService;
-    protected $commerceComponentRepository;
-    protected $commerceComponentService;
+    public $genericSliderRepository;
+    public $myblHomeComponentService;
+    public $sliderRepository;
+    public $contentComponentRepository;
+    public $nonBlComponentRepository;
+    public $contentComponentService;
+    public $commerceComponentRepository;
+    public $commerceComponentService;
 
-    protected $lmsHomeComponentService;
-    protected $nonBlOfferService;
-    protected $nonBLComponentService;
-    protected $genericComponentService, $genericComponentItemService;
+    public $lmsHomeComponentService;
+    public $nonBlOfferService;
+    public $nonBLComponentService;
+    public $genericComponentService, $genericComponentItemService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,
