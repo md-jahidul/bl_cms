@@ -43,7 +43,7 @@
 {{--                                <td>{{ $partnerOffer->offer_value  }} ({{ $partnerOffer->offer_unit }})</td>--}}
 
                                 <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
-                                <td>{{ $partnerOffer->get_offer_msg_en }}</td>
+                                <td>{!! $partnerOffer->get_offer_msg_en !!}</td>
                                 <td class="text-center"><a href="{{ route('offer.details', [$partnerName, $partnerOffer->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>
                                 <td class="action" width="12%">
                                     <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id] ) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
