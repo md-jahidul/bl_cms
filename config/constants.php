@@ -45,5 +45,9 @@ return [
         6 => 'weekly',
         29 => 'monthly',
         364 => 'yearly'
+    ],
+
+    'tnc_types' => [
+        'care' => 'Care'
     ]
 ];

@@ -151,9 +151,11 @@ class Helper
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "AMAR_TUNE"               => 'Amar Tune',
             "SIM_BLOCK"               => 'Sim Block',
-            "SERVICE"                => 'Service'
+            "AMAR_TUNE"               => 'Amar Tune',
+            "SERVICE"                => 'Service',
+            "DEEPLINK"               => 'Deeplink',
+            "DCB"                     => 'Dcb'
         ];
     }
 
@@ -364,7 +366,8 @@ class Helper
                 'mybl_component_content',
                 'mybl_component_commerce',
                 'mybl_component_nonbl',
-                'mybl_component_lms'
+                'mybl_component_lms',
+                'generic_component_data'
             ]);
         }
     }

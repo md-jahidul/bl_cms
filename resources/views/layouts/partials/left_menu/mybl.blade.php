@@ -178,6 +178,19 @@
         </li>
     @endif
 
+    <li class="{{ is_active_match(route('generic-components.index')) }} nav-item"><a href="{{route('generic-components.index')}}"><i
+                class="la la-list"></i>
+            <span class="menu-title">Iscreen</span></a>
+
+        <ul class="menu-content">
+
+            <li class="{{ is_active_match(route('generic-components.index')) }}">
+                <a class="menu-item" href="{{ route('generic-components.index') }}">
+                    <i class="ft-list"></i>Generic Component</a>
+            </li>
+        </ul>
+    </li>
+
     @if( auth()->user()->can_view('MyblPlanProduct') )
         <li class="{{ is_active_url('mybl-plan') }} nav-item"><a href="{{ route('mybl-plan.products') }}"><i
                     class="la la-list"></i>
@@ -573,6 +586,14 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('StoreLocatorEntry'))
+        <li class="{{ is_active_url('digital-service') }}">
+            <a class="menu-item" href="{{ url('store-locations/entry') }}"
+               data-i18n="nav.templates.vert.classic_menu">
+                <i class="la la-server"></i>Store Location Entry
+            </a>
+        </li>
+   @endif
 
     @if( auth()->user()->can_view('Banner') || auth()->user()->can_view('WelcomeInfo') || auth()->user()->can_view('MyblSlider')
          || auth()->user()->can_view('MyblSliderImage')  || auth()->user()->can_view('ContextualCard')    )

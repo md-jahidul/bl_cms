@@ -346,8 +346,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');
-    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
-    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
+    Route::get('store-locations/entry', 'CMS\StoreLocatorEntryController@index');
+    Route::post('store-locations', 'CMS\StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
@@ -1120,7 +1120,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'generic-slider/images/{id}/delete',
         'CMS\GenericSliderImageController@destroy'
     )->name('generic-slider.images.destroy');
-    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
 
     /*
@@ -1237,6 +1237,24 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('vas-products/destroy/{id}', 'CMS\VasProductController@destroy')
         ->name('vas-product.destroy');
 
+    /**
+     * I Screen
+     */
+    Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
+    Route::get('generic-components/destroy/{id}', 'CMS\GenericComponentController@delete');
+    Route::get('generic-component/{componentId}/items', 'CMS\GenericComponentItemController@index')->name('generic-component-items-list.index');
+//    Route::get('generic-component-items', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
+    Route::get('generic-component-items/edit/{id}', 'CMS\GenericComponentItemController@edit')
+        ->name('generic-component-items.edit');
+    Route::post('generic-component-items/store', 'CMS\GenericComponentItemController@store')
+        ->name('generic-component-items.store');
+    Route::post('generic-component-items/update', 'CMS\GenericComponentItemController@update')
+        ->name('generic-component-items.update');
+    Route::get('generic-component-items-sort', 'CMS\GenericComponentItemController@componentSort');
+    Route::get('generic-component-items-status-update/{id}', 'CMS\GenericComponentItemController@componentStatusUpdate')
+        ->name('generic-component-items.status.update');
+    Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
+        ->name('generic-component-items.destroy');
 });
 
 // 4G Map View Route

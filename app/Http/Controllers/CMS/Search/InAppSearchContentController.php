@@ -42,6 +42,7 @@ class InAppSearchContentController extends Controller
                     'description' => $request->description,
                     'search_content' => implode(', ', $request->tag),
                     'navigation_action' => $request->navigation_action,
+                    'deeplink' => $request->deeplink,
                     'other_contents' => isset($request->other_info) ? json_encode(
                         [
                             'type' => strtolower($request->navigation_action),
@@ -130,6 +131,7 @@ class InAppSearchContentController extends Controller
         $data['search_content'] = implode(', ', $request->tag);
         $data ['description'] = $request->description;
         $data ['navigation_action'] = $request->navigation_action;
+        $data ['deeplink'] = $request->deeplink;
         if (isset($data['other_contents'])) {
             $other_attributes = [
                 'type' => strtolower($data['navigation_action']),
